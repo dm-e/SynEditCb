@@ -1,0 +1,20 @@
+
+friend class ESynMethodChain;
+friend class TBetterRegistry;
+friend class TInternalResource;
+friend class TSynBandsCollection;
+friend class TSynBookMarkOpt;
+friend class TSynEditSearchCustom;
+friend class TSynGlyph;
+friend class TSynGutter;
+friend class TSynGutterBand;
+friend class TSynHotKey;
+friend class TSynInternalImage;
+friend class TSynMethodChain;
+friend class TSynNotifyEventChain;
+friend class TSynSelectedColor;
+friend void __fastcall ResizeBitmap(Vcl::Graphics::TBitmap* BITMAP, int NewWidth, int NewHeight);
+friend bool __fastcall KeySameAsShiftState(WORD key, System::Classes::TShiftState Shift);
+friend System::Classes::TShiftState __fastcall ModifiersToShiftState(THKModifiers Modifiers);
+//friend THKInvalidKey __fastcall ShiftStateToTHKInvalidKey(System::Classes::TShiftState Shift);
+friend String __fastcall ShortCutToTextEx(WORD key, System::Classes::TShiftState Shift);

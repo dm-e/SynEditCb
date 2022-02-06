@@ -1,0 +1,98 @@
+D2Cpp VERSION = 1.0.0
+
+==========[INPUT]
+SYSTEM_PAS =System.pas
+
+[DEFINITIONS]
+COMPILERVERSION=32
+MSWINDOWS=1
+SYN_COMPILER_10_UP=1
+UNICODE=1
+WIN32=1
+[INCLUDEPATHS]
+..\Source
+..\SynGen
+[VCLINCLUDEPATHS]
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\rtl\sys
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\rtl\common
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\rtl\win
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\vcl
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\ToolsAPI
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\data
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\data\vclctrls
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\Property Editors
+C:\Program Files (x86)\Embarcadero\Studio\22.0\source\xml
+[UNITSCOPENAMES]
+System
+Winapi
+Vcl
+System.Win
+Data
+Xml
+System.Generics
+
+==========[PROCESSORS]
+
+
+==========[SUBSTITUTIONS]
+IDENT_FILE =Identifiers.txt
+
+[PREREPLACEMENTS]
+
+[IDREPLACEMENTS]
+[ELEMENTIDREPLACEMENTS]
+HGLOBAL->hGlobal
+LPARAM->LParam
+RESULT->Result
+WPARAM->WParam
+[HELPERREPLACEMENTS]
+SysutilsEnum__0->System_Sysutils__85
+
+[REFACTORING]
+TComparer,TComparer__1,class,,,0,0,,,true,false
+TDictionary,TDictionary__2,class,,,0,0,,,true,false
+TEnumerable,TEnumerable__1,,,,0,0,,,true,false
+TLineFoldInfo,TLineFoldInfo,record,,,0,0,SynEditCodeFolding,SynEditDelphiInstances.hpp,false,true
+TList,TList__1,class,,,0,0,,,true,false
+TSynFoldRange,TSynFoldRange,record,,,0,0,SynEditCodeFolding,SynEditDelphiInstances.hpp,false,true
+TSynFoldRanges,TSynFoldRanges,class,,,0,0,SynEditCodeFolding,SynEditCodeFolding,false,false
+TSynFoldRanges.TFoldOpenClose,TFoldOpenClose,enum,,,0,-1,TSynFoldRanges,SynEditDelphiInstances.hpp,false,true
+
+
+
+==========[TYPES]
+
+DELPHISTRING =Delphi
+==========[NAMESPACES]
+
+NORMALIZE_NAMESPACES =true
+[NONAMESPACES]
+Windows
+Winapi.Windows
+Winapi.ImageHlp
+WINAPI.Messages
+Winapi.PsAPI
+Winapi.SHFolder
+Winapi::Activex
+[FORCENAMESPACE]
+
+
+==========[TUNING]
+
+APPLYEXTERNAL =true
+APPLYNODEFINE =true
+NOABSTRACT =true
+VIRTUALCLASSMETHODASSTATIC =false
+
+==========[TARGET]
+COMPILER =CBuilder
+PHEADER =<vcl.h>
+TARGETPLATFORM =WINDOWS
+TARGET64BIT =false
+
+==========[OUTPUT]
+
+INDENTER =Tab
+INDENTDELTA =1
+[EXCLUDEDUNITS]
+
