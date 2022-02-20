@@ -78,7 +78,6 @@ protected:
 	virtual bool __fastcall UseBom();
 public:
 	typedef Syneditexport::TSynCustomExporter inherited;	
-	#include "SynExportHTML_friends.inc"
 	__fastcall TSynExporterHTML(System::Classes::TComponent* AOwner);
 	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings();
 __published:

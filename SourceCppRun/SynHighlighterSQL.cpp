@@ -1751,21 +1751,23 @@ void __fastcall TSynSQLSyn::AnsiCProc()
 		CRProc();
 		break;
 		default:
-		if(FRange == rsConditionalComment)
-			FTokenID = tkConditionalComment;
-		else
-			FTokenID = tkComment;
-		do
 		{
-			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+			if(FRange == rsConditionalComment)
+				FTokenID = tkConditionalComment;
+			else
+				FTokenID = tkComment;
+			do
 			{
-				FRange = rsUnKnown;
-				Run += 2;
-				break;
+				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+				{
+					FRange = rsUnKnown;
+					Run += 2;
+					break;
+				}
+				++Run;
 			}
-			++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }

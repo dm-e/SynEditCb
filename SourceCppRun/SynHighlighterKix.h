@@ -109,7 +109,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterKix_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynKixSyn(System::Classes::TComponent* AOwner);

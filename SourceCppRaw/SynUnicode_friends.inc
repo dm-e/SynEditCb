@@ -14,3 +14,4 @@ friend void __fastcall StrSwapByteOrder(PWideChar Str);
 friend PWideChar __fastcall SynCharNext(PWideChar P);
 friend int __fastcall SynUniElementsCount(String s);
 friend bool __fastcall IsUTF8(const String FileName, bool& WithBOM, int BytesToCheck/*# = 0x4000*/);
+friend void SynUnicode_initialization();

@@ -856,7 +856,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterWebIDL_friends.inc"
 	__fastcall TSynWebIDLSyn(System::Classes::TComponent* AOwner);
 	__classmethod virtual UnicodeString __fastcall GetFriendlyLanguageName();
 	__classmethod virtual String __fastcall GetLanguageName();

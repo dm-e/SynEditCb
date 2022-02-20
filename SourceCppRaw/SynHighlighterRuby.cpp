@@ -205,8 +205,10 @@ void __fastcall TSynRubySyn::LFProc()
 
 void __fastcall TSynRubySyn::LowerProc()
 {
-	++Run;
-	FTokenID = tkSymbol;
+	{
+		++Run;
+		FTokenID = tkSymbol;
+	}
 }
 
 void __fastcall TSynRubySyn::NullProc()
@@ -277,21 +279,23 @@ void __fastcall TSynRubySyn::SlashProc()
 		}
 		break;
 		default:
-		FTokenID = tkComment;
-		while(fLine[Run] != L'\x00')
 		{
-			switch(fLine[Run])
+			FTokenID = tkComment;
+			while(fLine[Run] != L'\x00')
 			{
-				case L'\x0a':
-				case L'\x0d':
-				goto label1;
-				default:
-				  ;
-				break;
+				switch(fLine[Run])
+				{
+					case L'\x0a':
+					case L'\x0d':
+					goto label1;
+					default:
+					  ;
+					break;
+				}
+				++Run;
 			}
-			++Run;
+			label1:;
 		}
-		label1:;
 		break;
 	}
 }

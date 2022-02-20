@@ -96,7 +96,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterGalaxy_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynGalaxySyn(System::Classes::TComponent* AOwner);

@@ -137,7 +137,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterFoxpro_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynFoxproSyn(System::Classes::TComponent* AOwner);

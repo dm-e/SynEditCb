@@ -105,7 +105,6 @@ protected:
 	void __fastcall NextProcedure();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterRuby_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynRubySyn(System::Classes::TComponent* AOwner);

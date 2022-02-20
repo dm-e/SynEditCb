@@ -141,8 +141,7 @@ class TSynEditUndo : public TCppInterfacedObject<ISynEditUndo>
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TCppInterfacedObject<ISynEditUndo> inherited;
-	INTFOBJECT_IMPL_IUNKNOWN(TInterfacedObject)
+	typedef TInterfacedObject inherited;	
 private:
 	TSynUndoPlugin* FPlugin;
 	bool FGroupUndo;

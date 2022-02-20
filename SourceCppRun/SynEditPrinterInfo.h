@@ -55,7 +55,7 @@ CONTENTS:
 
 class TSynEditPrinterInfo : public System::TObject
 {
-	#include "SynEditPrinterInfo_friends.inc"
+
 public:
 	typedef TObject inherited;	
 private:

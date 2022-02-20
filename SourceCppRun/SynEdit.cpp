@@ -5354,9 +5354,11 @@ void __fastcall TCustomSynEdit::InitializeCaret()
 		}
 		break;
 		default:
-		cw = 2;
-		ch = FTextHeight - 2;
-		fCaretOffset = Point(-1, 0);
+		{
+			cw = 2;
+			ch = FTextHeight - 2;
+			fCaretOffset = Point(-1, 0);
+		}
 		break;
 	}
 	fStateFlags >> TSynStateFlag::sfCaretVisible;

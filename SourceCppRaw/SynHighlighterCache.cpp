@@ -722,10 +722,12 @@ void __fastcall TSynCacheSyn::FuncProc()
 			}
 			break;
 			default:
-			FTokenID = IdentKind((fLine + Run));
-			Run += fStringLen;
-			if(FTokenID == tkKey)
-				FTokenID = tkFunction;
+			{
+				FTokenID = IdentKind((fLine + Run));
+				Run += fStringLen;
+				if(FTokenID == tkKey)
+					FTokenID = tkFunction;
+			}
 			break;
 		}
 		break;

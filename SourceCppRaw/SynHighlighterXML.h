@@ -172,7 +172,6 @@ protected:
 	virtual bool __fastcall IsNameChar();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterXML_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynXMLSyn(System::Classes::TComponent* AOwner);

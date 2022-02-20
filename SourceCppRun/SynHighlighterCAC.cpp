@@ -326,8 +326,10 @@ void __fastcall TSynCACSyn::SlashProc()
 		}
 		break;
 		default:
-		++Run;
-		FTokenID = tkOperator;
+		{
+			++Run;
+			FTokenID = tkOperator;
+		}
 		break;
 	}
 }

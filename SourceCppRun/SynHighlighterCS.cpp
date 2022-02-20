@@ -928,8 +928,10 @@ void __fastcall TSynCSSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FExtTokenID = xtkAnd;
+		{
+			++Run;
+			FExtTokenID = xtkAnd;
+		}
 		break;
 	}
 }
@@ -998,8 +1000,10 @@ void __fastcall TSynCSSyn::ColonProc()
 		}
 		break;                                 /*colon*/
 		default:
-		++Run;
-		FExtTokenID = xtkColon;
+		{
+			++Run;
+			FExtTokenID = xtkColon;
+		}
 		break;
 	}
 }
@@ -1094,8 +1098,10 @@ void __fastcall TSynCSSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FExtTokenID = xtkAssign;
+		{
+			++Run;
+			FExtTokenID = xtkAssign;
+		}
 		break;
 	}
 }
@@ -1127,8 +1133,10 @@ void __fastcall TSynCSSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FExtTokenID = xtkGreaterThan;
+		{
+			++Run;
+			FExtTokenID = xtkGreaterThan;
+		}
 		break;
 	}
 }
@@ -1181,8 +1189,10 @@ void __fastcall TSynCSSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FExtTokenID = xtkLessThan;
+		{
+			++Run;
+			FExtTokenID = xtkLessThan;
+		}
 		break;
 	}
 }
@@ -1211,8 +1221,10 @@ void __fastcall TSynCSSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FExtTokenID = xtkSubtract;
+		{
+			++Run;
+			FExtTokenID = xtkSubtract;
+		}
 		break;
 	}
 }
@@ -1229,8 +1241,10 @@ void __fastcall TSynCSSyn::ModSymbolProc()
 		}
 		break;                                 /*mod*/
 		default:
-		++Run;
-		FExtTokenID = xtkMod;
+		{
+			++Run;
+			FExtTokenID = xtkMod;
+		}
 		break;
 	}
 }
@@ -1247,8 +1261,10 @@ void __fastcall TSynCSSyn::NotSymbolProc()
 		}
 		break;                                 /*not*/
 		default:
-		++Run;
-		FExtTokenID = xtkLogComplement;
+		{
+			++Run;
+			FExtTokenID = xtkLogComplement;
+		}
 		break;
 	}
 }
@@ -1322,8 +1338,10 @@ void __fastcall TSynCSSyn::OrSymbolProc()
 		}
 		break;                                 /*or*/
 		default:
-		++Run;
-		FExtTokenID = xtkIncOr;
+		{
+			++Run;
+			FExtTokenID = xtkIncOr;
+		}
 		break;
 	}
 }
@@ -1346,8 +1364,10 @@ void __fastcall TSynCSSyn::PlusProc()
 		}
 		break;                                 /*add*/
 		default:
-		++Run;
-		FExtTokenID = xtkAdd;
+		{
+			++Run;
+			FExtTokenID = xtkAdd;
+		}
 		break;
 	}
 }
@@ -1602,9 +1622,11 @@ void __fastcall TSynCSSyn::SlashProc()
 		}
 		break;                                 /*divide*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkDivide;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkDivide;
+		}
 		break;
 	}
 }
@@ -1643,8 +1665,10 @@ void __fastcall TSynCSSyn::StarProc()
 		}
 		break;                                 /*star*/
 		default:
-		++Run;
-		FExtTokenID = xtkStar;
+		{
+			++Run;
+			FExtTokenID = xtkStar;
+		}
 		break;
 	}
 }
@@ -1767,8 +1791,10 @@ void __fastcall TSynCSSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FExtTokenID = xtkXor;
+		{
+			++Run;
+			FExtTokenID = xtkXor;
+		}
 		break;
 	}
 }
@@ -1798,8 +1824,10 @@ void __fastcall TSynCSSyn::Next()
 		StringEndProc();
 		break;
 		default:
-		FRange = rsUnKnown;
-		NextProcedure();
+		{
+			FRange = rsUnKnown;
+			NextProcedure();
+		}
 		break;
 	}
 	inherited::Next();

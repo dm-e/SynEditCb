@@ -151,7 +151,6 @@ protected:
 	__property TtkTokenKind TokenId = { read = FTokenID };
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterPython_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynPythonSyn(System::Classes::TComponent* AOwner);

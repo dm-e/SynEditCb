@@ -50,7 +50,6 @@ private:
 	bool fVisible;
 public:
 	typedef System::Classes::TPersistent inherited;	
-	#include "SynEditHighlighterOptions_friends.inc"
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
 	virtual void __fastcall AssignTo(System::Classes::TPersistent* Dest);
 __published:

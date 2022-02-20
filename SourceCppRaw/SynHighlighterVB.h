@@ -123,7 +123,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterVB_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynVBSyn(System::Classes::TComponent* AOwner);

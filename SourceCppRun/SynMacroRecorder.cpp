@@ -138,11 +138,13 @@ TSynMacroEvent* __fastcall TCustomSynMacroRecorder::CreateMacroEvent(TSynEditorC
 		result = new TSynStringEvent();
 		break;
 		default:
-		result = nullptr;
-		if((ACmd < ecUserFirst) || WantDefaultEvent(result))
 		{
-			result = new TSynBasicEvent();
-			((TSynBasicEvent*) result)->Command = ACmd;
+			result = nullptr;
+			if((ACmd < ecUserFirst) || WantDefaultEvent(result))
+			{
+				result = new TSynBasicEvent();
+				((TSynBasicEvent*) result)->Command = ACmd;
+			}
 		}
 		break;
 	}

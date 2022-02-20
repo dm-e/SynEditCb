@@ -45,12 +45,11 @@ namespace Syneditdataobject
 
 typedef System::Word TClipFormat;
 
-class TSynEnumFormatEtc : public System::TInterfacedObject, public IEnumFORMATETC
+class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef TInterfacedObject inherited;
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+	typedef TInterfacedObject inherited;	
 private:
 	System::TArray<TClipFormat> FList;
 	int FIndex;
@@ -66,12 +65,11 @@ public:
 	__fastcall TSynEnumFormatEtc();
 };
 
-class TSynEditDataObject : public System::TInterfacedObject, public IDataObject
+class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
 	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
 private:
 	String FText;
 	TList__1<TClipFormat>* FFormatEtc;

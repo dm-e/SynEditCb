@@ -56,12 +56,11 @@ const unsigned int deScroll = DROPEFFECT_SCROLL;
 typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, System::Classes::TShiftState, const TPoint&, int&, HRESULT&);
 typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
 
-class TSynDropTarget : public System::TInterfacedObject, public IDropTarget
+class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
-	typedef TInterfacedObject inherited;
-  INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+	typedef TInterfacedObject inherited;	
 private:
 	IDataObject* FDataObject;
 	TOnDragEvent FOnDragEnter;
@@ -87,12 +86,11 @@ public:
 	__fastcall TSynDropTarget();
 };
 
-class TSynDragSource : public System::TInterfacedObject, public IDropSource
+class TSynDragSource : public System::TCppInterfacedObject<IDropSource>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
 	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
 private:
   // IDropSource
     // Called routinely by Windows to check that drag operations are to continue. See the
@@ -106,7 +104,7 @@ public:
 };
 
 
-}  // namespace Syneditdragdrop
+}  // namespace SynEditDragDrop
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditdragdrop;

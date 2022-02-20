@@ -784,7 +784,6 @@ private:
 	HIDESBASE MESSAGE void __fastcall WMGetMinMaxInfo(TWMGetMinMaxInfo& Msg)/*# WM_GETMINMAXINFO */;
 public:
 	typedef Vcl::Forms::TForm inherited;	
-	#include "SynEditKeyCmdsEditor_friends.inc"
 	__fastcall TSynEditKeystrokesEditorForm(System::Classes::TComponent* AOwner);
 	virtual __fastcall ~TSynEditKeystrokesEditorForm();
 	__property Syneditkeycmds::TSynEditKeyStrokes* Keystrokes = { read = fKeyStrokes, write = SetKeystrokes };

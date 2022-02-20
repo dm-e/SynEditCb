@@ -778,7 +778,6 @@ private:
 public:
 	Synautocorrect::TSynAutoCorrect* SynAutoCorrect;
 	typedef Vcl::Forms::TForm inherited;	
-	#include "SynAutoCorrectEditor_friends.inc"
 	__fastcall TfrmAutoCorrectEditor(System::Classes::TComponent* AOwner);
 };
 const System::Char SConfirmation[] = L"Confirmation";

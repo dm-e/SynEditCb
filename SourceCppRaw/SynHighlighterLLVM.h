@@ -813,7 +813,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterLLVM_friends.inc"
 	__fastcall TSynLLVMIRSyn(System::Classes::TComponent* AOwner);
 	__classmethod virtual UnicodeString __fastcall GetFriendlyLanguageName();
 	__classmethod virtual String __fastcall GetLanguageName();

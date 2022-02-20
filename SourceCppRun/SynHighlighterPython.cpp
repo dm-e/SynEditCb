@@ -279,8 +279,10 @@ void __fastcall TSynPythonSyn::GreaterProc()
 		}
 		break;
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -314,8 +316,10 @@ void __fastcall TSynPythonSyn::LowerProc()
 		}
 		break;
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -1069,14 +1073,27 @@ void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 	{
 		do
 		{
-			if(fLine[Run + 1] == fStringStarter)
+			if(fLine[Run] == fStringStarter)
 			{
-				fBackslashCount = 1;
-				while(((Run > fBackslashCount) && (fLine[Run - fBackslashCount] == L'\\')))
-					fBackslashCount = fBackslashCount + 1;
-				if(fBackslashCount % 2 == 1)
-					++Run;
-			}// if FLine[Run]...
+				++Run;
+				FRange = rsUnKnown;
+				return;
+			}
+			else
+			{
+				if(fLine[Run] == L'\\')
+					;  /*The same backslash stuff above...*/
+			}
+			{
+				if(fLine[Run + 1] == fStringStarter)
+				{
+					fBackslashCount = 1;
+					while(((Run > fBackslashCount) && (fLine[Run - fBackslashCount] == L'\\')))
+						fBackslashCount = fBackslashCount + 1;
+					if(fBackslashCount % 2 == 1)
+						++Run;
+				}// if FLine[Run]...
+			}
 			++Run;
 		}
 		while(!IsLineEnd(Run));

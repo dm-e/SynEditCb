@@ -2037,28 +2037,30 @@ void __fastcall TSynCPMSyn::BraceCommentProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
-		do
 		{
-			if(fLine[Run] == L'{')
-				++fCommentLevel;
-			else
+			FTokenID = tkComment;
+			do
 			{
-				if(fLine[Run] == L'}')
+				if(fLine[Run] == L'{')
+					++fCommentLevel;
+				else
 				{
-					--fCommentLevel;
-					if(fCommentLevel < 1)
+					if(fLine[Run] == L'}')
 					{
-						++Run;
-						FRange = rsUnKnown;
-						fCommentLevel = 0;
-						break;
+						--fCommentLevel;
+						if(fCommentLevel < 1)
+						{
+							++Run;
+							FRange = rsUnKnown;
+							fCommentLevel = 0;
+							break;
+						}
 					}
 				}
+				++Run;
 			}
-			++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 } /* BraceCommentProc */

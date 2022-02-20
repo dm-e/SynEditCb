@@ -672,19 +672,21 @@ void __fastcall TSynLLVMIRSyn::StringProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkString;
-		do
 		{
-			if(fLine[Run] == L'\"')
+			FTokenID = tkString;
+			do
 			{
-				Run += 1;
-				FRange = rsUnKnown;
-				break;
+				if(fLine[Run] == L'\"')
+				{
+					Run += 1;
+					FRange = rsUnKnown;
+					break;
+				}
+				if(!IsLineEnd(Run))
+					++Run;
 			}
-			if(!IsLineEnd(Run))
-				++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }

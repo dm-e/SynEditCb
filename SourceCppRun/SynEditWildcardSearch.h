@@ -758,7 +758,6 @@ protected:
 	UnicodeString __fastcall WildCardToRegExpr(UnicodeString AWildCard);
 public:
 	typedef Syneditregexsearch::TSynEditRegexSearch inherited;	
-	#include "SynEditWildcardSearch_friends.inc"
 	__fastcall TSynEditWildcardSearch(System::Classes::TComponent* AOwner);
 	virtual __fastcall ~TSynEditWildcardSearch();
 	virtual int __fastcall FindAll(const UnicodeString NewText);

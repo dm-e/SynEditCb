@@ -560,19 +560,21 @@ void __fastcall TSynVrml97Syn::X3DHeaderProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkX3DHeader;
-		do
 		{
-			if(fLine[Run] == L'?')
+			FTokenID = tkX3DHeader;
+			do
 			{
-				Run += 1;
-				FRange = rsNormalText;
-				break;
+				if(fLine[Run] == L'?')
+				{
+					Run += 1;
+					FRange = rsNormalText;
+					break;
+				}
+				if(!IsLineEnd(Run))
+					++Run;
 			}
-			if(!IsLineEnd(Run))
-				++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }
@@ -615,19 +617,21 @@ void __fastcall TSynVrml97Syn::X3DDocTypeProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkX3DDocType;
-		do
 		{
-			if(fLine[Run + 1] == L'>')
+			FTokenID = tkX3DDocType;
+			do
 			{
-				Run += 1;
-				FRange = rsNormalText;
-				break;
+				if(fLine[Run + 1] == L'>')
+				{
+					Run += 1;
+					FRange = rsNormalText;
+					break;
+				}
+				if(!IsLineEnd(Run))
+					++Run;
 			}
-			if(!IsLineEnd(Run))
-				++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }

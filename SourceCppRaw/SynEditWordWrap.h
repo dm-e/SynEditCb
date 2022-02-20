@@ -67,12 +67,11 @@ typedef TRowLengthArray* PRowLengthArray;
   // e.g. Starting row of first line (0) is 0. Starting row of second line (1)
   // is fLineOffsets[0]. Clear?
 
-class TSynWordWrapPlugin : public System::TInterfacedObject, public Synedittypes::ISynEditBufferPlugin
+class TSynWordWrapPlugin : public System::TCppInterfacedObject<Synedittypes::ISynEditBufferPlugin>
 {
-	#include "SynEditWordWrap_friends.inc"
+
 public:
 	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
 private:
 	PRowIndexArray fLineOffsets;
 	PRowLengthArray fRowLengths;

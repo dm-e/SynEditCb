@@ -1236,19 +1236,21 @@ void __fastcall TSynRexxSyn::MultilineCommentProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
-		do
 		{
-			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+			FTokenID = tkComment;
+			do
 			{
-				Run += 2;
-				FRange = rsUnKnown;
-				break;
+				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+				{
+					Run += 2;
+					FRange = rsUnKnown;
+					break;
+				}
+				if(!IsLineEnd(Run))
+					++Run;
 			}
-			if(!IsLineEnd(Run))
-				++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }

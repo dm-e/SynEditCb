@@ -780,7 +780,6 @@ public:
 	Syneditmiscclasses::TSynHotKey* hkKeystroke2;
 	Syneditmiscclasses::TSynHotKey* hkKeystroke;
 	typedef Vcl::Forms::TForm inherited;	
-	#include "SynEditKeyCmdEditor_friends.inc"
 	__property Synedittypes::TSynEditorCommand Command = { read = GetCommand, write = SetCommand };
 	__property System::Classes::TShortCut Keystroke = { read = GetKeystroke, write = SetKeystroke };
 	__property System::Classes::TShortCut Keystroke2 = { read = GetKeystroke2, write = SetKeystroke2 };

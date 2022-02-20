@@ -170,7 +170,6 @@ public:
 	int PHFInternalMargin;  // Internal margin in device units (pixels)
 	int PGutter; // Binding gutter in device units (pixels)
 	typedef System::Classes::TPersistent inherited;	
-	#include "SynEditPrintMargins_friends.inc"
 	__fastcall TSynEditPrintMargins();
 	void __fastcall InitPage(Vcl::Graphics::TCanvas* ACanvas, int PageNum, Syneditprinterinfo::TSynEditPrinterInfo* PrinterInfo, bool LineNumbers, bool LineNumbersInMargin, int MaxLineNum);
 	virtual void __fastcall Assign(System::Classes::TPersistent* Source);

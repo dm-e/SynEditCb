@@ -168,7 +168,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterRexx_friends.inc"
 	__fastcall TSynRexxSyn(System::Classes::TComponent* AOwner);
 	__classmethod virtual UnicodeString __fastcall GetFriendlyLanguageName();
 	__classmethod virtual String __fastcall GetLanguageName();

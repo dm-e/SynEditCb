@@ -443,7 +443,9 @@ void __fastcall TSynGeneralSyn::RoundOpenProc()
 			}
 			break;
 			default:
-			FTokenID = tkSymbol;
+			{
+				FTokenID = tkSymbol;
+			}
 			break;
 		}
 	}

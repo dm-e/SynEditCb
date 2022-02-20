@@ -401,24 +401,26 @@ void __fastcall TSynDWSSyn::BorProc()
 		CRProc();
 		break;
 		default:
-		if(SynHighlighterDWS__7.Contains(FRange))
-			FTokenID = tkDirec;
-		else
-			FTokenID = tkComment;
-		do
 		{
-			if(fLine[Run] == L'}')
+			if(SynHighlighterDWS__7.Contains(FRange))
+				FTokenID = tkDirec;
+			else
+				FTokenID = tkComment;
+			do
 			{
+				if(fLine[Run] == L'}')
+				{
+					++Run;
+					if(SynHighlighterDWS__8.Contains(FRange))
+						FRange = rsAsm;
+					else
+						FRange = rsUnKnown;
+					break;
+				}
 				++Run;
-				if(SynHighlighterDWS__8.Contains(FRange))
-					FRange = rsAsm;
-				else
-					FRange = rsUnKnown;
-				break;
 			}
-			++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }
@@ -1097,11 +1099,13 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 			Match = RE_BlockEnd.Match(CurLine);
 			if(Match.Success)
 			{
-				Index = Match.Index;
-				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 				{
-					FoldRanges->StopFoldRange(Line + 1, FT_Standard);
-					result = true;
+					Index = Match.Index;
+					if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
+					{
+						FoldRanges->StopFoldRange(Line + 1, FT_Standard);
+						result = true;
+					}
 				}
 			}
 		}
@@ -1289,15 +1293,17 @@ void __fastcall TSynDWSSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 						}
 						break;
 						default:
-						if(FoldRange.ToLine <= SkipTo)
-							continue;
-						else
+						{
+							if(FoldRange.ToLine <= SkipTo)
+								continue;
+							else
 
               // Otherwise delete
               // eg. function definitions within a class definition
-						{
-							FoldRanges->Ranges->Delete(i);
-							break;
+							{
+								FoldRanges->Ranges->Delete(i);
+								break;
+							}
 						}
 						break;
 					}

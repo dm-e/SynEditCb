@@ -150,7 +150,6 @@ protected:
 	void __fastcall NextDeclaration();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterCss_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynCssSyn(System::Classes::TComponent* AOwner);

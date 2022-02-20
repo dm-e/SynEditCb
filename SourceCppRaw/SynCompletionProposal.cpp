@@ -2609,7 +2609,7 @@ __fastcall TSynCompletionProposal::TSynCompletionProposal(TComponent* AOwner)
 			FTimerInterval(0),
 			FEditor(nullptr)
 {
-	Form->OnKeyPress = HandleOnKeyPress();
+	Form->OnKeyPress = HandleOnKeyPress;
 	Form->OnValidate = HandleOnValidate;
 	Form->OnCancel = HandleOnCancel;
 	Form->OnDblClick = HandleDblClick;

@@ -148,7 +148,11 @@ WORD __fastcall KeyboardCodePage()
 TSize __fastcall GetTextSize(HDC DC, PWideChar Str, int Count)
 {
 	TSize result = {};
-	GetTextExtentPoint32W(DC, Str, Count, &result);
+	result.cx = 0;
+	result.cy = 0;
+	{
+		GetTextExtentPoint32W(DC, Str, Count, &result);
+	}
 	return result;
 }
 

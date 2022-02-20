@@ -11,7 +11,7 @@
 
 using namespace std;
 using namespace d2c_system;
-#define FrmMain__0 (TSynSearchOptions() << ssoPrompt << ssoReplace << ssoReplaceAll)
+#define FrmMain__0 (TSynSearchOptions() << TSynSearchOption::ssoPrompt << TSynSearchOption::ssoReplace << TSynSearchOption::ssoReplaceAll)
 #define FrmMain__1 TSynSearchOptions()
 
 __fastcall TSearchReplaceDemoForm::TSearchReplaceDemoForm(TComponent* AOwner) : inherited(AOwner) {}

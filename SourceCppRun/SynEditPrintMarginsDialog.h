@@ -789,7 +789,6 @@ private:
 public:
     /* Public declarations */
 	typedef TForm inherited;	
-	#include "SynEditPrintMarginsDialog_friends.inc"
 	void __fastcall SetMargins(Syneditprintmargins::TSynEditPrintMargins* SynEditMargins);
 	void __fastcall GetMargins(Syneditprintmargins::TSynEditPrintMargins* SynEditMargins);
 	__fastcall TSynEditPrintMarginsDlg(System::Classes::TComponent* AOwner);

@@ -96,7 +96,6 @@ protected:
 	virtual bool __fastcall IsFilterStored();
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterJSON_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynJSONSyn(System::Classes::TComponent* AOwner);

@@ -278,7 +278,6 @@ protected:
 	void __fastcall NextProcedure();
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterCS_friends.inc"
 	__classmethod virtual Synedithighlighter::TSynHighlighterCapabilities __fastcall GetCapabilities();
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();

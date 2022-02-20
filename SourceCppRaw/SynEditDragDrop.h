@@ -56,7 +56,7 @@ const unsigned int deScroll = DROPEFFECT_SCROLL;
 typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, System::Classes::TShiftState, const TPoint&, int&, HRESULT&);
 typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
 
-class TSynDropTarget : public System::TInterfacedObject, public IDropTarget
+class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
@@ -86,7 +86,7 @@ public:
 	__fastcall TSynDropTarget();
 };
 
-class TSynDragSource : public System::TInterfacedObject, public IDropSource
+class TSynDragSource : public System::TCppInterfacedObject<IDropSource>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:

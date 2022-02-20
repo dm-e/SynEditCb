@@ -107,7 +107,6 @@ protected:
 	void __fastcall NextProcedure();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterUNIXShellScript_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynUNIXShellScriptSyn(System::Classes::TComponent* AOwner);

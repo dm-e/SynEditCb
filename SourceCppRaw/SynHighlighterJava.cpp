@@ -216,9 +216,11 @@ void __fastcall TSynJavaSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkAnd;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkAnd;
+		}
 		break;
 	}
 }
@@ -300,9 +302,11 @@ void __fastcall TSynJavaSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkAssign;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkAssign;
+		}
 		break;
 	}
 }
@@ -341,17 +345,21 @@ void __fastcall TSynJavaSyn::GreaterProc()
 				}
 				break;                           /*shift right*/
 				default:
-				Run += 2;
-				FExtTokenID = xtkShiftRight;
+				{
+					Run += 2;
+					FExtTokenID = xtkShiftRight;
+				}
 				break;
 			}
 			FTokenID = tkSymbol;
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkGreaterThan;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkGreaterThan;
+		}
 		break;
 	}
 }
@@ -398,9 +406,11 @@ void __fastcall TSynJavaSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkLessThan;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkLessThan;
+		}
 		break;
 	}
 }
@@ -424,9 +434,11 @@ void __fastcall TSynJavaSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkSubtract;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkSubtract;
+		}
 		break;
 	}
 }
@@ -443,9 +455,11 @@ void __fastcall TSynJavaSyn::MultiplyProc()
 		}
 		break;                                 /*multiply*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkMultiply;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkMultiply;
+		}
 		break;
 	}
 }
@@ -462,9 +476,11 @@ void __fastcall TSynJavaSyn::NotSymbolProc()
 		}
 		break;                                 /*logical complement*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkLogComplement;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkLogComplement;
+		}
 		break;
 	}
 }
@@ -537,9 +553,11 @@ void __fastcall TSynJavaSyn::OrSymbolProc()
 		}
 		break;                                 /*inclusive or*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkIncOr;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkIncOr;
+		}
 		break;
 	}
 }
@@ -563,9 +581,11 @@ void __fastcall TSynJavaSyn::PlusProc()
 		}
 		break;                                 /*add*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkAdd;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkAdd;
+		}
 		break;
 	}
 }
@@ -607,9 +627,11 @@ void __fastcall TSynJavaSyn::RemainderSymbolProc()
 		}
 		break;                                 /*remainder*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkRemainder;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkRemainder;
+		}
 		break;
 	}
 }
@@ -828,9 +850,11 @@ void __fastcall TSynJavaSyn::SlashProc()
 		}
 		break;                                 /*division*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkDivide;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkDivide;
+		}
 		break;
 	}
 }
@@ -904,9 +928,11 @@ void __fastcall TSynJavaSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkXor;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkXor;
+		}
 		break;
 	}
 }

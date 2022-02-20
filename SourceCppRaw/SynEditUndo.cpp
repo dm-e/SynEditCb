@@ -137,12 +137,11 @@ public:
 	__fastcall TSynEditUndoList(TEnumerable__1<TSynUndoItem*>* const Collection, bool AOwnsObjects = true) : inherited(Collection, AOwnsObjects) {}
 };
 
-class TSynEditUndo : public TInterfacedObject, public ISynEditUndo
+class TSynEditUndo : public TCppInterfacedObject<ISynEditUndo>
 {
 	#include "SynEditUndo_friends.inc"
 public:
 	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(TInterfacedObject)
 private:
 	TSynUndoPlugin* FPlugin;
 	bool FGroupUndo;

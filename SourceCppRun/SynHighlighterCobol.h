@@ -124,7 +124,6 @@ protected:
 	void __fastcall SetCodeEndPos(int Value);
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterCobol_friends.inc"
 	__fastcall TSynCobolSyn(System::Classes::TComponent* AOwner);
 	virtual __fastcall ~TSynCobolSyn();
 	__classmethod virtual String __fastcall GetLanguageName();

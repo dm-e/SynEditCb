@@ -147,7 +147,6 @@ protected:
 	void __fastcall SetAlreadyVisitedURIFunc(TAlreadyVisitedURIFunc Value);
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterURI_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynURISyn(System::Classes::TComponent* AOwner);

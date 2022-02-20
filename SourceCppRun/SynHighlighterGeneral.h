@@ -135,7 +135,6 @@ private:
 	void __fastcall SetDetectPreprocessor(bool Value);
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterGeneral_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	bool __fastcall IsStringDelim(WideChar AChar);

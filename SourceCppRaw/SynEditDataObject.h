@@ -43,7 +43,7 @@ namespace Syneditdataobject
   published in UNDO (www.undo.com)
 */
 
-class TSynEnumFormatEtc : public System::TInterfacedObject, public IEnumFORMATETC
+class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
@@ -63,7 +63,7 @@ public:
 	__fastcall TSynEnumFormatEtc();
 };
 
-class TSynEditDataObject : public System::TInterfacedObject, public IDataObject
+class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 {
 	#include "SynEditDataObject_friends.inc"
 public:

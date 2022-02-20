@@ -369,7 +369,6 @@ protected:
 	void __fastcall NextProcedure();
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
-	#include "SynHighlighterHtml_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynHTMLSyn(System::Classes::TComponent* AOwner);

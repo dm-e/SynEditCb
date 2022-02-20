@@ -637,8 +637,10 @@ void __fastcall TSynCobolSyn::Next()
 					StringEndProc();
 					break;
 					default:
-					FRange = rsUnKnown;
-					NextProcedure();
+					{
+						FRange = rsUnKnown;
+						NextProcedure();
+					}
 					break;
 				}
 			break;

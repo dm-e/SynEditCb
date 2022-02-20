@@ -141,7 +141,6 @@ protected:
 	void __fastcall NextProcedure();
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;	
-	#include "SynHighlighterPHP_friends.inc"
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__fastcall TSynPHPSyn(System::Classes::TComponent* AOwner);

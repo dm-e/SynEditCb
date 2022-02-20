@@ -181,8 +181,10 @@ void __fastcall TSynBaanSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -253,8 +255,10 @@ void __fastcall TSynBaanSyn::ColonProc()
 		}
 		break;                                 /*colon*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -297,8 +301,10 @@ void __fastcall TSynBaanSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -344,8 +350,10 @@ void __fastcall TSynBaanSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -385,8 +393,10 @@ void __fastcall TSynBaanSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -414,8 +424,10 @@ void __fastcall TSynBaanSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -431,8 +443,10 @@ void __fastcall TSynBaanSyn::ModSymbolProc()
 		}
 		break;                                 /*mod*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -448,8 +462,10 @@ void __fastcall TSynBaanSyn::NotSymbolProc()
 		}
 		break;                                 /*not*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -524,8 +540,10 @@ void __fastcall TSynBaanSyn::PlusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -559,8 +577,10 @@ void __fastcall TSynBaanSyn::SlashProc()
 		}
 		break;                                 /*division*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -596,8 +616,10 @@ void __fastcall TSynBaanSyn::StarProc()
 		}
 		break;                                 /*star*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -648,8 +670,10 @@ void __fastcall TSynBaanSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }

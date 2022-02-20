@@ -273,8 +273,10 @@ void __fastcall TSynUNIXShellScriptSyn::LFProc()
 
 void __fastcall TSynUNIXShellScriptSyn::LowerProc()
 {
-	++Run;
-	FTokenID = tkSymbol;
+	{
+		++Run;
+		FTokenID = tkSymbol;
+	}
 }
 
 void __fastcall TSynUNIXShellScriptSyn::NullProc()

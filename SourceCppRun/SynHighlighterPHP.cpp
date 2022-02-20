@@ -159,18 +159,20 @@ __fastcall TSynPHPSyn::TSynPHPSyn(TComponent* AOwner)
 
 void __fastcall TSynPHPSyn::AndSymbolProc()
 {
-	FTokenID = tkSymbol;
-	switch(fLine[Run + 1])
 	{
-		case L'=':
-		Run += 2;
-		break;                 /*and assign*/
-		case L'&':
-		Run += 2;
-		break;                 /*conditional and*/                                 /*and*/
-		default:
-		++Run;
-		break;
+		FTokenID = tkSymbol;
+		switch(fLine[Run + 1])
+		{
+			case L'=':
+			Run += 2;
+			break;                 /*and assign*/
+			case L'&':
+			Run += 2;
+			break;                 /*conditional and*/                                 /*and*/
+			default:
+			++Run;
+			break;
+		}
 	}
 }
 
@@ -261,8 +263,10 @@ void __fastcall TSynPHPSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -614,8 +618,10 @@ void __fastcall TSynPHPSyn::SlashProc()
 		}
 		break;                                 /*division*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -921,8 +927,10 @@ void __fastcall TSynPHPSyn::Next()
 		VarExpansionProc();
 		break;
 		default:
-		FRange = rsUnKnown;
-		NextProcedure();
+		{
+			FRange = rsUnKnown;
+			NextProcedure();
+		}
 		break;
 	}
 

@@ -585,9 +585,9 @@ void __fastcall TSynFoldRanges::RecreateFoldRanges(TStrings* Lines)
 	OpenFoldStack = new TList__1<int>();
 	try
 	{
-		for(int iFor0 = 0; iFor0 < fFoldInfoList->Count; iFor0++)
+		while(fFoldInfoList->GetEnumerator()->MoveNext())
 		{
-			TLineFoldInfo	LFI = fFoldInfoList->Items[iFor0];
+			TLineFoldInfo LFI = fFoldInfoList->GetEnumerator()->Current;
 			if(LFI.FoldOpenClose == TFoldOpenClose::focOpen)
 			{
 				if(LFI.Indent >= 0)
@@ -710,9 +710,9 @@ void __fastcall TSynFoldRanges::RestoreCollapsedState()
 {
 	int i = 0;
 	int Index = 0;
-	for(int iFor0 = 0; iFor0 < fCollapsedState->Count; iFor0++)
+	while(fCollapsedState->GetEnumerator()->MoveNext())
 	{
-		int	i = fCollapsedState->Items[iFor0];
+		int i = fCollapsedState->GetEnumerator()->Current;
 		if(FoldStartAtLine(i, Index))
 			fRanges->List[Index].Collapsed = true;
 	}
@@ -754,9 +754,9 @@ bool __fastcall TSynFoldRanges::StopScanning(TStrings* Lines)
 void __fastcall TSynFoldRanges::StoreCollapsedState(TStream* Stream)
 {
 	TSynFoldRange FoldRange = {};
-	for(int iFor0 = 0; iFor0 < fRanges->Count; iFor0++)
+	while(fRanges->GetEnumerator()->MoveNext())
 	{
-		TSynFoldRange	FoldRange = fRanges->Items[iFor0];
+		TSynFoldRange FoldRange = fRanges->GetEnumerator()->Current;
 		if(FoldRange.Collapsed)
 			Stream->WriteData(FoldRange.FromLine);
 	}
@@ -766,9 +766,9 @@ void __fastcall TSynFoldRanges::StoreCollapsedState()
 {
 	TSynFoldRange FoldRange = {};
 	fCollapsedState->Clear();
-	for(int iFor0 = 0; iFor0 < fRanges->Count; iFor0++)
+	while(fRanges->GetEnumerator()->MoveNext())
 	{
-		TSynFoldRange	FoldRange = fRanges->Items[iFor0];
+		TSynFoldRange FoldRange = fRanges->GetEnumerator()->Current;
 		if(FoldRange.Collapsed)
 			fCollapsedState->Add(FoldRange.FromLine);
 	}
@@ -968,5 +968,5 @@ void __fastcall TSynCodeFolding::SetShowCollapsedLine(bool Value)
 }
 
 
-}  // namespace Syneditcodefolding
+}  // namespace SynEditCodeFolding
 

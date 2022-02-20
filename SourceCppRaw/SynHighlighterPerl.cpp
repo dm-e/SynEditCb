@@ -359,8 +359,10 @@ void __fastcall TSynPerlSyn::AndSymbolProc()
 		}
 		break;                                 /*bit and*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -390,8 +392,10 @@ void __fastcall TSynPerlSyn::ColonProc()
 		}
 		break;                                 /*colon*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -445,8 +449,10 @@ void __fastcall TSynPerlSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -472,8 +478,10 @@ void __fastcall TSynPerlSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -628,8 +636,10 @@ void __fastcall TSynPerlSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -657,8 +667,10 @@ void __fastcall TSynPerlSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -680,8 +692,10 @@ void __fastcall TSynPerlSyn::NotSymbolProc()
 		}
 		break;                                 /*not*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -796,8 +810,10 @@ void __fastcall TSynPerlSyn::OrSymbolProc()
 		}
 		break;                                 /*bit or*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -819,8 +835,10 @@ void __fastcall TSynPerlSyn::PlusProc()
 		}
 		break;                                 /*add*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }                                            //Fiala
@@ -899,8 +917,10 @@ void __fastcall TSynPerlSyn::SlashProc()
 		}
 		break;                                 /*division*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -934,8 +954,10 @@ void __fastcall TSynPerlSyn::StarProc()
 		}
 		break;                                 /*multiply*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -1036,8 +1058,10 @@ void __fastcall TSynPerlSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }

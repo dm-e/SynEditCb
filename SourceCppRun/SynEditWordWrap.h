@@ -69,10 +69,9 @@ typedef TRowLengthArray* PRowLengthArray;
 
 class TSynWordWrapPlugin : public System::TCppInterfacedObject<Synedittypes::ISynEditBufferPlugin>
 {
-	#include "SynEditWordWrap_friends.inc"
+
 public:
-	typedef System::TCppInterfacedObject<Synedittypes::ISynEditBufferPlugin> inherited;
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+	typedef TInterfacedObject inherited;	
 private:
 	PRowIndexArray fLineOffsets;
 	PRowLengthArray fRowLengths;

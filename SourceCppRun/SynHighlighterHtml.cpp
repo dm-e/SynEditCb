@@ -580,28 +580,30 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 		}
 		break;
 		default:
-		if(fLine[Run + 1] == L'#')
 		{
-			fAndCode = -1;
-			Run += 2;
-			if(CharInSet(fLine[Run], SynHighlighterHtml__8))
+			if(fLine[Run + 1] == L'#')
 			{
-				++Run;
-				while(IsNumberChar())
+				fAndCode = -1;
+				Run += 2;
+				if(CharInSet(fLine[Run], SynHighlighterHtml__8))
+				{
 					++Run;
-			}
-			else
-			{
-				while(CharInSet(fLine[Run], SynHighlighterHtml__9))
+					while(IsNumberChar())
+						++Run;
+				}
+				else
+				{
+					while(CharInSet(fLine[Run], SynHighlighterHtml__9))
+						++Run;
+				}
+				if(fLine[Run] == L';')
+				{
 					++Run;
+					FTokenID = tkAmpersand;
+				}
+				else
+				FTokenID = tkText;
 			}
-			if(fLine[Run] == L';')
-			{
-				++Run;
-				FTokenID = tkAmpersand;
-			}
-			else
-			FTokenID = tkText;
 		}
 		break;
 	}
@@ -639,21 +641,23 @@ void __fastcall TSynHTMLSyn::StringProc()
 		}
 		break;
 		default:
-		iOpenChar = fLine[Run];
-		if(FRange == rsValue)
 		{
-			if(iOpenChar == L'\"')
-				FRange = rsDoubleQuoteValue;
+			iOpenChar = fLine[Run];
+			if(FRange == rsValue)
+			{
+				if(iOpenChar == L'\"')
+					FRange = rsDoubleQuoteValue;
+				else
+					FRange = rsQuoteValue;
+				FTokenID = tkValue;
+			}
 			else
-				FRange = rsQuoteValue;
-			FTokenID = tkValue;
+			{
+				IdentProc();
+				return;
+			}
+			++Run; /* jumps over the opening char */
 		}
-		else
-		{
-			IdentProc();
-			return;
-		}
-		++Run; /* jumps over the opening char */
 		break;
 	}
 	while(!IsLineEnd(Run))

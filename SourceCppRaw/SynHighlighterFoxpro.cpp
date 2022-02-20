@@ -266,7 +266,7 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
         // And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch	Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
 					if(Match.Index > Index)
 					{
 						OK = true;
@@ -414,15 +414,17 @@ void __fastcall TSynFoxproSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TStr
 						}
 						break;
 						default:
-						if(FoldRange.ToLine <= SkipTo)
-							continue;
-						else
+						{
+							if(FoldRange.ToLine <= SkipTo)
+								continue;
+							else
 
               // Otherwise delete
               // eg. function definitions within a class definition
-						{
-							FoldRanges->Ranges->Delete(i);
-							break;
+							{
+								FoldRanges->Ranges->Delete(i);
+								break;
+							}
 						}
 						break;
 					}
@@ -464,8 +466,10 @@ void __fastcall TSynFoxproSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -579,8 +583,10 @@ void __fastcall TSynFoxproSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -606,8 +612,10 @@ void __fastcall TSynFoxproSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }
@@ -647,8 +655,10 @@ void __fastcall TSynFoxproSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
 		break;
 	}
 }

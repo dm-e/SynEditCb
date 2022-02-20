@@ -761,7 +761,6 @@ protected:
 	virtual void __fastcall doProcessUserCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
 public:
 	typedef System::Classes::TComponent inherited;	
-	#include "SynEditPythonBehaviour_friends.inc"
 	__fastcall TSynEditPythonBehaviour(System::Classes::TComponent* AOwner);
 __published:
 	__property TSynEdit* Editor = { read = FEditor, write = SetEditor };

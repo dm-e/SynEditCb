@@ -1794,8 +1794,10 @@ void __fastcall TSynUnrealSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FExtTokenID = xtkAnd;
+		{
+			++Run;
+			FExtTokenID = xtkAnd;
+		}
 		break;
 	}
 }
@@ -1854,8 +1856,10 @@ void __fastcall TSynUnrealSyn::ColonProc()
 		}
 		break;                                 /*colon*/
 		default:
-		++Run;
-		FExtTokenID = xtkColon;
+		{
+			++Run;
+			FExtTokenID = xtkColon;
+		}
 		break;
 	}
 }
@@ -1926,8 +1930,10 @@ void __fastcall TSynUnrealSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FExtTokenID = xtkAssign;
+		{
+			++Run;
+			FExtTokenID = xtkAssign;
+		}
 		break;
 	}
 }
@@ -1959,8 +1965,10 @@ void __fastcall TSynUnrealSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FExtTokenID = xtkGreaterThan;
+		{
+			++Run;
+			FExtTokenID = xtkGreaterThan;
+		}
 		break;
 	}
 }
@@ -2013,8 +2021,10 @@ void __fastcall TSynUnrealSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FExtTokenID = xtkLessThan;
+		{
+			++Run;
+			FExtTokenID = xtkLessThan;
+		}
 		break;
 	}
 }
@@ -2043,8 +2053,10 @@ void __fastcall TSynUnrealSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FExtTokenID = xtkSubtract;
+		{
+			++Run;
+			FExtTokenID = xtkSubtract;
+		}
 		break;
 	}
 }
@@ -2061,8 +2073,10 @@ void __fastcall TSynUnrealSyn::ModSymbolProc()
 		}
 		break;                                 /*mod*/
 		default:
-		++Run;
-		FExtTokenID = xtkMod;
+		{
+			++Run;
+			FExtTokenID = xtkMod;
+		}
 		break;
 	}
 }
@@ -2079,8 +2093,10 @@ void __fastcall TSynUnrealSyn::NotSymbolProc()
 		}
 		break;                                 /*not*/
 		default:
-		++Run;
-		FExtTokenID = xtkLogComplement;
+		{
+			++Run;
+			FExtTokenID = xtkLogComplement;
+		}
 		break;
 	}
 }
@@ -2154,8 +2170,10 @@ void __fastcall TSynUnrealSyn::OrSymbolProc()
 		}
 		break;                                 /*or*/
 		default:
-		++Run;
-		FExtTokenID = xtkIncOr;
+		{
+			++Run;
+			FExtTokenID = xtkIncOr;
+		}
 		break;
 	}
 }
@@ -2178,8 +2196,10 @@ void __fastcall TSynUnrealSyn::PlusProc()
 		}
 		break;                                 /*add*/
 		default:
-		++Run;
-		FExtTokenID = xtkAdd;
+		{
+			++Run;
+			FExtTokenID = xtkAdd;
+		}
 		break;
 	}
 }
@@ -2280,9 +2300,11 @@ void __fastcall TSynUnrealSyn::SlashProc()
 		}
 		break;                                 /*divide*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkDivide;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkDivide;
+		}
 		break;
 	}
 }
@@ -2323,8 +2345,10 @@ void __fastcall TSynUnrealSyn::StarProc()
 		}
 		break;                                 /*star*/
 		default:
-		++Run;
-		FExtTokenID = xtkStar;
+		{
+			++Run;
+			FExtTokenID = xtkStar;
+		}
 		break;
 	}
 }
@@ -2386,8 +2410,10 @@ void __fastcall TSynUnrealSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FExtTokenID = xtkXor;
+		{
+			++Run;
+			FExtTokenID = xtkXor;
+		}
 		break;
 	}
 }
@@ -2411,8 +2437,10 @@ void __fastcall TSynUnrealSyn::Next()
 		DirectiveProc();
 		break;
 		default:
-		FRange = rsUnKnown;
-		NextProcedure();
+		{
+			FRange = rsUnKnown;
+			NextProcedure();
+		}
 		break;
 	}
 	inherited::Next();

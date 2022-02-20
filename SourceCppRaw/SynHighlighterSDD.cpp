@@ -463,18 +463,20 @@ void __fastcall TSynSDDSyn::BraceCommentProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
-		do
 		{
-			if(fLine[Run] == L'}')
+			FTokenID = tkComment;
+			do
 			{
+				if(fLine[Run] == L'}')
+				{
+					++Run;
+					FRange = rsUnKnown;
+					break;
+				}
 				++Run;
-				FRange = rsUnKnown;
-				break;
 			}
-			++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 } /* BraceCommentProc */

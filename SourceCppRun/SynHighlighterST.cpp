@@ -171,21 +171,23 @@ void __fastcall TSynSTSyn::BorProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
-		do
 		{
-			if(fLine[Run] == L'}')
+			FTokenID = tkComment;
+			do
 			{
+				if(fLine[Run] == L'}')
+				{
+					++Run;
+					if(FRange == rsBorAsm)
+						FRange = rsAsm;
+					else
+						FRange = rsUnKnown;
+					break;
+				}
 				++Run;
-				if(FRange == rsBorAsm)
-					FRange = rsAsm;
-				else
-					FRange = rsUnKnown;
-				break;
 			}
-			++Run;
+			while(!IsLineEnd(Run));
 		}
-		while(!IsLineEnd(Run));
 		break;
 	}
 }

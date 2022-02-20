@@ -74,7 +74,6 @@ protected:
 	virtual bool __fastcall UseBom();
 public:
 	typedef Syneditexport::TSynCustomExporter inherited;	
-	#include "SynExportRTF_friends.inc"
 	__fastcall TSynExporterRTF(System::Classes::TComponent* AOwner);
 	virtual __fastcall ~TSynExporterRTF();
 	virtual void __fastcall Clear();

@@ -226,7 +226,7 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
         // And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch	Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
 					if(Match.Index > Index)
 					{
 						OK = true;
@@ -374,15 +374,17 @@ void __fastcall TSynVBSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TStrings
 						}
 						break;
 						default:
-						if(FoldRange.ToLine <= SkipTo)
-							continue;
-						else
+						{
+							if(FoldRange.ToLine <= SkipTo)
+								continue;
+							else
 
               // Otherwise delete
               // eg. function definitions within a class definition
-						{
-							FoldRanges->Ranges->Delete(i);
-							break;
+							{
+								FoldRanges->Ranges->Delete(i);
+								break;
+							}
 						}
 						break;
 					}

@@ -88,21 +88,28 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 	DynamicArray<WideChar> Glyphs;
 	TGCPResults CharPlaceInfo = {};
 	DWORD TextOutFlags = 0;
-	if(UseLigatures && (Str != nullptr) && ((*Str) != WideNull))
+	TextOutFlags = 0;
+	if(Options.Contains(SynTextDrawerEnum__0::tooOpaque))
+		TextOutFlags = TextOutFlags | ETO_OPAQUE;
+	if(Options.Contains(SynTextDrawerEnum__0::tooClipped))
+		TextOutFlags = TextOutFlags | ETO_CLIPPED;
 	{
-		TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
-		ZeroMemory(&CharPlaceInfo, (NativeUInt) sizeof(CharPlaceInfo));
-		CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
-		Glyphs.Length = wcslen(Str);
-		CharPlaceInfo.lpGlyphs = &Glyphs[0];
-		CharPlaceInfo.nGlyphs = Glyphs.Length;
-		if(GetCharacterPlacement(DC, Str, (int) wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
-			result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), (int) Glyphs.Length, ((int*) ((void*) ETODist)));
+		if(UseLigatures && (Str != nullptr) && ((*Str) != WideNull))
+		{
+			TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
+			ZeroMemory(&CharPlaceInfo, (NativeUInt) sizeof(CharPlaceInfo));
+			CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
+			Glyphs.Length = wcslen(Str);
+			CharPlaceInfo.lpGlyphs = &Glyphs[0];
+			CharPlaceInfo.nGlyphs = Glyphs.Length;
+			if(GetCharacterPlacement(DC, Str, (int) wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
+				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), (int) Glyphs.Length, ((int*) ((void*) ETODist)));
+			else
+				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
+		}
 		else
-			result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
+		result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
 	}
-	else
-	result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
 	return result;
 }
 

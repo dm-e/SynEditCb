@@ -321,8 +321,10 @@ void __fastcall TSynGWScriptSyn::AndSymbolProc()
 		}
 		break;                                 /*and*/
 		default:
-		++Run;
-		FExtTokenID = xtkAnd;
+		{
+			++Run;
+			FExtTokenID = xtkAnd;
+		}
 		break;
 	}
 }
@@ -385,8 +387,10 @@ void __fastcall TSynGWScriptSyn::ColonProc()
 		}
 		break;                                 /*colon*/
 		default:
-		++Run;
-		FExtTokenID = xtkColon;
+		{
+			++Run;
+			FExtTokenID = xtkColon;
+		}
 		break;
 	}
 }
@@ -410,8 +414,10 @@ void __fastcall TSynGWScriptSyn::EqualProc()
 		}
 		break;                                 /*assign*/
 		default:
-		++Run;
-		FExtTokenID = xtkAssign;
+		{
+			++Run;
+			FExtTokenID = xtkAssign;
+		}
 		break;
 	}
 }
@@ -443,8 +449,10 @@ void __fastcall TSynGWScriptSyn::GreaterProc()
 		}
 		break;                                 /*greater than*/
 		default:
-		++Run;
-		FExtTokenID = xtkGreaterThan;
+		{
+			++Run;
+			FExtTokenID = xtkGreaterThan;
+		}
 		break;
 	}
 }
@@ -497,8 +505,10 @@ void __fastcall TSynGWScriptSyn::LowerProc()
 		}
 		break;                                 /*less than*/
 		default:
-		++Run;
-		FExtTokenID = xtkLessThan;
+		{
+			++Run;
+			FExtTokenID = xtkLessThan;
+		}
 		break;
 	}
 }
@@ -527,8 +537,10 @@ void __fastcall TSynGWScriptSyn::MinusProc()
 		}
 		break;                                 /*subtract*/
 		default:
-		++Run;
-		FExtTokenID = xtkSubtract;
+		{
+			++Run;
+			FExtTokenID = xtkSubtract;
+		}
 		break;
 	}
 }
@@ -545,8 +557,10 @@ void __fastcall TSynGWScriptSyn::ModSymbolProc()
 		}
 		break;                                 /*mod*/
 		default:
-		++Run;
-		FExtTokenID = xtkMod;
+		{
+			++Run;
+			FExtTokenID = xtkMod;
+		}
 		break;
 	}
 }
@@ -563,8 +577,10 @@ void __fastcall TSynGWScriptSyn::NotSymbolProc()
 		}
 		break;                                 /*not*/
 		default:
-		++Run;
-		FExtTokenID = xtkLogComplement;
+		{
+			++Run;
+			FExtTokenID = xtkLogComplement;
+		}
 		break;
 	}
 }
@@ -638,8 +654,10 @@ void __fastcall TSynGWScriptSyn::OrSymbolProc()
 		}
 		break;                                 /*or*/
 		default:
-		++Run;
-		FExtTokenID = xtkIncOr;
+		{
+			++Run;
+			FExtTokenID = xtkIncOr;
+		}
 		break;
 	}
 }
@@ -662,8 +680,10 @@ void __fastcall TSynGWScriptSyn::PlusProc()
 		}
 		break;                                 /*add*/
 		default:
-		++Run;
-		FExtTokenID = xtkAdd;
+		{
+			++Run;
+			FExtTokenID = xtkAdd;
+		}
 		break;
 	}
 }
@@ -757,9 +777,11 @@ void __fastcall TSynGWScriptSyn::SlashProc()
 		}
 		break;                                 /*divide*/
 		default:
-		++Run;
-		FTokenID = tkSymbol;
-		FExtTokenID = xtkDivide;
+		{
+			++Run;
+			FTokenID = tkSymbol;
+			FExtTokenID = xtkDivide;
+		}
 		break;
 	}
 }
@@ -798,8 +820,10 @@ void __fastcall TSynGWScriptSyn::StarProc()
 		}
 		break;                                 /*star*/
 		default:
-		++Run;
-		FExtTokenID = xtkStar;
+		{
+			++Run;
+			FExtTokenID = xtkStar;
+		}
 		break;
 	}
 }
@@ -862,8 +886,10 @@ void __fastcall TSynGWScriptSyn::XOrSymbolProc()
 		}
 		break;                                 /*xor*/
 		default:
-		++Run;
-		FExtTokenID = xtkXor;
+		{
+			++Run;
+			FExtTokenID = xtkXor;
+		}
 		break;
 	}
 }
@@ -883,121 +909,123 @@ void __fastcall TSynGWScriptSyn::Next()
 		AnsiCProc();
 		break;
 		default:
-		FRange = rsUnKnown;
-		switch(fLine[Run])
 		{
-			case L'&':
-			AndSymbolProc();
-			break;
-			case L'\x27':
-			AsciiCharProc();
-			break;
-			case L'@':
-			AtSymbolProc();
-			break;
-			case L'}':
-			BraceCloseProc();
-			break;
-			case L'{':
-			BraceOpenProc();
-			break;
-			case L'\x0d':
-			CRProc();
-			break;
-			case L':':
-			ColonProc();
-			break;
-			case L',':
-			CommaProc();
-			break;
-			case L'=':
-			EqualProc();
-			break;
-			case L'>':
-			GreaterProc();
-			break;
-			case L'?':
-			QuestionProc();
-			break;
-			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
-			 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
-			 case 85: case 86: case 87: case 88: case 89: case 90:
-			case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
-			 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
-			 case 117: case 118: case 119: case 120: case 121: case 122:
-			case L'_':
-			IdentProc();
-			break;
-			case L'\x0a':
-			LFProc();
-			break;
-			case L'<':
-			LowerProc();
-			break;
-			case L'-':
-			MinusProc();
-			break;
-			case L'%':
-			ModSymbolProc();
-			break;
-			case L'!':
-			NotSymbolProc();
-			break;
-			case L'\x00':
-			NullProc();
-			break;
-			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
-			NumberProc();
-			break;
-			case L'|':
-			OrSymbolProc();
-			break;
-			case L'+':
-			PlusProc();
-			break;
-			case L'.':
-			PointProc();
-			break;
-			case L')':
-			RoundCloseProc();
-			break;
-			case L'(':
-			RoundOpenProc();
-			break;
-			case L';':
-			SemiColonProc();
-			break;
-			case L'/':
-			SlashProc();
-			break;
-			case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
-			case L'\x0b':
-			case L'\x0c':
-			case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
-			 case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
-			SpaceProc();
-			break;
-			case L']':
-			SquareCloseProc();
-			break;
-			case L'[':
-			SquareOpenProc();
-			break;
-			case L'*':
-			StarProc();
-			break;
-			case L'\x22':
-			StringProc();
-			break;
-			case L'~':
-			TildeProc();
-			break;
-			case L'^':
-			XOrSymbolProc();
-			break;
-			default:
-			UnknownProc();
-			break;
+			FRange = rsUnKnown;
+			switch(fLine[Run])
+			{
+				case L'&':
+				AndSymbolProc();
+				break;
+				case L'\x27':
+				AsciiCharProc();
+				break;
+				case L'@':
+				AtSymbolProc();
+				break;
+				case L'}':
+				BraceCloseProc();
+				break;
+				case L'{':
+				BraceOpenProc();
+				break;
+				case L'\x0d':
+				CRProc();
+				break;
+				case L':':
+				ColonProc();
+				break;
+				case L',':
+				CommaProc();
+				break;
+				case L'=':
+				EqualProc();
+				break;
+				case L'>':
+				GreaterProc();
+				break;
+				case L'?':
+				QuestionProc();
+				break;
+				case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
+				 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
+				 case 85: case 86: case 87: case 88: case 89: case 90:
+				case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
+				 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
+				 case 117: case 118: case 119: case 120: case 121: case 122:
+				case L'_':
+				IdentProc();
+				break;
+				case L'\x0a':
+				LFProc();
+				break;
+				case L'<':
+				LowerProc();
+				break;
+				case L'-':
+				MinusProc();
+				break;
+				case L'%':
+				ModSymbolProc();
+				break;
+				case L'!':
+				NotSymbolProc();
+				break;
+				case L'\x00':
+				NullProc();
+				break;
+				case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
+				NumberProc();
+				break;
+				case L'|':
+				OrSymbolProc();
+				break;
+				case L'+':
+				PlusProc();
+				break;
+				case L'.':
+				PointProc();
+				break;
+				case L')':
+				RoundCloseProc();
+				break;
+				case L'(':
+				RoundOpenProc();
+				break;
+				case L';':
+				SemiColonProc();
+				break;
+				case L'/':
+				SlashProc();
+				break;
+				case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+				case L'\x0b':
+				case L'\x0c':
+				case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
+				 case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
+				SpaceProc();
+				break;
+				case L']':
+				SquareCloseProc();
+				break;
+				case L'[':
+				SquareOpenProc();
+				break;
+				case L'*':
+				StarProc();
+				break;
+				case L'\x22':
+				StringProc();
+				break;
+				case L'~':
+				TildeProc();
+				break;
+				case L'^':
+				XOrSymbolProc();
+				break;
+				default:
+				UnknownProc();
+				break;
+			}
 		}
 		break;
 	}
