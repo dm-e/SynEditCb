@@ -44,6 +44,7 @@
 *.007
 *.008
 *.009
+*_dme.bat
 
 # Temporary Files
 *.local
