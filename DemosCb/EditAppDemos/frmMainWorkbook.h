@@ -17,6 +17,7 @@
 #include <Vcl.ActnList.hpp>
 #include <Vcl.Menus.hpp>
 #include "uEditAppIntfs.h"
+#include <System.Actions.hpp>
 
 /*-------------------------------------------------------------------------------
 The contents of this file are subject to the Mozilla Public License

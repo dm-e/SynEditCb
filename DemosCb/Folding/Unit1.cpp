@@ -145,14 +145,14 @@ void __fastcall TForm1::FormCreate(TObject* Sender)
 	SynEdit1->PopupMenu = PopupActionBar1;
 	SynEdit1->TabOrder = 1;
 	SynEdit1->UseCodeFolding = False;
- 	/* doesn't work in 110 any more
+
 	SynEdit1->Gutter->AutoSize = True;
 	SynEdit1->Gutter->Font->Charset = DEFAULT_CHARSET;
 	SynEdit1->Gutter->Font->Color = clWindowText;
 	SynEdit1->Gutter->Font->Height-13;
 	SynEdit1->Gutter->Font->Name = "Consolas";
 	//SynEdit1->Gutter->Font->Style;
-    */
+
 	SynEdit1->Lines->Add("");
 	SynEdit1->Lines->Add("This project demonstrates the code folding capabilities of Synedit.");
 	SynEdit1->Lines->Add("");

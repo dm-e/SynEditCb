@@ -1,7 +1,7 @@
 inherited WorkbookMainForm: TWorkbookMainForm
   Caption = 'Workbook Edit Demo'
+  StyleElements = [seFont, seClient, seBorder]
   OnCloseQuery = FormCloseQuery
-  PixelsPerInch = 96
   TextHeight = 13
   object pctrlMain: TPageControl [0]
     Left = 0

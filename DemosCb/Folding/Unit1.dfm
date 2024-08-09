@@ -12,7 +12,6 @@ object Form1: TForm1
   Font.Style = []
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object ActionMainMenuBar1: TActionMainMenuBar
     Left = 0

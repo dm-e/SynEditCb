@@ -4,10 +4,10 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
-USEFORM("frmMainWorkbook.cpp", WorkbookMainForm);
 USEFORM("dmCommands.cpp", CommandsDataModule); /* TDataModule: File Type */
 USEFORM("frmEditor.cpp", EditorForm);
 USEFORM("frmMain.cpp", MainForm);
+USEFORM("frmMainWorkbook.cpp", WorkbookMainForm);
 USEFORM("..\SearchReplaceDemo\dlgConfirmReplace.cpp", ConfirmReplaceDialog);
 USEFORM("..\SearchReplaceDemo\dlgSearchText.cpp", TextSearchDialog);
 //---------------------------------------------------------------------------

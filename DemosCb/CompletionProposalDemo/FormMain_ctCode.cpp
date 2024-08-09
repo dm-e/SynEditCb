@@ -35,14 +35,12 @@ void __fastcall TForm1::FormCreate(TObject* Sender)
 	SynTest->Font->Name = "Courier New";
 	//SynTest->Font->Style;
 	SynTest->TabOrder = 9;
-	/* doesn't work in 110 any more
 	SynTest->Gutter->Font->Charset = DEFAULT_CHARSET;
 	SynTest->Gutter->Font->Color = clWindowText;
 	SynTest->Gutter->Font->Height = -11;
 	SynTest->Gutter->Font->Name = "Terminal";
 	//SynTest->Gutter->Font->Style;
 	SynTest->Gutter->Visible = False;
-    */
 	SynTest->Lines->Add("This is a Demo to show you how the");
 	SynTest->Lines->Add("Code Completion component works");
 	SynTest->Lines->Add("when the default kind is ctCode.");
@@ -98,15 +96,13 @@ void __fastcall TForm1::FormCreate(TObject* Sender)
 	SynEdit1->Font->Name = "Courier New";
 	//SynEdit1->Font->Style;
 	SynEdit1->TabOrder = 8;
-	/* doesn't work in 110 any more
 	SynEdit1->Gutter->Font->Charset = DEFAULT_CHARSET;
 	SynEdit1->Gutter->Font->Color = clWindowText;
 	SynEdit1->Gutter->Font->Height = -11;
 	SynEdit1->Gutter->Font->Name = "Terminal";
 	//SynEdit1->Gutter->Font->Style;
-    */
 	SynEdit1->Lines->Add("Use Ctrl+Space to activate Code Completion");
-	SynEdit1->Lines->Add("with a shortcut, or use the 39.39 key");
+	SynEdit1->Lines->Add("with a shortcut, or use the \x27" L".\x27" L" key");
 	SynEdit1->Lines->Add("to activate it with a timer");
 	SynEdit1->Lines->Add("");
 	SynEdit1->Lines->Add("");
