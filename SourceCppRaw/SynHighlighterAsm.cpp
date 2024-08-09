@@ -12,15 +12,12 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterasm
 {
-#define SynHighlighterAsm__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterAsm__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterAsm__2 (TSysCharSet() << L'=' << L'>')
+#define Synhighlighterasm__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterasm__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterasm__2 (TSysCharSet() << '=' << '>')
 
 
 const String Mnemonics = L"aaa,aad,aam,adc,add,and,arpl,bound,bsf,bsr,bswap,bt,btc,"
@@ -121,12 +118,12 @@ __fastcall TSynAsmSyn::TSynAsmSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterAsm__0;
+	fCommentAttri->Style = Synhighlighterasm__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterAsm__1;
+	fKeyAttri->Style = Synhighlighterasm__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -146,7 +143,6 @@ __fastcall TSynAsmSyn::~TSynAsmSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynAsmSyn::CommentProc()
 {
@@ -192,7 +188,7 @@ void __fastcall TSynAsmSyn::LowerProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(CharInSet(fLine[Run], SynHighlighterAsm__2))
+	if(CharInSet(fLine[Run], Synhighlighterasm__2))
 		++Run;
 }
 
@@ -534,16 +530,8 @@ void SynHighlighterAsm_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynAsmSyn));
 }
-class SynHighlighterAsm_unit
-{
-public:
-	SynHighlighterAsm_unit()
-	{
-		SynHighlighterAsm_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterAsm_unit _SynHighlighterAsm_unit;
 
 }  // namespace SynHighlighterAsm
 

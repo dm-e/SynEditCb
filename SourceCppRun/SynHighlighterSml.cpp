@@ -10,23 +10,21 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightersml
 {
-#define SynHighlighterSml__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterSml__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSml__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersml__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersml__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersml__2 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[41/*# range 0..40*/] = {L"abstype", L"and", L"andalso", L"as", L"case", L"datatype", L"do", L"else", L"end", L"eqtype", L"exception", L"fn"
-																				, L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
-																				, L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"
-																				, L"withtype"};
+                    , L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
+                    , L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"
+                    , L"withtype"};
 const int KeyIndices[71/*# range 0..70*/] = {28, -1, -1, -1, 23, 4, 19, -1, -1, 32, 8, 6, -1, 33, 0, -1, 14, -1, 2, -1, -1, 29, 35, -1, -1, -1, -1, 13, -1, -1, 9, -1, 11, 30, 1, -1, 25, 36, -1, -1, -1, 40, -1, 7, -1, 16
-																				, 26, 37, -1, 15, 21, -1, 18, 12, 5, -1, -1, 10, 22, 27, 34, 17, -1, 20, -1, 39, -1, 3, 38, 31, 24};
+                    , 26, 37, -1, 15, 21, -1, 18, 12, 5, -1, -1, 10, 22, 27, 34, 17, -1, 20, -1, 39, -1, 3, 38, 31, 24};
 
 /*$Q-*/
 
@@ -64,7 +62,7 @@ void __fastcall TSynSMLSyn::InitIdent()
 	int stop = 0;
 	for(stop = 70 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 70 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -166,13 +164,13 @@ __fastcall TSynSMLSyn::TSynSMLSyn(TComponent* AOwner)
 	fCharacterAttri->Foreground = clBlue;
 	addAttribute(fCharacterAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterSml__0;
+	fCommentAttri->Style = Synhighlightersml__0;
 	fCommentAttri->Foreground = clNavy;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterSml__1;
+	fKeyAttri->Style = Synhighlightersml__1;
 	fKeyAttri->Foreground = clGreen;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
@@ -190,7 +188,7 @@ __fastcall TSynSMLSyn::TSynSMLSyn(TComponent* AOwner)
 	addAttribute(fSymbolAttri);
 	fSyntaxErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
 	fSyntaxErrorAttri->Foreground = clRed;
-	fSyntaxErrorAttri->Style = SynHighlighterSml__2;
+	fSyntaxErrorAttri->Style = Synhighlightersml__2;
 	addAttribute(fSyntaxErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
@@ -755,7 +753,7 @@ void __fastcall TSynSMLSyn::ResetRange()
 
 void __fastcall TSynSMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynSMLSyn::GetRange()
@@ -783,16 +781,8 @@ void SynHighlighterSml_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynSMLSyn));
 }
-class SynHighlighterSml_unit
-{
-public:
-	SynHighlighterSml_unit()
-	{
-		SynHighlighterSml_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterSml_unit _SynHighlighterSml_unit;
 
 }  // namespace SynHighlighterSml
 

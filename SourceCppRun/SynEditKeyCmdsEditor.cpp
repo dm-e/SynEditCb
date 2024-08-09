@@ -14,15 +14,12 @@ using namespace Syneditstrconst;
 using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Comctrls;
-using namespace Vcl::Dialogs;
 using namespace Vcl::Forms;
 
-#define SynEditKeyCmdsEditor__0 (TMsgDlgButtons() << System::Uitypes::TMsgDlgBtn::mbOK << System::Uitypes::TMsgDlgBtn::mbCancel)
-#define SynEditKeyCmdsEditor__1 (TMsgDlgButtons() << System::Uitypes::TMsgDlgBtn::mbOK << System::Uitypes::TMsgDlgBtn::mbCancel)
+#define Syneditkeycmdseditor__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK << TMsgDlgBtn::mbCancel)
+#define Syneditkeycmdseditor__1 (TMsgDlgButtons() << TMsgDlgBtn::mbOK << TMsgDlgBtn::mbCancel)
 
 
 #pragma resource "*.dfm" 
@@ -57,12 +54,11 @@ __fastcall TSynEditKeystrokesEditorForm::~TSynEditKeystrokesEditorForm()
 	//# inherited::TForm::Destroy();
 }
 
-
 void __fastcall TSynEditKeystrokesEditorForm::SetKeystrokes(TSynEditKeyStrokes* const Value)
 {
 	if(fKeyStrokes == nullptr)
 		fKeyStrokes = new TSynEditKeyStrokes(this);
-	fKeyStrokes->Assign(Value);
+	fKeyStrokes->Assign((TPersistent*) Value);
 	UpdateKeystrokesList();
 }
 
@@ -158,7 +154,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 						TmpCommand = ConvertCodeStringToExtended(EditorCommandToCodeString(((TSynEditKeyStrokes*) NewStroke->Collection)->Items[KeyLoc]->Command));
 					else
 						TmpCommand = EditorCommandToCodeString(((TSynEditKeyStrokes*) NewStroke->Collection)->Items[KeyLoc]->Command);
-					result = MessageDlg(Format(SYNS_DuplicateShortcutMsg, ARRAYOFCONST((Menus::ShortCutToText(AForm->Keystroke), TmpCommand))), System::Uitypes::TMsgDlgType::mtError, SynEditKeyCmdsEditor__0, 0) == mrOk;
+					result = MessageDlg(Format(SYNS_DuplicateShortcutMsg, ARRAYOFCONST((Menus::ShortCutToText(AForm->Keystroke), TmpCommand))), TMsgDlgType::mtError, Syneditkeycmdseditor__0, 0) == mrOk;
 					delete NewStroke;
 					if(result)
 						result = result;
@@ -242,7 +238,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 						TmpCommand = ConvertCodeStringToExtended(EditorCommandToCodeString(((TSynEditKeyStrokes*) fKeyStrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command));
 					else
 						TmpCommand = EditorCommandToCodeString(((TSynEditKeyStrokes*) fKeyStrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command);
-					result = MessageDlg(Format(SYNS_DuplicateShortcutMsg, ARRAYOFCONST((Menus::ShortCutToText(AForm->Keystroke), TmpCommand))), System::Uitypes::TMsgDlgType::mtError, SynEditKeyCmdsEditor__1, 0) == mrOk;
+					result = MessageDlg(Format(SYNS_DuplicateShortcutMsg, ARRAYOFCONST((Menus::ShortCutToText(AForm->Keystroke), TmpCommand))), TMsgDlgType::mtError, Syneditkeycmdseditor__1, 0) == mrOk;
 					fKeyStrokes->Items[SelItem->Index]->ShortCut = OldShortcut;
 					fKeyStrokes->Items[SelItem->Index]->ShortCut2 = OldShortcut2;
 					if(result)

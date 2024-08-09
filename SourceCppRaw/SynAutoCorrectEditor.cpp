@@ -1,4 +1,4 @@
-﻿#include <vcl.h>
+#include <vcl.h>
 #pragma hdrstop
 
 #include "SynAutoCorrectEditor.h"
@@ -8,19 +8,17 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synautocorrect;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Controls;
-using namespace Vcl::Dialogs;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
 
 
-__fastcall TfrmAutoCorrectEditor::TfrmAutoCorrectEditor(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TfrmAutoCorrectEditor::TfrmAutoCorrectEditor(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 void __fastcall TfrmAutoCorrectEditor::FormShow(TObject* Sender)
@@ -39,7 +37,7 @@ void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItemCLX(TObject* Sender, int 
 		s = with0->Items->Strings[Index];
 		with0->Canvas->FillRect(Rect);
 		with0->Canvas->TextOut(Rect.Left + 2, Rect.Top, SynAutoCorrect->HalfString(s, true));
-		with0->Canvas->TextOut(Rect.Left + ((int)(lbxItems->ClientWidth / 2)) + 2, Rect.Top, SynAutoCorrect->HalfString(s, false));
+		with0->Canvas->TextOut(Rect.Left + ((int)(lbxItems->ClientWidth / /*div*/ 2)) + 2, Rect.Top, SynAutoCorrect->HalfString(s, false));
 		FormPaint(nullptr);
 	}
 }
@@ -69,8 +67,8 @@ void __fastcall TfrmAutoCorrectEditor::btnAddClick(TObject* Sender)
 			lbxItems->Items->Assign(SynAutoCorrect->Items);
 		}
 	}
-	btnDelete->Enabled = lbxItems->ItemIndex >  - 1;
-	btnEdit->Enabled = lbxItems->ItemIndex >  - 1;
+	btnDelete->Enabled = lbxItems->ItemIndex > -1;
+	btnEdit->Enabled = lbxItems->ItemIndex > -1;
 }
 
 void __fastcall TfrmAutoCorrectEditor::btnDeleteClick(TObject* Sender)
@@ -82,8 +80,8 @@ void __fastcall TfrmAutoCorrectEditor::btnDeleteClick(TObject* Sender)
 	}
 	SynAutoCorrect->Delete(lbxItems->ItemIndex);
 	lbxItems->Items->Assign(SynAutoCorrect->Items);
-	btnDelete->Enabled = lbxItems->ItemIndex >  - 1;
-	btnEdit->Enabled = lbxItems->ItemIndex >  - 1;
+	btnDelete->Enabled = lbxItems->ItemIndex > -1;
+	btnEdit->Enabled = lbxItems->ItemIndex > -1;
 }
 
 void __fastcall TfrmAutoCorrectEditor::btnEditClick(TObject* Sender)
@@ -109,8 +107,8 @@ void __fastcall TfrmAutoCorrectEditor::btnEditClick(TObject* Sender)
 		with0->Edit(lbxItems->ItemIndex, Original, Correction);
 		lbxItems->Items->Assign(SynAutoCorrect->Items);
 	}
-	btnDelete->Enabled = lbxItems->ItemIndex >  - 1;
-	btnEdit->Enabled = lbxItems->ItemIndex >  - 1;
+	btnDelete->Enabled = lbxItems->ItemIndex > -1;
+	btnEdit->Enabled = lbxItems->ItemIndex > -1;
 }
 
 void __fastcall TfrmAutoCorrectEditor::btnDoneClick(TObject* Sender)
@@ -120,18 +118,18 @@ void __fastcall TfrmAutoCorrectEditor::btnDoneClick(TObject* Sender)
 
 void __fastcall TfrmAutoCorrectEditor::btnClearClick(TObject* Sender)
 {
-	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != IDYES)
+	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != System::Uitypes::IDYES)
 		return;
 	SynAutoCorrect->Items->Clear();
 	lbxItems->Items->Clear();
-	btnDelete->Enabled = lbxItems->ItemIndex >  - 1;
-	btnEdit->Enabled = lbxItems->ItemIndex >  - 1;
+	btnDelete->Enabled = lbxItems->ItemIndex > -1;
+	btnEdit->Enabled = lbxItems->ItemIndex > -1;
 }
 
 void __fastcall TfrmAutoCorrectEditor::lbxItemsClick(TObject* Sender)
 {
-	btnDelete->Enabled = lbxItems->ItemIndex >  - 1;
-	btnEdit->Enabled = lbxItems->ItemIndex >  - 1;
+	btnDelete->Enabled = lbxItems->ItemIndex > -1;
+	btnEdit->Enabled = lbxItems->ItemIndex > -1;
 }
 
 void __fastcall TfrmAutoCorrectEditor::FormCreate(TObject* Sender)
@@ -139,7 +137,7 @@ void __fastcall TfrmAutoCorrectEditor::FormCreate(TObject* Sender)
 	ClientWidth = 521;
 	ClientHeight = 377;
 	lbxItems->OnDrawItem = lbxItemsDrawItem;
-	BorderStyle = TFormBorderStyle::bsSingle;
+	BorderStyle = bsSingle;
 }
 
 void __fastcall TfrmAutoCorrectEditor::FormPaint(TObject* Sender)
@@ -150,7 +148,7 @@ void __fastcall TfrmAutoCorrectEditor::FormPaint(TObject* Sender)
 	{
 		auto with0 = lbxItems->Canvas;
 		with0->Pen->Color = clBlack;
-		with0->PenPos = Point((int)(lbxItems->Width / 2) - 8, 0);
-		with0->LineTo((int)(lbxItems->Width / 2) - 8, lbxItems->Height);
+		with0->PenPos = Point((int)(lbxItems->Width / /*div*/ 2) - 8, 0);
+		with0->LineTo((int)(lbxItems->Width / /*div*/ 2) - 8, lbxItems->Height);
 	}
 }

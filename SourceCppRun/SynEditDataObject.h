@@ -54,7 +54,7 @@ private:
 	System::TArray<TClipFormat> FList;
 	int FIndex;
 protected:
-	Winapi::Activex::TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
+	TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
 		/*IEnumFORMATETC*/
 	HRESULT __stdcall Next(unsigned long celt, tagFORMATETC* elt, unsigned long* pceltFetched);
 	HRESULT __stdcall Skip(unsigned long celt);
@@ -73,9 +73,9 @@ public:
 private:
 	String FText;
 	TList__1<TClipFormat>* FFormatEtc;
-	System::Classes::TMemoryStream* MemoryStream;
-	System::Classes::TMemoryStream* HtmlStream;
-	void __fastcall StreamHTML(TObject* Editor, System::Classes::TStream* Stream);
+	TMemoryStream* MemoryStream;
+	TMemoryStream* HtmlStream;
+	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
 	HRESULT __stdcall GetData(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);
 	HRESULT __stdcall GetDataHere(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);

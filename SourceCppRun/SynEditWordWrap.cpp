@@ -16,10 +16,8 @@ using namespace Synedittextbuffer;
 using namespace Synedittypes;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Math;
 using namespace System::Rtlconsts;
-using namespace System::Sysutils;
 
 namespace Syneditwordwrap
 {
@@ -92,7 +90,6 @@ __fastcall TSynWordWrapPlugin::~TSynWordWrapPlugin()
 	FreeMemory(fRowLengths);
 }
 
-
 void __fastcall TSynWordWrapPlugin::DisplayChanged()
 {
 	if(Editor->CharsInWindow != fMaxRowLength)
@@ -150,7 +147,7 @@ int __fastcall TSynWordWrapPlugin::GetRowLength(int ARow)
 {
 	int result = 0;
 	if((ARow <= 0) || (ARow > RowCount()))
-		System::Classes::TList::Error(System_Rtlconsts_SListIndexError, ARow);
+		TList::Error(System_Rtlconsts_SListIndexError, ARow);
 	result = (int) (*fRowLengths)[ARow - 1];
 	return result;
 }
@@ -303,7 +300,7 @@ void __fastcall TSynWordWrapPlugin::Reset()
 {
 	Assert(Editor->CharsInWindow >= 0);
 	fMaxRowLength = (TRowLength) Editor->CharsInWindow;
-	fMinRowLength = (TRowLength) (Editor->CharsInWindow - ((int)(Editor->CharsInWindow / 3)));
+	fMinRowLength = (TRowLength) (Editor->CharsInWindow - ((int)(Editor->CharsInWindow / /*div*/ 3)));
 	if(fMinRowLength <= 0)
 		fMinRowLength = 1;
 	WrapLines();
@@ -331,7 +328,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex AIndex)
 	vLine = ((TSynEditStringList*) Editor->Lines)->ExpandedStrings[AIndex];
 	vLine = Editor->ExpandAtWideGlyphs(vLine);
   // Pre-allocate a buffer for rowlengths - at least one row
-	vMaxNewRows = (unsigned int) Max((int) (((size_t)((vLine.Length() - 1) / fMinRowLength)) + 1), 1);
+	vMaxNewRows = (unsigned int) Max(((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1, 1);
 	vTempRowLengths = ((PRowLengthArray) AllocMem(vMaxNewRows * sizeof(TRowLength)));
 	try
 	{
@@ -456,7 +453,7 @@ void __fastcall TSynWordWrapPlugin::WrapLines()
 	{
 		vLine = ((TSynEditStringList*) Editor->Lines)->ExpandedStrings[cLine];
 		vLine = Editor->ExpandAtWideGlyphs(vLine);
-		vMaxNewRows = (int) (((size_t)((vLine.Length() - 1) / fMinRowLength)) + 1);
+		vMaxNewRows = ((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1;
 		GrowRows(cRow + vMaxNewRows);
 		vRowBegin = ustr2pwchar(vLine);
 		vRowEnd = vRowBegin + fMaxRowLength;

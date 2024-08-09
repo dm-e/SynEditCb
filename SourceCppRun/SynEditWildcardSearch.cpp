@@ -9,7 +9,6 @@ using namespace d2c_system;
 using namespace Syneditregexsearch;
 using namespace Synedittypes;
 using namespace System;
-using namespace System::Classes;
 using namespace Vcl::Consts;
 
 namespace Syneditwildcardsearch
@@ -29,7 +28,6 @@ __fastcall TSynEditWildcardSearch::~TSynEditWildcardSearch()
 {
 	// inherited;
 }
-
 
 int __fastcall TSynEditWildcardSearch::FindAll(const UnicodeString NewText)
 {
@@ -91,7 +89,7 @@ UnicodeString __fastcall TSynEditWildcardSearch::WildCardToRegExpr(UnicodeString
 	int i = 0;
 	int stop = 0;
 	result = L"";
-	for(stop = (int) AWildCard.Length(), i = 1; i <= stop; i++)
+	for(stop = AWildCard.Length(), i = 1; i <= stop; i++)
 	{
 		switch(AWildCard[i])
 		{

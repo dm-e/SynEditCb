@@ -12,38 +12,35 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightercobol
 {
-#define SynHighlighterCobol__0 (TSysCharSet() <<  \
+#define Synhighlightercobol__0 (TSysCharSet() <<  \
 										1 << 2 << 3 << 4 << 5 << 6 <<  \
 										7 << 8 << 9 << 10 << 11 << 12 <<  \
 										13 << 14 << 15 << 16 << 17 << 18 <<  \
 										19 << 20 << 21 << 22 << 23 << 24 <<  \
 										25 << 26 << 27 << 28 << 29 << 30 <<  \
 										31 << 32)
-#define SynHighlighterCobol__1 (System::Set<TRangeState, rsUnKnown, rsApostStringMayBe>() << rsQuoteStringMayBe << rsApostStringMayBe)
-#define SynHighlighterCobol__2 (TSysCharSet() <<  \
+#define Synhighlightercobol__1 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteStringMayBe << rsApostStringMayBe)
+#define Synhighlightercobol__2 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << 'e' << 'E')
+#define Synhighlightercobol__3 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'e' << L'E')
-#define SynHighlighterCobol__3 (TSysCharSet() <<  \
+										54 << 55 << 56 << 57 << 'e' << 'E')
+#define Synhighlightercobol__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'e' << L'E')
-#define SynHighlighterCobol__4 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'.')
-#define SynHighlighterCobol__5 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterCobol__6 (System::Set<TRangeState, rsUnKnown, rsApostStringMayBe>() << rsQuoteString << rsApostString)
-#define SynHighlighterCobol__7 (System::Set<TRangeState, rsUnKnown, rsApostStringMayBe>() << rsQuoteString << rsApostString)
-#define SynHighlighterCobol__8 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterCobol__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCobol__10 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCobol__11 (TSysCharSet() << L'x' << L'g' << L'X' << L'G')
-#define SynHighlighterCobol__12 (TSysCharSet() << L'\"' << L'\'')
+										54 << 55 << 56 << 57 << '.')
+#define Synhighlightercobol__5 (TSysCharSet() << 'e' << 'E')
+#define Synhighlightercobol__6 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
+#define Synhighlightercobol__7 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
+#define Synhighlightercobol__8 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightercobol__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercobol__10 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercobol__11 (TSysCharSet() << 'x' << 'g' << 'X' << 'G')
+#define Synhighlightercobol__12 (TSysCharSet() << '\"' << '\'')
 
 
 const String BooleanWords = L"false, true";
@@ -209,10 +206,10 @@ TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar Maybe)
 					{
 						if(IsCurrentToken(L"label"))
 						{
-							i = (int) (Run + wcslen(L"label"));
+							i = Run + wcslen(L"label");
 							while(fLine[i] == L' ')
 								++i;
-							if((AnsiStrLComp(&fLine[i], const_cast<PWideChar>(L"record"), wcslen(L"record")) == 0) && (i + wcslen(L"record") - 1 <= fCodeEndPos))
+							if((AnsiStrLComp(&fLine[i], const_cast<PWideChar>(L"record"), (unsigned int) wcslen(L"record")) == 0) && (i + wcslen(L"record") - 1 <= fCodeEndPos))
 								result = tkKey;
 							else
 								result = tkPreprocessor;
@@ -237,7 +234,7 @@ void __fastcall TSynCobolSyn::SpaceProc()
 	{
 		++Run;
 	}
-	while(!!CharInSet(fLine[Run], SynHighlighterCobol__0));
+	while(!!CharInSet(fLine[Run], Synhighlightercobol__0));
 }
 
 void __fastcall TSynCobolSyn::FirstCharsProc()
@@ -268,7 +265,7 @@ void __fastcall TSynCobolSyn::FirstCharsProc()
 				fIndicator = fLine[Run];
 				break;
 				case L'-':
-				if(SynHighlighterCobol__1.Contains(FRange))
+				if(Synhighlightercobol__1.Contains(FRange))
 				{
 					i = Run + 1;
 					while(fLine[i] == L' ')
@@ -335,7 +332,7 @@ void __fastcall TSynCobolSyn::DebugProc()
 
 void __fastcall TSynCobolSyn::PointProc()
 {
-	if((Run < fCodeEndPos) && CharInSet(fLine[Run + 1], SynHighlighterCobol__2))
+	if((Run < fCodeEndPos) && CharInSet(fLine[Run + 1], Synhighlightercobol__2))
 		NumberProc();
 	else
 		UnknownProc();
@@ -372,14 +369,14 @@ void __fastcall TSynCobolSyn::NumberProc()
 		switch(fLine[Run])
 		{
 			case L'.':
-			if(!CharInSet(fLine[Run + 1], SynHighlighterCobol__3))
+			if(!CharInSet(fLine[Run + 1], Synhighlightercobol__3))
 				goto label0;
 			else
 				fFloat = true;
 			break;
 			case L'e':
 			case L'E':
-			if(!CharInSet(fLine[Run - 1], SynHighlighterCobol__4))
+			if(!CharInSet(fLine[Run - 1], Synhighlightercobol__4))
 				goto label1;
 			else
 				fFloat = true;
@@ -387,7 +384,7 @@ void __fastcall TSynCobolSyn::NumberProc()
 			case L'-':
 			case L'+':
 			{
-				if(!fFloat || !CharInSet(fLine[Run - 1], SynHighlighterCobol__5))
+				if(!fFloat || !CharInSet(fLine[Run - 1], Synhighlightercobol__5))
 					goto label2;
 			}
 			break;
@@ -459,7 +456,7 @@ void __fastcall TSynCobolSyn::StringProc()
 		{
 			if((fLine[Run] == StringChars[FRange]) && ((fLine[Run] != L'=') || ((Run > 0) && (fLine[Run - 1] == L'='))))
 			{
-				if((Run == fCodeEndPos) && (SynHighlighterCobol__6.Contains(FRange)))
+				if((Run == fCodeEndPos) && (Synhighlightercobol__6.Contains(FRange)))
 					Inc(FRange, 3);
 				else
 					FRange = rsUnKnown;
@@ -486,7 +483,7 @@ void __fastcall TSynCobolSyn::StringEndProc()
 			{
 				if(fLine[Run] == StringChars[FRange])
 				{
-					if(SynHighlighterCobol__7.Contains(FRange))
+					if(Synhighlightercobol__7.Contains(FRange))
 						++Run;
 					else
 					{
@@ -529,20 +526,20 @@ __fastcall TSynCobolSyn::TSynCobolSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterCobol__8;
+	fCommentAttri->Style = Synhighlightercobol__8;
 	fCommentAttri->Foreground = clGray;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fAIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrAreaAIdentifier, SYNS_FriendlyAttrAreaAIdentifier);
 	fAIdentifierAttri->Foreground = clTeal;
-	fAIdentifierAttri->Style = SynHighlighterCobol__9;
+	fAIdentifierAttri->Style = Synhighlightercobol__9;
 	addAttribute(fAIdentifierAttri);
 	fPreprocessorAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fPreprocessorAttri->Foreground = clMaroon;
 	addAttribute(fPreprocessorAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterCobol__10;
+	fKeyAttri->Style = Synhighlightercobol__10;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clGreen;
@@ -586,10 +583,9 @@ __fastcall TSynCobolSyn::~TSynCobolSyn()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynCobolSyn::IdentProc()
 {
-	if(CharInSet(fLine[Run], SynHighlighterCobol__11) && (Run < fCodeEndPos) && CharInSet(fLine[Run + 1], SynHighlighterCobol__12))
+	if(CharInSet(fLine[Run], Synhighlightercobol__11) && (Run < fCodeEndPos) && CharInSet(fLine[Run + 1], Synhighlightercobol__12))
 	{
 		++Run;
 		StringOpenProc();
@@ -959,7 +955,7 @@ void __fastcall TSynCobolSyn::ResetRange()
 
 void __fastcall TSynCobolSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynCobolSyn::GetRange()
@@ -987,16 +983,8 @@ void SynHighlighterCobol_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynCobolSyn));
 }
-class SynHighlighterCobol_unit
-{
-public:
-	SynHighlighterCobol_unit()
-	{
-		SynHighlighterCobol_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterCobol_unit _SynHighlighterCobol_unit;
 
 }  // namespace SynHighlighterCobol
 

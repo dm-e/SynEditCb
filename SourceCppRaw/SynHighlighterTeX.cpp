@@ -10,19 +10,18 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightertex
 {
-#define SynHighlighterTeX__0 TFontStyles()
-#define SynHighlighterTeX__1 TFontStyles()
-#define SynHighlighterTeX__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTeX__3 TFontStyles()
-#define SynHighlighterTeX__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTeX__5 TFontStyles()
-#define SynHighlighterTeX__6 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertex__0 TFontStyles()
+#define Synhighlightertex__1 TFontStyles()
+#define Synhighlightertex__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertex__3 TFontStyles()
+#define Synhighlightertex__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertex__5 TFontStyles()
+#define Synhighlightertex__6 (TFontStyles() << TFontStyle::fsBold)
 
 
 
@@ -37,19 +36,19 @@ __fastcall TSynTeXSyn::TSynTeXSyn(TComponent* AOwner)
 			fBracketAttri(nullptr),
 			fBraceAttri(nullptr)
 {
-	fCommentAttri = CreateHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment, clTeal, clNone, SynHighlighterTeX__0);
+	fCommentAttri = CreateHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment, clTeal, clNone, Synhighlightertex__0);
 	addAttribute(fCommentAttri);
-	fTextAttri = CreateHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText, clBlack, clNone, SynHighlighterTeX__1);
+	fTextAttri = CreateHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText, clBlack, clNone, Synhighlightertex__1);
 	addAttribute(fTextAttri);
-	fMathmodeAttri = CreateHighlighterAttributes(SYNS_AttrMathMode, SYNS_FriendlyAttrMathMode, clOlive, clNone, SynHighlighterTeX__2);
+	fMathmodeAttri = CreateHighlighterAttributes(SYNS_AttrMathMode, SYNS_FriendlyAttrMathMode, clOlive, clNone, Synhighlightertex__2);
 	addAttribute(fMathmodeAttri);
-	fSpaceAttri = CreateHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace, clNone, clWhite, SynHighlighterTeX__3);
+	fSpaceAttri = CreateHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace, clNone, clWhite, Synhighlightertex__3);
 	addAttribute(fSpaceAttri);
-	fControlSequenceAttri = CreateHighlighterAttributes(SYNS_AttrTeXCommand, SYNS_FriendlyAttrTeXCommand, clBlue, clWhite, SynHighlighterTeX__4);
+	fControlSequenceAttri = CreateHighlighterAttributes(SYNS_AttrTeXCommand, SYNS_FriendlyAttrTeXCommand, clBlue, clWhite, Synhighlightertex__4);
 	addAttribute(fControlSequenceAttri);
-	fBracketAttri = CreateHighlighterAttributes(SYNS_AttrSquareBracket, SYNS_FriendlyAttrSquareBracket, clPurple, clNone, SynHighlighterTeX__5);
+	fBracketAttri = CreateHighlighterAttributes(SYNS_AttrSquareBracket, SYNS_FriendlyAttrSquareBracket, clPurple, clNone, Synhighlightertex__5);
 	addAttribute(fBracketAttri);
-	fBraceAttri = CreateHighlighterAttributes(SYNS_AttrRoundBracket, SYNS_FriendlyAttrRoundBracket, clRed, clNone, SynHighlighterTeX__6);
+	fBraceAttri = CreateHighlighterAttributes(SYNS_AttrRoundBracket, SYNS_FriendlyAttrRoundBracket, clRed, clNone, Synhighlightertex__6);
 	addAttribute(fBraceAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterTeX;
@@ -370,16 +369,8 @@ void SynHighlighterTeX_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynTeXSyn));
 }
-class SynHighlighterTeX_unit
-{
-public:
-	SynHighlighterTeX_unit()
-	{
-		SynHighlighterTeX_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterTeX_unit _SynHighlighterTeX_unit;
 
 }  // namespace SynHighlighterTeX
 

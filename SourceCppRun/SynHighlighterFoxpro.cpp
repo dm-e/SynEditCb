@@ -15,14 +15,12 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Regularexpressions;
-using namespace System::Sysutils;
 
 namespace Synhighlighterfoxpro
 {
-#define SynHighlighterFoxpro__0 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterFoxpro__1 (TRegExOptions() << roIgnoreCase)
+#define Synhighlighterfoxpro__0 (TRegExOptions() << roIgnoreCase)
+#define Synhighlighterfoxpro__1 (TRegExOptions() << roIgnoreCase)
 
 
 const String Keywords = L"_curobj, _msysmenu, _pageno, _screen, _vfp, abs, accept, aclass, acopy, acos, "
@@ -229,8 +227,8 @@ __fastcall TSynFoxproSyn::TSynFoxproSyn(TComponent* AOwner)
 	fDefaultFilter = SYNS_FilterFoxpro;
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
 //++ CodeFolding
-	RE_BlockBegin = TRegEx(L"\\b(function |procedure )\\b", SynHighlighterFoxpro__0);
-	RE_BlockEnd = TRegEx(L"\\b(endproc|endfunc)\\b", SynHighlighterFoxpro__1);
+	RE_BlockBegin = TRegEx(L"\\b(function |procedure )\\b", Synhighlighterfoxpro__0);
+	RE_BlockEnd = TRegEx(L"\\b(endproc|endfunc)\\b", Synhighlighterfoxpro__1);
 //-- CodeFolding
 }
 
@@ -549,7 +547,6 @@ __fastcall TSynFoxproSyn::~TSynFoxproSyn()
 	delete fKeywords;
 	// inherited;
 }
-
 
 void __fastcall TSynFoxproSyn::DoAddKeyword(String AKeyword, int AKind)
 {
@@ -1152,16 +1149,8 @@ void SynHighlighterFoxpro_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynFoxproSyn));
 }
-class SynHighlighterFoxpro_unit
-{
-public:
-	SynHighlighterFoxpro_unit()
-	{
-		SynHighlighterFoxpro_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterFoxpro_unit _SynHighlighterFoxpro_unit;
 
 }  // namespace SynHighlighterFoxpro
 

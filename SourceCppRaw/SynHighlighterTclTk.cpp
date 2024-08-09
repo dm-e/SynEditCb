@@ -8,116 +8,115 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
+using namespace System::Types;
 
 namespace Synhighlightertcltk
 {
-#define SynHighlighterTclTk__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTclTk__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTclTk__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__4 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__5 (TSysCharSet() <<  \
+#define Synhighlightertcltk__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightertcltk__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertcltk__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertcltk__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlightertcltk__4 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlightertcltk__5 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterTclTk__6 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define SynHighlighterTclTk__7 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define SynHighlighterTclTk__8 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define SynHighlighterTclTk__9 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
-#define SynHighlighterTclTk__10 (TSysCharSet() << L'_' <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122)
+#define Synhighlightertcltk__6 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Synhighlightertcltk__7 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Synhighlightertcltk__8 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Synhighlightertcltk__9 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
+#define Synhighlightertcltk__10 (TSysCharSet() << '_' <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122)
 
 
 const String TclTkKeys[129/*# range 0..128*/] = {L"after", L"append", L"array", L"auto_execok", L"auto_import", L"auto_load", L"auto_mkindex", L"auto_mkindex_old", L"auto_qualify"
-																				, L"auto_reset", L"base", L"bgerror", L"binary", L"body", L"break", L"catch", L"cd", L"class", L"clock", L"close", L"code"
-																				, L"concat", L"configbody", L"constructor", L"continue", L"dde", L"delete", L"destructor", L"else", L"elseif", L"encoding", L"ensemble"
-																				, L"eof", L"error", L"eval", L"exec", L"exit", L"expr", L"fblocked", L"fconfigure", L"fcopy", L"file", L"fileevent", L"filename"
-																				, L"find", L"flush", L"for", L"foreach", L"format", L"gets", L"glob", L"global", L"history", L"http", L"if", L"incr", L"info"
-																				, L"inherit", L"interp", L"is", L"join", L"lappend", L"lindex", L"linsert", L"list", L"llength", L"load", L"local", L"lrange", L"lreplace"
-																				, L"lsearch", L"lset", L"lsort", L"memory", L"method", L"msgcat", L"namespace", L"open", L"package", L"parray", L"pid"
-																				, L"pkg_mkindex", L"private", L"proc", L"protected", L"public", L"puts", L"pwd", L"re_syntax", L"read", L"regexp", L"registry", L"regsub"
-																				, L"rename", L"resource", L"return", L"safe", L"safebase", L"scan", L"scope", L"seek", L"set", L"socket", L"source", L"split"
-																				, L"string", L"subst", L"switch", L"tcl", L"tcl_endofword", L"tcl_findlibrary", L"tcl_startofnextword", L"tcl_startofpreviousword", L"tcl_wordbreakafter"
-																				, L"tcl_wordbreakbefore", L"tcltest", L"tclvars", L"tell", L"then", L"time", L"trace", L"unknown", L"unset"
-																				, L"update", L"uplevel", L"upvar", L"variable", L"vwait", L"while"};
+                    , L"auto_reset", L"base", L"bgerror", L"binary", L"body", L"break", L"catch", L"cd", L"class", L"clock", L"close", L"code"
+                    , L"concat", L"configbody", L"constructor", L"continue", L"dde", L"delete", L"destructor", L"else", L"elseif", L"encoding", L"ensemble"
+                    , L"eof", L"error", L"eval", L"exec", L"exit", L"expr", L"fblocked", L"fconfigure", L"fcopy", L"file", L"fileevent", L"filename"
+                    , L"find", L"flush", L"for", L"foreach", L"format", L"gets", L"glob", L"global", L"history", L"http", L"if", L"incr", L"info"
+                    , L"inherit", L"interp", L"is", L"join", L"lappend", L"lindex", L"linsert", L"list", L"llength", L"load", L"local", L"lrange", L"lreplace"
+                    , L"lsearch", L"lset", L"lsort", L"memory", L"method", L"msgcat", L"namespace", L"open", L"package", L"parray", L"pid"
+                    , L"pkg_mkindex", L"private", L"proc", L"protected", L"public", L"puts", L"pwd", L"re_syntax", L"read", L"regexp", L"registry", L"regsub"
+                    , L"rename", L"resource", L"return", L"safe", L"safebase", L"scan", L"scope", L"seek", L"set", L"socket", L"source", L"split"
+                    , L"string", L"subst", L"switch", L"tcl", L"tcl_endofword", L"tcl_findlibrary", L"tcl_startofnextword", L"tcl_startofpreviousword", L"tcl_wordbreakafter"
+                    , L"tcl_wordbreakbefore", L"tcltest", L"tclvars", L"tell", L"then", L"time", L"trace", L"unknown", L"unset"
+                    , L"update", L"uplevel", L"upvar", L"variable", L"vwait", L"while"};
 const String SecondTclTkKeys[92/*# range 0..91*/] = {L"bell", L"bind", L"bindidproc", L"bindproc", L"bindtags", L"bitmap", L"button", L"canvas", L"checkbutton", L"clipboard"
-																				, L"colors", L"combobox", L"console", L"cursors", L"debug", L"destroy", L"entry", L"event", L"exp_after", L"exp_before", L"exp_continue"
-																				, L"exp_internal", L"exp_send", L"expect", L"focus", L"font", L"frame", L"grab", L"grid", L"image", L"interact", L"interpreter"
-																				, L"keysyms", L"label", L"labelframe", L"listbox", L"loadtk", L"log_file", L"log_user", L"lower", L"menu", L"menubutton"
-																				, L"message", L"namespupd", L"option", L"options", L"pack", L"panedwindow", L"photo", L"place", L"radiobutton", L"raise"
-																				, L"rgb", L"scale", L"scrollbar", L"selection", L"send", L"send_error", L"send_log", L"send_tty", L"send_user", L"sendout", L"sleep"
-																				, L"spawn", L"spinbox", L"stty", L"text", L"tk", L"tk_bisque", L"tk_choosecolor", L"tk_choosedirectory", L"tk_dialog", L"tk_focusfollowsmouse"
-																				, L"tk_focusnext", L"tk_focusprev", L"tk_getopenfile", L"tk_getsavefile", L"tk_menusetfocus", L"tk_messagebox"
-																				, L"tk_optionmenu", L"tk_popup", L"tk_setpalette", L"tk_textcopy", L"tk_textcut", L"tk_textpaste", L"tkerror"
-																				, L"tkvars", L"tkwait", L"toplevel", L"wait", L"winfo", L"wm"};
+                    , L"colors", L"combobox", L"console", L"cursors", L"debug", L"destroy", L"entry", L"event", L"exp_after", L"exp_before", L"exp_continue"
+                    , L"exp_internal", L"exp_send", L"expect", L"focus", L"font", L"frame", L"grab", L"grid", L"image", L"interact", L"interpreter"
+                    , L"keysyms", L"label", L"labelframe", L"listbox", L"loadtk", L"log_file", L"log_user", L"lower", L"menu", L"menubutton"
+                    , L"message", L"namespupd", L"option", L"options", L"pack", L"panedwindow", L"photo", L"place", L"radiobutton", L"raise"
+                    , L"rgb", L"scale", L"scrollbar", L"selection", L"send", L"send_error", L"send_log", L"send_tty", L"send_user", L"sendout", L"sleep"
+                    , L"spawn", L"spinbox", L"stty", L"text", L"tk", L"tk_bisque", L"tk_choosecolor", L"tk_choosedirectory", L"tk_dialog", L"tk_focusfollowsmouse"
+                    , L"tk_focusnext", L"tk_focusprev", L"tk_getopenfile", L"tk_getsavefile", L"tk_menusetfocus", L"tk_messagebox"
+                    , L"tk_optionmenu", L"tk_popup", L"tk_setpalette", L"tk_textcopy", L"tk_textcut", L"tk_textpaste", L"tkerror"
+                    , L"tkvars", L"tkwait", L"toplevel", L"wait", L"winfo", L"wm"};
 const String TixKeys[44/*# range 0..43*/] = {L"compound", L"pixmap", L"tix", L"tixballoon", L"tixbuttonbox", L"tixchecklist", L"tixcombobox", L"tixcontrol"
-																				, L"tixdestroy", L"tixdirlist", L"tixdirselectdialog", L"tixdirtree", L"tixdisplaystyle", L"tixexfileselectbox", L"tixexfileselectdialog"
-																				, L"tixfileentry", L"tixfileselectbox", L"tixfileselectdialog", L"tixform", L"tixgetboolean", L"tixgetint"
-																				, L"tixgrid", L"tixhlist", L"tixinputonly", L"tixlabelentry", L"tixlabelframe", L"tixlistnotebook", L"tixmeter", L"tixmwm"
-																				, L"tixnbframe", L"tixnotebook", L"tixoptionmenu", L"tixpanedwindow", L"tixpopupmenu", L"tixscrolledhlist", L"tixscrolledlistbox"
-																				, L"tixscrolledtext", L"tixscrolledwindow", L"tixselect", L"tixstdbuttonbox", L"tixtlist", L"tixtree", L"tixutils"
-																				, L"tixwish"};
+                    , L"tixdestroy", L"tixdirlist", L"tixdirselectdialog", L"tixdirtree", L"tixdisplaystyle", L"tixexfileselectbox", L"tixexfileselectdialog"
+                    , L"tixfileentry", L"tixfileselectbox", L"tixfileselectdialog", L"tixform", L"tixgetboolean", L"tixgetint"
+                    , L"tixgrid", L"tixhlist", L"tixinputonly", L"tixlabelentry", L"tixlabelframe", L"tixlistnotebook", L"tixmeter", L"tixmwm"
+                    , L"tixnbframe", L"tixnotebook", L"tixoptionmenu", L"tixpanedwindow", L"tixpopupmenu", L"tixscrolledhlist", L"tixscrolledlistbox"
+                    , L"tixscrolledtext", L"tixscrolledwindow", L"tixselect", L"tixstdbuttonbox", L"tixtlist", L"tixtree", L"tixutils"
+                    , L"tixwish"};
 const String WidgetKeys[33/*# range 0..32*/] = {L"ArrowButton", L"Button", L"ButtonBox", L"BWidget", L"ComboBox", L"Dialog", L"DragSite", L"DropSite", L"DynamicHelp"
-																				, L"Entry", L"Label", L"LabelEntry", L"LabelFrame", L"ListBox", L"MainFrame", L"MessageDlg", L"NoteBook", L"PagesManager"
-																				, L"PanedWindow", L"PasswdDlg", L"ProgressBar", L"ProgressDlg", L"ScrollableFrame", L"ScrollableWindow", L"ScrolledWindow"
-																				, L"ScrollView", L"SelectColor", L"SelectFont", L"Separator", L"SpinBox", L"TitleFrame", L"Tree", L"Widget"};
+                    , L"Entry", L"Label", L"LabelEntry", L"LabelFrame", L"ListBox", L"MainFrame", L"MessageDlg", L"NoteBook", L"PagesManager"
+                    , L"PanedWindow", L"PasswdDlg", L"ProgressBar", L"ProgressDlg", L"ScrollableFrame", L"ScrollableWindow", L"ScrolledWindow"
+                    , L"ScrollView", L"SelectColor", L"SelectFont", L"Separator", L"SpinBox", L"TitleFrame", L"Tree", L"Widget"};
 
 bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings* KeywordList, bool ACaseSensitive/*# = false*/)
 {
@@ -188,16 +187,16 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TStringList();
 	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
 	fSecondKeys = new TStringList();
 	((TStringList*) fSecondKeys)->Sorted = true;
-	((TStringList*) fSecondKeys)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fSecondKeys)->Duplicates = System::Types::dupIgnore;
 	fTixWords = new TStringList();
 	((TStringList*) fTixWords)->Sorted = true;
-	((TStringList*) fTixWords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fTixWords)->Duplicates = System::Types::dupIgnore;
 	fWidgetWords = new TStringList();
 	((TStringList*) fWidgetWords)->Sorted = true;
-	((TStringList*) fWidgetWords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fWidgetWords)->Duplicates = System::Types::dupIgnore;
 	fKeywords->BeginUpdate();
 	for(stop = 128 /*# High(TclTkKeys) */, i = 0 /*# Low(TclTkKeys) */; i <= stop; i++)
 	{
@@ -223,21 +222,21 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	}
 	fWidgetWords->EndUpdate();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterTclTk__0;
+	fCommentAttri->Style = Synhighlightertcltk__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterTclTk__1;
+	fKeyAttri->Style = Synhighlightertcltk__1;
 	addAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
-	fSecondKeyAttri->Style = SynHighlighterTclTk__2;
+	fSecondKeyAttri->Style = Synhighlightertcltk__2;
 	addAttribute(fSecondKeyAttri);
 	fTixKeyAttri = new TSynHighlighterAttributes(SYNS_AttrTixKeyWords, SYNS_FriendlyAttrTixKeyWords);
-	fTixKeyAttri->Style = SynHighlighterTclTk__3;
+	fTixKeyAttri->Style = Synhighlightertcltk__3;
 	addAttribute(fTixKeyAttri);
 	fWidgetKeyAttri = new TSynHighlighterAttributes(SYNS_AttrWidgetWords, SYNS_FriendlyAttrWidgetWords);
-	fWidgetKeyAttri->Style = SynHighlighterTclTk__4;
+	fWidgetKeyAttri->Style = Synhighlightertcltk__4;
 	addAttribute(fWidgetKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -265,7 +264,6 @@ __fastcall TSynTclTkSyn::~TSynTclTkSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynTclTkSyn::AnsiProc()
 {
@@ -741,7 +739,7 @@ void __fastcall TSynTclTkSyn::ResetRange()
 
 void __fastcall TSynTclTkSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
@@ -757,7 +755,7 @@ void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fKeywords->Assign(Value);
+	fKeywords->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -774,7 +772,7 @@ void __fastcall TSynTclTkSyn::SetSecondKeys(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fSecondKeys->Assign(Value);
+	fSecondKeys->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -896,7 +894,7 @@ void __fastcall TSynTclTkSyn::MinusProc()
 	OK = false;
 	++Run;
   /* minus like symbol */
-	if(CharInSet(fLine[Run], SynHighlighterTclTk__5))
+	if(CharInSet(fLine[Run], Synhighlightertcltk__5))
 		FTokenID = tkSymbol;
 	else
 	{
@@ -909,10 +907,10 @@ void __fastcall TSynTclTkSyn::MinusProc()
 		}
 		else
 		{
-			if(CharInSet(fLine[Run], SynHighlighterTclTk__6))
+			if(CharInSet(fLine[Run], Synhighlightertcltk__6))
 			{
 				++Run;
-				while(CharInSet(fLine[Run], SynHighlighterTclTk__7))
+				while(CharInSet(fLine[Run], Synhighlightertcltk__7))
 					++Run;
 				OK = CharInSet(fLine[Run], EmptyChars);
     /* bad option syntax */
@@ -932,11 +930,11 @@ void __fastcall TSynTclTkSyn::MinusProc()
 
 void __fastcall TSynTclTkSyn::PathProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterTclTk__8))
+	if(CharInSet(fLine[Run + 1], Synhighlightertcltk__8))
 	{
 		FTokenID = tkPath;
 		++Run;
-		while(CharInSet(fLine[Run], SynHighlighterTclTk__9))
+		while(CharInSet(fLine[Run], Synhighlightertcltk__9))
 			++Run;
 	}
 	else
@@ -950,7 +948,7 @@ void __fastcall TSynTclTkSyn::VariableProc()
 {
 	FTokenID = tkVariable;
 	++Run;
-	while(CharInSet(fLine[Run], SynHighlighterTclTk__10))
+	while(CharInSet(fLine[Run], Synhighlightertcltk__10))
 		++Run;
 }
 
@@ -1000,16 +998,8 @@ void SynHighlighterTclTk_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynTclTkSyn));
 }
-class SynHighlighterTclTk_unit
-{
-public:
-	SynHighlighterTclTk_unit()
-	{
-		SynHighlighterTclTk_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterTclTk_unit _SynHighlighterTclTk_unit;
 
 }  // namespace SynHighlighterTclTk
 

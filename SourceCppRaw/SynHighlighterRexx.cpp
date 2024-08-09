@@ -10,13 +10,11 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterrexx
 {
-#define SynHighlighterRexx__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterrexx__0 (TFontStyles() << TFontStyle::fsItalic)
 
 
 const System::Char SYNS_FilterREXX[] = L"Rexx sources|*.REX|All files (*.*)|*.*";
@@ -28,21 +26,21 @@ const System::Char SYNS_AttrStdFunction[] = L"StdFunction";
 const System::Char SYNS_FriendlyAttrStdFunction[] = L"StdFunction";
   // as this language is case-insensitive keywords *must* be in lowercase
 const UnicodeString Keywords[99/*# range 0..98*/] = {L"abbrev", L"abs", L"address", L"arg", L"b2x", L"bitand", L"bitor", L"bitxor", L"c2d", L"c2x", L"call", L"center"
-																				, L"centre", L"changestr", L"charin", L"charout", L"chars", L"compare", L"condition", L"copies", L"d2c", L"d2x", L"datatype", L"date"
-																				, L"delstr", L"delword", L"digits", L"do", L"drop", L"else", L"end", L"errortext", L"exit", L"form", L"format", L"fuzz", L"if"
-																				, L"insert", L"interpret", L"iterate", L"justify", L"lastpos", L"leave", L"left", L"length", L"linein", L"lineout", L"lines", L"linesize"
-																				, L"max", L"min", L"nop", L"numeric", L"options", L"otherwise", L"overlay", L"parse", L"pos", L"procedure", L"pull", L"push"
-																				, L"queue", L"queued", L"random", L"return", L"reverse", L"right", L"rxfuncadd", L"rxfuncdrop", L"rxfuncquery", L"say", L"select"
-																				, L"signal", L"sourceline", L"space", L"stream", L"strip", L"substr", L"subword", L"symbol", L"then", L"time", L"trace", L"translate"
-																				, L"trunc", L"upper", L"value", L"var", L"verify", L"when", L"word", L"wordindex", L"wordlength", L"wordpos", L"words", L"x2b"
-																				, L"x2c", L"x2d", L"xrange"};
+                    , L"centre", L"changestr", L"charin", L"charout", L"chars", L"compare", L"condition", L"copies", L"d2c", L"d2x", L"datatype", L"date"
+                    , L"delstr", L"delword", L"digits", L"do", L"drop", L"else", L"end", L"errortext", L"exit", L"form", L"format", L"fuzz", L"if"
+                    , L"insert", L"interpret", L"iterate", L"justify", L"lastpos", L"leave", L"left", L"length", L"linein", L"lineout", L"lines", L"linesize"
+                    , L"max", L"min", L"nop", L"numeric", L"options", L"otherwise", L"overlay", L"parse", L"pos", L"procedure", L"pull", L"push"
+                    , L"queue", L"queued", L"random", L"return", L"reverse", L"right", L"rxfuncadd", L"rxfuncdrop", L"rxfuncquery", L"say", L"select"
+                    , L"signal", L"sourceline", L"space", L"stream", L"strip", L"substr", L"subword", L"symbol", L"then", L"time", L"trace", L"translate"
+                    , L"trunc", L"upper", L"value", L"var", L"verify", L"when", L"word", L"wordindex", L"wordlength", L"wordpos", L"words", L"x2b"
+                    , L"x2c", L"x2d", L"xrange"};
 const int KeyIndices[349/*# range 0..348*/] = {-1, 26, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, 20, -1, 75, 0, -1, 98, -1, -1, 50, -1, 10, -1, -1, -1, -1, -1, 44, -1, -1, -1, -1, -1, -1, -1, 66, -1, -1, -1, 84, -1, -1
-																				, -1, -1, 83, 13, 42, 39, -1, -1, 5, -1, -1, 49, -1, -1, -1, 87, -1, 1, -1, -1, -1, -1, -1, 65, -1, 12, 74, -1, 38, 29, -1, 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, 80, 45, 68, 19, -1, -1, 63, -1, 67, -1, -1
-																				, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, 72, -1, -1, 60, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, 3, 23, -1, -1, 93, -1, -1, -1, -1, 47, 61, 30, -1, -1, -1, -1, -1, 14, -1, -1, -1, -1, -1, 9, -1, -1, -1
-																				, -1, -1, 59, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, 90, -1, -1, -1, 92, -1, -1, 37, -1, -1, -1, 8, -1, 41, -1, -1, 51, -1, -1, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, 86, 88, 78, -1, -1, -1
-																				, -1, 56, -1, -1, -1, -1, 31, -1, -1, 7, -1, 46, 27, 22, -1, -1, -1, 73, -1, -1, -1, -1, 16, -1, 94, -1, -1, -1, -1, 43, -1, -1, -1, -1, 36, -1, -1, -1, -1, 48, -1, -1, 53, -1, -1, -1, 34, -1, -1, -1, -1
-																				, -1, -1, -1, -1, 70, -1, -1, -1, 95, 24, -1, -1, -1, -1, -1, -1, 69, -1, 35, -1, -1, -1, 81, -1, 96, -1, -1, -1, -1, -1, 85, 62, -1, -1, 28, -1, -1, 57, 4, 15, 97, 77, -1, -1, -1, -1, -1, 17, -1, -1, -1
-																				, -1, -1, 91, -1, -1, -1, 52, 71, 76, -1, 25, 55, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 64, -1, -1, 11, -1, -1, -1, -1, -1, 89, 54, -1, -1, -1, 40, -1, 32, 2, 21};
+                    , -1, -1, 83, 13, 42, 39, -1, -1, 5, -1, -1, 49, -1, -1, -1, 87, -1, 1, -1, -1, -1, -1, -1, 65, -1, 12, 74, -1, 38, 29, -1, 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, 80, 45, 68, 19, -1, -1, 63, -1, 67, -1, -1
+                    , -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, 72, -1, -1, 60, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, 3, 23, -1, -1, 93, -1, -1, -1, -1, 47, 61, 30, -1, -1, -1, -1, -1, 14, -1, -1, -1, -1, -1, 9, -1, -1, -1
+                    , -1, -1, 59, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, 90, -1, -1, -1, 92, -1, -1, 37, -1, -1, -1, 8, -1, 41, -1, -1, 51, -1, -1, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, 86, 88, 78, -1, -1, -1
+                    , -1, 56, -1, -1, -1, -1, 31, -1, -1, 7, -1, 46, 27, 22, -1, -1, -1, 73, -1, -1, -1, -1, 16, -1, 94, -1, -1, -1, -1, 43, -1, -1, -1, -1, 36, -1, -1, -1, -1, 48, -1, -1, 53, -1, -1, -1, 34, -1, -1, -1, -1
+                    , -1, -1, -1, -1, 70, -1, -1, -1, 95, 24, -1, -1, -1, -1, -1, -1, 69, -1, 35, -1, -1, -1, 81, -1, 96, -1, -1, -1, -1, -1, 85, 62, -1, -1, 28, -1, -1, 57, 4, 15, 97, 77, -1, -1, -1, -1, -1, 17, -1, -1, -1
+                    , -1, -1, 91, -1, -1, -1, 52, 71, 76, -1, 25, 55, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 64, -1, -1, 11, -1, -1, -1, -1, -1, 89, 54, -1, -1, -1, 40, -1, 32, 2, 21};
 
 void __fastcall TSynRexxSyn::InitIdent()
 {
@@ -50,7 +48,7 @@ void __fastcall TSynRexxSyn::InitIdent()
 	int stop = 0;
 	for(stop = 348 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[15] = FuncAbbrev;
@@ -1350,7 +1348,7 @@ __fastcall TSynRexxSyn::TSynRexxSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterRexx__0;
+	fCommentAttri->Style = Synhighlighterrexx__0;
 	fCommentAttri->Foreground = (TColor) 0x00EFBC89;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
@@ -1611,7 +1609,7 @@ void __fastcall TSynRexxSyn::ResetRange()
 
 void __fastcall TSynRexxSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynRexxSyn::GetRange()
@@ -1631,16 +1629,8 @@ void SynHighlighterRexx_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynRexxSyn));
 }
-class SynHighlighterRexx_unit
-{
-public:
-	SynHighlighterRexx_unit()
-	{
-		SynHighlighterRexx_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterRexx_unit _SynHighlighterRexx_unit;
 
 }  // namespace SynHighlighterRexx
 

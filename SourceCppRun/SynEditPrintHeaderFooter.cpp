@@ -15,16 +15,15 @@ using namespace Syneditprinttypes;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Math;
-using namespace System::Sysutils;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Syneditprintheaderfooter
 {
-#define SynEditPrintHeaderFooter__0 (TFrameTypes() << ftLine)
-#define SynEditPrintHeaderFooter__1 TFrameTypes()
-#define SynEditPrintHeaderFooter__2 (TFrameTypes() << ftBox << ftShaded)
-#define SynEditPrintHeaderFooter__3 TFrameTypes()
+#define Syneditprintheaderfooter__0 (TFrameTypes() << ftLine)
+#define Syneditprintheaderfooter__1 TFrameTypes()
+#define Syneditprintheaderfooter__2 (TFrameTypes() << ftBox << ftShaded)
+#define Syneditprintheaderfooter__3 TFrameTypes()
 
 __fastcall TLineInfo::TLineInfo() {}
 
@@ -38,7 +37,7 @@ String __fastcall GetFirstEl(String& Value, WideChar Delim)
 	int P = 0;
 	P = Pos(Delim, Value);
 	if(P == 0)
-		P = (int) (Value.Length() + 1);
+		P = Value.Length() + 1;
 	result = Value.SubString(1, P - 1);
 	Value.Delete(1, 	P);
 	return result;
@@ -62,7 +61,6 @@ __fastcall THeaderFooterItem::~THeaderFooterItem()
 	// inherited;
 	delete FFont;
 }
-
 
 // Returns string representation of THeaderFooterItem to alleviate storing
 // items into external storage (registry, ini file).
@@ -175,7 +173,7 @@ String __fastcall THeaderFooterItem::GetText(int NumPages, int PageNum, bool Rom
 	if(Trim(AStr) == L"")
 		return result;
   // parse the line
-	Len = (int) AStr.Length();
+	Len = AStr.Length();
 	if(Len > 0)
       // start with left-aligned text
 	{
@@ -242,8 +240,8 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		try
 		{
 			with0->Read((void**) Buffer, BufferSize);
-			((PWideChar) Buffer)[(int)(BufferSize / sizeof(WideChar))] = L'\x00';
-			FText = (wchar_t*) Buffer;
+			((PWideChar) Buffer)[(int)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
+			FText = (wchar_t*) Buffer /*# check length*/;
 		}
 		__finally
 		{
@@ -259,8 +257,8 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		try
 		{
 			with0->Read((void**) Buffer, BufferSize);
-			((PAnsiChar) Buffer)[(int)(BufferSize / sizeof(AnsiChar))] = '\x00';
-			AName = UnicodeString((char*) Buffer);
+			((PAnsiChar) Buffer)[(int)(BufferSize / /*div*/ sizeof(AnsiChar))] = '\x00';
+			AName = UnicodeString((char*)Buffer /*# check length*/);
 		}
 		__finally
 		{
@@ -293,7 +291,7 @@ void __fastcall THeaderFooterItem::SaveToStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		ALen = (int) FText.Length();
+		ALen = FText.Length();
 		with0->Write(&ALen, sizeof(ALen));
 		with0->Write(FText.c_str(), ALen * sizeof(WideChar));
 		with0->Write(&fLineNumber, sizeof(fLineNumber));
@@ -308,7 +306,7 @@ void __fastcall THeaderFooterItem::SaveToStream(TStream* AStream)
 		with0->Write(&ACharSet, sizeof(ACharSet));
 		with0->Write(&AColor, sizeof(AColor));
 		with0->Write(&AHeight, sizeof(AHeight));
-		ALen = (int) AName.Length();
+		ALen = AName.Length();
 		with0->Write(&ALen, sizeof(ALen));
 		with0->Write(AnsiString(AName).c_str(), ALen);
 		with0->Write(&APitch, sizeof(APitch));
@@ -324,7 +322,7 @@ void __fastcall THeaderFooterItem::SetAsString(const String Value)
 	TFontStyles sty;
 	s = Value;
 	FText = DecodeString(GetFirstEl(s, L'/'));
-	FFont->Charset = (TFontCharset) StrToIntDef(GetFirstEl(s, L'/'), 0);
+	FFont->Charset = (System::Uitypes::TFontCharset) StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FFont->Color = (TColor) StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FFont->Height = StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FFont->Name = DecodeString(GetFirstEl(s, L'/'));
@@ -339,7 +337,7 @@ void __fastcall THeaderFooterItem::SetAsString(const String Value)
 
 void __fastcall THeaderFooterItem::SetFont(TFont* const Value)
 {
-	FFont->Assign(Value);
+	FFont->Assign((TPersistent*) Value);
 }
 
 /* THeaderFooter */
@@ -362,17 +360,17 @@ __fastcall THeaderFooter::THeaderFooter()
 			FMirrorPosition(false)
 {
 	// inherited;
-	FFrameTypes = SynEditPrintHeaderFooter__0;
+	FFrameTypes = Syneditprintheaderfooter__0;
 	FShadedColor = clSilver;
 	FLineColor = clBlack;
-	FItems = new System::Classes::TList();
+	FItems = new TList();
 	FDefaultFont = new TFont();
 	FOldPen = new TPen();
 	FOldBrush = new TBrush();
 	FOldFont = new TFont();
 	FRomanNumbers = false;
 	FMirrorPosition = false;
-	FLineInfo = new System::Classes::TList();
+	FLineInfo = new TList();
 	/*# with FDefaultFont do */
 	{
 		auto with0 = FDefaultFont;
@@ -399,7 +397,6 @@ __fastcall THeaderFooter::~THeaderFooter()
 	delete FLineInfo;
 	// inherited;
 }
-
 
 int __fastcall THeaderFooter::Add(String Text, TFont* Font, TAlignment Alignment, int LineNumber)
 {
@@ -445,7 +442,7 @@ void __fastcall THeaderFooter::Clear()
 
 void __fastcall THeaderFooter::SetDefaultFont(TFont* const Value)
 {
-	FDefaultFont->Assign(Value);
+	FDefaultFont->Assign((TPersistent*) Value);
 }
 
 /* Counts number of lines in header/footer and changes the line-number so they
@@ -572,7 +569,7 @@ void __fastcall THeaderFooter::RestoreFontPenBrush(TCanvas* ACanvas)
 
 void __fastcall THeaderFooter::DrawFrame(TCanvas* ACanvas)
 {
-	if(FrameTypes == SynEditPrintHeaderFooter__1)
+	if(FrameTypes == Syneditprintheaderfooter__1)
 		return;
 	/*# with ACanvas, FMargins do */
 	{
@@ -588,7 +585,7 @@ void __fastcall THeaderFooter::DrawFrame(TCanvas* ACanvas)
 			with0->Pen->Style = psSolid;
 		else
 			with0->Pen->Style = psClear;
-		if(FrameTypes * SynEditPrintHeaderFooter__2 != SynEditPrintHeaderFooter__3)
+		if(FrameTypes * Syneditprintheaderfooter__2 != Syneditprintheaderfooter__3)
 		{
 			if(fType == hftHeader)
 				with0->Rectangle(with1->PLeft, with1->PHeader - FFrameHeight, with1->PRight, with1->PHeader);
@@ -672,7 +669,7 @@ void __fastcall THeaderFooter::Print(TCanvas* ACanvas, int PageNum)
 				X = with0->PRightHFTextIndent - ACanvas->TextWidth(AStr);
 				break;
 				case taCenter:
-				X = (int)((with0->PLeftHFTextIndent + with0->PRightHFTextIndent - ACanvas->TextWidth(AStr)) / 2);
+				X = (int)((with0->PLeftHFTextIndent + with0->PRightHFTextIndent - ACanvas->TextWidth(AStr)) / /*div*/ 2);
 				break;
 				default:
 				  ;
@@ -681,7 +678,7 @@ void __fastcall THeaderFooter::Print(TCanvas* ACanvas, int PageNum)
 		}
       /*Aligning at base line - Fonts can have different size in headers and footers*/
 		OldAlign = SetTextAlign(ACanvas->Handle, (UINT) TA_BASELINE);
-		ExtTextOutW(ACanvas->Handle, X, Y + ((TLineInfo*) FLineInfo->Items[CurLine - 1])->MaxBaseDist, 0, nullptr, ustr2pwchar(AStr), (int) AStr.Length(), nullptr);
+		ExtTextOutW(ACanvas->Handle, X, Y + ((TLineInfo*) FLineInfo->Items[CurLine - 1])->MaxBaseDist, 0, nullptr, ustr2pwchar(AStr), AStr.Length(), nullptr);
 		SetTextAlign(ACanvas->Handle, OldAlign);
 	}
 	RestoreFontPenBrush(ACanvas);
@@ -861,9 +858,9 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 		with0->Write(&ACharSet, sizeof(ACharSet));
 		with0->Write(&AColor, sizeof(AColor));
 		with0->Write(&AHeight, sizeof(AHeight));
-		ALen = (int) AName.Length();
+		ALen = AName.Length();
 		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(AnsiString(AName).c_str(), (int) AName.Length());
+		with0->Write(AnsiString(AName).c_str(), AName.Length());
 		with0->Write(&APitch, sizeof(APitch));
 		with0->Write(&ASize, sizeof(ASize));
 		with0->Write(&AStyle, sizeof(AStyle));

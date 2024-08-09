@@ -1,3 +1,65 @@
+/*==============================================================================
+  Content:  TheTextDrawer, a helper class for drawing of
+            fixed-pitched font characters
+ ==============================================================================
+  The contents of this file are subject to the Mozilla Public License Ver. 1.0
+  (the "License"); you may not use this file except in compliance with the
+  License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
+
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+  the specific language governing rights and limitations under the License.
+ ==============================================================================
+  The Original Code is HANAI Tohru's private delphi library.
+ ==============================================================================
+  The Initial Developer of the Original Code is HANAI Tohru (Japan)
+  Portions created by HANAI Tohru are Copyright (C) 1999.
+  All Rights Reserved.
+ ==============================================================================
+  Contributor(s):   HANAI Tohru
+  Unicode translation by Maël Hörz.
+ ==============================================================================
+  History:  01/19/1999  HANAI Tohru
+                        Initial Version
+            02/13/1999  HANAI Tohru
+                        Changed default intercharacter spacing
+            09/09/1999  HANAI Tohru
+                        Redesigned all. Simplified interfaces.
+                        When drawing text now it uses TextOut + SetTextCharacter-
+                        Extra insted ExtTextOut since ExtTextOut has a little
+                        heavy behavior.
+            09/10/1999  HANAI Tohru
+                        Added code to call ExtTextOut because there is a problem
+                        when TextOut called with italicized raster type font.
+                        After this changing, ExtTextOut is called without the
+                        last parameter `lpDx' and be with SetTextCharacterExtra.
+                        This pair performs faster than with `lpDx'.
+            09/14/1999  HANAI Tohru
+                        Changed code for saving/restoring DC
+            09/15/1999  HANAI Tohru
+                        Added X/Y parameters to ExtTextOut.
+            09/16/1999  HANAI Tohru
+                        Redesigned for multi-bytes character drawing.
+            09/19/1999  HANAI Tohru
+                        Since TheTextDrawer grew fat it was split into three
+                        classes - TheFontStock, TheTextDrawer and TheTextDrawerEx.
+                        Currently it should avoid TheTextDrawer because it is
+                        slower than TheTextDrawer.
+            09/25/1999  HANAI Tohru
+                        Added internally definition of LeadBytes for Delphi 2
+            10/01/1999  HANAI Tohru
+                        To save font resources, now all fonts data are shared
+                        among all of TheFontStock instances. With this changing,
+                        there added a new class `TheFontsInfoManager' to manage
+                        those shared data.
+            10/09/1999  HANAI Tohru
+                        Added BaseStyle property to TheFontFont class.
+ ==============================================================================*/
+
+// $Id: SynTextDrawer.pas,v 1.6.2.17 2008/09/17 13:59:12 maelh Exp $
+
+// SynEdit note: The name had to be changed to get SynEdit to install 
+//   together with mwEdit into the same Delphi installation
 #ifndef SynTextDrawerH
 #define SynTextDrawerH
 
@@ -76,6 +138,42 @@ namespace Syntextdrawer
 
 // SynEdit note: The name had to be changed to get SynEdit to install 
 //   together with mwEdit into the same Delphi installation
+
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int FontStyleCount = int((TFontStyle) 3 /*# High(TFontStyle) */) + 1;
 const int FontStyleCombineCount = (1 << FontStyleCount);
 typedef int TIntegerArray[536870911/*# range 0..MaxInt div SizeOf(Integer)-1*/];
@@ -102,7 +200,7 @@ struct TheSharedFontsInfo
 	int RefCount;
 	int LockCount;
     // font information
-	Vcl::Graphics::TFont* BaseFont;
+	TFont* BaseFont;
 	TLogFont BaseLF;
 	bool IsTrueType;
 	TheFontsData FontsData;
@@ -114,26 +212,26 @@ class TheFontsInfoManager : public System::TObject
 {
 	#include "SynTextDrawer_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
-	System::Classes::TList* FFontsInfo;
+	TList* FFontsInfo;
 	PheSharedFontsInfo __fastcall FindFontsInfo(const TLogFont& LF);
-	PheSharedFontsInfo __fastcall CreateFontsInfo(Vcl::Graphics::TFont* ABaseFont, const TLogFont& LF);
+	PheSharedFontsInfo __fastcall CreateFontsInfo(TFont* ABaseFont, const TLogFont& LF);
 	void __fastcall DestroyFontHandles(PheSharedFontsInfo pFontsInfo);
-	void __fastcall RetrieveLogFontForComparison(Vcl::Graphics::TFont* ABaseFont, TLogFont& LF);
+	void __fastcall RetrieveLogFontForComparison(TFont* ABaseFont, TLogFont& LF);
 public:
 	__fastcall TheFontsInfoManager();
 	virtual __fastcall ~TheFontsInfoManager();
 	void __fastcall LockFontsInfo(PheSharedFontsInfo pFontsInfo);
 	void __fastcall UnLockFontsInfo(PheSharedFontsInfo pFontsInfo);
-	PheSharedFontsInfo __fastcall GetFontsInfo(Vcl::Graphics::TFont* ABaseFont);
+	PheSharedFontsInfo __fastcall GetFontsInfo(TFont* ABaseFont);
 	void __fastcall ReleaseFontsInfo(PheSharedFontsInfo pFontsInfo);
 };
 
   /* TheFontStock */
-enum SynTextDrawerEnum__0 {tooOpaque,
+enum SyntextdrawerEnum__0 {tooOpaque,
                            tooClipped };
-typedef System::Set<SynTextDrawerEnum__0, tooOpaque, tooClipped> TTextOutOptions;
+typedef System::Set<SyntextdrawerEnum__0, SyntextdrawerEnum__0::tooOpaque, SyntextdrawerEnum__0::tooClipped> TTextOutOptions;
 typedef void __fastcall (__closure *TheExtTextOutProc) (int, int, TTextOutOptions, const TRect&, const String, int);
 
 class EheFontStockException : public System::Sysutils::Exception
@@ -159,7 +257,7 @@ class TheFontStock : public System::TObject
 {
 	#include "SynTextDrawer_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
     // private DC
 	HDC FDC;
@@ -175,7 +273,7 @@ private:
 	PheFontData FpCrntFontData;
     // local font info
 	TLogFont FBaseLF;
-	Vcl::Graphics::TFont* __fastcall GetBaseFont();
+	TFont* __fastcall GetBaseFont();
 	bool __fastcall GetIsTrueType();
 protected:
 	virtual HDC __fastcall InternalGetDC();
@@ -186,16 +284,16 @@ protected:
 	virtual PheFontData __fastcall GetFontData(int Idx);
 	void __fastcall UseFontHandles();
 	void __fastcall ReleaseFontsInfo();
-	virtual void __fastcall SetBaseFont(Vcl::Graphics::TFont* Value);
+	virtual void __fastcall SetBaseFont(TFont* Value);
 	virtual void __fastcall SetStyle(TFontStyles Value);
 	__property PheFontData FontData[int Idx] = { read = GetFontData };
 	__property PheSharedFontsInfo FontsInfo = { read = FpInfo };
 public:
 	__classmethod virtual int __fastcall CalcFontAdvance(HDC DC, PInteger pCharHeight);
-	__fastcall TheFontStock(Vcl::Graphics::TFont* InitialFont);
+	__fastcall TheFontStock(TFont* InitialFont);
 	virtual __fastcall ~TheFontStock();
 	virtual void __fastcall ReleaseFontHandles();
-	__property Vcl::Graphics::TFont* BaseFont = { read = GetBaseFont };
+	__property TFont* BaseFont = { read = GetBaseFont };
 	__property TFontStyles Style = { read = FCrntStyle, write = SetStyle };
 	__property HFONT FontHandle = { read = FCrntFont };
 	__property int CharAdvance = { read = GetCharAdvance };
@@ -229,14 +327,14 @@ class TheTextDrawer : public System::TObject
 {
 	#include "SynTextDrawer_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
 	HDC FDC;
 	int FSaveDC;
 
     // Font information
 	TheFontStock* FFontStock;
-	Vcl::Graphics::TBitmap* FStockBitmap;
+	TBitmap* FStockBitmap;
 	TFontStyles FCalcExtentBaseStyle;
 	int FBaseCharWidth;
 	int FBaseCharHeight;
@@ -268,7 +366,7 @@ protected:
 	__property int BaseCharWidth = { read = FBaseCharWidth };
 	__property int BaseCharHeight = { read = FBaseCharHeight };
 public:
-	__fastcall TheTextDrawer(TFontStyles CalcExtentBaseStyle, Vcl::Graphics::TFont* BaseFont);
+	__fastcall TheTextDrawer(TFontStyles CalcExtentBaseStyle, TFont* BaseFont);
 	virtual __fastcall ~TheTextDrawer();
 	virtual int __fastcall GetCharWidth();
 	virtual int __fastcall GetCharHeight();
@@ -280,7 +378,7 @@ public:
 	TSize __fastcall TextExtent(PWideChar Text, int Count);
 	int __fastcall TextWidth(const String Text);
 	int __fastcall TextWidth(PWideChar Text, int Count);
-	virtual void __fastcall SetBaseFont(Vcl::Graphics::TFont* Value);
+	virtual void __fastcall SetBaseFont(TFont* Value);
 	virtual void __fastcall SetBaseStyle(const TFontStyles Value);
 	virtual void __fastcall SetStyle(TFontStyles Value);
 	virtual void __fastcall SetForeColor(TColor Value);
@@ -289,7 +387,7 @@ public:
 	virtual void __fastcall ReleaseTemporaryResources();
 	__property int CharWidth = { read = GetCharWidth };
 	__property int CharHeight = { read = GetCharHeight };
-	__property Vcl::Graphics::TFont* BaseFont = { write = SetBaseFont };
+	__property TFont* BaseFont = { write = SetBaseFont };
 	__property TFontStyles BaseStyle = { write = SetBaseStyle };
 	__property TColor ForeColor = { write = SetForeColor };
 	__property TColor BackColor = { write = SetBackColor };

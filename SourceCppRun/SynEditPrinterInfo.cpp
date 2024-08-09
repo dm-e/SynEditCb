@@ -6,7 +6,6 @@
 using namespace std;
 using namespace d2c_system;
 using namespace System;
-using namespace Vcl::Printers;
 
 namespace Syneditprinterinfo
 {

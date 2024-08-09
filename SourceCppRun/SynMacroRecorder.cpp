@@ -23,16 +23,16 @@ using namespace Vcl::Forms;
 
 namespace Synmacrorecorder
 {
-#define SynMacroRecorder__0 (TShiftState() << ssCtrl << ssShift)
-#define SynMacroRecorder__1 (TShiftState() << ssCtrl << ssShift)
-#define SynMacroRecorder__2 (TReplaceFlags() << System_Sysutils__95::rfReplaceAll)
+#define Synmacrorecorder__0 (TShiftState() << ssCtrl << ssShift)
+#define Synmacrorecorder__1 (TShiftState() << ssCtrl << ssShift)
+#define Synmacrorecorder__2 (TReplaceFlags() << rfReplaceAll)
 
 __fastcall TSynBasicEvent::TSynBasicEvent() {}
 __fastcall TSynCharEvent::TSynCharEvent() {}
 __fastcall TSynStringEvent::TSynStringEvent() {}
 __fastcall TSynPositionEvent::TSynPositionEvent() {}
 __fastcall TSynDataEvent::TSynDataEvent() {}
-__fastcall TSynMacroRecorder::TSynMacroRecorder(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynMacroRecorder::TSynMacroRecorder(TComponent* AOwner) : inherited(AOwner) {}
 
 
 
@@ -105,8 +105,8 @@ __fastcall TCustomSynMacroRecorder::TCustomSynMacroRecorder(TComponent* AOwner)
 	fMacroName = L"unnamed";
 	fCommandIDs[mcRecord] = NewPluginCommand();
 	fCommandIDs[mcPlayback] = NewPluginCommand();
-	fShortCuts[mcRecord] = Menus::ShortCut((WORD) int(L'R'), SynMacroRecorder__0);
-	fShortCuts[mcPlayback] = Menus::ShortCut((WORD) int(L'P'), SynMacroRecorder__1);
+	fShortCuts[mcRecord] = Menus::ShortCut((WORD) int(L'R'), Synmacrorecorder__0);
+	fShortCuts[mcPlayback] = Menus::ShortCut((WORD) int(L'P'), Synmacrorecorder__1);
 }
 
 TSynMacroEvent* __fastcall TCustomSynMacroRecorder::CreateMacroEvent(TSynEditorCommand ACmd)
@@ -167,7 +167,6 @@ __fastcall TCustomSynMacroRecorder::~TCustomSynMacroRecorder()
 	ReleasePluginCommand(RecordCommandID);
 }
 
-
 void __fastcall TCustomSynMacroRecorder::DoAddEditor(TCustomSynEdit* AEditor)
 {
 	HookEditor(AEditor, RecordCommandID, (TShortCut) 0, RecordShortCut);
@@ -212,7 +211,7 @@ bool __fastcall TCustomSynMacroRecorder::GetIsEmpty()
 void __fastcall TCustomSynMacroRecorder::InsertCustomEvent(int AIndex, TSynMacroEvent* AEvent)
 {
 	if(FEvents == nullptr)
-		FEvents = new System::Classes::TList();
+		FEvents = new TList();
 	FEvents->Insert(AIndex, AEvent);
 }
 
@@ -246,10 +245,10 @@ void __fastcall TCustomSynMacroRecorder::LoadFromStreamEx(TStream* aSrc, bool aC
 	Stop();
 	if(aClear)
 		Clear();
-	FEvents = new System::Classes::TList();
+	FEvents = new TList();
 	aSrc->Read((void**)&cnt, sizeof(cnt));
 	i = 0;
-	FEvents->Capacity = (int) ((__int64)(aSrc->Size / sizeof(TSynEditorCommand)));
+	FEvents->Capacity = (__int64)(aSrc->Size / /*div*/ sizeof(TSynEditorCommand));
 	while((aSrc->Position < aSrc->Size) && (i < cnt))
 	{
 		aSrc->Read((void**)&iCommand, sizeof(TSynEditorCommand));
@@ -372,7 +371,7 @@ void __fastcall TCustomSynMacroRecorder::RecordMacro(TCustomSynEdit* AEditor)
 	if(fState != msStopped)
 		Error(sCannotRecord);
 	Clear();
-	FEvents = new System::Classes::TList();
+	FEvents = new TList();
 	FEvents->Capacity = 512;
 	fState = msRecording;
 	FCurrentEditor = AEditor;
@@ -508,7 +507,7 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 	TSynMacroEvent* IEvent = nullptr;
 	Stop();
 	Clear();
-	FEvents = new System::Classes::TList();
+	FEvents = new TList();
   // process file line by line and create events
 	s = new TStringList();
 	try
@@ -520,7 +519,7 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 			cmdStr = Trim(s->Strings[i]);
 			P = Pos(L" ", cmdStr);
 			if(P == 0)
-				P = (int) (cmdStr.Length() + 1);
+				P = cmdStr.Length() + 1;
 			cmd = ecNone;
 			if(IdentToEditorCommand(cmdStr.SubString(1, P - 1), cmd))  // D2 needs type-cast
 			{
@@ -722,7 +721,7 @@ void __fastcall TSynPositionEvent::Initialize(TSynEditorCommand ACmd, WideChar A
 {
 	inherited::Initialize(ACmd, AChar, AData);
 	if(AData != nullptr)
-		Position = *((TBufferCoord*) &(*(TBufferCoord*) AData));
+		Position = (*(TBufferCoord*) AData);
 	else
 		Position = BufferCoord(0, 0);
 }
@@ -768,7 +767,7 @@ void __fastcall TSynStringEvent::InitEventParameters(String AStr)
 	O = Pos(L"\'", AStr);
 	C = LastDelimiter(L"\'", AStr);
 	valStr = AStr.SubString(O + 1, C - O - 1);
-	Value = StringReplace(valStr, L"''", L"\'", SynMacroRecorder__2);
+	Value = StringReplace(valStr, L"''", L"\'", Synmacrorecorder__2);
 	AStr.Delete(1, 	C);
 	RepeatCount = (unsigned char) StrToIntDef(Trim(AStr), 1);
 }
@@ -808,7 +807,7 @@ void __fastcall TSynStringEvent::Playback(TCustomSynEdit* AEditor)
     // SynEdit doesn't actually support the ecString command so we convert
     // it into ecChar commands
 		int stop1 = 0;
-		for(stop1 = (int) Value.Length(), i = 1; i <= stop1; i++)
+		for(stop1 = Value.Length(), i = 1; i <= stop1; i++)
 		{
 			AEditor->CommandProcessor((TSynEditorCommand) ecChar, Value[i], nullptr);
 		}
@@ -821,7 +820,7 @@ void __fastcall TSynStringEvent::SaveToStream(TStream* AStream)
 	int l = 0;
 	PWideChar Buff = nullptr;
 	AStream->Write(&StrCommand, sizeof(StrCommand));
-	l = (int) (Value.Length() + 1);
+	l = Value.Length() + 1;
 	AStream->Write(&l, sizeof(l));
 	Buff = (PWideChar) GetMemory(l * sizeof(WideChar));
 	try

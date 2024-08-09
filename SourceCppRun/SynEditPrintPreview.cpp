@@ -12,16 +12,14 @@ using namespace Syneditprint;
 using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
 using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Controls;
-using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
 
 namespace Syneditprintpreview
 {
-#define SynEditPrintPreview__0 (TControlStyle() << csNeedsBorderPaint)
+#define Syneditprintpreview__0 (TControlStyle() << csNeedsBorderPaint)
 
 __fastcall TSynEditPrintPreview::TSynEditPrintPreview(HWND ParentWindow) : inherited(ParentWindow) {}
 
@@ -34,7 +32,7 @@ const int SHADOW_SIZE = 2; // page shadow width
 
 __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
  : inherited(AOwner),
-			FBorderStyle((TBorderStyle) TFormBorderStyle::bsSingle),
+			FBorderStyle((TBorderStyle) bsSingle),
 			FSynEditPrint(nullptr),
 			FScaleMode(pscWholePage),
 			FScalePercent(0),
@@ -43,7 +41,7 @@ __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
 			FShowScrollHint(false),
 			FWheelAccumulator(0)
 {
-	ControlStyle = ControlStyle + SynEditPrintPreview__0;
+	ControlStyle = ControlStyle + Syneditprintpreview__0;
 	FScaleMode = pscUserScaled;
 	FScalePercent = 100;
 	FPageBG = clWhite;
@@ -66,7 +64,7 @@ void __fastcall TSynEditPrintPreview::CreateParams(TCreateParams& Params)
 	{
 		auto& with0 = Params;
 		with0.Style = with0.Style | WS_HSCROLL | WS_VSCROLL | BorderStyles[FBorderStyle] | WS_CLIPCHILDREN;
-		if(NewStyleControls && Ctl3D && (FBorderStyle == TFormBorderStyle::bsSingle))
+		if(NewStyleControls && Ctl3D && (FBorderStyle == bsSingle))
 		{
 			with0.Style = with0.Style & ~WS_BORDER;
 			with0.ExStyle = with0.ExStyle | WS_EX_CLIENTEDGE;
@@ -265,7 +263,7 @@ void __fastcall TSynEditPrintPreview::ScrollHorzTo(int Value)
 		n = Value - FScrollPosition.X;
 		FScrollPosition.X = Value;
 		UpdateScrollBars();
-		if(Abs(n) > (int)(nW / 2))
+		if(Abs(n) > (int)(nW / /*div*/ 2))
 			Invalidate();
 		else
 		{
@@ -295,7 +293,7 @@ void __fastcall TSynEditPrintPreview::ScrollVertTo(int Value)
 		n = Value - FScrollPosition.Y;
 		FScrollPosition.Y = Value;
 		UpdateScrollBars();
-		if(Abs(n) > (int)(nH / 2))
+		if(Abs(n) > (int)(nH / /*div*/ 2))
 			Invalidate();
 		else
 		{
@@ -344,10 +342,10 @@ void __fastcall TSynEditPrintPreview::SizeChanged()
 	FVirtualSize.Y = FPageSize.Y + 2 * MARGIN_Y + SHADOW_SIZE;
 	FVirtualOffset.X = MARGIN_X;
 	if(FVirtualSize.X < ClientWidth)
-		FVirtualOffset.X += (int)((ClientWidth - FVirtualSize.X) / 2);
+		FVirtualOffset.X += (int)((ClientWidth - FVirtualSize.X) / /*div*/ 2);
 	FVirtualOffset.Y = MARGIN_Y;
 	if(FVirtualSize.Y < ClientHeight)
-		FVirtualOffset.Y += (int)((ClientHeight - FVirtualSize.Y) / 2);
+		FVirtualOffset.Y += (int)((ClientHeight - FVirtualSize.Y) / /*div*/ 2);
 	UpdateScrollBars();
 // TODO
 	FScrollPosition.X = 0;
@@ -357,8 +355,8 @@ void __fastcall TSynEditPrintPreview::SizeChanged()
 void __fastcall TSynEditPrintPreview::UpdateScrollBars()
 {
 	TScrollInfo SI = {};
-	FillChar((void**)&SI, sizeof(TScrollInfo), 0);
-	SI.cbSize = (UINT) sizeof(TScrollInfo);
+	FillChar((void**)&SI, (int) sizeof(TScrollInfo), 0);
+	SI.cbSize = sizeof(TScrollInfo);
 	SI.fMask = (UINT) SIF_ALL;
 	switch(FScaleMode)
 	{
@@ -495,16 +493,16 @@ void __fastcall TSynEditPrintPreview::WMHScroll(TWMHScroll& Msg)
 			ScrollHorzTo(-FVirtualSize.X);
 			break;
 			case SB_LINEDOWN:
-			ScrollHorzFor(-((int)(nW / 10)));
+			ScrollHorzFor(-((int)(nW / /*div*/ 10)));
 			break;
 			case SB_LINEUP:
-			ScrollHorzFor((int)(nW / 10));
+			ScrollHorzFor((int)(nW / /*div*/ 10));
 			break;
 			case SB_PAGEDOWN:
-			ScrollHorzFor(-((int)(nW / 2)));
+			ScrollHorzFor(-((int)(nW / /*div*/ 2)));
 			break;
 			case SB_PAGEUP:
-			ScrollHorzFor((int)(nW / 2));
+			ScrollHorzFor((int)(nW / /*div*/ 2));
 			break;
 			case SB_THUMBPOSITION:
 			case SB_THUMBTRACK:
@@ -628,16 +626,16 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 			ScrollVertTo(-FVirtualSize.Y);
 			break;
 			case SB_LINEDOWN:
-			ScrollVertFor(-((int)(nH / 10)));
+			ScrollVertFor(-((int)(nH / /*div*/ 10)));
 			break;
 			case SB_LINEUP:
-			ScrollVertFor((int)(nH / 10));
+			ScrollVertFor((int)(nH / /*div*/ 10));
 			break;
 			case SB_PAGEDOWN:
-			ScrollVertFor(-((int)(nH / 2)));
+			ScrollVertFor(-((int)(nH / /*div*/ 2)));
 			break;
 			case SB_PAGEUP:
-			ScrollVertFor((int)(nH / 2));
+			ScrollVertFor((int)(nH / /*div*/ 2));
 			break;
 			case SB_THUMBPOSITION:
 			case SB_THUMBTRACK:

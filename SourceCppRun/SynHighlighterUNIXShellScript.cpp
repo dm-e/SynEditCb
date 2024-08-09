@@ -12,38 +12,35 @@ using namespace Synedithighlighter;
 using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterunixshellscript
 {
-#define SynHighlighterUNIXShellScript__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterUNIXShellScript__1 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
+#define Synhighlighterunixshellscript__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterunixshellscript__1 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
 
 
 const String ShellScriptKeys[110/*# range 0..109*/] = {L"awk", L"banner", L"basename", L"bdiff", L"bg", L"break", L"case", L"cat", L"cc", L"cd", L"chdir", L"chgrp", L"chmod"
-																				, L"chown", L"clear", L"compress", L"continue", L"cp", L"cpio", L"cut", L"date", L"dd", L"df", L"diff", L"do", L"done", L"dtpad", L"echo"
-																				, L"elif", L"else", L"esac", L"eval", L"exit", L"export", L"expr", L"fg", L"fi", L"finger", L"fold", L"for", L"ftp", L"g++", L"gcc"
-																				, L"getopts", L"grep", L"gzip", L"hash", L"head", L"if", L"in", L"jobs", L"kill", L"ld", L"ln", L"login", L"ls", L"make", L"mkdir", L"mt"
-																				, L"mv", L"newgrp", L"nohup", L"od", L"paste", L"perl", L"pg", L"ping", L"pr", L"ps", L"pwd", L"rcp", L"read", L"remsh", L"return", L"rm"
-																				, L"rsh", L"rwho", L"sed", L"set", L"sh", L"shift", L"stop", L"strings", L"strip", L"sync", L"tail", L"tar", L"telnet", L"test", L"then"
-																				, L"times", L"tput", L"trap", L"true", L"tty", L"type", L"ulimit", L"umask", L"unset", L"until", L"uudecode", L"uuencode", L"vi"
-																				, L"wait", L"wc", L"while", L"who", L"xtern", L"zcat", L"zip"};
+                    , L"chown", L"clear", L"compress", L"continue", L"cp", L"cpio", L"cut", L"date", L"dd", L"df", L"diff", L"do", L"done", L"dtpad", L"echo"
+                    , L"elif", L"else", L"esac", L"eval", L"exit", L"export", L"expr", L"fg", L"fi", L"finger", L"fold", L"for", L"ftp", L"g++", L"gcc"
+                    , L"getopts", L"grep", L"gzip", L"hash", L"head", L"if", L"in", L"jobs", L"kill", L"ld", L"ln", L"login", L"ls", L"make", L"mkdir", L"mt"
+                    , L"mv", L"newgrp", L"nohup", L"od", L"paste", L"perl", L"pg", L"ping", L"pr", L"ps", L"pwd", L"rcp", L"read", L"remsh", L"return", L"rm"
+                    , L"rsh", L"rwho", L"sed", L"set", L"sh", L"shift", L"stop", L"strings", L"strip", L"sync", L"tail", L"tar", L"telnet", L"test", L"then"
+                    , L"times", L"tput", L"trap", L"true", L"tty", L"type", L"ulimit", L"umask", L"unset", L"until", L"uudecode", L"uuencode", L"vi"
+                    , L"wait", L"wc", L"while", L"who", L"xtern", L"zcat", L"zip"};
 const String ShellScriptSecondKeys[23/*# range 0..22*/] = {L"cdpath", L"editor", L"home", L"ifs", L"lang", L"lc_messages", L"lc_type", L"ld_library_path", L"logname", L"mail"
-																				, L"mailcheck", L"mailpath", L"manpath", L"path", L"ps1", L"ps2", L"pwd", L"shacct", L"shell", L"shlib_path", L"term", L"termcap"
-																				, L"tz"};
+                    , L"mailcheck", L"mailpath", L"manpath", L"path", L"ps1", L"ps2", L"pwd", L"shacct", L"shell", L"shlib_path", L"term", L"termcap"
+                    , L"tz"};
 
 bool __fastcall TSynUNIXShellScriptSyn::IsKeyword(const String AKeyword)
 {
@@ -131,7 +128,7 @@ __fastcall TSynUNIXShellScriptSyn::TSynUNIXShellScriptSyn(TComponent* AOwner)
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = clNavy;
-	fKeyAttri->Style = SynHighlighterUNIXShellScript__0;
+	fKeyAttri->Style = Synhighlighterunixshellscript__0;
 	addAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
 	addAttribute(fSecondKeyAttri);
@@ -156,8 +153,7 @@ __fastcall TSynUNIXShellScriptSyn::TSynUNIXShellScriptSyn(TComponent* AOwner)
 __fastcall TSynUNIXShellScriptSyn::~TSynUNIXShellScriptSyn()
 {
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 void __fastcall TSynUNIXShellScriptSyn::DollarProc()
 {
@@ -199,7 +195,7 @@ void __fastcall TSynUNIXShellScriptSyn::DotProc()
 		result = false;
 		i = Run;
 		++i;
-		while(CharInSet(fLine[i], SynHighlighterUNIXShellScript__1))
+		while(CharInSet(fLine[i], Synhighlighterunixshellscript__1))
 			++i;
 		if(i > (Run + 1))
 			result = true;
@@ -576,7 +572,7 @@ void __fastcall TSynUNIXShellScriptSyn::ResetRange()
 
 void __fastcall TSynUNIXShellScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynUNIXShellScriptSyn::IsFilterStored()
@@ -639,16 +635,8 @@ void SynHighlighterUNIXShellScript_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynUNIXShellScriptSyn));
 }
-class SynHighlighterUNIXShellScript_unit
-{
-public:
-	SynHighlighterUNIXShellScript_unit()
-	{
-		SynHighlighterUNIXShellScript_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterUNIXShellScript_unit _SynHighlighterUNIXShellScript_unit;
 
 }  // namespace SynHighlighterUNIXShellScript
 

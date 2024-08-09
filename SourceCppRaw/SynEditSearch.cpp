@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
 
 namespace Syneditsearch
@@ -34,7 +33,7 @@ __fastcall TSynEditSearch::TSynEditSearch(TComponent* AOwner)
 			fResults(nullptr),
 			fShiftInitialized(false)
 {
-	fResults = new System::Classes::TList();
+	fResults = new TList();
 }
 
 bool __fastcall TSynEditSearch::GetFinished()
@@ -49,7 +48,7 @@ int __fastcall TSynEditSearch::GetResult(int Index)
 	int result = 0;
 	result = 0;
 	if((Index >= 0) && (Index < fResults->Count))
-		result = (int)fResults->Items[Index];
+		result = (NativeInt)fResults->Items[Index];
 	return result;
 }
 
@@ -68,9 +67,9 @@ void __fastcall TSynEditSearch::FixResults(int First, int delta)
 		i = Pred(fResults->Count);
 		while(i >= 0)
 		{
-			if((int)fResults->Items[i] <= First)
+			if((NativeInt)fResults->Items[i] <= First)
 				break;
-			fResults->Items[i] = ((void*) ((int)fResults->Items[i] - delta));
+			fResults->Items[i] = ((void*) ((NativeInt)fResults->Items[i] - delta));
 			--i;
 		}
 	}
@@ -81,12 +80,12 @@ void __fastcall TSynEditSearch::InitShiftTable()
 	int C = 0;
 	int i = 0;
 	int stop = 0;
-	PatLen = (int) Pat.Length();
+	PatLen = Pat.Length();
 	if(PatLen == 0)
 		throw new Exception(L"Pattern is empty");
 	PatLenSucc = PatLen + 1;
 	Look_At = 1;
-	for(stop = 65535 /*# High(WideChar) */, C = 0 /*# Low(WideChar) */; C <= stop; C++)
+	for(stop = High<WideChar>(), C = Low<WideChar>(); C <= stop; C++)
 	{
 		Shift[C] = PatLenSucc;
 	}
@@ -209,7 +208,6 @@ __fastcall TSynEditSearch::~TSynEditSearch()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynEditSearch::SetPattern(const String Value)
 {
 	if(Pat != Value)
@@ -266,7 +264,7 @@ int __fastcall TSynEditSearch::FindFirst(const String NewText)
 	if(!fShiftInitialized)
 		InitShiftTable();
 	result = 0;
-	fTextLen = (int) NewText.Length();
+	fTextLen = NewText.Length();
 	if(fTextLen >= PatLen)
 	{
 		if(CaseSensitive)
@@ -297,8 +295,8 @@ String __fastcall TSynEditSearch::GetPattern()
 
 void __fastcall TSynEditSearch::SetOptions(const TSynSearchOptions Value)
 {
-	CaseSensitive = Value.Contains(TSynSearchOption::ssoMatchCase);
-	Whole = Value.Contains(TSynSearchOption::ssoWholeWord);
+	CaseSensitive = Value.Contains(ssoMatchCase);
+	Whole = Value.Contains(ssoWholeWord);
 }
 
 

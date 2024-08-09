@@ -12,18 +12,16 @@ using namespace Synedithighlighter;
 using namespace Synedittypes;
 using namespace Synhighlightermulti;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Math;
 using namespace System::Sysutils;
-using namespace Vcl::Graphics;
+using namespace System::Types;
 
 namespace Syneditmiscprocs
 {
-#define SynEditMiscProcs__0 (System::Set<WORD, 0, 255>() << 0 << 10 << 13)
-#define SynEditMiscProcs__1 (System::Set<WORD, 0, 255>() << 10 << 13)
-#define SynEditMiscProcs__2 (System::Set<WORD, 0, 255>() << 10 << 13)
-#define SynEditMiscProcs__3 (System::Set<WORD, 0, 255>() << 10 << 13)
-#define SynEditMiscProcs__4 (TSysCharSet() << L'T' << L't')
+#define Syneditmiscprocs__0 (System::Set<WORD, 0, 255>() << 0 << 10 << 13)
+#define Syneditmiscprocs__1 (System::Set<WORD, 0, 255>() << 10 << 13)
+#define Syneditmiscprocs__2 (System::Set<WORD, 0, 255>() << 10 << 13)
+#define Syneditmiscprocs__3 (System::Set<WORD, 0, 255>() << 10 << 13)
+#define Syneditmiscprocs__4 (TSysCharSet() << 'T' << 't')
 
 
 
@@ -499,7 +497,7 @@ PWideChar __fastcall GetEol(PChar P)
 	result = P;
 	if(ASSIGNED(result))
 	{
-		while((((WORD) (*result)) > 13) || !(SynEditMiscProcs__0.Contains(((WORD) (*result)))))
+		while((((WORD) (*result)) > 13) || !(Syneditmiscprocs__0.Contains(((WORD) (*result)))))
 			++result;
 	}
 	return result;
@@ -518,7 +516,7 @@ int __fastcall CountLines(const String s)
     //  We do it that way instead of checking for $0 as well
     //  so the we properly deal with strings containing #0  (who knows)
 	{
-		while((P < PEnd) && ((((WORD) (*P)) > 13) || !(SynEditMiscProcs__1.Contains(((WORD) (*P))))))
+		while((P < PEnd) && ((((WORD) (*P)) > 13) || !(Syneditmiscprocs__1.Contains(((WORD) (*P))))))
 			++P;
 		++result;
 		if((*P) == L'\x0d')
@@ -527,7 +525,7 @@ int __fastcall CountLines(const String s)
 			++P;
 	}
   // Include Empty line at the end?
-	if((s != L"") && (SynEditMiscProcs__2.Contains(((WORD) s[s.Length()]))))
+	if((s != L"") && (Syneditmiscprocs__2.Contains(((WORD) s[s.Length()]))))
 		++result;
 	return result;
 }
@@ -551,7 +549,7 @@ TArray<String> __fastcall StringToLines(const String Value)
 		pStart = P;
     //  We do it that way instead of checking for $0 as well
     //  so the we properly deal with strings containing #0  (who knows)
-		while((P < PEnd) && ((((WORD) (*P)) > 13) || !(SynEditMiscProcs__3.Contains(((WORD) (*P))))))
+		while((P < PEnd) && ((((WORD) (*P)) > 13) || !(Syneditmiscprocs__3.Contains(((WORD) (*P))))))
 			++P;
 		SetString(s, pStart, P - pStart);
 		result[Count] = s;
@@ -563,7 +561,7 @@ TArray<String> __fastcall StringToLines(const String Value)
 	}
 	return result;
 }
-#pragma resource "-" 
+//#pragma resource "-" 
 
 
 String __fastcall EncodeString(String s)
@@ -572,9 +570,9 @@ String __fastcall EncodeString(String s)
 	int i = 0;
 	int j = 0;
 	int stop = 0;
-	result.SetLength((int) (2 * s.Length())); // worst case
+	result.SetLength(2 * s.Length()); // worst case
 	j = 0;
-	for(stop = (int) s.Length(), i = 1; i <= stop; i++)
+	for(stop = s.Length(), i = 1; i <= stop; i++)
 	{
 		++j;
 		if(s[i] == L'\\')
@@ -604,7 +602,7 @@ String __fastcall DecodeString(String s)
 	String result;
 	int i = 0;
 	int j = 0;
-	result.SetLength((int) s.Length()); // worst case
+	result.SetLength(s.Length()); // worst case
 	j = 0;
 	i = 1;
 	while(i <= s.Length())
@@ -630,7 +628,7 @@ String __fastcall DeleteTypePrefixAndSynSuffix(String s)
 {
 	String result;
 	result = s;
-	if(CharInSet(result[1], SynEditMiscProcs__4))
+	if(CharInSet(result[1], Syneditmiscprocs__4))
 	{
 		if(Pos(L"tsyn", LowerCase(result)) == 1)
   // ClassName is never empty so no AV possible
@@ -639,7 +637,7 @@ String __fastcall DeleteTypePrefixAndSynSuffix(String s)
 			result.Delete(1, 	1);
 	}
 	if(LowerCase(result).SubString(result.Length() - 2, 3) == L"syn")
-		result.SetLength((int) (result.Length() - 3));
+		result.SetLength(result.Length() - 3);
 	return result;
 }
 
@@ -794,28 +792,6 @@ String __fastcall DefaultFontName()
 		result = L"Consolas";
 	else
 		result = L"Courier New";
-	return result;
-}
-
-int __fastcall GrowCollection(int OldCapacity, int NewCount)
-{
-	int result = 0;
-	result = OldCapacity;
-	do
-	{
-		if(result > 64)
-			result = (int)((result * 3) / 2);
-		else
-		{
-			if(result > 8)
-				result = result + 16;
-			else
-				result = result + 4;
-		}
-		if(result < 0)
-			OutOfMemoryError();
-	}
-	while(!(result >= NewCount));
 	return result;
 }
 

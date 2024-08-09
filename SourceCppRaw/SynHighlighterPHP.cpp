@@ -14,44 +14,41 @@ using namespace Synedithighlighter;
 using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterphp
 {
-#define SynHighlighterPHP__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterPHP__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterPHP__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterPHP__3 (System::Set<TRangeState, rsUnKnown, rsVarExpansion>() << rsComment << rsDocument)
-#define SynHighlighterPHP__4 (System::Set<TRangeState, rsUnKnown, rsVarExpansion>() << rsComment << rsDocument)
-#define SynHighlighterPHP__5 (System::Set<TRangeState, rsUnKnown, rsVarExpansion>() << rsComment << rsDocument)
-#define SynHighlighterPHP__6 (System::Set<unsigned char, esNormal, esBrace>() << esBrace << esComplex)
-#define SynHighlighterPHP__7 (TSysCharSet() << L'_' << L'$')
+#define Synhighlighterphp__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterphp__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterphp__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterphp__3 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsVarExpansion>() << rsComment << rsDocument)
+#define Synhighlighterphp__4 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsVarExpansion>() << rsComment << rsDocument)
+#define Synhighlighterphp__5 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsVarExpansion>() << rsComment << rsDocument)
+#define Synhighlighterphp__6 (System::Set<TExpansionSyntax, TExpansionSyntax::esNormal, TExpansionSyntax::esBrace>() << esBrace << esComplex)
+#define Synhighlighterphp__7 (TSysCharSet() << '_' << '$')
 
 
 
 /* expanded keyword list */
 const WideString Keywords[111/*# range 0..110*/] = {L"__autoload", L"__call", L"__callstatic", L"__class__", L"__clone", L"__construct", L"__debuginfo", L"__destruct"
-																				, L"__dir__", L"__file__", L"__function__", L"__get", L"__halt_compiler", L"__invoke", L"__isset", L"__line__", L"__method__"
-																				, L"__namespace__", L"__set", L"__set_state", L"__sleep", L"__tostring", L"__trait__", L"__unset", L"__wakeup", L"abstract"
-																				, L"and", L"array", L"as", L"binary", L"bool", L"boolean", L"break", L"callable", L"case", L"catch", L"cfunction", L"class"
-																				, L"clone", L"const", L"continue", L"declare", L"default", L"die", L"do", L"double", L"echo", L"else", L"elseif", L"empty", L"enddeclare"
-																				, L"endfor", L"endforeach", L"endif", L"endswitch", L"endwhile", L"eval", L"exception", L"exit", L"extends", L"false"
-																				, L"final", L"finally", L"float", L"for", L"foreach", L"function", L"global", L"goto", L"if", L"implements", L"include", L"include_once"
-																				, L"instanceof", L"insteadof", L"int", L"integer", L"interface", L"isset", L"list", L"mixed", L"namespace", L"new"
-																				, L"null", L"object", L"old_function", L"or", L"parent", L"print", L"private", L"protected", L"public", L"real", L"require", L"require_once"
-																				, L"return", L"self", L"static", L"string", L"switch", L"throw", L"trait", L"true", L"try", L"unset", L"use", L"var"
-																				, L"void", L"while", L"xor", L"yield"};
+                    , L"__dir__", L"__file__", L"__function__", L"__get", L"__halt_compiler", L"__invoke", L"__isset", L"__line__", L"__method__"
+                    , L"__namespace__", L"__set", L"__set_state", L"__sleep", L"__tostring", L"__trait__", L"__unset", L"__wakeup", L"abstract"
+                    , L"and", L"array", L"as", L"binary", L"bool", L"boolean", L"break", L"callable", L"case", L"catch", L"cfunction", L"class"
+                    , L"clone", L"const", L"continue", L"declare", L"default", L"die", L"do", L"double", L"echo", L"else", L"elseif", L"empty", L"enddeclare"
+                    , L"endfor", L"endforeach", L"endif", L"endswitch", L"endwhile", L"eval", L"exception", L"exit", L"extends", L"false"
+                    , L"final", L"finally", L"float", L"for", L"foreach", L"function", L"global", L"goto", L"if", L"implements", L"include", L"include_once"
+                    , L"instanceof", L"insteadof", L"int", L"integer", L"interface", L"isset", L"list", L"mixed", L"namespace", L"new"
+                    , L"null", L"object", L"old_function", L"or", L"parent", L"print", L"private", L"protected", L"public", L"real", L"require", L"require_once"
+                    , L"return", L"self", L"static", L"string", L"switch", L"throw", L"trait", L"true", L"try", L"unset", L"use", L"var"
+                    , L"void", L"while", L"xor", L"yield"};
 const int KeyIndices[439/*# range 0..438*/] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, 110, -1, -1, 72, 88, -1, 67, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, 38, -1
-																				, 80, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 102, 43, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, 40, -1, -1, -1, -1, -1, -1, -1
-																				, 76, -1, 101, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, 98, -1, -1, 64, -1, -1, -1, 37, -1, 29, -1, -1, -1, 36, 60, -1, -1, -1, -1, 54, -1, -1, -1, -1, -1, -1, -1, -1, 27, -1, 32, -1, 51, 94
-																				, -1, 73, -1, -1, -1, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, 10, -1, -1, -1, -1, -1, 96, -1, -1, 9, -1, 100, -1, -1, -1, -1, -1, 57, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, 39, -1, -1, 109, 0, 44, -1, -1
-																				, -1, 78, -1, -1, -1, 65, 19, -1, 81, -1, 46, 1, 6, -1, 69, -1, 14, -1, -1, 35, -1, 71, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, 50, -1, -1, -1, -1, -1, 4, -1, 20, 8, -1, -1, 47, 7, -1, 68, -1, 5, 49, -1
-																				, -1, -1, 93, -1, -1, 89, -1, -1, -1, 34, -1, 59, -1, 86, -1, -1, 103, -1, -1, -1, -1, -1, 26, -1, -1, -1, -1, -1, 23, -1, 83, 66, 58, -1, -1, -1, 63, -1, 45, -1, -1, -1, -1, -1, -1, -1, 70, -1, -1, 105
-																				, -1, -1, 62, -1, -1, -1, -1, -1, -1, 42, 82, 24, 30, -1, -1, -1, 97, -1, -1, -1, 17, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 106, -1, 22, 3, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 15, -1, -1, -1, -1, 41, -1, 16, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, -1, -1, -1, 77, -1, 84, -1, -1, 92, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, 13, -1, 48, 12, -1, 28, -1, -1, -1, -1, -1, -1, 21, -1, 95, 108, 91, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, 55, -1, -1, 107, 56, -1, -1, -1, -1, -1, 87};
+                    , 80, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 102, 43, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, 40, -1, -1, -1, -1, -1, -1, -1
+                    , 76, -1, 101, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, 98, -1, -1, 64, -1, -1, -1, 37, -1, 29, -1, -1, -1, 36, 60, -1, -1, -1, -1, 54, -1, -1, -1, -1, -1, -1, -1, -1, 27, -1, 32, -1, 51, 94
+                    , -1, 73, -1, -1, -1, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, 10, -1, -1, -1, -1, -1, 96, -1, -1, 9, -1, 100, -1, -1, -1, -1, -1, 57, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, 39, -1, -1, 109, 0, 44, -1, -1
+                    , -1, 78, -1, -1, -1, 65, 19, -1, 81, -1, 46, 1, 6, -1, 69, -1, 14, -1, -1, 35, -1, 71, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, 50, -1, -1, -1, -1, -1, 4, -1, 20, 8, -1, -1, 47, 7, -1, 68, -1, 5, 49, -1
+                    , -1, -1, 93, -1, -1, 89, -1, -1, -1, 34, -1, 59, -1, 86, -1, -1, 103, -1, -1, -1, -1, -1, 26, -1, -1, -1, -1, -1, 23, -1, 83, 66, 58, -1, -1, -1, 63, -1, 45, -1, -1, -1, -1, -1, -1, -1, 70, -1, -1, 105
+                    , -1, -1, 62, -1, -1, -1, -1, -1, -1, 42, 82, 24, 30, -1, -1, -1, 97, -1, -1, -1, 17, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 106, -1, 22, 3, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 15, -1, -1, -1, -1, 41, -1, 16, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, -1, -1, -1, 77, -1, 84, -1, -1, 92, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, 13, -1, 48, 12, -1, 28, -1, -1, -1, -1, -1, -1, 21, -1, 95, 108, 91, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, 55, -1, -1, 107, 56, -1, -1, -1, -1, -1, 87};
 
 /*$Q-*/
 
@@ -89,7 +86,7 @@ void __fastcall TSynPHPSyn::InitIdent()
 	int stop = 0;
 	for(stop = 438 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 438 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -132,15 +129,15 @@ __fastcall TSynPHPSyn::TSynPHPSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterPHP__0;
+	fCommentAttri->Style = Synhighlighterphp__0;
 	addAttribute(fCommentAttri);
 	fDocumentAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
-	fDocumentAttri->Style = SynHighlighterPHP__1;
+	fDocumentAttri->Style = Synhighlighterphp__1;
 	addAttribute(fDocumentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterPHP__2;
+	fKeyAttri->Style = Synhighlighterphp__2;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -446,7 +443,7 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -467,7 +464,7 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -531,9 +528,9 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if(SynHighlighterPHP__3.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) Line)))
+		if(Synhighlighterphp__3.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line)))
 		{
-			if(!(SynHighlighterPHP__4.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)))))
+			if(!(Synhighlighterphp__4.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)))))
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -541,7 +538,7 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		}
 		else
 		{
-			if(SynHighlighterPHP__5.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1))))
+			if(Synhighlighterphp__5.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1))))
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -724,7 +721,7 @@ void __fastcall TSynPHPSyn::VarExpansionProc()
 		else
 		iSyntax = esNormal;
 	}
-	if(SynHighlighterPHP__6.Contains(iSyntax))
+	if(Synhighlighterphp__6.Contains(iSyntax))
 	{
 		iOpenBraces = 1;
 		while(!IsLineEnd(Run))
@@ -1152,7 +1149,7 @@ void __fastcall TSynPHPSyn::ResetRange()
 
 void __fastcall TSynPHPSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynPHPSyn::IsFilterStored()
@@ -1199,7 +1196,7 @@ String __fastcall TSynPHPSyn::GetFriendlyLanguageName()
 bool __fastcall TSynPHPSyn::IsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, SynHighlighterPHP__7);
+	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, Synhighlighterphp__7);
 	return result;
 }
 
@@ -1269,16 +1266,8 @@ void SynHighlighterPHP_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynPHPSyn));
 }
-class SynHighlighterPHP_unit
-{
-public:
-	SynHighlighterPHP_unit()
-	{
-		SynHighlighterPHP_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterPHP_unit _SynHighlighterPHP_unit;
 
 }  // namespace SynHighlighterPHP
 

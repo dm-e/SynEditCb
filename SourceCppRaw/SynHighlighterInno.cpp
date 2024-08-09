@@ -12,20 +12,17 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterinno
 {
-#define SynHighlighterInno__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterInno__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterInno__2 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterInno__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterInno__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterInno__5 (TSysCharSet() << L'\x09' << L' ')
-#define SynHighlighterInno__6 (TSysCharSet() <<  \
+#define Synhighlighterinno__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterinno__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterinno__2 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlighterinno__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterinno__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterinno__5 (TSysCharSet() << '\x09' << ' ')
+#define Synhighlighterinno__6 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
 
@@ -188,7 +185,7 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterInno__0;
+	fCommentAttri->Style = Synhighlighterinno__0;
 	fCommentAttri->Foreground = clGray;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
@@ -196,7 +193,7 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterInno__1;
+	fKeyAttri->Style = Synhighlighterinno__1;
 	fKeyAttri->Foreground = clNavy;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
@@ -208,7 +205,7 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 	fStringAttri->Foreground = clBlue;
 	addAttribute(fStringAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
-	fConstantAttri->Style = SynHighlighterInno__2;
+	fConstantAttri->Style = Synhighlighterinno__2;
 	fConstantAttri->Foreground = clTeal;
 	addAttribute(fConstantAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
@@ -216,11 +213,11 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 
   //Parameters
 	fParamAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	fParamAttri->Style = SynHighlighterInno__3;
+	fParamAttri->Style = Synhighlighterinno__3;
 	fParamAttri->Foreground = clOlive;
 	addAttribute(fParamAttri);
 	fSectionAttri = new TSynHighlighterAttributes(SYNS_AttrSection, SYNS_FriendlyAttrSection);
-	fSectionAttri->Style = SynHighlighterInno__4;
+	fSectionAttri->Style = Synhighlighterinno__4;
 	fSectionAttri->Foreground = clRed;
 	addAttribute(fSectionAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -235,7 +232,6 @@ __fastcall TSynInnoSyn::~TSynInnoSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynInnoSyn::SymbolProc()
 {
@@ -278,7 +274,7 @@ void __fastcall TSynInnoSyn::IdentProc()
 	if(FTokenID == tkKeyOrParameter)
 	{
 		LookAhead = Run;
-		while(CharInSet(fLine[LookAhead], SynHighlighterInno__5))
+		while(CharInSet(fLine[LookAhead], Synhighlighterinno__5))
 			++LookAhead;
 		if(fLine[LookAhead] == L':')
 			FTokenID = tkKey;
@@ -331,7 +327,7 @@ void __fastcall TSynInnoSyn::NumberProc()
 	{
 		++Run;
 	}
-	while(!!CharInSet(fLine[Run], SynHighlighterInno__6));
+	while(!!CharInSet(fLine[Run], Synhighlighterinno__6));
 }
 
 void __fastcall TSynInnoSyn::ConstantProc()
@@ -349,7 +345,7 @@ void __fastcall TSynInnoSyn::ConstantProc()
 	}
 	FTokenID = tkConstant;
 	BraceLevel = 1;
-	LastOpenBrace = -2147483648 /*# Low(Integer) */;
+	LastOpenBrace = Low<int>();
 	do
 	{
 		++Run;
@@ -640,16 +636,8 @@ void SynHighlighterInno_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynInnoSyn));
 }
-class SynHighlighterInno_unit
-{
-public:
-	SynHighlighterInno_unit()
-	{
-		SynHighlighterInno_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterInno_unit _SynHighlighterInno_unit;
 
 }  // namespace SynHighlighterInno
 

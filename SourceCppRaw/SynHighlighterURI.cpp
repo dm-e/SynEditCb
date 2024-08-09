@@ -10,53 +10,50 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighteruri
 {
-#define SynHighlighterURI__0 (TSysCharSet() <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122)
-#define SynHighlighterURI__1 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynHighlighterURI__2 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synhighlighteruri__0 (TSysCharSet() <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122)
+#define Synhighlighteruri__1 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synhighlighteruri__2 (TFontStyles() << TFontStyle::fsUnderline)
 
 
 const String Keywords[16/*# range 0..15*/] = {L"", L"http://", L"", L"https://", L"news:", L"gopher://", L"", L"prospero://", L"news://", L"www", L"nntp://", L"ftp://"
-																				, L"wais://", L"", L"telnet://", L"mailto:"};
+                    , L"wais://", L"", L"telnet://", L"mailto:"};
 
 int __fastcall TSynURISyn::HashKey(PWideChar Str)
 {
 	int result = 0;
 	result = 0;
-	while(CharInSet((*Str), SynHighlighterURI__0))
+	while(CharInSet((*Str), Synhighlighteruri__0))
 	{
-		result = (result * 3 + (int)(int((*Str)) / 9)) % 16;
+		result = (result * 3 + (int)(int((*Str)) / /*div*/ 9)) % 16;
 		++Str;
 	}
 	if((*Str) == L':')
 	{
-		result = (result * 3 + (int)(int((*Str)) / 9)) % 16;
+		result = (result * 3 + (int)(int((*Str)) / /*div*/ 9)) % 16;
 		++Str;
 	}
 	if((*Str) == L'/')
 	{
-		result = (result * 3 + (int)(int((*Str)) / 9)) % 16;
+		result = (result * 3 + (int)(int((*Str)) / /*div*/ 9)) % 16;
 		++Str;
 	}
 	if((*Str) == L'/')
 	{
-		result = (result * 3 + (int)(int((*Str)) / 9)) % 16;
+		result = (result * 3 + (int)(int((*Str)) / /*div*/ 9)) % 16;
 		++Str;
 	}
 	fStringLen = Str - fMayBeProtocol;
@@ -131,11 +128,11 @@ __fastcall TSynURISyn::TSynURISyn(TComponent* AOwner)
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fURIAttri = new TSynHighlighterAttributes(SYNS_AttrURI, SYNS_FriendlyAttrURI);
 	fURIAttri->Foreground = clBlue;
-	fURIAttri->Style = SynHighlighterURI__1;
+	fURIAttri->Style = Synhighlighteruri__1;
 	addAttribute(fURIAttri);
 	fVisitedURIAttri = new TSynHighlighterAttributes(SYNS_AttrVisitedURI, SYNS_FriendlyAttrVisitedURI);
 	fVisitedURIAttri->Foreground = clPurple;
-	fVisitedURIAttri->Style = SynHighlighterURI__2;
+	fVisitedURIAttri->Style = Synhighlighteruri__2;
 	addAttribute(fVisitedURIAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
@@ -149,7 +146,6 @@ __fastcall TSynURISyn::~TSynURISyn()
 	delete fSpaceAttri;
 	delete fIdentifierAttri;
 }
-
 
 void __fastcall TSynURISyn::CRProc()
 {
@@ -353,12 +349,12 @@ void __fastcall TSynURISyn::SetAlreadyVisitedURIFunc(TAlreadyVisitedURIFunc Valu
 
 void __fastcall TSynURISyn::SetURIAttri(TSynHighlighterAttributes* const Value)
 {
-	fURIAttri->Assign(Value);
+	fURIAttri->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynURISyn::SetVisitedURIAttri(TSynHighlighterAttributes* const Value)
 {
-	fVisitedURIAttri->Assign(Value);
+	fVisitedURIAttri->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynURISyn::ProtocolProc()
@@ -617,7 +613,7 @@ bool __fastcall TSynURISyn::IsValidEmailAddress()
 	}
 	while((Run > StartPos) && (IsNeverAtEMailAddressEnd(fLine[Run - 1])))
 		--Run;
-	while((DotPos >= Run) || (DotPos >  - 1) && (fLine[DotPos] != L'.'))
+	while((DotPos >= Run) || (DotPos > -1) && (fLine[DotPos] != L'.'))
 		--DotPos;
 	result = (StartPos < AtPos) && (AtPos < Run - 1) && (DotPos > AtPos + 1);
 	if(!result)
@@ -681,9 +677,9 @@ bool __fastcall TSynURISyn::IsValidWebLink()
 			else
 			{
 				DotPos = Run;
-				if(SecondDotPos ==  - 2)
+				if(SecondDotPos == -2)
 					SecondDotPos = DotPos;
-				if(SecondDotPos ==  - 1)
+				if(SecondDotPos == -1)
 					SecondDotPos = -2;
 			}
 		}
@@ -713,16 +709,8 @@ void SynHighlighterURI_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynURISyn));
 }
-class SynHighlighterURI_unit
-{
-public:
-	SynHighlighterURI_unit()
-	{
-		SynHighlighterURI_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterURI_unit _SynHighlighterURI_unit;
 
 }  // namespace SynHighlighterURI
 

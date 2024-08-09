@@ -16,24 +16,21 @@ using namespace Syneditmiscprocs;
 using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Comctrls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Vcl::Menus;
 
-#define SynEditOptionsDialog__0 (TSynEditorOptions() << TSynEditorOption::eoAutoIndent << TSynEditorOption::eoDragDropEditing << TSynEditorOption::eoDropFiles << TSynEditorOption::eoScrollPastEol << TSynEditorOption::eoShowScrollHint << TSynEditorOption::eoSmartTabs << TSynEditorOption::eoAltSetsColumnMode << TSynEditorOption::eoTabsToSpaces << TSynEditorOption::eoTrimTrailingSpaces << TSynEditorOption::eoKeepCaretX)
-#define SynEditOptionsDialog__1 Syneditmiscclasses::THKInvalidKeys()
-#define SynEditOptionsDialog__2 Syneditmiscclasses::THKModifiers()
-#define SynEditOptionsDialog__3 Syneditmiscclasses::THKInvalidKeys()
-#define SynEditOptionsDialog__4 Syneditmiscclasses::THKModifiers()
+#define Syneditoptionsdialog__0 (TSynEditorOptions() << eoAutoIndent << eoDragDropEditing << eoDropFiles << eoScrollPastEol << eoShowScrollHint << eoSmartTabs << eoAltSetsColumnMode << eoTabsToSpaces << eoTrimTrailingSpaces << eoKeepCaretX)
+#define Syneditoptionsdialog__1 Syneditmiscclasses::THKInvalidKeys()
+#define Syneditoptionsdialog__2 Syneditmiscclasses::THKModifiers()
+#define Syneditoptionsdialog__3 Syneditmiscclasses::THKInvalidKeys()
+#define Syneditoptionsdialog__4 Syneditmiscclasses::THKModifiers()
 
-__fastcall TfmEditorOptionsDialog::TfmEditorOptionsDialog(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TfmEditorOptionsDialog::TfmEditorOptionsDialog(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 /* TSynEditOptionsDialog */
@@ -49,7 +46,6 @@ __fastcall TSynEditOptionsDialog::~TSynEditOptionsDialog()
 	delete FForm;
 	// inherited;
 }
-
 
 bool __fastcall TSynEditOptionsDialog::Execute(TSynEditorOptionsContainer* EditOptions)
 {
@@ -159,8 +155,8 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 			fRightEdgeColor((TColor) 0),
 			FFont(nullptr),
 			fBookMarks(nullptr),
-			fOverwriteCaret(TSynEditCaretType::ctVerticalLine),
-			fInsertCaret(TSynEditCaretType::ctVerticalLine),
+			fOverwriteCaret(ctVerticalLine),
+			fInsertCaret(ctVerticalLine),
 			fKeyStrokes(nullptr),
 			FSynGutter(nullptr),
 			FColor((TColor) 0)
@@ -177,11 +173,11 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 	FFont->Size = 8;
 	Color = clWindow;
 	Keystrokes->ResetDefaults();
-	Options = SynEditOptionsDialog__0;
+	Options = Syneditoptionsdialog__0;
 	ExtraLineSpacing = 0;
 	HideSelection = false;
-	InsertCaret = TSynEditCaretType::ctVerticalLine;
-	OverwriteCaret = TSynEditCaretType::ctBlock;
+	InsertCaret = ctVerticalLine;
+	OverwriteCaret = ctBlock;
 	MaxScrollWidth = 1024;
 	MaxUndo = 0;
 	RightEdge = 80;
@@ -200,20 +196,19 @@ __fastcall TSynEditorOptionsContainer::~TSynEditorOptionsContainer()
 	// inherited;
 }
 
-
 void __fastcall TSynEditorOptionsContainer::SetBookMarks(TSynBookMarkOpt* const Value)
 {
-	fBookMarks->Assign(Value);
+	fBookMarks->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditorOptionsContainer::SetFont(TFont* const Value)
 {
-	FFont->Assign(Value);
+	FFont->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditorOptionsContainer::SetKeystrokes(TSynEditKeyStrokes* const Value)
 {
-	fKeyStrokes->Assign(Value);
+	fKeyStrokes->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditorOptionsContainer::SetOptions(const TSynEditorOptions Value)
@@ -223,7 +218,7 @@ void __fastcall TSynEditorOptionsContainer::SetOptions(const TSynEditorOptions V
 
 void __fastcall TSynEditorOptionsContainer::SetSynGutter(TSynGutter* const Value)
 {
-	FSynGutter->Assign(Value);
+	FSynGutter->Assign((TPersistent*) Value);
 }
 
 /* TfmEditorOptionsDialog */
@@ -241,7 +236,7 @@ bool __fastcall TfmEditorOptionsDialog::Execute(TSynEditorOptionsContainer* Edit
   //Get Data
 	GetData();
   //Show the form
-	result = ShowModal() == mrOk;
+	result = ShowModal() == System::Uitypes::mrOk;
   //PutData
 	if(result)
 		PutData();
@@ -275,27 +270,27 @@ void __fastcall TfmEditorOptionsDialog::GetData()
 	labFont->Font->Assign(FSynEdit->Font);
 	labFont->Caption = labFont->Font->Name + L" " + IntToStr(labFont->Font->Size) + L"pt";
   //Options
-	ckAutoIndent->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoAutoIndent);
-	ckDragAndDropEditing->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoDragDropEditing);
+	ckAutoIndent->Checked = FSynEdit->Options.Contains(eoAutoIndent);
+	ckDragAndDropEditing->Checked = FSynEdit->Options.Contains(eoDragDropEditing);
 	ckWantTabs->Checked = FSynEdit->WantTabs;
-	ckSmartTabs->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoSmartTabs);
-	ckAltSetsColumnMode->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoAltSetsColumnMode);
-	ckHalfPageScroll->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoHalfPageScroll);
-	ckScrollByOneLess->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoScrollByOneLess);
-	ckScrollPastEOF->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoScrollPastEof);
-	ckScrollPastEOL->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoScrollPastEol);
-	ckShowScrollHint->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoShowScrollHint);
-	ckTabsToSpaces->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoTabsToSpaces);
-	ckTrimTrailingSpaces->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoTrimTrailingSpaces);
-	ckKeepCaretX->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoKeepCaretX);
-	ckSmartTabDelete->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoSmartTabDelete);
-	ckRightMouseMoves->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoRightMouseMovesCursor);
-	ckEnhanceHomeKey->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoEnhanceHomeKey);
-	ckEnhanceEndKey->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoEnhanceEndKey);
-	ckGroupUndo->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoGroupUndo);
-	ckDisableScrollArrows->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoDisableScrollArrows);
-	ckHideShowScrollbars->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoHideShowScrollbars);
-	ckShowSpecialChars->Checked = FSynEdit->Options.Contains(TSynEditorOption::eoShowSpecialChars);
+	ckSmartTabs->Checked = FSynEdit->Options.Contains(eoSmartTabs);
+	ckAltSetsColumnMode->Checked = FSynEdit->Options.Contains(eoAltSetsColumnMode);
+	ckHalfPageScroll->Checked = FSynEdit->Options.Contains(eoHalfPageScroll);
+	ckScrollByOneLess->Checked = FSynEdit->Options.Contains(eoScrollByOneLess);
+	ckScrollPastEOF->Checked = FSynEdit->Options.Contains(eoScrollPastEof);
+	ckScrollPastEOL->Checked = FSynEdit->Options.Contains(eoScrollPastEol);
+	ckShowScrollHint->Checked = FSynEdit->Options.Contains(eoShowScrollHint);
+	ckTabsToSpaces->Checked = FSynEdit->Options.Contains(eoTabsToSpaces);
+	ckTrimTrailingSpaces->Checked = FSynEdit->Options.Contains(eoTrimTrailingSpaces);
+	ckKeepCaretX->Checked = FSynEdit->Options.Contains(eoKeepCaretX);
+	ckSmartTabDelete->Checked = FSynEdit->Options.Contains(eoSmartTabDelete);
+	ckRightMouseMoves->Checked = FSynEdit->Options.Contains(eoRightMouseMovesCursor);
+	ckEnhanceHomeKey->Checked = FSynEdit->Options.Contains(eoEnhanceHomeKey);
+	ckEnhanceEndKey->Checked = FSynEdit->Options.Contains(eoEnhanceEndKey);
+	ckGroupUndo->Checked = FSynEdit->Options.Contains(eoGroupUndo);
+	ckDisableScrollArrows->Checked = FSynEdit->Options.Contains(eoDisableScrollArrows);
+	ckHideShowScrollbars->Checked = FSynEdit->Options.Contains(eoHideShowScrollbars);
+	ckShowSpecialChars->Checked = FSynEdit->Options.Contains(eoShowSpecialChars);
 
   //Caret
 	cInsertCaret->ItemIndex = int(FSynEdit->InsertCaret);
@@ -354,26 +349,26 @@ void __fastcall TfmEditorOptionsDialog::PutData()
   //Options
 	FSynEdit->WantTabs = ckWantTabs->Checked;
 	vOptions = FSynEdit->Options; //Keep old values for unsupported options
-	SetFlag(TSynEditorOption::eoAutoIndent, ckAutoIndent->Checked);
-	SetFlag(TSynEditorOption::eoDragDropEditing, ckDragAndDropEditing->Checked);
-	SetFlag(TSynEditorOption::eoSmartTabs, ckSmartTabs->Checked);
-	SetFlag(TSynEditorOption::eoAltSetsColumnMode, ckAltSetsColumnMode->Checked);
-	SetFlag(TSynEditorOption::eoHalfPageScroll, ckHalfPageScroll->Checked);
-	SetFlag(TSynEditorOption::eoScrollByOneLess, ckScrollByOneLess->Checked);
-	SetFlag(TSynEditorOption::eoScrollPastEof, ckScrollPastEOF->Checked);
-	SetFlag(TSynEditorOption::eoScrollPastEol, ckScrollPastEOL->Checked);
-	SetFlag(TSynEditorOption::eoShowScrollHint, ckShowScrollHint->Checked);
-	SetFlag(TSynEditorOption::eoTabsToSpaces, ckTabsToSpaces->Checked);
-	SetFlag(TSynEditorOption::eoTrimTrailingSpaces, ckTrimTrailingSpaces->Checked);
-	SetFlag(TSynEditorOption::eoKeepCaretX, ckKeepCaretX->Checked);
-	SetFlag(TSynEditorOption::eoSmartTabDelete, ckSmartTabDelete->Checked);
-	SetFlag(TSynEditorOption::eoRightMouseMovesCursor, ckRightMouseMoves->Checked);
-	SetFlag(TSynEditorOption::eoEnhanceHomeKey, ckEnhanceHomeKey->Checked);
-	SetFlag(TSynEditorOption::eoEnhanceEndKey, ckEnhanceEndKey->Checked);
-	SetFlag(TSynEditorOption::eoGroupUndo, ckGroupUndo->Checked);
-	SetFlag(TSynEditorOption::eoDisableScrollArrows, ckDisableScrollArrows->Checked);
-	SetFlag(TSynEditorOption::eoHideShowScrollbars, ckHideShowScrollbars->Checked);
-	SetFlag(TSynEditorOption::eoShowSpecialChars, ckShowSpecialChars->Checked);
+	SetFlag(eoAutoIndent, ckAutoIndent->Checked);
+	SetFlag(eoDragDropEditing, ckDragAndDropEditing->Checked);
+	SetFlag(eoSmartTabs, ckSmartTabs->Checked);
+	SetFlag(eoAltSetsColumnMode, ckAltSetsColumnMode->Checked);
+	SetFlag(eoHalfPageScroll, ckHalfPageScroll->Checked);
+	SetFlag(eoScrollByOneLess, ckScrollByOneLess->Checked);
+	SetFlag(eoScrollPastEof, ckScrollPastEOF->Checked);
+	SetFlag(eoScrollPastEol, ckScrollPastEOL->Checked);
+	SetFlag(eoShowScrollHint, ckShowScrollHint->Checked);
+	SetFlag(eoTabsToSpaces, ckTabsToSpaces->Checked);
+	SetFlag(eoTrimTrailingSpaces, ckTrimTrailingSpaces->Checked);
+	SetFlag(eoKeepCaretX, ckKeepCaretX->Checked);
+	SetFlag(eoSmartTabDelete, ckSmartTabDelete->Checked);
+	SetFlag(eoRightMouseMovesCursor, ckRightMouseMoves->Checked);
+	SetFlag(eoEnhanceHomeKey, ckEnhanceHomeKey->Checked);
+	SetFlag(eoEnhanceEndKey, ckEnhanceEndKey->Checked);
+	SetFlag(eoGroupUndo, ckGroupUndo->Checked);
+	SetFlag(eoDisableScrollArrows, ckDisableScrollArrows->Checked);
+	SetFlag(eoHideShowScrollbars, ckHideShowScrollbars->Checked);
+	SetFlag(eoShowSpecialChars, ckShowSpecialChars->Checked);
 	FSynEdit->Options = vOptions;
   //Caret
 	FSynEdit->InsertCaret = ((TSynEditCaretType) cInsertCaret->ItemIndex);
@@ -383,10 +378,10 @@ void __fastcall TfmEditorOptionsDialog::PutData()
 TColor __fastcall TfmEditorOptionsDialog::GetColor(TMenuItem* Item)
 {
 	TColor result = (TColor) 0;
-	if((Item->Tag ==  - 1) || (Item->Tag > 24))
+	if((Item->Tag == -1) || (Item->Tag > 24))
 		result = clNone;
 	else
-		result = ((TColor) (((Byte) Item->Tag) | 0x80000000));
+		result = ((TColor) (((unsigned char) Item->Tag) | 0x80000000));
 	return result;
 }
 
@@ -420,7 +415,7 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
     //Loop through and create colored images
 		for(stop = ColorPopup->Items->Count - 1, i = 0; i <= stop; i++)
 		{
-			if(ColorPopup->Items->Items[i]->Tag ==  - 1)
+			if(ColorPopup->Items->Items[i]->Tag == -1)
 				continue;
 			C = GetColor(ColorPopup->Items->Items[i]);
 			B->Canvas->Brush->Color = C;
@@ -446,8 +441,8 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with0->Width = 185;
 		with0->Height = 21;
 		with0->HotKey = (TShortCut) 0;
-		with0->InvalidKeys = SynEditOptionsDialog__1;
-		with0->Modifiers = SynEditOptionsDialog__2;
+		with0->InvalidKeys = Syneditoptionsdialog__1;
+		with0->Modifiers = Syneditoptionsdialog__2;
 		with0->TabOrder = (TTabOrder) 1;
 	}
 	eKeyShort2 = new TSynHotKey(this);
@@ -460,8 +455,8 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with1->Width = 185;
 		with1->Height = 21;
 		with1->HotKey = (TShortCut) 0;
-		with1->InvalidKeys = SynEditOptionsDialog__3;
-		with1->Modifiers = SynEditOptionsDialog__4;
+		with1->InvalidKeys = Syneditoptionsdialog__3;
+		with1->Modifiers = Syneditoptionsdialog__4;
 		with1->TabOrder = (TTabOrder) 2;
 	}
 }
@@ -523,7 +518,7 @@ void __fastcall TfmEditorOptionsDialog::btnUpdateKeyClick(TObject* Sender)
 		return;
 	if(cKeyCommand->ItemIndex < 0)
 		return;
-	cmd = ((int) cKeyCommand->Items->Objects[cKeyCommand->ItemIndex]);
+	cmd = (NativeInt) cKeyCommand->Items->Objects[cKeyCommand->ItemIndex];
 	((TSynEditKeyStroke*) OldSelected->Data)->Command = (TSynEditorCommand) cmd;
 	if(eKeyShort1->HotKey != 0)
 		((TSynEditKeyStroke*) OldSelected->Data)->ShortCut = eKeyShort1->HotKey;
@@ -603,7 +598,7 @@ void __fastcall TfmEditorOptionsDialog::KeyListEditing(TObject* Sender, TListIte
 void __fastcall TfmEditorOptionsDialog::btnOKClick(TObject* Sender)
 {
 	btnUpdateKey->Click();
-	ModalResult = (TModalResult) mrOk;
+	ModalResult = (TModalResult) System::Uitypes::mrOk;
 }
 
 void __fastcall TfmEditorOptionsDialog::btnGutterFontClick(TObject* Sender)

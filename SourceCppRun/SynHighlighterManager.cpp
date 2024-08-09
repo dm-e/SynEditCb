@@ -20,7 +20,6 @@ using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Sysutils;
-using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Checklst;
 using namespace Vcl::Controls;
@@ -159,7 +158,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 					compLeft = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Lo;
 					compTop = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Hi;
 					compRect = Rect(compLeft, compTop, compLeft + 31, compTop + 31);
-					if(IntersectRect(interRect, testRect, compRect))
+					if(IntersectRect(&interRect, testRect, compRect))
 					{
 						result = true;
 						return result;
@@ -223,7 +222,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			try
 			{
 				CheckExisting();
-				if(synForm->ShowModal() == mrOk)
+				if(synForm->ShowModal() == System::Uitypes::mrOk)
 					PlaceNew();
 			}
 			__finally
@@ -249,8 +248,8 @@ clbHighlighters(new TCheckListBox(this)),
 	Caption = L"Highlighter Manager";
 	Width = 410;
 	Height = 243;
-	Position = TPosition::poScreenCenter;
-	BorderStyle = TFormBorderStyle::bsDialog;
+	Position = poScreenCenter;
+	BorderStyle = bsDialog;
 	Highlight = highlighters;
   
 //object clbHighlighters: TCheckListBox

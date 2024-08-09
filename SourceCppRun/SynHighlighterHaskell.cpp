@@ -9,23 +9,21 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterhaskell
 {
-#define SynHighlighterHaskell__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterHaskell__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHaskell__2 (TSysCharSet() << L'\x27' << L'\\')
-#define SynHighlighterHaskell__3 (TSysCharSet() << L'\x22' << L'\\')
-#define SynHighlighterHaskell__4 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
+#define Synhighlighterhaskell__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterhaskell__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhaskell__2 (TSysCharSet() << '\x27' << '\\')
+#define Synhighlighterhaskell__3 (TSysCharSet() << '\x22' << '\\')
+#define Synhighlighterhaskell__4 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
 const String Keywords[24/*# range 0..23*/] = {L"Bool", L"Char", L"class", L"data", L"deriving", L"Double", L"else", L"False", L"Float", L"if", L"import", L"in"
-																				, L"instance", L"Int", L"Integer", L"IO", L"let", L"module", L"otherwise", L"String", L"then", L"True", L"type", L"where"};
+                    , L"instance", L"Int", L"Integer", L"IO", L"let", L"module", L"otherwise", L"String", L"then", L"True", L"type", L"where"};
 const int KeyIndices[29/*# range 0..28*/] = {2, 23, 10, 16, 7, -1, 22, 8, 14, 17, 5, 4, 11, -1, 1, 9, 12, 0, -1, 6, -1, 3, 15, 18, 20, -1, 13, 19, 21};
 
 /*$Q-*/
@@ -64,7 +62,7 @@ void __fastcall TSynHaskellSyn::InitIdent()
 	int stop = 0;
 	for(stop = 28 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 28 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -107,12 +105,12 @@ __fastcall TSynHaskellSyn::TSynHaskellSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterHaskell__0;
+	fCommentAttri->Style = Synhighlighterhaskell__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterHaskell__1;
+	fKeyAttri->Style = Synhighlighterhaskell__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -224,7 +222,7 @@ void __fastcall TSynHaskellSyn::AsciiCharProc()
 	{
 		if(fLine[Run] == L'\\')
 		{
-			if(CharInSet(fLine[Run + 1], SynHighlighterHaskell__2))
+			if(CharInSet(fLine[Run + 1], Synhighlighterhaskell__2))
 				++Run;
 		}
 		++Run;
@@ -693,7 +691,7 @@ void __fastcall TSynHaskellSyn::StringProc()
 	{
 		if(fLine[Run] == L'\\')
 		{
-			if(CharInSet(fLine[Run + 1], SynHighlighterHaskell__3))
+			if(CharInSet(fLine[Run + 1], Synhighlighterhaskell__3))
 				++Run;
 		}
 		++Run;
@@ -973,7 +971,7 @@ void __fastcall TSynHaskellSyn::ResetRange()
 
 void __fastcall TSynHaskellSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynHaskellSyn::EnumUserSettings(TStrings* Settings)
@@ -1047,7 +1045,7 @@ String __fastcall TSynHaskellSyn::GetLanguageName()
 TSynHighlighterCapabilities __fastcall TSynHaskellSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterHaskell__4;
+	result = inherited::GetCapabilities() + Synhighlighterhaskell__4;
 	return result;
 }
 
@@ -1076,16 +1074,8 @@ void SynHighlighterHaskell_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynHaskellSyn));
 }
-class SynHighlighterHaskell_unit
-{
-public:
-	SynHighlighterHaskell_unit()
-	{
-		SynHighlighterHaskell_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterHaskell_unit _SynHighlighterHaskell_unit;
 
 }  // namespace SynHighlighterHaskell
 

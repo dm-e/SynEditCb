@@ -6,13 +6,12 @@
 using namespace std;
 using namespace d2c_system;
 using namespace System;
-using namespace System::Classes;
 using namespace Vcl::Controls;
 
 namespace Syneditkbdhandler
 {
 
-__fastcall TKeyboardControl::TKeyboardControl(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TKeyboardControl::TKeyboardControl(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TKeyboardControl::TKeyboardControl(HWND ParentWindow) : inherited(ParentWindow) {}
 
 
@@ -91,7 +90,6 @@ __fastcall TSynEditKbdHandler::~TSynEditKbdHandler()
 	delete fMouseCursorChain;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
 {
@@ -286,7 +284,7 @@ void __fastcall TMethodList::Add(const TMethod& caHandler)
 }
 
 __fastcall TMethodList::TMethodList()
- : FData(new System::Classes::TList())
+ : FData(new TList())
 {
 	//# inherited::Create();
 }
@@ -297,11 +295,10 @@ __fastcall TMethodList::~TMethodList()
 	//# inherited::Destroy();
 }
 
-
 int __fastcall TMethodList::GetCount()
 {
 	int result = 0;
-	result = (int)(FData->Count / 2);
+	result = (NativeInt)(FData->Count / /*div*/ 2);
 	return result;
 }
 
@@ -332,5 +329,5 @@ void __fastcall TMethodList::Remove(const TMethod& caHandler)
 }
 
 
-}  // namespace Syneditkbdhandler
+}  // namespace SynEditKbdHandler
 

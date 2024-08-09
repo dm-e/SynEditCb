@@ -11,61 +11,58 @@ using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterjscript
 {
-#define SynHighlighterJScript__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterJScript__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterJScript__2 (TSysCharSet() << L'=' << L'&')
-#define SynHighlighterJScript__3 (TSysCharSet() << L'=' << L'-' << L'>')
-#define SynHighlighterJScript__4 (TSysCharSet() << L'=' << L'|')
-#define SynHighlighterJScript__5 (TSysCharSet() << L'=' << L'+')
+#define Synhighlighterjscript__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterjscript__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterjscript__2 (TSysCharSet() << '=' << '&')
+#define Synhighlighterjscript__3 (TSysCharSet() << '=' << '-' << '>')
+#define Synhighlighterjscript__4 (TSysCharSet() << '=' << '|')
+#define Synhighlighterjscript__5 (TSysCharSet() << '=' << '+')
 
 
   // IMPORTANT!!! Cause JavaScript is case sensitive, list must be sorted by ASCII values
 const String NonReserwedKeyWords[318/*# range 0..317*/] = {L"All", L"Anchor", L"Applet", L"Area", L"Arguments", L"Array", L"Boolean", L"Button", L"Checkbox", L"Date"
-																				, L"E", L"Embed", L"FileUpload", L"Float", L"Form", L"Frame", L"Function", L"Global", L"Hidden", L"History", L"Image", L"Infinity"
-																				, L"LN10", L"LN2", L"LOG10E", L"LOG2E", L"Layer", L"Link", L"Location", L"MAX_VALUE", L"MIN_VALUE", L"Math", L"MimeType", L"NEGATIVE_INFINITY"
-																				, L"Navigator", L"Null", L"Number", L"Object", L"Option", L"PI", L"POSITIVE_INFINITY", L"Packages", L"Password"
-																				, L"Plugin", L"Radio", L"RegExp", L"Reset", L"SQRT1_2", L"SQRT2", L"Select", L"String", L"Submit", L"Text", L"Textarea", L"URL"
-																				, L"UTC", L"Undefined", L"Window", L"abs", L"acos", L"action", L"alert", L"align", L"alinkColor", L"all", L"anchor", L"anchors", L"appCodeName"
-																				, L"appName", L"appVersion", L"applets", L"arguments", L"asin", L"atan", L"atan2", L"await", L"back", L"background", L"bgColor"
-																				, L"big", L"blink", L"blur", L"body", L"bold", L"border", L"bottom", L"call", L"caller", L"captureEvents", L"ceil", L"charAt"
-																				, L"charCodeAt", L"checked", L"clear", L"clearInterval", L"clearTimeout", L"click", L"close", L"closed", L"color", L"complete"
-																				, L"concat", L"confirm", L"cookie", L"cos", L"current", L"defaultChecked", L"defaultSelected", L"defaultStatus", L"defaultValue"
-																				, L"description", L"display", L"document", L"domain", L"elements", L"embeds", L"enabledPlugin", L"encoding", L"escape"
-																				, L"eval", L"event", L"exp", L"fgColor", L"filename", L"find", L"fixed", L"floor", L"focus", L"fontcolor", L"fontsize", L"form"
-																				, L"forms", L"forward", L"frames", L"fromCharCode", L"getDate", L"getDay", L"getElementById", L"getFullYear", L"getHours", L"getMilliseconds"
-																				, L"getMinutes", L"getMonth", L"getSeconds", L"getTime", L"getTimezoneOffset", L"getUTCDate", L"getUTCDay", L"getUTCFullYear"
-																				, L"getUTCHours", L"getUTCMilliseconds", L"getUTCMinutes", L"getUTCMonth", L"getUTCSeconds", L"getYear", L"go"
-																				, L"handleEvent", L"hash", L"height", L"history", L"home", L"host", L"hostname", L"href", L"hspace", L"images", L"index", L"indexOf"
-																				, L"innerHeight", L"innerWidth", L"input", L"isFinite", L"isNaN", L"italics", L"java", L"javaEnabled", L"join", L"lastIndexOf"
-																				, L"lastModified", L"layers", L"left", L"length", L"let", L"link", L"linkColor", L"links", L"location", L"locationbar", L"log"
-																				, L"logon", L"lowsrc", L"match", L"max", L"menubar", L"method", L"mimeTypes", L"min", L"moveBy", L"moveTo", L"name", L"navigator", L"netscape"
-																				, L"next", L"open", L"opener", L"options", L"outerHeight", L"outerWidth", L"pageX", L"pageXOffset", L"pageY", L"pageYOffset"
-																				, L"parent", L"parse", L"parseFloat", L"parseInt", L"pathname", L"personalbar", L"platform", L"plugins", L"port"
-																				, L"pow", L"previous", L"print", L"prompt", L"protocol", L"random", L"referrer", L"refresh", L"releaseEvents", L"reload", L"replace"
-																				, L"reset", L"resizeBy", L"resizeTo", L"reverse", L"right", L"round", L"routeEvent", L"screen", L"scroll", L"scrollBy", L"scrollTo"
-																				, L"scrollbars", L"search", L"select", L"selected", L"selectedIndex", L"self", L"setDate", L"setFullYear", L"setHours", L"setInterval"
-																				, L"setMilliseconds", L"setMinutes", L"setMonth", L"setSeconds", L"setTime", L"setTimeout", L"setUTCDate", L"setUTCFullYear"
-																				, L"setUTCHours", L"setUTCMilliseconds", L"setUTCMinutes", L"setUTCMonth", L"setUTCSeconds", L"setYear", L"sin"
-																				, L"slice", L"small", L"sort", L"split", L"sqrt", L"src", L"status", L"statusbar", L"stop", L"strike", L"style", L"sub", L"submit"
-																				, L"substr", L"substring", L"suffixes", L"sup", L"tags", L"taint", L"taintEnabled", L"tan", L"target", L"text", L"title", L"toGMTString"
-																				, L"toLocaleString", L"toLowerCase", L"toSource", L"toString", L"toUTCString", L"toUpperCase", L"toolbar", L"top"
-																				, L"type", L"undefined", L"unescape", L"untaint", L"unwatch", L"userAgent", L"value", L"valueOf", L"visibility", L"vlinkColor", L"vspace"
-																				, L"watch", L"width", L"window", L"write", L"writeln", L"zIndex"};
+                    , L"E", L"Embed", L"FileUpload", L"Float", L"Form", L"Frame", L"Function", L"Global", L"Hidden", L"History", L"Image", L"Infinity"
+                    , L"LN10", L"LN2", L"LOG10E", L"LOG2E", L"Layer", L"Link", L"Location", L"MAX_VALUE", L"MIN_VALUE", L"Math", L"MimeType", L"NEGATIVE_INFINITY"
+                    , L"Navigator", L"Null", L"Number", L"Object", L"Option", L"PI", L"POSITIVE_INFINITY", L"Packages", L"Password"
+                    , L"Plugin", L"Radio", L"RegExp", L"Reset", L"SQRT1_2", L"SQRT2", L"Select", L"String", L"Submit", L"Text", L"Textarea", L"URL"
+                    , L"UTC", L"Undefined", L"Window", L"abs", L"acos", L"action", L"alert", L"align", L"alinkColor", L"all", L"anchor", L"anchors", L"appCodeName"
+                    , L"appName", L"appVersion", L"applets", L"arguments", L"asin", L"atan", L"atan2", L"await", L"back", L"background", L"bgColor"
+                    , L"big", L"blink", L"blur", L"body", L"bold", L"border", L"bottom", L"call", L"caller", L"captureEvents", L"ceil", L"charAt"
+                    , L"charCodeAt", L"checked", L"clear", L"clearInterval", L"clearTimeout", L"click", L"close", L"closed", L"color", L"complete"
+                    , L"concat", L"confirm", L"cookie", L"cos", L"current", L"defaultChecked", L"defaultSelected", L"defaultStatus", L"defaultValue"
+                    , L"description", L"display", L"document", L"domain", L"elements", L"embeds", L"enabledPlugin", L"encoding", L"escape"
+                    , L"eval", L"event", L"exp", L"fgColor", L"filename", L"find", L"fixed", L"floor", L"focus", L"fontcolor", L"fontsize", L"form"
+                    , L"forms", L"forward", L"frames", L"fromCharCode", L"getDate", L"getDay", L"getElementById", L"getFullYear", L"getHours", L"getMilliseconds"
+                    , L"getMinutes", L"getMonth", L"getSeconds", L"getTime", L"getTimezoneOffset", L"getUTCDate", L"getUTCDay", L"getUTCFullYear"
+                    , L"getUTCHours", L"getUTCMilliseconds", L"getUTCMinutes", L"getUTCMonth", L"getUTCSeconds", L"getYear", L"go"
+                    , L"handleEvent", L"hash", L"height", L"history", L"home", L"host", L"hostname", L"href", L"hspace", L"images", L"index", L"indexOf"
+                    , L"innerHeight", L"innerWidth", L"input", L"isFinite", L"isNaN", L"italics", L"java", L"javaEnabled", L"join", L"lastIndexOf"
+                    , L"lastModified", L"layers", L"left", L"length", L"let", L"link", L"linkColor", L"links", L"location", L"locationbar", L"log"
+                    , L"logon", L"lowsrc", L"match", L"max", L"menubar", L"method", L"mimeTypes", L"min", L"moveBy", L"moveTo", L"name", L"navigator", L"netscape"
+                    , L"next", L"open", L"opener", L"options", L"outerHeight", L"outerWidth", L"pageX", L"pageXOffset", L"pageY", L"pageYOffset"
+                    , L"parent", L"parse", L"parseFloat", L"parseInt", L"pathname", L"personalbar", L"platform", L"plugins", L"port"
+                    , L"pow", L"previous", L"print", L"prompt", L"protocol", L"random", L"referrer", L"refresh", L"releaseEvents", L"reload", L"replace"
+                    , L"reset", L"resizeBy", L"resizeTo", L"reverse", L"right", L"round", L"routeEvent", L"screen", L"scroll", L"scrollBy", L"scrollTo"
+                    , L"scrollbars", L"search", L"select", L"selected", L"selectedIndex", L"self", L"setDate", L"setFullYear", L"setHours", L"setInterval"
+                    , L"setMilliseconds", L"setMinutes", L"setMonth", L"setSeconds", L"setTime", L"setTimeout", L"setUTCDate", L"setUTCFullYear"
+                    , L"setUTCHours", L"setUTCMilliseconds", L"setUTCMinutes", L"setUTCMonth", L"setUTCSeconds", L"setYear", L"sin"
+                    , L"slice", L"small", L"sort", L"split", L"sqrt", L"src", L"status", L"statusbar", L"stop", L"strike", L"style", L"sub", L"submit"
+                    , L"substr", L"substring", L"suffixes", L"sup", L"tags", L"taint", L"taintEnabled", L"tan", L"target", L"text", L"title", L"toGMTString"
+                    , L"toLocaleString", L"toLowerCase", L"toSource", L"toString", L"toUTCString", L"toUpperCase", L"toolbar", L"top"
+                    , L"type", L"undefined", L"unescape", L"untaint", L"unwatch", L"userAgent", L"value", L"valueOf", L"visibility", L"vlinkColor", L"vspace"
+                    , L"watch", L"width", L"window", L"write", L"writeln", L"zIndex"};
 const String Keywords[62/*# range 0..61*/] = {L"abstract", L"boolean", L"break", L"byte", L"callee", L"case", L"catch", L"char", L"const", L"constructor", L"continue"
-																				, L"debugger", L"default", L"delete", L"do", L"double", L"else", L"enum", L"export", L"extends", L"false", L"final", L"finally"
-																				, L"float", L"for", L"function", L"goto", L"if", L"implements", L"import", L"in", L"instanceof", L"int", L"interface", L"long"
-																				, L"NaN", L"native", L"new", L"null", L"package", L"private", L"protected", L"prototype", L"public", L"return", L"short", L"start"
-																				, L"static", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws", L"transient", L"true", L"try", L"typeof", L"var"
-																				, L"void", L"while", L"with"};
+                    , L"debugger", L"default", L"delete", L"do", L"double", L"else", L"enum", L"export", L"extends", L"false", L"final", L"finally"
+                    , L"float", L"for", L"function", L"goto", L"if", L"implements", L"import", L"in", L"instanceof", L"int", L"interface", L"long"
+                    , L"NaN", L"native", L"new", L"null", L"package", L"private", L"protected", L"prototype", L"public", L"return", L"short", L"start"
+                    , L"static", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws", L"transient", L"true", L"try", L"typeof", L"var"
+                    , L"void", L"while", L"with"};
 const String Events[20/*# range 0..19*/] = {L"onAbort", L"onBlur", L"onChange", L"onClick", L"onDblClick", L"onError", L"onFocus", L"onKeyDown", L"onKeyPress"
-																				, L"onKeyUp", L"onLoad", L"onMouseDown", L"onMouseMove", L"onMouseOut", L"onMouseOver", L"onMouseUp", L"onReset", L"onSelect"
-																				, L"onSubmit", L"onUnload"};
+                    , L"onKeyUp", L"onLoad", L"onMouseDown", L"onMouseMove", L"onMouseOut", L"onMouseOver", L"onMouseUp", L"onReset", L"onSelect"
+                    , L"onSubmit", L"onUnload"};
 
 bool __fastcall TSynJScriptSyn::IsKeyword(const String AKeyword)
 {
@@ -177,14 +174,14 @@ __fastcall TSynJScriptSyn::TSynJScriptSyn(TComponent* AOwner)
 	fLiteralLevel = 0;
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterJScript__0;
+	fCommentAttri->Style = Synhighlighterjscript__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fSpecVarAttri = new TSynHighlighterAttributes(SYNS_AttrSpecialVariable, SYNS_FriendlyAttrSpecialVariable);
 	addAttribute(fSpecVarAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterJScript__1;
+	fKeyAttri->Style = Synhighlighterjscript__1;
 	addAttribute(fKeyAttri);
 	fNonReservedKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
 	addAttribute(fNonReservedKeyAttri);
@@ -208,7 +205,7 @@ void __fastcall TSynJScriptSyn::AndSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterJScript__2))
+	if(CharInSet(fLine[Run], Synhighlighterjscript__2))
 		++Run;
 }
 
@@ -360,7 +357,7 @@ void __fastcall TSynJScriptSyn::MinusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterJScript__3))
+	if(CharInSet(fLine[Run], Synhighlighterjscript__3))
 		++Run;
 }
 
@@ -462,7 +459,7 @@ void __fastcall TSynJScriptSyn::OrSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterJScript__4))
+	if(CharInSet(fLine[Run], Synhighlighterjscript__4))
 		++Run;
 }
 
@@ -470,7 +467,7 @@ void __fastcall TSynJScriptSyn::PlusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterJScript__5))
+	if(CharInSet(fLine[Run], Synhighlighterjscript__5))
 		++Run;
 }
 
@@ -805,7 +802,7 @@ void __fastcall TSynJScriptSyn::ResetRange()
 
 void __fastcall TSynJScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynJScriptSyn::IsFilterStored()
@@ -876,7 +873,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -897,7 +894,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -961,9 +958,9 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(int)GetLineRange(LinesToScan, (int) Line) == rsAnsi)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsAnsi)
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsi)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsi)
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -971,7 +968,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 		}
 		else
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsi)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsi)
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -1007,16 +1004,8 @@ void SynHighlighterJScript_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynJScriptSyn));
 }
-class SynHighlighterJScript_unit
-{
-public:
-	SynHighlighterJScript_unit()
-	{
-		SynHighlighterJScript_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterJScript_unit _SynHighlighterJScript_unit;
 
 }  // namespace SynHighlighterJScript
 

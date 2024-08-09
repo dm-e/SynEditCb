@@ -12,8 +12,6 @@ using namespace d2c_system;
 using namespace Synedit;
 using namespace Synexporthtml;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
 
 namespace Syneditdataobject
 {
@@ -49,7 +47,7 @@ HGLOBAL __fastcall MakeGlobal(const String s)
 HGLOBAL __fastcall MakeGlobal(int Value)
 {
 	HGLOBAL result = 0;
-	result = MakeGlobal((void**)&Value, sizeof(int));
+	result = MakeGlobal((void**)&Value, (int) sizeof(int));
 	return result;
 }
 
@@ -117,16 +115,15 @@ __fastcall TSynEditDataObject::~TSynEditDataObject()
 	//# inherited::Destroy();
 }
 
-
+// the signature must conform to a purely virtual method
 HRESULT __stdcall TSynEditDataObject::GetData(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium)
 {
 	HRESULT result = 0;
+	ZeroMemory(medium, sizeof(TStgMedium));
+	result = QueryGetData(formatetcIn);
+	if(result == S_OK)
 	try
 	{
-		result = DV_E_FORMATETC;
-		ZeroMemory(medium, (NativeUInt) sizeof(TStgMedium));
-		if((formatetcIn->tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL)
-		{
 			medium->tymed = TYMED_HGLOBAL;
 			if(formatetcIn->cfFormat == CF_UNICODETEXT)
 				medium->hGlobal = MakeGlobal(FText);
@@ -135,9 +132,10 @@ HRESULT __stdcall TSynEditDataObject::GetData(tagFORMATETC* formatetcIn, tagSTGM
 				if(formatetcIn->cfFormat == SynEditClipboardFormat)
 					medium->hGlobal = MakeGlobal((void**) MemoryStream->Memory, (int) MemoryStream->Position);
 				else
-					return result;
+				{
+					if(formatetcIn->cfFormat == HTMLClipboardFormat)
+						medium->hGlobal = MakeGlobal((void**) HtmlStream->Memory, (int) HtmlStream->Position);
 			}
-			result = S_OK;
 		}
 	}
 	catch(...)
@@ -177,14 +175,11 @@ void __fastcall TSynEditDataObject::StreamHTML(TObject* Editor, TStream* Stream)
 HRESULT __stdcall TSynEditDataObject::QueryGetData(tagFORMATETC* FORMATETC)
 {
 	HRESULT result = 0;
-	TClipFormat ClipFormat = 0;
-	for(int iFor0 = 0; iFor0 < FFormatEtc->Count; iFor0++)
-	{
-		TClipFormat	ClipFormat = FFormatEtc->Items[iFor0];
-		if((FORMATETC->cfFormat == ClipFormat) && ((FORMATETC->tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL))
-			return S_OK;
-	}
-	return DV_E_FORMATETC;
+	if(((FORMATETC->tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(FORMATETC->cfFormat))
+		result = S_OK;
+	else
+		result = DV_E_FORMATETC;
+	return result;
 }
 
 HRESULT __stdcall TSynEditDataObject::GetCanonicalFormatEtc(tagFORMATETC* FORMATETC, tagFORMATETC* formatetcOut)
@@ -277,7 +272,7 @@ HRESULT __stdcall TSynEnumFormatEtc::Next(unsigned long celt, tagFORMATETC* elt,
 	FORMATETC = ((PFormatEtc) elt);
 	while((i < celt) && (FIndex < FList.Length))
 	{
-		(*FORMATETC) = GetFormatEtc(FList[FIndex]);
+		*FORMATETC = GetFormatEtc(FList[FIndex]);
 		++FORMATETC;
 		++FIndex;
 		++i;
@@ -299,7 +294,7 @@ HRESULT __stdcall TSynEnumFormatEtc::Skip(unsigned long celt)
 		FIndex = FIndex + celt;
 	else
 	{
-		FIndex = (int) FList.Length;
+		FIndex = FList.Length;
 		result = S_FALSE;
 	}
 	return result;
@@ -331,32 +326,32 @@ void SynEditDataObject_initialization()
 	SynEditDataObject_Initialized = true;
 	
 	OleInitialize(nullptr);
-	SynEditClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(L"Internal Synedit clipboard format"));
+	SynEditClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(L"Internal SynEdit clipboard format"));
 	HTMLClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
 }
-static bool SynEditDataObject_Finalized = false;
+//static bool SynEditDataObject_Finalized = false;
+//
+//void SynEditDataObject_finalization()
+//{
+//	if(SynEditDataObject_Finalized)
+//		return;
+//
+//	SynEditDataObject_Finalized = true;
+//
+//	OleFlushClipboard();
+//	OleUninitialize();
+//}
+//class SynEditDataObject_unit
+//{
+//public:
+//	SynEditDataObject_unit()
+//	{
+//		SynEditDataObject_initialization();
+//	}
+//	~SynEditDataObject_unit(){SynEditDataObject_finalization(); }
+//};
+//
+//SynEditDataObject_unit _SynEditDataObject_unit;
 
-void SynEditDataObject_finalization()
-{
-	if(SynEditDataObject_Finalized)
-		return;
-	
-	SynEditDataObject_Finalized = true;
-	
-	OleFlushClipboard();
-	OleUninitialize();
-}
-class SynEditDataObject_unit
-{
-public:
-	SynEditDataObject_unit()
-	{
-		SynEditDataObject_initialization();
-	}
-	~SynEditDataObject_unit(){SynEditDataObject_finalization(); }
-};
-
-SynEditDataObject_unit _SynEditDataObject_unit;
-
-}  // namespace Syneditdataobject
+}  // namespace SynEditDataObject
 

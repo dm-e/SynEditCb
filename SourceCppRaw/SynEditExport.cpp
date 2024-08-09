@@ -17,17 +17,15 @@ using namespace Synunicode;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Math;
-using namespace System::Sysutils;
 using namespace System::Uitypes;
-using namespace Vcl::Clipbrd;
 using namespace Vcl::Graphics;
 
 namespace Syneditexport
 {
-#define SynEditExport__0 TFontStyles()
-#define SynEditExport__1 TFontStyles()
-#define SynEditExport__2 (System::Set<TSynEncoding, seUTF8, seAnsi>() << TSynEncoding::seUTF8 << TSynEncoding::seAnsi)
-#define SynEditExport__3 (System::Set<TSynEncoding, seUTF8, seAnsi>() << TSynEncoding::seUTF16LE << TSynEncoding::seUTF16BE)
+#define Syneditexport__0 TFontStyles()
+#define Syneditexport__1 TFontStyles()
+#define Syneditexport__2 (System::Set<TSynEncoding, TSynEncoding::seUTF8, TSynEncoding::seAnsi>() << seUTF8 << seAnsi)
+#define Syneditexport__3 (System::Set<TSynEncoding, TSynEncoding::seUTF8, TSynEncoding::seAnsi>() << seUTF16LE << seUTF16BE)
 
 __fastcall ESynEncoding::ESynEncoding(const String Msg) : inherited(Msg) {}
 __fastcall ESynEncoding::ESynEncoding(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
@@ -54,7 +52,7 @@ __fastcall TSynCustomExporter::TSynCustomExporter(TComponent* AOwner)
 			FStreaming(false),
 			FBackgroundColor((TColor) 0),
 			FClipboardFormat(0),
-			FEncoding(TSynEncoding::seUTF8),
+			FEncoding(seUTF8),
 			fExportAsText(false),
 			FFont(nullptr),
 			fHighlighter(nullptr),
@@ -63,7 +61,7 @@ __fastcall TSynCustomExporter::TSynCustomExporter(TComponent* AOwner)
 			fUseBackground(false)
 {
 	FClipboardFormat = (UINT) CF_TEXT;
-	FEncoding = TSynEncoding::seUTF8;
+	FEncoding = seUTF8;
 	FFont = new TFont();
 	FBackgroundColor = clWindow;
 	AssignFont(nullptr);
@@ -77,7 +75,6 @@ __fastcall TSynCustomExporter::~TSynCustomExporter()
 	delete FBuffer;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynCustomExporter::AddData(const String AText)
 {
@@ -109,7 +106,7 @@ void __fastcall TSynCustomExporter::AssignFont(TFont* Value)
 		FFont->Name = DefaultFontName();
 		FFont->Size = 10;
 		FFont->Color = clWindowText;
-		FFont->Style = SynEditExport__0;
+		FFont->Style = Syneditexport__0;
 	}
 }
 
@@ -118,7 +115,7 @@ void __fastcall TSynCustomExporter::Clear()
 	FBuffer->Position = 0;
   // Size is ReadOnly in Delphi 2
 	FBuffer->SetSize(0);
-	fLastStyle = SynEditExport__1;
+	fLastStyle = Syneditexport__1;
 	fLastBG = clWindow;
 	fLastFG = clWindowText;
 }
@@ -128,7 +125,7 @@ void __fastcall SetClipboardText(String Text)
 	HGLOBAL Mem = 0;
 	PByte P = nullptr;
 	int SLen = 0;
-	SLen = (int) Text.Length();
+	SLen = Text.Length();
 	Clipboard()->Open();
 	try
 	{
@@ -145,7 +142,7 @@ void __fastcall SetClipboardText(String Text)
 				if(P != nullptr)
 				{
 					Move(ustr2address(Text), P, (SLen + 1) * sizeof(WideChar));
-					Clipboard()->SetAsHandle((WORD) CF_UNICODETEXT, Mem);
+					Clipboard()->SetAsHandle((UINT) CF_UNICODETEXT, (THandle) Mem);
 				}
 			}
 			__finally
@@ -172,26 +169,26 @@ void __fastcall TSynCustomExporter::CopyToClipboard()
 		FBuffer->Write(&Nulls, FCharSize);
 		switch(Encoding)
 		{
-			case TSynEncoding::seUTF16LE:
-			s = FBuffer->Memory.c_str();
+			case seUTF16LE:
+			s = (wchar_t*) FBuffer->Memory /*# check length*/;
 			break;
-			case TSynEncoding::seUTF16BE:
+			case seUTF16BE:
 			{
-				s = FBuffer->Memory.c_str();
+				s = (wchar_t*) FBuffer->Memory /*# check length*/;
 				StrSwapByteOrder(ustr2pwchar(s));
 			}
 			break;
-			case TSynEncoding::seUTF8:
+			case seUTF8:
 			s = UTF8ToUnicodeString(((PAnsiChar) FBuffer->Memory));
 			break;
-			case TSynEncoding::seAnsi:
-			s = UnicodeString((char*) FBuffer->Memory);
+			case seAnsi:
+			s = UnicodeString((char*)FBuffer->Memory /*# check length*/);
 			break;
 			default:
 			  ;
 			break;
 		}
-		Syneditexport::SetClipboardText(s);
+		SetClipboardText(s);
 	}
 	else
 	CopyToClipboardFormat(GetClipboardFormat());
@@ -203,11 +200,11 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 	UINT hDataSize = 0;
 	PByte PtrData = nullptr;
 	hDataSize = (UINT) (GetBufferSize() + 1);
-	hData = GlobalAlloc((UINT) (GMEM_MOVEABLE | GMEM_ZEROINIT | GMEM_SHARE), hDataSize);
+	hData = (THandle) GlobalAlloc((UINT) (GMEM_MOVEABLE | GMEM_ZEROINIT | GMEM_SHARE), hDataSize);
 	if(hData != 0)
 		try
 		{
-			PtrData = ((unsigned char*) GlobalLock(hData));
+			PtrData = ((unsigned char*) GlobalLock((HGLOBAL) hData));
 			if(ASSIGNED(PtrData))
 			{
 				try
@@ -217,16 +214,16 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 				}
 				__finally
 				{
-					GlobalUnlock(hData);
+					GlobalUnlock((HGLOBAL) hData);
 				}
-				Clipboard()->SetAsHandle((WORD) AFormat, hData);
+				Clipboard()->SetAsHandle(AFormat, hData);
 			}
 			else
 			Abort();
 		}
 		catch(...)
 		{
-			GlobalFree(hData);
+			GlobalFree((HGLOBAL) hData);
 			OutOfMemoryError();
 		}
 }
@@ -258,8 +255,8 @@ void __fastcall TSynCustomExporter::ExportRange(TStrings* ALines, const TBufferC
 		if(!ASSIGNED(ALines) || !ASSIGNED(Highlighter) || (ALines->Count == 0) || (Start.Line > ALines->Count) || (Start.Line > Stop.Line))
 			Abort();
 		Stop.Line = Max(1, Min(Stop.Line, ALines->Count));
-		Stop.Char = Max(1, Min(Stop.Char, (int) (ALines->Strings[Stop.Line - 1].Length() + 1)));
-		Start.Char = Max(1, Min(Start.Char, (int) (ALines->Strings[Start.Line - 1].Length() + 1)));
+		Stop.Char = Max(1, Min(Stop.Char, ALines->Strings[Stop.Line - 1].Length() + 1));
+		Start.Char = Max(1, Min(Start.Char, ALines->Strings[Start.Line - 1].Length() + 1));
 		if((Start.Line == Stop.Line) && (Start.Char >= Stop.Char))
 			Abort();
     // initialization
@@ -345,7 +342,7 @@ void __fastcall TSynCustomExporter::insertData(int APos, const String AText)
 		SizeNeeded = ToMove + Size;
 		if(FBuffer->Size < SizeNeeded)
       // Size is ReadOnly in Delphi 2
-			FBuffer->SetSize((SizeNeeded + 0x1800) & ~0xfff); // increment in pages
+			FBuffer->SetSize((SizeNeeded + 0x1800) & ~0xFFF); // increment in pages
 		Dest = ((unsigned char*) FBuffer->Memory);
 		Dest += Size;
 		Move(FBuffer->Memory, Dest, ToMove);
@@ -368,7 +365,7 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 	WideChar C = L'\0';
 	if(AToken != L"")
 	{
-		SrcLen = (int) AToken.Length();
+		SrcLen = AToken.Length();
 		ISrc = 1;
 		DestLen = SrcLen;
 		IDest = 1;
@@ -397,7 +394,7 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 				DestLen += Max(32, IDest + Replace.Length() - DestLen);
 				result.SetLength(DestLen);
 			}
-			for(stop = (int) Replace.Length(), i = 1; i <= stop; i++)
+			for(stop = Replace.Length(), i = 1; i <= stop; i++)
 			{
 				result[IDest] = Replace[i];
 				++IDest;
@@ -429,13 +426,13 @@ void __fastcall TSynCustomExporter::SaveToStream(TStream* Stream)
 	if(UseBom())
 		switch(Encoding)
 		{
-			case TSynEncoding::seUTF8:
+			case seUTF8:
 			Stream->WriteBuffer(UTF8BOM, 3);
 			break;
-			case TSynEncoding::seUTF16LE:
+			case seUTF16LE:
 			Stream->WriteBuffer(UTF16BOMLE, 2);
 			break;
-			case TSynEncoding::seUTF16BE:
+			case seUTF16BE:
 			Stream->WriteBuffer(UTF16BOMBE, 2);
 			break;
 			default:
@@ -455,11 +452,11 @@ void __fastcall TSynCustomExporter::SetEncoding(TSynEncoding Value)
 	if(!(SupportedEncodings().Contains(Value)))
 		throw new ESynEncoding(SEncodingError, ARRAYOFCONST((EncodingStrs[Value], GetFormatName())));
 	FEncoding = Value;
-	if(SynEditExport__2.Contains(Value))
+	if(Syneditexport__2.Contains(Value))
 		FCharSize = 1;
 	else
 	{
-		if(SynEditExport__3.Contains(Value))
+		if(Syneditexport__3.Contains(Value))
 			FCharSize = 2;
 	}
 }
@@ -556,18 +553,18 @@ int __fastcall TSynCustomExporter::StringSize(const String AText)
 	int result = 0;
 	switch(Encoding)
 	{
-		case TSynEncoding::seUTF8:
-		result = (int) UTF8Encode(AText).Length();
+		case seUTF8:
+		result = UTF8Encode(AText).Length();
 		break;
-		case TSynEncoding::seUTF16LE:
-		case TSynEncoding::seUTF16BE:
-		result = (int) AText.Length();
+		case seUTF16LE:
+		case seUTF16BE:
+		result = AText.Length();
 		break;
-		case TSynEncoding::seAnsi:
-		result = (int) AnsiString(AText).Length();
+		case seAnsi:
+		result = AnsiString(AText).Length();
 		break;
 		default:
-		result = (int) AText.Length();
+		result = AText.Length();
 		break;
 	}
 	result = result * FCharSize;
@@ -580,22 +577,22 @@ void __fastcall TSynCustomExporter::WriteString(const String AText)
 	AnsiString AnsiStr;
 	switch(Encoding)
 	{
-		case TSynEncoding::seUTF8:
+		case seUTF8:
 		{
 			UTF8Str = UTF8Encode(AText);
 			FBuffer->WriteBuffer(astr2pchar(UTF8Str, 1 - 1), UTF8Str.Length());
 		}
 		break;
-		case TSynEncoding::seUTF16LE:
+		case seUTF16LE:
 		FBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		break;
-		case TSynEncoding::seUTF16BE:
+		case seUTF16BE:
 		{
 			StrSwapByteOrder(ustr2pwchar(AText));
 			FBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		}
 		break;
-		case TSynEncoding::seAnsi:
+		case seAnsi:
 		{
 			AnsiStr = AnsiString(AText.c_str());
 			FBuffer->WriteBuffer(astr2pchar(AnsiStr, 1 - 1), AnsiStr.Length());

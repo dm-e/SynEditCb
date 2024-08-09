@@ -23,7 +23,6 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Designeditors;
-using namespace Designintf;
 using namespace Synautocorrect;
 using namespace Syncompletionproposal;
 using namespace Synedit;
@@ -33,8 +32,8 @@ using namespace Syneditprintmargins;
 using namespace Synedittypes;
 using namespace Synmacrorecorder;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
+using namespace System::Uitypes;
 using namespace Vcleditors;
 using namespace Vcl::Controls;
 using namespace Vcl::Dialogs;
@@ -43,23 +42,23 @@ using namespace Vcl::Graphics;
 
 namespace Syneditpropertyreg
 {
-#define SynEditPropertyReg__0 (TFontDialogOptions() << TFontDialogOption::fdShowHelp << TFontDialogOption::fdForceFontExist << TFontDialogOption::fdFixedPitchOnly)
-#define SynEditPropertyReg__1 (TPropertyAttributes() << paMultiSelect << paDialog << paValueList << paRevertable)
-#define SynEditPropertyReg__2 (TPropertyAttributes() << paDialog << paReadOnly)
-#define SynEditPropertyReg__3 (TPropertyAttributes() << paDialog << paSubProperties << paReadOnly << paSortList)
-#define SynEditPropertyReg__4 (TPropertyAttributes() << paDialog << paReadOnly)
+#define Syneditpropertyreg__0 (TFontDialogOptions() << fdShowHelp << fdForceFontExist << fdFixedPitchOnly)
+#define Syneditpropertyreg__1 (TPropertyAttributes() << paMultiSelect << paDialog << paValueList << paRevertable)
+#define Syneditpropertyreg__2 (TPropertyAttributes() << paDialog << paReadOnly)
+#define Syneditpropertyreg__3 (TPropertyAttributes() << paDialog << paSubProperties << paReadOnly << paSortList)
+#define Syneditpropertyreg__4 (TPropertyAttributes() << paDialog << paReadOnly)
 
-__fastcall TSynEditFontProperty::TSynEditFontProperty(Designintf::IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditFontProperty::TSynEditFontProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditFontProperty::TSynEditFontProperty() {}
-__fastcall TSynEditCommandProperty::TSynEditCommandProperty(Designintf::IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditCommandProperty::TSynEditCommandProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditCommandProperty::TSynEditCommandProperty() {}
-__fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty(Designintf::IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty() {}
-__fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty(Designintf::IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty() {}
-__fastcall TAutoCorrectionProperty::TAutoCorrectionProperty(Designintf::IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TAutoCorrectionProperty::TAutoCorrectionProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TAutoCorrectionProperty::TAutoCorrectionProperty() {}
-__fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor(System::Classes::TComponent* AComponent, Designintf::IDesigner* ADesigner) : inherited(AComponent, ADesigner) {}
+__fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor(TComponent* AComponent, IDesigner* ADesigner) : inherited(AComponent, ADesigner) {}
 __fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor() {}
 
 
@@ -77,7 +76,7 @@ void __fastcall TSynEditFontProperty::Edit()
 	{
 		FontDialog->Font = ((TFont*) GetOrdValue());
 		FontDialog->HelpContext = (THelpContext) hcDFontEditor;
-		FontDialog->Options = FontDialog->Options + SynEditPropertyReg__0;
+		FontDialog->Options = FontDialog->Options + Syneditpropertyreg__0;
 		if(FontDialog->Execute())
 			SetOrdValue(((NativeInt) FontDialog->Font));
 	}
@@ -98,7 +97,7 @@ void __fastcall TSynEditCommandProperty::Edit()
 TPropertyAttributes __fastcall TSynEditCommandProperty::GetAttributes()
 {
 	TPropertyAttributes result;
-	result = SynEditPropertyReg__1;
+	result = Syneditpropertyreg__1;
 	return result;
 }
 
@@ -133,7 +132,7 @@ void __fastcall TSynEditKeystrokesProperty::Edit()
 	{
 		Dlg->Caption = this->GetName();
 		Dlg->Keystrokes = ((TSynEditKeyStrokes*) GetOrdValue());
-		if(Dlg->ShowModal() == mrOk)
+		if(Dlg->ShowModal() == System::Uitypes::mrOk)
       /* SetOrdValue will operate on all selected propertiy values */
 		{
 			SetOrdValue(((NativeInt) Dlg->Keystrokes));
@@ -149,7 +148,7 @@ void __fastcall TSynEditKeystrokesProperty::Edit()
 TPropertyAttributes __fastcall TSynEditKeystrokesProperty::GetAttributes()
 {
 	TPropertyAttributes result;
-	result = SynEditPropertyReg__2;
+	result = Syneditpropertyreg__2;
 	return result;
 }
 
@@ -162,7 +161,7 @@ void __fastcall TSynEditPrintMarginsProperty::Edit()
 	try
 	{
 		SynEditPrintMarginsDlg->SetMargins(((TSynEditPrintMargins*) GetOrdValue()));
-		if(SynEditPrintMarginsDlg->ShowModal() == mrOk)
+		if(SynEditPrintMarginsDlg->ShowModal() == System::Uitypes::mrOk)
 			SynEditPrintMarginsDlg->GetMargins(((TSynEditPrintMargins*) GetOrdValue()));
 	}
 	__finally
@@ -174,7 +173,7 @@ void __fastcall TSynEditPrintMarginsProperty::Edit()
 TPropertyAttributes __fastcall TSynEditPrintMarginsProperty::GetAttributes()
 {
 	TPropertyAttributes result;
-	result = SynEditPropertyReg__3;
+	result = Syneditpropertyreg__3;
 	return result;
 }
 
@@ -191,7 +190,7 @@ void __fastcall TSynAutoCorrectComponentEditor::Edit()
 	{
 		delete frmAutoCorrectEditor;
 	}
-	Designer->Modified();
+	Designer->Modified;
 }
 
 void __fastcall TSynAutoCorrectComponentEditor::ExecuteVerb(int Index)
@@ -248,7 +247,7 @@ void __fastcall TAutoCorrectionProperty::Edit()
 TPropertyAttributes __fastcall TAutoCorrectionProperty::GetAttributes()
 {
 	TPropertyAttributes result;
-	result = SynEditPropertyReg__4;
+	result = Syneditpropertyreg__4;
 	return result;
 }
 

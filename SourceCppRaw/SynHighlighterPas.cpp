@@ -11,60 +11,58 @@ using namespace std;
 using namespace d2c_system;
 using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Regularexpressions;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterpas
 {
-#define SynHighlighterPas__0 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsProperty << rsExports)
-#define SynHighlighterPas__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterPas__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterPas__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterPas__4 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterPas__5 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterPas__6 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterPas__7 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsDirective << rsDirectiveAsm)
-#define SynHighlighterPas__8 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsBorAsm << rsDirectiveAsm)
-#define SynHighlighterPas__9 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsProperty << rsExports)
-#define SynHighlighterPas__10 (System::Set<TtkTokenKind, tkSymbol, tkType>() << tkNull << tkComment << tkDirec << tkSpace)
-#define SynHighlighterPas__11 TReplaceFlags()
-#define SynHighlighterPas__12 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
-#define SynHighlighterPas__13 (TRangeStates() << rsAnsi)
-#define SynHighlighterPas__14 (TRangeStates() << rsAsm << rsAnsiAsm << rsBorAsm << rsDirectiveAsm)
-#define SynHighlighterPas__15 (TRangeStates() << rsBor)
-#define SynHighlighterPas__16 (TRangeStates() << rsDirective)
+#define Synhighlighterpas__0 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsProperty << rsExports)
+#define Synhighlighterpas__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterpas__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterpas__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterpas__4 (TRegExOptions() << roIgnoreCase)
+#define Synhighlighterpas__5 (TRegExOptions() << roIgnoreCase)
+#define Synhighlighterpas__6 (TRegExOptions() << roIgnoreCase)
+#define Synhighlighterpas__7 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsDirective << rsDirectiveAsm)
+#define Synhighlighterpas__8 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsBorAsm << rsDirectiveAsm)
+#define Synhighlighterpas__9 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsProperty << rsExports)
+#define Synhighlighterpas__10 (System::Set<TtkTokenKind, TtkTokenKind::tkSymbol, TtkTokenKind::tkType>() << tkNull << tkComment << tkDirec << tkSpace)
+#define Synhighlighterpas__11 TReplaceFlags()
+#define Synhighlighterpas__12 (TSynHighlighterCapabilities() << hcUserSettings)
+#define Synhighlighterpas__13 (TRangeStates() << rsAnsi)
+#define Synhighlighterpas__14 (TRangeStates() << rsAsm << rsAnsiAsm << rsBorAsm << rsDirectiveAsm)
+#define Synhighlighterpas__15 (TRangeStates() << rsBor)
+#define Synhighlighterpas__16 (TRangeStates() << rsDirective)
 
 
   // if the language is case-insensitive keywords *must* be in lowercase
 const String Keywords[132/*# range 0..131*/] = {L"absolute", L"abstract", L"and", L"ansistring", L"array", L"as", L"asm", L"assembler", L"automated", L"begin"
-																				, L"boolean", L"byte", L"bytebool", L"cardinal", L"case", L"cdecl", L"class", L"const", L"constructor", L"contains", L"currency"
-																				, L"default", L"deprecated", L"destructor", L"dispid", L"dispinterface", L"div", L"do", L"double", L"downto", L"dynamic"
-																				, L"else", L"end", L"except", L"export", L"exports", L"extended", L"external", L"far", L"file", L"final", L"finalization", L"finally"
-																				, L"for", L"forward", L"function", L"goto", L"helper", L"if", L"implementation", L"implements", L"in", L"index", L"inherited"
-																				, L"initialization", L"inline", L"int64", L"integer", L"interface", L"is", L"label", L"library", L"longbool", L"longint"
-																				, L"longword", L"message", L"mod", L"name", L"near", L"nil", L"nodefault", L"not", L"object", L"of", L"on", L"operator", L"or"
-																				, L"out", L"overload", L"override", L"package", L"packed", L"pascal", L"platform", L"private", L"procedure", L"program", L"property"
-																				, L"protected", L"public", L"published", L"raise", L"read", L"readonly", L"real48", L"record", L"register", L"reintroduce", L"repeat"
-																				, L"requires", L"resourcestring", L"safecall", L"sealed", L"set", L"shl", L"shortint", L"shortstring", L"shr", L"single", L"smallint"
-																				, L"stdcall", L"stored", L"string", L"stringresource", L"then", L"threadvar", L"to", L"try", L"type", L"unit", L"until", L"uses"
-																				, L"var", L"virtual", L"while", L"string", L"with", L"word", L"wordbool", L"write", L"writeonly", L"xor"};
+                    , L"boolean", L"byte", L"bytebool", L"cardinal", L"case", L"cdecl", L"class", L"const", L"constructor", L"contains", L"currency"
+                    , L"default", L"deprecated", L"destructor", L"dispid", L"dispinterface", L"div", L"do", L"double", L"downto", L"dynamic"
+                    , L"else", L"end", L"except", L"export", L"exports", L"extended", L"external", L"far", L"file", L"final", L"finalization", L"finally"
+                    , L"for", L"forward", L"function", L"goto", L"helper", L"if", L"implementation", L"implements", L"in", L"index", L"inherited"
+                    , L"initialization", L"inline", L"int64", L"integer", L"interface", L"is", L"label", L"library", L"longbool", L"longint"
+                    , L"longword", L"message", L"mod", L"name", L"near", L"nil", L"nodefault", L"not", L"object", L"of", L"on", L"operator", L"or"
+                    , L"out", L"overload", L"override", L"package", L"packed", L"pascal", L"platform", L"private", L"procedure", L"program", L"property"
+                    , L"protected", L"public", L"published", L"raise", L"read", L"readonly", L"real48", L"record", L"register", L"reintroduce", L"repeat"
+                    , L"requires", L"resourcestring", L"safecall", L"sealed", L"set", L"shl", L"shortint", L"shortstring", L"shr", L"single", L"smallint"
+                    , L"stdcall", L"stored", L"string", L"stringresource", L"then", L"threadvar", L"to", L"try", L"type", L"unit", L"until", L"uses"
+                    , L"var", L"virtual", L"while", L"string", L"with", L"word", L"wordbool", L"write", L"writeonly", L"xor"};
 const int KeyIndices[641/*# range 0..640*/] = {-1, -1, -1, 34, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 122, -1, 78, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, -1, -1
-																				, -1, -1, 107, -1, -1, 31, -1, -1, -1, -1, -1, -1, -1, -1, 35, -1, -1, -1, 4, 79, -1, 36, -1, -1, 117, -1, -1, -1, -1, -1, 49, -1, -1, -1, 77, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 113, -1, 112, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 72, -1, 40, -1, 121, 83, 98, -1, -1, -1, -1, -1, 38, -1, -1, -1, -1
-																				, 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, -1, 86, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 64, 32, -1, -1, -1, -1, 58, 44, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 67, -1, 6, 13, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, 3, -1, 43, -1, -1, -1, 96, -1, -1, 53, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, 12
-																				, -1, -1, -1, -1, -1, -1, 37, 90, -1, 126, -1, -1, 85, 81, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, 124, -1, -1, -1, 69, -1, -1, -1, -1, -1, -1, 42, -1, -1, 29, -1, 127, -1, -1, -1, -1, -1, -1, 129
-																				, -1, -1, -1, 16, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 28, -1, 101, 61, -1, -1, 26, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59, 131, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 19, -1, 41, 2, -1, -1, 82, -1, -1, -1, 30, -1, -1, 33, -1, -1, -1, -1, 95, -1, -1, -1, -1, -1, -1, -1, 114, -1, 51, -1, 9, -1, 21, -1, 0, -1, -1, 66, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 55, 14, 18, -1, -1, -1, -1, 110, -1, -1, -1, -1, 10, -1, -1, -1, 97, -1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, 8, 70, -1, -1, -1, -1, -1, -1, 27, 116
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, 111, -1, -1, 25, 50, -1, 57, -1, 24, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, -1, 123, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 130, -1, -1, -1, -1, -1, -1, -1, -1, 102, -1, -1, -1, -1, 17, 63, -1, -1, -1, -1, -1, -1, -1, -1, -1, 125, -1, -1, -1, -1, 103, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, 120, -1, -1
-																				, -1, -1, -1, -1, -1, 119, -1, 118, -1, -1, -1, -1, 88, 7, -1, -1, -1, -1, -1, -1, -1, 46, 89, -1, -1, -1, -1, -1, 62, -1, -1, -1, -1, -1, -1, -1, 45, -1, -1, 54, -1, 75, -1, -1, 56, -1, -1, -1, -1, -1
-																				, -1, 68, -1, 115, -1, 60, -1, -1, 91, -1, -1, -1, -1, -1, -1, 93, -1, -1, 106, -1, 94, 73, -1, -1, -1, -1, -1, 22, -1, -1, -1, 84, -1, 92, -1, -1, 47, -1, -1, -1, -1, -1, 23, -1, -1, -1, -1, -1, -1, 80};
+                    , -1, -1, 107, -1, -1, 31, -1, -1, -1, -1, -1, -1, -1, -1, 35, -1, -1, -1, 4, 79, -1, 36, -1, -1, 117, -1, -1, -1, -1, -1, 49, -1, -1, -1, 77, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 113, -1, 112, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, 72, -1, 40, -1, 121, 83, 98, -1, -1, -1, -1, -1, 38, -1, -1, -1, -1
+                    , 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, -1, 86, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 64, 32, -1, -1, -1, -1, 58, 44, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 67, -1, 6, 13, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, 3, -1, 43, -1, -1, -1, 96, -1, -1, 53, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, 12
+                    , -1, -1, -1, -1, -1, -1, 37, 90, -1, 126, -1, -1, 85, 81, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, 124, -1, -1, -1, 69, -1, -1, -1, -1, -1, -1, 42, -1, -1, 29, -1, 127, -1, -1, -1, -1, -1, -1, 129
+                    , -1, -1, -1, 16, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 28, -1, 101, 61, -1, -1, 26, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59, 131, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 19, -1, 41, 2, -1, -1, 82, -1, -1, -1, 30, -1, -1, 33, -1, -1, -1, -1, 95, -1, -1, -1, -1, -1, -1, -1, 114, -1, 51, -1, 9, -1, 21, -1, 0, -1, -1, 66, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 55, 14, 18, -1, -1, -1, -1, 110, -1, -1, -1, -1, 10, -1, -1, -1, 97, -1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, 8, 70, -1, -1, -1, -1, -1, -1, 27, 116
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, 111, -1, -1, 25, 50, -1, 57, -1, 24, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, -1, 123, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 130, -1, -1, -1, -1, -1, -1, -1, -1, 102, -1, -1, -1, -1, 17, 63, -1, -1, -1, -1, -1, -1, -1, -1, -1, 125, -1, -1, -1, -1, 103, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, 120, -1, -1
+                    , -1, -1, -1, -1, -1, 119, -1, 118, -1, -1, -1, -1, 88, 7, -1, -1, -1, -1, -1, -1, -1, 46, 89, -1, -1, -1, -1, -1, 62, -1, -1, -1, -1, -1, -1, -1, 45, -1, -1, 54, -1, 75, -1, -1, 56, -1, -1, -1, -1, -1
+                    , -1, 68, -1, 115, -1, 60, -1, -1, 91, -1, -1, -1, -1, -1, -1, 93, -1, -1, 106, -1, 94, 73, -1, -1, -1, -1, -1, 22, -1, -1, -1, 84, -1, 92, -1, -1, 47, -1, -1, -1, -1, -1, 23, -1, -1, -1, -1, -1, -1, 80};
 
 /*$Q-*/
 
@@ -102,7 +100,7 @@ void __fastcall TSynPasSyn::InitIdent()
 	int stop = 0;
 	for(stop = 640 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[215] = FuncType;
@@ -328,7 +326,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncImplements(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncIndex(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((SynHighlighterPas__0.Contains(FRange)) && IsCurrentToken(Keywords[Index]))
+	if((Synhighlighterpas__0.Contains(FRange)) && IsCurrentToken(Keywords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -575,15 +573,15 @@ __fastcall TSynPasSyn::TSynPasSyn(TComponent* AOwner)
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
 	addAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterPas__1;
+	fCommentAttri->Style = Synhighlighterpas__1;
 	addAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	fDirecAttri->Style = SynHighlighterPas__2;
+	fDirecAttri->Style = Synhighlighterpas__2;
 	addAttribute(fDirecAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterPas__3;
+	fKeyAttri->Style = Synhighlighterpas__3;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -607,9 +605,9 @@ __fastcall TSynPasSyn::TSynPasSyn(TComponent* AOwner)
 	fDefaultFilter = SYNS_FilterPascal;
 
 //++ CodeFolding
-	RE_BlockBegin = TRegEx(L"\\b(begin|record|class)\\b", SynHighlighterPas__4);
-	RE_BlockEnd = TRegEx(L"\\bend\\b", SynHighlighterPas__5);
-	RE_Code = TRegEx(L"^\\s*(function|procedure)\\b", SynHighlighterPas__6);
+	RE_BlockBegin = TRegEx(L"\\b(begin|record|class)\\b", Synhighlighterpas__4);
+	RE_BlockEnd = TRegEx(L"\\bend\\b", Synhighlighterpas__5);
+	RE_Code = TRegEx(L"^\\s*(function|procedure)\\b", Synhighlighterpas__6);
 //-- CodeFolding
 }
 
@@ -662,7 +660,7 @@ void __fastcall TSynPasSyn::BorProc()
 		break;
 		default:
 		{
-			if(SynHighlighterPas__7.Contains(FRange))
+			if(Synhighlighterpas__7.Contains(FRange))
 				FTokenID = tkDirec;
 			else
 				FTokenID = tkComment;
@@ -671,7 +669,7 @@ void __fastcall TSynPasSyn::BorProc()
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					if(SynHighlighterPas__8.Contains(FRange))
+					if(Synhighlighterpas__8.Contains(FRange))
 						FRange = rsAsm;
 					else
 						FRange = rsUnKnown;
@@ -905,7 +903,7 @@ void __fastcall TSynPasSyn::SemiColonProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(SynHighlighterPas__9.Contains(FRange))
+	if(Synhighlighterpas__9.Contains(FRange))
 		FRange = rsUnKnown;
 }
 
@@ -1110,7 +1108,7 @@ bool __fastcall TSynPasSyn::GetEol()
 TtkTokenKind __fastcall TSynPasSyn::GetTokenID()
 {
 	TtkTokenKind result = tkSymbol;
-	if(!fAsmStart && (FRange == rsAsm) && !(SynHighlighterPas__10.Contains(FTokenID)))
+	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterpas__10.Contains(FTokenID)))
 		result = tkAsm;
 	else
 		result = FTokenID;
@@ -1187,7 +1185,7 @@ void* __fastcall TSynPasSyn::GetRange()
 
 void __fastcall TSynPasSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynPasSyn::ResetRange()
@@ -1271,7 +1269,7 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = (int) Name.Length(), i = 1; i <= stop; i++)
+				for(stop = Name.Length(), i = 1; i <= stop; i++)
 				{
 					if(Name[i] == L' ')
 						Name[i] = L'_';
@@ -1310,7 +1308,7 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 				{
 					VersionStr = settingTag.SubString(wcslen(BDSVersionPrefix) + 1, 999);
 					Version = 0;
-					if(!TryStrToCurr(StringReplace(VersionStr, L".", String(FormatSettings.DecimalSeparator), SynHighlighterPas__11), Version))
+					if(!TryStrToCurr(StringReplace(VersionStr, L".", String(FormatSettings.DecimalSeparator), Synhighlighterpas__11), Version))
 					{
 						result = false;
 						return result;
@@ -1437,7 +1435,7 @@ String __fastcall TSynPasSyn::GetLanguageName()
 TSynHighlighterCapabilities __fastcall TSynPasSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterPas__12;
+	result = inherited::GetCapabilities() + Synhighlighterpas__12;
 	return result;
 }
 
@@ -1479,7 +1477,7 @@ String __fastcall TSynPasSyn::GetFriendlyLanguageName()
 }
 
 //++ CodeFolding
-typedef System::Set<TRangeState, rsANil, rsUnKnown> TRangeStates;
+typedef System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown> TRangeStates;
 const int FT_Standard = 1;  // begin end, class end, record end
 const int FT_Comment = 11;
 const int FT_Asm = 12;
@@ -1593,16 +1591,16 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	{
 		bool result = false;
 		result = true;
-		if(Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line)))
+		if(Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line)))
 		{
-			if(Fold && !(Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line - 1))))
+			if(Fold && !(Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1))))
 				FoldRanges->StartFoldRange(Line + 1, FoldType);
 			else
 				FoldRanges->NoFoldInfo(Line + 1);
 		}
 		else
 		{
-			if(Fold && (Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line - 1))))
+			if(Fold && (Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1))))
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldType);
 			}
@@ -1615,7 +1613,7 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline statements
-		if(IsMultiLineStatement((int) Line, SynHighlighterPas__13, true, FT_Comment) || IsMultiLineStatement((int) Line, SynHighlighterPas__14, true, FT_Asm) || IsMultiLineStatement((int) Line, SynHighlighterPas__15, true, FT_Comment) || IsMultiLineStatement((int) Line, SynHighlighterPas__16, false))
+		if(IsMultiLineStatement((int) Line, Synhighlighterpas__13, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterpas__14, true, FT_Asm) || IsMultiLineStatement((int) Line, Synhighlighterpas__15, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterpas__16, false))
 			continue;
 		CurLine = LinesToScan->Strings[Line];
 
@@ -1763,16 +1761,8 @@ void SynHighlighterPas_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynPasSyn));
 }
-class SynHighlighterPas_unit
-{
-public:
-	SynHighlighterPas_unit()
-	{
-		SynHighlighterPas_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterPas_unit _SynHighlighterPas_unit;
 
 }  // namespace SynHighlighterPas
 

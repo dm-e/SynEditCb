@@ -1,3 +1,3 @@
 
 friend class TSynEditPrintPreview;
-friend Vcl::Controls::THintWindow* __fastcall GetScrollHint();
+friend THintWindow* __fastcall GetScrollHint();

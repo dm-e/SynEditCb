@@ -12,42 +12,39 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightercss
 {
-#define SynHighlighterCss__0 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 << L'_' << L'-')
-#define SynHighlighterCss__1 (TSysCharSet() <<  \
+#define Synhighlightercss__0 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 << '_' << '-')
+#define Synhighlightercss__1 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterCss__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCss__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCss__4 TFontStyles()
-#define SynHighlighterCss__5 TFontStyles()
-#define SynHighlighterCss__6 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCss__7 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCss__8 (TSysCharSet() <<  \
+#define Synhighlightercss__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercss__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercss__4 TFontStyles()
+#define Synhighlightercss__5 TFontStyles()
+#define Synhighlightercss__6 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercss__7 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercss__8 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterCss__9 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'.')
-#define SynHighlighterCss__10 (TSysCharSet() << L'(' << L')' << L'}' << L';' << L',' << L' ')
-#define SynHighlighterCss__11 (TSysCharSet() << L'}' << L';')
-#define SynHighlighterCss__12 (TSysCharSet() << L':' << L'\"' << L'}' << L';')
+#define Synhighlightercss__9 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '.')
+#define Synhighlightercss__10 (TSysCharSet() << '(' << ')' << '}' << ';' << ',' << ' ')
+#define Synhighlightercss__11 (TSysCharSet() << '}' << ';')
+#define Synhighlightercss__12 (TSysCharSet() << ':' << '\"' << '}' << ';')
 
 
 const String Properties_CSS1 = L"background"
@@ -368,7 +365,7 @@ int __fastcall TSynCssSyn::HashKey(PWideChar Str)
 {
 	int result = 0;
 	result = 0;
-	while(CharInSet((*Str), SynHighlighterCss__0))
+	while(CharInSet((*Str), Synhighlightercss__0))
 	{
 		if((*Str) != L'-')
 			switch((*Str))
@@ -385,7 +382,7 @@ int __fastcall TSynCssSyn::HashKey(PWideChar Str)
 			}
 		++Str;
 	}
-	while(CharInSet((*Str), SynHighlighterCss__1))
+	while(CharInSet((*Str), Synhighlightercss__1))
 	{
 		result += int((*Str)) - int(L'0');
 		++Str;
@@ -456,26 +453,26 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	addAttribute(fCommentAttri);
 	fPropertyAttri = new TSynHighlighterAttributes(SYNS_AttrProperty, SYNS_FriendlyAttrProperty);
-	fPropertyAttri->Style = SynHighlighterCss__2;
+	fPropertyAttri->Style = Synhighlightercss__2;
 	addAttribute(fPropertyAttri);
 	fSelectorAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fSelectorAttri->Style = SynHighlighterCss__3;
+	fSelectorAttri->Style = Synhighlightercss__3;
 	fSelectorAttri->Foreground = (TColor) 0x00FF0080;
 	addAttribute(fSelectorAttri);
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
-	fAttributeAttri->Style = SynHighlighterCss__4;
+	fAttributeAttri->Style = Synhighlightercss__4;
 	fAttributeAttri->Foreground = (TColor) 0x00FF0080;
 	addAttribute(fAttributeAttri);
 	fAtRuleAttri = new TSynHighlighterAttributes(SYNS_AttrAtRules, SYNS_FriendlyAttrAttribute);
-	fAtRuleAttri->Style = SynHighlighterCss__5;
+	fAtRuleAttri->Style = Synhighlightercss__5;
 	fAtRuleAttri->Foreground = (TColor) 0x00808000;
 	addAttribute(fAtRuleAttri);
 	fUndefPropertyAttri = new TSynHighlighterAttributes(SYNS_AttrUndefinedProperty, SYNS_FriendlyAttrUndefinedProperty);
-	fUndefPropertyAttri->Style = SynHighlighterCss__6;
+	fUndefPropertyAttri->Style = Synhighlightercss__6;
 	fUndefPropertyAttri->Foreground = (TColor) 0x00FF0080;
 	addAttribute(fUndefPropertyAttri);
 	fImportantPropertyAttri = new TSynHighlighterAttributes(L"Important", L"Important Marker");
-	fImportantPropertyAttri->Style = SynHighlighterCss__7;
+	fImportantPropertyAttri->Style = Synhighlightercss__7;
 	fImportantPropertyAttri->Foreground = clRed;
 	addAttribute(fImportantPropertyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
@@ -491,7 +488,7 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	addAttribute(fTextAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = (TColor) 0x00ff8000;
+	fValueAttri->Foreground = (TColor) 0x00FF8000;
 	addAttribute(fValueAttri);
 	SetAttributesOnChange(DefHighlightChange);
 
@@ -508,7 +505,6 @@ __fastcall TSynCssSyn::~TSynCssSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynCssSyn::AttributeProc()
 {
@@ -658,13 +654,13 @@ void __fastcall TSynCssSyn::StartValProc()
 
 void __fastcall TSynCssSyn::NumberProc()
 {
-	if((fLine[Run] == L'-') && !CharInSet(fLine[Run + 1], SynHighlighterCss__8))
+	if((fLine[Run] == L'-') && !CharInSet(fLine[Run + 1], Synhighlightercss__8))
 		IdentProc();
 	else
 	{
 		++Run;
 		FTokenID = tkNumber;
-		while(CharInSet(fLine[Run], SynHighlighterCss__9))
+		while(CharInSet(fLine[Run], Synhighlightercss__9))
 		{
 			switch(fLine[Run])
 			{
@@ -728,11 +724,11 @@ void __fastcall TSynCssSyn::IdentProc()
 		case rsParameter:
 		{
 			FTokenID = tkValue;
-			while(!IsLineEnd(Run) && !CharInSet(fLine[Run], SynHighlighterCss__10))
+			while(!IsLineEnd(Run) && !CharInSet(fLine[Run], Synhighlightercss__10))
 			{
 				++Run;
 			}
-			if(IsLineEnd(Run) || CharInSet(fLine[Run], SynHighlighterCss__11))
+			if(IsLineEnd(Run) || CharInSet(fLine[Run], Synhighlightercss__11))
 				FRange = rsDeclaration;
 		}
 		break;
@@ -742,7 +738,7 @@ void __fastcall TSynCssSyn::IdentProc()
 		{
 			++Run;
 		}
-		while(!((fLine[Run] <= L'\x20') || CharInSet(fLine[Run], SynHighlighterCss__12)));
+		while(!((fLine[Run] <= L'\x20') || CharInSet(fLine[Run], Synhighlightercss__12)));
 		break;
 	}
 }
@@ -1164,7 +1160,7 @@ void* __fastcall TSynCssSyn::GetRange()
 
 void __fastcall TSynCssSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynCssSyn::ResetRange()
@@ -1237,16 +1233,8 @@ void SynHighlighterCss_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynCssSyn));
 }
-class SynHighlighterCss_unit
-{
-public:
-	SynHighlighterCss_unit()
-	{
-		SynHighlighterCss_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterCss_unit _SynHighlighterCss_unit;
 
 }  // namespace SynHighlighterCss
 

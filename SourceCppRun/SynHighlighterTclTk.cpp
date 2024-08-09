@@ -8,23 +8,22 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
+using namespace System::Types;
 
 namespace Synhighlightertcltk
 {
-#define SynHighlighterTclTk__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTclTk__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterTclTk__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__4 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterTclTk__5 (TSysCharSet() <<  \
+#define Synhighlightertcltk__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightertcltk__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertcltk__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightertcltk__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlightertcltk__4 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlightertcltk__5 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterTclTk__6 (TSysCharSet() <<  \
+#define Synhighlightertcltk__6 (TSysCharSet() <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										103 << 104 << 105 << 106 << 107 << 108 <<  \
 										109 << 110 << 111 << 112 << 113 << 114 <<  \
@@ -35,7 +34,7 @@ namespace Synhighlightertcltk
 										77 << 78 << 79 << 80 << 81 << 82 <<  \
 										83 << 84 << 85 << 86 << 87 << 88 <<  \
 										89 << 90)
-#define SynHighlighterTclTk__7 (TSysCharSet() <<  \
+#define Synhighlightertcltk__7 (TSysCharSet() <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										103 << 104 << 105 << 106 << 107 << 108 <<  \
 										109 << 110 << 111 << 112 << 113 << 114 <<  \
@@ -46,7 +45,7 @@ namespace Synhighlightertcltk
 										77 << 78 << 79 << 80 << 81 << 82 <<  \
 										83 << 84 << 85 << 86 << 87 << 88 <<  \
 										89 << 90)
-#define SynHighlighterTclTk__8 (TSysCharSet() <<  \
+#define Synhighlightertcltk__8 (TSysCharSet() <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										103 << 104 << 105 << 106 << 107 << 108 <<  \
 										109 << 110 << 111 << 112 << 113 << 114 <<  \
@@ -57,7 +56,7 @@ namespace Synhighlightertcltk
 										77 << 78 << 79 << 80 << 81 << 82 <<  \
 										83 << 84 << 85 << 86 << 87 << 88 <<  \
 										89 << 90)
-#define SynHighlighterTclTk__9 (TSysCharSet() <<  \
+#define Synhighlightertcltk__9 (TSysCharSet() <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										103 << 104 << 105 << 106 << 107 << 108 <<  \
 										109 << 110 << 111 << 112 << 113 << 114 <<  \
@@ -70,7 +69,7 @@ namespace Synhighlightertcltk
 										89 << 90 <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterTclTk__10 (TSysCharSet() << L'_' <<  \
+#define Synhighlightertcltk__10 (TSysCharSet() << '_' <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57 <<  \
 										65 << 66 << 67 << 68 << 69 << 70 <<  \
@@ -188,16 +187,16 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TStringList();
 	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
 	fSecondKeys = new TStringList();
 	((TStringList*) fSecondKeys)->Sorted = true;
-	((TStringList*) fSecondKeys)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fSecondKeys)->Duplicates = System::Types::dupIgnore;
 	fTixWords = new TStringList();
 	((TStringList*) fTixWords)->Sorted = true;
-	((TStringList*) fTixWords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fTixWords)->Duplicates = System::Types::dupIgnore;
 	fWidgetWords = new TStringList();
 	((TStringList*) fWidgetWords)->Sorted = true;
-	((TStringList*) fWidgetWords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fWidgetWords)->Duplicates = System::Types::dupIgnore;
 	fKeywords->BeginUpdate();
 	for(stop = 128 /*# High(TclTkKeys) */, i = 0 /*# Low(TclTkKeys) */; i <= stop; i++)
 	{
@@ -223,21 +222,21 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	}
 	fWidgetWords->EndUpdate();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterTclTk__0;
+	fCommentAttri->Style = Synhighlightertcltk__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterTclTk__1;
+	fKeyAttri->Style = Synhighlightertcltk__1;
 	addAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
-	fSecondKeyAttri->Style = SynHighlighterTclTk__2;
+	fSecondKeyAttri->Style = Synhighlightertcltk__2;
 	addAttribute(fSecondKeyAttri);
 	fTixKeyAttri = new TSynHighlighterAttributes(SYNS_AttrTixKeyWords, SYNS_FriendlyAttrTixKeyWords);
-	fTixKeyAttri->Style = SynHighlighterTclTk__3;
+	fTixKeyAttri->Style = Synhighlightertcltk__3;
 	addAttribute(fTixKeyAttri);
 	fWidgetKeyAttri = new TSynHighlighterAttributes(SYNS_AttrWidgetWords, SYNS_FriendlyAttrWidgetWords);
-	fWidgetKeyAttri->Style = SynHighlighterTclTk__4;
+	fWidgetKeyAttri->Style = Synhighlightertcltk__4;
 	addAttribute(fWidgetKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -265,7 +264,6 @@ __fastcall TSynTclTkSyn::~TSynTclTkSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynTclTkSyn::AnsiProc()
 {
@@ -741,7 +739,7 @@ void __fastcall TSynTclTkSyn::ResetRange()
 
 void __fastcall TSynTclTkSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
@@ -757,7 +755,7 @@ void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fKeywords->Assign(Value);
+	fKeywords->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -774,7 +772,7 @@ void __fastcall TSynTclTkSyn::SetSecondKeys(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fSecondKeys->Assign(Value);
+	fSecondKeys->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -896,7 +894,7 @@ void __fastcall TSynTclTkSyn::MinusProc()
 	OK = false;
 	++Run;
   /* minus like symbol */
-	if(CharInSet(fLine[Run], SynHighlighterTclTk__5))
+	if(CharInSet(fLine[Run], Synhighlightertcltk__5))
 		FTokenID = tkSymbol;
 	else
 	{
@@ -909,10 +907,10 @@ void __fastcall TSynTclTkSyn::MinusProc()
 		}
 		else
 		{
-			if(CharInSet(fLine[Run], SynHighlighterTclTk__6))
+			if(CharInSet(fLine[Run], Synhighlightertcltk__6))
 			{
 				++Run;
-				while(CharInSet(fLine[Run], SynHighlighterTclTk__7))
+				while(CharInSet(fLine[Run], Synhighlightertcltk__7))
 					++Run;
 				OK = CharInSet(fLine[Run], EmptyChars);
     /* bad option syntax */
@@ -932,11 +930,11 @@ void __fastcall TSynTclTkSyn::MinusProc()
 
 void __fastcall TSynTclTkSyn::PathProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterTclTk__8))
+	if(CharInSet(fLine[Run + 1], Synhighlightertcltk__8))
 	{
 		FTokenID = tkPath;
 		++Run;
-		while(CharInSet(fLine[Run], SynHighlighterTclTk__9))
+		while(CharInSet(fLine[Run], Synhighlightertcltk__9))
 			++Run;
 	}
 	else
@@ -950,7 +948,7 @@ void __fastcall TSynTclTkSyn::VariableProc()
 {
 	FTokenID = tkVariable;
 	++Run;
-	while(CharInSet(fLine[Run], SynHighlighterTclTk__10))
+	while(CharInSet(fLine[Run], Synhighlightertcltk__10))
 		++Run;
 }
 
@@ -1000,16 +998,8 @@ void SynHighlighterTclTk_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynTclTkSyn));
 }
-class SynHighlighterTclTk_unit
-{
-public:
-	SynHighlighterTclTk_unit()
-	{
-		SynHighlighterTclTk_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterTclTk_unit _SynHighlighterTclTk_unit;
 
 }  // namespace SynHighlighterTclTk
 

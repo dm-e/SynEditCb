@@ -1,3 +1,46 @@
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynEditExport.pas, released 2000-04-16.
+
+The Original Code is partly based on the mwExport.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Michael Hieke.
+Portions created by Michael Hieke are Copyright 2000 Michael Hieke.
+Portions created by James D. Jacobson are Copyright 1999 Martin Waldenburg.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit project are listed in the Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynEditExport.pas,v 1.17.2.8 2008/09/17 13:59:12 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+
+/* Base class for exporting a programming language source file or part of it to
+  a formatted output like HTML or RTF and copying this to the Windows clipboard
+  or saving it to a file. */
 #ifndef SynEditExportH
 #define SynEditExportH
 
@@ -61,11 +104,46 @@ Known Issues:
   a formatted output like HTML or RTF and copying this to the Windows clipboard
   or saving it to a file. */
 
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
+
 class ESynEncoding : public Synedittypes::ESynError
 {
 	#include "SynEditExport_friends.inc"
 public:
-	typedef Synedittypes::ESynError inherited;	
+	typedef Synedittypes::ESynError inherited;
 	__fastcall ESynEncoding(const String Msg);
 	__fastcall ESynEncoding(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynEncoding(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -88,14 +166,14 @@ public:
 class TSynCustomExporter : public System::Classes::TComponent
 {
 private:
-	System::Classes::TMemoryStream* FBuffer;
+	TMemoryStream* FBuffer;
 	int FCharSize;
 	bool fFirstAttribute;
 	bool FStreaming;
-	void __fastcall AssignFont(Vcl::Graphics::TFont* Value);
+	void __fastcall AssignFont(TFont* Value);
 	void __fastcall SetEncoding(Synunicode::TSynEncoding Value);
 	void __fastcall SetExportAsText(bool Value);
-	void __fastcall SetFont(Vcl::Graphics::TFont* Value);
+	void __fastcall SetFont(TFont* Value);
 	void __fastcall SetHighlighter(Synedithighlighter::TSynCustomHighlighter* Value);
 	void __fastcall SetTitle(const String Value);
 	void __fastcall SetUseBackground(bool Value);
@@ -107,7 +185,7 @@ protected:
 	String fDefaultFilter;
 	Synunicode::TSynEncoding FEncoding;
 	bool fExportAsText;
-	Vcl::Graphics::TFont* FFont;
+	TFont* FFont;
 	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
 	TColor fLastBG;
 	TColor fLastFG;
@@ -123,7 +201,7 @@ protected:
     /* Copies the data under this format to the clipboard. The clipboard has to
       be opened explicitly when more than one format is to be set. */
 	void __fastcall CopyToClipboardFormat(UINT AFormat);
-	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
+	virtual void __fastcall DefineProperties(TFiler* Filer);
     /* Has to be overridden in descendant classes to add the closing format
       strings to the output buffer.  The parameters can be used to track what
       changes are made for the next token. */
@@ -173,9 +251,9 @@ protected:
 	virtual bool __fastcall UseBom(){return false;} // = 0;
 public:
     /* Creates an instance of the exporter. */
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynEditExport_friends.inc"
-	__fastcall TSynCustomExporter(System::Classes::TComponent* AOwner);
+	__fastcall TSynCustomExporter(TComponent* AOwner);
     /* Destroys an instance of the exporter. */
 	virtual __fastcall ~TSynCustomExporter();
     /* Clears the output buffer and any internal data that relates to the last
@@ -185,14 +263,14 @@ public:
       or as text depending on the ExportAsText property. */
 	void __fastcall CopyToClipboard();
     /* Exports everything in the strings parameter to the output buffer. */
-	void __fastcall ExportAll(System::Classes::TStrings* ALines);
+	void __fastcall ExportAll(TStrings* ALines);
     /* Exports the given range of the strings parameter to the output buffer. */
-	void __fastcall ExportRange(System::Classes::TStrings* ALines, const TBufferCoord& Start, const TBufferCoord& Stop);
+	void __fastcall ExportRange(TStrings* ALines, const TBufferCoord& Start, const TBufferCoord& Stop);
     /* Saves the contents of the output buffer to a file. */
 	void __fastcall SaveToFile(const String FileName);
     /* Saves the contents of the output buffer to a stream. */
-	void __fastcall SaveToStream(System::Classes::TStream* Stream);
-	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings(){return System::Set<Synunicode::TSynEncoding, Synunicode::seUTF8, Synunicode::seAnsi>();} // = 0;
+	void __fastcall SaveToStream(TStream* Stream);
+	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings(){return Synunicode::TSynEncodings();} // = 0;
     /* Default background color for text that has no token attribute assigned or
       for token attributes that have the background set to default. */
 	__property TColor Color = { read = FBackgroundColor, write = FBackgroundColor };
@@ -203,7 +281,7 @@ public:
     /* The font to be used for the output format. The font color is used for text
       that has no token attribute assigned or for token attributes that have
       the background set to default. */
-	__property Vcl::Graphics::TFont* Font = { read = FFont, write = SetFont };
+	__property TFont* Font = { read = FFont, write = SetFont };
     /* The output format of the exporter. */
 	__property String FormatName = { read = GetFormatName };
     /* The highlighter to use for exporting. */

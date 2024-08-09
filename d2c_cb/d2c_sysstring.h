@@ -29,6 +29,7 @@ namespace d2c_system
 void SetString( UnicodeString& S, wchar_t* Buf, int Len );
 int Length(const UnicodeString& S);
 int d2c_wcsncmp(const wchar_t* xs1, const wchar_t* xs2);
+bool CharEqualStr(wchar_t c, UnicodeString s);
 
 
 } // namespace d2c_string

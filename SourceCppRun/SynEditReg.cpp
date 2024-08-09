@@ -85,7 +85,6 @@ using namespace Synmacrorecorder;
 using namespace Synspellcheck;
 using namespace Synuriopener;
 using namespace System;
-using namespace System::Classes;
 
 namespace Syneditreg
 {
@@ -96,10 +95,10 @@ void __fastcall Register()
 {
 
 // SynEdit main components
-	TComponentClass classesSynEditReg__0[1] = {__classid(TSynEdit)};
-	RegisterComponents(SYNS_ComponentsPage, classesSynEditReg__0, 1);
-	TComponentClass classesSynEditReg__1[1] = {__classid(TDBSynEdit)};
-	RegisterComponents(SYNS_ComponentsPage, classesSynEditReg__1, 1);
+	TComponentClass classesSyneditreg__0[1] = {__classid(TSynEdit)};
+	RegisterComponents(SYNS_ComponentsPage, classesSyneditreg__0, 1);
+	TComponentClass classesSyneditreg__1[1] = {__classid(TDBSynEdit)};
+	RegisterComponents(SYNS_ComponentsPage, classesSyneditreg__1, 1);
 	GroupDescendentsWith(__classid(TSynCustomHighlighter), __classid(TSynEdit));
 	GroupDescendentsWith(__classid(TSynEditSearchCustom), __classid(TSynEdit));
 	GroupDescendentsWith(__classid(TSynCustomExporter), __classid(TSynEdit));
@@ -116,7 +115,7 @@ void __fastcall Register()
 	GroupDescendentsWith(__classid(TSynURIOpener), __classid(TSynEdit));
 
 // SynEdit extra components
-	TComponentClass classesSynEditReg__2[15] = {__classid(TSynExporterHTML)
+	TComponentClass classesSyneditreg__2[15] = {__classid(TSynExporterHTML)
                                  , __classid(TSynExporterRTF)
                                  , __classid(TSynExporterTeX)
                                  , __classid(TSynEditPythonBehaviour)
@@ -131,11 +130,11 @@ void __fastcall Register()
                                  , __classid(TSynEditRegexSearch)
                                  , __classid(TSynEditOptionsDialog)
                                  , __classid(TSynURIOpener)};
-	RegisterComponents(SYNS_ComponentsPage, classesSynEditReg__2, 15);
-	TComponentClass classesSynEditReg__3[1] = {__classid(TSynHighlighterManager)};
-	RegisterComponents(SYNS_ComponentsPage, classesSynEditReg__3, 1);
-	TComponentClass classesSynEditReg__4[1] = {__classid(TSynSpellCheck)};
-	RegisterComponents(SYNS_ComponentsPage, classesSynEditReg__4, 1);
+	RegisterComponents(SYNS_ComponentsPage, classesSyneditreg__2, 15);
+	TComponentClass classesSyneditreg__3[1] = {__classid(TSynHighlighterManager)};
+	RegisterComponents(SYNS_ComponentsPage, classesSyneditreg__3, 1);
+	TComponentClass classesSyneditreg__4[1] = {__classid(TSynSpellCheck)};
+	RegisterComponents(SYNS_ComponentsPage, classesSyneditreg__4, 1);
 
 // SynEdit highlighters
 
@@ -154,7 +153,7 @@ void __fastcall Register()
     //data
 
     // other
-	TComponentClass classesSynEditReg__5[57] = {__classid(TSynCppSyn)
+	TComponentClass classesSyneditreg__5[57] = {__classid(TSynCppSyn)
                                  , __classid(TSynEiffelSyn)
                                  , __classid(TSynFortranSyn)
                                  , __classid(TSynGeneralSyn)
@@ -211,7 +210,7 @@ void __fastcall Register()
                                  , __classid(TSynURISyn)
                                  , __classid(TSynDOTSyn)
                                  , __classid(TSynRCSyn)};
-	RegisterComponents(SYNS_HighlightersPage, classesSynEditReg__5, 57);
+	RegisterComponents(SYNS_HighlightersPage, classesSyneditreg__5, 57);
 }
 
 

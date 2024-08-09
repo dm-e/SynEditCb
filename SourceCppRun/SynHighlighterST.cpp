@@ -10,34 +10,31 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterst
 {
-#define SynHighlighterST__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterST__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterST__2 (TSysCharSet() <<  \
+#define Synhighlighterst__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterst__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterst__2 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterST__3 (TSysCharSet() << L'=' << L'>')
-#define SynHighlighterST__4 (TSysCharSet() << L'.' << L')')
-#define SynHighlighterST__5 (System::Set<TtkTokenKind, tkAsm, tkUnknown>() << tkNull << tkComment << tkSpace)
+#define Synhighlighterst__3 (TSysCharSet() << '=' << '>')
+#define Synhighlighterst__4 (TSysCharSet() << '.' << ')')
+#define Synhighlighterst__5 (System::Set<TtkTokenKind, TtkTokenKind::tkAsm, TtkTokenKind::tkUnknown>() << tkNull << tkComment << tkSpace)
 
 
 const String Keywords[75/*# range 0..74*/] = {L"action", L"and", L"any", L"any_num", L"array", L"at", L"bool", L"by", L"byte", L"case", L"configuration", L"constant"
-																				, L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
-																				, L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"
-																				, L"external", L"finally", L"for", L"from", L"function", L"goto", L"if", L"index", L"initial_step", L"initialization", L"int"
-																				, L"label", L"not", L"of", L"on", L"or", L"program", L"real", L"repeat", L"resource", L"retain", L"return", L"sint", L"step", L"string"
-																				, L"struct", L"then", L"time", L"to", L"transition", L"type", L"udint", L"uint", L"until", L"usint", L"var", L"var_external", L"var_global"
-																				, L"var_in_out", L"var_input", L"var_output", L"while", L"word", L"xor"};
+                    , L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
+                    , L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"
+                    , L"external", L"finally", L"for", L"from", L"function", L"goto", L"if", L"index", L"initial_step", L"initialization", L"int"
+                    , L"label", L"not", L"of", L"on", L"or", L"program", L"real", L"repeat", L"resource", L"retain", L"return", L"sint", L"step", L"string"
+                    , L"struct", L"then", L"time", L"to", L"transition", L"type", L"udint", L"uint", L"until", L"usint", L"var", L"var_external", L"var_global"
+                    , L"var_in_out", L"var_input", L"var_output", L"while", L"word", L"xor"};
 const int KeyIndices[211/*# range 0..210*/] = {-1, -1, -1, -1, -1, 55, 39, -1, -1, -1, -1, 51, -1, -1, -1, -1, 57, 49, 4, -1, 17, -1, -1, -1, -1, -1, -1, 24, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 47, -1, -1, -1
-																				, 58, 70, 38, -1, -1, 35, -1, -1, -1, 28, 12, -1, -1, -1, -1, -1, -1, 64, -1, -1, 1, -1, -1, 69, 27, 45, -1, 2, -1, -1, -1, 3, 9, -1, 37, 13, 63, -1, -1, 8, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, 25, 20, -1, 53, 14, -1, -1, -1, 0, -1, -1, 26, 41, 42, 62, -1, -1, -1, 66, 21, 36, -1, -1, 30, -1, 73, 22, -1, 16, -1, -1, -1, -1, 74, -1, -1, 23, -1, 29
-																				, 50, -1, -1, -1, -1, -1, 68, -1, -1, 19, -1, 15, 11, -1, 48, -1, 72, -1, 43, -1, -1, -1, -1, 67, 31, -1, 32, -1, -1, 6, -1, -1, 7, 65, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, 5, -1, 40, 52, 34, -1, -1, -1
-																				, -1, -1, -1, -1, 56, -1, -1, 44, 54, -1, 71, 46, 59};
+                    , 58, 70, 38, -1, -1, 35, -1, -1, -1, 28, 12, -1, -1, -1, -1, -1, -1, 64, -1, -1, 1, -1, -1, 69, 27, 45, -1, 2, -1, -1, -1, 3, 9, -1, 37, 13, 63, -1, -1, 8, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, 25, 20, -1, 53, 14, -1, -1, -1, 0, -1, -1, 26, 41, 42, 62, -1, -1, -1, 66, 21, 36, -1, -1, 30, -1, 73, 22, -1, 16, -1, -1, -1, -1, 74, -1, -1, 23, -1, 29
+                    , 50, -1, -1, -1, -1, -1, 68, -1, -1, 19, -1, 15, 11, -1, 48, -1, 72, -1, 43, -1, -1, -1, -1, 67, 31, -1, 32, -1, -1, 6, -1, -1, 7, 65, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, 5, -1, 40, 52, 34, -1, -1, -1
+                    , -1, -1, -1, -1, 56, -1, -1, 44, 54, -1, 71, 46, 59};
 
 /*$Q-*/
 
@@ -75,7 +72,7 @@ void __fastcall TSynSTSyn::InitIdent()
 	int stop = 0;
 	for(stop = 210 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 210 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -120,12 +117,12 @@ __fastcall TSynSTSyn::TSynSTSyn(TComponent* AOwner)
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
 	addAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterST__0;
+	fCommentAttri->Style = Synhighlighterst__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterST__1;
+	fKeyAttri->Style = Synhighlighterst__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -153,7 +150,7 @@ void __fastcall TSynSTSyn::AsciiCharProc()
 {
 	FTokenID = tkString;
 	++Run;
-	while(CharInSet(fLine[Run], SynHighlighterST__2))
+	while(CharInSet(fLine[Run], Synhighlighterst__2))
 		++Run;
 }
 
@@ -260,7 +257,7 @@ void __fastcall TSynSTSyn::LowerProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterST__3))
+	if(CharInSet(fLine[Run], Synhighlighterst__3))
 		++Run;
 }
 
@@ -313,7 +310,7 @@ void __fastcall TSynSTSyn::PointProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterST__4))
+	if(CharInSet(fLine[Run], Synhighlighterst__4))
 		++Run;
 }
 
@@ -583,7 +580,7 @@ bool __fastcall TSynSTSyn::GetEol()
 TtkTokenKind __fastcall TSynSTSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAsm;
-	if(!fAsmStart && (FRange == rsAsm) && !(SynHighlighterST__5.Contains(FTokenID)))
+	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterst__5.Contains(FTokenID)))
 		result = tkAsm;
 	else
 		result = FTokenID;
@@ -645,7 +642,7 @@ void* __fastcall TSynSTSyn::GetRange()
 
 void __fastcall TSynSTSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynSTSyn::ResetRange()
@@ -686,16 +683,8 @@ void SynHighlighterST_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynSTSyn));
 }
-class SynHighlighterST_unit
-{
-public:
-	SynHighlighterST_unit()
-	{
-		SynHighlighterST_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterST_unit _SynHighlighterST_unit;
 
 }  // namespace SynHighlighterST
 

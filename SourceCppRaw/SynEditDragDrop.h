@@ -53,14 +53,14 @@ const int deLink = DROPEFFECT_LINK;
 const unsigned int deScroll = DROPEFFECT_SCROLL;
 
 // Provides a translation of a IDropTarget interface into Delphi
-typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, System::Classes::TShiftState, const TPoint&, int&, HRESULT&);
+typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, TShiftState, const TPoint&, int&, HRESULT&);
 typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
 
 class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
+	typedef System::TCppInterfacedObject<IDropTarget> inherited;
 private:
 	IDataObject* FDataObject;
 	TOnDragEvent FOnDragEnter;
@@ -73,10 +73,10 @@ private:
 	HRESULT __stdcall DragLeave();
 	HRESULT __stdcall Drop(IDataObject* const dataObj, int grfKeyState, const TPoint& Pt, int& dwEffect);
 protected:
-	void __fastcall DragEnter(IDataObject* dataObject, System::Classes::TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
-	void __fastcall DragOver(System::Classes::TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
+	void __fastcall DragEnter(IDataObject* dataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
+	void __fastcall DragOver(TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
 	void __fastcall DragLeave(HRESULT& result);
-	void __fastcall Drop(IDataObject* dataObject, System::Classes::TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
+	void __fastcall Drop(IDataObject* dataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
 public:
 	virtual __fastcall ~TSynDropTarget();
 	__property TOnDragEvent OnDragEnter = { read = FOnDragEnter, write = FOnDragEnter };
@@ -90,7 +90,7 @@ class TSynDragSource : public System::TCppInterfacedObject<IDropSource>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
+	typedef System::TCppInterfacedObject<IDropSource> inherited;
 private:
   // IDropSource
     // Called routinely by Windows to check that drag operations are to continue. See the

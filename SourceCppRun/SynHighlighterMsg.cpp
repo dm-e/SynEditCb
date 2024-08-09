@@ -10,14 +10,12 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightermsg
 {
-#define SynHighlighterMsg__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterMsg__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightermsg__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightermsg__1 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[7/*# range 0..6*/] = {L"beginproc", L"chars", L"enclosedby", L"endproc", L"keys", L"samplesource", L"tokentypes"};
@@ -59,7 +57,7 @@ void __fastcall TSynMsgSyn::InitIdent()
 	int stop = 0;
 	for(stop = 6 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[4] = FuncBeginproc;
@@ -256,13 +254,13 @@ __fastcall TSynMsgSyn::TSynMsgSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterMsg__0;
+	fCommentAttri->Style = Synhighlightermsg__0;
 	fCommentAttri->Foreground = clNavy;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterMsg__1;
+	fKeyAttri->Style = Synhighlightermsg__1;
 	addAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
@@ -522,7 +520,7 @@ void __fastcall TSynMsgSyn::ResetRange()
 
 void __fastcall TSynMsgSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynMsgSyn::GetRange()
@@ -550,16 +548,8 @@ void SynHighlighterMsg_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynMsgSyn));
 }
-class SynHighlighterMsg_unit
-{
-public:
-	SynHighlighterMsg_unit()
-	{
-		SynHighlighterMsg_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterMsg_unit _SynHighlighterMsg_unit;
 
 }  // namespace SynHighlighterMsg
 

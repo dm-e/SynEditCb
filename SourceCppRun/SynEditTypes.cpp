@@ -2,17 +2,13 @@
 #pragma hdrstop
 
 #include "SynEditTypes.h"
-#include <Vcl.Forms.hpp>
 #include "SynUnicode.h"
 
 using namespace std;
 using namespace d2c_system;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
-using namespace Vcl::Controls;
-using namespace Vcl::Forms;
 
 namespace Synedittypes
 {
@@ -95,6 +91,9 @@ bool __fastcall operator <= (const TBufferCoord& cA, const TBufferCoord& cB)
 	result = (B.Line > A.Line) || ((B.Line == A.Line) && (B.Char >= A.Char));
 	return result;
 }
+
+
+
 bool __fastcall operator != (const TBufferCoord& cA, const TBufferCoord& cB)
 {
 	TBufferCoord A = cA;
@@ -192,16 +191,16 @@ String __fastcall LineBreakFromFileFormat(TSynEditFileFormat FileFormat)
 	String result;
 	switch(FileFormat)
 	{
-		case TSynEditFileFormat::sffDos:
+		case sffDos:
 		result = WideCRLF;
 		break;
-		case TSynEditFileFormat::sffUnix:
+		case sffUnix:
 		result = WideLF;
 		break;
-		case TSynEditFileFormat::sffMac:
+		case sffMac:
 		result = WideCR;
 		break;
-		case TSynEditFileFormat::sffUnicode:
+		case sffUnicode:
 		result = WideLineSeparator;
 		break;
 		default:
@@ -210,22 +209,7 @@ String __fastcall LineBreakFromFileFormat(TSynEditFileFormat FileFormat)
 	}
 	return result;
 } 
-/* TControlHelper */
-
-int __fastcall TControlHelper::CurrentPPI()
-{
-	int result = 0;
-	result = Screen->PixelsPerInch;
-	return result;
-}
-
-int __fastcall TControlHelper::FCurrentPPI()
-{
-	int result = 0;
-	result = Screen->PixelsPerInch;
-	return result;
-}
 
 
-}  // namespace Synedittypes
+}  // namespace SynEditTypes
 

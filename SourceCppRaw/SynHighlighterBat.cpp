@@ -10,24 +10,21 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterbat
 {
-#define SynHighlighterBat__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterBat__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterBat__2 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'.')
-#define SynHighlighterBat__3 (TSysCharSet() << L'E' << L'e')
-#define SynHighlighterBat__4 (TSysCharSet() << L'M' << L'm')
+#define Synhighlighterbat__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterbat__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterbat__2 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '.')
+#define Synhighlighterbat__3 (TSysCharSet() << 'E' << 'e')
+#define Synhighlighterbat__4 (TSysCharSet() << 'M' << 'm')
 
 
 const String Keywords[21/*# range 0..20*/] = {L"call", L"cd", L"cls", L"copy", L"del", L"do", L"echo", L"errorlevel", L"exist", L"for", L"goto", L"if", L"in"
-																				, L"not", L"off", L"on", L"pause", L"set", L"shift", L"start", L"title"};
+                    , L"not", L"off", L"on", L"pause", L"set", L"shift", L"start", L"title"};
 const int KeyIndices[25/*# range 0..24*/] = {14, 4, -1, 6, 17, 12, 8, 18, 19, 15, -1, -1, 10, 3, 13, 0, 1, 11, 20, 7, 2, 5, -1, 16, 9};
 
 /*$Q-*/
@@ -66,7 +63,7 @@ void __fastcall TSynBatSyn::InitIdent()
 	int stop = 0;
 	for(stop = 24 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[15] = FuncCall;
@@ -321,13 +318,13 @@ __fastcall TSynBatSyn::TSynBatSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterBat__0;
+	fCommentAttri->Style = Synhighlighterbat__0;
 	fCommentAttri->Foreground = clNavy;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
-	fKeyAttri->Style = SynHighlighterBat__1;
+	fKeyAttri->Style = Synhighlighterbat__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clBlue;
@@ -426,12 +423,12 @@ void __fastcall TSynBatSyn::NumberProc()
 	{
 		++Run;
 	}
-	while(!!CharInSet(fLine[Run], SynHighlighterBat__2));
+	while(!!CharInSet(fLine[Run], Synhighlighterbat__2));
 }
 
 void __fastcall TSynBatSyn::REMCommentProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterBat__3) && CharInSet(fLine[Run + 2], SynHighlighterBat__4) && (fLine[Run + 3] < L'\x21'))
+	if(CharInSet(fLine[Run + 1], Synhighlighterbat__3) && CharInSet(fLine[Run + 2], Synhighlighterbat__4) && (fLine[Run + 3] < L'\x21'))
 	{
 		FTokenID = tkComment;
 		Run += 3;
@@ -650,16 +647,8 @@ void SynHighlighterBat_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynBatSyn));
 }
-class SynHighlighterBat_unit
-{
-public:
-	SynHighlighterBat_unit()
-	{
-		SynHighlighterBat_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterBat_unit _SynHighlighterBat_unit;
 
 }  // namespace SynHighlighterBat
 

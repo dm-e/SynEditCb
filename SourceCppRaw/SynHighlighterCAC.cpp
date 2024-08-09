@@ -10,42 +10,40 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 
 namespace Synhighlightercac
 {
-#define SynHighlighterCAC__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterCAC__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercac__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightercac__1 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[143/*# range 0..142*/] = {L"aadd", L"abs", L"and", L"announce", L"asc", L"at", L"average", L"begin", L"bof", L"break", L"call", L"cancel", L"cdow"
-																				, L"chr", L"clear", L"close", L"cmonth", L"col", L"commit", L"continue", L"copy", L"count", L"create", L"ctod", L"date", L"day"
-																				, L"declare", L"delete", L"deleted", L"devpos", L"dir", L"display", L"dow", L"dtoc", L"dtos", L"eject", L"else", L"elseif", L"empty"
-																				, L"endcase", L"enddo", L"endif", L"eof", L"erase", L"exit", L"exp", L"external", L"fcount", L"field", L"fieldname", L"file"
-																				, L"find", L"flock", L"for", L"found", L"function", L"get", L"go", L"if", L"iif", L"index", L"init", L"inkey", L"input", L"int", L"join"
-																				, L"keyboard", L"lastrec", L"len", L"list", L"local", L"locate", L"lock", L"log", L"lower", L"ltrim", L"max", L"memvar", L"min"
-																				, L"month", L"not", L"note", L"or", L"pack", L"parameters", L"pcol", L"pcount", L"private", L"procedure", L"prompt", L"prow", L"public"
-																				, L"quit", L"read", L"recall", L"reccount", L"recno", L"reindex", L"release", L"rename", L"replace", L"replicate", L"request"
-																				, L"restore", L"return", L"rlock", L"round", L"row", L"rtrim", L"run", L"save", L"say", L"seconds", L"seek", L"select", L"sequence"
-																				, L"setpos", L"skip", L"sort", L"space", L"sqrt", L"static", L"store", L"str", L"substr", L"sum", L"text", L"time", L"total"
-																				, L"transform", L"trim", L"type", L"unlock", L"update", L"upper", L"use", L"val", L"valtype", L"wait", L"while", L"word", L"year"
-																				, L"zap"};
+                    , L"chr", L"clear", L"close", L"cmonth", L"col", L"commit", L"continue", L"copy", L"count", L"create", L"ctod", L"date", L"day"
+                    , L"declare", L"delete", L"deleted", L"devpos", L"dir", L"display", L"dow", L"dtoc", L"dtos", L"eject", L"else", L"elseif", L"empty"
+                    , L"endcase", L"enddo", L"endif", L"eof", L"erase", L"exit", L"exp", L"external", L"fcount", L"field", L"fieldname", L"file"
+                    , L"find", L"flock", L"for", L"found", L"function", L"get", L"go", L"if", L"iif", L"index", L"init", L"inkey", L"input", L"int", L"join"
+                    , L"keyboard", L"lastrec", L"len", L"list", L"local", L"locate", L"lock", L"log", L"lower", L"ltrim", L"max", L"memvar", L"min"
+                    , L"month", L"not", L"note", L"or", L"pack", L"parameters", L"pcol", L"pcount", L"private", L"procedure", L"prompt", L"prow", L"public"
+                    , L"quit", L"read", L"recall", L"reccount", L"recno", L"reindex", L"release", L"rename", L"replace", L"replicate", L"request"
+                    , L"restore", L"return", L"rlock", L"round", L"row", L"rtrim", L"run", L"save", L"say", L"seconds", L"seek", L"select", L"sequence"
+                    , L"setpos", L"skip", L"sort", L"space", L"sqrt", L"static", L"store", L"str", L"substr", L"sum", L"text", L"time", L"total"
+                    , L"transform", L"trim", L"type", L"unlock", L"update", L"upper", L"use", L"val", L"valtype", L"wait", L"while", L"word", L"year"
+                    , L"zap"};
 const int KeyIndices[709/*# range 0..708*/] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, 138, 87, 41, 140, 88, -1, -1, -1, 11, -1, -1, -1, 53, -1, -1, -1, -1, 54, -1, 111, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 110, -1, -1, -1, 106, -1, -1, -1, -1, -1, -1, 24, -1, 86, -1, -1, -1, 81, -1, -1, -1, -1, -1, 119, -1, -1, 14, -1, -1, -1, 92, -1, -1, -1, -1, -1, 77, 89, 10, 23, -1, -1, 91, 65, -1, 122, -1, -1, -1
-																				, 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 46, -1, 27, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 120
-																				, -1, 100, 2, -1, -1, -1, -1, 75, 7, -1, -1, -1, -1, -1, -1, -1, 108, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, -1, -1, -1, -1, -1, -1, 50, 30, -1, -1
-																				, -1, -1, 83, 116, -1, -1, 134, -1, -1, 69, -1, -1, -1, 109, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 142, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, 127, -1, -1, 102, 48
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, 133, -1, 57, 113, -1, -1, -1, -1, -1, -1, 43, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 126, -1
-																				, 132, -1, -1, -1, -1, -1, -1, -1, 80, -1, -1, -1, 58, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, 125, -1, -1, -1, -1, -1, 98, -1, 49, 123, -1, -1, -1, -1, -1, -1, -1, -1, 38, -1, -1, -1, -1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, 103, -1, -1, -1, -1, -1, 5, 82, -1
-																				, -1, -1, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, 72, -1, -1, -1, -1, -1, -1, -1, 19, 63, -1, 52, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, -1, -1, 13, -1, -1
-																				, -1, 105, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, 118, -1, -1, -1, -1, -1, 121, 3, 115, -1, -1, 64, -1, -1, 60, -1, 114, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 47, -1, -1, -1, -1, -1, 20, -1, -1, 62
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 135, -1, -1, -1, -1, 22, -1, -1, -1, -1, -1, 55, -1, 68, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 17, 94, 112, -1, -1, -1, -1, 59, -1, -1, 21, -1, -1, 66, -1, -1, -1
-																				, -1, -1, 107, 28, -1, -1, -1, -1, -1, -1, -1, 96, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 93, -1, -1, -1, -1, 9, -1, -1, -1, -1
-																				, 104, -1, -1, -1, 42, -1, -1, -1, -1, 79, 18, 70, -1, 26, 25, 32, -1, -1, 0, 37, -1, 40, -1, -1, -1, -1, 73, -1, 97, -1, -1, -1, 67, 128, -1, -1, -1, -1, -1, -1, 136, 16, 12, -1, -1, -1, -1, -1, -1, 131
-																				, 117, -1, -1, -1, -1, -1, -1, 45, -1, -1, -1, -1, -1, -1, 51, -1, 1, -1, -1, -1, -1, -1, 141, -1, 129, -1, 44, -1, -1, 71, -1, 61, -1, -1, -1, -1, -1, -1, -1, 101, -1, -1, -1, -1, 4, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, 130, 139, -1, -1, -1, -1, -1, 95, -1, -1, -1, 31, -1, -1, 84, 8};
+                    , 110, -1, -1, -1, 106, -1, -1, -1, -1, -1, -1, 24, -1, 86, -1, -1, -1, 81, -1, -1, -1, -1, -1, 119, -1, -1, 14, -1, -1, -1, 92, -1, -1, -1, -1, -1, 77, 89, 10, 23, -1, -1, 91, 65, -1, 122, -1, -1, -1
+                    , 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 46, -1, 27, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 120
+                    , -1, 100, 2, -1, -1, -1, -1, 75, 7, -1, -1, -1, -1, -1, -1, -1, 108, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, -1, -1, -1, -1, -1, -1, 50, 30, -1, -1
+                    , -1, -1, 83, 116, -1, -1, 134, -1, -1, 69, -1, -1, -1, 109, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 142, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, 127, -1, -1, 102, 48
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, 133, -1, 57, 113, -1, -1, -1, -1, -1, -1, 43, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 126, -1
+                    , 132, -1, -1, -1, -1, -1, -1, -1, 80, -1, -1, -1, 58, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, 125, -1, -1, -1, -1, -1, 98, -1, 49, 123, -1, -1, -1, -1, -1, -1, -1, -1, 38, -1, -1, -1, -1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, 103, -1, -1, -1, -1, -1, 5, 82, -1
+                    , -1, -1, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, 72, -1, -1, -1, -1, -1, -1, -1, 19, 63, -1, 52, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, -1, -1, 13, -1, -1
+                    , -1, 105, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, 118, -1, -1, -1, -1, -1, 121, 3, 115, -1, -1, 64, -1, -1, 60, -1, 114, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 47, -1, -1, -1, -1, -1, 20, -1, -1, 62
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 135, -1, -1, -1, -1, 22, -1, -1, -1, -1, -1, 55, -1, 68, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 17, 94, 112, -1, -1, -1, -1, 59, -1, -1, 21, -1, -1, 66, -1, -1, -1
+                    , -1, -1, 107, 28, -1, -1, -1, -1, -1, -1, -1, 96, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 93, -1, -1, -1, -1, 9, -1, -1, -1, -1
+                    , 104, -1, -1, -1, 42, -1, -1, -1, -1, 79, 18, 70, -1, 26, 25, 32, -1, -1, 0, 37, -1, 40, -1, -1, -1, -1, 73, -1, 97, -1, -1, -1, 67, 128, -1, -1, -1, -1, -1, -1, 136, 16, 12, -1, -1, -1, -1, -1, -1, 131
+                    , 117, -1, -1, -1, -1, -1, -1, 45, -1, -1, -1, -1, -1, -1, 51, -1, 1, -1, -1, -1, -1, -1, 141, -1, 129, -1, 44, -1, -1, 71, -1, 61, -1, -1, -1, -1, -1, -1, -1, 101, -1, -1, -1, -1, 4, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, 130, 139, -1, -1, -1, -1, -1, 95, -1, -1, -1, 31, -1, -1, 84, 8};
 
 /*$Q-*/
 
@@ -83,7 +81,7 @@ void __fastcall TSynCACSyn::InitIdent()
 	int stop = 0;
 	for(stop = 708 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 708 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -125,12 +123,12 @@ __fastcall TSynCACSyn::TSynCACSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterCAC__0;
+	fCommentAttri->Style = Synhighlightercac__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterCAC__1;
+	fKeyAttri->Style = Synhighlightercac__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -632,7 +630,7 @@ void __fastcall TSynCACSyn::ResetRange()
 
 void __fastcall TSynCACSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynCACSyn::IsFilterStored()
@@ -688,16 +686,8 @@ void SynHighlighterCAC_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynCACSyn));
 }
-class SynHighlighterCAC_unit
-{
-public:
-	SynHighlighterCAC_unit()
-	{
-		SynHighlighterCAC_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterCAC_unit _SynHighlighterCAC_unit;
 
 }  // namespace SynHighlighterCAC
 

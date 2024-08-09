@@ -12,39 +12,36 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterm3
 {
-#define SynHighlighterM3__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterM3__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterM3__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterM3__3 (TSysCharSet() <<  \
+#define Synhighlighterm3__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterm3__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterm3__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterm3__3 (TSysCharSet() <<  \
 										50 << 51 << 52 << 53 << 54 << 55 <<  \
 										56 << 57)
-#define SynHighlighterM3__4 (TSysCharSet() <<  \
+#define Synhighlighterm3__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54)
-#define SynHighlighterM3__5 (TSysCharSet() <<  \
+#define Synhighlighterm3__5 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterM3__6 (TSysCharSet() <<  \
+#define Synhighlighterm3__6 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterM3__7 (TSysCharSet() <<  \
+#define Synhighlighterm3__7 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterM3__8 (TSysCharSet() << L'+' << L'-')
-#define SynHighlighterM3__9 (TSysCharSet() <<  \
+#define Synhighlighterm3__8 (TSysCharSet() << '+' << '-')
+#define Synhighlighterm3__9 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterM3__10 (TSysCharSet() <<  \
+#define Synhighlighterm3__10 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterM3__11 (TSysCharSet() << L'\x22' << L'\\')
+#define Synhighlighterm3__11 (TSysCharSet() << '\x22' << '\\')
 
 
 const String Keywords = L"AS,AND,ANY,ARRAY,BEGIN,BITS,BRANDED,BY,CASE,CONST,DIV,DO,ELSE,ELSIF,END,"
@@ -151,17 +148,17 @@ __fastcall TSynM3Syn::TSynM3Syn(TComponent* AOwner)
 	FCaseSensitive = true;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterM3__0;
+	fCommentAttri->Style = Synhighlighterm3__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
-	fKeyAttri->Style = SynHighlighterM3__1;
+	fKeyAttri->Style = Synhighlighterm3__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
 	fPragmaAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	fPragmaAttri->Style = SynHighlighterM3__2;
+	fPragmaAttri->Style = Synhighlighterm3__2;
 	addAttribute(fPragmaAttri);
 	FReservedAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	addAttribute(FReservedAttri);
@@ -185,7 +182,6 @@ __fastcall TSynM3Syn::~TSynM3Syn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynM3Syn::SymAsciiCharProc()
 {
@@ -356,7 +352,7 @@ void __fastcall TSynM3Syn::SymNumberProc()
 	if(!IsIdentChar(fLine[Run]))
 		return;
   // check for numbers with a base prefix
-	if(CharInSet(fLine[Run], SynHighlighterM3__3) && (fLine[Run + 1] == L'_'))
+	if(CharInSet(fLine[Run], Synhighlighterm3__3) && (fLine[Run + 1] == L'_'))
 	{
 		BasedNumber = true;
 		MaxDigit = int(fLine[Run]) - int(L'0') - 1;
@@ -364,7 +360,7 @@ void __fastcall TSynM3Syn::SymNumberProc()
 	}
 	else
 	{
-		if((fLine[Run] == L'1') && CharInSet(fLine[Run + 1], SynHighlighterM3__4) && (fLine[Run + 2] == L'_'))
+		if((fLine[Run] == L'1') && CharInSet(fLine[Run + 1], Synhighlighterm3__4) && (fLine[Run + 2] == L'_'))
 		{
 			BasedNumber = true;
 			MaxDigit = 10 + int(fLine[Run + 1]) - int(L'0') - 1;
@@ -393,18 +389,18 @@ void __fastcall TSynM3Syn::SymNumberProc()
 		{
 			++Run;
 		}
-		while(!!CharInSet(fLine[Run], SynHighlighterM3__5));
+		while(!!CharInSet(fLine[Run], Synhighlighterm3__5));
     // can include a decimal point and an exponent
 		if(fLine[Run] == L'.')
 		{
 			++Run;
-			if(CharInSet(fLine[Run], SynHighlighterM3__6))
+			if(CharInSet(fLine[Run], Synhighlighterm3__6))
 			{
 				do
 				{
 					++Run;
 				}
-				while(!!CharInSet(fLine[Run], SynHighlighterM3__7));
+				while(!!CharInSet(fLine[Run], Synhighlighterm3__7));
 			}
 			else
 			FTokenID = tkSyntaxError; // must be a number after the '.'
@@ -413,15 +409,15 @@ void __fastcall TSynM3Syn::SymNumberProc()
 		if(IsExponentChar())
 		{
 			++Run;
-			if(CharInSet(fLine[Run], SynHighlighterM3__8))
+			if(CharInSet(fLine[Run], Synhighlighterm3__8))
 				++Run;
-			if(CharInSet(fLine[Run], SynHighlighterM3__9))
+			if(CharInSet(fLine[Run], Synhighlighterm3__9))
 			{
 				do
 				{
 					++Run;
 				}
-				while(!!CharInSet(fLine[Run], SynHighlighterM3__10));
+				while(!!CharInSet(fLine[Run], Synhighlighterm3__10));
 			}
 			else
  // exponent must include a number
@@ -506,7 +502,7 @@ void __fastcall TSynM3Syn::SymStringProc()
 				goto label1;
 			}
 			case L'\\':
-			if(CharInSet(fLine[Run + 1], SynHighlighterM3__11))
+			if(CharInSet(fLine[Run + 1], Synhighlighterm3__11))
 				++Run;
 			break;
 			default:
@@ -752,16 +748,8 @@ void SynHighlighterM3_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynM3Syn));
 }
-class SynHighlighterM3_unit
-{
-public:
-	SynHighlighterM3_unit()
-	{
-		SynHighlighterM3_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterM3_unit _SynHighlighterM3_unit;
 
 }  // namespace SynHighlighterM3
 

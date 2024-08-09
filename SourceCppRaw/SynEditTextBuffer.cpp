@@ -15,17 +15,17 @@ using namespace System::Sysutils;
 
 namespace Synedittextbuffer
 {
-#define SynEditTextBuffer__0 (TStringsOptions() << soWriteBOM << soTrailingLineBreak)
-#define SynEditTextBuffer__1 (TSynEditStringFlags() <<  \
+#define Synedittextbuffer__0 (TStringsOptions() << soWriteBOM << soTrailingLineBreak)
+#define Synedittextbuffer__1 (TSynEditStringFlags() <<  \
 										sfModified << sfSaved << sfAsSaved)
-#define SynEditTextBuffer__2 TSynLineChangeFlags()
-#define SynEditTextBuffer__3 (TArray() << s)
-#define SynEditTextBuffer__4 (TSynEditStringFlags() << TSynEditStringFlag::sfExpandedLengthUnknown)
-#define SynEditTextBuffer__5 (TSynEditStringFlags() << TSynEditStringFlag::sfExpandedLengthUnknown)
-#define SynEditTextBuffer__6 (TSynEditStringFlags() <<  \
+#define Synedittextbuffer__2 TSynLineChangeFlags()
+#define Synedittextbuffer__3 (TArray() << s)
+#define Synedittextbuffer__4 (TSynEditStringFlags() << sfExpandedLengthUnknown)
+#define Synedittextbuffer__5 (TSynEditStringFlags() << sfExpandedLengthUnknown)
+#define Synedittextbuffer__6 (TSynEditStringFlags() <<  \
 										sfModified << sfSaved << sfAsSaved)
-#define SynEditTextBuffer__7 (System::Set<WORD, 0, 255>() << 10 << 13)
-#define SynEditTextBuffer__8 (TSysCharSet() << L'\x0a' << L'\x0d')
+#define Synedittextbuffer__7 (System::Set<WORD, 0, 255>() << 10 << 13)
+#define Synedittextbuffer__8 (TSysCharSet() << '\x0a' << '\x0d')
 
 __fastcall TSynEditStringList::TSynEditStringList() {}
 __fastcall ESynEditStringList::ESynEditStringList(const String Msg) : inherited(Msg) {}
@@ -56,7 +56,7 @@ __fastcall TSynEditStringList::TSynEditStringList(TExpandAtWideGlyphsFunc AExpan
  : FList(nullptr),
 			FCount(0),
 			FCapacity(0),
-			fFileFormat(TSynEditFileFormat::sffDos),
+			fFileFormat(sffDos),
 			fIndexOfLongestLine(0),
 			FTabWidth(0),
 			fCharIndexesAreValid(false),
@@ -65,11 +65,11 @@ __fastcall TSynEditStringList::TSynEditStringList(TExpandAtWideGlyphsFunc AExpan
 {
 	//# inherited::Create();
 	fExpandAtWideGlyphsFunc = AExpandAtWideGlyphsFunc;
-	fFileFormat = TSynEditFileFormat::sffDos;
+	fFileFormat = sffDos;
 	fIndexOfLongestLine = -1;
 	TabWidth = 8;
 	fUTF8CheckLen = -1;
-	Options = Options - SynEditTextBuffer__0;
+	Options = Options - Synedittextbuffer__0;
 	fDetectUTF8 = true;
 }
 
@@ -83,7 +83,6 @@ __fastcall TSynEditStringList::~TSynEditStringList()
 	FCount = 0;
 	SetCapacity(0);
 }
-
 
 void __fastcall TSynEditStringList::Clear()
 {
@@ -164,22 +163,22 @@ String __fastcall TSynEditStringList::ExpandString(int Index)
 		if((*FList)[Index].FString.Length() == 0)
 		{
 			result = L"";
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfExpandedLengthUnknown;
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfHasTabs;
-			(*FList)[Index].FFlags << TSynEditStringFlag::sfHasNoTabs;
+			(*FList)[Index].FFlags >> sfExpandedLengthUnknown;
+			(*FList)[Index].FFlags >> sfHasTabs;
+			(*FList)[Index].FFlags << sfHasNoTabs;
 			(*FList)[Index].fExpandedLength = 0;
 		}
 		else
 		{
 			result = fConvertTabsProc((*FList)[Index].FString, FTabWidth, HasTabs);
 			(*FList)[Index].fExpandedLength = Length(fExpandAtWideGlyphsFunc(result));
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfExpandedLengthUnknown;
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfHasTabs;
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfHasNoTabs;
+			(*FList)[Index].FFlags >> sfExpandedLengthUnknown;
+			(*FList)[Index].FFlags >> sfHasTabs;
+			(*FList)[Index].FFlags >> sfHasNoTabs;
 			if(HasTabs)
-				(*FList)[Index].FFlags << TSynEditStringFlag::sfHasTabs;
+				(*FList)[Index].FFlags << sfHasTabs;
 			else
-				(*FList)[Index].FFlags << TSynEditStringFlag::sfHasNoTabs;
+				(*FList)[Index].FFlags << sfHasNoTabs;
 		}
 	}
 	return result;
@@ -218,7 +217,7 @@ int __fastcall TSynEditStringList::LineCharLength(int Index)
 {
 	int result = 0;
 	if(((unsigned int) Index) < ((unsigned int) FCount))
-		result = (int) (*FList)[Index].FString.Length();
+		result = (*FList)[Index].FString.Length();
 	else
 		result = 0;
 	return result;
@@ -249,9 +248,9 @@ TSynLineChangeFlags __fastcall TSynEditStringList::GetChangeFlags(int Index)
 {
 	TSynLineChangeFlags result;
 	if((Index >= 0) && (Index < FCount))
-		result = (*FList)[Index].FFlags * SynEditTextBuffer__1;
+		result = (*FList)[Index].FFlags * Synedittextbuffer__1;
 	else
-		result = SynEditTextBuffer__2;
+		result = Synedittextbuffer__2;
 	return result;
 }
 
@@ -267,7 +266,7 @@ String __fastcall TSynEditStringList::GetExpandedString(int Index)
 	String result;
 	if((Index >= 0) && (Index < FCount))
 	{
-		if((*FList)[Index].FFlags.Contains(TSynEditStringFlag::sfHasNoTabs))
+		if((*FList)[Index].FFlags.Contains(sfHasNoTabs))
 			result = Get(Index);
 		else
 			result = ExpandString(Index);
@@ -282,8 +281,8 @@ int __fastcall TSynEditStringList::GetExpandedStringLength(int Index)
 	int result = 0;
 	if((Index >= 0) && (Index < FCount))
 	{
-		if((*FList)[Index].FFlags.Contains(TSynEditStringFlag::sfExpandedLengthUnknown))
-			result = Length(String(ExpandedStrings[Index]));
+		if((*FList)[Index].FFlags.Contains(sfExpandedLengthUnknown))
+			result = String(ExpandedStrings[Index]).Length();
 		else
 			result = (*FList)[Index].fExpandedLength;
 	}
@@ -307,7 +306,7 @@ int __fastcall TSynEditStringList::GetLengthOfLongestLine()
 			Prec = &(*FList)[0];
 			for(stop = FCount - 1, i = 0; i <= stop; i++)
 			{
-				if((*Prec).FFlags.Contains(TSynEditStringFlag::sfExpandedLengthUnknown))
+				if((*Prec).FFlags.Contains(sfExpandedLengthUnknown))
 					ExpandString(i);
 				if((*Prec).fExpandedLength > MaxLen)
 				{
@@ -362,17 +361,17 @@ String __fastcall TSynEditStringList::GetSeparatedText(String SeparatorS)
 		result = L"";
 		return result;
 	}
-	LineBreakSize = (int) SeparatorS.Length();
+	LineBreakSize = SeparatorS.Length();
 	PLineBreak = ustr2pwchar(SeparatorS);
 
   // compute buffer size
-	Size = (int) ((FCount - 1) * LineBreakSize + LineCharIndex(FCount - 1) + (*FList)[FCount - 1].FString.Length());
+	Size = (FCount - 1) * LineBreakSize + LineCharIndex(FCount - 1) + (*FList)[FCount - 1].FString.Length();
 	result.SetLength(Size);
 	P = ustr2pwchar(result);
 	Prec = &(*FList)[0];
 
   // handle 1st line separately (to avoid trailing line break)
-	l = (int) Prec->FString.Length();
+	l = Prec->FString.Length();
 	if(l != 0)
 	{
 		System::Move(ustr2address(Prec->FString), P, l * sizeof(Char));
@@ -416,12 +415,12 @@ String __fastcall TSynEditStringList::GetSeparatedText(String SeparatorS)
 
 void __fastcall TSynEditStringList::Grow()
 {
-	SetCapacity(Syneditmiscprocs::GrowCollection(FCapacity, FCount + 1));
+	SetCapacity(GrowCollection(FCapacity, FCount + 1));
 }
 
 void __fastcall TSynEditStringList::Insert(int Index, const String s)
 {
-	InsertStrings(Index, SynEditTextBuffer__3);
+	InsertStrings(Index, Synedittextbuffer__3);
 }
 
 void __fastcall TSynEditStringList::InsertItem(int Index, const String s)
@@ -442,7 +441,7 @@ void __fastcall TSynEditStringList::InsertItem(int Index, const String s)
 		(*FList)[Index].FObject = nullptr;
 		(*FList)[Index].FRange = const_cast<TSynEditRange>(NullRange);
 		(*FList)[Index].fExpandedLength = -1;
-		(*FList)[Index].FFlags = SynEditTextBuffer__4;
+		(*FList)[Index].FFlags = Synedittextbuffer__4;
 	}
 	++FCount;
 	EndUpdate();
@@ -454,7 +453,7 @@ void __fastcall TSynEditStringList::InsertStrings(int Index, TArray<String>& Str
 	int lineCount = 0;
 	if((Index < 0) || (Index > FCount))
 		ListIndexOutOfBounds(Index);
-	lineCount = (int) (Strings.Length - FromIndex);
+	lineCount = Strings.Length - FromIndex;
 	if(lineCount > 0)
 	{
 		BeginUpdate();
@@ -462,7 +461,7 @@ void __fastcall TSynEditStringList::InsertStrings(int Index, TArray<String>& Str
 		{
 			int stop = 0;
 			if(FCapacity < FCount + lineCount)
-				SetCapacity(Syneditmiscprocs::GrowCollection(FCapacity, FCount + lineCount));
+				SetCapacity(GrowCollection(FCapacity, FCount + lineCount));
 			if(Index < FCount)
 			{
 				System::Move(&(*FList)[Index], &(*FList)[Index + lineCount], (FCount - Index) * SynEditStringRecSize);
@@ -477,7 +476,7 @@ void __fastcall TSynEditStringList::InsertStrings(int Index, TArray<String>& Str
 					(*FList)[Index + i].FObject = nullptr;
 					(*FList)[Index + i].FRange = const_cast<TSynEditRange>(NullRange);
 					(*FList)[Index + i].fExpandedLength = -1;
-					(*FList)[Index + i].FFlags = SynEditTextBuffer__5;
+					(*FList)[Index + i].FFlags = Synedittextbuffer__5;
 				}
 			}
 			FCount += lineCount;
@@ -525,7 +524,7 @@ void __fastcall TSynEditStringList::LoadFromStream(TStream* Stream, TEncoding* E
 		if((Encoding == TEncoding::ANSI) && DetectUTF8 && IsUTF8(Buffer, Size))
 			Encoding = TEncoding::UTF8;
 		SetEncoding(Encoding); // Keep Encoding in case the stream is saved
-		DecodedText = Encoding->GetString(Buffer, Size, (int) (Buffer.Length - Size));
+		DecodedText = Encoding->GetString(Buffer, Size, Buffer.Length - Size);
 		Buffer.Length = 0; // Free the buffer here to reduce memory footprint
 		SetTextAndFileFormat(DecodedText);
 	}
@@ -587,9 +586,9 @@ void __fastcall TSynEditStringList::Put(int Index, const String s)
 		/*# with FList^[Index] do */
 		{
 			
-			(*FList)[Index].FFlags << TSynEditStringFlag::sfExpandedLengthUnknown;
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfHasTabs;
-			(*FList)[Index].FFlags >> TSynEditStringFlag::sfHasNoTabs;
+			(*FList)[Index].FFlags << sfExpandedLengthUnknown;
+			(*FList)[Index].FFlags >> sfHasTabs;
+			(*FList)[Index].FFlags >> sfHasNoTabs;
 			OldLine = (*FList)[Index].FString;
 			(*FList)[Index].FString = s;
 		}
@@ -621,7 +620,7 @@ void __fastcall TSynEditStringList::PutRange(int Index, TSynEditRange ARange)
 void __fastcall TSynEditStringList::SetCapacity(int NewCapacity)
 {
 	if(NewCapacity < Count)
-		EListError::Create(SInvalidCapacity);
+		new EListError(SInvalidCapacity);
 	FList = (PSynEditStringRecList) ReallocMemory(FList, NewCapacity * SynEditStringRecSize);
 	FCapacity = NewCapacity;
 }
@@ -629,7 +628,7 @@ void __fastcall TSynEditStringList::SetCapacity(int NewCapacity)
 void __fastcall TSynEditStringList::SetChangeFlags(int Index, const TSynLineChangeFlags Value)
 {
 	if((Index >= 0) && (Index < FCount))
-		(*FList)[Index].FFlags = (*FList)[Index].FFlags - SynEditTextBuffer__6 + Value;
+		(*FList)[Index].FFlags = (*FList)[Index].FFlags - Synedittextbuffer__6 + Value;
 }
 
 void __fastcall TSynEditStringList::SetEncoding(TEncoding* const Value)
@@ -652,8 +651,8 @@ void __fastcall TSynEditStringList::SetTabWidth(int Value)
 			{
 				
 				(*FList)[i].fExpandedLength = -1;
-				(*FList)[i].FFlags >> TSynEditStringFlag::sfHasNoTabs;
-				(*FList)[i].FFlags << TSynEditStringFlag::sfExpandedLengthUnknown;
+				(*FList)[i].FFlags >> sfHasNoTabs;
+				(*FList)[i].FFlags << sfExpandedLengthUnknown;
 			}
 		}
 	}
@@ -679,12 +678,12 @@ void __fastcall TSynEditStringList::SetTextAndFileFormat(const String Value)
 		P = ustr2pwchar(Value);
 		if(P != nullptr)
 		{
-			Size = (int) Value.Length();
+			Size = Value.Length();
 			Pmax = P + Value.Length();
 			while((P < Pmax))
 			{
 				Start = P;
-				while((P < Pmax) && ((((WORD) (*P)) > 13) || !((SynEditTextBuffer__7.Contains(((WORD) (*P)))) || ((*P) == WideLineSeparator))))
+				while((P < Pmax) && ((((WORD) (*P)) > 13) || !((Synedittextbuffer__7.Contains(((WORD) (*P)))) || ((*P) == WideLineSeparator))))
 					++P;
 				if(P != Start)
 				{
@@ -712,7 +711,7 @@ void __fastcall TSynEditStringList::SetTextAndFileFormat(const String Value)
 				}
 			}
       // keep the old format of the file
-			if(!TrailingLineBreak && (CharInSet(Value[Size], SynEditTextBuffer__8) || (Value[Size] == WideLineSeparator)))
+			if(!TrailingLineBreak && (CharInSet(Value[Size], Synedittextbuffer__8) || (Value[Size] == WideLineSeparator)))
 				InsertItem(FCount, L"");
 		}
 		if(ASSIGNED(OnInserted) && (FCount > 0))
@@ -723,17 +722,17 @@ void __fastcall TSynEditStringList::SetTextAndFileFormat(const String Value)
 		EndUpdate();
 	}
 	if(fLINESEPARATOR)
-		FileFormat = TSynEditFileFormat::sffUnicode;
+		FileFormat = sffUnicode;
 	else
 	{
 		if(fCR && !fLF)
-			FileFormat = TSynEditFileFormat::sffMac;
+			FileFormat = sffMac;
 		else
 		{
 			if(fLF && !fCR)
-				FileFormat = TSynEditFileFormat::sffUnix;
+				FileFormat = sffUnix;
 			else
-				FileFormat = TSynEditFileFormat::sffDos;
+				FileFormat = sffDos;
 		}
 	}
 }
@@ -769,8 +768,8 @@ void __fastcall TSynEditStringList::FontChanged()
 		{
 			
 			(*FList)[i].fExpandedLength = -1;
-			(*FList)[i].FFlags >> TSynEditStringFlag::sfHasNoTabs;
-			(*FList)[i].FFlags << TSynEditStringFlag::sfExpandedLengthUnknown;
+			(*FList)[i].FFlags >> sfHasNoTabs;
+			(*FList)[i].FFlags << sfExpandedLengthUnknown;
 		}
 	}
 }

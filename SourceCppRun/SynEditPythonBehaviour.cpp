@@ -12,7 +12,6 @@ using namespace Syneditstrconst;
 using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
 
 namespace Syneditpythonbehaviour
 {

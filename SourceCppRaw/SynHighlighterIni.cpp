@@ -10,14 +10,12 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterini
 {
-#define SynHighlighterIni__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterIni__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterini__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterini__1 (TFontStyles() << TFontStyle::fsBold)
 
 
 
@@ -34,13 +32,13 @@ __fastcall TSynIniSyn::TSynIniSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr)
 {
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterIni__0;
+	fCommentAttri->Style = Synhighlighterini__0;
 	fCommentAttri->Foreground = clGreen;
 	addAttribute(fCommentAttri);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	addAttribute(fTextAttri);
 	fSectionAttri = new TSynHighlighterAttributes(SYNS_AttrSection, SYNS_FriendlyAttrSection);
-	fSectionAttri->Style = SynHighlighterIni__1;
+	fSectionAttri->Style = Synhighlighterini__1;
 	addAttribute(fSectionAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	addAttribute(fKeyAttri);
@@ -505,16 +503,8 @@ void SynHighlighterIni_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynIniSyn));
 }
-class SynHighlighterIni_unit
-{
-public:
-	SynHighlighterIni_unit()
-	{
-		SynHighlighterIni_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterIni_unit _SynHighlighterIni_unit;
 
 }  // namespace SynHighlighterIni
 

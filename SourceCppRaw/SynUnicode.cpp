@@ -18,11 +18,10 @@ using namespace System::Math;
 using namespace System::Rtlconsts;
 using namespace System::Sysconst;
 using namespace System::Sysutils;
-using namespace Vcl::Clipbrd;
 
 namespace Synunicode
 {
-#define SynUnicode__0 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__0 (System::Set<unsigned char, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
@@ -34,21 +33,21 @@ namespace Synunicode
 										176 << 177 << 178 << 179 << 180 << 181 <<  \
 										182 << 183 << 184 << 185 << 186 << 187 <<  \
 										188 << 189 << 190 << 191)
-#define SynUnicode__1 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__1 (System::Set<unsigned char, 0, 255>() <<  \
 										160 << 161 << 162 << 163 << 164 << 165 <<  \
 										166 << 167 << 168 << 169 << 170 << 171 <<  \
 										172 << 173 << 174 << 175 << 176 << 177 <<  \
 										178 << 179 << 180 << 181 << 182 << 183 <<  \
 										184 << 185 << 186 << 187 << 188 << 189 <<  \
 										190 << 191)
-#define SynUnicode__2 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__2 (System::Set<unsigned char, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
 										146 << 147 << 148 << 149 << 150 << 151 <<  \
 										152 << 153 << 154 << 155 << 156 << 157 <<  \
 										158 << 159)
-#define SynUnicode__3 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__3 (System::Set<unsigned char, 0, 255>() <<  \
 										144 << 145 << 146 << 147 << 148 << 149 <<  \
 										150 << 151 << 152 << 153 << 154 << 155 <<  \
 										156 << 157 << 158 << 159 << 160 << 161 <<  \
@@ -57,7 +56,7 @@ namespace Synunicode
 										174 << 175 << 176 << 177 << 178 << 179 <<  \
 										180 << 181 << 182 << 183 << 184 << 185 <<  \
 										186 << 187 << 188 << 189 << 190 << 191)
-#define SynUnicode__4 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__4 (System::Set<unsigned char, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143)
@@ -73,6 +72,7 @@ PWideChar __fastcall SynCharNext(PWideChar P)
 
 PWideChar __fastcall SynCharNext(PWideChar P, String& Element)
 {
+	Element; //# clear out parameter
 	PWideChar result = nullptr;
 	PWideChar Start = nullptr;
 	Start = P;
@@ -105,7 +105,7 @@ void __fastcall StrSwapByteOrder(PWideChar Str)
 	P = ((PWORD) Str);
 	while((*P) != 0)
 	{
-		(*P) = MAKEWORD(HIBYTE((*P)), ((LOBYTE) (*P)));
+		(*P) = MAKEWORD(HIBYTE((*P)), LOBYTE((*P)));
 		++P;
 	}
 }
@@ -156,13 +156,14 @@ bool __fastcall IsAnsiOnly(const String WS)
 {
 	bool result = false;
 	BOOL UsedDefaultChar = false;
-	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, ustr2pwchar(WS), (int) WS.Length(), nullptr, 0, nullptr, &UsedDefaultChar);
+	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, ustr2pwchar(WS), WS.Length(), nullptr, 0, nullptr, &UsedDefaultChar);
 	result = !UsedDefaultChar;
 	return result;
 }
 
 bool __fastcall IsUTF8(const String FileName, bool& WithBOM, int BytesToCheck/*# = 0x4000*/)
 {
+	WithBOM = false; //# clear out parameter
 	bool result = false;
 	TStream* Stream = nullptr;
 	Stream = new TFileStream(FileName, (WORD) (fmOpenRead | fmShareDenyWrite));
@@ -182,6 +183,7 @@ bool __fastcall IsUTF8(const String FileName, bool& WithBOM, int BytesToCheck/*#
 
 bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4000*/)
 {
+	WithBOM = false; //# clear out parameter
 	bool result = false;
 	TBytes Buffer;
 	int BufferSize = 0;
@@ -191,7 +193,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
-	BufferSize = (int) Min(BytesToCheck, Stream->Size - Stream->Position);
+	BufferSize = (int) Min((__int64) BytesToCheck, Stream->Size - Stream->Position);
 
   // if no special characteristics are found it is not UTF-8
 	result = false;
@@ -238,7 +240,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 		++i;
 		while((i < Len) && (result < 4))
 		{
-			if(SynUnicode__0.Contains(Bytes[i]))
+			if(Synunicode__0.Contains(Bytes[i]))
 				++result;
 			else
 				break;
@@ -252,7 +254,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
             makes it unlikely to detect files with only little usage of non
             US-ASCII chars, like usual in European languages. */
 	result = false;
-	Len = Min(Start + BytesToCheck, (int) Bytes.Length);
+	Len = Min(Start + BytesToCheck, Bytes.Length);
 	FoundUTF8Strings = 0;
 	i = Start;
 	while(i < Len)
@@ -285,7 +287,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xE0:
 			{
 				++i;
-				if((i < Len) && (SynUnicode__1.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
+				if((i < Len) && (Synunicode__1.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
 					++FoundUTF8Strings;
 				else
 					goto label1;
@@ -302,7 +304,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xED:
 			{
 				++i;
-				if((i < Len) && (SynUnicode__2.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
+				if((i < Len) && (Synunicode__2.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
 					++FoundUTF8Strings;
 				else
 					goto label3;
@@ -311,7 +313,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xF0:
 			{
 				++i;
-				if((i < Len) && (SynUnicode__3.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
+				if((i < Len) && (Synunicode__3.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
 					++FoundUTF8Strings;
 				else
 					goto label4;
@@ -326,7 +328,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xF4:
 			{
 				++i;
-				if((i < Len) && (SynUnicode__4.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
+				if((i < Len) && (Synunicode__4.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
 					++FoundUTF8Strings;
 				else
 					goto label6;
@@ -371,6 +373,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 
 TEncoding* __fastcall GetEncoding(const String FileName, bool& WithBOM)
 {
+	WithBOM = false; //# clear out parameter
 	TEncoding* result = nullptr;
 	TStream* Stream = nullptr;
 	Stream = new TFileStream(FileName, (WORD) (fmOpenRead | fmShareDenyWrite));
@@ -387,6 +390,7 @@ TEncoding* __fastcall GetEncoding(const String FileName, bool& WithBOM)
 
 TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 {
+	WithBOM = false; //# clear out parameter
 	TEncoding* result = nullptr;
 
 	auto TBytesEqual = [&](TBytes& A, TBytes& B, int Len) -> bool 
@@ -423,9 +427,9 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 	if(Size >= Preamble.Length)
 	{
 		Buffer.Length = Preamble.Length;
-		Stream->Read(Buffer, 0, (int) Preamble.Length);
-		Stream->Seek((int) -Preamble.Length, (WORD) soFromCurrent);
-		if(TBytesEqual(Preamble, Buffer, (int) Preamble.Length))
+		Stream->Read(Buffer, 0, Preamble.Length);
+		Stream->Seek(-Preamble.Length, (WORD) soFromCurrent);
+		if(TBytesEqual(Preamble, Buffer, Preamble.Length))
 		{
 			WithBOM = true;
 			return TEncoding::Unicode;
@@ -436,9 +440,9 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 	if(Size >= Preamble.Length)
 	{
 		Buffer.Length = Preamble.Length;
-		Stream->Read(Buffer, 0, (int) Preamble.Length);
-		Stream->Seek((int) -Preamble.Length, (WORD) soFromCurrent);
-		if(TBytesEqual(Preamble, Buffer, (int) Preamble.Length))
+		Stream->Read(Buffer, 0, Preamble.Length);
+		Stream->Seek(-Preamble.Length, (WORD) soFromCurrent);
+		if(TBytesEqual(Preamble, Buffer, Preamble.Length))
 		{
 			WithBOM = true;
 			return TEncoding::BigEndianUnicode;
@@ -485,16 +489,8 @@ void SynUnicode_initialization()
 	
 	Assert(Win32Platform() == VER_PLATFORM_WIN32_NT, L"Unsupported Windows version");
 }
-class SynUnicode_unit
-{
-public:
-	SynUnicode_unit()
-	{
-		SynUnicode_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynUnicode_unit _SynUnicode_unit;
 
 }  // namespace SynUnicode
 

@@ -12,21 +12,20 @@ using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Uitypes;
-using namespace Vcl::Dialogs;
 using namespace Vcl::Forms;
 
-#define SynEditKeyCmdEditor__0 (TMsgDlgButtons() << System::Uitypes::TMsgDlgBtn::mbOK)
-#define SynEditKeyCmdEditor__1 (TMsgDlgButtons() << System::Uitypes::TMsgDlgBtn::mbOK)
-#define SynEditKeyCmdEditor__2 Syneditmiscclasses::THKInvalidKeys()
-#define SynEditKeyCmdEditor__3 Syneditmiscclasses::THKModifiers()
-#define SynEditKeyCmdEditor__4 Syneditmiscclasses::THKInvalidKeys()
-#define SynEditKeyCmdEditor__5 Syneditmiscclasses::THKModifiers()
+#define Syneditkeycmdeditor__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
+#define Syneditkeycmdeditor__1 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
+#define Syneditkeycmdeditor__2 Syneditmiscclasses::THKInvalidKeys()
+#define Syneditkeycmdeditor__3 Syneditmiscclasses::THKModifiers()
+#define Syneditkeycmdeditor__4 Syneditmiscclasses::THKInvalidKeys()
+#define Syneditkeycmdeditor__5 Syneditmiscclasses::THKModifiers()
 
-__fastcall TSynEditKeystrokeEditorForm::TSynEditKeystrokeEditorForm(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynEditKeystrokeEditorForm::TSynEditKeystrokeEditorForm(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TSynEditKeystrokeEditorForm* SynEditKeystrokeEditorForm = nullptr;
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 /* TSynEditKeystrokeEditorForm */
@@ -70,9 +69,9 @@ void __fastcall TSynEditKeystrokeEditorForm::AddEditorCommand(const String s)
 TSynEditorCommand __fastcall TSynEditKeystrokeEditorForm::GetCommand()
 {
 	TSynEditorCommand result = 0;
-	if(cmbCommand->ItemIndex !=  - 1)
+	if(cmbCommand->ItemIndex != -1)
 	{
-		result = ((TSynEditorCommand) ((int) cmbCommand->Items->Objects[cmbCommand->ItemIndex]));
+		result = ((TSynEditorCommand) (NativeInt) cmbCommand->Items->Objects[cmbCommand->ItemIndex]);
 	}
 	else
 	result = (TSynEditorCommand) ecNone;
@@ -108,7 +107,7 @@ void __fastcall TSynEditKeystrokeEditorForm::btnOKClick(TObject* Sender)
 {
 	if(Command == ecNone)
 	{
-		MessageDlg(L"You must first select a command.", System::Uitypes::TMsgDlgType::mtError, SynEditKeyCmdEditor__0, 0);
+		MessageDlg(L"You must first select a command.", TMsgDlgType::mtError, Syneditkeycmdeditor__0, 0);
 		cmbCommand->SetFocus();
 		cmbCommand->SelectAll();
 	}
@@ -117,7 +116,7 @@ void __fastcall TSynEditKeystrokeEditorForm::btnOKClick(TObject* Sender)
 		if(Keystroke == 0)
 		{
 			MessageDlg(String(L"The command \"") + cmbCommand->Text
-	           + L"\" needs to have at least one keystroke assigned to it.", System::Uitypes::TMsgDlgType::mtError, SynEditKeyCmdEditor__1, 0);
+	           + L"\" needs to have at least one keystroke assigned to it.", TMsgDlgType::mtError, Syneditkeycmdeditor__1, 0);
 			hkKeystroke->SetFocus();
 		}
 		else
@@ -137,8 +136,8 @@ void __fastcall TSynEditKeystrokeEditorForm::FormCreate(TObject* Sender)
 		with0->Width = 186;
 		with0->Height = 19;
 		with0->HotKey = (TShortCut) 0;
-		with0->InvalidKeys = SynEditKeyCmdEditor__2;
-		with0->Modifiers = SynEditKeyCmdEditor__3;
+		with0->InvalidKeys = Syneditkeycmdeditor__2;
+		with0->Modifiers = Syneditkeycmdeditor__3;
 		with0->TabOrder = (TTabOrder) 1;
 	}
 	hkKeystroke2 = new TSynHotKey(this);
@@ -151,8 +150,8 @@ void __fastcall TSynEditKeystrokeEditorForm::FormCreate(TObject* Sender)
 		with1->Width = 186;
 		with1->Height = 19;
 		with1->HotKey = (TShortCut) 0;
-		with1->InvalidKeys = SynEditKeyCmdEditor__4;
-		with1->Modifiers = SynEditKeyCmdEditor__5;
+		with1->InvalidKeys = Syneditkeycmdeditor__4;
+		with1->Modifiers = Syneditkeycmdeditor__5;
 		with1->TabOrder = (TTabOrder) 2;
 	}
 }

@@ -10,27 +10,24 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightermodelica
 {
-#define SynHighlighterModelica__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterModelica__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterModelica__2 (TSysCharSet() << L'=' << L'&')
-#define SynHighlighterModelica__3 (TSysCharSet() << L'=' << L'-' << L'>')
-#define SynHighlighterModelica__4 (TSysCharSet() << L'=' << L'|')
-#define SynHighlighterModelica__5 (TSysCharSet() << L'=' << L'+')
+#define Synhighlightermodelica__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightermodelica__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightermodelica__2 (TSysCharSet() << '=' << '&')
+#define Synhighlightermodelica__3 (TSysCharSet() << '=' << '-' << '>')
+#define Synhighlightermodelica__4 (TSysCharSet() << '=' << '|')
+#define Synhighlightermodelica__5 (TSysCharSet() << '=' << '+')
 
 
 const String Keywords[48/*# range 0..47*/] = {L"algorithm", L"and", L"annotation", L"assert", L"block", L"Boolean", L"class", L"connect", L"connector", L"constant"
-																				, L"der", L"discrete", L"else", L"elseif", L"end", L"equation", L"extends", L"external", L"false", L"final", L"flow", L"for"
-																				, L"function", L"if", L"in", L"input", L"Integer", L"loop", L"model", L"nondiscrete", L"not", L"or", L"output", L"package", L"parameter"
-																				, L"partial", L"protected", L"public", L"Real", L"record", L"redeclare", L"replaceable", L"terminate", L"then", L"true"
-																				, L"type", L"when", L"while"};
+                    , L"der", L"discrete", L"else", L"elseif", L"end", L"equation", L"extends", L"external", L"false", L"final", L"flow", L"for"
+                    , L"function", L"if", L"in", L"input", L"Integer", L"loop", L"model", L"nondiscrete", L"not", L"or", L"output", L"package", L"parameter"
+                    , L"partial", L"protected", L"public", L"Real", L"record", L"redeclare", L"replaceable", L"terminate", L"then", L"true"
+                    , L"type", L"when", L"while"};
 const int KeyIndices[97/*# range 0..96*/] = {-1, 8, 41, 46, -1, 21, -1, 30, 5, -1, 45, -1, -1, 23, 7, -1, -1, 17, 15, -1, -1, 10, -1, -1, -1, 3, -1, 18, -1, 28, -1, -1, 47, -1, -1, -1, -1, -1, 39, 16, 27, 25, -1, 4
-																				, 22, -1, 43, -1, 37, 40, -1, -1, 31, -1, 42, -1, -1, 26, 14, 24, 44, -1, -1, -1, -1, 11, 33, 0, -1, -1, -1, -1, 36, 19, -1, 38, -1, 32, -1, -1, 29, -1, -1, -1, 6, 35, 12, 1, -1, -1, -1, 20, 34, -1, 13, 9, 2};
+                    , 22, -1, 43, -1, 37, 40, -1, -1, 31, -1, 42, -1, -1, 26, 14, 24, 44, -1, -1, -1, -1, 11, 33, 0, -1, -1, -1, -1, 36, 19, -1, 38, -1, 32, -1, -1, 29, -1, -1, -1, 6, 35, 12, 1, -1, -1, -1, 20, 34, -1, 13, 9, 2};
 
 /*$Q-*/
 
@@ -68,7 +65,7 @@ void __fastcall TSynModelicaSyn::InitIdent()
 	int stop = 0;
 	for(stop = 96 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 96 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -110,14 +107,14 @@ __fastcall TSynModelicaSyn::TSynModelicaSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterModelica__0;
+	fCommentAttri->Style = Synhighlightermodelica__0;
 	addAttribute(fCommentAttri);
 	fDirectiveAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
 	addAttribute(fDirectiveAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterModelica__1;
+	fKeyAttri->Style = Synhighlightermodelica__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -136,7 +133,7 @@ void __fastcall TSynModelicaSyn::AndSymbolProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(CharInSet(fLine[Run], SynHighlighterModelica__2))
+	if(CharInSet(fLine[Run], Synhighlightermodelica__2))
 		++Run;
 }
 
@@ -244,7 +241,7 @@ void __fastcall TSynModelicaSyn::MinusProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(CharInSet(fLine[Run], SynHighlighterModelica__3))
+	if(CharInSet(fLine[Run], Synhighlightermodelica__3))
 		++Run;
 }
 
@@ -305,7 +302,7 @@ void __fastcall TSynModelicaSyn::OrSymbolProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(CharInSet(fLine[Run], SynHighlighterModelica__4))
+	if(CharInSet(fLine[Run], Synhighlightermodelica__4))
 		++Run;
 }
 
@@ -313,7 +310,7 @@ void __fastcall TSynModelicaSyn::PlusProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(CharInSet(fLine[Run], SynHighlighterModelica__5))
+	if(CharInSet(fLine[Run], Synhighlightermodelica__5))
 		++Run;
 }
 
@@ -715,7 +712,7 @@ void __fastcall TSynModelicaSyn::ResetRange()
 
 void __fastcall TSynModelicaSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynModelicaSyn::IsFilterStored()
@@ -751,16 +748,8 @@ void SynHighlighterModelica_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynModelicaSyn));
 }
-class SynHighlighterModelica_unit
-{
-public:
-	SynHighlighterModelica_unit()
-	{
-		SynHighlighterModelica_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterModelica_unit _SynHighlighterModelica_unit;
 
 }  // namespace SynHighlighterModelica
 

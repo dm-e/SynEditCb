@@ -11,51 +11,48 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterawk
 {
-#define SynHighlighterAWK__0 (TSysCharSet() <<  \
+#define Synhighlighterawk__0 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterAWK__1 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define SynHighlighterAWK__2 (TSysCharSet() <<  \
-										0 << 1 << 2 << 3 << 4 << 5 <<  \
-										6 << 7 << 8 << 9 << 10 << 11 <<  \
-										12 << 13 << 14 << 15 << 16 << 17 <<  \
-										18 << 19 << 20 << 21 << 22 << 23 <<  \
-										24 << 25 << 26 << 27 << 28 << 29 <<  \
-										30 << 31 << 32 << L';')
-#define SynHighlighterAWK__3 (TSysCharSet() <<  \
+#define Synhighlighterawk__1 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Synhighlighterawk__2 (TSysCharSet() <<  \
+          0 << 1 << 2 << 3 << 4 << 5 <<  \
+          6 << 7 << 8 << 9 << 10 << 11 <<  \
+          12 << 13 << 14 << 15 << 16 << 17 <<  \
+          18 << 19 << 20 << 21 << 22 << 23 <<  \
+          24 << 25 << 26 << 27 << 28 << 29 <<  \
+          30 << 31 << 32 << ';')
+#define Synhighlighterawk__3 (TSysCharSet() <<  \
 										0 << 1 << 2 << 3 << 4 << 5 <<  \
 										6 << 7 << 8 << 9 << 10 << 11 <<  \
 										12 << 13 << 14 << 15 << 16 << 17 <<  \
 										18 << 19 << 20 << 21 << 22 << 23 <<  \
 										24 << 25 << 26 << 27 << 28 << 29 <<  \
 										30 << 31)
-#define SynHighlighterAWK__4 (TSysCharSet() <<  \
+#define Synhighlighterawk__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterAWK__5 (TSysCharSet() << L'+' << L'=')
-#define SynHighlighterAWK__6 (TSysCharSet() << L'-' << L'=')
-#define SynHighlighterAWK__7 (TSysCharSet() << L'=' << L'~')
-#define SynHighlighterAWK__8 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterAWK__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterAWK__10 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterAWK__11 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterawk__5 (TSysCharSet() << '+' << '=')
+#define Synhighlighterawk__6 (TSysCharSet() << '-' << '=')
+#define Synhighlighterawk__7 (TSysCharSet() << '=' << '~')
+#define Synhighlighterawk__8 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterawk__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterawk__10 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterawk__11 (TFontStyles() << TFontStyle::fsBold)
 
 
 
@@ -143,7 +140,7 @@ void __fastcall TSynAWKSyn::NumberProc()
 {
 	FTokenID = tkNumber;
 	++Run;
-	while(CharInSet(fLine[Run], SynHighlighterAWK__0))
+	while(CharInSet(fLine[Run], Synhighlighterawk__0))
 		++Run;
 }
 
@@ -153,14 +150,14 @@ void __fastcall TSynAWKSyn::IdentProc()
 	int Idx = 0;
 	String s;
 	i = Run;
-	while(CharInSet(fLine[i], SynHighlighterAWK__1))
+	while(CharInSet(fLine[i], Synhighlighterawk__1))
 		++i;
 	s.SetLength(i - Run);
 	StrLCopy(ustr2pwchar(s), fLine + Run, (unsigned int) (i - Run));
 	Run = i;
 	if(AWKSyntaxList->Find(s, Idx) && (AWKSyntaxList->Strings[Idx] == s))
 	{
-		FTokenID = (TtkTokenKind) (int) AWKSyntaxList->Objects[Idx];
+		FTokenID = (TtkTokenKind) (NativeInt) AWKSyntaxList->Objects[Idx];
 		if(FTokenID == tkUnknown)
 		{
 			FTokenID = tkKey;
@@ -168,7 +165,7 @@ void __fastcall TSynAWKSyn::IdentProc()
 			{
 				while((fLine[i] == L' '))
 					++i;
-				if((fLine[i + 0] == L'f') && (fLine[i + 1] == L'i') && (fLine[i + 2] == L'l') && (fLine[i + 3] == L'e') && CharInSet(fLine[i + 4], SynHighlighterAWK__2))
+				if((fLine[i + 0] == L'f') && (fLine[i + 1] == L'i') && (fLine[i + 2] == L'l') && (fLine[i + 3] == L'e') && CharInSet(fLine[i + 4], Synhighlighterawk__2))
 				{
 					Run = (i + 4);
 				}
@@ -273,7 +270,7 @@ void __fastcall TSynAWKSyn::StringProc()
 			return;
 		}
 	}
-	while(!CharInSet(fLine[Run], SynHighlighterAWK__3));
+	while(!CharInSet(fLine[Run], Synhighlighterawk__3));
 	FTokenID = tkIdentifier;
 }
 
@@ -308,7 +305,7 @@ void __fastcall TSynAWKSyn::FieldRefProc()
 		return result;
 	};
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterAWK__4) && !IsAlphaNumChar(Run + 1))
+	if(CharInSet(fLine[Run], Synhighlighterawk__4) && !IsAlphaNumChar(Run + 1))
 	{
 		FTokenID = tkSymbol;
 		++Run;
@@ -327,7 +324,7 @@ void __fastcall TSynAWKSyn::PlusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterAWK__5))
+	if(CharInSet(fLine[Run], Synhighlighterawk__5))
 		++Run;
 }
 
@@ -335,7 +332,7 @@ void __fastcall TSynAWKSyn::MinusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterAWK__6))
+	if(CharInSet(fLine[Run], Synhighlighterawk__6))
 		++Run;
 }
 
@@ -351,7 +348,7 @@ void __fastcall TSynAWKSyn::ExclamProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterAWK__7))
+	if(CharInSet(fLine[Run], Synhighlighterawk__7))
 		++Run;
 }
 
@@ -413,11 +410,11 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 	addAttribute(fIdentifierAttri);
 	fInterFuncAttri = new TSynHighlighterAttributes(SYNS_AttrInternalFunction, SYNS_FriendlyAttrInternalFunction);
 	fInterFuncAttri->Foreground = (TColor) 0x00408080;
-	fInterFuncAttri->Style = SynHighlighterAWK__8;
+	fInterFuncAttri->Style = Synhighlighterawk__8;
 	addAttribute(fInterFuncAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) 0x00FF0080;
-	fKeyAttri->Style = SynHighlighterAWK__9;
+	fKeyAttri->Style = Synhighlighterawk__9;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -427,11 +424,11 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 	fStringAttri->Foreground = clTeal;
 	addAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Style = SynHighlighterAWK__10;
+	fSymbolAttri->Style = Synhighlighterawk__10;
 	addAttribute(fSymbolAttri);
 	fSysVarAttri = new TSynHighlighterAttributes(SYNS_AttrSystemValue, SYNS_FriendlyAttrSystemValue);
 	fSysVarAttri->Foreground = (TColor) 0x000080FF;
-	fSysVarAttri->Style = SynHighlighterAWK__11;
+	fSysVarAttri->Style = Synhighlighterawk__11;
 	addAttribute(fSysVarAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	MakeSyntaxList();
@@ -443,7 +440,6 @@ __fastcall TSynAWKSyn::~TSynAWKSyn()
 	delete AWKSyntaxList;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynAWKSyn::CRProc()
 {
@@ -590,16 +586,8 @@ void SynHighlighterAWK_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynAWKSyn));
 }
-class SynHighlighterAWK_unit
-{
-public:
-	SynHighlighterAWK_unit()
-	{
-		SynHighlighterAWK_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterAWK_unit _SynHighlighterAWK_unit;
 
 }  // namespace SynHighlighterAWK
 

@@ -10,27 +10,24 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterxml
 {
-#define SynHighlighterXML__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterXML__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterXML__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterXML__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterXML__4 TFontStyles()
-#define SynHighlighterXML__5 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterXML__6 TFontStyles()
-#define SynHighlighterXML__7 TFontStyles()
-#define SynHighlighterXML__8 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterXML__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterXML__10 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterXML__11 TFontStyles()
-#define SynHighlighterXML__12 (TSysCharSet() << L'\x00' << L'\x09' << L'\x0a' << L'\x0d')
-#define SynHighlighterXML__13 (TSysCharSet() << L'\x22' << L'\x27')
+#define Synhighlighterxml__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterxml__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterxml__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterxml__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterxml__4 TFontStyles()
+#define Synhighlighterxml__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterxml__6 TFontStyles()
+#define Synhighlighterxml__7 TFontStyles()
+#define Synhighlighterxml__8 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterxml__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterxml__10 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlighterxml__11 TFontStyles()
+#define Synhighlighterxml__12 (TSysCharSet() << '\x00' << '\x09' << '\x0a' << '\x0d')
+#define Synhighlighterxml__13 (TSysCharSet() << '\x22' << '\x27')
 
 
 
@@ -68,30 +65,30 @@ __fastcall TSynXMLSyn::TSynXMLSyn(TComponent* AOwner)
 	fnsAttributeValueAttri = new TSynHighlighterAttributes(SYNS_AttrNamespaceAttrValue, SYNS_FriendlyAttrNamespaceAttrValue);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fElementAttri->Foreground = clMaroon;
-	fElementAttri->Style = SynHighlighterXML__0;
+	fElementAttri->Style = Synhighlighterxml__0;
 	fDocTypeAttri->Foreground = clBlue;
-	fDocTypeAttri->Style = SynHighlighterXML__1;
+	fDocTypeAttri->Style = Synhighlighterxml__1;
 	fCDATAAttri->Foreground = clOlive;
-	fCDATAAttri->Style = SynHighlighterXML__2;
+	fCDATAAttri->Style = Synhighlighterxml__2;
 	fEntityRefAttri->Foreground = clBlue;
-	fEntityRefAttri->Style = SynHighlighterXML__3;
+	fEntityRefAttri->Style = Synhighlighterxml__3;
 	fProcessingInstructionAttri->Foreground = clBlue;
-	fProcessingInstructionAttri->Style = SynHighlighterXML__4;
+	fProcessingInstructionAttri->Style = Synhighlighterxml__4;
 	fTextAttri->Foreground = clBlack;
-	fTextAttri->Style = SynHighlighterXML__5;
+	fTextAttri->Style = Synhighlighterxml__5;
 	fAttributeAttri->Foreground = clMaroon;
-	fAttributeAttri->Style = SynHighlighterXML__6;
+	fAttributeAttri->Style = Synhighlighterxml__6;
 	fnsAttributeAttri->Foreground = clRed;
-	fnsAttributeAttri->Style = SynHighlighterXML__7;
+	fnsAttributeAttri->Style = Synhighlighterxml__7;
 	fAttributeValueAttri->Foreground = clNavy;
-	fAttributeValueAttri->Style = SynHighlighterXML__8;
+	fAttributeValueAttri->Style = Synhighlighterxml__8;
 	fnsAttributeValueAttri->Foreground = clRed;
-	fnsAttributeValueAttri->Style = SynHighlighterXML__9;
+	fnsAttributeValueAttri->Style = Synhighlighterxml__9;
 	fCommentAttri->Background = clSilver;
 	fCommentAttri->Foreground = clGray;
-	fCommentAttri->Style = SynHighlighterXML__10;
+	fCommentAttri->Style = Synhighlighterxml__10;
 	fSymbolAttri->Foreground = clBlue;
-	fSymbolAttri->Style = SynHighlighterXML__11;
+	fSymbolAttri->Style = Synhighlighterxml__11;
 	addAttribute(fSymbolAttri);
 	addAttribute(fProcessingInstructionAttri);
 	addAttribute(fDocTypeAttri);
@@ -135,7 +132,7 @@ void __fastcall TSynXMLSyn::SpaceProc()
 	FTokenID = tkSpace;
 	while(fLine[Run] <= L'\x20')
 	{
-		if(CharInSet(fLine[Run], SynHighlighterXML__12))
+		if(CharInSet(fLine[Run], Synhighlighterxml__12))
 			break;
 		++Run;
 	}
@@ -359,7 +356,7 @@ void __fastcall TSynXMLSyn::AttributeProc()
 {
 
   //Check if we are starting on a closing quote
-	if(CharInSet(fLine[Run], SynHighlighterXML__13))
+	if(CharInSet(fLine[Run], Synhighlighterxml__13))
 	{
 		FTokenID = tkSymbol;
 		FRange = rsAttribute;
@@ -658,7 +655,7 @@ bool __fastcall TSynXMLSyn::NextTokenIs(String Token)
 	int Len = 0;
 	__int64 stop = 0;
 	result = true;
-	Len = (int) Token.Length();
+	Len = Token.Length();
 	for(stop = Len, i = 1; i <= stop; i++)
 	{
 		if(fLine[Run + i] != Token[i])
@@ -802,7 +799,7 @@ void* __fastcall TSynXMLSyn::GetRange()
 
 void __fastcall TSynXMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynXMLSyn::ResetRange()
@@ -887,16 +884,8 @@ void SynHighlighterXML_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynXMLSyn));
 }
-class SynHighlighterXML_unit
-{
-public:
-	SynHighlighterXML_unit()
-	{
-		SynHighlighterXML_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterXML_unit _SynHighlighterXML_unit;
 
 }  // namespace SynHighlighterXML
 

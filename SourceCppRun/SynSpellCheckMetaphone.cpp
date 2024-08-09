@@ -5,7 +5,6 @@
 #include "SynUnicode.h"
 #include <System.Classes.hpp>
 #include <System.SysUtils.hpp>
-#include "d2c_openarray.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -54,101 +53,101 @@ const int RuleCount = 67;
 
   // Note - always make the default rule the LAST
 const TRule Rules[67/*# range 1..RuleCount*/] = {{(L"AE"), (L"E"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"GN"), (L"N"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"KN"), (L"N"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"PN"), (L"N"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"WR"), (L"R"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"PS"), (L"S"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"WH"), (L"W"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"GN"), (L"N"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"KN"), (L"N"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"PN"), (L"N"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"WR"), (L"R"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"PS"), (L"S"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"WH"), (L"W"), mrBeginningOfWord, (L"")}
       // 8 rules
     // B
-																				, 																				{(L"B"), (L"B"), mrNotEndAfter, (L"M")}
-																				, 																				{(L"B"), (L"B"), mrNone, (L"")}
+                    ,                     {(L"B"), (L"B"), mrNotEndAfter, (L"M")}
+                    ,                     {(L"B"), (L"B"), mrNone, (L"")}
     // C
-																				, 																				{(L"C"), (L"X"), mrBetween, (L"CA")}
-																				, 																				{(L"C"), (L"X"), mrBefore, (L"H")}
-																				, 																				{(L"C"), (L"S"), mrBefore, (L"I")}
-																				, 																				{(L"C"), (L"S"), mrBefore, (L"E")}
-																				, 																				{(L"C"), (L"S"), mrBefore, (L"Y")}
-																				, 																				{(L"C"), (L""), mrBetween, (L"SE")}
-																				, 																				{(L"C"), (L""), mrBetween, (L"SI")} // 10
-																				, 																				{(L"C"), (L"K"), mrNone, (L"")}
+                    ,                     {(L"C"), (L"X"), mrBetween, (L"CA")}
+                    ,                     {(L"C"), (L"X"), mrBefore, (L"H")}
+                    ,                     {(L"C"), (L"S"), mrBefore, (L"I")}
+                    ,                     {(L"C"), (L"S"), mrBefore, (L"E")}
+                    ,                     {(L"C"), (L"S"), mrBefore, (L"Y")}
+                    ,                     {(L"C"), (L""), mrBetween, (L"SE")}
+                    ,                     {(L"C"), (L""), mrBetween, (L"SI")} // 10
+                    ,                     {(L"C"), (L"K"), mrNone, (L"")}
     // D
-																				, 																				{(L"D"), (L"J"), mrBefore, (L"GE")}
-																				, 																				{(L"D"), (L"J"), mrBefore, (L"GY")}
-																				, 																				{(L"D"), (L"J"), mrBefore, (L"GI")}
-																				, 																				{(L"D"), (L"T"), mrNone, (L"")}
+                    ,                     {(L"D"), (L"J"), mrBefore, (L"GE")}
+                    ,                     {(L"D"), (L"J"), mrBefore, (L"GY")}
+                    ,                     {(L"D"), (L"J"), mrBefore, (L"GI")}
+                    ,                     {(L"D"), (L"T"), mrNone, (L"")}
     //F
-																				, 																				{(L"F"), (L"F"), mrNone, (L"")}
+                    ,                     {(L"F"), (L"F"), mrNone, (L"")}
     // GG - changed to "1" in phase 1
-																				, 																				{(L"1"), (L"K"), mrNone, (L"")}
+                    ,                     {(L"1"), (L"K"), mrNone, (L"")}
     // G
-																				, 																				{(L"G"), (L"G"), mrBefore, (L"G")}
-																				, 																				{(L"G"), (L""), mrAfter, (L"G")}
-																				, 																				{(L"G"), (L""), mrBeforeNoVowel, (L"H")}
-																				, 																				{(L"G"), (L""), mrAtEndBefore, (L"N")}
-																				, 																				{(L"G"), (L""), mrAtEndBefore, (L"NED")}
-																				, 																				{(L"G"), (L""), mrBetween, (L"DE")}
+                    ,                     {(L"G"), (L"G"), mrBefore, (L"G")}
+                    ,                     {(L"G"), (L""), mrAfter, (L"G")}
+                    ,                     {(L"G"), (L""), mrBeforeNoVowel, (L"H")}
+                    ,                     {(L"G"), (L""), mrAtEndBefore, (L"N")}
+                    ,                     {(L"G"), (L""), mrAtEndBefore, (L"NED")}
+                    ,                     {(L"G"), (L""), mrBetween, (L"DE")}
       // Paired with D rule
-																				, 																				{(L"G"), (L"J"), mrBefore, (L"I")}
-																				, 																				{(L"G"), (L"J"), mrBefore, (L"E")}
-																				, 																				{(L"G"), (L"J"), mrBefore, (L"Y")}
-																				, 																				{(L"G"), (L"K"), mrNone, (L"")} // 16
+                    ,                     {(L"G"), (L"J"), mrBefore, (L"I")}
+                    ,                     {(L"G"), (L"J"), mrBefore, (L"E")}
+                    ,                     {(L"G"), (L"J"), mrBefore, (L"Y")}
+                    ,                     {(L"G"), (L"K"), mrNone, (L"")} // 16
     // H
-																				, 																				{(L"H"), (L""), mrAfterVowelNotBeforeVowel, (L"")}
-																				, 																				{(L"H"), (L""), mrAfter, (L"C")}
-																				, 																				{(L"H"), (L""), mrAfter, (L"S")}
-																				, 																				{(L"H"), (L""), mrAfter, (L"P")}
-																				, 																				{(L"H"), (L""), mrAfter, (L"T")}
-																				, 																				{(L"H"), (L""), mrAfter, (L"G")}
-																				, 																				{(L"H"), (L""), mrNone, (L"")}
+                    ,                     {(L"H"), (L""), mrAfterVowelNotBeforeVowel, (L"")}
+                    ,                     {(L"H"), (L""), mrAfter, (L"C")}
+                    ,                     {(L"H"), (L""), mrAfter, (L"S")}
+                    ,                     {(L"H"), (L""), mrAfter, (L"P")}
+                    ,                     {(L"H"), (L""), mrAfter, (L"T")}
+                    ,                     {(L"H"), (L""), mrAfter, (L"G")}
+                    ,                     {(L"H"), (L""), mrNone, (L"")}
     // J
-																				, 																				{(L"J"), (L"J"), mrNone, (L"")}
+                    ,                     {(L"J"), (L"J"), mrNone, (L"")}
     // K
-																				, 																				{(L"K"), (L""), mrAfter, (L"C")}
-																				, 																				{(L"K"), (L"K"), mrNone, (L"")} // 10
+                    ,                     {(L"K"), (L""), mrAfter, (L"C")}
+                    ,                     {(L"K"), (L"K"), mrNone, (L"")} // 10
     // L
-																				, 																				{(L"L"), (L"L"), mrNone, (L"")}
+                    ,                     {(L"L"), (L"L"), mrNone, (L"")}
     // M
-																				, 																				{(L"M"), (L"M"), mrNone, (L"")}
+                    ,                     {(L"M"), (L"M"), mrNone, (L"")}
     // N
-																				, 																				{(L"N"), (L"N"), mrNone, (L"")}
+                    ,                     {(L"N"), (L"N"), mrNone, (L"")}
     // P
-																				, 																				{(L"P"), (L"F"), mrBefore, (L"H")}
-																				, 																				{(L"P"), (L"P"), mrNone, (L"")}
+                    ,                     {(L"P"), (L"F"), mrBefore, (L"H")}
+                    ,                     {(L"P"), (L"P"), mrNone, (L"")}
     // Q
-																				, 																				{(L"Q"), (L"K"), mrNone, (L"")}
+                    ,                     {(L"Q"), (L"K"), mrNone, (L"")}
     // R
-																				, 																				{(L"R"), (L"R"), mrNone, (L"")}
+                    ,                     {(L"R"), (L"R"), mrNone, (L"")}
     // S
-																				, 																				{(L"S"), (L"X"), mrBefore, (L"H")}
-																				, 																				{(L"S"), (L"X"), mrBetween, (L"SO")}
-																				, 																				{(L"S"), (L"X"), mrBetween, (L"SA")}
-																				, 																				{(L"S"), (L"S"), mrNone, (L"")} //11
+                    ,                     {(L"S"), (L"X"), mrBefore, (L"H")}
+                    ,                     {(L"S"), (L"X"), mrBetween, (L"SO")}
+                    ,                     {(L"S"), (L"X"), mrBetween, (L"SA")}
+                    ,                     {(L"S"), (L"S"), mrNone, (L"")} //11
     // T
-																				, 																				{(L"T"), (L"X"), mrBefore, (L"IA")}
-																				, 																				{(L"T"), (L"X"), mrBefore, (L"IO")}
-																				, 																				{(L"T"), (L""), mrBefore, (L"CH")}
-																				, 																				{(L"T"), (L"0"), mrBefore, (L"H")}
-																				, 																				{(L"T"), (L"T"), mrNone, (L"")}
+                    ,                     {(L"T"), (L"X"), mrBefore, (L"IA")}
+                    ,                     {(L"T"), (L"X"), mrBefore, (L"IO")}
+                    ,                     {(L"T"), (L""), mrBefore, (L"CH")}
+                    ,                     {(L"T"), (L"0"), mrBefore, (L"H")}
+                    ,                     {(L"T"), (L"T"), mrNone, (L"")}
     // V
-																				, 																				{(L"V"), (L"F"), mrNone, (L"")}
+                    ,                     {(L"V"), (L"F"), mrNone, (L"")}
     // W
-																				, 																				{(L"W"), (L"W"), mrNotBeforeVowel, (L"")}
-																				, 																				{(L"W"), (L""), mrNone, (L"")}
+                    ,                     {(L"W"), (L"W"), mrNotBeforeVowel, (L"")}
+                    ,                     {(L"W"), (L""), mrNone, (L"")}
     // X
-																				, 																				{(L"X"), (L"S"), mrBeginningOfWord, (L"")}
-																				, 																				{(L"X"), (L"KS"), mrNone, (L"")}
+                    ,                     {(L"X"), (L"S"), mrBeginningOfWord, (L"")}
+                    ,                     {(L"X"), (L"KS"), mrNone, (L"")}
     // Y
-																				, 																				{(L"Y"), (L"Y"), mrNotBeforeVowel, (L"")}
-																				, 																				{(L"Y"), (L""), mrNone, (L"")}
+                    ,                     {(L"Y"), (L"Y"), mrNotBeforeVowel, (L"")}
+                    ,                     {(L"Y"), (L""), mrNone, (L"")}
     // Z
-																				, 																				{(L"Z"), (L"S"), mrNone, (L"")}}; // 12
+                    ,                     {(L"Z"), (L"S"), mrNone, (L"")}}; // 12
 const WideChar AllowChar[] = L"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const WideChar Vowels[] = L"AEIOU";
-TUnicodeStringList OutStr;
+TStringList* OutStr;
 
-void __fastcall ApplyRules(UnicodeString ScanStr, TRule* RuleBase, int RuleBase_maxidx)
+void __fastcall ApplyRules(UnicodeString ScanStr, const TRule* RuleBase, int RuleBase_maxidx)
 {
 
 	auto RuleApplicable = [&](const TRule& cRule, int CharIndex) -> bool 
@@ -159,10 +158,10 @@ void __fastcall ApplyRules(UnicodeString ScanStr, TRule* RuleBase, int RuleBase_
 		int PrevChar = 0;
 		int ArgLength = 0;
 		int InpLength = 0;
-		InpLength = (int) ScanStr.Length();
+		InpLength = ScanStr.Length();
 		RemChar = InpLength - CharIndex;
 		PrevChar = CharIndex - 1;
-		ArgLength = (int) Rule.Args.Length();
+		ArgLength = Rule.Args.Length();
 		result = false;
 		if(((RemChar + 1) >= Rule.sFrom.Length()) && (ScanStr.SubString(CharIndex, Rule.sFrom.Length()) == Rule.sFrom))
 			switch(Rule.RuleType)
@@ -229,11 +228,11 @@ void __fastcall ApplyRules(UnicodeString ScanStr, TRule* RuleBase, int RuleBase_
 	{
 		int stop = 0;
 		SkipFlag = false;
-		for(stop = (int) ScanStr.Length(), II = 1; II <= stop; II++)
+		for(stop = ScanStr.Length(), II = 1; II <= stop; II++)
 		{
 			if(RuleApplicable(RuleBase[T], II))
 			{
-				OutStr.AddObject(RuleBase[T].sTo, ((void*) II));
+				OutStr->AddObject(RuleBase[T].sTo, ((TObject*) II));
 				SkipFlag = true;
 				SkipRule = RuleBase[T].sFrom;
 			}
@@ -253,9 +252,9 @@ UnicodeString __fastcall FindRel(int xx)
 	UnicodeString result;
 	int II = 0;
 	int stop = 0;
-	for(stop = OutStr.Count - 1, II = 0; II <= stop; II++)
+	for(stop = OutStr->Count - 1, II = 0; II <= stop; II++)
 	{
-		if(((int) OutStr.Objects[II]) == xx)
+		if(((int) OutStr->Objects[II]) == xx)
 			result = result + Format(L"%3.3s %d ", ARRAYOFCONST((OutStr[II], II)));
 	}
 	return result;
@@ -272,13 +271,13 @@ PWideChar __stdcall metaphone(PWideChar A, int lg)
 	int SmallestIndex = 0;
 	int SmallestValue = 0; //for selection sort
 	bool FirstFlag = false;
-	OutStr = TUnicodeStringList.Create;
+	OutStr = new TStringList();
 	try
 	{
 		int stop = 0;
 		TempStr = WideUpperCase(A);
 		InStr = L"";
-		for(stop = (int) TempStr.Length(), X = 1; X <= stop; X++)
+		for(stop = TempStr.Length(), X = 1; X <= stop; X++)
 		{
 			if(Pos(TempStr.SubString(X, 1), String(AllowChar)) > 0)
 				InStr = InStr + TempStr.SubString(X, 1);
@@ -289,7 +288,7 @@ PWideChar __stdcall metaphone(PWideChar A, int lg)
 		{
 			int stop = 0;
 			TempStr = InStr.SubString(1, 1);
-			for(stop = (int) InStr.Length(), X = 2; X <= stop; X++)
+			for(stop = InStr.Length(), X = 2; X <= stop; X++)
 			{
 				if(InStr.SubString(X, 1) == L"G")
 					TempStr = TempStr + InStr.SubString(X, 1);
@@ -302,32 +301,32 @@ PWideChar __stdcall metaphone(PWideChar A, int lg)
 			InStr = TempStr;
 		}
 
-    //scan input and create result for each rule in output array
-		ApplyRules(InStr, OpenArrayEx<TRule>(Rules, 67), 66);
+	//scan input and create result for each rule in output array
+		ApplyRules(InStr, Rules, 66);
 
     //get result - order output stringlist, then translate to string
     //do selection sort - or something like that, anyway :-)
-		for(stop = OutStr.Count - 1, X = 0; X <= stop; X++)
+		for(stop = OutStr->Count - 1, X = 0; X <= stop; X++)
 		{
 			int stop1 = 0;
 			SmallestIndex = X;
-			SmallestValue = ((int) OutStr.Objects[X]);
-			for(stop1 = OutStr.Count - 1, Y = X; Y <= stop1; Y++)
+			SmallestValue = ((int) OutStr->Objects[X]);
+			for(stop1 = OutStr->Count - 1, Y = X; Y <= stop1; Y++)
 			{
-				if(((int) OutStr.Objects[Y]) < SmallestValue)
+				if(((int) OutStr->Objects[Y]) < SmallestValue)
 				{
 					SmallestIndex = Y;
-					SmallestValue = ((int) OutStr.Objects[Y]);
+					SmallestValue = ((int) OutStr->Objects[Y]);
 				}
 			}
 			if(SmallestIndex > X) //do swap with smallest
-				OutStr.Exchange(X, SmallestIndex);
+				OutStr->Exchange(X, SmallestIndex);
 		}
 		FirstFlag = false;
-		for(stop = OutStr.Count - 1, X = 0; X <= stop; X++)
+		for(stop = OutStr->Count - 1, X = 0; X <= stop; X++)
 		{
-			sResult = sResult + OutStr[X];
-			if(((int) OutStr.Objects[X]) == 1)
+			sResult = sResult + OutStr->Strings[X];
+			if(((int) OutStr->Objects[X]) == 1)
 				FirstFlag = true;
 		}
 

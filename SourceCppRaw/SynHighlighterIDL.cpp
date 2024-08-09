@@ -10,26 +10,23 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighteridl
 {
-#define SynHighlighterIDL__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterIDL__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterIDL__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighteridl__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighteridl__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighteridl__2 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[48/*# range 0..47*/] = {L"abstract", L"any", L"attribute", L"boolean", L"case", L"char", L"const", L"context", L"custom", L"default", L"double"
-																				, L"enum", L"exception", L"factory", L"FALSE", L"fixed", L"float", L"in", L"inout", L"interface", L"local", L"long", L"module"
-																				, L"native", L"Object", L"octet", L"oneway", L"out", L"private", L"public", L"raises", L"readonly", L"sequence", L"short", L"string"
-																				, L"struct", L"supports", L"switch", L"TRUE", L"truncatable", L"typedef", L"union", L"unsigned", L"ValueBase", L"valuetype", L"void"
-																				, L"wchar", L"wstring"};
+                    , L"enum", L"exception", L"factory", L"FALSE", L"fixed", L"float", L"in", L"inout", L"interface", L"local", L"long", L"module"
+                    , L"native", L"Object", L"octet", L"oneway", L"out", L"private", L"public", L"raises", L"readonly", L"sequence", L"short", L"string"
+                    , L"struct", L"supports", L"switch", L"TRUE", L"truncatable", L"typedef", L"union", L"unsigned", L"ValueBase", L"valuetype", L"void"
+                    , L"wchar", L"wstring"};
 const int KeyIndices[101/*# range 0..100*/] = {5, 19, 17, 7, -1, -1, -1, -1, -1, 15, 18, -1, 37, -1, 24, -1, -1, -1, 44, -1, 11, 31, -1, 25, 33, -1, -1, 42, 39, -1, -1, 36, 46, -1, 27, -1, 43, 28, 26, 20, -1, 1, 32
-																				, 6, -1, 14, 8, -1, -1, -1, -1, 0, 35, -1, -1, -1, -1, -1, -1, -1, -1, 45, 22, 47, -1, -1, 12, 4, -1, -1, -1, 10, -1, -1, 3, -1, 9, -1, 34, 30, 13, -1, 2, 21, 16, -1, 29, 40, -1, -1, -1, -1, -1, -1, -1, 23, -1
-																				, 38, -1, -1, 41};
+                    , 6, -1, 14, 8, -1, -1, -1, -1, 0, 35, -1, -1, -1, -1, -1, -1, -1, -1, 45, 22, 47, -1, -1, 12, 4, -1, -1, -1, 10, -1, -1, 3, -1, 9, -1, 34, 30, 13, -1, 2, 21, 16, -1, 29, 40, -1, -1, -1, -1, -1, -1, -1, 23, -1
+                    , 38, -1, -1, 41};
 
 /*$Q-*/
 
@@ -67,7 +64,7 @@ void __fastcall TSynIdlSyn::InitIdent()
 	int stop = 0;
 	for(stop = 100 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[51] = FuncAbstract;
@@ -839,17 +836,17 @@ __fastcall TSynIdlSyn::TSynIdlSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterIDL__0;
+	fCommentAttri->Style = Synhighlighteridl__0;
 	fCommentAttri->Foreground = clNavy;
 	addAttribute(fCommentAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	fDataTypeAttri->Style = SynHighlighterIDL__1;
+	fDataTypeAttri->Style = Synhighlighteridl__1;
 	fDataTypeAttri->Foreground = clTeal;
 	addAttribute(fDataTypeAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterIDL__2;
+	fKeyAttri->Style = Synhighlighteridl__2;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clBlue;
@@ -1125,7 +1122,7 @@ void __fastcall TSynIdlSyn::ResetRange()
 
 void __fastcall TSynIdlSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynIdlSyn::GetRange()
@@ -1153,16 +1150,8 @@ void SynHighlighterIDL_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynIdlSyn));
 }
-class SynHighlighterIDL_unit
-{
-public:
-	SynHighlighterIDL_unit()
-	{
-		SynHighlighterIDL_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterIDL_unit _SynHighlighterIDL_unit;
 
 }  // namespace SynHighlighterIDL
 

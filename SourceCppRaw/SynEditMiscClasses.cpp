@@ -22,45 +22,41 @@ using namespace Synedittypes;
 using namespace Syntextdrawer;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Math;
 using namespace System::Rtti;
 using namespace System::Sysutils;
-using namespace System::Types;
 using namespace System::Uitypes;
 using namespace System::Win::Registry;
 using namespace Vcl::Controls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphutil;
 using namespace Vcl::Graphics;
-using namespace Vcl::Imglist;
-using namespace Vcl::Menus;
 using namespace Winapi::Wincodec;
 
 namespace Syneditmiscclasses
 {
-#define SynEditMiscClasses__0 TFontStyles()
-#define SynEditMiscClasses__1 TShiftState()
-#define SynEditMiscClasses__2 (TShiftState() << ssShift << ssAlt << ssCtrl)
-#define SynEditMiscClasses__3 (TShiftState() << ssShift)
-#define SynEditMiscClasses__4 (TShiftState() << ssCtrl)
-#define SynEditMiscClasses__5 (TShiftState() << ssAlt)
-#define SynEditMiscClasses__6 (TShiftState() << ssShift << ssCtrl)
-#define SynEditMiscClasses__7 (TShiftState() << ssShift << ssAlt)
-#define SynEditMiscClasses__8 (TShiftState() << ssCtrl << ssAlt)
-#define SynEditMiscClasses__9 (TShiftState() << ssShift << ssCtrl << ssAlt)
-#define SynEditMiscClasses__10 (TControlStyle() << csNeedsBorderPaint)
-#define SynEditMiscClasses__11 (THKInvalidKeys() << THKInvalidKey::hcNone << THKInvalidKey::hcShift)
-#define SynEditMiscClasses__12 (THKModifiers() << THKModifier::hkAlt)
-#define SynEditMiscClasses__13 (System::Set<TSynGutterBandKind, gbkCustom, gbkTrackChanges>() << TSynGutterBandKind::gbkLineNumbers << TSynGutterBandKind::gbkFold)
-#define SynEditMiscClasses__14 (System::Set<TSynGutterBandKind, gbkCustom, gbkTrackChanges>() << TSynGutterBandKind::gbkLineNumbers << TSynGutterBandKind::gbkFold)
-#define SynEditMiscClasses__15 (TTextFormat() << tfSingleLine << tfVerticalCenter << tfRight)
-#define SynEditMiscClasses__16 (System::Set<int, 0, 255>() <<  \
+#define Syneditmiscclasses__0 TFontStyles()
+#define Syneditmiscclasses__1 TShiftState()
+#define Syneditmiscclasses__2 (TShiftState() << ssShift << ssAlt << ssCtrl)
+#define Syneditmiscclasses__3 (TShiftState() << ssShift)
+#define Syneditmiscclasses__4 (TShiftState() << ssCtrl)
+#define Syneditmiscclasses__5 (TShiftState() << ssAlt)
+#define Syneditmiscclasses__6 (TShiftState() << ssShift << ssCtrl)
+#define Syneditmiscclasses__7 (TShiftState() << ssShift << ssAlt)
+#define Syneditmiscclasses__8 (TShiftState() << ssCtrl << ssAlt)
+#define Syneditmiscclasses__9 (TShiftState() << ssShift << ssCtrl << ssAlt)
+#define Syneditmiscclasses__10 (TControlStyle() << csNeedsBorderPaint)
+#define Syneditmiscclasses__11 (THKInvalidKeys() << hcNone << hcShift)
+#define Syneditmiscclasses__12 (THKModifiers() << hkAlt)
+#define Syneditmiscclasses__13 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
+#define Syneditmiscclasses__14 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
+#define Syneditmiscclasses__15 (TTextFormat() << tfSingleLine << tfVerticalCenter << tfRight)
+#define Syneditmiscclasses__16 (System::Set<int, 0, 255>() <<  \
 										0 << 1 << 2 << 3 << 4 << 5 <<  \
 										6 << 7 << 8 << 9)
-#define SynEditMiscClasses__17 (System::Set<TSynGutterBandKind, gbkCustom, gbkTrackChanges>() << TSynGutterBandKind::gbkLineNumbers << TSynGutterBandKind::gbkFold)
+#define Syneditmiscclasses__17 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
 
-__fastcall TSynBandsCollection::TSynBandsCollection(System::Classes::TPersistent* AOwner, System::Classes::TCollectionItemClass ItemClass) : inherited(AOwner, ItemClass) {}
-//# problematic: __fastcall TSynBandsCollection::TSynBandsCollection(System::Classes::TCollectionItemClass ItemClass) : inherited(ItemClass) {}
+__fastcall TSynBandsCollection::TSynBandsCollection(TPersistent* AOwner, TCollectionItemClass ItemClass) : inherited(AOwner, ItemClass) {}
+//# problematic: __fastcall TSynBandsCollection::TSynBandsCollection(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
 __fastcall TSynBookMarkOpt::TSynBookMarkOpt() {}
 __fastcall TSynGlyph::TSynGlyph() {}
 __fastcall ESynMethodChain::ESynMethodChain(const String Msg) : inherited(Msg) {}
@@ -78,30 +74,45 @@ __fastcall ESynMethodChain::ESynMethodChain(System::PResStringRec ResStringRec, 
 __fastcall TSynNotifyEventChain::TSynNotifyEventChain() {}
 __fastcall TSynInternalImage::TSynInternalImage() {}
 __fastcall TSynHotKey::TSynHotKey(HWND ParentWindow) : inherited(ParentWindow) {}
-__fastcall TSynEditSearchCustom::TSynEditSearchCustom(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynEditSearchCustom::TSynEditSearchCustom(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TBetterRegistry::TBetterRegistry() {}
 __fastcall TBetterRegistry::TBetterRegistry(unsigned int AAccess) : inherited(AAccess) {}
 
 
-/*static */const int TSynGutterBand::MarginX = 2;
+/*static */const int TSynGutterBand::MarginX = 2; 
+// ++ DPI-Aware
 
 void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight)
 {
-	TBitmap* Buffer = nullptr;
-	Buffer = new TBitmap();
+	IWICImagingFactory* Factory = nullptr;
+	IWICBitmapScaler* Scaler = nullptr;
+	TWICImage* Source = nullptr;
+	BITMAP->AlphaFormat = afDefined;
+	Source = new TWICImage();
 	try
 	{
-		Buffer->SetSize(NewWidth, NewHeight);
-		Buffer->AlphaFormat = afDefined;
-		Buffer->Canvas->StretchDraw(Rect(0, 0, NewWidth, NewHeight), BITMAP);
-		BITMAP->SetSize(NewWidth, NewHeight);
-		BITMAP->Canvas->Draw(0, 0, Buffer);
+		Source->Assign(BITMAP);
+		Factory = TWICImage::ImagingFactory;
+		Factory->CreateBitmapScaler(Scaler);
+		try
+		{
+			Scaler->Initialize(Source->Handle, (UINT) NewWidth, (UINT) NewHeight, WICBitmapInterpolationModeHighQualityCubic);
+			Source->Handle = ((IWICBitmap*) Scaler);
+		}
+		__finally
+		{
+			Scaler = nullptr;
+			Factory = nullptr;
+		}
+		BITMAP->Assign(Source);
 	}
 	__finally
 	{
-		delete Buffer;
+		delete Source;
 	}
-} 
+}
+// -- DPI-Aware
+ 
 
 /* TSynSelectedColor */
 
@@ -212,7 +223,7 @@ __fastcall TSynGutter::TSynGutter()
 			fUseFontStyle(false),
 			FAutoSize(false),
 			fAutoSizeDigitCount(0),
-			FBorderStyle(TSynGutterBorderStyle::gbsNone),
+			FBorderStyle(gbsNone),
 			fLineNumberStart(0),
 			fGradient(false),
 			FGradientStartColor((TColor) 0),
@@ -238,7 +249,7 @@ __fastcall TSynGutter::TSynGutter()
 	FFont = new TFont();
 	FFont->Name = DefaultFontName();
 	FFont->Size = 8;
-	FFont->Style = SynEditMiscClasses__0;
+	FFont->Style = Syneditmiscclasses__0;
 	fUseFontStyle = true;
 	CalcCharWidth();
 	FFont->OnChange = OnFontChange;
@@ -248,7 +259,7 @@ __fastcall TSynGutter::TSynGutter()
 	fAutoSizeDigitCount = fDigitCount;
 	FAutoSize = true;
 	FBorderColor = clWindow;
-	FBorderStyle = TSynGutterBorderStyle::gbsMiddle;
+	FBorderStyle = gbsMiddle;
 	fLineNumberStart = 1;
 	fZeroStart = false;
 	fGradient = false;
@@ -260,10 +271,10 @@ __fastcall TSynGutter::TSynGutter()
 	Bands->BeginUpdate();
 	try
 	{
-		AddBand(TSynGutterBandKind::gbkMarks, 13, true);
-		AddBand(TSynGutterBandKind::gbkLineNumbers, 0, false);
-		AddBand(TSynGutterBandKind::gbkFold, 0, false);
-		AddBand(TSynGutterBandKind::gbkMargin, 3, true);
+		AddBand(gbkMarks, 13, true);
+		AddBand(gbkLineNumbers, 0, false);
+		AddBand(gbkFold, 0, false);
+		AddBand(gbkMargin, 3, true);
 	}
 	__finally
 	{
@@ -289,7 +300,7 @@ __fastcall TSynGutter::TSynGutter(TPersistent* Owner)
 			fUseFontStyle(false),
 			FAutoSize(false),
 			fAutoSizeDigitCount(0),
-			FBorderStyle(TSynGutterBorderStyle::gbsNone),
+			FBorderStyle(gbsNone),
 			fLineNumberStart(0),
 			fGradient(false),
 			FGradientStartColor((TColor) 0),
@@ -310,7 +321,6 @@ __fastcall TSynGutter::~TSynGutter()
 	delete fInternalImage;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynGutter::EndUpdate()
 {
@@ -365,7 +375,7 @@ void __fastcall TSynGutter::AutoSizeDigitCount()
 			if(fLineNumberStart > 1)
 				LinesCount += fLineNumberStart - 1;
 		}
-		nDigits = Max((int) IntToStr(LinesCount).Length(), fDigitCount);
+		nDigits = Max(IntToStr(LinesCount).Length(), fDigitCount);
 		if(fAutoSizeDigitCount != nDigits)
 		{
 			fAutoSizeDigitCount = nDigits;
@@ -554,7 +564,7 @@ void __fastcall TSynGutter::SetLineNumberStart(int Value)
 
 void __fastcall TSynGutter::SetBands(TSynBandsCollection* const Value)
 {
-	FBands->Assign(Value);
+	FBands->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynGutter::SetBorderColor(const TColor Value)
@@ -623,7 +633,7 @@ TSynInternalImage* __fastcall TSynGutter::GetInternalImage()
 	TSynInternalImage* result = nullptr;
 	if(!ASSIGNED(fInternalImage))
 	{
-		fInternalImage = new TSynInternalImage(HInstance, L"SynEditInternalImages", 10);
+		fInternalImage = new TSynInternalImage((THandle) HInstance, L"SynEditInternalImages", 10);
     // ++ DPI-Aware
 		if(ASSIGNED(FOwner))
 			fInternalImage->ChangeScale(FCurrentPPI, 96);
@@ -775,7 +785,6 @@ __fastcall TSynGlyph::~TSynGlyph()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynGlyph::Assign(TPersistent* ASource)
 {
 	TSynGlyph* vSrc = nullptr;
@@ -809,7 +818,7 @@ void __fastcall TSynGlyph::Draw(TCanvas* ACanvas, int AX, int AY, int aLineHeigh
 	if(aLineHeight >= vGlyph->Height)
 	{
 		rcSrc = Rect(0, 0, vGlyph->Width, vGlyph->Height);
-		AY += (int)((aLineHeight - vGlyph->Height) / 2);
+		AY += (int)((aLineHeight - vGlyph->Height) / /*div*/ 2);
 		rcDest = Rect(AX, AY, AX + vGlyph->Width, AY + vGlyph->Height);
 	}
 	else
@@ -817,7 +826,7 @@ void __fastcall TSynGlyph::Draw(TCanvas* ACanvas, int AX, int AY, int aLineHeigh
     // TODO: Skip drawing?
 	{
 		rcDest = Rect(AX, AY, AX + vGlyph->Width, AY + aLineHeight);
-		AY = (int)((vGlyph->Height - aLineHeight) / 2);
+		AY = (int)((vGlyph->Height - aLineHeight) / /*div*/ 2);
 		rcSrc = Rect(0, AY, vGlyph->Width, AY + aLineHeight);
 	}
 	DrawTransparentBitmap(vGlyph, rcSrc, ACanvas, rcDest, 255);
@@ -901,7 +910,6 @@ __fastcall TSynMethodChain::~TSynMethodChain()
 	delete FNotifyProcs;
 	// inherited;
 }
-
 
 bool __fastcall TSynMethodChain::DoHandleException(Exception* e)
 {
@@ -1007,7 +1015,7 @@ class TInternalResource : public TObject
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 	int UsageCount;
 	String Name;
 	TBitmap* BITMAP;
@@ -1025,7 +1033,7 @@ void __fastcall TSynInternalImage::ChangeScale(int m, int D)
 
 __fastcall TSynInternalImage::TSynInternalImage(THandle aModule, const String Name, int Count)
  : FImages(new TBitmap()),
-			FWidth((int)((FImages->Width + (Count >> 1)) / Count)),
+			FWidth((int)((FImages->Width + (Count >> 1)) / /*div*/ Count)),
 			FHeight(FImages->Height),
 			FCount(Count)
 {
@@ -1039,7 +1047,6 @@ __fastcall TSynInternalImage::~TSynInternalImage()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynInternalImage::Draw(TCanvas* ACanvas, int Number, int X, int Y, int LineHeight)
 {
 	TRect rcSrc = {};
@@ -1049,13 +1056,13 @@ void __fastcall TSynInternalImage::Draw(TCanvas* ACanvas, int Number, int X, int
 		if(LineHeight >= FHeight)
 		{
 			rcSrc = Rect(Number * FWidth, 0, (Number + 1) * FWidth, FHeight);
-			Y += (int)((LineHeight - FHeight) / 2);
+			Y += (int)((LineHeight - FHeight) / /*div*/ 2);
 			rcDest = Rect(X, Y, X + FWidth, Y + FHeight);
 		}
 		else
 		{
 			rcDest = Rect(X, Y, X + FWidth, Y + LineHeight);
-			Y = (int)((FHeight - LineHeight) / 2);
+			Y = (int)((FHeight - LineHeight) / /*div*/ 2);
 			rcSrc = Rect(Number * FWidth, Y, (Number + 1) * FWidth, Y + LineHeight);
 		}
 		DrawTransparentBitmap(FImages, rcSrc, ACanvas, rcDest, 255);
@@ -1074,48 +1081,48 @@ bool __fastcall KeySameAsShiftState(WORD key, TShiftState Shift)
 TShiftState __fastcall ModifiersToShiftState(THKModifiers Modifiers)
 {
 	TShiftState result;
-	result = SynEditMiscClasses__1;
-	if(Modifiers.Contains(THKModifier::hkShift))
+	result = Syneditmiscclasses__1;
+	if(Modifiers.Contains(hkShift))
 		result << ssShift;
-	if(Modifiers.Contains(THKModifier::hkCtrl))
+	if(Modifiers.Contains(hkCtrl))
 		result << ssCtrl;
-	if(Modifiers.Contains(THKModifier::hkAlt))
+	if(Modifiers.Contains(hkAlt))
 		result << ssAlt;
 	return result;
 }
 
 THKInvalidKey __fastcall ShiftStateToTHKInvalidKey(TShiftState Shift)
 {
-	THKInvalidKey result = THKInvalidKey::hcNone;
-	Shift = Shift * SynEditMiscClasses__2;
-	if(Shift == SynEditMiscClasses__3)
-		result = THKInvalidKey::hcShift;
+	THKInvalidKey result = hcNone;
+	Shift = Shift * Syneditmiscclasses__2;
+	if(Shift == Syneditmiscclasses__3)
+		result = hcShift;
 	else
 	{
-		if(Shift == SynEditMiscClasses__4)
-			result = THKInvalidKey::hcCtrl;
+		if(Shift == Syneditmiscclasses__4)
+			result = hcCtrl;
 		else
 		{
-			if(Shift == SynEditMiscClasses__5)
-				result = THKInvalidKey::hcAlt;
+			if(Shift == Syneditmiscclasses__5)
+				result = hcAlt;
 			else
 			{
-				if(Shift == SynEditMiscClasses__6)
-					result = THKInvalidKey::hcShiftCtrl;
+				if(Shift == Syneditmiscclasses__6)
+					result = hcShiftCtrl;
 				else
 				{
-					if(Shift == SynEditMiscClasses__7)
-						result = THKInvalidKey::hcShiftAlt;
+					if(Shift == Syneditmiscclasses__7)
+						result = hcShiftAlt;
 					else
 					{
-						if(Shift == SynEditMiscClasses__8)
-							result = THKInvalidKey::hcCtrlAlt;
+						if(Shift == Syneditmiscclasses__8)
+							result = hcCtrlAlt;
 						else
 						{
-							if(Shift == SynEditMiscClasses__9)
-								result = THKInvalidKey::hcShiftCtrlAlt;
+							if(Shift == Syneditmiscclasses__9)
+								result = hcShiftCtrlAlt;
 							else
-								result = THKInvalidKey::hcNone;
+								result = hcNone;
 						}
 					}
 				}
@@ -1146,10 +1153,10 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 			FHotKey((TShortCut) 0),
 			FPressedOnlyModifiers(false)
 {
-	BorderStyle = (TBorderStyle) TFormBorderStyle::bsSingle;
-	ControlStyle = ControlStyle + SynEditMiscClasses__10;
-	FInvalidKeys = SynEditMiscClasses__11;
-	FModifiers = SynEditMiscClasses__12;
+	BorderStyle = (TBorderStyle) bsSingle;
+	ControlStyle = ControlStyle + Syneditmiscclasses__10;
+	FInvalidKeys = Syneditmiscclasses__11;
+	FModifiers = Syneditmiscclasses__12;
 	SetHotKey((TShortCut) 0x0041); /* Alt+A */
 	ParentColor = false;
 	Color = clWindow;
@@ -1166,7 +1173,7 @@ void __fastcall TSynHotKey::CreateParams(TCreateParams& Params)
 		auto& with0 = Params;
 		with0.WindowClass.style = with0.WindowClass.style & ~ClassStylesOff;
 		with0.Style = with0.Style | BorderStyles[FBorderStyle] | WS_CLIPCHILDREN;
-		if(NewStyleControls && Ctl3D && (FBorderStyle == TFormBorderStyle::bsSingle))
+		if(NewStyleControls && Ctl3D && (FBorderStyle == bsSingle))
 		{
 			with0.Style = with0.Style & ~WS_BORDER;
 			with0.ExStyle = with0.ExStyle | WS_EX_CLIENTEDGE;
@@ -1186,7 +1193,7 @@ void __fastcall TSynHotKey::DoExit()
 
 void __fastcall TSynHotKey::KeyDown(WORD& key, TShiftState Shift)
 {
-	THKInvalidKey MaybeInvalidKey = THKInvalidKey::hcNone;
+	THKInvalidKey MaybeInvalidKey = hcNone;
 	WORD SavedKey = 0;
 	SavedKey = key;
 	FPressedOnlyModifiers = KeySameAsShiftState(key, Shift);
@@ -1252,7 +1259,7 @@ void __fastcall TSynHotKey::SetHotKey(const TShortCut Value)
 {
 	WORD key = 0;
 	TShiftState Shift;
-	THKInvalidKey MaybeInvalidKey = THKInvalidKey::hcNone;
+	THKInvalidKey MaybeInvalidKey = hcNone;
 	ShortCutToKey(Value, key, Shift);
 	MaybeInvalidKey = ShiftStateToTHKInvalidKey(Shift);
 	if(FInvalidKeys.Contains(MaybeInvalidKey))
@@ -1276,7 +1283,7 @@ void __fastcall TSynHotKey::SetModifiers(const THKModifiers Value)
 	SetHotKey(FHotKey);
 }
 
-void __fastcall TSynHotKey::WMGetDlgCode(TMessage& Message)
+void __fastcall TSynHotKey::WMGetDlgCode(::TMessage& Message)
 {
 	Message.Result = DLGC_WANTTAB | DLGC_WANTARROWS;
 }
@@ -1355,13 +1362,13 @@ void __fastcall TSynGutterBand::Assign(TPersistent* Source)
 
 __fastcall TSynGutterBand::TSynGutterBand(TCollection* Collection)
  : inherited(Collection),
-			FKind(TSynGutterBandKind::gbkCustom),
+			FKind(gbkCustom),
 			fVisible(false),
 			FWidth(0),
-			FBackground(TSynGutterBandBackground::gbbNone)
+			FBackground(gbbNone)
 {
 	fVisible = true;
-	FBackground = TSynGutterBandBackground::gbbGutter;
+	FBackground = gbbGutter;
 }
 
 void __fastcall TSynGutterBand::DoClick(TObject* Sender, TMouseButton Button, int X, int Y, int Row, int Line)
@@ -1369,7 +1376,7 @@ void __fastcall TSynGutterBand::DoClick(TObject* Sender, TMouseButton Button, in
 	TCustomSynEdit* SynEdit = nullptr;
 	int Index = 0;
 	TRect rcFold = {};
-	if(Visible && (FKind == TSynGutterBandKind::gbkFold))
+	if(Visible && (FKind == gbkFold))
 	{
 		SynEdit = ((TCustomSynEdit*) Editor);
 		if(SynEdit->AllFoldRanges->FoldStartAtLine(Line, Index))
@@ -1394,14 +1401,14 @@ void __fastcall TSynGutterBand::DoMouseCursor(TObject* Sender, int X, int Y, int
 	TCustomSynEdit* SynEdit = nullptr;
 	int Index = 0;
 	TRect rcFold = {};
-	if(Visible && (FKind == TSynGutterBandKind::gbkFold))
+	if(Visible && (FKind == gbkFold))
 	{
 		SynEdit = ((TCustomSynEdit*) Editor);
 		if(SynEdit->AllFoldRanges->FoldStartAtLine(Line, Index))
 		{
 			rcFold = FoldShapeRect(Row, Line);
 			if(!rcFold.IsEmpty() && PtInRect(rcFold, Point(X, Y)))
-				Cursor = crHandPoint;
+				Cursor = System::Uitypes::crHandPoint;
 		}
 	}
 	if(ASSIGNED(fOnMouseCursor))
@@ -1414,16 +1421,16 @@ void __fastcall TSynGutterBand::DoPaintLines(TCanvas* Canvas, const TRect& cClip
 	TRect ClipR = cClipR;
 	switch(FKind)
 	{
-		case TSynGutterBandKind::gbkMarks:
+		case gbkMarks:
 		PaintMarks(Canvas, ClipR, FirstRow, LastRow);
 		break;
-		case TSynGutterBandKind::gbkLineNumbers:
+		case gbkLineNumbers:
 		PaintLineNumbers(Canvas, ClipR, FirstRow, LastRow);
 		break;
-		case TSynGutterBandKind::gbkFold:
+		case gbkFold:
 		PaintFoldShapes(Canvas, ClipR, FirstRow, LastRow);
 		break;
-		case TSynGutterBandKind::gbkMargin:
+		case gbkMargin:
 		PaintMargin(Canvas, ClipR, FirstRow, LastRow);
 		break;
 		default:
@@ -1443,7 +1450,7 @@ TRect __fastcall TSynGutterBand::FoldShapeRect(int Row, int Line)
 	int ShapeSize = 0;
 	int Margin = 0;
 	result = TRect::Empty();
-	if(!Visible || (FKind != TSynGutterBandKind::gbkFold))
+	if(!Visible || (FKind != gbkFold))
 		return result;
 	SynEdit = ((TCustomSynEdit*) Editor);
 	if(SynEdit->RowToLine(Row) != Line)
@@ -1454,8 +1461,8 @@ TRect __fastcall TSynGutterBand::FoldShapeRect(int Row, int Line)
 		l = LeftX;
 		if(l < 0)
 			return result;
-		Margin = MulDiv(TSynGutterBand::MarginX, Gutter->FCurrentPPI, 96);
-		result.TopLeft() = Point(l + Margin, (Row - SynEdit->TopLine) * SynEdit->LineHeight + (int)((SynEdit->LineHeight - ShapeSize) / 2));
+		Margin = MulDiv(MarginX, Gutter->FCurrentPPI, 96);
+		result.TopLeft() = Point(l + Margin, (Row - SynEdit->TopLine) * SynEdit->LineHeight + (int)((SynEdit->LineHeight - ShapeSize) / /*div*/ 2));
 		result.BottomRight() = result.TopLeft();
 		result.BottomRight().Offset(ShapeSize, ShapeSize);
 	}
@@ -1519,10 +1526,10 @@ bool __fastcall TSynGutterBand::GetVisible()
 	result = fVisible;
 	switch(FKind)
 	{
-		case TSynGutterBandKind::gbkLineNumbers:
+		case gbkLineNumbers:
 		result = ASSIGNED(Gutter) && Gutter->ShowLineNumbers;
 		break;
-		case TSynGutterBandKind::gbkFold:
+		case gbkFold:
 		result = ASSIGNED(Editor) && ((TCustomSynEdit*) Editor)->UseCodeFolding;
 		break;
 		default:
@@ -1537,8 +1544,8 @@ int __fastcall TSynGutterBand::GetWidth()
 	int result = 0;
 	switch(FKind)
 	{
-		case TSynGutterBandKind::gbkLineNumbers:
-		case TSynGutterBandKind::gbkFold:
+		case gbkLineNumbers:
+		case gbkFold:
 		result = 0;
 		break;
 		default:
@@ -1551,14 +1558,14 @@ int __fastcall TSynGutterBand::GetWidth()
 bool __fastcall TSynGutterBand::IsVisibleStored()
 {
 	bool result = false;
-	result = fVisible && !(SynEditMiscClasses__13.Contains(FKind));
+	result = fVisible && !(Syneditmiscclasses__13.Contains(FKind));
 	return result;
 }
 
 bool __fastcall TSynGutterBand::IsWidthStored()
 {
 	bool result = false;
-	result = !(SynEditMiscClasses__14.Contains(FKind));
+	result = !(Syneditmiscclasses__14.Contains(FKind));
 	return result;
 }
 
@@ -1586,7 +1593,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 	if(SynEdit->UseCodeFolding)
 	{
 		__int64 stop = 0;
-		Margin = MulDiv(TSynGutterBand::MarginX, PPI, 96);
+		Margin = MulDiv(MarginX, PPI, 96);
 		PMMargin = MulDiv(PlusMinusMargin, PPI, 96);
 		ShapeSize = SynEdit->CodeFolding->ScaledGutterShapeSize(PPI);
 		for(stop = LastRow, cRow = FirstRow; cRow <= stop; cRow++)
@@ -1594,7 +1601,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 			vLine = SynEdit->RowToLine((int) cRow);
 			if(vLine > SynEdit->Lines->Count)
 				break;
-			rcFold.TopLeft() = Point(ClipR.Left + Margin, (cRow - SynEdit->TopLine) * SynEdit->LineHeight + (int)((SynEdit->LineHeight - ShapeSize) / 2));
+			rcFold.TopLeft() = Point(ClipR.Left + Margin, (cRow - SynEdit->TopLine) * SynEdit->LineHeight + (int)((SynEdit->LineHeight - ShapeSize) / /*div*/ 2));
 			rcFold.BottomRight() = rcFold.TopLeft();
 			rcFold.BottomRight().Offset(ShapeSize, ShapeSize);
 			Canvas->Pen->Color = SynEdit->CodeFolding->FolderBarLinesColor;
@@ -1608,13 +1615,13 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 
         // Paint minus sign
 				Canvas->Pen->Color = SynEdit->CodeFolding->FolderBarLinesColor;
-				Canvas->MoveTo(rcFold.Left + PMMargin, rcFold.Top + (int)(ShapeSize / 2));
-				Canvas->LineTo(rcFold.Right - PMMargin, rcFold.Top + (int)(ShapeSize / 2));
+				Canvas->MoveTo(rcFold.Left + PMMargin, rcFold.Top + (int)(ShapeSize / /*div*/ 2));
+				Canvas->LineTo(rcFold.Right - PMMargin, rcFold.Top + (int)(ShapeSize / /*div*/ 2));
 
         // Paint vertical line of plus sign
 				if(FoldRange.Collapsed)
 				{
-					X = rcFold.Left + (int)(ShapeSize / 2);
+					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
 					Canvas->MoveTo(X, rcFold.Top + PMMargin);
 					Canvas->LineTo(X, rcFold.Bottom - PMMargin);
 				}
@@ -1622,7 +1629,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 
         // Draw the bottom part of a line
 				{
-					X = rcFold.Left + (int)(ShapeSize / 2);
+					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
 					Canvas->MoveTo(X, rcFold.Bottom);
 					Canvas->LineTo(X, (int) ((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
 				}
@@ -1633,15 +1640,15 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 			{
 				if(SynEdit->AllFoldRanges->FoldEndAtLine(vLine, Index))
 				{
-					X = rcFold.Left + (int)(ShapeSize / 2);
+					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
 					Canvas->MoveTo(X, (int) ((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
-					Canvas->LineTo(X, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / 2)));
-					Canvas->LineTo(rcFold.Right, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / 2)));
+					Canvas->LineTo(X, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / /*div*/ 2)));
+					Canvas->LineTo(rcFold.Right, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / /*div*/ 2)));
 				}
         // Need to paint a line?
 				if(SynEdit->AllFoldRanges->FoldAroundLine(vLine, Index))
 				{
-					X = rcFold.Left + (int)(ShapeSize / 2);
+					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
 					Canvas->MoveTo(X, (int) ((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
 					Canvas->LineTo(X, (int) ((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
 				}
@@ -1679,11 +1686,11 @@ void __fastcall TSynGutterBand::PaintLineNumbers(TCanvas* Canvas, const TRect& c
 			SynEdit->WordWrapGlyph->Draw(Canvas, ClipR.Right - SynEdit->WordWrapGlyph->Width, LineTop, SynEdit->LineHeight);
 		else
 		{
-			LineRect = Rect(ClipR.Left + MulDiv(TSynGutterBand::MarginX, PPI, 96), LineTop, ClipR.Right, LineTop + SynEdit->LineHeight);
+			LineRect = Rect(ClipR.Left + MulDiv(MarginX, PPI, 96), LineTop, ClipR.Right, LineTop + SynEdit->LineHeight);
 			s = Gutter->FormatLineNumber(Line);
 			if(ASSIGNED(SynEdit->OnGutterGetText))
 				SynEdit->OnGutterGetText(this, Line, s);
-			Canvas->TextRect(LineRect, s, SynEditMiscClasses__15);
+			Canvas->TextRect(LineRect, s, Syneditmiscclasses__15);
 		}
 	}
 }
@@ -1703,14 +1710,14 @@ void __fastcall TSynGutterBand::PaintMargin(TCanvas* Canvas, const TRect& cClipR
 {
 	TRect ClipR = cClipR;
 	int Offset = 0;
-	if(Gutter->BorderStyle != TSynGutterBorderStyle::gbsNone)
+	if(Gutter->BorderStyle != gbsNone)
 		/*# with Canvas do */
 		{
 			auto with0 = Canvas;
 			with0->Pen->Color = Gutter->BorderColor;
 			with0->Pen->Width = 1;
-			if(Gutter->BorderStyle == TSynGutterBorderStyle::gbsMiddle)
-				Offset = Max(2, (int)((ClipR.Right - ClipR.Left) / 2));
+			if(Gutter->BorderStyle == gbsMiddle)
+				Offset = Max(2, (int)((ClipR.Right - ClipR.Left) / /*div*/ 2));
 			else
 				Offset = 1;
 			with0->MoveTo(ClipR.Right - Offset, ClipR.Top);
@@ -1742,7 +1749,7 @@ void __fastcall TSynGutterBand::PaintMarks(TCanvas* Canvas, const TRect& cClipR,
 		}
 		else
 		{
-			if(SynEditMiscClasses__16.Contains(aMark->ImageIndex))
+			if(Syneditmiscclasses__16.Contains(aMark->ImageIndex))
 			{
 				if(aGutterOff == 0)
 				{
@@ -1818,12 +1825,12 @@ int __fastcall TSynGutterBand::RealWidth()
 	if(Visible)
 		switch(FKind)
 		{
-			case TSynGutterBandKind::gbkLineNumbers:
+			case gbkLineNumbers:
       // A margin of two pixels at the end
-			result = Gutter->fAutoSizeDigitCount * IfThen(Gutter->UseFontStyle, Gutter->fCharWidth, ((TCustomSynEdit*) Editor)->CharWidth) + MulDiv(TSynGutterBand::MarginX, PPI, 96);
+			result = Gutter->fAutoSizeDigitCount * IfThen(Gutter->UseFontStyle, Gutter->fCharWidth, ((TCustomSynEdit*) Editor)->CharWidth) + MulDiv(MarginX, PPI, 96);
 			break;
-			case TSynGutterBandKind::gbkFold:
-			result = ((TCustomSynEdit*) Editor)->CodeFolding->ScaledGutterShapeSize(PPI) + MulDiv(TSynGutterBand::MarginX, PPI, 96);
+			case gbkFold:
+			result = ((TCustomSynEdit*) Editor)->CodeFolding->ScaledGutterShapeSize(PPI) + MulDiv(MarginX, PPI, 96);
 			break;
 			default:
 			result = MulDiv(FWidth, PPI, 96);
@@ -1871,7 +1878,7 @@ void __fastcall TSynGutterBand::SetVisible(bool Value)
 
 void __fastcall TSynGutterBand::SetWidth(int Value)
 {
-	if(!(SynEditMiscClasses__17.Contains(FKind)))
+	if(!(Syneditmiscclasses__17.Contains(FKind)))
 	{
 		FWidth = Value;
 		Changed(false);

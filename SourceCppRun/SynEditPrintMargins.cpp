@@ -9,8 +9,6 @@ using namespace Syneditprinttypes;
 using namespace Syneditprinterinfo;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace Vcl::Graphics;
 
 namespace Syneditprintmargins
 {
@@ -62,7 +60,7 @@ double __fastcall TSynEditPrintMargins::ConvertTo(double Value)
 		result = Value * mmPrInch;
 		break;
 		case muThousandthsOfInches:
-		result = mmPrInch * Value / 1000;
+		result = mmPrInch * Value / 1000.0;
 		break;
 		default:
 		result = Value;
@@ -84,7 +82,7 @@ double __fastcall TSynEditPrintMargins::ConvertFrom(double Value)
 		result = Value / mmPrInch;
 		break;
 		case muThousandthsOfInches:
-		result = 1000 * Value / mmPrInch;
+		result = 1000.0 * Value / mmPrInch;
 		break;
 		default:
 		result = Value;

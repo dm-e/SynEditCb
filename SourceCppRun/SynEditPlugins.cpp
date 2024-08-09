@@ -23,14 +23,14 @@ using namespace Vcl::Forms;
 
 namespace Syneditplugins
 {
-#define SynEditPlugins__0 (TComponentState() << csDesigning)
-#define SynEditPlugins__1 (TComponentState() << csDesigning)
-#define SynEditPlugins__2 (TComponentState() << csDesigning)
-#define SynEditPlugins__3 (TComponentState() << csDesigning)
+#define Syneditplugins__0 (TComponentState() << csDesigning)
+#define Syneditplugins__1 (TComponentState() << csDesigning)
+#define Syneditplugins__2 (TComponentState() << csDesigning)
+#define Syneditplugins__3 (TComponentState() << csDesigning)
 
-__fastcall TAbstractSynPlugin::TAbstractSynPlugin(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
-__fastcall TAbstractSynHookerPlugin::TAbstractSynHookerPlugin(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
-__fastcall TAbstractSynCompletion::TAbstractSynCompletion(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TAbstractSynPlugin::TAbstractSynPlugin(TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TAbstractSynHookerPlugin::TAbstractSynHookerPlugin(TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TAbstractSynCompletion::TAbstractSynCompletion(TComponent* AOwner) : inherited(AOwner) {}
 
 
 const int ecPluginBase = 64000;
@@ -57,7 +57,7 @@ int __fastcall TAbstractSynPlugin::AddEditor(TCustomSynEdit* AEditor)
 	int result = 0;
 	if(fEditors == nullptr)
 	{
-		fEditors = new System::Classes::TList();
+		fEditors = new TList();
 	}
 	else
 	{
@@ -81,7 +81,6 @@ __fastcall TAbstractSynPlugin::~TAbstractSynPlugin()
 		RemoveEditor(Editors[0]);
 	// inherited;
 }
-
 
 void __fastcall TAbstractSynPlugin::Notification(TComponent* AComponent, TOperation aOperation)
 {
@@ -131,11 +130,11 @@ void __fastcall TAbstractSynPlugin::SetEditor(TCustomSynEdit* const Value)
 			if((iEditor != nullptr) && (fEditors->Count == 1))
 				RemoveEditor(iEditor);
 			if(Value != nullptr)
-				AddEditor(Value);
+				AddEditor(const_cast<TCustomSynEdit*>(Value));
 		}
 		catch(...)
 		{
-			if(SynEditPlugins__0 * ComponentState == SynEditPlugins__1)
+			if(Syneditplugins__0 * ComponentState == Syneditplugins__1)
 				Application->HandleException(this);
 			else
 				throw ;
@@ -177,7 +176,7 @@ void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* AEditor, TS
 	TSynEditKeyStroke* iKeystroke = nullptr;
 	Assert(aNewShortCut != 0);
   /* shortcurts aren't created while in design-time */
-	if(SynEditPlugins__2 * ComponentState == SynEditPlugins__3)
+	if(Syneditplugins__2 * ComponentState == Syneditplugins__3)
 	{
 		if(((TSynEdit*) AEditor)->Keystrokes->FindShortcut(aNewShortCut) >= 0)
 			throw new ESynKeyError(SYNS_EDuplicateShortcut);
@@ -277,7 +276,6 @@ __fastcall TAbstractSynSingleHookPlugin::~TAbstractSynSingleHookPlugin()
 	ReleasePluginCommand(CommandID);
 	// inherited;
 }
-
 
 void __fastcall TAbstractSynSingleHookPlugin::DoAddEditor(TCustomSynEdit* AEditor)
 {

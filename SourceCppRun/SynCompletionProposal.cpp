@@ -10,6 +10,7 @@
 #include "SynEditMiscProcs.h"
 #include "SynEditKeyConst.h"
 #include "d2c_graphics.h"
+#include "SynEditDelphiInstances.hpp"
 
 using namespace std;
 using namespace d2c_system;
@@ -22,50 +23,45 @@ using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Math;
-using namespace System::Sysutils;
 using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Controls;
-using namespace Vcl::Extctrls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Vcl::Imglist;
-using namespace Vcl::Menus;
-using namespace Vcl::Stdctrls;
 using namespace Vcl::Themes;
 
 namespace Syncompletionproposal
 {
-#define SynCompletionProposal__0 (TSysCharSet() << L'+' << L'-' << L'~')
-#define SynCompletionProposal__1 (TSysCharSet() << L'B' << L'I' << L'U' << L'S')
-#define SynCompletionProposal__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynCompletionProposal__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynCompletionProposal__4 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynCompletionProposal__5 (TFontStyles() << TFontStyle::fsStrikeOut)
-#define SynCompletionProposal__6 TFontStyles()
-#define SynCompletionProposal__7 (TFormatCommands() << fcColor)
-#define SynCompletionProposal__8 TFormatCommands()
-#define SynCompletionProposal__9 (TFormatCommands() << fcColor)
-#define SynCompletionProposal__10 (TSysCharSet() << L'B' << L'I' << L'U')
-#define SynCompletionProposal__11 TFontStyles()
-#define SynCompletionProposal__12 (TFontStyles() << TFontStyle::fsBold)
-#define SynCompletionProposal__13 (TStyleElements() << seClient)
-#define SynCompletionProposal__14 TShiftState()
-#define SynCompletionProposal__15 TShiftState()
-#define SynCompletionProposal__16 TShiftState()
-#define SynCompletionProposal__17 TShiftState()
-#define SynCompletionProposal__18 (TElementEdges() << eeRaisedOuter)
-#define SynCompletionProposal__19 (TElementEdgeFlags() << efRect << efFlat)
-#define SynCompletionProposal__20 TShiftState()
-#define SynCompletionProposal__21 (TShiftState() << ssCtrl)
-#define SynCompletionProposal__22 TShiftState()
-#define SynCompletionProposal__23 (TShiftState() << ssShift)
-#define SynCompletionProposal__24 (System::Set<TSynCompletionOption, scoCaseSensitive, scoCompleteWithEnter>() << scoUsePrettyText)
-#define SynCompletionProposal__25 (System::Set<TSynCompletionOption, scoCaseSensitive, scoCompleteWithEnter>() << scoUseBuiltInTimer)
-#define SynCompletionProposal__26 (TSynCompletionOptions() << scoUsePrettyText)
-#define SynCompletionProposal__27 (TSynCompletionOptions() << scoUseBuiltInTimer)
+#define Syncompletionproposal__0 (TSysCharSet() << '+' << '-' << '~')
+#define Syncompletionproposal__1 (TSysCharSet() << 'B' << 'I' << 'U' << 'S')
+#define Syncompletionproposal__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Syncompletionproposal__3 (TFontStyles() << TFontStyle::fsBold)
+#define Syncompletionproposal__4 (TFontStyles() << TFontStyle::fsUnderline)
+#define Syncompletionproposal__5 (TFontStyles() << TFontStyle::fsStrikeOut)
+#define Syncompletionproposal__6 TFontStyles()
+#define Syncompletionproposal__7 (TFormatCommands() << fcColor)
+#define Syncompletionproposal__8 TFormatCommands()
+#define Syncompletionproposal__9 (TFormatCommands() << fcColor)
+#define Syncompletionproposal__10 (TSysCharSet() << 'B' << 'I' << 'U')
+#define Syncompletionproposal__11 TFontStyles()
+#define Syncompletionproposal__12 (TFontStyles() << TFontStyle::fsBold)
+#define Syncompletionproposal__13 (TStyleElements() << seClient)
+#define Syncompletionproposal__14 TShiftState()
+#define Syncompletionproposal__15 TShiftState()
+#define Syncompletionproposal__16 TShiftState()
+#define Syncompletionproposal__17 TShiftState()
+#define Syncompletionproposal__18 (TElementEdges() << eeRaisedOuter)
+#define Syncompletionproposal__19 (TElementEdgeFlags() << efRect << efFlat)
+#define Syncompletionproposal__20 TShiftState()
+#define Syncompletionproposal__21 (TShiftState() << ssCtrl)
+#define Syncompletionproposal__22 TShiftState()
+#define Syncompletionproposal__23 (TShiftState() << ssShift)
+#define Syncompletionproposal__24 (System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter>() << scoUsePrettyText)
+#define Syncompletionproposal__25 (System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter>() << scoUseBuiltInTimer)
+#define Syncompletionproposal__26 (TSynCompletionOptions() << scoUsePrettyText)
+#define Syncompletionproposal__27 (TSynCompletionOptions() << scoUseBuiltInTimer)
 
-__fastcall TProposalColumns::TProposalColumns(System::Classes::TCollectionItemClass ItemClass) : inherited(ItemClass) {}
+__fastcall TProposalColumns::TProposalColumns(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
 
 
 const WideChar TextHeightString[] = L"CompletionProposal";
@@ -77,7 +73,7 @@ enum TFormatCommand {fcNoCommand,
                      fcColumn,
                      fcHSpace,
                      fcImage };
-typedef System::Set<TFormatCommand, fcNoCommand, fcImage> TFormatCommands;
+typedef System::Set<TFormatCommand, TFormatCommand::fcNoCommand, TFormatCommand::fcImage> TFormatCommands;
 struct TFormatChunk;
 typedef TFormatChunk* PFormatChunk;
 
@@ -113,7 +109,7 @@ public:
 	__property int Count = { read = GetCount };
 	__property PFormatChunk Chunks[int Index] = { read = GetChunk/*# default */ };
 };
-const System::Set<TFormatCommand, fcNoCommand, fcImage> AllCommands = System::Set<TFormatCommand, fcNoCommand, fcImage>() <<  \
+const System::Set<TFormatCommand, TFormatCommand::fcNoCommand, TFormatCommand::fcImage> AllCommands = System::Set<TFormatCommand, TFormatCommand::fcNoCommand, TFormatCommand::fcImage>() <<  \
 										fcColor << fcStyle << fcColumn << fcHSpace << fcImage;
 
 int __fastcall TFormatChunkList::GetCount()
@@ -166,7 +162,6 @@ __fastcall TFormatChunkList::~TFormatChunkList()
 	delete FChunks;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TFormatChunkList::Add(PFormatChunk AChunk)
 {
@@ -308,7 +303,7 @@ bool __fastcall ParseFormatChunks(const String FormattedString, TFormatChunkList
 							{
 								if(Command == L"STYLE")
 								{
-									if((Parameter.Length() == 2) && CharInSet(Parameter[1], SynCompletionProposal__0) && CharInSet(System::Sysutils::AnsiUpperCase(String(Parameter[2]))[1], SynCompletionProposal__1))
+									if((Parameter.Length() == 2) && CharInSet(Parameter[1], Syncompletionproposal__0) && CharInSet(System::Sysutils::AnsiUpperCase(String(Parameter[2]))[1], Syncompletionproposal__1))
 									{
 										CommandType = fcStyle;
 										if(!(StripCommands.Contains(fcStyle)))
@@ -423,7 +418,7 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 		{
 			CurrentColumnIndex = 0;
 			CurrentColumn = Columns->Items[0];
-			TargetCanvas->Font->Style = CurrentColumn->FFontStyle;
+			TargetCanvas->Font->Style = CurrentColumn->DefaultFontStyle;
 		}
 		else
 		{
@@ -449,23 +444,23 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 				break;
 				case fcColor:
 				if(!Invisible)
-					TargetCanvas->Font->Color = StyleServices()->GetSystemColor((TColor) (int) (*C).Data);
+					TargetCanvas->Font->Color = StyleServices()->GetSystemColor((TColor) (NativeInt) (*C).Data);
 				break;
 				case fcStyle:
 				{
 					switch((*((PFormatStyleData) (*C).Data)).Style)
 					{
 						case L'I':
-						Style = SynCompletionProposal__2;
+						Style = Syncompletionproposal__2;
 						break;
 						case L'B':
-						Style = SynCompletionProposal__3;
+						Style = Syncompletionproposal__3;
 						break;
 						case L'U':
-						Style = SynCompletionProposal__4;
+						Style = Syncompletionproposal__4;
 						break;
 						case L'S':
-						Style = SynCompletionProposal__5;
+						Style = Syncompletionproposal__5;
 						break;
 						default:
 						Assert(false);
@@ -477,7 +472,7 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 						TargetCanvas->Font->Style = TargetCanvas->Font->Style - Style;
 						break;
 						case 0:
-						if(TargetCanvas->Font->Style * Style == SynCompletionProposal__6)
+						if(TargetCanvas->Font->Style * Style == Syncompletionproposal__6)
 							TargetCanvas->Font->Style = TargetCanvas->Font->Style + Style;
 						else
 							TargetCanvas->Font->Style = TargetCanvas->Font->Style - Style;
@@ -496,13 +491,13 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 				{
 					if(CurrentColumnIndex <= Columns->Count - 1)
 					{
-						LastColumnStart += MulDiv(CurrentColumn->FColumnWidth, PPI, 96);
+						LastColumnStart += MulDiv(CurrentColumn->ColumnWidth, PPI, 96);
 						X = LastColumnStart;
 						++CurrentColumnIndex;
 						if(CurrentColumnIndex <= Columns->Count - 1)
 						{
 							CurrentColumn = Columns->Items[CurrentColumnIndex];
-							TargetCanvas->Font->Style = CurrentColumn->FFontStyle;
+							TargetCanvas->Font->Style = CurrentColumn->DefaultFontStyle;
 						}
 						else
 						CurrentColumn = nullptr;
@@ -511,7 +506,7 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 				break;
 				case fcHSpace:
 				{
-					X += MulDiv((int)(*C).Data, PPI, 96);
+					X += MulDiv((NativeInt)(*C).Data, PPI, 96);
 					if(X > Rect.Right)
 						goto label1;
 				}
@@ -519,7 +514,7 @@ int __fastcall PaintChunks(TCanvas* TargetCanvas, const TRect& Rect, int PPI, TF
 				case fcImage:
 				{
 					Assert(ASSIGNED(Images));
-					Images->Draw(TargetCanvas, X, Rect.Top, (int)(*C).Data);
+					Images->Draw(TargetCanvas, X, Rect.Top, (NativeInt)(*C).Data);
 					X += Images->Width;
 					if(X > Rect.Right)
 						goto label2;
@@ -552,9 +547,9 @@ void __fastcall FormattedTextOut(TCanvas* TargetCanvas, const TRect& Rect, int P
 	try
 	{
 		if(Selected)
-			StripCommands = SynCompletionProposal__7;
+			StripCommands = Syncompletionproposal__7;
 		else
-			StripCommands = SynCompletionProposal__8;
+			StripCommands = Syncompletionproposal__8;
 		ParseFormatChunks(Text, Chunks, StripCommands);
 		PaintChunks(TargetCanvas, Rect, PPI, Chunks, Columns, Images, false);
 	}
@@ -573,7 +568,7 @@ int __fastcall FormattedTextWidth(TCanvas* TargetCanvas, const String Text, int 
 	try
 	{
 		tmpRect = Rect(0, 0, MaxInt, MaxInt);
-		ParseFormatChunks(Text, Chunks, SynCompletionProposal__9);
+		ParseFormatChunks(Text, Chunks, Syncompletionproposal__9);
 		result = PaintChunks(TargetCanvas, tmpRect, PPI, Chunks, Columns, Images, true);
 	}
 	__finally
@@ -603,7 +598,7 @@ String __fastcall PrettyTextToFormattedString(const String APrettyText, bool Alt
 			break;
 			case L'\x03':
 			{
-				if(CharInSet(System::Sysutils::AnsiUpperCase(String(APrettyText[i + 1]))[1], SynCompletionProposal__10))
+				if(CharInSet(System::Sysutils::AnsiUpperCase(String(APrettyText[i + 1]))[1], Syncompletionproposal__10))
 				{
 					result = result + L"\\style{";
 					switch(APrettyText[i + 1])
@@ -658,7 +653,7 @@ __fastcall TProposalColumn::TProposalColumn(TCollection* Collection)
  : inherited(Collection),
 			FColumnWidth(100),
 			FInternalWidth(-1),
-			FFontStyle(SynCompletionProposal__11)
+			FFontStyle(Syncompletionproposal__11)
 {
 }
 
@@ -666,7 +661,6 @@ __fastcall TProposalColumn::~TProposalColumn()
 {
 	// inherited;
 }
-
 
 void __fastcall TProposalColumn::Assign(TPersistent* Source)
 {
@@ -812,9 +806,9 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 	FInsertList = new TStringList();
 	FAssignedList = new TStringList();
 	FMatchText = false;
-	BorderStyle = TFormBorderStyle::bsNone;
+	BorderStyle = bsNone;
 	FScrollbar = new TScrollBar(this);
-	FScrollbar->Kind = TScrollBarKind::sbVertical;
+	FScrollbar->Kind = sbVertical;
 	FScrollbar->ParentCtl3D = false;
 	FScrollbar->OnChange = ScrollbarOnChange;
 	FScrollbar->OnScroll = ScrollbarOnScroll;
@@ -823,7 +817,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 	FTitleFont = new TFont();
 	FTitleFont->Name = L"MS Shell Dlg 2";
 	FTitleFont->Size = 8;
-	FTitleFont->Style = SynCompletionProposal__12;
+	FTitleFont->Style = Syncompletionproposal__12;
 	FTitleFont->Color = clBtnText;
 	FFont = new TFont();
 	FFont->Name = L"MS Shell Dlg 2";
@@ -851,7 +845,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 	OnDblClick = DoDoubleClick;
 	OnShow = DoFormShow;
 	OnHide = DoFormHide;
-	StyleElements = SynCompletionProposal__13;
+	StyleElements = Syncompletionproposal__13;
 	Resizeable = false;
 	Visible = false;
 }
@@ -899,6 +893,7 @@ void __fastcall TSynBaseCompletionProposalForm::Deactivate()
 __fastcall TSynBaseCompletionProposalForm::~TSynBaseCompletionProposalForm()
 {
 	//# inherited::TCustomForm::Destroy();
+	inherited::RemoveFreeNotifications();
 	delete FColumns;
 	delete BITMAP;
 	delete TitleBitmap;
@@ -908,7 +903,6 @@ __fastcall TSynBaseCompletionProposalForm::~TSynBaseCompletionProposalForm()
 	delete FTitleFont;
 	delete FFont;
 }
-
 
 void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState Shift)
 {
@@ -950,7 +944,7 @@ void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState S
 			}
 			break;
 			case SYNEDIT_LEFT:
-			if(Shift == SynCompletionProposal__14)
+			if(Shift == Syncompletionproposal__14)
 			{
 				if(FCurrentString.Length() > 0)
 				{
@@ -973,7 +967,7 @@ void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState S
 			ExecuteCmdAndCancel();
 			break;
 			case SYNEDIT_RIGHT:
-			if(Shift == SynCompletionProposal__15)
+			if(Shift == Syncompletionproposal__15)
 			{
 				if(ASSIGNED(CurrentEditor))
 					/*# with CurrentEditor as TCustomSynEdit do */
@@ -1023,7 +1017,7 @@ void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState S
 				MoveLine(1);
 			break;
 			case SYNEDIT_BACK:
-			if(Shift == SynCompletionProposal__16)
+			if(Shift == Syncompletionproposal__16)
 			{
 				if(FCurrentString.Length() > 0)
 				{
@@ -1073,14 +1067,14 @@ void __fastcall TSynBaseCompletionProposalForm::KeyPress(Char& key)
 				OnKeyPress(this, key);
 			break;
 			default:
-			if(key >= L'\x20' && key <= 65535 /*# High(WideChar) */)
+			if(key >= L'\x20' && key <= High<WideChar>())
 			{
 				if(IsWordBreakChar(key) && ASSIGNED(OnValidate))
             //if Key = #32 then
             //  OnValidate(Self, [], #0)
             //else
 				{
-					OnValidate(this, SynCompletionProposal__17, key);
+					OnValidate(this, Syncompletionproposal__17, key);
 				}
 				CurrentString = CurrentString + String(key);
 				if(ASSIGNED(OnKeyPress))
@@ -1104,7 +1098,7 @@ void __fastcall TSynBaseCompletionProposalForm::KeyPress(Char& key)
 
 void __fastcall TSynBaseCompletionProposalForm::MouseDown(TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-	Y = (int)((Y - FHeightBuffer) / FEffectiveItemHeight);
+	Y = (int)((Y - FHeightBuffer) / /*div*/ FEffectiveItemHeight);
 	Position = FScrollbar->Position + Y;
 //  (CurrentEditor as TCustomSynEdit).UpdateCaret;
 }
@@ -1113,7 +1107,7 @@ void __fastcall TSynBaseCompletionProposalForm::Resize()
 {
 	inherited::Resize();
 	if(FEffectiveItemHeight != 0)
-		fLinesInWindow = (int)((ClientHeight - FHeightBuffer) / FEffectiveItemHeight);
+		fLinesInWindow = (int)((ClientHeight - FHeightBuffer) / /*div*/ FEffectiveItemHeight);
 	if(!(ControlState.Contains(csCreating)))
 		AdjustMetrics();
 	AdjustScrollBarPosition();
@@ -1170,7 +1164,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 				{
 					if(FFormattedText)
 					{
-						FormattedTextOut(with1->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / 2)), BITMAP->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
+						FormattedTextOut(with1->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)), BITMAP->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
 					}
 					else
 					{
@@ -1183,7 +1177,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 			if(TStyleManager::IsCustomStyleActive)
 			{
 				tmpRect = ClientRect;
-				DrawStyleEdge(with1->Canvas, tmpRect, SynCompletionProposal__18, SynCompletionProposal__19);
+				DrawStyleEdge(with1->Canvas, tmpRect, Syncompletionproposal__18, Syncompletionproposal__19);
 			}
 		}
 		Canvas->Draw(0, FHeightBuffer, BITMAP);
@@ -1204,7 +1198,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 				with2->Canvas->Font->Color = StyleServices()->GetSystemColor(FTitleFont->Color);
 				if(CenterTitle)
 				{
-					TmpX = (int)((with2->Width - with2->Canvas->TextWidth(Title)) / 2);
+					TmpX = (int)((with2->Width - with2->Canvas->TextWidth(Title)) / /*div*/ 2);
 					if(TmpX < ScaledMargin)
 						TmpX = ScaledMargin;  //We still want to be able to read it, even if it does go over the edge
 				}
@@ -1243,7 +1237,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 							TmpString = FormatParamList(FAssignedList->Strings[i], CurrentIndex);
 						else
 							TmpString = FAssignedList->Strings[i];
-						FormattedTextOut(with3->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / 2)) + ScaledMargin, BITMAP->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
+						FormattedTextOut(with3->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)) + ScaledMargin, BITMAP->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
 					}
 				}
 			}
@@ -1295,7 +1289,7 @@ int __fastcall TSynBaseCompletionProposalForm::LogicalToPhysicalIndex(int Index)
 {
 	int result = 0;
 	if(FMatchText && (Index >= 0) && (Index < FAssignedList->Count))
-		result = ((int) FAssignedList->Objects[Index]);
+		result = (NativeInt) FAssignedList->Objects[Index];
 	else
 		result = -1;
 	return result;
@@ -1311,7 +1305,7 @@ int __fastcall TSynBaseCompletionProposalForm::PhysicalToLogicalIndex(int Index)
 		result = -1;
 		for(stop = FAssignedList->Count - 1, i = 0; i <= stop; i++)
 		{
-			if(((int) FAssignedList->Objects[i]) == Index)
+			if((NativeInt) FAssignedList->Objects[i] == Index)
 			{
 				result = i;
 				break;
@@ -1396,14 +1390,14 @@ void __fastcall TSynBaseCompletionProposalForm::SetCurrentString(const String Va
 
 void __fastcall TSynBaseCompletionProposalForm::SetItemList(TStrings* const Value)
 {
-	FItemList->Assign(Value);
-	FAssignedList->Assign(Value);
+	FItemList->Assign((TPersistent*) Value);
+	FAssignedList->Assign((TPersistent*) Value);
 	CurrentString = CurrentString;
 }
 
 void __fastcall TSynBaseCompletionProposalForm::SetInsertList(TStrings* const Value)
 {
-	FInsertList->Assign(Value);
+	FInsertList->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynBaseCompletionProposalForm::DoDoubleClick(TObject* Sender)
@@ -1413,7 +1407,7 @@ void __fastcall TSynBaseCompletionProposalForm::DoDoubleClick(TObject* Sender)
 	if(DisplayType == ctCode)
 	{
 		if(ASSIGNED(OnValidate))
-			OnValidate(this, SynCompletionProposal__20, L'\x00');                      //GBN 15/11/2001
+			OnValidate(this, Syncompletionproposal__20, L'\x00');                      //GBN 15/11/2001
 	}
 }
 
@@ -1488,7 +1482,7 @@ bool __fastcall TSynBaseCompletionProposalForm::IsWordBreakChar(WideChar AChar)
 	return result;
 }
 
-void __fastcall TSynBaseCompletionProposalForm::WMMouseWheel(TMessage& Msg)
+void __fastcall TSynBaseCompletionProposalForm::WMMouseWheel(::TMessage& Msg)
 {
 	int nDelta = 0;
 	int nWheelClicks = 0;
@@ -1499,7 +1493,7 @@ void __fastcall TSynBaseCompletionProposalForm::WMMouseWheel(TMessage& Msg)
 	else
 		nDelta = fLinesInWindow;
 	fMouseWheelAccumulator += ((short int) Msg.WParamHi);
-	nWheelClicks = (int)(fMouseWheelAccumulator / WHEEL_DELTA);
+	nWheelClicks = (int)(fMouseWheelAccumulator / /*div*/ WHEEL_DELTA);
 	fMouseWheelAccumulator = fMouseWheelAccumulator % WHEEL_DELTA;
 	if((nDelta == ((int) WHEEL_PAGESCROLL)) || (nDelta > fLinesInWindow))
 		nDelta = fLinesInWindow;
@@ -1567,7 +1561,7 @@ TSynForm* __fastcall GetMDIParent(TSynForm* const Form)
 	result = const_cast<TSynForm*>(Form);
 	if(Form == nullptr)
 		return result;
-	if((ObjectIs(Form, TSynForm*)) && (((TForm*) Form)->FormStyle == TFormStyle::fsMDIChild))
+	if((ObjectIs(Form, TSynForm*)) && (((TForm*) Form)->FormStyle == fsMDIChild))
 	{
 		int stop = 0;
 		for(stop = Screen->FormCount - 1, i = 0; i <= stop; i++)
@@ -1576,7 +1570,7 @@ TSynForm* __fastcall GetMDIParent(TSynForm* const Form)
 			{
 				
 				int stop1 = 0;
-				if(Screen->Forms[i]->FormStyle != TFormStyle::fsMDIForm)
+				if(Screen->Forms[i]->FormStyle != fsMDIForm)
 					continue;
 				for(stop1 = Screen->Forms[i]->MDIChildCount - 1, j = 0; j <= stop1; j++)
 				{
@@ -1652,7 +1646,7 @@ void __fastcall TSynBaseCompletionProposalForm::DoFormShow(TObject* Sender)
 		((TSynBaseCompletionProposal*) Owner)->OnShow(this);
 }
 
-void __fastcall TSynBaseCompletionProposalForm::WMEraseBackgrnd(TMessage& Message)
+void __fastcall TSynBaseCompletionProposalForm::WMEraseBackgrnd(::TMessage& Message)
 {
 	Message.Result = 1;
 }
@@ -1725,14 +1719,14 @@ void __fastcall TSynBaseCompletionProposalForm::SetTitle(const String Value)
 
 void __fastcall TSynBaseCompletionProposalForm::SetFont(TFont* const Value)
 {
-	FFont->Assign(Value);
+	FFont->Assign((TPersistent*) Value);
 	RecalcItemHeight();
 	AdjustMetrics();
 }
 
 void __fastcall TSynBaseCompletionProposalForm::SetTitleFont(TFont* const Value)
 {
-	FTitleFont->Assign(Value);
+	FTitleFont->Assign((TPersistent*) Value);
 	FTitleFontHeight = Canvas->TextHeight(TextHeightString);
 	AdjustMetrics();
 }
@@ -1942,9 +1936,9 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 			Form->Visible = false;
 		return;
 	}
-	Form->PopupMode = TPopupMode::pmExplicit;
+	Form->PopupMode = pmExplicit;
 	if(Kind == ctCode)
-		Form->FormStyle = TFormStyle::fsStayOnTop;
+		Form->FormStyle = fsStayOnTop;
 	if(ASSIGNED(Form->CurrentEditor))
 	{
 		TmpOffset = ((TCustomSynEdit*) Form->CurrentEditor)->Canvas->TextWidth(s.SubString(1, DotOffset));
@@ -2491,9 +2485,9 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 					{
 						if(Form->FAssignedList->Count > Position)
 						{
-							if((InsertList->Count > ((int) Form->FAssignedList->Objects[Position])) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
+							if((InsertList->Count > (NativeInt) Form->FAssignedList->Objects[Position]) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
               // Added check to make sure item is only used when no EndChar
-								Value = InsertList->Strings[((int) Form->FAssignedList->Objects[Position])];
+								Value = InsertList->Strings[(NativeInt) Form->FAssignedList->Objects[Position]];
 							else
 								Value = with0->SelText;
 						}
@@ -2582,7 +2576,7 @@ void __fastcall TSynCompletionProposal::SetEditor(TCustomSynEdit* const Value)
 			RemoveEditor(Editor);
 		FEditor = const_cast<TCustomSynEdit*>(Value);
 		if(ASSIGNED(Value))
-			AddEditor(Value);
+			AddEditor(const_cast<TCustomSynEdit*>(Value));
 	}
 }
 
@@ -2620,7 +2614,7 @@ __fastcall TSynCompletionProposal::TSynCompletionProposal(TComponent* AOwner)
 	TriggerChars = L".";
 	FTimerInterval = 1000;
 	FNoNextKey = false;
-	FShortCut = Vcl::Menus::ShortCut((WORD) int(L' '), SynCompletionProposal__21);
+	FShortCut = Vcl::Menus::ShortCut((WORD) int(L' '), Syncompletionproposal__21);
 	Options = DefaultProposalOptions;
 }
 
@@ -2730,7 +2724,7 @@ void __fastcall TSynCompletionProposal::DeactivateTimer()
 
 void __fastcall TSynCompletionProposal::HandleDblClick(TObject* Sender)
 {
-	HandleOnValidate(Sender, SynCompletionProposal__22, L'\x00');
+	HandleOnValidate(Sender, Syncompletionproposal__22, L'\x00');
 }
 
 __fastcall TSynCompletionProposal::~TSynCompletionProposal()
@@ -2743,7 +2737,6 @@ __fastcall TSynCompletionProposal::~TSynCompletionProposal()
 	// inherited;
 	delete fEditors;
 }
-
 
 void __fastcall TSynCompletionProposal::TimerExecute(TObject* Sender)
 {
@@ -3021,7 +3014,7 @@ void __fastcall TSynCompletionProposal::ActivateCompletion()
 
 __fastcall TSynAutoComplete::TSynAutoComplete(TComponent* AOwner)
  : inherited(AOwner),
-			FShortCut(Vcl::Menus::ShortCut((WORD) int(L' '), SynCompletionProposal__23)),
+			FShortCut(Vcl::Menus::ShortCut((WORD) int(L' '), Syncompletionproposal__23)),
 			FEditor(nullptr),
 			fAutoCompleteList(nullptr),
 			FNoNextKey(false),
@@ -3051,7 +3044,6 @@ __fastcall TSynAutoComplete::~TSynAutoComplete()
 	// inherited;
 	delete fAutoCompleteList;
 }
-
 
 void __fastcall TSynAutoComplete::EditorKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
 {
@@ -3106,22 +3098,22 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 				int stop = 0;
 				TmpOptions = Editor->Options;
 				OrigOptions = Editor->Options;
-				ChangedIndent = TmpOptions.Contains(TSynEditorOption::eoAutoIndent);
-				ChangedTrailing = TmpOptions.Contains(TSynEditorOption::eoTrimTrailingSpaces);
+				ChangedIndent = TmpOptions.Contains(eoAutoIndent);
+				ChangedTrailing = TmpOptions.Contains(eoTrimTrailingSpaces);
 				if(ChangedIndent)
-					TmpOptions >> TSynEditorOption::eoAutoIndent;
+					TmpOptions >> eoAutoIndent;
 				if(ChangedTrailing)
-					TmpOptions >> TSynEditorOption::eoTrimTrailingSpaces;
+					TmpOptions >> eoTrimTrailingSpaces;
 				if(ChangedIndent || ChangedTrailing)
 					Editor->Options = TmpOptions;
 				FNoNextKey = true;
-				for(stop = (int) Token.Length(), j = 1; j <= stop; j++)
+				for(stop = Token.Length(), j = 1; j <= stop; j++)
 				{
 					Editor->CommandProcessor((TSynEditorCommand) ecDeleteLastChar, L' ', nullptr);
 				}
 				BeginningSpaceCount = Editor->DisplayX - 1;
-				if(!(Editor->Options.Contains(TSynEditorOption::eoTabsToSpaces)) && (BeginningSpaceCount >= Editor->TabWidth))
-					Spacing = StringOfChar(L'\x09', (int)(BeginningSpaceCount / Editor->TabWidth))
+				if(!(Editor->Options.Contains(eoTabsToSpaces)) && (BeginningSpaceCount >= Editor->TabWidth))
+					Spacing = StringOfChar(L'\x09', (int)(BeginningSpaceCount / /*div*/ Editor->TabWidth))
 	           + StringOfChar(L' ', BeginningSpaceCount % Editor->TabWidth);
 				else
 					Spacing = StringOfChar(L' ', BeginningSpaceCount);
@@ -3139,7 +3131,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 				{
 					int stop = 0;
 					Temp = AutoCompleteList->Strings[i];
-					for(stop = (int) Temp.Length(), j = 2; j <= stop; j++)
+					for(stop = Temp.Length(), j = 2; j <= stop; j++)
 					{
 						if(Temp[j] == L'\x09')
 							Editor->CommandProcessor((TSynEditorCommand) ecTab, Temp[j], nullptr);
@@ -3153,7 +3145,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 					{
 						int stop = 0;
 						Editor->CommandProcessor((TSynEditorCommand) ecLineBreak, L' ', nullptr);
-						for(stop = (int) Spacing.Length(), j = 1; j <= stop; j++)
+						for(stop = Spacing.Length(), j = 1; j <= stop; j++)
 						{
 							if(Spacing[j] == L'\x09')
 								Editor->CommandProcessor((TSynEditorCommand) ecTab, L'\x09', nullptr);
@@ -3335,7 +3327,7 @@ void __fastcall TSynAutoComplete::SetDoLookup(bool Value)
 void __fastcall TSynAutoComplete::CreateInternalCompletion()
 {
 	FInternalCompletion = new TSynCompletionProposal(this);
-	FInternalCompletion->Options = DefaultProposalOptions + SynCompletionProposal__24 - SynCompletionProposal__25;
+	FInternalCompletion->Options = DefaultProposalOptions + Syncompletionproposal__24 - Syncompletionproposal__25;
 	FInternalCompletion->EndOfTokenChr = FEndOfTokenChr;
 	FInternalCompletion->ShortCut = (TShortCut) 0;
 	FInternalCompletion->OnAfterCodeCompletion = DoInternalAutoCompletion;
@@ -3354,7 +3346,7 @@ void __fastcall TSynAutoComplete::SetOptions(const TSynCompletionOptions Value)
 {
 	fOptions = Value;
 	if(ASSIGNED(FInternalCompletion))
-		FInternalCompletion->Options = fOptions + SynCompletionProposal__26 - SynCompletionProposal__27;
+		FInternalCompletion->Options = fOptions + Syncompletionproposal__26 - Syncompletionproposal__27;
 }
 
 void __fastcall TSynAutoComplete::CancelCompletion()

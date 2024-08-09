@@ -10,17 +10,15 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterwebidl
 {
-#define SynHighlighterWebIDL__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterWebIDL__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterWebIDL__2 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
-#define SynHighlighterWebIDL__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterWebIDL__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterwebidl__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterwebidl__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterwebidl__2 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic)
+#define Synhighlighterwebidl__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterwebidl__4 (TFontStyles() << TFontStyle::fsBold)
 
 
 const System::Char SYNS_FilterWebIDL[] = L"Web IDL (*.idl)|*.idl";
@@ -32,11 +30,11 @@ const System::Char SYNS_AttrExtended[] = L"Extended";
 const System::Char SYNS_FriendlyAttrExtended[] = L"Extended";
   // as this language is case-insensitive keywords *must* be in lowercase
 const UnicodeString Keywords[38/*# range 0..37*/] = {L"any", L"attribute", L"boolean", L"byte", L"bytestring", L"callback", L"const", L"creator", L"date", L"deleter"
-																				, L"dictionary", L"domstring", L"double", L"enum", L"exception", L"float", L"getter", L"implements", L"inherit", L"interface"
-																				, L"legacycaller", L"long", L"object", L"octet", L"optional", L"partial", L"readonly", L"regexp", L"sequence", L"setter"
-																				, L"short", L"static", L"stringifier", L"typedef", L"unresticted", L"unrestricted", L"unsigned", L"void"};
+                    , L"dictionary", L"domstring", L"double", L"enum", L"exception", L"float", L"getter", L"implements", L"inherit", L"interface"
+                    , L"legacycaller", L"long", L"object", L"octet", L"optional", L"partial", L"readonly", L"regexp", L"sequence", L"setter"
+                    , L"short", L"static", L"stringifier", L"typedef", L"unresticted", L"unrestricted", L"unsigned", L"void"};
 const int KeyIndices[59/*# range 0..58*/] = {14, 28, 4, 37, 21, -1, -1, 12, 17, -1, -1, 22, -1, 3, -1, -1, 29, -1, 27, 31, -1, 1, 20, -1, 24, 15, 2, -1, -1, -1, -1, 23, -1, 19, 0, 13, 11, 16, 34, 10, 36, 25, -1, 30
-																				, -1, 33, 32, 6, -1, 9, 7, -1, 8, -1, 26, 18, -1, 5, 35};
+                    , -1, 33, 32, 6, -1, 9, 7, -1, 8, -1, 26, 18, -1, 5, 35};
 
 __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
  : inherited(AOwner),
@@ -56,21 +54,21 @@ __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fArgumentsAttri = new TSynHighlighterAttributes(SYNS_AttrArguments, SYNS_FriendlyAttrArguments);
-	fArgumentsAttri->Style = SynHighlighterWebIDL__0;
+	fArgumentsAttri->Style = Synhighlighterwebidl__0;
 	fArgumentsAttri->Foreground = clNavy;
 	addAttribute(fArgumentsAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterWebIDL__1;
+	fCommentAttri->Style = Synhighlighterwebidl__1;
 	fCommentAttri->Foreground = clGreen;
 	addAttribute(fCommentAttri);
 	fExtendedAttri = new TSynHighlighterAttributes(SYNS_AttrExtended, SYNS_FriendlyAttrExtended);
-	fExtendedAttri->Style = SynHighlighterWebIDL__2;
+	fExtendedAttri->Style = Synhighlighterwebidl__2;
 	fExtendedAttri->Foreground = clMaroon;
 	addAttribute(fExtendedAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterWebIDL__3;
+	fKeyAttri->Style = Synhighlighterwebidl__3;
 	fKeyAttri->Foreground = clNavy;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
@@ -82,7 +80,7 @@ __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
 	fStringAttri->Foreground = clPurple;
 	addAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Style = SynHighlighterWebIDL__4;
+	fSymbolAttri->Style = Synhighlighterwebidl__4;
 	fSymbolAttri->Foreground = clMaroon;
 	addAttribute(fSymbolAttri);
 	fTypesAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
@@ -99,7 +97,7 @@ void __fastcall TSynWebIDLSyn::InitIdent()
 	int stop = 0;
 	for(stop = 58 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[34] = FuncAny;
@@ -1101,7 +1099,7 @@ void __fastcall TSynWebIDLSyn::ResetRange()
 
 void __fastcall TSynWebIDLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynWebIDLSyn::GetRange()
@@ -1121,16 +1119,8 @@ void SynHighlighterWebIDL_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynWebIDLSyn));
 }
-class SynHighlighterWebIDL_unit
-{
-public:
-	SynHighlighterWebIDL_unit()
-	{
-		SynHighlighterWebIDL_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterWebIDL_unit _SynHighlighterWebIDL_unit;
 
 }  // namespace SynHighlighterWebIDL
 

@@ -1,19 +1,3 @@
-#ifndef SynEditKeyCmdsH
-#define SynEditKeyCmdsH
-
-#include <System.hpp>
-#include "d2c_system.h"
-
-#include <Vcl.Menus.hpp>
-#include "SynUnicode.h"
-#include <System.Classes.hpp>
-#include "SynEditTypes.h"
-#include <System.SysUtils.hpp>
-
-namespace Syneditkeycmds
-{
-
-#define SynEditKeyCmds__0 System::Classes::TShiftState()
 /*-------------------------------------------------------------------------------
 The contents of this file are subject to the Mozilla Public License
 Version 1.1 (the "License"); you may not use this file except in compliance
@@ -51,6 +35,95 @@ located at http://SynEdit.SourceForge.net
 Known Issues:
 -------------------------------------------------------------------------------*/
 // TODO: introduce friendly Names for the Commands (EditorCommandStrs is not good enough for end-users)
+#ifndef SynEditKeyCmdsH
+#define SynEditKeyCmdsH
+
+#include <System.hpp>
+#include "d2c_system.h"
+
+#include <Vcl.Menus.hpp>
+#include "SynUnicode.h"
+#include <System.Classes.hpp>
+#include "SynEditTypes.h"
+#include <System.SysUtils.hpp>
+
+namespace Syneditkeycmds
+{
+
+#define Syneditkeycmds__0 TShiftState()
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynEditKeyCmds.pas, released 2000-04-07.
+The Original Code is based on the mwKeyCmds.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Brad Stowers.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynEditKeyCmds.pas,v 1.23.2.4 2008/09/14 16:24:58 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+// TODO: introduce friendly Names for the Commands (EditorCommandStrs is not good enough for end-users)
+
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 
   //****************************************************************************
   // NOTE!  If you add an editor command, you must also update the
@@ -202,7 +275,7 @@ class ESynKeyError : public System::Sysutils::Exception
 {
 	#include "SynEditKeyCmds_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall ESynKeyError(const String Msg);
 	__fastcall ESynKeyError(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynKeyError(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -221,75 +294,75 @@ class TSynEditKeyStroke : public System::Classes::TCollectionItem
 {
 private:
 	WORD FKey;          // Virtual keycode, i.e. VK_xxx
-	System::Classes::TShiftState FShift;
+	TShiftState FShift;
 	WORD FKey2;
-	System::Classes::TShiftState FShift2;
+	TShiftState FShift2;
 	Synedittypes::TSynEditorCommand FCommand;
-	System::Classes::TShortCut __fastcall GetShortCut();
-	System::Classes::TShortCut __fastcall GetShortCut2();
+	TShortCut __fastcall GetShortCut();
+	TShortCut __fastcall GetShortCut2();
 	void __fastcall SetCommand(Synedittypes::TSynEditorCommand Value);
 	void __fastcall SetKey(WORD Value);
 	void __fastcall SetKey2(WORD Value);
-	void __fastcall SetShift(const System::Classes::TShiftState Value);
-	void __fastcall SetShift2(const System::Classes::TShiftState Value);
-	void __fastcall SetShortCut(const System::Classes::TShortCut Value);
-	void __fastcall SetShortCut2(const System::Classes::TShortCut Value);
+	void __fastcall SetShift(const TShiftState Value);
+	void __fastcall SetShift2(const TShiftState Value);
+	void __fastcall SetShortCut(const TShortCut Value);
+	void __fastcall SetShortCut2(const TShortCut Value);
 protected:
 	virtual String __fastcall GetDisplayName();
 public:
-	typedef System::Classes::TCollectionItem inherited;	
+	typedef System::Classes::TCollectionItem inherited;
 	#include "SynEditKeyCmds_friends.inc"
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
-	void __fastcall LoadFromStream(System::Classes::TStream* AStream);
-	void __fastcall SaveToStream(System::Classes::TStream* AStream);
+	virtual void __fastcall Assign(TPersistent* Source);
+	void __fastcall LoadFromStream(TStream* AStream);
+	void __fastcall SaveToStream(TStream* AStream);
     // No duplicate checking is done if assignment made via these properties!
 	__property WORD key = { read = FKey, write = SetKey };
 	__property WORD Key2 = { read = FKey2, write = SetKey2 };
-	__property System::Classes::TShiftState Shift = { read = FShift, write = SetShift };
-	__property System::Classes::TShiftState Shift2 = { read = FShift2, write = SetShift2 };
+	__property TShiftState Shift = { read = FShift, write = SetShift };
+	__property TShiftState Shift2 = { read = FShift2, write = SetShift2 };
 __published:
-	__property TSynEditorCommand Command = { read = FCommand, write = SetCommand };
+	__property Synedittypes::TSynEditorCommand Command = { read = FCommand, write = SetCommand };
 	__property TShortCut ShortCut = { read = GetShortCut, write = SetShortCut, default = 0 };
 	__property TShortCut ShortCut2 = { read = GetShortCut2, write = SetShortCut2, default = 0 };
 public:
-	__fastcall TSynEditKeyStroke(System::Classes::TCollection* Collection);
+	__fastcall TSynEditKeyStroke(TCollection* Collection);
 };
 
 class TSynEditKeyStrokes : public System::Classes::TCollection
 {
 private:
-	System::Classes::TPersistent* FOwner;
+	TPersistent* FOwner;
 	TSynEditKeyStroke* __fastcall GetItem(int Index);
 	void __fastcall SetItem(int Index, TSynEditKeyStroke* Value);
 protected:
-	DYNAMIC System::Classes::TPersistent* __fastcall GetOwner();
+	DYNAMIC TPersistent* __fastcall GetOwner();
 public:
-	typedef System::Classes::TCollection inherited;	
+	typedef System::Classes::TCollection inherited;
 	#include "SynEditKeyCmds_friends.inc"
-	__fastcall TSynEditKeyStrokes(System::Classes::TPersistent* AOwner);
+	__fastcall TSynEditKeyStrokes(TPersistent* AOwner);
 	TSynEditKeyStroke* __fastcall Add();
 //++ CodeFolding
-	void __fastcall AddKey(Synedittypes::TSynEditorCommand ACmd, WORD AKey, const System::Classes::TShiftState AShift, WORD AKey2 = 0, const System::Classes::TShiftState AShift2 = SynEditKeyCmds__0);
+	void __fastcall AddKey(Synedittypes::TSynEditorCommand ACmd, WORD AKey, const TShiftState AShift, WORD AKey2 = 0, const TShiftState AShift2 = Syneditkeycmds__0);
 //-- CodeFolding
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 	int __fastcall FindCommand(Synedittypes::TSynEditorCommand cmd);
-	int __fastcall FindKeycode(WORD Code, System::Classes::TShiftState Ss);
-	int __fastcall FindKeycode2(WORD Code1, System::Classes::TShiftState SS1, WORD Code2, System::Classes::TShiftState SS2);
-	int __fastcall FindShortcut(System::Classes::TShortCut SC);
-	int __fastcall FindShortcut2(System::Classes::TShortCut SC, System::Classes::TShortCut SC2);
-	void __fastcall LoadFromStream(System::Classes::TStream* AStream);
+	int __fastcall FindKeycode(WORD Code, TShiftState Ss);
+	int __fastcall FindKeycode2(WORD Code1, TShiftState SS1, WORD Code2, TShiftState SS2);
+	int __fastcall FindShortcut(TShortCut SC);
+	int __fastcall FindShortcut2(TShortCut SC, TShortCut SC2);
+	void __fastcall LoadFromStream(TStream* AStream);
 	void __fastcall ResetDefaults();
-	void __fastcall SaveToStream(System::Classes::TStream* AStream);
+	void __fastcall SaveToStream(TStream* AStream);
 	__property TSynEditKeyStroke* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
-	__fastcall TSynEditKeyStrokes(System::Classes::TCollectionItemClass ItemClass);
+	__fastcall TSynEditKeyStrokes(TCollectionItemClass ItemClass);
 };
 
 // These are mainly for the TSynEditorCommand property editor, but could be
 // useful elsewhere.
 String __fastcall EditorCommandToDescrString(Synedittypes::TSynEditorCommand cmd);
 String __fastcall EditorCommandToCodeString(Synedittypes::TSynEditorCommand cmd);
-void __fastcall GetEditorCommandValues(System::Classes::TGetStrProc Proc);
-void __fastcall GetEditorCommandExtended(System::Classes::TGetStrProc Proc);
+void __fastcall GetEditorCommandValues(TGetStrProc Proc);
+void __fastcall GetEditorCommandExtended(TGetStrProc Proc);
 bool __fastcall IdentToEditorCommand(const String Ident, int& cmd);
 bool __fastcall EditorCommandToIdent(int cmd, String& Ident);
 String __fastcall ConvertCodeStringToExtended(String AString);

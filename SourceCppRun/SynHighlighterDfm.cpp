@@ -12,38 +12,37 @@ using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterdfm
 {
-#define SynHighlighterDfm__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterDfm__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterDfm__2 (TSysCharSet() <<  \
+#define Synhighlighterdfm__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterdfm__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdfm__2 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterDfm__3 (TSysCharSet() << L'n' << L'N')
-#define SynHighlighterDfm__4 (TSysCharSet() << L'd' << L'D')
-#define SynHighlighterDfm__5 (TSysCharSet() << L'b' << L'B')
-#define SynHighlighterDfm__6 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterDfm__7 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterDfm__8 (TSysCharSet() << L'c' << L'C')
-#define SynHighlighterDfm__9 (TSysCharSet() << L't' << L'T')
-#define SynHighlighterDfm__10 (TSysCharSet() << L'n' << L'N')
-#define SynHighlighterDfm__11 (TSysCharSet() << L'h' << L'H')
-#define SynHighlighterDfm__12 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterDfm__13 (TSysCharSet() << L'r' << L'R')
-#define SynHighlighterDfm__14 (TSysCharSet() << L'i' << L'I')
-#define SynHighlighterDfm__15 (TSysCharSet() << L't' << L'T')
-#define SynHighlighterDfm__16 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterDfm__17 (TSysCharSet() << L'd' << L'D')
-#define SynHighlighterDfm__18 (TSysCharSet() << L'n' << L'N')
-#define SynHighlighterDfm__19 (TSysCharSet() << L'l' << L'L')
-#define SynHighlighterDfm__20 (TSysCharSet() << L'i' << L'I')
-#define SynHighlighterDfm__21 (TSysCharSet() << L'n' << L'N')
-#define SynHighlighterDfm__22 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterDfm__23 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterDfm__24 (TSysCharSet() << L'o' << L'O')
-#define SynHighlighterDfm__25 (TSysCharSet() << L'i' << L'I')
+#define Synhighlighterdfm__3 (TSysCharSet() << 'n' << 'N')
+#define Synhighlighterdfm__4 (TSysCharSet() << 'd' << 'D')
+#define Synhighlighterdfm__5 (TSysCharSet() << 'b' << 'B')
+#define Synhighlighterdfm__6 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterdfm__7 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterdfm__8 (TSysCharSet() << 'c' << 'C')
+#define Synhighlighterdfm__9 (TSysCharSet() << 't' << 'T')
+#define Synhighlighterdfm__10 (TSysCharSet() << 'n' << 'N')
+#define Synhighlighterdfm__11 (TSysCharSet() << 'h' << 'H')
+#define Synhighlighterdfm__12 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterdfm__13 (TSysCharSet() << 'r' << 'R')
+#define Synhighlighterdfm__14 (TSysCharSet() << 'i' << 'I')
+#define Synhighlighterdfm__15 (TSysCharSet() << 't' << 'T')
+#define Synhighlighterdfm__16 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterdfm__17 (TSysCharSet() << 'd' << 'D')
+#define Synhighlighterdfm__18 (TSysCharSet() << 'n' << 'N')
+#define Synhighlighterdfm__19 (TSysCharSet() << 'l' << 'L')
+#define Synhighlighterdfm__20 (TSysCharSet() << 'i' << 'I')
+#define Synhighlighterdfm__21 (TSysCharSet() << 'n' << 'N')
+#define Synhighlighterdfm__22 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterdfm__23 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterdfm__24 (TSysCharSet() << 'o' << 'O')
+#define Synhighlighterdfm__25 (TSysCharSet() << 'i' << 'I')
 
 
 
@@ -148,12 +147,12 @@ __fastcall TSynDfmSyn::TSynDfmSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterDfm__0;
+	fCommentAttri->Style = Synhighlighterdfm__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
-	fKeyAttri->Style = SynHighlighterDfm__1;
+	fKeyAttri->Style = Synhighlighterdfm__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -184,7 +183,7 @@ void __fastcall TSynDfmSyn::AsciiCharProc()
 	{
 		++Run;
 	}
-	while(!!CharInSet(fLine[Run], SynHighlighterDfm__2));
+	while(!!CharInSet(fLine[Run], Synhighlighterdfm__2));
 }
 
 void __fastcall TSynDfmSyn::BraceCloseProc()
@@ -226,7 +225,7 @@ void __fastcall TSynDfmSyn::CRProc()
 
 void __fastcall TSynDfmSyn::EndProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterDfm__3) && CharInSet(fLine[Run + 2], SynHighlighterDfm__4) && !IsIdentChar(fLine[Run + 3]))
+	if(CharInSet(fLine[Run + 1], Synhighlighterdfm__3) && CharInSet(fLine[Run + 2], Synhighlighterdfm__4) && !IsIdentChar(fLine[Run + 3]))
 	{
 		FTokenID = tkKey;
 		Run += 3;
@@ -309,7 +308,7 @@ void __fastcall TSynDfmSyn::NumberProc()
 
 void __fastcall TSynDfmSyn::ObjectProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterDfm__5) && CharInSet(fLine[Run + 2], SynHighlighterDfm__6) && CharInSet(fLine[Run + 3], SynHighlighterDfm__7) && CharInSet(fLine[Run + 4], SynHighlighterDfm__8) && CharInSet(fLine[Run + 5], SynHighlighterDfm__9) && !IsIdentChar(fLine[Run + 6]))
+	if(CharInSet(fLine[Run + 1], Synhighlighterdfm__5) && CharInSet(fLine[Run + 2], Synhighlighterdfm__6) && CharInSet(fLine[Run + 3], Synhighlighterdfm__7) && CharInSet(fLine[Run + 4], Synhighlighterdfm__8) && CharInSet(fLine[Run + 5], Synhighlighterdfm__9) && !IsIdentChar(fLine[Run + 6]))
 	{
 		FTokenID = tkKey;
 		Run += 6;
@@ -320,14 +319,14 @@ void __fastcall TSynDfmSyn::ObjectProc()
 
 void __fastcall TSynDfmSyn::InheritedProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterDfm__10) && CharInSet(fLine[Run + 2], SynHighlighterDfm__11) && CharInSet(fLine[Run + 3], SynHighlighterDfm__12) && CharInSet(fLine[Run + 4], SynHighlighterDfm__13) && CharInSet(fLine[Run + 5], SynHighlighterDfm__14) && CharInSet(fLine[Run + 6], SynHighlighterDfm__15) && CharInSet(fLine[Run + 7], SynHighlighterDfm__16) && CharInSet(fLine[Run + 8], SynHighlighterDfm__17) && !IsIdentChar(fLine[Run + 9]))
+	if(CharInSet(fLine[Run + 1], Synhighlighterdfm__10) && CharInSet(fLine[Run + 2], Synhighlighterdfm__11) && CharInSet(fLine[Run + 3], Synhighlighterdfm__12) && CharInSet(fLine[Run + 4], Synhighlighterdfm__13) && CharInSet(fLine[Run + 5], Synhighlighterdfm__14) && CharInSet(fLine[Run + 6], Synhighlighterdfm__15) && CharInSet(fLine[Run + 7], Synhighlighterdfm__16) && CharInSet(fLine[Run + 8], Synhighlighterdfm__17) && !IsIdentChar(fLine[Run + 9]))
 	{
 		FTokenID = tkKey;
 		Run += 9;
 	}
 	else
 	{
-		if(CharInSet(fLine[Run + 1], SynHighlighterDfm__18) && CharInSet(fLine[Run + 2], SynHighlighterDfm__19) && CharInSet(fLine[Run + 3], SynHighlighterDfm__20) && CharInSet(fLine[Run + 4], SynHighlighterDfm__21) && CharInSet(fLine[Run + 5], SynHighlighterDfm__22) && !IsIdentChar(fLine[Run + 6]))
+		if(CharInSet(fLine[Run + 1], Synhighlighterdfm__18) && CharInSet(fLine[Run + 2], Synhighlighterdfm__19) && CharInSet(fLine[Run + 3], Synhighlighterdfm__20) && CharInSet(fLine[Run + 4], Synhighlighterdfm__21) && CharInSet(fLine[Run + 5], Synhighlighterdfm__22) && !IsIdentChar(fLine[Run + 6]))
 		{
 			FTokenID = tkKey;
 			Run += 6;
@@ -407,15 +406,15 @@ void __fastcall TSynDfmSyn::Next()
 		 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
 		 case 117: case 118: case 119: case 120: case 121: case 122:
 		case L'_':
-		if(CharInSet(fLine[Run], SynHighlighterDfm__23))
+		if(CharInSet(fLine[Run], Synhighlighterdfm__23))
 			EndProc();
 		else
 		{
-			if(CharInSet(fLine[Run], SynHighlighterDfm__24))
+			if(CharInSet(fLine[Run], Synhighlighterdfm__24))
 				ObjectProc();
 			else
 			{
-				if(CharInSet(fLine[Run], SynHighlighterDfm__25))
+				if(CharInSet(fLine[Run], Synhighlighterdfm__25))
 					InheritedProc();
 				else
 					AltProc();
@@ -564,7 +563,7 @@ void __fastcall TSynDfmSyn::ResetRange()
 
 void __fastcall TSynDfmSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynDfmSyn::IsFilterStored()
@@ -612,16 +611,8 @@ void SynHighlighterDfm_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynDfmSyn));
 }
-class SynHighlighterDfm_unit
-{
-public:
-	SynHighlighterDfm_unit()
-	{
-		SynHighlighterDfm_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterDfm_unit _SynHighlighterDfm_unit;
 
 }  // namespace SynHighlighterDfm
 

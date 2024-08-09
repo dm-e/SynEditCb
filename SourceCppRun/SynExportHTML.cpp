@@ -16,23 +16,22 @@ using namespace Syneditstrconst;
 using namespace Synhighlightermulti;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
 using namespace Vcl::Graphics;
 
 namespace Synexporthtml
 {
-#define SynExportHTML__0 (TSysCharSet() << L'.' << L'_')
-#define SynExportHTML__1 (TSysCharSet() <<  \
+#define Synexporthtml__0 (TSysCharSet() << '.' << '_')
+#define Synexporthtml__1 (TSysCharSet() <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										103 << 104 << 105 << 106 << 107 << 108 <<  \
 										109 << 110 << 111 << 112 << 113 << 114 <<  \
 										115 << 116 << 117 << 118 << 119 << 120 <<  \
 										121 << 122 <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'-')
-#define SynExportHTML__2 (System::Set<TSynEncoding, seUTF8, seAnsi>() << TSynEncoding::seUTF16LE << TSynEncoding::seUTF16BE)
-#define SynExportHTML__3 (TSynEncodings() << TSynEncoding::seUTF8 << TSynEncoding::seUTF16LE << TSynEncoding::seUTF16BE)
+										54 << 55 << 56 << 57 << '-')
+#define Synexporthtml__2 (System::Set<TSynEncoding, TSynEncoding::seUTF8, TSynEncoding::seAnsi>() << seUTF16LE << seUTF16BE)
+#define Synexporthtml__3 (TSynEncodings() << seUTF8 << seUTF16LE << seUTF16BE)
 
 
 
@@ -45,7 +44,7 @@ __fastcall TSynExporterHTML::TSynExporterHTML(TComponent* AOwner)
 	const WideChar CF_HTML[] = L"HTML Format";
 	FClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
 	fDefaultFilter = SYNS_FilterHTML;
-	FEncoding = TSynEncoding::seUTF8;
+	FEncoding = seUTF8;
 }
 
 String __fastcall TSynExporterHTML::AttriToCSS(TSynHighlighterAttributes* Attri, String UniqueAttriName)
@@ -85,7 +84,7 @@ String __fastcall TSynExporterHTML::ColorToHTML(TColor AColor)
 	String result;
 	int RGBColor = 0;
 	unsigned char RGBValue = 0;
-	const Char Digits[16/*# range 0..15*/ + 1] = L"0123456789ABCDEF";
+	const Char Digits[16/*# range 0..15*/] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 	RGBColor = ColorToRGB(AColor);
 	result = L"#000000";
 	RGBValue = GetRValue((DWORD) RGBColor);
@@ -231,11 +230,11 @@ String __fastcall TSynExporterHTML::MakeValidName(String Name)
 	result = LowerCase(Name);
 	for(stop = 1, i = result.Length(); i >= stop; i--)
 	{
-		if(CharInSet(result[i], SynExportHTML__0))
+		if(CharInSet(result[i], Synexporthtml__0))
 			result[i] = L'-';
 		else
 		{
-			if(!CharInSet(result[i], SynExportHTML__1))
+			if(!CharInSet(result[i], Synexporthtml__1))
 				result.Delete(i, 	1);
 		}
 	}
@@ -290,14 +289,14 @@ bool __fastcall TSynExporterHTML::UseBom()
 {
 	bool result = false;
   // do not include seUTF8 as some browsers have problems with UTF-8-BOM
-	result = SynExportHTML__2.Contains(Encoding);
+	result = Synexporthtml__2.Contains(Encoding);
 	return result;
 }
 
 TSynEncodings __fastcall TSynExporterHTML::SupportedEncodings()
 {
 	TSynEncodings result;
-	result = SynExportHTML__3;
+	result = Synexporthtml__3;
 	return result;
 }
 

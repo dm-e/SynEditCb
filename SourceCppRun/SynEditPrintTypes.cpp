@@ -6,8 +6,6 @@
 using namespace std;
 using namespace d2c_system;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
 
 namespace Syneditprinttypes
 {
@@ -18,7 +16,7 @@ __fastcall TWrapPos::TWrapPos() {}
 
 //Returns wrapping positions in AList.
 
-bool __fastcall WrapTextEx(const String Line, TSysCharSet BreakChars, int MaxCol, System::Classes::TList* AList)
+bool __fastcall WrapTextEx(const String Line, TSysCharSet BreakChars, int MaxCol, TList* AList)
 {
 	bool result = false;
 	TWrapPos* WrapPos = nullptr;

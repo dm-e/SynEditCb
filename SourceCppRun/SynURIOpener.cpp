@@ -19,8 +19,7 @@ using namespace Synhighlighteruri;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Sysutils;
-using namespace System::Types;
-using namespace Vcl::Controls;
+using namespace System::Uitypes;
 using namespace Vcl::Forms;
 using namespace Winapi::Shellapi;
 
@@ -69,7 +68,6 @@ __fastcall TSynURIOpener::~TSynURIOpener()
 	// inherited;
 }
 
-
 bool __fastcall TSynURIOpener::MouseInSynEdit()
 {
 	bool result = false;
@@ -116,14 +114,14 @@ void __fastcall TSynURIOpener::NewMouseCursor(TObject* Sender, const TBufferCoor
 		{
 			auto with0 = FEditor;
 			with0->GetHighlighterAttriAtRowColEx(aLineCharPos, Token, TokenType, Start, Attri);
-			if(ASSIGNED(URIHighlighter) && ((Attri == URIHighlighter->URIAttri) || (Attri == URIHighlighter->VisitedURIAttri)) && !((with0->Options.Contains(TSynEditorOption::eoDragDropEditing)) && with0->IsPointInSelection(aLineCharPos)))
-				aCursor = crHandPoint;
+			if(ASSIGNED(URIHighlighter) && ((Attri == URIHighlighter->URIAttri) || (Attri == URIHighlighter->VisitedURIAttri)) && !((with0->Options.Contains(eoDragDropEditing)) && with0->IsPointInSelection(aLineCharPos)))
+				aCursor = System::Uitypes::crHandPoint;
 		}
 }
 
 void __fastcall TSynURIOpener::NewMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-	if((Button == Vcl::Controls::TMouseButton::mbLeft) && !(FCtrlActivatesLinks) || FControlDown)
+	if((Button == System::Uitypes::TMouseButton::mbLeft) && !(FCtrlActivatesLinks) || FControlDown)
 	{
 		fMouseDownX = X;
 		fMouseDownY = Y;
@@ -137,18 +135,18 @@ void __fastcall TSynURIOpener::NewMouseUp(TObject* Sender, TMouseButton Button, 
 	int Start = 0;
 	String Token;
 	TSynHighlighterAttributes* Attri = nullptr;
-	if((Button != Vcl::Controls::TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(fMouseDownX - X) > 4) || (Abs(fMouseDownY - Y) > 4))
+	if((Button != System::Uitypes::TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(fMouseDownX - X) > 4) || (Abs(fMouseDownY - Y) > 4))
 		return;
 	/*# with TAccessCustomSynEdit(FEditor) do */
 	{
 		auto with0 = ((TAccessCustomSynEdit*) FEditor);
-		if((with0->Options.Contains(TSynEditorOption::eoDragDropEditing)) && with0->IsPointInSelection(ptLineCol))
+		if((with0->Options.Contains(eoDragDropEditing)) && with0->IsPointInSelection(ptLineCol))
 			return;
 		if(X >= with0->fGutterWidth)
 		{
 			ptLineCol = with0->DisplayToBufferPos(with0->PixelsToRowColumn(X, Y));
 			with0->GetHighlighterAttriAtRowColEx(ptLineCol, Token, TokenType, Start, Attri);
-			if(ASSIGNED(URIHighlighter) && ((Attri == URIHighlighter->URIAttri) || (Attri == URIHighlighter->VisitedURIAttri)) && !((with0->Options.Contains(TSynEditorOption::eoDragDropEditing)) && with0->IsPointInSelection(ptLineCol)))
+			if(ASSIGNED(URIHighlighter) && ((Attri == URIHighlighter->URIAttri) || (Attri == URIHighlighter->VisitedURIAttri)) && !((with0->Options.Contains(eoDragDropEditing)) && with0->IsPointInSelection(ptLineCol)))
 			{
 				OpenLink(Token, TokenType);
 				with0->InvalidateLine(ptLineCol.Line);
@@ -246,18 +244,10 @@ void SynURIOpener_initialization()
 	
 	CursorHandle = (THandle) LoadCursor(0, const_cast<LPCWSTR>(IDC_LINK));
 	if(CursorHandle != 0)
-		Screen->Cursors[crHandPoint] = (HICON) CursorHandle;
+		Screen->Cursors[System::Uitypes::crHandPoint] = (HCURSOR) CursorHandle;
 }
-class SynURIOpener_unit
-{
-public:
-	SynURIOpener_unit()
-	{
-		SynURIOpener_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynURIOpener_unit _SynURIOpener_unit;
 
 }  // namespace SynURIOpener
 

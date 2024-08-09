@@ -1,3 +1,29 @@
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynEditHighlighter.pas, released 2000-04-07.
+
+The Original Code is based on mwHighlighter.pas by Martin Waldenburg, part of
+the mwEdit component suite.
+Portions created by Martin Waldenburg are Copyright (C) 1998 Martin Waldenburg.
+Unicode translation by Maël Hörz.
+Options property added by CodehunterWorks
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
 #ifndef SynEditHighlighterH
 #define SynEditHighlighterH
 
@@ -44,7 +70,42 @@ located at http://SynEdit.SourceForge.net
 
 Known Issues:
 -------------------------------------------------------------------------------*/
-typedef Syneditmiscclasses::TBetterRegistry TBetterRegistry;
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
+//# typedef Syneditmiscclasses::TBetterRegistry TBetterRegistry;
 
 class TSynHighlighterAttributes : public System::Classes::TPersistent
 {
@@ -57,7 +118,7 @@ private:
 	String FName;
 	TFontStyles FStyle;
 	TFontStyles fStyleDefault;
-	System::Classes::TNotifyEvent FOnChange;
+	TNotifyEvent FOnChange;
 	virtual void __fastcall Changed();
 	bool __fastcall GetBackgroundColorStored();
 	bool __fastcall GetForegroundColorStored();
@@ -70,20 +131,20 @@ private:
 public:
 	typedef System::Classes::TPersistent inherited;	
 	#include "SynEditHighlighter_friends.inc"
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 	void __fastcall AssignColorAndStyle(TSynHighlighterAttributes* Source);
 	__fastcall TSynHighlighterAttributes(String AName, String AFriendlyName);
 	void __fastcall InternalSaveDefaultValues();
 	virtual bool __fastcall LoadFromBorlandRegistry(HKEY RootKey, String AttrKey, String AttrName, bool OldStyle);
-	bool __fastcall LoadFromRegistry(TBetterRegistry* reg);
-	bool __fastcall SaveToRegistry(TBetterRegistry* reg);
-	bool __fastcall LoadFromFile(System::Inifiles::TCustomIniFile* Ini);
-	bool __fastcall SaveToFile(System::Inifiles::TCustomIniFile* Ini);
+	bool __fastcall LoadFromRegistry(Syneditmiscclasses::TBetterRegistry* reg);
+	bool __fastcall SaveToRegistry(Syneditmiscclasses::TBetterRegistry* reg);
+	bool __fastcall LoadFromFile(TCustomIniFile* Ini);
+	bool __fastcall SaveToFile(TCustomIniFile* Ini);
 	void __fastcall SetColors(TColor Foreground, TColor Background);
 	__property String FriendlyName = { read = FFriendlyName };
 	__property int IntegerStyle = { read = GetStyleFromInt, write = SetStyleFromInt };
 	__property String Name = { read = FName };
-	__property System::Classes::TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
 __published:
 	__property TColor Background = { read = FBackground, write = SetBackground, stored = GetBackgroundColorStored };
 	__property TColor Foreground = { read = FForeground, write = SetForeground, stored = GetForegroundColorStored };
@@ -94,7 +155,7 @@ public:
       // supports LoadFrom/SaveToRegistry
 enum TSynHighlighterCapability {hcUserSettings,
                                 hcRegistry };
-typedef System::Set<TSynHighlighterCapability, hcUserSettings, hcRegistry> TSynHighlighterCapabilities;
+typedef System::Set<TSynHighlighterCapability, TSynHighlighterCapability::hcUserSettings, TSynHighlighterCapability::hcRegistry> TSynHighlighterCapabilities;
 const int SYN_ATTR_COMMENT = 0;
 const int SYN_ATTR_IDENTIFIER = 1;
 const int SYN_ATTR_KEYWORD = 2;
@@ -105,18 +166,18 @@ const int SYN_ATTR_SYMBOL = 5;
 class TSynCustomHighlighter : public System::Classes::TComponent
 {
 private:
-	System::Classes::TStringList* fAttributes;
+	TStringList* fAttributes;
 	Syneditmiscclasses::TSynNotifyEventChain* fAttrChangeHooks;
 	int FUpdateCount;
 	bool FEnabled;
-	System::Sysutils::TSysCharSet FAdditionalWordBreakChars;
-	System::Sysutils::TSysCharSet FAdditionalIdentChars;
+	TSysCharSet FAdditionalWordBreakChars;
+	TSysCharSet FAdditionalIdentChars;
 	String FExportName;
 	Synedithighlighteroptions::TSynEditHighlighterOptions* fOptions;
 	String __fastcall GetExportName();
 	void __fastcall SetEnabled(bool Value);
-	void __fastcall SetAdditionalIdentChars(const System::Sysutils::TSysCharSet Value);
-	void __fastcall SetAdditionalWordBreakChars(const System::Sysutils::TSysCharSet Value);
+	void __fastcall SetAdditionalIdentChars(const TSysCharSet Value);
+	void __fastcall SetAdditionalWordBreakChars(const TSysCharSet Value);
 protected:
 	PWideChar fCasedLine;
 	String fCasedLineStr;
@@ -140,7 +201,7 @@ protected:
 	virtual void __fastcall Loaded();
 	void __fastcall addAttribute(TSynHighlighterAttributes* Attri);
 	void __fastcall DefHighlightChange(TObject* Sender);
-	virtual void __fastcall DefineProperties(System::Classes::TFiler* Filer);
+	virtual void __fastcall DefineProperties(TFiler* Filer);
 	void __fastcall FreeHighlighterAttributes();
 	virtual int __fastcall GetAttribCount();
 	virtual TSynHighlighterAttributes* __fastcall getAttribute(int Index);
@@ -151,7 +212,7 @@ protected:
 	virtual bool __fastcall IsCurrentToken(const String Token);
 	virtual bool __fastcall IsFilterStored();
 	virtual bool __fastcall IsLineEnd(int Run);
-	void __fastcall SetAttributesOnChange(System::Classes::TNotifyEvent AEvent);
+	void __fastcall SetAttributesOnChange(TNotifyEvent AEvent);
 	virtual void __fastcall SetDefaultFilter(String Value);
 	virtual void __fastcall SetSampleSource(String Value);
 	TSynHighlighterCapabilities __fastcall GetCapabilitiesProp();
@@ -163,9 +224,9 @@ public:
 	__classmethod virtual TSynHighlighterCapabilities __fastcall GetCapabilities();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
 	__classmethod virtual String __fastcall GetLanguageName();
-	__fastcall TSynCustomHighlighter(System::Classes::TComponent* AOwner);
+	__fastcall TSynCustomHighlighter(TComponent* AOwner);
 	virtual __fastcall ~TSynCustomHighlighter();
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 	void __fastcall BeginUpdate();
 	void __fastcall EndUpdate();
 	virtual bool __fastcall GetEol(){return false;} // = 0;
@@ -186,22 +247,22 @@ public:
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
 	virtual bool __fastcall UseUserSettings(int settingIndex);
-	virtual void __fastcall EnumUserSettings(System::Classes::TStrings* Settings);
+	virtual void __fastcall EnumUserSettings(TStrings* Settings);
 	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
 	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
-	bool __fastcall LoadFromIniFile(System::Inifiles::TCustomIniFile* AIni);
-	bool __fastcall SaveToIniFile(System::Inifiles::TCustomIniFile* AIni);
+	bool __fastcall LoadFromIniFile(TCustomIniFile* AIni);
+	bool __fastcall SaveToIniFile(TCustomIniFile* AIni);
 	bool __fastcall LoadFromFile(String AFileName);
 	bool __fastcall SaveToFile(String AFileName);
-	void __fastcall HookAttrChangeEvent(System::Classes::TNotifyEvent ANotifyEvent);
-	void __fastcall UnhookAttrChangeEvent(System::Classes::TNotifyEvent ANotifyEvent);
+	void __fastcall HookAttrChangeEvent(TNotifyEvent ANotifyEvent);
+	void __fastcall UnhookAttrChangeEvent(TNotifyEvent ANotifyEvent);
 	virtual bool __fastcall IsIdentChar(WideChar AChar);
 	virtual bool __fastcall IsWhiteChar(WideChar AChar);
 	virtual bool __fastcall IsWordBreakChar(WideChar AChar);
 	__property String FriendlyLanguageName = { read = GetFriendlyLanguageNameProp };
 	__property String LanguageName = { read = GetLanguageNameProp };
-	__property System::Sysutils::TSysCharSet AdditionalIdentChars = { read = FAdditionalIdentChars, write = SetAdditionalIdentChars };
-	__property System::Sysutils::TSysCharSet AdditionalWordBreakChars = { read = FAdditionalWordBreakChars, write = SetAdditionalWordBreakChars };
+	__property TSysCharSet AdditionalIdentChars = { read = FAdditionalIdentChars, write = SetAdditionalIdentChars };
+	__property TSysCharSet AdditionalWordBreakChars = { read = FAdditionalWordBreakChars, write = SetAdditionalWordBreakChars };
 	__property int AttrCount = { read = GetAttribCount };
 	__property TSynHighlighterAttributes* Attribute[int Index] = { read = getAttribute };
 	__property TSynHighlighterCapabilities Capabilities = { read = GetCapabilitiesProp };
@@ -216,7 +277,7 @@ public:
 __published:
 	__property String DefaultFilter = { read = GetDefaultFilter, write = SetDefaultFilter, stored = IsFilterStored };
 	__property bool Enabled = { read = FEnabled, write = SetEnabled, default = true };
-	__property TSynEditHighlighterOptions* Options = { read = fOptions, write = fOptions }; // <-- Codehunter patch
+	__property Synedithighlighteroptions::TSynEditHighlighterOptions* Options = { read = fOptions, write = fOptions }; // <-- Codehunter patch
 };
 
 typedef System::TMetaClass* TSynCustomHighlighterClass;
@@ -228,7 +289,7 @@ class TSynHighlighterList : public System::Classes::TList
 public:
 	typedef System::Classes::TList inherited;	
 private:
-	System::Classes::TList* hlList;
+	TList* hlList;
 	TSynCustomHighlighterClass __fastcall GetItem(int Index);
 public:
 	__fastcall TSynHighlighterList();
@@ -236,7 +297,7 @@ public:
 	int __fastcall Count();
 	int __fastcall FindByFriendlyName(String FriendlyName);
 	int __fastcall FindByName(String Name);
-	int __fastcall FindByClass(System::Classes::TComponent* Comp);
+	int __fastcall FindByClass(TComponent* Comp);
 	__property TSynCustomHighlighterClass Items[int Index] = { read = GetItem/*# default */ };
 };
 void __fastcall RegisterPlaceableHighlighter(TSynCustomHighlighterClass Highlighter);

@@ -1,19 +1,21 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2021 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2024 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'SynEditDelphiInstances.pas' rev: 35.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'Syneditdelphiinstances.pas' rev: 36.00 (Windows)
 
 #ifndef SyneditdelphiinstancesHPP
 #define SyneditdelphiinstancesHPP
 
 #pragma delphiheader begin
 #pragma option push
+#if defined(__BORLANDC__) && !defined(__clang__)
 #pragma option -w-      // All warnings off
 #pragma option -Vx      // Zero-length empty class member 
+#endif
 #pragma pack(push,8)
 #include <System.hpp>
-#include <SysInit.hpp>
+#include <Sysinit.hpp>
 #include <System.Generics.Collections.hpp>
 #include <System.Generics.Defaults.hpp>
 #include <Vcl.Controls.hpp>

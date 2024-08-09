@@ -53,7 +53,7 @@ const int deLink = DROPEFFECT_LINK;
 const unsigned int deScroll = DROPEFFECT_SCROLL;
 
 // Provides a translation of a IDropTarget interface into Delphi
-typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, System::Classes::TShiftState, const TPoint&, int&, HRESULT&);
+typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, TShiftState, const TPoint&, int&, HRESULT&);
 typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
 
 class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>

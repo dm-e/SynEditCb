@@ -20,19 +20,17 @@ using namespace Synunicode;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Math;
-using namespace System::Sysutils;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
-using namespace Vcl::Printers;
 
 namespace Syneditprint
 {
-#define SynEditPrint__0 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic << TFontStyle::fsUnderline << TFontStyle::fsStrikeOut)
-#define SynEditPrint__1 (TSysCharSet() << L' ' << L'-' << L'\x09' << L',')
-#define SynEditPrint__2 (TSysCharSet() << L';' << L')' << L'.')
-#define SynEditPrint__3 TFontStyles()
-#define SynEditPrint__4 (TSysCharSet() << L' ' << L'-' << L'\x09' << L',')
-#define SynEditPrint__5 (TSysCharSet() << L';' << L')' << L'.')
+#define Syneditprint__0 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsItalic << TFontStyle::fsUnderline << TFontStyle::fsStrikeOut)
+#define Syneditprint__1 (TSysCharSet() << ' ' << '-' << '\x09' << ',')
+#define Syneditprint__2 (TSysCharSet() << ';' << ')' << '.')
+#define Syneditprint__3 TFontStyles()
+#define Syneditprint__4 (TSysCharSet() << ' ' << '-' << '\x09' << ',')
+#define Syneditprint__5 (TSysCharSet() << ';' << ')' << '.')
 
 __fastcall TPageLine::TPageLine() {}
 
@@ -78,7 +76,7 @@ __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)
 			FFontColor((TColor) 0),
 			fSelectedOnly(false),
 			fSelAvail(false),
-			fSelMode(TSynSelectionMode::smNormal),
+			fSelMode(smNormal),
 			FETODist(nullptr)
 {
 	FPrinterInfo = new TSynEditPrinterInfo();
@@ -92,7 +90,7 @@ __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)
 	FLineOffset = 0;
 	FPageOffset = 0;
 	FLineNumbersInMargin = false;
-	FPages = new System::Classes::TList();
+	FPages = new TList();
 	FTabWidth = 8;
 	FDefaultBG = clWhite;
 }
@@ -116,7 +114,6 @@ __fastcall TSynEditPrint::~TSynEditPrint()
 	FreeMemory(FETODist);
 	// inherited;
 }
-
 
 void __fastcall TSynEditPrint::DefineProperties(TFiler* Filer)
 {
@@ -161,7 +158,7 @@ void __fastcall TSynEditPrint::SetLines(TStrings* const Value)
 
 void __fastcall TSynEditPrint::SetFont(TFont* const Value)
 {
-	FFont->Assign(Value);
+	FFont->Assign((TPersistent*) Value);
 	FPagesCounted = false;
 }
 
@@ -197,14 +194,14 @@ String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String s)
 	int stop = 0;
 	FCanvas->Font = Font;
 	j = 0;
-	result.SetLength((int) (s.Length() * 2)); // speed improvement
-	for(stop = (int) s.Length(), i = 1; i <= stop; i++)
+	result.SetLength(s.Length() * 2); // speed improvement
+	for(stop = s.Length(), i = 1; i <= stop; i++)
 	{
 		++j;
     // Introduce a small tolerance Issue 54
 		CountOfAvgGlyphs = Ceil(double(FCanvas->TextWidth(String(s[i]))) / fCharWidth - 0.04);
 		if(j + CountOfAvgGlyphs > result.Length())
-			result.SetLength((int) (result.Length() + 128));
+			result.SetLength(result.Length() + 128);
 
     // insert CountOfAvgGlyphs filling chars
 		while(CountOfAvgGlyphs > 1)
@@ -237,7 +234,7 @@ void __fastcall TSynEditPrint::InitPrint()
 	}
   // Calculate TextMetrics with the (probably) most wider text styles so text is
   // never clipped (although potentially wasting space)
-	FCanvas->Font->Style = SynEditPrint__0;
+	FCanvas->Font->Style = Syneditprint__0;
 	GetTextMetrics(FCanvas->Handle, &TmpTextMetrics);
 	CharWidth = TmpTextMetrics.tmAveCharWidth;
 	FLineHeight = TmpTextMetrics.tmHeight + TmpTextMetrics.tmExternalLeading;
@@ -289,7 +286,7 @@ void __fastcall TSynEditPrint::CalcPages()
 	int StrWidth = 0;
 	__int64 i = 0;
 	int j = 0;
-	System::Classes::TList* AList = nullptr;
+	TList* AList = nullptr;
 	int YPos = 0;
 	TPageLine* PageLine = nullptr;
 
@@ -347,15 +344,15 @@ void __fastcall TSynEditPrint::CalcPages()
 	}
 	for(stop = iEndLine, i = iStartLine; i <= stop; i++)
 	{
-		if(!fSelectedOnly || (fSelMode == TSynSelectionMode::smLine))
+		if(!fSelectedOnly || (fSelMode == smLine))
 			Text = Lines->Strings[i];
 		else
 		{
-			if((fSelMode == TSynSelectionMode::smColumn) || (i == fBlockBegin.Line - 1))
+			if((fSelMode == smColumn) || (i == fBlockBegin.Line - 1))
 				iSelStart = fBlockBegin.Char;
 			else
 				iSelStart = 1;
-			if((fSelMode == TSynSelectionMode::smColumn) || (i == fBlockEnd.Line - 1))
+			if((fSelMode == smColumn) || (i == fBlockEnd.Line - 1))
 				iSelLen = fBlockEnd.Char - iSelStart;
 			else
 				iSelLen = MaxInt;
@@ -376,15 +373,15 @@ void __fastcall TSynEditPrint::CalcPages()
 		if(Wrap && (StrWidth > FMaxWidth))
 		{
 			int stop1 = 0;
-			AList = new System::Classes::TList();
-			if(WrapTextEx(Text, SynEditPrint__1, FMaxCol, AList))
+			AList = new TList();
+			if(WrapTextEx(Text, Syneditprint__1, FMaxCol, AList))
 				CountWrapped();
 			else
 
               /*If WrapTextToList didn't succed with the first set of breakchars
                then try this one:*/
 			{
-				if(WrapTextEx(Text, SynEditPrint__2, FMaxCol, AList))
+				if(WrapTextEx(Text, Syneditprint__2, FMaxCol, AList))
 					CountWrapped();
 				else
 
@@ -421,7 +418,7 @@ void __fastcall TSynEditPrint::WriteLineNumber()
 	SaveCurrentFont();
 	AStr = IntToStr(fLineNumber + FLineOffset) + L": ";
 	FCanvas->Brush->Color = FDefaultBG;
-	FCanvas->Font->Style = SynEditPrint__3;
+	FCanvas->Font->Style = Syneditprint__3;
 	FCanvas->Font->Color = clBlack;
 	FCanvas->TextOut(FMargins->PLeft - FCanvas->TextWidth(AStr), FYPos, AStr);
 	RestoreCurrentFont();
@@ -430,7 +427,7 @@ void __fastcall TSynEditPrint::WriteLineNumber()
 void __fastcall TSynEditPrint::HandleWrap(const String Text, int MaxWidth)
 {
 	String AStr;
-	System::Classes::TList* AList = nullptr;
+	TList* AList = nullptr;
 	int j = 0;
 
 	auto WrapPrimitive = [&]() -> void 
@@ -456,14 +453,14 @@ void __fastcall TSynEditPrint::HandleWrap(const String Text, int MaxWidth)
 	int stop = 0;
 	AStr = L"";
   //First try to break the string at the following chars:
-	AList = new System::Classes::TList();
-	if(WrapTextEx(Text, SynEditPrint__4, FMaxCol, AList))
+	AList = new TList();
+	if(WrapTextEx(Text, Syneditprint__4, FMaxCol, AList))
 		TextOut(Text, AList);
 	else
 
       //Then try to break the string at the following chars:
 	{
-		if(WrapTextEx(Text, SynEditPrint__5, FMaxCol, AList))
+		if(WrapTextEx(Text, Syneditprint__5, FMaxCol, AList))
 			TextOut(Text, AList);
 		else
 		{
@@ -493,14 +490,14 @@ String __fastcall TSynEditPrint::ClipLineToRect(String s, const TRect& cR)
 	TRect R = cR;
 	String result;
 	while(FCanvas->TextWidth(s) > FMaxWidth)
-		s.SetLength((int) (s.Length() - 1));
+		s.SetLength(s.Length() - 1);
 	result = s;
 	return result;
 }
 
 //Does the actual printing
 
-void __fastcall TSynEditPrint::TextOut(const String Text, System::Classes::TList* AList)
+void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 {
 	String Token;
 	int TokenPos = 0;
@@ -525,7 +522,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, System::Classes::TList
 		int i = 0;
 		int stop = 0;
 		FETODist = (pIntArray) ReallocMemory(FETODist, Text.Length() * sizeof(int));
-		for(stop = (int) Text.Length() - 1, i = 0; i <= stop; i++)
+		for(stop = Text.Length() - 1, i = 0; i <= stop; i++)
 		{
 			Size = GetTextSize(FCanvas->Handle, ustr2pwchar(Text, i + 1 - 1), 1);
       // Introduce a small tolerance (#54)
@@ -537,7 +534,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, System::Classes::TList
 	{
 		Text = ClipLineToRect(Text, ClipRect);
 		InitETODist(fCharWidth, Text);
-		::ExtTextOutW(FCanvas->Handle, X, Y, 0, nullptr, ustr2pwchar(Text), (int) Text.Length(), ((PInteger) FETODist));
+		::ExtTextOutW(FCanvas->Handle, X, Y, 0, nullptr, ustr2pwchar(Text), Text.Length(), ((PInteger) FETODist));
 	};
 
 	auto SplitToken = [&]() -> void 
@@ -548,7 +545,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, System::Classes::TList
 		int TokenEnd = 0;
 		Last = TokenPos;
 		FirstPos = TokenPos;
-		TokenEnd = (int) (TokenPos + Token.Length());
+		TokenEnd = TokenPos + Token.Length();
 		while((LCount < AList->Count) && (TokenEnd > ((TWrapPos*) AList->Items[LCount])->Index))
 		{
 			AStr = Text.SubString(Last + 1, ((TWrapPos*) AList->Items[LCount])->Index - Last);
@@ -563,7 +560,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, System::Classes::TList
 		ExpandedPos = fHighlighter->PosToExpandedPos(FirstPos);
 		ClippedTextOut(FMargins->PLeft + ExpandedPos * fCharWidth, FYPos, AStr);
     //Ready for next token:
-		TokenStart = (int) (TokenPos + Token.Length() - AStr.Length());
+		TokenStart = TokenPos + Token.Length() - AStr.Length();
 	};
 	/*# with FMargins do */
 	{
@@ -728,15 +725,15 @@ void __fastcall TSynEditPrint::PrintPage(int Num)
 				fLineNumber = (int) (i + 1);
 				if(!fSelectedOnly || ((i >= fBlockBegin.Line - 1) && (i <= fBlockEnd.Line - 1)))
 				{
-					if(!fSelectedOnly || (fSelMode == TSynSelectionMode::smLine))
+					if(!fSelectedOnly || (fSelMode == smLine))
 						WriteLine(Lines->Strings[i]);
 					else
 					{
-						if((fSelMode == TSynSelectionMode::smColumn) || (i == fBlockBegin.Line - 1))
+						if((fSelMode == smColumn) || (i == fBlockBegin.Line - 1))
 							iSelStart = fBlockBegin.Char;
 						else
 							iSelStart = 1;
-						if((fSelMode == TSynSelectionMode::smColumn) || (i == fBlockEnd.Line - 1))
+						if((fSelMode == smColumn) || (i == fBlockEnd.Line - 1))
 							iSelLen = fBlockEnd.Char - iSelStart;
 						else
 							iSelLen = MaxInt;
@@ -900,7 +897,7 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 		try
 		{
 			with0->Read((void**)Buffer, BufferSize);
-			Buffer[(int)(BufferSize / sizeof(WideChar))] = L'\x00';
+			Buffer[(int)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
 			FTitle = Buffer;
 		}
 		__finally
@@ -913,7 +910,7 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 		try
 		{
 			with0->Read((void**)Buffer, BufferSize);
-			Buffer[(int)(BufferSize / sizeof(WideChar))] = L'\x00';
+			Buffer[(int)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
 			FDocTitle = Buffer;
 		}
 		__finally
@@ -938,10 +935,10 @@ void __fastcall TSynEditPrint::SaveToStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		ALen = (int) FTitle.Length();
+		ALen = FTitle.Length();
 		with0->Write(&ALen, sizeof(ALen));
 		with0->Write(FTitle.c_str(), ALen * sizeof(WideChar));
-		ALen = (int) FDocTitle.Length();
+		ALen = FDocTitle.Length();
 		with0->Write(&ALen, sizeof(ALen));
 		with0->Write(FDocTitle.c_str(), ALen * sizeof(WideChar));
 		with0->Write(&FWrap, sizeof(FWrap));
@@ -955,17 +952,17 @@ void __fastcall TSynEditPrint::SaveToStream(TStream* AStream)
 
 void __fastcall TSynEditPrint::SetFooter(TFooter* const Value)
 {
-	FFooter->Assign(Value);
+	FFooter->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditPrint::SetHeader(Syneditprintheaderfooter::THeader* const Value)
 {
-	FHeader->Assign(Value);
+	FHeader->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditPrint::SetMargins(TSynEditPrintMargins* const Value)
 {
-	FMargins->Assign(Value);
+	FMargins->Assign((TPersistent*) Value);
 }
 
 

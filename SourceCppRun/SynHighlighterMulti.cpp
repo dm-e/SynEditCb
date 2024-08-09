@@ -12,25 +12,25 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Regularexpressions;
 using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightermulti
 {
-#define SynHighlighterMulti__0 (TRegExOptions() << roNotEmpty << roCompiled)
-#define SynHighlighterMulti__1 (TRegExOptions() << roNotEmpty << roCompiled)
-#define SynHighlighterMulti__2 (TRegExOptions() << roNotEmpty << roIgnoreCase << roCompiled)
-#define SynHighlighterMulti__3 (TRegExOptions() << roNotEmpty << roCompiled)
-#define SynHighlighterMulti__4 (TRegExOptions() << roNotEmpty << roIgnoreCase << roCompiled)
-#define SynHighlighterMulti__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightermulti__0 (TRegExOptions() << roNotEmpty << roCompiled)
+#define Synhighlightermulti__1 (TRegExOptions() << roNotEmpty << roCompiled)
+#define Synhighlightermulti__2 (TRegExOptions() << roNotEmpty << roIgnoreCase << roCompiled)
+#define Synhighlightermulti__3 (TRegExOptions() << roNotEmpty << roCompiled)
+#define Synhighlightermulti__4 (TRegExOptions() << roNotEmpty << roIgnoreCase << roCompiled)
+#define Synhighlightermulti__5 (TFontStyles() << TFontStyle::fsBold)
 
-__fastcall TSchemes::TSchemes(System::Classes::TCollectionItemClass ItemClass) : inherited(ItemClass) {}
+__fastcall TSchemes::TSchemes(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
 __fastcall TMarker::TMarker() {}
 
 
@@ -39,7 +39,7 @@ void __fastcall CheckExpression(const String expr)
 {
 	TRegEx Parser = {};
   // will raise an exception if the expression is incorrect
-	Parser = TRegEx(expr, SynHighlighterMulti__0);
+	Parser = TRegEx(expr, Synhighlightermulti__0);
 }
 
 /* TMarker */
@@ -80,7 +80,7 @@ __fastcall TSynMultiSyn::TSynMultiSyn(TComponent* AOwner)
 {
 	fSchemes = new TSchemes(this);
 	fCurrScheme = -1;
-	fMarkers = new System::Classes::TList();
+	fMarkers = new TList();
 	fRangeProc = NewRangeProc;
 }
 
@@ -91,10 +91,10 @@ __fastcall TSynMultiSyn::~TSynMultiSyn()
 	Schemes->Clear();
 	DefaultHighlighter = nullptr;
 	//# inherited::Destroy();
+	inherited::RemoveFreeNotifications();
 	delete fSchemes;
 	delete fMarkers;
 }
-
 
 int __fastcall TSynMultiSyn::GetAttribCount()
 {
@@ -227,7 +227,7 @@ void __fastcall TSynMultiSyn::OldRangeProc(TRangeOperation Operation, TRangeUNat
 		Assert(iSchemeIndex <= MaxSchemeCount);
 		if(iHL != nullptr)
 		{
-			iSchemeRange = (unsigned int)iHL->GetRange();
+			iSchemeRange = (NativeUInt)iHL->GetRange();
 			Assert((iSchemeRange <= MaxSchemeRange) || (ObjectIs(iHL, TSynMultiSyn*)));
 		}
 		else
@@ -321,7 +321,7 @@ void __fastcall TSynMultiSyn::Next()
 		if(Run > 0)
 			++Run;
 		else
-			Run = (int) (fLineStr.Length() + 1);
+			Run = fLineStr.Length() + 1;
 		inherited::Next();
 		return;
 	}
@@ -479,7 +479,7 @@ void __fastcall TSynMultiSyn::DoCheckMarker(TScheme* Scheme, int StartPos, int M
 
 void __fastcall TSynMultiSyn::SetSchemes(TSchemes* const Value)
 {
-	fSchemes->Assign(Value);
+	fSchemes->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynMultiSyn::UnhookHighlighter(TSynCustomHighlighter* aHL)
@@ -588,14 +588,14 @@ void __fastcall TSynMultiSyn::NewRangeProc(TRangeOperation Operation, TRangeUNat
 	if(Operation == roGet)
 	{
 		if(DefaultHighlighter != nullptr)
-			Range = (unsigned int)DefaultHighlighter->GetRange();
+			Range = (NativeUInt)DefaultHighlighter->GetRange();
 		else
 			Range = 0;
 		if(CurrScheme >= 0)
 		{
-			Assert((unsigned int)Schemes->Items[CurrScheme]->Highlighter->GetRange() <= MaxSchemeRange);
+			Assert((NativeUInt)Schemes->Items[CurrScheme]->Highlighter->GetRange() <= MaxSchemeRange);
 			Range = (TRangeUNativeInt) (Range << SchemeRangeSize);
-			Range = (TRangeUNativeInt) (Range | (unsigned int)Schemes->Items[CurrScheme]->Highlighter->GetRange());
+			Range = (TRangeUNativeInt) (Range | (NativeUInt)Schemes->Items[CurrScheme]->Highlighter->GetRange());
 		}
 		Assert(CurrScheme <= MaxSchemeCount);
 		Range = (TRangeUNativeInt) (Range << SchemeIndexSize);
@@ -711,9 +711,9 @@ void __fastcall TSynMultiSyn::DoSetLine(const String Value, int LineNumber)
 		if(iScheme != nullptr)
 		{
 			if(iScheme->CaseSensitive)
-				new TRegEx(iScheme->EndExpr, SynHighlighterMulti__1);
+				iParser = TRegEx(iScheme->EndExpr, Synhighlightermulti__1);
 			else
-				new TRegEx(iScheme->EndExpr, SynHighlighterMulti__2);
+				iParser = TRegEx(iScheme->EndExpr, Synhighlightermulti__2);
 			Match = iParser.Match(iLine);
 			if(Match.Success)
 			{
@@ -737,9 +737,9 @@ void __fastcall TSynMultiSyn::DoSetLine(const String Value, int LineNumber)
 					continue;
 				}
 				if(iScheme->CaseSensitive)
-					new TRegEx(iScheme->StartExpr, SynHighlighterMulti__3);
+					iParser = TRegEx(iScheme->StartExpr, Synhighlightermulti__3);
 				else
-					new TRegEx(iScheme->StartExpr, SynHighlighterMulti__4);
+					iParser = TRegEx(iScheme->StartExpr, Synhighlightermulti__4);
 				Match = iParser.Match(iLine);
 				if(Match.Success)
 				{
@@ -835,7 +835,7 @@ __fastcall TScheme::TScheme(TCollection* Collection)
 	fMarkerAttri = new TSynHighlighterAttributes(SYNS_AttrMarker, SYNS_FriendlyAttrMarker);
 	fMarkerAttri->OnChange = MarkerAttriChanged;
 	MarkerAttri->Background = clYellow;
-	MarkerAttri->Style = SynHighlighterMulti__5;
+	MarkerAttri->Style = Synhighlightermulti__5;
 	MarkerAttri->InternalSaveDefaultValues();
 }
 
@@ -847,7 +847,6 @@ __fastcall TScheme::~TScheme()
 	//# inherited::Destroy();
 	delete fMarkerAttri;
 }
-
 
 void __fastcall TScheme::DefineProperties(TFiler* Filer)
 {
@@ -920,7 +919,7 @@ void __fastcall TScheme::SetHighlighter(TSynCustomHighlighter* const Value)
 
 void __fastcall TScheme::SetMarkerAttri(TSynHighlighterAttributes* const Value)
 {
-	fMarkerAttri->Assign(Value);
+	fMarkerAttri->Assign((TPersistent*) Value);
 }
 
 void __fastcall TScheme::SetStartExpr(const String Value)

@@ -10,28 +10,26 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 
 namespace Synhighlighterrc
 {
-#define SynHighlighterRC__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterrc__0 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[78/*# range 0..77*/] = {L"ACCELERATORS", L"ALT", L"ASCII", L"AUTO3STATE", L"AUTOCHECKBOX", L"AUTORADIOBUTTON", L"BITMAP", L"BLOCK"
-																				, L"CAPTION", L"CHARACTERISTICS", L"CHECKBOX", L"CHECKED", L"CLASS", L"COMBOBOX", L"COMMENTS", L"COMPANYNAME", L"CONTROL"
-																				, L"CTEXT", L"CURSOR", L"DEFPUSHBUTTON", L"DIALOG", L"DIALOGEX", L"DISCARDABLE", L"EDITTEXT", L"EXSTYLE", L"FILEDESCRIPTION", L"FILEFLAGS"
-																				, L"FILEFLAGSMASK", L"FILEOS", L"FILESUBTYPE", L"FILETYPE", L"FILEVERSION", L"FIXED", L"FONT", L"GRAYED", L"GROUPBOX", L"HELP"
-																				, L"ICON", L"IMPURE", L"INACTIVE", L"INTERNALNAME", L"LANGUAGE", L"LEGALCOPYRIGHT", L"LEGALTRADEMARKS", L"LISTBOX", L"LOADONCALL"
-																				, L"LTEXT", L"MENU", L"MENUBARBREAK", L"MENUBREAK", L"MENUEX", L"MENUITEM", L"MESSAGETABLE", L"MOVEABLE", L"NOINVERT"
-																				, L"ORIGINALFILENAME", L"POPUP", L"PRELOAD", L"PRIVATEBUILD", L"PRODUCTNAME", L"PRODUCTVERSION", L"PURE", L"PUSHBOX"
-																				, L"PUSHBUTTON", L"RADIOBUTTON", L"RCDATA", L"RTEXT", L"SCROLLBAR", L"SEPARATOR", L"SHIFT", L"SPECIALBUILD", L"STATE3"
-																				, L"STRINGTABLE", L"STYLE", L"VALUE", L"VERSION", L"VERSIONINFO", L"VIRTKEY"};
+                    , L"CAPTION", L"CHARACTERISTICS", L"CHECKBOX", L"CHECKED", L"CLASS", L"COMBOBOX", L"COMMENTS", L"COMPANYNAME", L"CONTROL"
+                    , L"CTEXT", L"CURSOR", L"DEFPUSHBUTTON", L"DIALOG", L"DIALOGEX", L"DISCARDABLE", L"EDITTEXT", L"EXSTYLE", L"FILEDESCRIPTION", L"FILEFLAGS"
+                    , L"FILEFLAGSMASK", L"FILEOS", L"FILESUBTYPE", L"FILETYPE", L"FILEVERSION", L"FIXED", L"FONT", L"GRAYED", L"GROUPBOX", L"HELP"
+                    , L"ICON", L"IMPURE", L"INACTIVE", L"INTERNALNAME", L"LANGUAGE", L"LEGALCOPYRIGHT", L"LEGALTRADEMARKS", L"LISTBOX", L"LOADONCALL"
+                    , L"LTEXT", L"MENU", L"MENUBARBREAK", L"MENUBREAK", L"MENUEX", L"MENUITEM", L"MESSAGETABLE", L"MOVEABLE", L"NOINVERT"
+                    , L"ORIGINALFILENAME", L"POPUP", L"PRELOAD", L"PRIVATEBUILD", L"PRODUCTNAME", L"PRODUCTVERSION", L"PURE", L"PUSHBOX"
+                    , L"PUSHBUTTON", L"RADIOBUTTON", L"RCDATA", L"RTEXT", L"SCROLLBAR", L"SEPARATOR", L"SHIFT", L"SPECIALBUILD", L"STATE3"
+                    , L"STRINGTABLE", L"STYLE", L"VALUE", L"VERSION", L"VERSIONINFO", L"VIRTKEY"};
 const int KeyIndices[241/*# range 0..240*/] = {-1, -1, -1, 35, -1, 57, 54, -1, -1, -1, 74, -1, -1, -1, 64, -1, -1, -1, -1, 9, 68, -1, 41, -1, -1, 10, -1, -1, 13, 24, -1, -1, -1, 42, -1, -1, -1, -1, -1, 61, -1, -1
-																				, 20, 67, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, 23, -1, -1, -1, -1, -1, 48, -1, 12, -1, -1, -1, -1, -1, -1, -1, 75, 73, 14, -1, 77, -1, 4, 63, -1, -1, -1, -1, 65, 19, 27, -1, 31, 38, -1, -1, -1, -1, -1
-																				, 50, -1, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, 8, 6, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 49, 76, -1, 59, -1, -1, 52, 47, 29, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, 44, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 71, 17, 32, 34, -1, 45, -1, -1, -1, 70, -1, 3, -1, 62, 43, 5, -1, -1, 33, 0, 51, 16, 69, -1, -1, -1, 39, -1, -1, 7, -1, 11, -1, -1, -1, 21, -1, 40, -1, -1
-																				, 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 26, -1, 66, 25, -1, -1, 72, -1, -1, 60, 15, -1, -1, -1, -1, 55, -1, -1, -1, 30, -1, -1, -1, 46, -1, 58, -1, 37, 22, -1};
+                    , 20, 67, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, 23, -1, -1, -1, -1, -1, 48, -1, 12, -1, -1, -1, -1, -1, -1, -1, 75, 73, 14, -1, 77, -1, 4, 63, -1, -1, -1, -1, 65, 19, 27, -1, 31, 38, -1, -1, -1, -1, -1
+                    , 50, -1, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, 8, 6, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 49, 76, -1, 59, -1, -1, 52, 47, 29, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, 44, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 71, 17, 32, 34, -1, 45, -1, -1, -1, 70, -1, 3, -1, 62, 43, 5, -1, -1, 33, 0, 51, 16, 69, -1, -1, -1, 39, -1, -1, 7, -1, 11, -1, -1, -1, 21, -1, 40, -1, -1
+                    , 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 26, -1, 66, 25, -1, -1, 72, -1, -1, 60, 15, -1, -1, -1, -1, 55, -1, -1, -1, 30, -1, -1, -1, 46, -1, 58, -1, 37, 22, -1};
 
 /* TSynRCSyn */
 
@@ -71,7 +69,7 @@ void __fastcall TSynRCSyn::InitIdent()
 	int stop = 0;
 	for(stop = 240 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 240 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -119,7 +117,7 @@ __fastcall TSynRCSyn::TSynRCSyn(TComponent* AOwner)
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterRC__0;
+	fKeyAttri->Style = Synhighlighterrc__0;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -138,7 +136,6 @@ __fastcall TSynRCSyn::~TSynRCSyn()
 {
 	// inherited;
 }
-
 
 void __fastcall TSynRCSyn::QuoteProc()
 {
@@ -529,7 +526,7 @@ void __fastcall TSynRCSyn::ResetRange()
 
 void __fastcall TSynRCSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynRCSyn::EnumUserSettings(TStrings* Settings)
@@ -549,7 +546,7 @@ bool __fastcall TSynRCSyn::UseUserSettings(int settingIndex)
 TSynHighlighterCapabilities __fastcall TSynRCSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities();  //#virtual static
+	result = inherited::GetCapabilities();
 	return result;
 }
 
@@ -593,16 +590,8 @@ void SynHighlighterRC_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynRCSyn));
 }
-class SynHighlighterRC_unit
-{
-public:
-	SynHighlighterRC_unit()
-	{
-		SynHighlighterRC_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterRC_unit _SynHighlighterRC_unit;
 
 }  // namespace SynHighlighterRC
 

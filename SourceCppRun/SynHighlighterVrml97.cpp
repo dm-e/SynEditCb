@@ -12,49 +12,46 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightervrml97
 {
-#define SynHighlighterVrml97__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__1 TFontStyles()
-#define SynHighlighterVrml97__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__3 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__4 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__5 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__6 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__7 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__8 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__9 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__10 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__11 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__12 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__13 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__14 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__15 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__16 (TFontStyles() << TFontStyle::fsItalic << TFontStyle::fsBold)
-#define SynHighlighterVrml97__17 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__18 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__19 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__20 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVrml97__21 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__22 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__23 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__24 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__25 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__26 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVrml97__27 (TSysCharSet() << L'=' << L'&')
-#define SynHighlighterVrml97__28 (TSysCharSet() << L'=' << L'-' << L'>')
-#define SynHighlighterVrml97__29 (TSysCharSet() <<  \
+#define Synhighlightervrml97__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__1 TFontStyles()
+#define Synhighlightervrml97__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__3 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__4 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__5 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__7 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__8 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__9 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__10 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__11 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__12 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__13 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__14 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__15 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__16 (TFontStyles() << TFontStyle::fsItalic << TFontStyle::fsBold)
+#define Synhighlightervrml97__17 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__18 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__19 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__20 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervrml97__21 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__22 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__23 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__24 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__25 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__26 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervrml97__27 (TSysCharSet() << '=' << '&')
+#define Synhighlightervrml97__28 (TSysCharSet() << '=' << '-' << '>')
+#define Synhighlightervrml97__29 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57 <<  \
 										97 << 98 << 99 << 100 << 101 << 102 <<  \
 										65 << 66 << 67 << 68 << 69 << 70)
-#define SynHighlighterVrml97__30 (TSysCharSet() << L'=' << L'|')
-#define SynHighlighterVrml97__31 (TSysCharSet() << L'=' << L'+')
+#define Synhighlightervrml97__30 (TSysCharSet() << '=' << '|')
+#define Synhighlightervrml97__31 (TSysCharSet() << '=' << '+')
 
 
 const String Events = L"onAbort, onBlur, onChange, onClick, onDblClick, onError, onFocus, "
@@ -309,137 +306,137 @@ __fastcall TSynVrml97Syn::TSynVrml97Syn(TComponent* AOwner)
 	fKeywords = new TSynHashEntryList();
 	isDoctype = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterVrml97__0;
+	fCommentAttri->Style = Synhighlightervrml97__0;
 	fCommentAttri->Foreground = clNavy;
 	fCommentAttri->Background = clGray;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	fIdentifierAttri->Style = SynHighlighterVrml97__1;
+	fIdentifierAttri->Style = Synhighlightervrml97__1;
 	fIdentifierAttri->Foreground = clNavy;
 	fIdentifierAttri->Background = clWhite;
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterVrml97__2;
+	fKeyAttri->Style = Synhighlightervrml97__2;
 	fKeyAttri->Foreground = clRed;
 	fKeyAttri->Background = clWhite;
 	addAttribute(fKeyAttri);
 	fNonReservedKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
-	fNonReservedKeyAttri->Style = SynHighlighterVrml97__3;
+	fNonReservedKeyAttri->Style = Synhighlightervrml97__3;
 	fNonReservedKeyAttri->Foreground = clBlack;
 	fNonReservedKeyAttri->Background = clWhite;
 	addAttribute(fNonReservedKeyAttri);
 	fEventAttri = new TSynHighlighterAttributes(SYNS_AttrEvent, SYNS_FriendlyAttrEvent);
-	fEventAttri->Style = SynHighlighterVrml97__4;
+	fEventAttri->Style = Synhighlightervrml97__4;
 	fEventAttri->Foreground = clNavy;
 	fEventAttri->Background = clWhite;
 	addAttribute(fEventAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fEventAttri->Style = SynHighlighterVrml97__5;
+	fEventAttri->Style = Synhighlightervrml97__5;
 	fEventAttri->Foreground = clNavy;
 	fEventAttri->Background = clWhite;
 	addAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	fSpaceAttri->Style = SynHighlighterVrml97__6;
+	fSpaceAttri->Style = Synhighlightervrml97__6;
 	fSpaceAttri->Foreground = clNavy;
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Style = SynHighlighterVrml97__7;
+	fStringAttri->Style = Synhighlightervrml97__7;
 	fStringAttri->Foreground = clNavy;
 	fStringAttri->Background = clWhite;
 	addAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Style = SynHighlighterVrml97__8;
+	fSymbolAttri->Style = Synhighlightervrml97__8;
 	fSymbolAttri->Foreground = clNavy;
 	fSymbolAttri->Background = clWhite;
 	addAttribute(fSymbolAttri);
   //-- vrml
 	fVrmlAppearanceAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlAppearance, SYNS_FriendlyAttrVrmlAppearance);
-	fVrmlAppearanceAttri->Style = SynHighlighterVrml97__9;
+	fVrmlAppearanceAttri->Style = Synhighlightervrml97__9;
 	fVrmlAppearanceAttri->Foreground = clNavy;
 	fVrmlAppearanceAttri->Background = clWhite;
 	addAttribute(fVrmlAppearanceAttri);
 	fVrmlAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlAttribute, SYNS_FriendlyAttrVrmlAttribute);
-	fVrmlAttributeAttri->Style = SynHighlighterVrml97__10;
+	fVrmlAttributeAttri->Style = Synhighlightervrml97__10;
 	fVrmlAttributeAttri->Foreground = clNavy;
 	fVrmlAttributeAttri->Background = clGray;
 	addAttribute(fVrmlAttributeAttri);
 	fVrmlDefinitionAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlDefinition, SYNS_FriendlyAttrVrmlDefinition);
-	fVrmlDefinitionAttri->Style = SynHighlighterVrml97__11;
+	fVrmlDefinitionAttri->Style = Synhighlightervrml97__11;
 	fVrmlDefinitionAttri->Foreground = clNavy;
 	fVrmlDefinitionAttri->Background = clRed;
 	addAttribute(fVrmlDefinitionAttri);
 	fVrmlEventAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlEvent, SYNS_FriendlyAttrVrmlEvent);
-	fVrmlEventAttri->Style = SynHighlighterVrml97__12;
+	fVrmlEventAttri->Style = Synhighlightervrml97__12;
 	fVrmlEventAttri->Foreground = clRed;
 	fVrmlEventAttri->Background = clWhite;
 	addAttribute(fVrmlEventAttri);
 	fVrmlGroupingAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlGrouping, SYNS_FriendlyAttrVrmlGrouping);
-	fVrmlGroupingAttri->Style = SynHighlighterVrml97__13;
+	fVrmlGroupingAttri->Style = Synhighlightervrml97__13;
 	fVrmlGroupingAttri->Foreground = clNavy;
 	fVrmlGroupingAttri->Background = clWhite;
 	addAttribute(fVrmlGroupingAttri);
 	fVrmlInterpolatorAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlInterpolator, SYNS_FriendlyAttrVrmlInterpolator);
-	fVrmlInterpolatorAttri->Style = SynHighlighterVrml97__14;
+	fVrmlInterpolatorAttri->Style = Synhighlightervrml97__14;
 	fVrmlInterpolatorAttri->Foreground = clLime;
 	fVrmlInterpolatorAttri->Background = clWhite;
 	addAttribute(fVrmlInterpolatorAttri);
 	fVrmlLightAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlLight, SYNS_FriendlyAttrVrmlLight);
-	fVrmlLightAttri->Style = SynHighlighterVrml97__15;
+	fVrmlLightAttri->Style = Synhighlightervrml97__15;
 	fVrmlLightAttri->Foreground = clTeal;
 	fVrmlLightAttri->Background = clWhite;
 	addAttribute(fVrmlLightAttri);
 	fVrmlNodeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlNode, SYNS_FriendlyAttrVrmlNode);
-	fVrmlNodeAttri->Style = SynHighlighterVrml97__16;
+	fVrmlNodeAttri->Style = Synhighlightervrml97__16;
 	fVrmlNodeAttri->Foreground = clGreen;
 	fVrmlNodeAttri->Background = clWhite;
 	addAttribute(fVrmlNodeAttri);
 	fVrmlParameterAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlParameter, SYNS_FriendlyAttrVrmlParameter);
-	fVrmlParameterAttri->Style = SynHighlighterVrml97__17;
+	fVrmlParameterAttri->Style = Synhighlightervrml97__17;
 	fVrmlParameterAttri->Foreground = (TColor) 0xF0CAA6; //clSkyBlue
 	fVrmlParameterAttri->Background = clWhite;
 	addAttribute(fVrmlParameterAttri);
 	fVrmlprotoAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlProto, SYNS_FriendlyAttrVrmlProto);
-	fVrmlprotoAttri->Style = SynHighlighterVrml97__18;
+	fVrmlprotoAttri->Style = Synhighlightervrml97__18;
 	fVrmlprotoAttri->Foreground = clRed;
 	fVrmlprotoAttri->Background = clWhite;
 	addAttribute(fVrmlprotoAttri);
 	fVrmlSensorAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlSensor, SYNS_FriendlyAttrVrmlSensor);
-	fVrmlSensorAttri->Style = SynHighlighterVrml97__19;
+	fVrmlSensorAttri->Style = Synhighlightervrml97__19;
 	fVrmlSensorAttri->Foreground = clOlive;
 	fVrmlSensorAttri->Background = clWhite;
 	addAttribute(fVrmlSensorAttri);
 	fVrmlShapeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlShape, SYNS_FriendlyAttrVrmlShape);
-	fVrmlShapeAttri->Style = SynHighlighterVrml97__20;
+	fVrmlShapeAttri->Style = Synhighlightervrml97__20;
 	fVrmlShapeAttri->Foreground = clPurple;
 	fVrmlShapeAttri->Background = clWhite;
 	addAttribute(fVrmlShapeAttri);
 	fVrmlShape_HintAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlShape_Hint, SYNS_FriendlyAttrVrmlShape_Hint);
-	fVrmlShape_HintAttri->Style = SynHighlighterVrml97__21;
+	fVrmlShape_HintAttri->Style = Synhighlightervrml97__21;
 	fVrmlShape_HintAttri->Foreground = clPurple;
 	fVrmlShape_HintAttri->Background = clWhite;
 	addAttribute(fVrmlShape_HintAttri);
 	fVrmlTime_dependentAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlTime_dependent, SYNS_FriendlyAttrVrmlTime_dependent);
-	fVrmlTime_dependentAttri->Style = SynHighlighterVrml97__22;
+	fVrmlTime_dependentAttri->Style = Synhighlightervrml97__22;
 	fVrmlTime_dependentAttri->Foreground = clOlive;
 	fVrmlTime_dependentAttri->Background = clWhite;
 	addAttribute(fVrmlTime_dependentAttri);
 	fVrmlViewpointAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlViewpoint, SYNS_FriendlyAttrVrmlViewpoint);
-	fVrmlViewpointAttri->Style = SynHighlighterVrml97__23;
+	fVrmlViewpointAttri->Style = Synhighlightervrml97__23;
 	fVrmlViewpointAttri->Foreground = clGreen;
 	fVrmlViewpointAttri->Background = clWhite;
 	addAttribute(fVrmlViewpointAttri);
 	fVrmlWorldInfoAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlWorldInfo, SYNS_FriendlyAttrVrmlWorldInfo);
-	fVrmlWorldInfoAttri->Style = SynHighlighterVrml97__24;
+	fVrmlWorldInfoAttri->Style = Synhighlightervrml97__24;
 	fVrmlWorldInfoAttri->Foreground = clMaroon;
 	fVrmlWorldInfoAttri->Background = clWhite;
 	addAttribute(fVrmlWorldInfoAttri);
 	fX3DDocTypeAttri = new TSynHighlighterAttributes(SYNS_AttrX3DDocType, SYNS_FriendlyAttrX3DDocType);
-	fX3DDocTypeAttri->Style = SynHighlighterVrml97__25;
+	fX3DDocTypeAttri->Style = Synhighlightervrml97__25;
 	fX3DDocTypeAttri->Foreground = clMaroon;
 	fX3DDocTypeAttri->Background = clWhite;
 	addAttribute(fX3DDocTypeAttri);
 	fX3DHeaderAttri = new TSynHighlighterAttributes(SYNS_AttrX3DHeader, SYNS_FriendlyAttrX3DHeader);
-	fX3DHeaderAttri->Style = SynHighlighterVrml97__26;
+	fX3DHeaderAttri->Style = Synhighlightervrml97__26;
 	fX3DHeaderAttri->Foreground = clMaroon;
 	fX3DHeaderAttri->Background = clWhite;
 	addAttribute(fX3DHeaderAttri);
@@ -472,12 +469,11 @@ __fastcall TSynVrml97Syn::~TSynVrml97Syn()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynVrml97Syn::AndSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterVrml97__27))
+	if(CharInSet(fLine[Run], Synhighlightervrml97__27))
 		++Run;
 }
 
@@ -488,7 +484,7 @@ bool __fastcall TSynVrml97Syn::NextTokenIs(String T)
 	int Len = 0;
 	__int64 stop = 0;
 	result = true;
-	Len = (int) T.Length();
+	Len = T.Length();
 	for(stop = Len, i = 1; i <= stop; i++)
 	{
 		if(fLine[Run + i] != T[i])
@@ -683,7 +679,7 @@ void __fastcall TSynVrml97Syn::MinusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterVrml97__28))
+	if(CharInSet(fLine[Run], Synhighlightervrml97__28))
 		++Run;
 }
 
@@ -747,7 +743,7 @@ void __fastcall TSynVrml97Syn::NumberProc()
 			{
 				if((fLine[idx1] != L'0') || (Run > Succ(idx1)))
 					goto label2;
-				if(!CharInSet(fLine[Succ(Run)], SynHighlighterVrml97__29))
+				if(!CharInSet(fLine[Succ(Run)], Synhighlightervrml97__29))
 				{
 					goto label3;
 				}
@@ -770,7 +766,7 @@ void __fastcall TSynVrml97Syn::OrSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterVrml97__30))
+	if(CharInSet(fLine[Run], Synhighlightervrml97__30))
 		++Run;
 }
 
@@ -778,7 +774,7 @@ void __fastcall TSynVrml97Syn::PlusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterVrml97__31))
+	if(CharInSet(fLine[Run], Synhighlightervrml97__31))
 		++Run;
 }
 
@@ -855,7 +851,7 @@ void __fastcall TSynVrml97Syn::StringProc()
 	String l_strChar;
 	FTokenID = tkString;
 	l_strChar = fLine[Run]; // We could have '"' or #39
-	if((fLine[Run + 1] == l_strChar) && (fLine[Run + 2] == l_strChar))
+	if((CharEqualStr(fLine[Run + 1], l_strChar)) && (CharEqualStr(fLine[Run + 2], l_strChar)))
 		Run += 2;
 	do
 	{
@@ -863,7 +859,7 @@ void __fastcall TSynVrml97Syn::StringProc()
 			break;
 		++Run;
 	}
-	while(!((fLine[Run] == l_strChar) && (fLine[Pred(Run)] != L'\\')));
+	while(!((CharEqualStr(fLine[Run], l_strChar)) && (fLine[Pred(Run)] != L'\\')));
 	if(!IsLineEnd(Run))
 		++Run;
 }
@@ -1149,7 +1145,7 @@ void __fastcall TSynVrml97Syn::ResetRange()
 
 void __fastcall TSynVrml97Syn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynVrml97Syn::IsFilterStored()
@@ -1247,16 +1243,8 @@ void SynHighlighterVrml97_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynVrml97Syn));
 }
-class SynHighlighterVrml97_unit
-{
-public:
-	SynHighlighterVrml97_unit()
-	{
-		SynHighlighterVrml97_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterVrml97_unit _SynHighlighterVrml97_unit;
 
 }  // namespace SynHighlighterVrml97
 

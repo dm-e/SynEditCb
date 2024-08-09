@@ -1,3 +1,35 @@
+/* -------------------------------------------------------------------------------
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+  the specific language governing rights and limitations under the License.
+
+  The Original Code is: SynEditMiscClasses.pas, released 2000-04-07.
+  The Original Code is based on the mwSupportClasses.pas file from the
+  mwEdit component suite by Martin Waldenburg and other developers, the Initial
+  Author of this file is Michael Hieke.
+  Unicode translation by Maël Hörz.
+  All Rights Reserved.
+
+  Contributors to the SynEdit and mwEdit projects are listed in the
+  Contributors.txt file.
+
+  Alternatively, the contents of this file may be used under the terms of the
+  GNU General Public License Version 2 or later (the "GPL"), in which case
+  the provisions of the GPL are applicable instead of those above.
+  If you wish to allow use of your version of this file only under the terms
+  of the GPL and not to allow others to use your version of this file
+  under the MPL, indicate your decision by deleting the provisions above and
+  replace them with the notice and other provisions required by the GPL.
+  If you do not delete the provisions above, a recipient may use your version
+  of this file under either the MPL or the GPL.
+
+  Known Issues:
+  ------------------------------------------------------------------------------- */
 #ifndef SynEditMiscClassesH
 #define SynEditMiscClassesH
 
@@ -57,6 +89,41 @@ namespace Syneditmiscclasses
 
   Known Issues:
   ------------------------------------------------------------------------------- */
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 class DELPHICLASS TSynGutter;
 class DELPHICLASS TSynInternalImage;
 
@@ -65,14 +132,14 @@ class TSynSelectedColor : public System::Classes::TPersistent
 private:
 	TColor fBG;
 	TColor fFG;
-	System::Classes::TNotifyEvent FOnChange;
+	TNotifyEvent FOnChange;
 	void __fastcall SetBG(TColor Value);
 	void __fastcall SetFG(TColor Value);
 public:
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	__fastcall TSynSelectedColor();
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 __published:
 	__property TColor Background = { read = fBG, write = SetBG, default = clHighlight };
 	__property TColor Foreground = { read = fFG, write = SetFG, default = clHighlightText };
@@ -81,7 +148,7 @@ __published:
 enum TSynGutterBorderStyle {gbsNone,
                             gbsMiddle,
                             gbsRight };
-typedef void __fastcall (__closure *TGutterBandPaintEvent) (Vcl::Graphics::TCanvas*, const TRect&, int, int, bool&);
+typedef void __fastcall (__closure *TGutterBandPaintEvent) (TCanvas*, const TRect&, int, int, bool&);
 typedef void __fastcall (__closure *TGutterBandClickEvent) (TObject*, TMouseButton, int, int, int, int);
 typedef void __fastcall (__closure *TGutterMouseCursorEvent) (TObject*, int, int, int, int, TCursor&);
 
@@ -105,7 +172,7 @@ enum TSynGutterBandBackground {gbbNone,
 class TSynGutterBand : public System::Classes::TCollectionItem
 {
 public:
-	typedef System::Classes::TCollectionItem inherited;	
+	typedef System::Classes::TCollectionItem inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	static const int MarginX; //  = 2;
 private:
@@ -117,12 +184,12 @@ private:
 	TGutterBandClickEvent FOnClick;
 	TGutterMouseCursorEvent fOnMouseCursor;
 	TSynGutter* __fastcall GetSynGutter();
-	System::Classes::TPersistent* __fastcall GetEditor();
-	void __fastcall DoPaintLines(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
-	void __fastcall PaintMarks(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
-	void __fastcall PaintLineNumbers(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
-	void __fastcall PaintFoldShapes(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
-	void __fastcall PaintMargin(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	TPersistent* __fastcall GetEditor();
+	void __fastcall DoPaintLines(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	void __fastcall PaintMarks(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	void __fastcall PaintLineNumbers(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	void __fastcall PaintFoldShapes(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	void __fastcall PaintMargin(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
 	void __fastcall SetBackground(TSynGutterBandBackground Value);
 	void __fastcall SetVisible(bool Value);
 	void __fastcall SetWidth(int Value);
@@ -139,14 +206,14 @@ private:
 protected:
 	virtual String __fastcall GetDisplayName();
 public:
-	__fastcall TSynGutterBand(System::Classes::TCollection* Collection);
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	__fastcall TSynGutterBand(TCollection* Collection);
+	virtual void __fastcall Assign(TPersistent* Source);
 	int __fastcall RealWidth();
-	void __fastcall PaintLines(Vcl::Graphics::TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
+	void __fastcall PaintLines(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
 	void __fastcall DoClick(TObject* Sender, TMouseButton Button, int X, int Y, int Row, int Line);
 	void __fastcall DoMouseCursor(TObject* Sender, int X, int Y, int Row, int Line, TCursor& Cursor);
 	__property int LeftX = { read = GetLeftX };
-	__property System::Classes::TPersistent* Editor = { read = GetEditor };
+	__property TPersistent* Editor = { read = GetEditor };
 	__property TSynGutter* Gutter = { read = GetSynGutter };
 __published:
 	__property TSynGutterBandKind Kind = { read = FKind, write = SetKind };
@@ -163,29 +230,29 @@ class TSynBandsCollection : public System::Classes::TOwnedCollection
 private:
 	TSynGutterBand* __fastcall GetBands(int Index);
 protected:
-	virtual void __fastcall Update(System::Classes::TCollectionItem* Item);
+	virtual void __fastcall Update(TCollectionItem* Item);
 public:
-	typedef System::Classes::TOwnedCollection inherited;	
+	typedef System::Classes::TOwnedCollection inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	__property TSynGutterBand* Bands[int Index] = { read = GetBands/*# default */ };
-	__fastcall TSynBandsCollection(System::Classes::TPersistent* AOwner, System::Classes::TCollectionItemClass ItemClass);
-	//# problematic: __fastcall TSynBandsCollection(System::Classes::TCollectionItemClass ItemClass);
+	__fastcall TSynBandsCollection(TPersistent* AOwner, TCollectionItemClass ItemClass);
+	//# problematic: __fastcall TSynBandsCollection(TCollectionItemClass ItemClass);
 };
 
 class TSynGutter : public System::Classes::TPersistent
 {
 private:
-	System::Classes::TPersistent* FOwner; // Synedit
+	TPersistent* FOwner; // Synedit
 	int FUpdateCount;
 	int FCurrentPPI;
-	Vcl::Graphics::TFont* FFont;
+	TFont* FFont;
 	int fCharWidth;
 	TColor FColor;
 	TColor FBorderColor;
 	int fDigitCount;
 	bool fLeadingZeros;
 	bool fZeroStart;
-	System::Classes::TNotifyEvent FOnChange;
+	TNotifyEvent FOnChange;
 	TCursor FCursor;
 	bool fVisible;
 	bool fShowLineNumbers;
@@ -209,7 +276,7 @@ private:
 	void __fastcall SetUseFontStyle(bool Value);
 	void __fastcall SetVisible(bool Value);
 	void __fastcall SetZeroStart(bool Value);
-	void __fastcall SetFont(Vcl::Graphics::TFont* Value);
+	void __fastcall SetFont(TFont* Value);
 	void __fastcall OnFontChange(TObject* Sender);
 	void __fastcall SetBorderStyle(TSynGutterBorderStyle Value);
 	void __fastcall SetLineNumberStart(int Value);
@@ -223,15 +290,15 @@ private:
 	void __fastcall CalcCharWidth();
 	void __fastcall Changed();
 protected:
-	DYNAMIC System::Classes::TPersistent* __fastcall GetOwner();
+	DYNAMIC TPersistent* __fastcall GetOwner();
 public:
 	bool AssignableBands;
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	__fastcall TSynGutter();
-	__fastcall TSynGutter(System::Classes::TPersistent* Owner);
+	__fastcall TSynGutter(TPersistent* Owner);
 	virtual __fastcall ~TSynGutter();
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 	void __fastcall BeginUpdate();
 	void __fastcall EndUpdate();
 	void __fastcall AutoSizeDigitCount();
@@ -269,24 +336,24 @@ __published:
 class TSynBookMarkOpt : public System::Classes::TPersistent
 {
 private:
-	Vcl::Imglist::TCustomImageList* fBookmarkImages;
+	TCustomImageList* fBookmarkImages;
 	bool fDrawBookmarksFirst;
 	bool fEnableKeys;
 	bool fGlyphsVisible;
 	int fLeftMargin;
-	System::Classes::TComponent* FOwner;
+	TComponent* FOwner;
 	int FXOffset;
-	System::Classes::TNotifyEvent FOnChange;
-	void __fastcall SetBookmarkImages(Vcl::Imglist::TCustomImageList* const Value);
+	TNotifyEvent FOnChange;
+	void __fastcall SetBookmarkImages(TCustomImageList* const Value);
 	void __fastcall SetDrawBookmarksFirst(bool Value);
 	void __fastcall SetGlyphsVisible(bool Value);
 	void __fastcall SetLeftMargin(int Value);
 	void __fastcall SetXOffset(int Value);
 public:
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditMiscClasses_friends.inc"
-	__fastcall TSynBookMarkOpt(System::Classes::TComponent* AOwner);
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	__fastcall TSynBookMarkOpt(TComponent* AOwner);
+	virtual void __fastcall Assign(TPersistent* Source);
     // ++ DPI-Aware
 	virtual void __fastcall ChangeScale(int m, int D);
     // -- DPI-Aware
@@ -306,21 +373,21 @@ class TSynGlyph : public System::Classes::TPersistent
 {
 private:
 	bool fVisible;
-	Vcl::Graphics::TBitmap* fInternalGlyph;
-	Vcl::Graphics::TBitmap* FGlyph;
-	System::Classes::TNotifyEvent FOnChange;
-	void __fastcall SetGlyph(Vcl::Graphics::TBitmap* Value);
+	TBitmap* fInternalGlyph;
+	TBitmap* FGlyph;
+	TNotifyEvent FOnChange;
+	void __fastcall SetGlyph(TBitmap* Value);
 	void __fastcall GlyphChange(TObject* Sender);
 	void __fastcall SetVisible(bool Value);
 	int __fastcall GetWidth();
 	int __fastcall GetHeight();
 public:
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	__fastcall TSynGlyph(THandle aModule, const String AName);
 	virtual __fastcall ~TSynGlyph();
-	virtual void __fastcall Assign(System::Classes::TPersistent* ASource);
-	void __fastcall Draw(Vcl::Graphics::TCanvas* ACanvas, int AX, int AY, int aLineHeight);
+	virtual void __fastcall Assign(TPersistent* ASource);
+	void __fastcall Draw(TCanvas* ACanvas, int AX, int AY, int aLineHeight);
 	__property int Width = { read = GetWidth };
 	__property int Height = { read = GetHeight };
     // ++ DPI-Aware
@@ -340,7 +407,7 @@ class ESynMethodChain : public System::Sysutils::Exception
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall ESynMethodChain(const String Msg);
 	__fastcall ESynMethodChain(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynMethodChain(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -354,19 +421,19 @@ public:
 	__fastcall ESynMethodChain(System::NativeUInt Ident, int AHelpContext);
 	__fastcall ESynMethodChain(System::PResStringRec ResStringRec, int AHelpContext);
 };
-typedef void __fastcall (__closure *TSynExceptionEvent) (TObject*, System::Sysutils::Exception*, bool&);
+typedef void __fastcall (__closure *TSynExceptionEvent) (TObject*, Exception*, bool&);
 
 class TSynMethodChain : public System::TObject
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
-	System::Classes::TList* FNotifyProcs;
+	TList* FNotifyProcs;
 	TSynExceptionEvent FExceptionHandler;
 protected:
 	virtual void __fastcall DoFire(const System::TMethod& AEvent){} // = 0;
-	virtual bool __fastcall DoHandleException(System::Sysutils::Exception* e);
+	virtual bool __fastcall DoHandleException(Exception* e);
 	__property TSynExceptionEvent ExceptionHandler = { read = FExceptionHandler, write = FExceptionHandler };
 public:
 	__fastcall TSynMethodChain();
@@ -382,15 +449,15 @@ class TSynNotifyEventChain : public TSynMethodChain
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TSynMethodChain inherited;	
+	typedef TSynMethodChain inherited;
 private:
 	TObject* FSender;
 protected:
 	virtual void __fastcall DoFire(const System::TMethod& AEvent);
 public:
 	__fastcall TSynNotifyEventChain(TObject* ASender);
-	void __fastcall Add(System::Classes::TNotifyEvent AEvent);
-	void __fastcall Remove(System::Classes::TNotifyEvent AEvent);
+	void __fastcall Add(TNotifyEvent AEvent);
+	void __fastcall Remove(TNotifyEvent AEvent);
 	__property  ExceptionHandler;
 	__property TObject* Sender = { read = FSender, write = FSender };
 	__fastcall TSynNotifyEventChain();
@@ -402,16 +469,16 @@ class TSynInternalImage : public System::TObject
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
-	Vcl::Graphics::TBitmap* FImages;
+	TBitmap* FImages;
 	int FWidth;
 	int FHeight;
 	int FCount;
 public:
 	__fastcall TSynInternalImage(THandle aModule, const String Name, int Count);
 	virtual __fastcall ~TSynInternalImage();
-	void __fastcall Draw(Vcl::Graphics::TCanvas* ACanvas, int Number, int X, int Y, int LineHeight);
+	void __fastcall Draw(TCanvas* ACanvas, int Number, int X, int Y, int LineHeight);
     // ++ DPI-Aware
 	virtual void __fastcall ChangeScale(int m, int D);
     // -- DPI-Aware
@@ -420,11 +487,11 @@ public:
 
   /* TSynHotKey */
 const int BorderWidth = 0;
-typedef Vcl::Forms::TBorderStyle TSynBorderStyle;
+typedef TBorderStyle TSynBorderStyle;
 enum THKModifier {hkShift,
                   hkCtrl,
                   hkAlt };
-typedef System::Set<THKModifier, hkShift, hkAlt> THKModifiers;
+typedef System::Set<THKModifier, THKModifier::hkShift, THKModifier::hkAlt> THKModifiers;
 enum THKInvalidKey {hcNone,
                     hcShift,
                     hcCtrl,
@@ -433,34 +500,34 @@ enum THKInvalidKey {hcNone,
                     hcShiftAlt,
                     hcCtrlAlt,
                     hcShiftCtrlAlt };
-typedef System::Set<THKInvalidKey, hcNone, hcShiftCtrlAlt> THKInvalidKeys;
+typedef System::Set<THKInvalidKey, THKInvalidKey::hcNone, THKInvalidKey::hcShiftCtrlAlt> THKInvalidKeys;
 
 class TSynHotKey : public Vcl::Controls::TCustomControl
 {
 private:
 	TSynBorderStyle FBorderStyle;
-	System::Classes::TShortCut FHotKey;
+	TShortCut FHotKey;
 	THKInvalidKeys FInvalidKeys;
 	THKModifiers FModifiers;
 	bool FPressedOnlyModifiers;
 	void __fastcall SetBorderStyle(const TSynBorderStyle Value);
-	void __fastcall SetHotKey(const System::Classes::TShortCut Value);
+	void __fastcall SetHotKey(const TShortCut Value);
 	void __fastcall SetInvalidKeys(const THKInvalidKeys Value);
 	void __fastcall SetModifiers(const THKModifiers Value);
-	MESSAGE void __fastcall WMGetDlgCode(TMessage& Message)/*# WM_GETDLGCODE */;
+	MESSAGE void __fastcall WMGetDlgCode(::TMessage& Message)/*# WM_GETDLGCODE */;
 	HIDESBASE MESSAGE void __fastcall WMKillFocus(TWMKillFocus& Msg)/*# WM_KILLFOCUS */;
 	HIDESBASE MESSAGE void __fastcall WMSetFocus(TWMSetFocus& Msg)/*# WM_SETFOCUS */;
 protected:
-	virtual void __fastcall CreateParams(Vcl::Controls::TCreateParams& Params);
+	virtual void __fastcall CreateParams(TCreateParams& Params);
 	DYNAMIC void __fastcall DoExit();
-	DYNAMIC void __fastcall KeyDown(WORD& key, System::Classes::TShiftState Shift);
-	DYNAMIC void __fastcall KeyUp(WORD& key, System::Classes::TShiftState Shift);
-	DYNAMIC void __fastcall MouseDown(TMouseButton Button, System::Classes::TShiftState Shift, int X, int Y);
+	DYNAMIC void __fastcall KeyDown(WORD& key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyUp(WORD& key, TShiftState Shift);
+	DYNAMIC void __fastcall MouseDown(TMouseButton Button, TShiftState Shift, int X, int Y);
 	virtual void __fastcall Paint();
 public:
-	typedef Vcl::Controls::TCustomControl inherited;	
+	typedef Vcl::Controls::TCustomControl inherited;
 	#include "SynEditMiscClasses_friends.inc"
-	__fastcall TSynHotKey(System::Classes::TComponent* AOwner);
+	__fastcall TSynHotKey(TComponent* AOwner);
 __published:
 	__property  Font;
 	__property  Color;
@@ -488,7 +555,7 @@ protected:
 	virtual int __fastcall GetResultCount(){return 0;} // = 0;
 	virtual void __fastcall SetOptions(const Synedittypes::TSynSearchOptions Value){} // = 0;
 public:
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynEditMiscClasses_friends.inc"
 	virtual int __fastcall FindAll(const String NewText){return 0;} // = 0;
 	virtual String __fastcall PreprocessReplaceExpression(const String AReplace);
@@ -498,21 +565,21 @@ public:
 	__property int Results[int Index] = { read = GetResult };
 	__property int Lengths[int Index] = { read = GetLength };
 	__property Synedittypes::TSynSearchOptions Options = { write = SetOptions };
-	__fastcall TSynEditSearchCustom(System::Classes::TComponent* AOwner);
+	__fastcall TSynEditSearchCustom(TComponent* AOwner);
 };
 
 class TBetterRegistry : public System::Win::Registry::TRegistry
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef System::Win::Registry::TRegistry inherited;	
+	typedef System::Win::Registry::TRegistry inherited;
 	bool __fastcall OpenKeyReadOnly(const String key);
 	__fastcall TBetterRegistry();
 	__fastcall TBetterRegistry(unsigned int AAccess);
 };
 
   // ++ DPI-Aware
-void __fastcall ResizeBitmap(Vcl::Graphics::TBitmap* BITMAP, int NewWidth, int NewHeight);
+void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight);
 // -- DPI-Aware
 
 

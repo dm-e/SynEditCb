@@ -9,57 +9,55 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighteradsp21xx
 {
-#define SynHighlighterADSP21xx__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterADSP21xx__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterADSP21xx__2 (TSysCharSet() <<  \
+#define Synhighlighteradsp21xx__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighteradsp21xx__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighteradsp21xx__2 (TSysCharSet() <<  \
 										48 << 49)
-#define SynHighlighterADSP21xx__3 (TSysCharSet() <<  \
-										50 << 51 << 52 << 53 << 54 << 55 <<  \
-										56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										97 << 98 << 99 << 100 << 101 << 102)
-#define SynHighlighterADSP21xx__4 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
+#define Synhighlighteradsp21xx__3 (TSysCharSet() <<  \
+          50 << 51 << 52 << 53 << 54 << 55 <<  \
+          56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          97 << 98 << 99 << 100 << 101 << 102)
+#define Synhighlighteradsp21xx__4 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
 const String Keywords[179/*# range 0..178*/] = {L"abs", L"abstract", L"ac", L"af", L"alt_reg", L"and", L"ar", L"ar_sat", L"ashift", L"astat", L"aux", L"av", L"av_latch"
-																				, L"ax0", L"ax1", L"ay0", L"ay1", L"b", L"bit_rev", L"bm", L"boot", L"by", L"cache", L"call", L"ce", L"circ", L"clear", L"clr"
-																				, L"clrbit", L"cntl", L"cntr", L"const", L"define", L"dis", L"divq", L"divs", L"dm", L"dmovlay", L"do", L"else", L"emode", L"ena"
-																				, L"endif", L"endmacro", L"endmod", L"entry", L"eq", L"exp", L"expadj", L"external", L"fl0", L"fl1", L"fl2", L"flag_in", L"flag_out"
-																				, L"for", L"forever", L"ge", L"global", L"go_mode", L"gt", L"h", L"hi", L"i0", L"i1", L"i2", L"i3", L"i4", L"i5", L"i6", L"i7", L"icntl"
-																				, L"idle", L"if", L"ifc", L"ifdef", L"ifndef", L"imask", L"in", L"include", L"init", L"io", L"jump", L"l0", L"l1", L"l2", L"l3", L"l4"
-																				, L"l5", L"l6", L"l7", L"le", L"lo", L"local", L"loop", L"lshift", L"lt", L"m_mode", L"m0", L"m1", L"m2", L"m3", L"m4", L"m5", L"m6", L"m7"
-																				, L"macro", L"mf", L"modify", L"module", L"mr", L"mr0", L"mr1", L"mr2", L"mstat", L"mv", L"mx0", L"mx1", L"my0", L"my1", L"name", L"ne"
-																				, L"neg", L"newpage", L"nop", L"norm", L"not", L"of", L"or", L"pass", L"pc", L"pm", L"pop", L"port", L"push", L"ram", L"regbank", L"reset"
-																				, L"rnd", L"rom", L"rti", L"rts", L"rx0", L"rx1", L"sat", L"sb", L"sec_reg", L"seg", L"segment", L"set", L"setbit", L"shift", L"shl"
-																				, L"shr", L"si", L"sr", L"sr0", L"sr1", L"ss", L"sstat", L"static", L"sts", L"su", L"test", L"testbit", L"tglbit", L"timer", L"toggle"
-																				, L"topofpcstack", L"trap", L"true", L"tx0", L"tx1", L"undef", L"until", L"us", L"uu", L"var", L"xor"};
+                    , L"ax0", L"ax1", L"ay0", L"ay1", L"b", L"bit_rev", L"bm", L"boot", L"by", L"cache", L"call", L"ce", L"circ", L"clear", L"clr"
+                    , L"clrbit", L"cntl", L"cntr", L"const", L"define", L"dis", L"divq", L"divs", L"dm", L"dmovlay", L"do", L"else", L"emode", L"ena"
+                    , L"endif", L"endmacro", L"endmod", L"entry", L"eq", L"exp", L"expadj", L"external", L"fl0", L"fl1", L"fl2", L"flag_in", L"flag_out"
+                    , L"for", L"forever", L"ge", L"global", L"go_mode", L"gt", L"h", L"hi", L"i0", L"i1", L"i2", L"i3", L"i4", L"i5", L"i6", L"i7", L"icntl"
+                    , L"idle", L"if", L"ifc", L"ifdef", L"ifndef", L"imask", L"in", L"include", L"init", L"io", L"jump", L"l0", L"l1", L"l2", L"l3", L"l4"
+                    , L"l5", L"l6", L"l7", L"le", L"lo", L"local", L"loop", L"lshift", L"lt", L"m_mode", L"m0", L"m1", L"m2", L"m3", L"m4", L"m5", L"m6", L"m7"
+                    , L"macro", L"mf", L"modify", L"module", L"mr", L"mr0", L"mr1", L"mr2", L"mstat", L"mv", L"mx0", L"mx1", L"my0", L"my1", L"name", L"ne"
+                    , L"neg", L"newpage", L"nop", L"norm", L"not", L"of", L"or", L"pass", L"pc", L"pm", L"pop", L"port", L"push", L"ram", L"regbank", L"reset"
+                    , L"rnd", L"rom", L"rti", L"rts", L"rx0", L"rx1", L"sat", L"sb", L"sec_reg", L"seg", L"segment", L"set", L"setbit", L"shift", L"shl"
+                    , L"shr", L"si", L"sr", L"sr0", L"sr1", L"ss", L"sstat", L"static", L"sts", L"su", L"test", L"testbit", L"tglbit", L"timer", L"toggle"
+                    , L"topofpcstack", L"trap", L"true", L"tx0", L"tx1", L"undef", L"until", L"us", L"uu", L"var", L"xor"};
 const int KeyIndices[821/*# range 0..820*/] = {-1, -1, -1, -1, -1, -1, -1, -1, 110, -1, -1, -1, -1, -1, -1, -1, -1, -1, 67, 15, -1, 48, 100, 132, -1, -1, -1, -1, -1, 133, -1, -1, -1, -1, -1, -1, -1, 152, 93
-																				, 155, -1, -1, -1, 70, 62, -1, -1, 103, 0, -1, -1, 10, -1, -1, -1, -1, -1, -1, 171, -1, -1, -1, -1, 120, 162, -1, -1, -1, -1, -1, 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 153
-																				, -1, -1, -1, 50, -1, -1, -1, -1, -1, -1, 72, 12, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, 25, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 156, 83
-																				, -1, -1, -1, -1, -1, 77, 106, -1, 45, 27, -1, -1, -1, -1, -1, 7, -1, -1, 43, -1, 74, 14, 174, 73, 86, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, 111, -1, -1, 140, -1, -1, -1
-																				, 89, -1, -1, -1, -1, 127, -1, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 116, -1, 49, -1, -1, 164, 23, -1, -1, 9, -1, -1, -1, -1, 149, -1, -1, -1, 40, -1, -1, 46, -1, 94, -1
-																				, 81, -1, 134, -1, -1, -1, -1, -1, -1, -1, 55, -1, 47, -1, -1, -1, -1, 11, -1, 135, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, 65, 142, -1, -1, 98, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, -1, 18, -1, 68, 16, -1, -1, 101, 91, -1, -1, -1, 130, -1, 167, -1, -1, -1, 115, -1, -1, -1, -1, 19, 158, -1, 163, -1, -1, -1, -1, -1, 104, -1, -1
-																				, -1, -1, -1, -1, -1, 39, -1, 79, 172, -1, -1, -1, -1, 41, -1, 38, 176, 80, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 75, -1, -1, 51, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 138, -1, -1, -1, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 58, -1, -1, 136, -1, -1, -1, -1, -1, -1, 177, -1, -1, -1, -1, -1, -1, -1, 57, -1, 157, 84, 21, -1, -1, -1, -1, -1, 1, -1, -1, -1
-																				, 96, 161, -1, -1, 123, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, -1, -1, -1, 54, 137, -1, -1, 124, 145, -1, -1, -1, -1, -1, -1, -1, -1, 112, -1, -1, 173, -1, -1, -1, 90, -1, 125, -1, 166, -1, -1
-																				, -1, -1, 144, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 117, -1, -1, 170, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, 148, -1, 44, -1, -1, -1, -1, 159, -1, -1, -1, -1, -1, 150, -1, -1, -1
-																				, -1, 31, -1, -1, -1, -1, -1, -1, 63, -1, -1, -1, 178, -1, -1, -1, 141, 60, -1, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 66, 143, -1, -1, 99, -1, -1, 97, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 37, -1, -1, 26, -1, -1, 69, -1, -1, -1, 102, -1, -1, 121, -1, -1, -1, 61, 129, 95, -1, -1, -1, 122, -1, 139, -1, -1, 36, 175, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1, -1, 108, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 32, -1, -1, -1, -1, -1, 119, -1, -1, -1, -1, -1, -1, 2, -1, -1, 165, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, 92, -1, 147, -1, 131, 3, -1, 24
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 168, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, 13, -1, -1, 85, 59, -1, -1, 146, -1, -1, -1, -1, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, 88, -1, -1, 107, -1, -1, -1, -1, -1, -1, 160, -1, -1, -1, -1, -1, -1, -1, 113, 151, -1, -1, -1, -1, 53, -1, -1, -1, -1, -1, 34, 29, 169, 126, 114, -1, -1, 22, -1, -1, -1
-																				, 6, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, 5, 30, -1, -1, -1, -1, -1, -1, 64, -1, -1, -1
-																				, -1, -1, -1};
+                    , 155, -1, -1, -1, 70, 62, -1, -1, 103, 0, -1, -1, 10, -1, -1, -1, -1, -1, -1, 171, -1, -1, -1, -1, 120, 162, -1, -1, -1, -1, -1, 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 153
+                    , -1, -1, -1, 50, -1, -1, -1, -1, -1, -1, 72, 12, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, 25, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 156, 83
+                    , -1, -1, -1, -1, -1, 77, 106, -1, 45, 27, -1, -1, -1, -1, -1, 7, -1, -1, 43, -1, 74, 14, 174, 73, 86, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, 111, -1, -1, 140, -1, -1, -1
+                    , 89, -1, -1, -1, -1, 127, -1, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 116, -1, 49, -1, -1, 164, 23, -1, -1, 9, -1, -1, -1, -1, 149, -1, -1, -1, 40, -1, -1, 46, -1, 94, -1
+                    , 81, -1, 134, -1, -1, -1, -1, -1, -1, -1, 55, -1, 47, -1, -1, -1, -1, 11, -1, 135, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, 65, 142, -1, -1, 98, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, -1, 18, -1, 68, 16, -1, -1, 101, 91, -1, -1, -1, 130, -1, 167, -1, -1, -1, 115, -1, -1, -1, -1, 19, 158, -1, 163, -1, -1, -1, -1, -1, 104, -1, -1
+                    , -1, -1, -1, -1, -1, 39, -1, 79, 172, -1, -1, -1, -1, 41, -1, 38, 176, 80, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 75, -1, -1, 51, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 138, -1, -1, -1, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 58, -1, -1, 136, -1, -1, -1, -1, -1, -1, 177, -1, -1, -1, -1, -1, -1, -1, 57, -1, 157, 84, 21, -1, -1, -1, -1, -1, 1, -1, -1, -1
+                    , 96, 161, -1, -1, 123, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, -1, -1, -1, 54, 137, -1, -1, 124, 145, -1, -1, -1, -1, -1, -1, -1, -1, 112, -1, -1, 173, -1, -1, -1, 90, -1, 125, -1, 166, -1, -1
+                    , -1, -1, 144, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 117, -1, -1, 170, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, 148, -1, 44, -1, -1, -1, -1, 159, -1, -1, -1, -1, -1, 150, -1, -1, -1
+                    , -1, 31, -1, -1, -1, -1, -1, -1, 63, -1, -1, -1, 178, -1, -1, -1, 141, 60, -1, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 66, 143, -1, -1, 99, -1, -1, 97, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 37, -1, -1, 26, -1, -1, 69, -1, -1, -1, 102, -1, -1, 121, -1, -1, -1, 61, 129, 95, -1, -1, -1, 122, -1, 139, -1, -1, 36, 175, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1, -1, 108, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 32, -1, -1, -1, -1, -1, 119, -1, -1, -1, -1, -1, -1, 2, -1, -1, 165, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, 92, -1, 147, -1, 131, 3, -1, 24
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 168, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, 13, -1, -1, 85, 59, -1, -1, 146, -1, -1, -1, -1, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, 88, -1, -1, 107, -1, -1, -1, -1, -1, -1, 160, -1, -1, -1, -1, -1, -1, -1, 113, 151, -1, -1, -1, -1, 53, -1, -1, -1, -1, -1, 34, 29, 169, 126, 114, -1, -1, 22, -1, -1, -1
+                    , 6, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, 5, 30, -1, -1, -1, -1, -1, -1, 64, -1, -1, -1
+                    , -1, -1, -1};
 
 /*$Q-*/
 
@@ -97,7 +95,7 @@ void __fastcall TSynADSP21xxSyn::InitIdent()
 	int stop = 0;
 	for(stop = 820 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[48] = FuncAbs;
@@ -2117,12 +2115,12 @@ __fastcall TSynADSP21xxSyn::TSynADSP21xxSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = clTeal;
-	fCommentAttri->Style = SynHighlighterADSP21xx__0;
+	fCommentAttri->Style = Synhighlighteradsp21xx__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterADSP21xx__1;
+	fKeyAttri->Style = Synhighlighteradsp21xx__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clOlive;
@@ -2452,11 +2450,11 @@ void __fastcall TSynADSP21xxSyn::BinaryNumber()
 {
 	++Run;
 	FRange = rsUnKnown;
-	while(CharInSet(fLine[Run], SynHighlighterADSP21xx__2))
+	while(CharInSet(fLine[Run], Synhighlighteradsp21xx__2))
 	{
 		++Run;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterADSP21xx__3))
+	if(CharInSet(fLine[Run], Synhighlighteradsp21xx__3))
 	{
 		FTokenID = tkIdentifier;
 	}
@@ -2700,7 +2698,7 @@ void* __fastcall TSynADSP21xxSyn::GetRange()
 
 void __fastcall TSynADSP21xxSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynADSP21xxSyn::ResetRange()
@@ -2843,7 +2841,7 @@ String __fastcall TSynADSP21xxSyn::GetLanguageName()
 TSynHighlighterCapabilities __fastcall TSynADSP21xxSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterADSP21xx__4;
+	result = inherited::GetCapabilities() + Synhighlighteradsp21xx__4;
 	return result;
 }
 
@@ -2865,16 +2863,8 @@ void SynHighlighterADSP21xx_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynADSP21xxSyn));
 }
-class SynHighlighterADSP21xx_unit
-{
-public:
-	SynHighlighterADSP21xx_unit()
-	{
-		SynHighlighterADSP21xx_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterADSP21xx_unit _SynHighlighterADSP21xx_unit;
 
 }  // namespace SynHighlighterADSP21xx
 

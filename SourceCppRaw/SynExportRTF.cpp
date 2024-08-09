@@ -11,14 +11,12 @@ using namespace Syneditexport;
 using namespace Syneditstrconst;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
 using namespace System::Uitypes;
-using namespace Vcl::Graphics;
 
 namespace Synexportrtf
 {
-#define SynExportRTF__0 (TSynEncodings() << TSynEncoding::seUTF8)
+#define Synexportrtf__0 (TSynEncodings() << seUTF8)
 
 
 
@@ -29,10 +27,10 @@ __fastcall TSynExporterRTF::TSynExporterRTF(TComponent* AOwner)
 			fAttributesChanged(false),
 			fListColors(nullptr)
 {
-	fListColors = new System::Classes::TList();
+	fListColors = new TList();
 	fDefaultFilter = SYNS_FilterRTF;
 	FClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_RTF));
-	FEncoding = TSynEncoding::seUTF8;
+	FEncoding = seUTF8;
 }
 
 __fastcall TSynExporterRTF::~TSynExporterRTF()
@@ -41,7 +39,6 @@ __fastcall TSynExporterRTF::~TSynExporterRTF()
 	fListColors = nullptr;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynExporterRTF::Clear()
 {
@@ -128,7 +125,7 @@ int __fastcall TSynExporterRTF::GetColorIndex(TColor AColor)
 {
 	int result = 0;
 	result = fListColors->IndexOf(((void*) AColor));
-	if(result ==  - 1)
+	if(result == -1)
 		result = fListColors->Add(((void*) AColor));
 	return result;
 }
@@ -165,7 +162,7 @@ String __fastcall TSynExporterRTF::GetHeader()
 	result = result + L"{\\colortbl";
 	for(stop = fListColors->Count - 1, i = 0; i <= stop; i++)
 	{
-		result = result + ColorToRTF((TColor) (int) fListColors->Items[i]);
+		result = result + ColorToRTF((TColor) (NativeInt) fListColors->Items[i]);
 	}
 	result = result + L"}\x0d\x0a";
   // title and creator comment
@@ -212,7 +209,7 @@ String __fastcall TSynExporterRTF::ReplaceReservedChar(WideChar AChar)
 TSynEncodings __fastcall TSynExporterRTF::SupportedEncodings()
 {
 	TSynEncodings result;
-	result = SynExportRTF__0;
+	result = Synexportrtf__0;
 	return result;
 }
 

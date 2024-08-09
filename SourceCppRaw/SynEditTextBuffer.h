@@ -1,3 +1,36 @@
+/* -------------------------------------------------------------------------------
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+  the specific language governing rights and limitations under the License.
+
+  The Original Code is: SynEditTextBuffer.pas, released 2000-04-07.
+  The Original Code is based on parts of mwCustomEdit.pas by Martin Waldenburg,
+  part of the mwEdit component suite.
+  Portions created by Martin Waldenburg are Copyright (C) 1998 Martin Waldenburg.
+  Unicode translation by Maël Hörz.
+  All Rights Reserved.
+
+  Contributors to the SynEdit and mwEdit projects are listed in the
+  Contributors.txt file.
+
+  Alternatively, the contents of this file may be used under the terms of the
+  GNU General Public License Version 2 or later (the "GPL"), in which case
+  the provisions of the GPL are applicable instead of those above.
+  If you wish to allow use of your version of this file only under the terms
+  of the GPL and not to allow others to use your version of this file
+  under the MPL, indicate your decision by deleting the provisions above and
+  replace them with the notice and other provisions required by the GPL.
+  If you do not delete the provisions above, a recipient may use your version
+  of this file under either the MPL or the GPL.
+
+  Known Issues:
+  ------------------------------------------------------------------------------- */
+// todo: Avoid calculating expanded string unncessarily (just calculate expandedLength instead).
 #ifndef SynEditTextBufferH
 #define SynEditTextBufferH
 
@@ -46,6 +79,42 @@ namespace Synedittextbuffer
   Known Issues:
   ------------------------------------------------------------------------------- */
 // todo: Avoid calculating expanded string unncessarily (just calculate expandedLength instead).
+
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 typedef void* TSynEditRange;
 enum TSynEditStringFlag {sfHasTabs,
                          sfHasNoTabs,
@@ -53,7 +122,7 @@ enum TSynEditStringFlag {sfHasTabs,
                          sfModified,
                          sfSaved,
                          sfAsSaved };
-typedef System::Set<TSynEditStringFlag, sfHasTabs, sfAsSaved> TSynEditStringFlags;
+typedef System::Set<TSynEditStringFlag, TSynEditStringFlag::sfHasTabs, TSynEditStringFlag::sfAsSaved> TSynEditStringFlags;
 
   // Managed by Undo
 typedef int /*# guessed*/ /*sfModified..sfAsSaved*/ TSynLineChangeFlag;
@@ -77,8 +146,8 @@ struct TSynEditTwoWideChars
 	WideChar Two;
 };
 typedef TSynEditTwoWideChars* PSynEditTwoWideChars;
-const int SynEditStringRecSize = sizeof(TSynEditStringRec);
-const int MaxSynEditStrings = (int)(System::MaxInt / SynEditStringRecSize);
+const unsigned int SynEditStringRecSize = sizeof(TSynEditStringRec);
+const unsigned int MaxSynEditStrings = (unsigned int)(System::MaxInt / /*div*/ SynEditStringRecSize);
 const void* const NullRange = ((TSynEditRange) -1);
 typedef TSynEditStringRec TSynEditStringRecList[(MaxSynEditStrings - 1)+1 - 0/*# range 0..MaxSynEditStrings-1*/];
 typedef TSynEditStringRecList* PSynEditStringRecList;
@@ -100,9 +169,9 @@ private:
 	bool fCharIndexesAreValid;
 	bool fDetectUTF8;
 	int fUTF8CheckLen;
-	System::Classes::TNotifyEvent FOnChange;
-	System::Classes::TNotifyEvent FOnChanging;
-	System::Classes::TNotifyEvent fOnCleared;
+	TNotifyEvent FOnChange;
+	TNotifyEvent FOnChanging;
+	TNotifyEvent fOnCleared;
 	TStringListChangeEvent FOnBeforeDeleted;
 	TStringListChangeEvent fOnDeleted;
 	TStringListChangeEvent fOnInserted;
@@ -134,15 +203,15 @@ protected:
 	void __fastcall UpdateCharIndexes();
 public:
     // TStrings overriden public methods
-	typedef System::Classes::TStrings inherited;	
+	typedef System::Classes::TStrings inherited;
 	#include "SynEditTextBuffer_friends.inc"
 	virtual void __fastcall Clear();
 	virtual void __fastcall Delete(int Index);
 	void __fastcall DeleteLines(int Index, int NumLines);
 	virtual void __fastcall Insert(int Index, const String s);
-	virtual void __fastcall LoadFromStream(System::Classes::TStream* Stream, System::Sysutils::TEncoding* Encoding);
-	virtual void __fastcall SaveToStream(System::Classes::TStream* Stream, System::Sysutils::TEncoding* Encoding);
-	virtual void __fastcall SetEncoding(System::Sysutils::TEncoding* const Value); // just to elevate
+	virtual void __fastcall LoadFromStream(TStream* Stream, TEncoding* Encoding);
+	virtual void __fastcall SaveToStream(TStream* Stream, TEncoding* Encoding);
+	virtual void __fastcall SetEncoding(TEncoding* const Value); // just to elevate
     // Other public methods
 	__fastcall TSynEditStringList(TExpandAtWideGlyphsFunc AExpandAtWideGlyphsFunc);
 	virtual __fastcall ~TSynEditStringList();
@@ -162,9 +231,9 @@ public:
 	__property int UTF8CheckLen = { read = fUTF8CheckLen, write = fUTF8CheckLen };
 	__property bool DetectUTF8 = { read = fDetectUTF8, write = fDetectUTF8 };
 	__property TSynLineChangeFlags ChangeFlags[int Index] = { read = GetChangeFlags, write = SetChangeFlags };
-	__property System::Classes::TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
-	__property System::Classes::TNotifyEvent OnChanging = { read = FOnChanging, write = FOnChanging };
-	__property System::Classes::TNotifyEvent OnCleared = { read = fOnCleared, write = fOnCleared };
+	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TNotifyEvent OnChanging = { read = FOnChanging, write = FOnChanging };
+	__property TNotifyEvent OnCleared = { read = fOnCleared, write = fOnCleared };
 	__property TStringListChangeEvent OnBeforeDeleted = { read = FOnBeforeDeleted, write = FOnBeforeDeleted };
 	__property TStringListChangeEvent OnDeleted = { read = fOnDeleted, write = fOnDeleted };
 	__property TStringListChangeEvent OnInserted = { read = fOnInserted, write = fOnInserted };
@@ -177,7 +246,7 @@ class ESynEditStringList : public System::Sysutils::Exception
 {
 	#include "SynEditTextBuffer_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall ESynEditStringList(const String Msg);
 	__fastcall ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);

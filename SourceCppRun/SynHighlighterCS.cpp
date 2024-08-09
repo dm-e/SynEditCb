@@ -13,17 +13,14 @@ using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightercs
 {
-#define SynHighlighterCS__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterCS__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCS__2 (TSysCharSet() << L'\x27' << L'\\')
-#define SynHighlighterCS__3 (System::Set<TtkTokenKind, tkSymbol, tkUnknown>() << tkComment << tkSpace << tkNull)
-#define SynHighlighterCS__4 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
+#define Synhighlightercs__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightercs__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercs__2 (TSysCharSet() << '\x27' << '\\')
+#define Synhighlightercs__3 (System::Set<TtkTokenKind, TtkTokenKind::tkSymbol, TtkTokenKind::tkUnknown>() << tkComment << tkSpace << tkNull)
+#define Synhighlightercs__4 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
 const String Keywords[77/*# range 0..76*/] = {L"abstract", L"as", L"base", L"bool", L"break", L"byte", L"case", L"catch", L"class", L"const", L"continue", L"decimal"
@@ -75,7 +72,7 @@ void __fastcall TSynCSSyn::InitIdent()
 	int stop = 0;
 	for(stop = 210 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 
@@ -820,14 +817,14 @@ __fastcall TSynCSSyn::TSynCSSyn(TComponent* AOwner)
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
 	addAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterCS__0;
+	fCommentAttri->Style = Synhighlightercs__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterCS__1;
+	fKeyAttri->Style = Synhighlightercs__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -943,7 +940,7 @@ void __fastcall TSynCSSyn::AsciiCharProc()
 	{
 		if(fLine[Run] == L'\\')
 		{
-			if(CharInSet(fLine[Run + 1], SynHighlighterCS__2))
+			if(CharInSet(fLine[Run + 1], Synhighlightercs__2))
 				++Run;
 		}
 		++Run;
@@ -1415,7 +1412,7 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -1436,7 +1433,7 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -1500,9 +1497,9 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(int)GetLineRange(LinesToScan, (int) Line) == rsAnsiC)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsAnsiC)
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsiC)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsiC)
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -1510,7 +1507,7 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 		}
 		else
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsiC)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsiC)
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -2000,7 +1997,7 @@ TtkTokenKind __fastcall TSynCSSyn::GetTokenID()
 {
 	TtkTokenKind result = tkSymbol;
 	result = FTokenID;
-	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(SynHighlighterCS__3.Contains(FTokenID)))
+	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercs__3.Contains(FTokenID)))
 		result = tkAsm;
 	return result;
 }
@@ -2071,7 +2068,7 @@ void __fastcall TSynCSSyn::ResetRange()
 
 void __fastcall TSynCSSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynCSSyn::EnumUserSettings(TStrings* Settings)
@@ -2126,7 +2123,7 @@ bool __fastcall TSynCSSyn::UseUserSettings(int settingIndex)
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = (int) Name.Length(), i = 1; i <= stop; i++)
+				for(stop = Name.Length(), i = 1; i <= stop; i++)
 				{
 					if(Name[i] == L' ')
 						Name[i] = L'_';
@@ -2263,7 +2260,7 @@ bool __fastcall TSynCSSyn::IsFilterStored()
 TSynHighlighterCapabilities __fastcall TSynCSSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterCS__4;
+	result = inherited::GetCapabilities() + Synhighlightercs__4;
 	return result;
 }
 

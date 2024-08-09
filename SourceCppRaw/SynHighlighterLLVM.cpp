@@ -10,80 +10,77 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterllvm
 {
-#define SynHighlighterLLVM__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterLLVM__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterLLVM__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterLLVM__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterLLVM__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterLLVM__5 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterLLVM__6 (TSysCharSet() <<  \
+#define Synhighlighterllvm__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterllvm__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterllvm__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterllvm__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterllvm__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterllvm__5 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterllvm__6 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterLLVM__7 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterLLVM__8 (TSysCharSet() << L'x' << L'X')
+#define Synhighlighterllvm__7 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterllvm__8 (TSysCharSet() << 'x' << 'X')
 
 
   // as this language is case-insensitive keywords *must* be in lowercase
 const UnicodeString Keywords[217/*# range 0..216*/] = {L"acq_rel", L"acquire", L"add", L"addrspace", L"alias", L"align", L"alignstack", L"alloca", L"alwaysinline", L"and"
-																				, L"appending", L"arcp", L"arm_aapcs_vfpcc", L"arm_aapcscc", L"arm_apcscc", L"ashr", L"asm", L"atomic", L"atomicrmw", L"available_externally"
-																				, L"bitcast", L"blockaddress", L"br", L"byval", L"c", L"call", L"catch", L"cc", L"ccc", L"cleanup", L"cmpxchg"
-																				, L"coldcc", L"common", L"constant", L"datalayout", L"declare", L"default", L"define", L"deplibs", L"dllexport", L"dllimport"
-																				, L"double", L"eq", L"exact", L"except", L"extern_weak", L"external", L"extractelement", L"extractvalue", L"fadd", L"false"
-																				, L"fast", L"fastcc", L"fcmp", L"fdiv", L"fence", L"filter", L"float", L"fmul", L"fp128", L"fpext", L"fptosi", L"fptoui", L"fptrunc"
-																				, L"free", L"frem", L"fsub", L"gc", L"getelementptr", L"global", L"half", L"hidden", L"icmp", L"inbounds", L"indirectbr", L"initialexec"
-																				, L"inlinehint", L"inreg", L"insertelement", L"insertvalue", L"intel_ocl_bicc", L"inteldialect", L"internal", L"inttoptr"
-																				, L"invoke", L"label", L"landingpad", L"linker_private", L"linker_private_weak", L"linker_private_weak_def_auto", L"linkonce"
-																				, L"linkonce_odr", L"linkonce_odr_auto_hide", L"load", L"localdynamic", L"localexec", L"lshr", L"malloc", L"max"
-																				, L"metadata", L"min", L"minsize", L"module", L"monotonic", L"msp430_intrcc", L"mul", L"naked", L"nand", L"ne", L"nest", L"ninf"
-																				, L"nnan", L"noalias", L"nocapture", L"noimplicitfloat", L"noinline", L"nonlazybind", L"noredzone", L"noreturn", L"nounwind"
-																				, L"nsw", L"nsz", L"null", L"nuw", L"oeq", L"oge", L"ogt", L"ole", L"olt", L"one", L"opaque", L"optsize", L"or", L"ord", L"personality"
-																				, L"phi", L"ppc_fp128", L"private", L"protected", L"ptrtoint", L"ptx_device", L"ptx_kernel", L"readnone", L"readonly"
-																				, L"release", L"resume", L"ret", L"returns_twice", L"sanitize_address", L"sanitize_memory", L"sanitize_thread", L"sdiv"
-																				, L"section", L"select", L"seq_cst", L"sext", L"sge", L"sgt", L"shl", L"shufflevector", L"sideeffect", L"signext", L"singlethread", L"sitofp"
-																				, L"sle", L"slt", L"spir_func", L"spir_kernel", L"srem", L"sret", L"ssp", L"sspreq", L"sspstrong", L"store", L"sub", L"switch"
-																				, L"tail", L"target", L"thread_local", L"to", L"triple", L"true", L"trunc", L"type", L"udiv", L"ueq", L"uge", L"ugt", L"uitofp"
-																				, L"ule", L"ult", L"umax", L"umin", L"undef", L"une", L"unnamed_addr", L"uno", L"unordered", L"unreachable", L"unwind", L"urem"
-																				, L"uwtable", L"va_arg", L"void", L"volatile", L"weak", L"weak_odr", L"x86_fastcallcc", L"x86_fp80", L"x86_mmx", L"x86_stdcallcc", L"x86_thiscallcc"
-																				, L"xchg", L"xor", L"zeroext", L"zeroinitializer", L"zext"};
+                    , L"appending", L"arcp", L"arm_aapcs_vfpcc", L"arm_aapcscc", L"arm_apcscc", L"ashr", L"asm", L"atomic", L"atomicrmw", L"available_externally"
+                    , L"bitcast", L"blockaddress", L"br", L"byval", L"c", L"call", L"catch", L"cc", L"ccc", L"cleanup", L"cmpxchg"
+                    , L"coldcc", L"common", L"constant", L"datalayout", L"declare", L"default", L"define", L"deplibs", L"dllexport", L"dllimport"
+                    , L"double", L"eq", L"exact", L"except", L"extern_weak", L"external", L"extractelement", L"extractvalue", L"fadd", L"false"
+                    , L"fast", L"fastcc", L"fcmp", L"fdiv", L"fence", L"filter", L"float", L"fmul", L"fp128", L"fpext", L"fptosi", L"fptoui", L"fptrunc"
+                    , L"free", L"frem", L"fsub", L"gc", L"getelementptr", L"global", L"half", L"hidden", L"icmp", L"inbounds", L"indirectbr", L"initialexec"
+                    , L"inlinehint", L"inreg", L"insertelement", L"insertvalue", L"intel_ocl_bicc", L"inteldialect", L"internal", L"inttoptr"
+                    , L"invoke", L"label", L"landingpad", L"linker_private", L"linker_private_weak", L"linker_private_weak_def_auto", L"linkonce"
+                    , L"linkonce_odr", L"linkonce_odr_auto_hide", L"load", L"localdynamic", L"localexec", L"lshr", L"malloc", L"max"
+                    , L"metadata", L"min", L"minsize", L"module", L"monotonic", L"msp430_intrcc", L"mul", L"naked", L"nand", L"ne", L"nest", L"ninf"
+                    , L"nnan", L"noalias", L"nocapture", L"noimplicitfloat", L"noinline", L"nonlazybind", L"noredzone", L"noreturn", L"nounwind"
+                    , L"nsw", L"nsz", L"null", L"nuw", L"oeq", L"oge", L"ogt", L"ole", L"olt", L"one", L"opaque", L"optsize", L"or", L"ord", L"personality"
+                    , L"phi", L"ppc_fp128", L"private", L"protected", L"ptrtoint", L"ptx_device", L"ptx_kernel", L"readnone", L"readonly"
+                    , L"release", L"resume", L"ret", L"returns_twice", L"sanitize_address", L"sanitize_memory", L"sanitize_thread", L"sdiv"
+                    , L"section", L"select", L"seq_cst", L"sext", L"sge", L"sgt", L"shl", L"shufflevector", L"sideeffect", L"signext", L"singlethread", L"sitofp"
+                    , L"sle", L"slt", L"spir_func", L"spir_kernel", L"srem", L"sret", L"ssp", L"sspreq", L"sspstrong", L"store", L"sub", L"switch"
+                    , L"tail", L"target", L"thread_local", L"to", L"triple", L"true", L"trunc", L"type", L"udiv", L"ueq", L"uge", L"ugt", L"uitofp"
+                    , L"ule", L"ult", L"umax", L"umin", L"undef", L"une", L"unnamed_addr", L"uno", L"unordered", L"unreachable", L"unwind", L"urem"
+                    , L"uwtable", L"va_arg", L"void", L"volatile", L"weak", L"weak_odr", L"x86_fastcallcc", L"x86_fp80", L"x86_mmx", L"x86_stdcallcc", L"x86_thiscallcc"
+                    , L"xchg", L"xor", L"zeroext", L"zeroinitializer", L"zext"};
 const int KeyIndices[1553/*# range 0..1552*/] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, 64, 40, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 9, -1, -1, -1, -1, -1, 183, -1, -1, -1, 168, -1, -1, 79, -1, -1, -1, -1, 186, -1, -1, -1, -1, -1, 209, 37, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 166, -1, -1, -1
-																				, -1, -1, -1, -1, 211, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, 62, -1, -1, -1, -1, -1, -1, 91, -1, -1
-																				, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, 182, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 169, -1, -1, -1, -1, 26, 78, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, 116, 143, 93, -1, -1, -1, -1, -1, 165, -1, -1, 132, -1, -1, -1, -1, 195, -1, -1, -1, -1, 41, -1, -1, -1, -1, -1, 173, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, -1, -1, 146, -1, -1, -1, -1, -1, -1, 205, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 120, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 151, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, -1, 207, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, 106, -1
-																				, -1, 23, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 89, -1, -1, 161, -1, -1, -1, -1, -1, -1, -1, 17, -1, -1, -1, -1, -1, -1, 24, -1, -1, -1, -1, -1, 10, -1, 133, -1, -1, 122, 65, -1, -1, 53, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 170, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 197, 144, -1, -1, -1, -1, -1, -1
-																				, 57, -1, -1, -1, -1, 189, -1, -1, -1, -1, -1, -1, -1, 159, -1, -1, -1, -1, -1, -1, -1, -1, 59, -1, 35, -1, -1, 131, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, 147
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, -1, 196, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 141, -1, -1, -1, -1, -1, 188, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 202, -1
-																				, -1, -1, -1, -1, 32, -1, -1, -1, -1, 187, -1, -1, -1, -1, -1, -1, -1, -1, -1, 191, -1, -1, -1, -1, -1, 18, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, 199, 185, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 55, 129, -1, 12, -1, -1, -1, 54, -1, 215
-																				, -1, -1, -1, -1, -1, -1, -1, 115, -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 94, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 145, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, -1, 138, -1, -1, 160, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, 162
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 180, -1, -1, -1, -1, -1, -1, -1, -1, 153, -1, -1, -1, -1, -1, -1, -1, 203, 88, -1, -1, -1, 42, -1, 50, -1, -1, 45, 80, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, 73, 167, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 130, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, 201, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 156, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, 5, -1, 3, -1, 190, -1, -1, -1, -1, -1, -1, -1, 212, -1, -1
-																				, 174, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 178, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 83, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, -1
-																				, -1, -1, -1, -1, -1, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 193, -1, -1, -1, 21, -1, -1, 121, -1, -1, 214, -1, 84, 70, -1, -1, 47, -1, -1, -1, -1, -1, 38, -1, 16, -1, -1, -1, -1, -1, -1, 125, -1
-																				, -1, -1, -1, -1, -1, 134, 181, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, 123, -1, -1, -1, -1, -1, 216, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, 206, -1, -1, -1, -1, -1, -1, -1, -1, 49, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, 30, 213, -1, -1, -1, -1, -1, 46, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, 68, -1, -1, 136, -1, -1, -1, -1, -1, -1, -1, 6, 102, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 135, -1
-																				, -1, -1, 66, 105, -1, -1, 198, -1, -1, -1, -1, -1, -1, -1, -1, 172, -1, 19, -1, -1, 114, -1, -1, -1, -1, -1, -1, 175, -1, -1, -1, -1, -1, -1, -1, -1, 117, 194, -1, -1, 72, -1, -1, -1, -1, -1, 152
-																				, -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, -1, -1, 15, -1, 171, -1, -1, 192, -1, 200, -1, -1, 148, -1, -1, 86, 76, 63, -1, 14, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 164, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 67, -1, -1, -1, -1, -1, -1, -1, -1, 27, -1, -1, -1, -1, -1, 155, 184, -1, 97
-																				, -1, -1, -1, -1, 149, -1, 176, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, 163, -1, -1, -1, -1, -1, 210, -1, 44, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, 157, -1, -1, 142, -1, 7, 51, -1, 177, -1, -1, -1, -1, 69, -1, -1, -1, -1, -1, -1, -1, 22, -1, 127, 204, -1, -1, 158, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 140, -1, 179, -1, -1, -1, 58, -1, -1, 208, 139, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 92, 43, -1, -1, 110, 0, -1, -1, -1, 96, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 112, 126, 95, -1, -1, -1, -1, -1, 13, -1
-																				, -1, -1, -1, -1, -1, 150, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, 60};
+                    , -1, -1, -1, 9, -1, -1, -1, -1, -1, 183, -1, -1, -1, 168, -1, -1, 79, -1, -1, -1, -1, 186, -1, -1, -1, -1, -1, 209, 37, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 166, -1, -1, -1
+                    , -1, -1, -1, -1, 211, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, 62, -1, -1, -1, -1, -1, -1, 91, -1, -1
+                    , -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, 182, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 169, -1, -1, -1, -1, 26, 78, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, 116, 143, 93, -1, -1, -1, -1, -1, 165, -1, -1, 132, -1, -1, -1, -1, 195, -1, -1, -1, -1, 41, -1, -1, -1, -1, -1, 173, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 36, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, -1, -1, 146, -1, -1, -1, -1, -1, -1, 205, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 120, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 151, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, -1, 207, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, 106, -1
+                    , -1, 23, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 89, -1, -1, 161, -1, -1, -1, -1, -1, -1, -1, 17, -1, -1, -1, -1, -1, -1, 24, -1, -1, -1, -1, -1, 10, -1, 133, -1, -1, 122, 65, -1, -1, 53, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 170, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 197, 144, -1, -1, -1, -1, -1, -1
+                    , 57, -1, -1, -1, -1, 189, -1, -1, -1, -1, -1, -1, -1, 159, -1, -1, -1, -1, -1, -1, -1, -1, 59, -1, 35, -1, -1, 131, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, 147
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, -1, 196, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 141, -1, -1, -1, -1, -1, 188, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 202, -1
+                    , -1, -1, -1, -1, 32, -1, -1, -1, -1, 187, -1, -1, -1, -1, -1, -1, -1, -1, -1, 191, -1, -1, -1, -1, -1, 18, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, 199, 185, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 55, 129, -1, 12, -1, -1, -1, 54, -1, 215
+                    , -1, -1, -1, -1, -1, -1, -1, 115, -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 94, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 145, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, -1, 138, -1, -1, 160, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, 162
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 180, -1, -1, -1, -1, -1, -1, -1, -1, 153, -1, -1, -1, -1, -1, -1, -1, 203, 88, -1, -1, -1, 42, -1, 50, -1, -1, 45, 80, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, 73, 167, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 130, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 82, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, 90, -1, -1, -1, -1, -1, -1, 201, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 156, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, 5, -1, 3, -1, 190, -1, -1, -1, -1, -1, -1, -1, 212, -1, -1
+                    , 174, -1, -1, 28, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 178, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 83, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 87, -1
+                    , -1, -1, -1, -1, -1, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 193, -1, -1, -1, 21, -1, -1, 121, -1, -1, 214, -1, 84, 70, -1, -1, 47, -1, -1, -1, -1, -1, 38, -1, 16, -1, -1, -1, -1, -1, -1, 125, -1
+                    , -1, -1, -1, -1, -1, 134, 181, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, 123, -1, -1, -1, -1, -1, 216, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, 206, -1, -1, -1, -1, -1, -1, -1, -1, 49, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, 30, 213, -1, -1, -1, -1, -1, 46, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, 68, -1, -1, 136, -1, -1, -1, -1, -1, -1, -1, 6, 102, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 135, -1
+                    , -1, -1, 66, 105, -1, -1, 198, -1, -1, -1, -1, -1, -1, -1, -1, 172, -1, 19, -1, -1, 114, -1, -1, -1, -1, -1, -1, 175, -1, -1, -1, -1, -1, -1, -1, -1, 117, 194, -1, -1, 72, -1, -1, -1, -1, -1, 152
+                    , -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, -1, -1, 15, -1, 171, -1, -1, 192, -1, 200, -1, -1, 148, -1, -1, 86, 76, 63, -1, 14, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 164, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 67, -1, -1, -1, -1, -1, -1, -1, -1, 27, -1, -1, -1, -1, -1, 155, 184, -1, 97
+                    , -1, -1, -1, -1, 149, -1, 176, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, 163, -1, -1, -1, -1, -1, 210, -1, 44, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, 157, -1, -1, 142, -1, 7, 51, -1, 177, -1, -1, -1, -1, 69, -1, -1, -1, -1, -1, -1, -1, 22, -1, 127, 204, -1, -1, 158, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 140, -1, 179, -1, -1, -1, 58, -1, -1, 208, 139, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 92, 43, -1, -1, 110, 0, -1, -1, -1, 96, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 112, 126, 95, -1, -1, -1, -1, -1, 13, -1
+                    , -1, -1, -1, -1, -1, 150, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, 60};
 
 __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
  : inherited(AOwner),
@@ -107,7 +104,7 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 	addAttribute(fBooleanAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) 0xB0A060;
-	fCommentAttri->Style = SynHighlighterLLVM__0;
+	fCommentAttri->Style = Synhighlighterllvm__0;
 	addAttribute(fCommentAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrConstant, SYNS_FriendlyAttrConstant);
 	fConstantAttri->Foreground = clNavy;
@@ -117,15 +114,15 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 	addAttribute(fIdentifierAttri);
 	fInstructionAttri = new TSynHighlighterAttributes(SYNS_AttrInstructions, SYNS_FriendlyAttrInstructions);
 	fInstructionAttri->Foreground = (TColor) 0x207000;
-	fInstructionAttri->Style = SynHighlighterLLVM__1;
+	fInstructionAttri->Style = Synhighlighterllvm__1;
 	addAttribute(fInstructionAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) 0x207000;
-	fKeyAttri->Style = SynHighlighterLLVM__2;
+	fKeyAttri->Style = Synhighlighterllvm__2;
 	addAttribute(fKeyAttri);
 	fLabelAttri = new TSynHighlighterAttributes(SYNS_AttrLabel, SYNS_FriendlyAttrLabel);
 	fLabelAttri->Foreground = (TColor) 0x702000;
-	fLabelAttri->Style = SynHighlighterLLVM__3;
+	fLabelAttri->Style = Synhighlighterllvm__3;
 	addAttribute(fLabelAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) 0x70A040;
@@ -137,7 +134,7 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 	addAttribute(fStringAttri);
 	fTypesAttri = new TSynHighlighterAttributes(SYNS_AttrBasicTypes, SYNS_FriendlyAttrBasicTypes);
 	fTypesAttri->Foreground = (TColor) 0x002090;
-	fTypesAttri->Style = SynHighlighterLLVM__4;
+	fTypesAttri->Style = Synhighlighterllvm__4;
 	addAttribute(fTypesAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
@@ -150,7 +147,7 @@ void __fastcall TSynLLVMIRSyn::InitIdent()
 	int stop = 0;
 	for(stop = 1552 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[1458] = FuncKey; // acq95rel
@@ -799,7 +796,7 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			{
 				if(FTokenID != tkFloat) // number <> float. an arithmetic operator
 					return;
-				if(!CharInSet(fLine[Pred(Run)], SynHighlighterLLVM__5))
+				if(!CharInSet(fLine[Pred(Run)], Synhighlighterllvm__5))
 					return; // number = float, but no exponent. an arithmetic operator
 				if(!IsDigitPlusMinusChar(Succ(Run))) // invalid
 				{
@@ -823,12 +820,12 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			case L'E':
 			if(FTokenID != tkHex)
 			{
-				if(CharInSet(fLine[Pred(Run)], SynHighlighterLLVM__6)) // exponent
+				if(CharInSet(fLine[Pred(Run)], Synhighlighterllvm__6)) // exponent
 				{
 					int stop = 0;
 					for(stop = Pred(Run), i = idx1; i <= stop; i++)
 					{
-						if(CharInSet(fLine[i], SynHighlighterLLVM__7)) // too many exponents
+						if(CharInSet(fLine[i], Synhighlighterllvm__7)) // too many exponents
 						{
 							FTokenID = tkUnknown;
 							return;
@@ -852,7 +849,7 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			else
  // invalid char
 			{
-				if(!IsIdentChar(fLine[Succ(Run)]) && CharInSet(fLine[Succ(idx1)], SynHighlighterLLVM__8))
+				if(!IsIdentChar(fLine[Succ(Run)]) && CharInSet(fLine[Succ(idx1)], Synhighlighterllvm__8))
 				{
 					++Run; // highlight 'x' too
 					FTokenID = tkUnknown;
@@ -1182,7 +1179,7 @@ void __fastcall TSynLLVMIRSyn::ResetRange()
 
 void __fastcall TSynLLVMIRSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynLLVMIRSyn::GetRange()
@@ -1202,16 +1199,8 @@ void SynHighlighterLLVM_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynLLVMIRSyn));
 }
-class SynHighlighterLLVM_unit
-{
-public:
-	SynHighlighterLLVM_unit()
-	{
-		SynHighlighterLLVM_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterLLVM_unit _SynHighlighterLLVM_unit;
 
 }  // namespace SynHighlighterLLVM
 

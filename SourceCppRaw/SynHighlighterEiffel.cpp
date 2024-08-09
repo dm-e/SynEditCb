@@ -10,55 +10,52 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightereiffel
 {
-#define SynHighlighterEiffel__0 (TSysCharSet() <<  \
+#define Synhighlightereiffel__0 (TSysCharSet() <<  \
 										35 << 36 << 37 << 38 << 39 << 40 <<  \
 										41 << 42 << 43 << 44)
-#define SynHighlighterEiffel__1 (TSysCharSet() <<  \
+#define Synhighlightereiffel__1 (TSysCharSet() <<  \
 										46 << 47)
-#define SynHighlighterEiffel__2 (TSysCharSet() <<  \
+#define Synhighlightereiffel__2 (TSysCharSet() <<  \
 										58 << 59 << 60 << 61 << 62 << 63 <<  \
 										64)
-#define SynHighlighterEiffel__3 (TSysCharSet() <<  \
+#define Synhighlightereiffel__3 (TSysCharSet() <<  \
 										91 << 92 << 93 << 94 << 95 << 96)
-#define SynHighlighterEiffel__4 (TSysCharSet() <<  \
+#define Synhighlightereiffel__4 (TSysCharSet() <<  \
 										123 << 124 << 125 << 126 << 127)
-#define SynHighlighterEiffel__5 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__6 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterEiffel__7 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__8 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__10 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__11 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterEiffel__12 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightereiffel__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightereiffel__7 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__8 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__10 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__11 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightereiffel__12 (TFontStyles() << TFontStyle::fsItalic)
 
 
 const String Keywords[119/*# range 0..118*/] = {L"-", L"!", L"#", L"$", L"%u", L"&", L"(", L")", L"*", L".", L"/", L"//", L"/=", L":", L":=", L";", L"@", L"[", L"\\\\", L"]"
-																				, L"^", L"|", L"+", L"<", L"<>", L"=", L">", L"adapt", L"alias", L"all", L"and", L"array", L"as", L"assertion", L"bit", L"boolean", L"character"
-																				, L"check", L"class", L"cluster", L"colon", L"comma", L"creation", L"current", L"debug", L"default", L"deferred", L"do"
-																				, L"double", L"else", L"elseif", L"end", L"ensure", L"exclude", L"executable", L"expanded", L"export", L"external", L"false", L"feature"
-																				, L"from", L"frozen", L"generate", L"identifier", L"if", L"ignore", L"implies", L"include", L"include_path", L"indexing", L"infix"
-																				, L"inherit", L"inspect", L"integer", L"invariant", L"is", L"like", L"local", L"loop", L"make", L"no", L"not", L"object", L"obsolete"
-																				, L"old", L"once", L"optimize", L"option", L"or", L"pointer", L"precompiled", L"precursor", L"prefix", L"real", L"redefine"
-																				, L"rename", L"require", L"rescue", L"result", L"retry", L"root", L"select", L"separate", L"string", L"strip", L"system", L"then"
-																				, L"trace", L"true", L"undefine", L"unique", L"until", L"use", L"variant", L"visible", L"void", L"when", L"xor", L"yes"};
+                    , L"^", L"|", L"+", L"<", L"<>", L"=", L">", L"adapt", L"alias", L"all", L"and", L"array", L"as", L"assertion", L"bit", L"boolean", L"character"
+                    , L"check", L"class", L"cluster", L"colon", L"comma", L"creation", L"current", L"debug", L"default", L"deferred", L"do"
+                    , L"double", L"else", L"elseif", L"end", L"ensure", L"exclude", L"executable", L"expanded", L"export", L"external", L"false", L"feature"
+                    , L"from", L"frozen", L"generate", L"identifier", L"if", L"ignore", L"implies", L"include", L"include_path", L"indexing", L"infix"
+                    , L"inherit", L"inspect", L"integer", L"invariant", L"is", L"like", L"local", L"loop", L"make", L"no", L"not", L"object", L"obsolete"
+                    , L"old", L"once", L"optimize", L"option", L"or", L"pointer", L"precompiled", L"precursor", L"prefix", L"real", L"redefine"
+                    , L"rename", L"require", L"rescue", L"result", L"retry", L"root", L"select", L"separate", L"string", L"strip", L"system", L"then"
+                    , L"trace", L"true", L"undefine", L"unique", L"until", L"use", L"variant", L"visible", L"void", L"when", L"xor", L"yes"};
 const int KeyIndices[503/*# range 0..502*/] = {-1, 49, -1, -1, -1, 97, 69, 85, -1, -1, -1, 106, -1, -1, 37, -1, -1, 63, -1, 92, -1, -1, -1, -1, 108, 82, 16, -1, -1, -1, -1, -1, 86, -1, 0, -1, -1, 66, -1, -1, -1
-																				, -1, 91, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 30, 13, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, -1, -1, -1, 110, -1
-																				, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, -1, -1, -1, 9, -1, -1, -1, -1, -1, -1, 68, 88, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, 105, -1, -1, -1, 51, -1, -1, 6
-																				, -1, 96, -1, -1, 17, -1, -1, 55, -1, -1, -1, -1, -1, 117, -1, -1, -1, 77, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, 62, -1, 59, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, -1, -1, -1, -1, 83, 10, 95
-																				, -1, 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, 18, 23, -1, -1, -1, 35, -1, -1, -1, 7, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 21, 90, -1, 103, -1
-																				, -1, 80, -1, -1, -1, -1, 2, -1, 34, -1, -1, -1, -1, -1, -1, 41, -1, 27, 112, -1, -1, -1, 33, -1, 44, -1, 50, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1
-																				, -1, -1, 93, -1, -1, -1, 8, 46, 102, -1, -1, 19, 87, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, -1, -1, 84, 53, -1, -1, -1, 71, -1, -1, 11, -1, 3, 107, 67, -1, 64, 47, -1, -1, -1, -1, -1, 24, -1, -1, -1, 114
-																				, -1, -1, -1, 116, -1, -1, -1, -1, 81, 75, -1, -1, -1, -1, -1, -1, -1, 100, -1, -1, -1, -1, -1, 54, -1, -1, 26, 115, -1, -1, -1, -1, -1, 78, 22, 36, -1, 74, -1, 20, -1, -1, 42, -1, 99, -1, -1, -1, -1
-																				, -1, -1, -1, 73, -1, 52, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, 60, -1, 4, 94, -1, -1, 40, -1, -1, 39, -1, -1, -1, -1, 45, -1, 12, -1, -1, -1, 72, 38, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, -1, -1, -1, 28, 48, -1, -1, -1, -1, -1, 101, -1, 118, -1, -1, 57, -1, -1, -1, -1, -1, 14, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 70, -1, 89, -1, -1, 111, -1};
+                    , -1, 91, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 30, 13, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, -1, -1, -1, 110, -1
+                    , 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, -1, -1, -1, 9, -1, -1, -1, -1, -1, -1, 68, 88, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, 105, -1, -1, -1, 51, -1, -1, 6
+                    , -1, 96, -1, -1, 17, -1, -1, 55, -1, -1, -1, -1, -1, 117, -1, -1, -1, 77, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, 62, -1, 59, -1, -1, -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, -1, -1, -1, -1, 83, 10, 95
+                    , -1, 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, 18, 23, -1, -1, -1, 35, -1, -1, -1, 7, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 21, 90, -1, 103, -1
+                    , -1, 80, -1, -1, -1, -1, 2, -1, 34, -1, -1, -1, -1, -1, -1, 41, -1, 27, 112, -1, -1, -1, 33, -1, 44, -1, 50, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1
+                    , -1, -1, 93, -1, -1, -1, 8, 46, 102, -1, -1, 19, 87, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, -1, -1, 84, 53, -1, -1, -1, 71, -1, -1, 11, -1, 3, 107, 67, -1, 64, 47, -1, -1, -1, -1, -1, 24, -1, -1, -1, 114
+                    , -1, -1, -1, 116, -1, -1, -1, -1, 81, 75, -1, -1, -1, -1, -1, -1, -1, 100, -1, -1, -1, -1, -1, 54, -1, -1, 26, 115, -1, -1, -1, -1, -1, 78, 22, 36, -1, 74, -1, 20, -1, -1, 42, -1, 99, -1, -1, -1, -1
+                    , -1, -1, -1, 73, -1, 52, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, 60, -1, 4, 94, -1, -1, 40, -1, -1, 39, -1, -1, -1, -1, 45, -1, 12, -1, -1, -1, 72, 38, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, -1, -1, -1, -1, 28, 48, -1, -1, -1, -1, -1, 101, -1, 118, -1, -1, 57, -1, -1, -1, -1, -1, 14, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 70, -1, 89, -1, -1, 111, -1};
 
 /*$Q-*/
 
@@ -96,7 +93,7 @@ void __fastcall TSynEiffelSyn::InitIdent()
 	int stop = 0;
 	for(stop = 502 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[34] = OperatorFunc;
@@ -1205,35 +1202,35 @@ void __fastcall TSynEiffelSyn::OperatorAndSymbolProc()
 		++Run;
 		return;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterEiffel__0))
+	if(CharInSet(fLine[Run], Synhighlightereiffel__0))
 	{
 		FRange = rsOperatorAndSymbolProc;
 		FTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterEiffel__1))
+	if(CharInSet(fLine[Run], Synhighlightereiffel__1))
 	{
 		FRange = rsOperatorAndSymbolProc;
 		FTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterEiffel__2))
+	if(CharInSet(fLine[Run], Synhighlightereiffel__2))
 	{
 		FRange = rsOperatorAndSymbolProc;
 		FTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterEiffel__3))
+	if(CharInSet(fLine[Run], Synhighlightereiffel__3))
 	{
 		FRange = rsOperatorAndSymbolProc;
 		FTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
-	if(CharInSet(fLine[Run], SynHighlighterEiffel__4))
+	if(CharInSet(fLine[Run], Synhighlightereiffel__4))
 	{
 		FRange = rsOperatorAndSymbolProc;
 		FTokenID = tkOperatorAndSymbols;
@@ -1308,40 +1305,40 @@ __fastcall TSynEiffelSyn::TSynEiffelSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fBasicTypesAttri = new TSynHighlighterAttributes(SYNS_AttrBasicTypes, SYNS_FriendlyAttrBasicTypes);
-	fBasicTypesAttri->Style = SynHighlighterEiffel__5;
+	fBasicTypesAttri->Style = Synhighlightereiffel__5;
 	fBasicTypesAttri->Foreground = clBlue;
 	addAttribute(fBasicTypesAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterEiffel__6;
+	fCommentAttri->Style = Synhighlightereiffel__6;
 	fCommentAttri->Foreground = clTeal;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = clMaroon;
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterEiffel__7;
+	fKeyAttri->Style = Synhighlightereiffel__7;
 	fKeyAttri->Foreground = clNavy;
 	addAttribute(fKeyAttri);
 	fLaceAttri = new TSynHighlighterAttributes(SYNS_AttrLace, SYNS_FriendlyAttrLace);
-	fLaceAttri->Style = SynHighlighterEiffel__8;
+	fLaceAttri->Style = Synhighlightereiffel__8;
 	fLaceAttri->Foreground = clNavy;
 	addAttribute(fLaceAttri);
 	fOperatorAndSymbolsAttri = new TSynHighlighterAttributes(SYNS_AttrOperatorAndSymbols, SYNS_FriendlyAttrOperatorAndSymbols);
-	fOperatorAndSymbolsAttri->Style = SynHighlighterEiffel__9;
+	fOperatorAndSymbolsAttri->Style = Synhighlightereiffel__9;
 	fOperatorAndSymbolsAttri->Foreground = clOlive;
 	addAttribute(fOperatorAndSymbolsAttri);
 	fPredefinedAttri = new TSynHighlighterAttributes(SYNS_AttrPredefined, SYNS_FriendlyAttrPredefined);
-	fPredefinedAttri->Style = SynHighlighterEiffel__10;
+	fPredefinedAttri->Style = Synhighlightereiffel__10;
 	fPredefinedAttri->Foreground = clRed;
 	addAttribute(fPredefinedAttri);
 	fResultValueAttri = new TSynHighlighterAttributes(SYNS_AttrResultValue, SYNS_FriendlyAttrResultValue);
-	fResultValueAttri->Style = SynHighlighterEiffel__11;
+	fResultValueAttri->Style = Synhighlightereiffel__11;
 	fResultValueAttri->Foreground = clPurple;
 	addAttribute(fResultValueAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Style = SynHighlighterEiffel__12;
+	fStringAttri->Style = Synhighlightereiffel__12;
 	fStringAttri->Foreground = clGray;
 	addAttribute(fStringAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -1586,7 +1583,7 @@ void __fastcall TSynEiffelSyn::ResetRange()
 
 void __fastcall TSynEiffelSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynEiffelSyn::GetRange()
@@ -1651,16 +1648,8 @@ void SynHighlighterEiffel_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynEiffelSyn));
 }
-class SynHighlighterEiffel_unit
-{
-public:
-	SynHighlighterEiffel_unit()
-	{
-		SynHighlighterEiffel_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterEiffel_unit _SynHighlighterEiffel_unit;
 
 }  // namespace SynHighlighterEiffel
 

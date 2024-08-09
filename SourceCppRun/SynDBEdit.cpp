@@ -11,16 +11,13 @@ using namespace Syneditkeycmds;
 using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace Vcl::Controls;
-using namespace Vcl::Dbctrls;
 
 namespace Syndbedit
 {
-#define SynDBEdit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << ftWideMemo << ftWideString)
+#define Syndbedit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << ftWideMemo << ftWideString)
 
 __fastcall TCustomDBSynEdit::TCustomDBSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
-__fastcall TDBSynEdit::TDBSynEdit(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TDBSynEdit::TDBSynEdit(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TDBSynEdit::TDBSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
 
 
@@ -44,7 +41,6 @@ __fastcall TCustomDBSynEdit::~TCustomDBSynEdit()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TCustomDBSynEdit::CMEnter(TCMEnter& Msg)
 {
 	SetEditing(true);
@@ -66,9 +62,9 @@ void __fastcall TCustomDBSynEdit::CMExit(TCMExit& Msg)
 	inherited::Dispatch(&Msg);  //#inherited method "CMExit" not not accessible;
 }
 
-void __fastcall TCustomDBSynEdit::CMGetDataLink(TMessage& Msg)
+void __fastcall TCustomDBSynEdit::CMGetDataLink(::TMessage& Msg)
 {
-	Msg.Result = ((int) FDataLink);
+	Msg.Result = (NativeInt) FDataLink;
 }
 
 void __fastcall TCustomDBSynEdit::DataChange(TObject* Sender)
@@ -170,7 +166,7 @@ void __fastcall TCustomDBSynEdit::LoadMemo()
 	{
 		BlobStream = FDataLink->DataSet->CreateBlobStream(FDataLink->Field, bmRead);
 		Lines->BeginUpdate();
-		if((ObjectIs(FDataLink->Field, TBlobField*)) && (SynDBEdit__0.Contains(((TBlobField*) FDataLink->Field)->BlobType)))
+		if((ObjectIs(FDataLink->Field, TBlobField*)) && (Syndbedit__0.Contains(((TBlobField*) FDataLink->Field)->BlobType)))
 			Lines->LoadFromStream(BlobStream, TEncoding::Unicode);
 		else
 

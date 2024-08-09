@@ -12,13 +12,11 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterprogress
 {
-#define SynHighlighterProgress__0 (TSysCharSet() <<  \
+#define Synhighlighterprogress__0 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
 
@@ -174,7 +172,6 @@ __fastcall TSynProgressSyn::~TSynProgressSyn()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynProgressSyn::IdentProc()
 {
 	FTokenID = IdentKind(fLine + Run);
@@ -196,7 +193,7 @@ void __fastcall TSynProgressSyn::NumberProc()
 	{
 		++P;
 	}
-	while(!!CharInSet((*P), SynHighlighterProgress__0));
+	while(!!CharInSet((*P), Synhighlighterprogress__0));
 	Run = P - fLine;
 }
 
@@ -862,16 +859,8 @@ void SynHighlighterProgress_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynProgressSyn));
 }
-class SynHighlighterProgress_unit
-{
-public:
-	SynHighlighterProgress_unit()
-	{
-		SynHighlighterProgress_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterProgress_unit _SynHighlighterProgress_unit;
 
 }  // namespace SynHighlighterProgress
 

@@ -31,7 +31,7 @@ __fastcall TSynCodeFoldingException::TSynCodeFoldingException(System::PResString
 __fastcall TSynCodeFoldingException::TSynCodeFoldingException(System::NativeUInt Ident, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Ident, Args, Args_maxidx, AHelpContext) {}
 __fastcall TSynCodeFoldingException::TSynCodeFoldingException(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall TSynCodeFoldingException::TSynCodeFoldingException(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
-__fastcall TSynCustomCodeFoldingHighlighter::TSynCustomCodeFoldingHighlighter(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynCustomCodeFoldingHighlighter::TSynCustomCodeFoldingHighlighter(TComponent* AOwner) : inherited(AOwner) {}
 
 
 
@@ -47,6 +47,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldAroundLine(int Line)
 
 bool __fastcall TSynFoldRanges::CollapsedFoldAroundLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	result = FoldAroundLineEx(Line, true, false, false, Index);
 	return result;
@@ -62,6 +63,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldStartAtLine(int Line)
 
 bool __fastcall TSynFoldRanges::CollapsedFoldStartAtLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	TSynFoldRange range;
 	range.FromLine = Line;
@@ -72,7 +74,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldStartAtLine(int Line, int& Index)
 }
 
 __fastcall TSynFoldRanges::TSynFoldRanges()
- : fCodeFoldingMode(TSynCodeFoldingMode::cfmStandard),
+ : fCodeFoldingMode(cfmStandard),
 			fRangesNeedFixing(false),
 			fRanges(nullptr),
 			fCollapsedState(nullptr),
@@ -122,7 +124,6 @@ __fastcall TSynFoldRanges::~TSynFoldRanges()
 	// inherited;
 }
 
-
 bool __fastcall TSynFoldRanges::FoldAroundLine(int Line)
 {
 	bool result = false;
@@ -133,6 +134,7 @@ bool __fastcall TSynFoldRanges::FoldAroundLine(int Line)
 
 bool __fastcall TSynFoldRanges::FoldAroundLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	result = FoldAroundLineEx(Line, false, false, false, Index);
 	return result;
@@ -140,6 +142,7 @@ bool __fastcall TSynFoldRanges::FoldAroundLine(int Line, int& Index)
 
 bool __fastcall TSynFoldRanges::FoldAroundLineEx(int Line, bool WantCollapsed, bool AcceptFromLine, bool AcceptToLine, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	int i = 0;
 	int stop = 0;
@@ -163,6 +166,7 @@ bool __fastcall TSynFoldRanges::FoldAroundLineEx(int Line, bool WantCollapsed, b
 
 bool __fastcall TSynFoldRanges::FoldEndAtLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	int i = 0;
 	int stop = 0;
@@ -206,6 +210,7 @@ bool __fastcall TSynFoldRanges::FoldHidesLine(int Line)
 
 bool __fastcall TSynFoldRanges::FoldHidesLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	result = FoldAroundLineEx(Line, true, false, true, Index);
 	return result;
@@ -276,9 +281,9 @@ int __fastcall TSynFoldRanges::FoldRowToLine(int Row)
    ignoring fold ranges of type FoldRegionType
 */
 
-TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
+System::TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
 {
-	TArray<int> result;
+	System::TArray<int> result;
 	int i = 0;
 	TList__1<int>* FRStack = nullptr;
 	TList__1<int>* ResultList = nullptr;
@@ -320,9 +325,9 @@ TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
    Returns an array of indices of folds with FoldType = aType
 */
 
-TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int AType)
+System::TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int AType)
 {
-	TArray<int> result;
+	System::TArray<int> result;
 	int i = 0;
 	TList__1<int>* ResultList = nullptr;
 	ResultList = new TList__1<int>();
@@ -356,6 +361,7 @@ bool __fastcall TSynFoldRanges::FoldStartAtLine(int Line)
 
 bool __fastcall TSynFoldRanges::FoldStartAtLine(int Line, int& Index)
 {
+	Index = 0; //# clear out parameter
 	bool result = false;
 	TSynFoldRange range;
 	range.FromLine = Line;
@@ -366,8 +372,8 @@ bool __fastcall TSynFoldRanges::FoldStartAtLine(int Line, int& Index)
 void __fastcall TSynFoldRanges::AddByParts(int AFoldType, int AFromLine, int AToLine/*# = -1*/)
 {
 	int Index = 0;
+	TSynFoldRange FR = {};
 	// Insert keeping the list sorted
-	TSynFoldRange FR;
 	TSynFoldRange range;
 	range.FromLine = AFromLine;
 	range.ToLine = AToLine;
@@ -585,17 +591,17 @@ void __fastcall TSynFoldRanges::RecreateFoldRanges(TStrings* Lines)
 	OpenFoldStack = new TList__1<int>();
 	try
 	{
-		while(fFoldInfoList->GetEnumerator()->MoveNext())
+		for(int iFor0 = 0; iFor0 < fFoldInfoList->Count; iFor0++)
 		{
-			TLineFoldInfo LFI = fFoldInfoList->GetEnumerator()->Current;
-			if(LFI.FoldOpenClose == TFoldOpenClose::focOpen)
+			TLineFoldInfo LFI = fFoldInfoList->Items[iFor0];
+			if(LFI.FoldOpenClose == focOpen)
 			{
 				if(LFI.Indent >= 0)
 				{
 					int stop1 = 0;
 					for(stop1 = 0, i = OpenFoldStack->Count - 1; i >= stop1; i--)
 					{
-            // Close all Fold Ranges with less Indent
+			// Close all Fold Ranges with less Indent
 						PFoldRange = &fRanges->List[OpenFoldStack->List[i]];
 						if((*PFoldRange).Indent >= LFI.Indent)
 						{
@@ -648,7 +654,7 @@ void __fastcall TSynFoldRanges::RecreateFoldRanges(TStrings* Lines)
 				}
 			}
 		}
-		if(CodeFoldingMode == TSynCodeFoldingMode::cfmIndentation)
+		if(CodeFoldingMode == cfmIndentation)
       // close all open indent based folds
 		{
 			int stop = 0;
@@ -710,9 +716,9 @@ void __fastcall TSynFoldRanges::RestoreCollapsedState()
 {
 	int i = 0;
 	int Index = 0;
-	while(fCollapsedState->GetEnumerator()->MoveNext())
+	for(int iFor0 = 0; iFor0 < fCollapsedState->Count; iFor0++)
 	{
-		int i = fCollapsedState->GetEnumerator()->Current;
+		int i = fCollapsedState->Items[iFor0];
 		if(FoldStartAtLine(i, Index))
 			fRanges->List[Index].Collapsed = true;
 	}
@@ -721,7 +727,7 @@ void __fastcall TSynFoldRanges::RestoreCollapsedState()
 
 void __fastcall TSynFoldRanges::StartFoldRange(int ALine, int AFoldType, int AIndent/*# = -1*/)
 {
-	AddLineInfo(ALine, AFoldType, TFoldOpenClose::focOpen, AIndent);
+	AddLineInfo(ALine, AFoldType, focOpen, AIndent);
 }
 
 void __fastcall TSynFoldRanges::StartScanning()
@@ -730,7 +736,7 @@ void __fastcall TSynFoldRanges::StartScanning()
 
 void __fastcall TSynFoldRanges::StopFoldRange(int ALine, int AFoldType, int AIndent/*# = -1*/)
 {
-	AddLineInfo(ALine, AFoldType, TFoldOpenClose::focClose, AIndent);
+	AddLineInfo(ALine, AFoldType, focClose, AIndent);
 }
 /*
   Returns true if fold ranges changed
@@ -754,9 +760,9 @@ bool __fastcall TSynFoldRanges::StopScanning(TStrings* Lines)
 void __fastcall TSynFoldRanges::StoreCollapsedState(TStream* Stream)
 {
 	TSynFoldRange FoldRange = {};
-	while(fRanges->GetEnumerator()->MoveNext())
+	for(int iFor0 = 0; iFor0 < fRanges->Count; iFor0++)
 	{
-		TSynFoldRange FoldRange = fRanges->GetEnumerator()->Current;
+		TSynFoldRange FoldRange = fRanges->Items[iFor0];
 		if(FoldRange.Collapsed)
 			Stream->WriteData(FoldRange.FromLine);
 	}
@@ -766,15 +772,17 @@ void __fastcall TSynFoldRanges::StoreCollapsedState()
 {
 	TSynFoldRange FoldRange = {};
 	fCollapsedState->Clear();
-	while(fRanges->GetEnumerator()->MoveNext())
+	for(int iFor0 = 0; iFor0 < fRanges->Count; iFor0++)
 	{
-		TSynFoldRange FoldRange = fRanges->GetEnumerator()->Current;
+		TSynFoldRange FoldRange = fRanges->Items[iFor0];
 		if(FoldRange.Collapsed)
 			fCollapsedState->Add(FoldRange.FromLine);
 	}
 }
 
 /* TSynEditFoldRange */
+
+
 
 
 void __fastcall TSynCodeFolding::Assign(TPersistent* Source)
@@ -883,7 +891,7 @@ void* __fastcall TSynCustomCodeFoldingHighlighter::GetLineRange(TStrings* Lines,
 
 void __fastcall TSynCustomCodeFoldingHighlighter::InitFoldRanges(TSynFoldRanges* FoldRanges)
 {
-	FoldRanges->CodeFoldingMode = TSynCodeFoldingMode::cfmStandard;
+	FoldRanges->CodeFoldingMode = cfmStandard;
 }
 
 int __fastcall TSynCustomCodeFoldingHighlighter::TabWidth(TStrings* LinesToScan)

@@ -16,27 +16,26 @@ using namespace Syneditstrconst;
 using namespace Synunicode;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Inifiles;
-using namespace System::Sysutils;
+using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synedithighlighter
 {
-#define SynEditHighlighter__0 TFontStyles()
-#define SynEditHighlighter__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__3 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__4 TFontStyles()
-#define SynEditHighlighter__5 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__6 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__7 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__8 TFontStyles()
-#define SynEditHighlighter__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__10 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__11 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
-#define SynEditHighlighter__13 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcRegistry)
+#define Synedithighlighter__0 TFontStyles()
+#define Synedithighlighter__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__3 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__4 TFontStyles()
+#define Synedithighlighter__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__7 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__8 TFontStyles()
+#define Synedithighlighter__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__10 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__11 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
+#define Synedithighlighter__13 (TSynHighlighterCapabilities() << hcRegistry)
 
 __fastcall TSynHighlighterAttributes::TSynHighlighterAttributes() {}
 
@@ -52,7 +51,7 @@ int __fastcall TSynHighlighterList::Count()
 }
 
 __fastcall TSynHighlighterList::TSynHighlighterList()
- : hlList(new System::Classes::TList())
+ : hlList(new TList())
 {
 	//# inherited::Create();
 }
@@ -62,7 +61,6 @@ __fastcall TSynHighlighterList::~TSynHighlighterList()
 	delete hlList;
 	// inherited;
 }
-
 
 int __fastcall TSynHighlighterList::FindByClass(TComponent* Comp)
 {
@@ -277,7 +275,7 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 			int P = 0;
 			P = Pos(L",", Name);
 			if(P == 0)
-				P = (int) (Name.Length() + 1);
+				P = Name.Length() + 1;
 			result = Name.SubString(1, P - 1);
 			Name = Name.SubString(P + 1, Name.Length() - P);
 			return result;
@@ -314,13 +312,13 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 									Foreground = clWindowText;
 								else
 									Foreground = Pal16[StrToInt(fgIndex16)];
-								Style = SynEditHighlighter__0;
+								Style = Synedithighlighter__0;
 								if(Pos(L"B", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__1;
+									Style = Style + Synedithighlighter__1;
 								if(Pos(L"I", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__2;
+									Style = Style + Synedithighlighter__2;
 								if(Pos(L"U", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__3;
+									Style = Style + Synedithighlighter__3;
 								result = true;
 							}
 						}
@@ -421,13 +419,13 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 								Foreground = clWindowText;
 							else
 								Foreground = (TColor) FgColor;
-							Style = SynEditHighlighter__4;
+							Style = Synedithighlighter__4;
 							if(IsTrue(FONTBOLD))
-								Style = Style + SynEditHighlighter__5;
+								Style = Style + Synedithighlighter__5;
 							if(IsTrue(FONTITALIC))
-								Style = Style + SynEditHighlighter__6;
+								Style = Style + Synedithighlighter__6;
 							if(IsTrue(fontUnderline))
-								Style = Style + SynEditHighlighter__7;
+								Style = Style + Synedithighlighter__7;
 							result = true;
 						}
 						__finally
@@ -588,15 +586,15 @@ int __fastcall TSynHighlighterAttributes::GetStyleFromInt()
 void __fastcall TSynHighlighterAttributes::SetStyleFromInt(int Value)
 {
 	if((Value & 0x1) == 0)
-		Style = SynEditHighlighter__8;
+		Style = Synedithighlighter__8;
 	else
-		Style = SynEditHighlighter__9;
+		Style = Synedithighlighter__9;
 	if((Value & 0x2) != 0)
-		Style = Style + SynEditHighlighter__10;
+		Style = Style + Synedithighlighter__10;
 	if((Value & 0x4) != 0)
-		Style = Style + SynEditHighlighter__11;
+		Style = Style + Synedithighlighter__11;
 	if((Value & 0x8) != 0)
-		Style = Style + SynEditHighlighter__12;
+		Style = Style + Synedithighlighter__12;
 }
 
 /* TSynCustomHighlighter */
@@ -624,7 +622,7 @@ __fastcall TSynCustomHighlighter::TSynCustomHighlighter(TComponent* AOwner)
 			ExpandedRun(0),
 			fOldRun(0)
 {
-	fAttributes->Duplicates = System::Classes::dupError;
+	fAttributes->Duplicates = System::Types::dupError;
 	fAttributes->Sorted = true;
 	fDefaultFilter = L"";
 	FEnabled = true;
@@ -634,12 +632,12 @@ __fastcall TSynCustomHighlighter::TSynCustomHighlighter(TComponent* AOwner)
 __fastcall TSynCustomHighlighter::~TSynCustomHighlighter()
 {
 	//# inherited::Destroy();
+	inherited::RemoveFreeNotifications();
 	FreeHighlighterAttributes();
 	delete fAttributes;
 	delete fAttrChangeHooks;
 	delete fOptions; // <-- Codehunter patch
 }
-
 
 void __fastcall TSynCustomHighlighter::BeginUpdate()
 {
@@ -862,7 +860,7 @@ TSynHighlighterAttributes* __fastcall TSynCustomHighlighter::getAttribute(int In
 TSynHighlighterCapabilities __fastcall TSynCustomHighlighter::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = SynEditHighlighter__13; //registry save/load supported by default
+	result = Synedithighlighter__13; //registry save/load supported by default
 	return result;
 }
 
@@ -1234,7 +1232,7 @@ void __fastcall TSynCustomHighlighter::SetLineExpandedAtWideGlyphs(const String 
 {
 	fExpandedLineStr = ExpandedLine;
 	fExpandedLine = ustr2pwchar(fExpandedLineStr);
-	fExpandedLineLen = (int) fExpandedLineStr.Length();
+	fExpandedLineLen = fExpandedLineStr.Length();
 	DoSetLine(Line, LineNumber);
 	Next();
 }
@@ -1272,7 +1270,7 @@ void __fastcall TSynCustomHighlighter::DoSetLine(const String Value, int LineNum
 		fCasedLine = ustr2pwchar(fCasedLineStr);
 	}
 	fLine = ustr2pwchar(fLineStr);
-	fLineLen = (int) fLineStr.Length();
+	fLineLen = fLineStr.Length();
 	Run = 0;
 	ExpandedRun = 0;
 	fOldRun = Run;
@@ -1359,17 +1357,8 @@ void SynEditHighlighter_finalization()
 	delete G_PlaceableHighlighters;
 	G_PlaceableHighlighters = nullptr;
 }
-class SynEditHighlighter_unit
-{
-public:
-	SynEditHighlighter_unit()
-	{
-		SynEditHighlighter_initialization();
-	}
-	~SynEditHighlighter_unit(){SynEditHighlighter_finalization(); }
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynEditHighlighter_unit _SynEditHighlighter_unit;
 
 }  // namespace SynEditHighlighter
 

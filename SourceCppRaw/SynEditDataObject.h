@@ -47,7 +47,7 @@ class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
+	typedef System::TCppInterfacedObject<IEnumFORMATETC> inherited;
 private:
 	System::TArray<TClipFormat> FList;
 	int FIndex;
@@ -67,13 +67,13 @@ class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
+	typedef System::TCppInterfacedObject<IDataObject> inherited;
 private:
 	String FText;
 	TList__1<TClipFormat>* FFormatEtc;
-	System::Classes::TMemoryStream* MemoryStream;
-	System::Classes::TMemoryStream* HtmlStream;
-	void __fastcall StreamHTML(TObject* Editor, System::Classes::TStream* Stream);
+	TMemoryStream* MemoryStream;
+	TMemoryStream* HtmlStream;
+	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
 	HRESULT __stdcall GetData(const TFormatEtc& formatetcIn, TStgMedium& medium);
 	HRESULT __stdcall GetDataHere(const TFormatEtc& FORMATETC, TStgMedium& medium);

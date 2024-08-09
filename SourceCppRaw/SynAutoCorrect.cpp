@@ -3,6 +3,7 @@
 
 #include "SynAutoCorrect.h"
 #include "d2c_convert.h"
+#include "SynEditDelphiInstances.hpp"
 
 using namespace std;
 using namespace d2c_system;
@@ -12,15 +13,12 @@ using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Inifiles;
-using namespace System::Sysutils;
-using namespace System::Win::Registry;
 
 namespace Synautocorrect
 {
-#define SynAutoCorrect__0 (TAsSynAutoCorrectOptions() << TAsSynAutoCorrectOption::ascoIgnoreCase << TAsSynAutoCorrectOption::ascoMaintainCase)
+#define Synautocorrect__0 (TAsSynAutoCorrectOptions() << ascoIgnoreCase << ascoMaintainCase)
 
-__fastcall TSynAutoCorrect::TSynAutoCorrect(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynAutoCorrect::TSynAutoCorrect(TComponent* AOwner) : inherited(AOwner) {}
 
 
 
@@ -38,7 +36,7 @@ __fastcall TCustomSynAutoCorrect::TCustomSynAutoCorrect(TComponent* AOwner)
 	FEnabled = true;
 	FItems = new TStringList();
 	FItemSepChar = L'\x09';
-	fOptions = SynAutoCorrect__0;
+	fOptions = Synautocorrect__0;
 	FPrevLine = -1;
 //  FEditor := nil; initialized by Delphi
 }
@@ -49,7 +47,6 @@ __fastcall TCustomSynAutoCorrect::~TCustomSynAutoCorrect()
 	// inherited;
 	delete FItems;
 }
-
 
 
 /* Utility functions */
@@ -153,7 +150,7 @@ void __fastcall TCustomSynAutoCorrect::LoadFromRegistry(DWORD ARoot, String AKey
 		{
 			auto with0 = reg;
 			int stop = 0;
-			with0->RootKey = ARoot;
+			with0->RootKey = (HKEY) ARoot;
 			((TBetterRegistry*) reg)->OpenKeyReadOnly(AKey);
 			FItems->Clear();
 			for(stop = Pred(with0->ReadInteger(L"", L"Count", 0)), i = 0; i <= stop; i++)
@@ -182,7 +179,7 @@ void __fastcall TCustomSynAutoCorrect::SaveToRegistry(DWORD ARoot, String AKey)
 		{
 			auto with0 = reg;
 			int stop = 0;
-			with0->RootKey = ARoot;
+			with0->RootKey = (HKEY) ARoot;
 			with0->OpenKey(AKey, true);
 			with0->WriteInteger(L"", L"Count", FItems->Count);
 			for(stop = Pred(FItems->Count), i = 0; i <= stop; i++)
@@ -303,11 +300,11 @@ int __fastcall TCustomSynAutoCorrect::CorrectItemStart(String EditLine, String S
 		EditLine = Sysutils::AnsiUpperCase(EditLine);
 		SearchString = Sysutils::AnsiUpperCase(SearchString);
 	}
-	BufLen = (int) EditLine.Length();
+	BufLen = EditLine.Length();
 	Buf = ustr2pwchar(EditLine);
 	if(BufLen > 0)
 	{
-		SearchCount = (int) Succ(BufLen - StartPos - SearchString.Length());
+		SearchCount = Succ(BufLen - StartPos - SearchString.Length());
 		if((SearchCount >= 0) && (SearchCount <= BufLen) && (StartPos + SearchCount <= BufLen))
 		{
 			CurBuf = &Buf[StartPos];
@@ -336,7 +333,7 @@ void __fastcall TCustomSynAutoCorrect::Delete(int AIndex)
 
 void __fastcall TCustomSynAutoCorrect::Edit(int AIndex, String ANewOriginal, String ANewCorrection)
 {
-	if(AIndex >  - 1)
+	if(AIndex > -1)
 		FItems->Strings[AIndex] = ANewOriginal + String(FItemSepChar) + ANewCorrection;
 }
 
@@ -387,7 +384,7 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 
 void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-	TAutoCorrectAction Action = TAutoCorrectAction::aaCorrect;
+	TAutoCorrectAction Action = aaCorrect;
 	bool B = false;
 	int i = 0;
 	int cx = 0;
@@ -395,9 +392,9 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 	String Original;
 	String Correction;
 	String CurrText;
-	if(fOptions.Contains(TAsSynAutoCorrectOption::ascoCorrectOnMouseDown))
+	if(fOptions.Contains(ascoCorrectOnMouseDown))
 	{
-		if(ASSIGNED(Editor) && Enabled && (FPrevLine !=  - 1))
+		if(ASSIGNED(Editor) && Enabled && (FPrevLine != -1))
 		{
 			int stop = 0;
 			B = false;
@@ -414,9 +411,9 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 			{
 				if(ASSIGNED(FOnAutoCorrect))
 				{
-					Action = TAutoCorrectAction::aaCorrect;
+					Action = aaCorrect;
 					FOnAutoCorrect(this, Editor->Lines->Strings[Pred(FPrevLine)], s, Editor->CaretY, 0, Action);
-					if(Action == TAutoCorrectAction::aaAbort)
+					if(Action == aaAbort)
 						return;
 				}
 				Editor->Lines->Strings[Pred(FPrevLine)] = s;
@@ -435,7 +432,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 	String FoundText;
 	String ReplaceDefText;
 	TBufferCoord P = {};
-	TAutoCorrectAction Action = TAutoCorrectAction::aaCorrect;
+	TAutoCorrectAction Action = aaCorrect;
 
 	auto FirstCapCase = [&](String s) -> String 
 	{
@@ -451,13 +448,13 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 	result = false;
 	ReplaceDefText = Correction;
 	StartPos = 0;
-	EndPos = (int) Original.Length();
+	EndPos = Original.Length();
 	if((Editor != nullptr) && !(Editor->ReadOnly))
 	{
-		StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(TAsSynAutoCorrectOption::ascoIgnoreCase)), true);
-		while(StartPos >  - 1)
+		StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(ascoIgnoreCase)), true);
+		while(StartPos > -1)
 		{
-			if(fOptions.Contains(TAsSynAutoCorrectOption::ascoMaintainCase))
+			if(fOptions.Contains(ascoMaintainCase))
 			{
 				Correction = ReplaceDefText;
 				FoundText = EditLine.SubString(StartPos + 1, EndPos);
@@ -474,14 +471,14 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 					}
 				}
 			}
-			if(CurrentX >  - 1)
+			if(CurrentX > -1)
 			{
 				P = Editor->CaretXY;
 				if(ASSIGNED(FOnAutoCorrect))
 				{
-					Action = TAutoCorrectAction::aaCorrect;
+					Action = aaCorrect;
 					FOnAutoCorrect(this, Original, Correction, P.Line, P.Char, Action);
-					if(Action == TAutoCorrectAction::aaAbort)
+					if(Action == aaAbort)
 						break;
 				}
 				Editor->BeginUpdate();
@@ -507,7 +504,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 				result = true;
 				EditLine = EditLine.SubString(1, StartPos) + Correction + EditLine.SubString(StartPos + EndPos + 1, MaxInt);
 				StartPos += EndPos;
-				StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(TAsSynAutoCorrectOption::ascoIgnoreCase)), true);
+				StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(ascoIgnoreCase)), true);
 			}
 		}
 	}
@@ -572,7 +569,7 @@ void __fastcall TCustomSynAutoCorrect::SetEditor(TCustomSynEdit* Value)
 
 void __fastcall TCustomSynAutoCorrect::SetItems(TStrings* const Value)
 {
-	FItems->Assign(Value);
+	FItems->Assign((TPersistent*) Value);
 }
 
 

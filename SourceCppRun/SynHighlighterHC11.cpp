@@ -12,25 +12,22 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlighterhc11
 {
-#define SynHighlighterHC11__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterHC11__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHC11__2 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										97 << 98 << 99 << 100 << 101 << 102)
-#define SynHighlighterHC11__3 (TSysCharSet() <<  \
+#define Synhighlighterhc11__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterhc11__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhc11__2 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          97 << 98 << 99 << 100 << 101 << 102)
+#define Synhighlighterhc11__3 (TSysCharSet() <<  \
 										48 << 49)
-#define SynHighlighterHC11__4 (TSysCharSet() <<  \
+#define Synhighlighterhc11__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterHC11__5 (System::Set<TkwKeyWordType, kwNone, kwNoOperand>() << kwOperandOver << kwNoOperand)
+#define Synhighlighterhc11__5 (System::Set<TkwKeyWordType, TkwKeyWordType::kwNone, TkwKeyWordType::kwNoOperand>() << kwOperandOver << kwNoOperand)
 
 
   /* TODO: seems as if the Ansi version ignores the underscores and therfore
@@ -135,14 +132,14 @@ __fastcall TSynHC11Syn::TSynHC11Syn(TComponent* AOwner)
 	FCaseSensitive = true;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterHC11__0;
+	fCommentAttri->Style = Synhighlighterhc11__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterHC11__1;
+	fKeyAttri->Style = Synhighlighterhc11__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -165,7 +162,6 @@ __fastcall TSynHC11Syn::~TSynHC11Syn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynHC11Syn::SymAsciiCharProc()
 {
@@ -205,7 +201,7 @@ void __fastcall TSynHC11Syn::SymDollarProc()
 {
 	FTokenID = tkNumber;
 	++Run;
-	while(CharInSet(fLine[Run], SynHighlighterHC11__2))
+	while(CharInSet(fLine[Run], Synhighlighterhc11__2))
 	{
 		++Run;
 	}
@@ -239,7 +235,7 @@ void __fastcall TSynHC11Syn::SymPercentProc()
 {
 	++Run;
 	FTokenID = tkNumber;
-	while(CharInSet(fLine[Run], SynHighlighterHC11__3))
+	while(CharInSet(fLine[Run], Synhighlighterhc11__3))
 		++Run;
 }
 
@@ -253,14 +249,14 @@ void __fastcall TSynHC11Syn::SymNumberProc()
 {
 	++Run;
 	FTokenID = tkNumber;
-	while(CharInSet(fLine[Run], SynHighlighterHC11__4))
+	while(CharInSet(fLine[Run], Synhighlighterhc11__4))
 		++Run;
 }
 
 void __fastcall TSynHC11Syn::SymSpaceProc()
 {
 	++Run;
-	if(SynHighlighterHC11__5.Contains(FKeyWordType))
+	if(Synhighlighterhc11__5.Contains(FKeyWordType))
 	{
 		FKeyWordType = kwNone;
 		FTokenID = tkComment;
@@ -523,16 +519,8 @@ void SynHighlighterHC11_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynHC11Syn));
 }
-class SynHighlighterHC11_unit
-{
-public:
-	SynHighlighterHC11_unit()
-	{
-		SynHighlighterHC11_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterHC11_unit _SynHighlighterHC11_unit;
 
 }  // namespace SynHighlighterHC11
 

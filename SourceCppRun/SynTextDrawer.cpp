@@ -12,8 +12,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Math;
 using namespace System::Sysutils;
 using namespace System::Types;
 using namespace System::Uitypes;
@@ -21,8 +19,8 @@ using namespace Vcl::Graphics;
 
 namespace Syntextdrawer
 {
-#define SynTextDrawer__0 TFontStyles()
-#define SynTextDrawer__1 TTextOutOptions()
+#define Syntextdrawer__0 TFontStyles()
+#define Syntextdrawer__1 TTextOutOptions()
 
 __fastcall EheFontStockException::EheFontStockException(const String Msg) : inherited(Msg) {}
 __fastcall EheFontStockException::EheFontStockException(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
@@ -89,21 +87,21 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 	TGCPResults CharPlaceInfo = {};
 	DWORD TextOutFlags = 0;
 	TextOutFlags = 0;
-	if(Options.Contains(SynTextDrawerEnum__0::tooOpaque))
+	if(Options.Contains(tooOpaque))
 		TextOutFlags = TextOutFlags | ETO_OPAQUE;
-	if(Options.Contains(SynTextDrawerEnum__0::tooClipped))
+	if(Options.Contains(tooClipped))
 		TextOutFlags = TextOutFlags | ETO_CLIPPED;
 	{
 		if(UseLigatures && (Str != nullptr) && ((*Str) != WideNull))
 		{
 			TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
-			ZeroMemory(&CharPlaceInfo, (NativeUInt) sizeof(CharPlaceInfo));
-			CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
+			ZeroMemory(&CharPlaceInfo, sizeof(CharPlaceInfo));
+			CharPlaceInfo.lStructSize = sizeof(CharPlaceInfo);
 			Glyphs.Length = wcslen(Str);
 			CharPlaceInfo.lpGlyphs = &Glyphs[0];
-			CharPlaceInfo.nGlyphs = Glyphs.Length;
-			if(GetCharacterPlacement(DC, Str, (int) wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
-				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), (int) Glyphs.Length, ((int*) ((void*) ETODist)));
+			CharPlaceInfo.nGlyphs = (UINT) Glyphs.Length;
+			if(GetCharacterPlacement(DC, Str, wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
+				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), Glyphs.Length, ((int*) ((void*) ETODist)));
 			else
 				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
 		}
@@ -121,7 +119,7 @@ void __fastcall TheFontsInfoManager::LockFontsInfo(PheSharedFontsInfo pFontsInfo
 }
 
 __fastcall TheFontsInfoManager::TheFontsInfoManager()
- : FFontsInfo(new System::Classes::TList())
+ : FFontsInfo(new TList())
 {
 	// inherited;
 }
@@ -130,7 +128,7 @@ PheSharedFontsInfo __fastcall TheFontsInfoManager::CreateFontsInfo(TFont* ABaseF
 {
 	PheSharedFontsInfo result = nullptr;
 	result = new TheSharedFontsInfo;
-	FillChar((void**)result, sizeof(TheSharedFontsInfo), 0);
+	FillChar((void**)result, (int) sizeof(TheSharedFontsInfo), 0);
 	/*# with result^ do */
 	{
 		auto& with0 = (*result);
@@ -177,7 +175,6 @@ __fastcall TheFontsInfoManager::~TheFontsInfoManager()
 	// inherited;
 }
 
-
 void __fastcall TheFontsInfoManager::DestroyFontHandles(PheSharedFontsInfo pFontsInfo)
 {
 	int i = 0;
@@ -185,7 +182,7 @@ void __fastcall TheFontsInfoManager::DestroyFontHandles(PheSharedFontsInfo pFont
 	{
 		auto& with0 = (*pFontsInfo);
 		int stop = 0;
-		for(stop = (int) FontStyleCombineCount - 1 /*# High(TheStockFontPatterns) */, i = 0 /*# Low(TheStockFontPatterns) */; i <= stop; i++)
+		for(stop = FontStyleCombineCount - 1 /*# High(TheStockFontPatterns) */, i = 0 /*# Low(TheStockFontPatterns) */; i <= stop; i++)
 		{
 			/*# with FontsData[i] do */
 			{
@@ -208,7 +205,7 @@ PheSharedFontsInfo __fastcall TheFontsInfoManager::FindFontsInfo(const TLogFont&
 	for(stop = FFontsInfo->Count - 1, i = 0; i <= stop; i++)
 	{
 		result = ((PheSharedFontsInfo) FFontsInfo->Items[i]);
-		if(CompareMem(&((*result).BaseLF), (void*)&LF, sizeof(TLogFont)))
+		if(CompareMem(&((*result).BaseLF), (void*) &LF, (NativeInt) sizeof(TLogFont)))
 			return result;
 	}
 	result = nullptr;
@@ -254,7 +251,7 @@ void __fastcall TheFontsInfoManager::ReleaseFontsInfo(PheSharedFontsInfo pFontsI
 void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFont, TLogFont& LF)
 {
 	PChar PEnd = nullptr;
-	GetObject(ABaseFont->Handle, sizeof(TLogFont), &LF);
+	GetObject(ABaseFont->Handle, (int) sizeof(TLogFont), &LF);
 	/*# with LF do */
 	{
 		auto& with0 = LF;
@@ -327,7 +324,6 @@ __fastcall TheFontStock::~TheFontStock()
 	Assert(FDCRefCount == 0);
 	// inherited;
 }
-
 
 TFont* __fastcall TheFontStock::GetBaseFont()
 {
@@ -537,7 +533,6 @@ __fastcall TheTextDrawer::~TheTextDrawer()
 	// inherited;
 }
 
-
 void __fastcall TheTextDrawer::ReleaseETODist()
 {
 	if(ASSIGNED(FETODist))
@@ -599,7 +594,7 @@ void __fastcall TheTextDrawer::SetBaseFont(TFont* Value)
 		FlushCharABCWidthCache();
 		ReleaseETODist();
 		FStockBitmap->Canvas->Font->Assign(Value);
-		FStockBitmap->Canvas->Font->Style = SynTextDrawer__0;
+		FStockBitmap->Canvas->Font->Style = Syntextdrawer__0;
 		/*# with FFontStock do */
 		{
 			auto with0 = FFontStock;
@@ -713,7 +708,7 @@ void __fastcall TheTextDrawer::TextOut(int X, int Y, PWideChar Text, int Length)
 {
 	TRect R = {};
 	R = Rect(X, Y, X, Y);
-	UniversalExtTextOut(FDC, X, Y, SynTextDrawer__1, R, Text, Length, nullptr);
+	UniversalExtTextOut(FDC, X, Y, Syntextdrawer__1, R, Text, Length, nullptr);
 }
 
 void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options, const TRect& cARect, PWideChar Text, int Length, bool UseLigatures/*# = false*/)
@@ -756,7 +751,7 @@ void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options,
 		}
 		else
 		{
-			if(LastChar < int(255 /*# High(AnsiChar) */))
+			if(LastChar < int(High<AnsiChar>()))
 			{
 				GetTextMetricsA(FDC, &TM);
 				RealCharWidth = TM.tmAveCharWidth + TM.tmOverhang;
@@ -827,15 +822,10 @@ void SynTextDrawer_finalization()
 	
 	SynTextDrawer_Finalized = true;
 	
-	// fix dme crash at closing the application: delete gFontsInfoManager;
+	delete gFontsInfoManager;
 }
-class SynTextDrawer_unit
-{
-public:
-	~SynTextDrawer_unit(){SynTextDrawer_finalization(); }
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynTextDrawer_unit _SynTextDrawer_unit;
 
 }  // namespace SynTextDrawer
 

@@ -11,36 +11,33 @@ using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterjava
 {
-#define SynHighlighterJava__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterJava__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterJava__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterJava__3 (TSysCharSet() <<  \
+#define Synhighlighterjava__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterjava__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterjava__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterjava__3 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterJava__4 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsComment << rsDocument)
-#define SynHighlighterJava__5 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsComment << rsDocument)
-#define SynHighlighterJava__6 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsComment << rsDocument)
-#define SynHighlighterJava__7 (TSysCharSet() <<  \
+#define Synhighlighterjava__4 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
+#define Synhighlighterjava__5 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
+#define Synhighlighterjava__6 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
+#define Synhighlighterjava__7 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterJava__8 (TSysCharSet() << L'_' << L'$')
+#define Synhighlighterjava__8 (TSysCharSet() << '_' << '$')
 
 
 const String Keywords[52/*# range 0..51*/] = {L"abstract", L"assert", L"boolean", L"break", L"byte", L"case", L"catch", L"char", L"class", L"const", L"continue"
-																				, L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
-																				, L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"
-																				, L"public", L"return", L"short", L"static", L"strictfp", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws"
-																				, L"transient", L"true", L"try", L"void", L"volatile", L"while"};
+                    , L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
+                    , L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"
+                    , L"public", L"return", L"short", L"static", L"strictfp", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws"
+                    , L"transient", L"true", L"try", L"void", L"volatile", L"while"};
 const int KeyIndices[113/*# range 0..112*/] = {1, -1, -1, 45, -1, -1, 39, -1, -1, -1, 9, 36, 26, -1, -1, 4, 27, 5, 50, 25, 33, -1, 18, -1, 17, 6, 28, -1, -1, -1, 51, -1, -1, -1, -1, 21, 48, -1, 7, 3, -1, -1, -1, 49, 41
-																				, -1, 35, -1, 46, 40, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 13, 24, -1, 37, -1, -1, 31, 11, -1, 22, -1, -1, -1, 44, -1, 10, 19, 8, -1, -1, 38, 15, -1, -1, 34, -1, 14, -1, -1, -1
-																				, 0, 12, -1, 20, -1, 23, -1, 47, -1, -1, 29, 30, -1, -1, 16, 32, 2};
+                    , -1, 35, -1, 46, 40, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 13, 24, -1, 37, -1, -1, 31, 11, -1, 22, -1, -1, -1, 44, -1, 10, 19, 8, -1, -1, 38, 15, -1, -1, 34, -1, 14, -1, -1, -1
+                    , 0, 12, -1, 20, -1, 23, -1, 47, -1, -1, 29, 30, -1, -1, 16, 32, 2};
 
 /*$Q-*/
 
@@ -78,7 +75,7 @@ void __fastcall TSynJavaSyn::InitIdent()
 	int stop = 0;
 	for(stop = 112 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 112 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -124,17 +121,17 @@ __fastcall TSynJavaSyn::TSynJavaSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterJava__0;
+	fCommentAttri->Style = Synhighlighterjava__0;
 	addAttribute(fCommentAttri);
 	fDocumentAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
-	fDocumentAttri->Style = SynHighlighterJava__1;
+	fDocumentAttri->Style = Synhighlighterjava__1;
 	addAttribute(fDocumentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrInvalidSymbol, SYNS_FriendlyAttrInvalidSymbol);
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterJava__2;
+	fKeyAttri->Style = Synhighlighterjava__2;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -593,7 +590,7 @@ void __fastcall TSynJavaSyn::PlusProc()
 void __fastcall TSynJavaSyn::PointProc()
 {
 	++Run;                            /*point*/
-	if(CharInSet(fLine[Run], SynHighlighterJava__3))
+	if(CharInSet(fLine[Run], Synhighlighterjava__3))
 	{
 		NumberProc();
 		return;
@@ -665,7 +662,7 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -686,7 +683,7 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -750,9 +747,9 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if(SynHighlighterJava__4.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) Line)))
+		if(Synhighlighterjava__4.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line)))
 		{
-			if(!(SynHighlighterJava__5.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)))))
+			if(!(Synhighlighterjava__5.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)))))
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -760,7 +757,7 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		}
 		else
 		{
-			if(SynHighlighterJava__6.Contains((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1))))
+			if(Synhighlighterjava__6.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1))))
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -955,7 +952,7 @@ void __fastcall TSynJavaSyn::Next()
 		CommentProc();
 		break;
 		default:
-		if(IsCharAlphaNumeric(fLine[Run]) && !CharInSet(fLine[Run], SynHighlighterJava__7)) //Fiala
+		if(IsCharAlphaNumeric(fLine[Run]) && !CharInSet(fLine[Run], Synhighlighterjava__7)) //Fiala
 			IdentProc();
 		else
 		{
@@ -1130,7 +1127,7 @@ void __fastcall TSynJavaSyn::ResetRange()
 
 void __fastcall TSynJavaSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 TtkTokenKind __fastcall TSynJavaSyn::GetTokenID()
@@ -1206,7 +1203,7 @@ bool __fastcall TSynJavaSyn::IsFilterStored()
 bool __fastcall TSynJavaSyn::IsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, SynHighlighterJava__8);       //Fiala
+	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, Synhighlighterjava__8);       //Fiala
 /*
   case AChar of
     '_', '$', '0'..'9', 'a'..'z', 'A'..'Z', 'L'..'Ö', 'Ø'..'ö', 'ø'..'ÿ':
@@ -1261,16 +1258,8 @@ void SynHighlighterJava_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynJavaSyn));
 }
-class SynHighlighterJava_unit
-{
-public:
-	SynHighlighterJava_unit()
-	{
-		SynHighlighterJava_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterJava_unit _SynHighlighterJava_unit;
 
 }  // namespace SynHighlighterJava
 

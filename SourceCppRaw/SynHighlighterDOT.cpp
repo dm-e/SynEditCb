@@ -10,51 +10,49 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterdot
 {
-#define SynHighlighterDOT__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterDOT__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterDOT__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterDOT__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterDOT__4 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterDOT__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdot__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterdot__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdot__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdot__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdot__4 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterdot__5 (TFontStyles() << TFontStyle::fsBold)
 
 
 const String Keywords[146/*# range 0..145*/] = {L"all", L"appendix", L"arrowhead", L"arrowsize", L"arrowtail", L"auto", L"back", L"bgcolor", L"bold", L"both"
-																				, L"bottomlabel", L"box", L"center", L"circle", L"clusterrank", L"color", L"comment", L"compound", L"concentrate", L"constraint"
-																				, L"decorate", L"diamond", L"digraph", L"dir", L"distortion", L"dot", L"dotted", L"doublecircle", L"doubleoctagon", L"e"
-																				, L"edge", L"egg", L"ellipse", L"false", L"fill", L"fillcolor", L"filled", L"fixedsize", L"fontcolor", L"fontname", L"fontpath", L"fontsize"
-																				, L"forward", L"global", L"graph", L"group", L"headlabel", L"headport", L"headurl", L"height", L"hexagon", L"house", L"id"
-																				, L"inv", L"invdot", L"invhouse", L"invodot", L"invtrapezium", L"invtriangle", L"label", L"labelangle", L"labeldistance", L"labelfloat"
-																				, L"labelfontcolor", L"labelfontname", L"labelfontsize", L"labeljust", L"labelloc", L"layer", L"layers", L"lhead"
-																				, L"ltail", L"margin", L"max", L"mcircle", L"mclimit", L"mdiamond", L"merged", L"min", L"minimum", L"minlen", L"mrecord", L"msquare"
-																				, L"multiples", L"n", L"ne", L"node", L"nodesep", L"none", L"normal", L"nslimit", L"nw", L"octagon", L"odot", L"onto", L"ordering"
-																				, L"orientation", L"page", L"pagedir", L"parallelogram", L"peripheries", L"plaintext", L"point", L"polygon", L"quantum"
-																				, L"rank", L"rankdir", L"ranksep", L"ratio", L"record", L"regular", L"remincross", L"rotate", L"s", L"same", L"samehead", L"sametail"
-																				, L"samplepoints", L"se", L"searchsize", L"section", L"shape", L"shapefile", L"sides", L"sink", L"size", L"skew", L"source"
-																				, L"strict", L"style", L"subgraph", L"sw", L"taillabel", L"tailport", L"tailurl", L"toplabel", L"trapezium", L"triangle", L"tripleoctagon"
-																				, L"true", L"url", L"w", L"weight", L"when", L"width", L"z"};
+                    , L"bottomlabel", L"box", L"center", L"circle", L"clusterrank", L"color", L"comment", L"compound", L"concentrate", L"constraint"
+                    , L"decorate", L"diamond", L"digraph", L"dir", L"distortion", L"dot", L"dotted", L"doublecircle", L"doubleoctagon", L"e"
+                    , L"edge", L"egg", L"ellipse", L"false", L"fill", L"fillcolor", L"filled", L"fixedsize", L"fontcolor", L"fontname", L"fontpath", L"fontsize"
+                    , L"forward", L"global", L"graph", L"group", L"headlabel", L"headport", L"headurl", L"height", L"hexagon", L"house", L"id"
+                    , L"inv", L"invdot", L"invhouse", L"invodot", L"invtrapezium", L"invtriangle", L"label", L"labelangle", L"labeldistance", L"labelfloat"
+                    , L"labelfontcolor", L"labelfontname", L"labelfontsize", L"labeljust", L"labelloc", L"layer", L"layers", L"lhead"
+                    , L"ltail", L"margin", L"max", L"mcircle", L"mclimit", L"mdiamond", L"merged", L"min", L"minimum", L"minlen", L"mrecord", L"msquare"
+                    , L"multiples", L"n", L"ne", L"node", L"nodesep", L"none", L"normal", L"nslimit", L"nw", L"octagon", L"odot", L"onto", L"ordering"
+                    , L"orientation", L"page", L"pagedir", L"parallelogram", L"peripheries", L"plaintext", L"point", L"polygon", L"quantum"
+                    , L"rank", L"rankdir", L"ranksep", L"ratio", L"record", L"regular", L"remincross", L"rotate", L"s", L"same", L"samehead", L"sametail"
+                    , L"samplepoints", L"se", L"searchsize", L"section", L"shape", L"shapefile", L"sides", L"sink", L"size", L"skew", L"source"
+                    , L"strict", L"style", L"subgraph", L"sw", L"taillabel", L"tailport", L"tailurl", L"toplabel", L"trapezium", L"triangle", L"tripleoctagon"
+                    , L"true", L"url", L"w", L"weight", L"when", L"width", L"z"};
 const int KeyIndices[787/*# range 0..786*/] = {-1, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 141, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 88, 50, -1, -1, -1, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, 4, -1, -1, -1, -1, 90, -1, 3, -1, 110, 86, -1, -1, 49, 23, -1, 92, -1, -1, -1, 15, -1, 122, -1, -1, 28, -1
-																				, 78, -1, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, 27, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 140, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 142, -1, 7, -1, 0, -1, -1, 97, -1, -1, -1, -1, -1, 43
-																				, -1, -1, -1, 131, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, 10, -1, 47, 68, -1, 132, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1
-																				, 64, -1, -1, 124, -1, -1, -1, -1, -1, -1, 87, -1, -1, -1, 12, -1, 84, -1, -1, -1, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 42, -1, 38, -1, -1, -1, 143
-																				, -1, -1, -1, 145, 106, -1, 127, -1, -1, -1, 99, 75, -1, -1, 102, -1, 58, -1, -1, 56, -1, -1, -1, -1, 9, -1, -1, -1, -1, -1, 22, -1, 73, -1, -1, -1, 17, -1, 54, 112, -1, -1, -1, -1, -1, -1, -1, 113
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 96, -1, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 69, 116, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, 16, -1, -1, -1, -1, -1, 126, -1, -1, -1, -1, -1
-																				, -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, 117, -1, -1, -1, -1, -1, -1, -1, -1, 111, 93, -1, -1, -1, -1, 108, -1, -1, 119, -1, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, 89
-																				, -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, -1, -1, 77, -1, -1, 104, -1, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, 26, -1, -1, -1, 79, -1, 19, -1, -1, -1, -1, -1, -1, -1, -1, -1, 39, -1
-																				, -1, -1, 115, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, 35, -1, -1, 70, -1, -1, 57, -1, 72, -1, -1, 83, -1, -1, -1, -1, 130, -1, -1, -1, 18, -1, 118, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, 37, 1, -1, -1, -1, -1, 138, -1, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 14, -1, -1
-																				, 8, -1, -1, -1, 125, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 91, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1, 95, -1, -1, -1, -1, 136, -1, -1, 20, -1, 62, -1, -1, -1, -1, 134, -1, -1, -1, 63, -1
-																				, -1, -1, 121, 80, -1, -1, -1, -1, -1, -1, 135, -1, -1, 120, -1, -1, -1, 53, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, -1, -1, 24, -1, -1, 139, 67, -1, -1, 59, -1, -1, 36, -1, -1, -1
-																				, -1, -1, -1, -1, -1, 128, 34, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, 114, -1, -1, -1, -1, -1, -1, -1, 55, -1, -1, 94, -1, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 41, -1, -1, -1, -1, -1, -1, -1, 44, -1, -1, -1, -1, -1, 74, -1, 51, 144, -1, -1, 82, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, 66, -1, 25, -1, -1, -1, 45, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, 6, 105, -1, -1, 133, 123, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, -1, -1, -1, -1, -1, -1, -1, 30
-																				, -1, -1, -1};
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 88, 50, -1, -1, -1, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, 4, -1, -1, -1, -1, 90, -1, 3, -1, 110, 86, -1, -1, 49, 23, -1, 92, -1, -1, -1, 15, -1, 122, -1, -1, 28, -1
+                    , 78, -1, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, 27, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 140, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 142, -1, 7, -1, 0, -1, -1, 97, -1, -1, -1, -1, -1, 43
+                    , -1, -1, -1, 131, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, 10, -1, 47, 68, -1, 132, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1
+                    , 64, -1, -1, 124, -1, -1, -1, -1, -1, -1, 87, -1, -1, -1, 12, -1, 84, -1, -1, -1, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 42, -1, 38, -1, -1, -1, 143
+                    , -1, -1, -1, 145, 106, -1, 127, -1, -1, -1, 99, 75, -1, -1, 102, -1, 58, -1, -1, 56, -1, -1, -1, -1, 9, -1, -1, -1, -1, -1, 22, -1, 73, -1, -1, -1, 17, -1, 54, 112, -1, -1, -1, -1, -1, -1, -1, 113
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 96, -1, 21, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 69, 116, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, 16, -1, -1, -1, -1, -1, 126, -1, -1, -1, -1, -1
+                    , -1, -1, 71, -1, -1, -1, -1, -1, -1, -1, -1, -1, 137, -1, -1, 117, -1, -1, -1, -1, -1, -1, -1, -1, 111, 93, -1, -1, -1, -1, 108, -1, -1, 119, -1, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, 89
+                    , -1, -1, -1, -1, 76, -1, -1, -1, -1, -1, -1, -1, 77, -1, -1, 104, -1, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, 26, -1, -1, -1, 79, -1, 19, -1, -1, -1, -1, -1, -1, -1, -1, -1, 39, -1
+                    , -1, -1, 115, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 109, 35, -1, -1, 70, -1, -1, 57, -1, 72, -1, -1, 83, -1, -1, -1, -1, 130, -1, -1, -1, 18, -1, 118, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, 37, 1, -1, -1, -1, -1, 138, -1, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 14, -1, -1
+                    , 8, -1, -1, -1, 125, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 91, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1, 95, -1, -1, -1, -1, 136, -1, -1, 20, -1, 62, -1, -1, -1, -1, 134, -1, -1, -1, 63, -1
+                    , -1, -1, 121, 80, -1, -1, -1, -1, -1, -1, 135, -1, -1, 120, -1, -1, -1, 53, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, -1, -1, 24, -1, -1, 139, 67, -1, -1, 59, -1, -1, 36, -1, -1, -1
+                    , -1, -1, -1, -1, -1, 128, 34, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, 114, -1, -1, -1, -1, -1, -1, -1, 55, -1, -1, 94, -1, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 41, -1, -1, -1, -1, -1, -1, -1, 44, -1, -1, -1, -1, -1, 74, -1, 51, 144, -1, -1, 82, 98, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 100, 66, -1, 25, -1, -1, -1, 45, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, 6, 105, -1, -1, 133, 123, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, -1, -1, -1, -1, -1, -1, -1, 30
+                    , -1, -1, -1};
 
 /*$Q-*/
 
@@ -92,7 +90,7 @@ void __fastcall TSynDOTSyn::InitIdent()
 	int stop = 0;
 	for(stop = 786 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[132] = FuncAll;
@@ -1867,20 +1865,20 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
 	addAttribute(fAttributeAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterDOT__0;
+	fCommentAttri->Style = Synhighlighterdot__0;
 	fCommentAttri->Foreground = clNavy;
 	addAttribute(fCommentAttri);
 	fDirectionsAttri = new TSynHighlighterAttributes(SYNS_AttrDirections, SYNS_FriendlyAttrDirections);
-	fDirectionsAttri->Style = SynHighlighterDOT__1;
+	fDirectionsAttri->Style = Synhighlighterdot__1;
 	fDirectionsAttri->Foreground = clYellow;
 	addAttribute(fDirectionsAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterDOT__2;
+	fKeyAttri->Style = Synhighlighterdot__2;
 	addAttribute(fKeyAttri);
 	fShapeAttri = new TSynHighlighterAttributes(SYNS_AttrShape, SYNS_FriendlyAttrShape);
-	fShapeAttri->Style = SynHighlighterDOT__3;
+	fShapeAttri->Style = Synhighlighterdot__3;
 	fShapeAttri->Foreground = clRed;
 	addAttribute(fShapeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
@@ -1888,11 +1886,11 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	addAttribute(fStringAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Style = SynHighlighterDOT__4;
+	fValueAttri->Style = Synhighlighterdot__4;
 	fValueAttri->Foreground = clRed;
 	addAttribute(fValueAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Style = SynHighlighterDOT__5;
+	fSymbolAttri->Style = Synhighlighterdot__5;
 	fSymbolAttri->Foreground = clGreen;
 	addAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -2205,7 +2203,7 @@ void __fastcall TSynDOTSyn::ResetRange()
 
 void __fastcall TSynDOTSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynDOTSyn::GetRange()
@@ -2233,16 +2231,8 @@ void SynHighlighterDOT_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynDOTSyn));
 }
-class SynHighlighterDOT_unit
-{
-public:
-	SynHighlighterDOT_unit()
-	{
-		SynHighlighterDOT_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterDOT_unit _SynHighlighterDOT_unit;
 
 }  // namespace SynHighlighterDOT
 

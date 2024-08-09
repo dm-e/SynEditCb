@@ -6,8 +6,6 @@
 using namespace std;
 using namespace d2c_system;
 using namespace System;
-using namespace System::Classes;
-using namespace Vcl::Forms;
 
 namespace Syneditdragdrop
 {
@@ -42,7 +40,7 @@ HRESULT __fastcall TSynDropTarget::DragEnter(IDataObject* const dataObj, int grf
 	result = S_OK;
 	try
 	{
-		DragEnter(dataObj, KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		DragEnter(const_cast<IDataObject*>(dataObj), KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
 	}
 	catch(...)
 	{
@@ -89,7 +87,7 @@ HRESULT __fastcall TSynDropTarget::Drop(IDataObject* const dataObj, int grfKeySt
 	result = S_OK;
 	try
 	{
-		Drop(dataObj, KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		Drop(const_cast<IDataObject*>(dataObj), KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
 	}
 	catch(...)
 	{
@@ -163,7 +161,6 @@ __fastcall TSynDropTarget::~TSynDropTarget()
 	// inherited;
 }
 
-
 //===  DRAG SOURCE CLASS ===================================================
 
 HRESULT __stdcall TSynDragSource::QueryContinueDrag(BOOL fEscapePressed, int grfKeyState)
@@ -194,7 +191,6 @@ __fastcall TSynDragSource::~TSynDragSource()
   // for debugging purposes
 	// inherited;
 }
-
 
 
 }  // namespace SynEditDragDrop

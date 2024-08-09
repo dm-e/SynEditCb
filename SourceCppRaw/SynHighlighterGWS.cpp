@@ -10,15 +10,12 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightergws
 {
-#define SynHighlighterGWS__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterGWS__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterGWS__2 (TSysCharSet() << L'\x27' << L'\\')
+#define Synhighlightergws__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightergws__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightergws__2 (TSysCharSet() << '\x27' << '\\')
 
 
 const String Keywords[13/*# range 0..12*/] = {L"bool", L"break", L"char", L"do", L"else", L"false", L"for", L"if", L"int", L"return", L"string", L"true", L"while"};
@@ -47,7 +44,7 @@ void __fastcall TSynGWScriptSyn::InitIdent()
 	int stop = 0;
 	for(stop = 12 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[6] = FuncBool;
@@ -231,11 +228,11 @@ __fastcall TSynGWScriptSyn::TSynGWScriptSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterGWS__0;
+	fCommentAttri->Style = Synhighlightergws__0;
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterGWS__1;
+	fKeyAttri->Style = Synhighlightergws__1;
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
@@ -336,7 +333,7 @@ void __fastcall TSynGWScriptSyn::AsciiCharProc()
 	{
 		if(fLine[Run] == L'\\')
 		{
-			if(CharInSet(fLine[Run + 1], SynHighlighterGWS__2))
+			if(CharInSet(fLine[Run + 1], Synhighlightergws__2))
 				++Run;
 		}
 		++Run;
@@ -1110,7 +1107,7 @@ void __fastcall TSynGWScriptSyn::ResetRange()
 
 void __fastcall TSynGWScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynGWScriptSyn::IsFilterStored()
@@ -1176,16 +1173,8 @@ void SynHighlighterGWS_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynGWScriptSyn));
 }
-class SynHighlighterGWS_unit
-{
-public:
-	SynHighlighterGWS_unit()
-	{
-		SynHighlighterGWS_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterGWS_unit _SynHighlighterGWS_unit;
 
 }  // namespace SynHighlighterGWS
 

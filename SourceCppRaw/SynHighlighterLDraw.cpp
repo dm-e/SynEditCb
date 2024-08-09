@@ -10,17 +10,14 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterldraw
 {
-#define SynHighlighterLDraw__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterLDraw__1 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << L'.')
+#define Synhighlighterldraw__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterldraw__1 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '.')
 
 
 const String Keywords[1/*# range 0..0*/] = {L"author"};
@@ -62,7 +59,7 @@ void __fastcall TSynLDRSyn::InitIdent()
 	int stop = 0;
 	for(stop = 1 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[1] = FuncAuthor;
@@ -137,7 +134,7 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterLDraw__0;
+	fKeyAttri->Style = Synhighlighterldraw__0;
 	addAttribute(fKeyAttri);
 	fLineAttri = new TSynHighlighterAttributes(SYNS_AttrLine, SYNS_FriendlyAttrLine);
 	fLineAttri->Foreground = clBlack;
@@ -282,7 +279,7 @@ void __fastcall TSynLDRSyn::Number1Proc()
 		FTokenID = tkIdentifier;
 		break;
 	}
-	while(CharInSet(fLine[Run], SynHighlighterLDraw__1))
+	while(CharInSet(fLine[Run], Synhighlighterldraw__1))
 		++Run;
 }
 
@@ -483,7 +480,7 @@ void __fastcall TSynLDRSyn::ResetRange()
 
 void __fastcall TSynLDRSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynLDRSyn::GetRange()
@@ -511,16 +508,8 @@ void SynHighlighterLDraw_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynLDRSyn));
 }
-class SynHighlighterLDraw_unit
-{
-public:
-	SynHighlighterLDraw_unit()
-	{
-		SynHighlighterLDraw_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterLDraw_unit _SynHighlighterLDraw_unit;
 
 }  // namespace SynHighlighterLDraw
 

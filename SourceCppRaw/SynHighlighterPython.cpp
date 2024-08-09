@@ -12,68 +12,65 @@ using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Regularexpressions;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
+using namespace System::Types;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterpython
 {
-#define SynHighlighterPython__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterPython__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterPython__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterPython__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterPython__4 (TSysCharSet() <<  \
+#define Synhighlighterpython__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterpython__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterpython__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterpython__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterpython__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__5 (TSysCharSet() << L'x' << L'X')
-#define SynHighlighterPython__6 (TSysCharSet() <<  \
+#define Synhighlighterpython__5 (TSysCharSet() << 'x' << 'X')
+#define Synhighlighterpython__6 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__7 (TSysCharSet() <<  \
+#define Synhighlighterpython__7 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55)
-#define SynHighlighterPython__8 (TSysCharSet() << L'+' << L'-')
-#define SynHighlighterPython__9 (TSysCharSet() <<  \
+#define Synhighlighterpython__8 (TSysCharSet() << '+' << '-')
+#define Synhighlighterpython__9 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__10 (TSysCharSet() <<  \
+#define Synhighlighterpython__10 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__11 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterPython__12 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterPython__13 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterPython__14 (TSysCharSet() <<  \
+#define Synhighlighterpython__11 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterpython__12 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterpython__13 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterpython__14 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__15 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterPython__16 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterPython__17 (TSysCharSet() <<  \
+#define Synhighlighterpython__15 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterpython__16 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterpython__17 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__18 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterPython__19 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
+#define Synhighlighterpython__18 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterpython__19 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
+#define Synhighlighterpython__20 (TSysCharSet() << 'l' << 'L')
+#define Synhighlighterpython__21 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__20 (TSysCharSet() << L'l' << L'L')
-#define SynHighlighterPython__21 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
-#define SynHighlighterPython__22 (TSysCharSet() <<  \
+#define Synhighlighterpython__22 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55)
-#define SynHighlighterPython__23 (TSysCharSet() << L'l' << L'L')
-#define SynHighlighterPython__24 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterPython__25 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterPython__26 (TSysCharSet() <<  \
+#define Synhighlighterpython__23 (TSysCharSet() << 'l' << 'L')
+#define Synhighlighterpython__24 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterpython__25 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterpython__26 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterPython__27 (TSysCharSet() << L'j' << L'J')
-#define SynHighlighterPython__28 (TSysCharSet() << L'r' << L'R')
-#define SynHighlighterPython__29 (TSysCharSet() << L'\'' << L'\"')
+#define Synhighlighterpython__27 (TSysCharSet() << 'j' << 'J')
+#define Synhighlighterpython__28 (TSysCharSet() << 'r' << 'R')
+#define Synhighlighterpython__29 (TSysCharSet() << '\'' << '\"')
 
 
 TStringList* GlobalKeywords = nullptr;
@@ -86,17 +83,17 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
   // List of keywords
 	const int KEYWORDCOUNT = 29;
 	const String Keywords[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
-																				, L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
-																				, L"while", L"yield"};
+                    , L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
+                    , L"while", L"yield"};
 
   // List of non-keyword identifiers
 	const int NONKEYWORDCOUNT = 66;
 	const String NONKEYWORDS[66/*# range 1..NONKEYWORDCOUNT*/] = {L"__future__", L"__import__", L"abs", L"apply", L"as", L"buffer", L"callable", L"chr", L"cmp", L"coerce", L"compile"
-																				, L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
-																				, L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
-																				, L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
-																				, L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
-																				, L"unicode", L"vars", L"xrange", L"zip"};
+                    , L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
+                    , L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
+                    , L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
+                    , L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
+                    , L"unicode", L"vars", L"xrange", L"zip"};
 	int f = 0;
 	if(!ASSIGNED(GlobalKeywords))
     // Create the string list of keywords - only once
@@ -140,10 +137,10 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
 	}
 	else
 	i = -1;
-	if(i !=  - 1)
+	if(i != -1)
 
   // Check if it is a system identifier (__*__)
-		result = (TtkTokenKind) (int) fKeywords->Objects[i];
+		result = (TtkTokenKind) (NativeInt) fKeywords->Objects[i];
 	else
 	{
 		if((fStringLen >= 5) && (Maybe[0] == L'_') && (Maybe[1] == L'_') && (Maybe[2] != L'_') && (Maybe[fStringLen - 1] == L'_') && (Maybe[fStringLen - 2] == L'_') && (Maybe[fStringLen - 3] != L'_'))
@@ -180,29 +177,29 @@ __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
 	FCaseSensitive = true;
 	fKeywords = new TStringList();
 	fKeywords->Sorted = true;
-	fKeywords->Duplicates = System::Classes::dupError;
+	fKeywords->Duplicates = System::Types::dupError;
 	fKeywords->Assign(GetKeywordIdentifiers());
 
 //++ CodeFolding
-	new TRegEx(L"^(def|class|while|for|if|else|elif|try|except|with"
+	BlockOpenerRE = TRegEx(L"^(def|class|while|for|if|else|elif|try|except|with"
 	           L"|(async[ \\t]+def)|(async[ \\t]+with)|(async[ \\t]+for))\\b");
 //-- CodeFolding
 	FRange = rsUnKnown;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = clGray;
-	fCommentAttri->Style = SynHighlighterPython__0;
+	fCommentAttri->Style = Synhighlighterpython__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterPython__1;
+	fKeyAttri->Style = Synhighlighterpython__1;
 	addAttribute(fKeyAttri);
 	fNonKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
 	fNonKeyAttri->Foreground = clNavy;
-	fNonKeyAttri->Style = SynHighlighterPython__2;
+	fNonKeyAttri->Style = Synhighlighterpython__2;
 	addAttribute(fNonKeyAttri);
 	fSystemAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
-	fSystemAttri->Style = SynHighlighterPython__3;
+	fSystemAttri->Style = Synhighlighterpython__3;
 	addAttribute(fSystemAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clBlue;
@@ -238,7 +235,6 @@ __fastcall TSynPythonSyn::~TSynPythonSyn()
 	delete fKeywords;
 	// inherited;
 }
-
 
 void __fastcall TSynPythonSyn::SymbolProc()
 {
@@ -351,7 +347,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 
         // .45
 			{
-				if(CharInSet(fLine[Run], SynHighlighterPython__4))
+				if(CharInSet(fLine[Run], Synhighlighterpython__4))
 				{
 					++Run;
 					FTokenID = tkFloat;
@@ -377,7 +373,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 			{
 				Temp = fLine[Run];
         // 0x123ABC
-				if(CharInSet(Temp, SynHighlighterPython__5))
+				if(CharInSet(Temp, Synhighlighterpython__5))
 				{
 					++Run;
 					FTokenID = tkHex;
@@ -394,11 +390,11 @@ void __fastcall TSynPythonSyn::NumberProc()
 					}
 					else
 					{
-						if(CharInSet(Temp, SynHighlighterPython__6))
+						if(CharInSet(Temp, Synhighlighterpython__6))
 						{
 							++Run;
           // 0123 or 0123.45
-							if(CharInSet(Temp, SynHighlighterPython__7))
+							if(CharInSet(Temp, Synhighlighterpython__7))
 							{
 								FTokenID = tkOct;
 								State = nsOct;
@@ -439,10 +435,10 @@ void __fastcall TSynPythonSyn::NumberProc()
 		State = nsExpFound;
 		FTokenID = tkFloat;
     // Skip e[+/-]
-		if(CharInSet(fLine[Run + 1], SynHighlighterPython__8))
+		if(CharInSet(fLine[Run + 1], Synhighlighterpython__8))
 			++Run;
     // Invalid token : 1.0e
-		if(!CharInSet(fLine[Run + 1], SynHighlighterPython__9))
+		if(!CharInSet(fLine[Run + 1], Synhighlighterpython__9))
 		{
 			++Run;
 			result = HandleBadNumber();
@@ -469,21 +465,21 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1234
-		if(CharInSet(Temp, SynHighlighterPython__10))
+		if(CharInSet(Temp, Synhighlighterpython__10))
 		{
 			result = true;
     //123e4
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__11))
+			if(CharInSet(Temp, Synhighlighterpython__11))
 			{
 				result = HandleExponent();
     // 123.45j
 			}
 			else
 			{
-				if(CharInSet(Temp, SynHighlighterPython__12))
+				if(CharInSet(Temp, Synhighlighterpython__12))
 				{
 					++Run;
 					FTokenID = tkFloat;
@@ -519,21 +515,21 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1.0e4
-		if(CharInSet(Temp, SynHighlighterPython__13))
+		if(CharInSet(Temp, Synhighlighterpython__13))
 		{
 			result = HandleExponent();
     // 123.45
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__14))
+			if(CharInSet(Temp, Synhighlighterpython__14))
 			{
 				result = true;
     // 123.45j
 			}
 			else
 			{
-				if(CharInSet(Temp, SynHighlighterPython__15))
+				if(CharInSet(Temp, Synhighlighterpython__15))
 				{
 					++Run;
 					result = false;
@@ -570,14 +566,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 091.0e4
-		if(CharInSet(Temp, SynHighlighterPython__16))
+		if(CharInSet(Temp, Synhighlighterpython__16))
 		{
 			result = HandleExponent();
     // 0912345
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__17))
+			if(CharInSet(Temp, Synhighlighterpython__17))
 			{
 				result = true;
     // 09123.45
@@ -591,7 +587,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(CharInSet(Temp, SynHighlighterPython__18))
+					if(CharInSet(Temp, Synhighlighterpython__18))
 					{
 						++Run;
 						result = false;
@@ -611,14 +607,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 0x123ABC
-		if(CharInSet(Temp, SynHighlighterPython__19))
+		if(CharInSet(Temp, Synhighlighterpython__19))
 		{
 			result = true;
     // 0x123ABCL
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__20))
+			if(CharInSet(Temp, Synhighlighterpython__20))
 			{
 				++Run;
 				result = false;
@@ -654,9 +650,9 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 012345
-		if(CharInSet(Temp, SynHighlighterPython__21))
+		if(CharInSet(Temp, Synhighlighterpython__21))
 		{
-			if(!CharInSet(Temp, SynHighlighterPython__22))
+			if(!CharInSet(Temp, Synhighlighterpython__22))
 			{
 				State = nsFloatNeeded;
 				FTokenID = tkFloat;
@@ -666,7 +662,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__23))
+			if(CharInSet(Temp, Synhighlighterpython__23))
 			{
 				++Run;
 				result = false;
@@ -674,14 +670,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 			}
 			else
 			{
-				if(CharInSet(Temp, SynHighlighterPython__24))
+				if(CharInSet(Temp, Synhighlighterpython__24))
 				{
 					result = HandleExponent();
     // 0123j
 				}
 				else
 				{
-					if(CharInSet(Temp, SynHighlighterPython__25))
+					if(CharInSet(Temp, Synhighlighterpython__25))
 					{
 						++Run;
 						FTokenID = tkFloat;
@@ -718,14 +714,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1e+123
-		if(CharInSet(Temp, SynHighlighterPython__26))
+		if(CharInSet(Temp, Synhighlighterpython__26))
 		{
 			result = true;
     // 1e+123j
 		}
 		else
 		{
-			if(CharInSet(Temp, SynHighlighterPython__27))
+			if(CharInSet(Temp, Synhighlighterpython__27))
 			{
 				++Run;
 				result = false;
@@ -937,7 +933,7 @@ void __fastcall TSynPythonSyn::UnicodeStringProc()
 
   // Handle python raw and unicode strings
   // Valid syntax: u"", or ur""
-	if(CharInSet(fLine[Run + 1], SynHighlighterPython__28) && CharInSet(fLine[Run + 2], SynHighlighterPython__29))
+	if(CharInSet(fLine[Run + 1], Synhighlighterpython__28) && CharInSet(fLine[Run + 2], Synhighlighterpython__29))
     // for ur, Remove the "u" and...
 	{
 		++Run;
@@ -1358,7 +1354,7 @@ void __fastcall TSynPythonSyn::ResetRange()
 void __fastcall TSynPythonSyn::InitFoldRanges(TSynFoldRanges* FoldRanges)
 {
 	inherited::InitFoldRanges(FoldRanges);
-	FoldRanges->CodeFoldingMode = TSynCodeFoldingMode::cfmIndentation;
+	FoldRanges->CodeFoldingMode = cfmIndentation;
 }
 
 void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan, int FromLine, int ToLine)
@@ -1377,16 +1373,16 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 	{
 		bool result = false;
 		result = true;
-		if((TRangeState)(int)GetLineRange(LinesToScan, Line) == Range)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line) == Range)
 		{
-			if(((TRangeState)(int)GetLineRange(LinesToScan, Line - 1) != Range) && Fold)
+			if(((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1) != Range) && Fold)
 				FoldRanges->StartFoldRange(Line + 1, MultiLineStringFoldType);
 			else
 				FoldRanges->NoFoldInfo(Line + 1);
 		}
 		else
 		{
-			if(((TRangeState)(int)GetLineRange(LinesToScan, Line - 1) == Range) && Fold)
+			if(((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1) == Range) && Fold)
 			{
 				FoldRanges->StopFoldRange(Line + 1, MultiLineStringFoldType);
 			}
@@ -1487,7 +1483,7 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 
 void __fastcall TSynPythonSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynPythonSyn::IsFilterStored()
@@ -1546,17 +1542,8 @@ void SynHighlighterPython_finalization()
 	
 	delete GlobalKeywords;
 }
-class SynHighlighterPython_unit
-{
-public:
-	SynHighlighterPython_unit()
-	{
-		SynHighlighterPython_initialization();
-	}
-	~SynHighlighterPython_unit(){SynHighlighterPython_finalization(); }
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterPython_unit _SynHighlighterPython_unit;
 
 }  // namespace SynHighlighterPython
 

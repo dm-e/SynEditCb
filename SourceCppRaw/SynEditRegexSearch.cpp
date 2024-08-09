@@ -12,7 +12,6 @@ using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Regularexpressions;
 using namespace System::Regularexpressionsapi;
 using namespace System::Regularexpressionscore;
@@ -21,11 +20,11 @@ using namespace Vcl::Consts;
 
 namespace Syneditregexsearch
 {
-#define SynEditRegexSearch__0 TRegExOptions()
-#define SynEditRegexSearch__1 (TReplaceFlags() << System_Sysutils__95::rfReplaceAll)
-#define SynEditRegexSearch__2 (TReplaceFlags() << System_Sysutils__95::rfReplaceAll)
-#define SynEditRegexSearch__3 TRegExOptions()
-#define SynEditRegexSearch__4 (TRegExOptions() << roIgnoreCase)
+#define Syneditregexsearch__0 TRegExOptions()
+#define Syneditregexsearch__1 (TReplaceFlags() << rfReplaceAll)
+#define Syneditregexsearch__2 (TReplaceFlags() << rfReplaceAll)
+#define Syneditregexsearch__3 TRegExOptions()
+#define Syneditregexsearch__4 (TRegExOptions() << roIgnoreCase)
 
 
   /* TPerlRegExHelper */
@@ -75,7 +74,7 @@ void __fastcall TRegExHelper::SetAdditionalPCREOptions(int PCREOptions)
 __fastcall TSynEditRegexSearch::TSynEditRegexSearch(TComponent* AOwner)
  : inherited(AOwner)
 {
-	fOptions = SynEditRegexSearch__0;
+	fOptions = Syneditregexsearch__0;
 }
 
 int __fastcall TSynEditRegexSearch::FindAll(const String NewText)
@@ -91,8 +90,8 @@ int __fastcall TSynEditRegexSearch::FindAll(const String NewText)
 String __fastcall TSynEditRegexSearch::PreprocessReplaceExpression(const String AReplace)
 {
 	String result;
-	result = StringReplace(AReplace, L"\\n", WideCRLF, SynEditRegexSearch__1);
-	result = StringReplace(result, L"\\t", L"\x09", SynEditRegexSearch__2);
+	result = StringReplace(AReplace, L"\\n", WideCRLF, Syneditregexsearch__1);
+	result = StringReplace(result, L"\\t", L"\x09", Syneditregexsearch__2);
 	return result;
 }
 
@@ -133,10 +132,10 @@ int __fastcall TSynEditRegexSearch::GetResultCount()
 
 void __fastcall TSynEditRegexSearch::SetOptions(const TSynSearchOptions Value)
 {
-	if(Value.Contains(TSynSearchOption::ssoMatchCase))
-		fOptions = SynEditRegexSearch__3;
+	if(Value.Contains(ssoMatchCase))
+		fOptions = Syneditregexsearch__3;
 	else
-		fOptions = SynEditRegexSearch__4;
+		fOptions = Syneditregexsearch__4;
 	RegEx = TRegEx(FPattern, fOptions);
 	TRegExHelper(RegEx).SetAdditionalPCREOptions(PCRE_UCP);
 }

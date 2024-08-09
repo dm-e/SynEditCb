@@ -9,18 +9,14 @@ using namespace d2c_system;
 using namespace Syneditprintmargins;
 using namespace Syneditprinttypes;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
 using namespace System::Uitypes;
-using namespace Vcl::Dialogs;
-using namespace Vcl::Stdctrls;
 
-#define SynEditPrintMarginsDialog__0 (TMsgDlgButtons() << System::Uitypes::TMsgDlgBtn::mbOK)
+#define Syneditprintmarginsdialog__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
 
-__fastcall TSynEditPrintMarginsDlg::TSynEditPrintMarginsDlg(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynEditPrintMarginsDlg::TSynEditPrintMarginsDlg(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 /* TSynEditPrintMarginsDlg */
@@ -67,7 +63,7 @@ void __fastcall TSynEditPrintMarginsDlg::GetMargins(TSynEditPrintMargins* SynEdi
 		}
 		catch(...)
 		{
-			MessageDlg(L"Invalid number!", System::Uitypes::TMsgDlgType::mtError, SynEditPrintMarginsDialog__0, 0);
+			MessageDlg(L"Invalid number!", TMsgDlgType::mtError, Syneditprintmarginsdialog__0, 0);
 			CurEdit->SetFocus();
 		}
 		with0->MirrorMargins = CBMirrorMargins->Checked;

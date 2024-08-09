@@ -8,16 +8,15 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
+using namespace System::Types;
 
 namespace Synhighlightergalaxy
 {
-#define SynHighlighterGalaxy__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterGalaxy__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightergalaxy__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightergalaxy__1 (TFontStyles() << TFontStyle::fsBold)
 
 
 
@@ -91,19 +90,19 @@ __fastcall TSynGalaxySyn::TSynGalaxySyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TStringList();
 	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
 	((TStringList*) fKeywords)->CommaText = L"#end,#galaxy,a,anonymous,autounload,b,battleprotocol,c,cap,cargo,col,"
 	           L"compress,d,drive,e,emp,f,fleet,fleettables,g,galaxytv,gplus,groupforecast,"
 	           L"h,i,j,l,m,machinereport,mat,n,namecase,no,o,options,p,planetforecast,"
 	           L"prodtable,produce,q,r,routesforecast,s,send,shields,shiptypeforecast,"
 	           L"sortgroups,t,twocol,u,underscores,v,w,war,weapons,x,y,z";
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterGalaxy__0;
+	fCommentAttri->Style = Synhighlightergalaxy__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterGalaxy__1;
+	fKeyAttri->Style = Synhighlightergalaxy__1;
 	addAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
@@ -119,8 +118,7 @@ __fastcall TSynGalaxySyn::~TSynGalaxySyn()
 {
 	delete fKeywords;
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 void __fastcall TSynGalaxySyn::MessageStyleProc()
 {
@@ -362,7 +360,7 @@ void __fastcall TSynGalaxySyn::ResetRange()
 
 void __fastcall TSynGalaxySyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynGalaxySyn::SetKeyWords(TStrings* const Value)
@@ -378,7 +376,7 @@ void __fastcall TSynGalaxySyn::SetKeyWords(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fKeywords->Assign(Value);
+	fKeywords->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -462,16 +460,8 @@ void SynHighlighterGalaxy_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynGalaxySyn));
 }
-class SynHighlighterGalaxy_unit
-{
-public:
-	SynHighlighterGalaxy_unit()
-	{
-		SynHighlighterGalaxy_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterGalaxy_unit _SynHighlighterGalaxy_unit;
 
 }  // namespace SynHighlighterGalaxy
 

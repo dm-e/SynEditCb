@@ -51,7 +51,12 @@ int d2c_wcsncmp(const wchar_t* xs1, const wchar_t* xs2)
 	}
 	return wcsncmp(xs1, xs2, d2c_min(i1, i2));
 }
-
+//---------------------------------------------------------------------------
+bool CharEqualStr(wchar_t c, UnicodeString s)
+{
+  return s.Length() == 1 && s[1] == c;
+}
+//---------------------------------------------------------------------------
 
 
 } // namespace System

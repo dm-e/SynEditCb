@@ -14,27 +14,26 @@ using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace Synunicode;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
 using namespace Vcl::Graphics;
 
 namespace Synexporttex
 {
-#define SynExportTeX__0 (TSysCharSet() <<  \
+#define Synexporttex__0 (TSysCharSet() <<  \
 										49 << 50 << 51 << 52 << 53 << 54 <<  \
 										55 << 56 << 57)
-#define SynExportTeX__1 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define SynExportTeX__2 (TSynEncodings() << TSynEncoding::seAnsi)
+#define Synexporttex__1 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Synexporttex__2 (TSynEncodings() << seAnsi)
 
 
 
@@ -84,7 +83,7 @@ __fastcall TSynExporterTeX::TSynExporterTeX(TComponent* AOwner)
 	FTabWidth = 2;
 	fPageStyleEmpty = false;
 	fDefaultFilter = SYNS_FilterTeX;
-	FEncoding = TSynEncoding::seAnsi;
+	FEncoding = seAnsi;
 }
 
 bool __fastcall TSynExporterTeX::AttriToCommandCallback(TSynCustomHighlighter* Highlighter, TSynHighlighterAttributes* Attri, String UniqueAttriName, void** Params, int Params_maxidx)
@@ -310,7 +309,7 @@ String __fastcall TSynExporterTeX::MakeValidName(String Name)
 	result = Name;
 	for(stop = 1, i = result.Length(); i >= stop; i--)
 	{
-		if(CharInSet(result[i], SynExportTeX__0))
+		if(CharInSet(result[i], Synexporttex__0))
 			result[i] = ((Char) (int(L'A') + int(result[i]) - int(L'1')));
 		else
 		{
@@ -318,7 +317,7 @@ String __fastcall TSynExporterTeX::MakeValidName(String Name)
 				result[i] = L'Z';
 			else
 			{
-				if(!CharInSet(result[i], SynExportTeX__1))
+				if(!CharInSet(result[i], Synexporttex__1))
 					result.Delete(i, 	1);
 			}
 		}
@@ -397,7 +396,7 @@ void __fastcall TSynExporterTeX::SetTokenAttribute(TSynHighlighterAttributes* At
 TSynEncodings __fastcall TSynExporterTeX::SupportedEncodings()
 {
 	TSynEncodings result;
-	result = SynExportTeX__2;
+	result = Synexporttex__2;
 	return result;
 }
 

@@ -60,7 +60,7 @@ __fastcall TSynHashEntry::TSynHashEntry(const String AKey, int AKind)
 			FKind(0)
 {
 	//# inherited::Create();
-	fKeyLen = (int) AKey.Length();
+	fKeyLen = AKey.Length();
 	fKeyword = AKey;
 	FKind = AKind;
 }
@@ -70,7 +70,6 @@ __fastcall TSynHashEntry::~TSynHashEntry()
 	delete FNext;
 	//# inherited::Destroy();
 }
-
 
 TSynHashEntry* __fastcall TSynHashEntry::AddEntry(TSynHashEntry* NewEntry)
 {

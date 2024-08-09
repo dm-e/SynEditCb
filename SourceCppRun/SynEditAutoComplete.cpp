@@ -17,7 +17,7 @@ using namespace System::Sysutils;
 namespace Syneditautocomplete
 {
 
-__fastcall TSynAutoComplete::TSynAutoComplete(System::Classes::TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TSynAutoComplete::TSynAutoComplete(TComponent* AOwner) : inherited(AOwner) {}
 
 
 
@@ -42,7 +42,7 @@ bool __fastcall TCustomSynAutoComplete::AddEditor(TCustomSynEdit* AEditor)
 	if(AEditor != nullptr)
 	{
 		i = fEditors->IndexOf(AEditor);
-		if(i ==  - 1)
+		if(i == -1)
 		{
 			AEditor->FreeNotification(this);
 			fEditors->Add(AEditor);
@@ -72,7 +72,7 @@ __fastcall TCustomSynAutoComplete::TCustomSynAutoComplete(TComponent* AOwner)
 			fParsed(false)
 {
 	((TStringList*) fAutoCompleteList)->OnChange = CompletionListChanged;
-	fEditors = new System::Classes::TList();
+	fEditors = new TList();
 	fEOTokenChars = L"()[]{}.";
 }
 
@@ -82,13 +82,13 @@ __fastcall TCustomSynAutoComplete::~TCustomSynAutoComplete()
 	while(EditorCount > 0)
 		RemoveEditor(((TCustomSynEdit*) fEditors->Last()));
 	//# inherited::Destroy();
+	inherited::RemoveFreeNotifications();
 	delete fEditors;
 	delete fCompletions;
 	delete fCompletionComments;
 	delete fCompletionValues;
 	delete fAutoCompleteList;
 }
-
 
 void __fastcall TCustomSynAutoComplete::DefineProperties(TFiler* Filer)
 {
@@ -131,7 +131,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 	TStringList* Temp = nullptr;
 	if(!fParsed)
 		ParseCompletionList();
-	Len = (int) AToken.Length();
+	Len = AToken.Length();
 	if((Len > 0) && (AEditor != nullptr) && !AEditor->ReadOnly && (fCompletions->Count > 0))
     // find completion for this token - not all chars necessary if unambiguous
 	{
@@ -140,7 +140,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 		NumMaybe = 0;
 		if(FCaseSensitive)
 		{
-			while(i >  - 1)
+			while(i > -1)
 			{
 				s = fCompletions->Strings[i];
 				if(CompareStr(s, AToken) == 0)
@@ -158,7 +158,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 		}
 		else
 		{
-			while(i >  - 1)
+			while(i > -1)
 			{
 				s = fCompletions->Strings[i];
 				if(CompareText(s, AToken) == 0)
@@ -174,9 +174,9 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 				--i;
 			}
 		}
-		if((i ==  - 1) && (NumMaybe == 1))
+		if((i == -1) && (NumMaybe == 1))
 			i = IdxMaybe;
-		if(i >  - 1)
+		if(i > -1)
       // select token in editor
 		{
 			P = AEditor->CaretXY;
@@ -227,7 +227,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 					}
 					s = Temp->Text;
           // strip the trailing #13#10 that was appended by the stringlist
-					i = (int) s.Length();
+					i = s.Length();
 					if((i >= 2) && (s[i - 1] == L'\x0d') && (s[i] == L'\x0a'))
 						s.SetLength(i - 2);
 				}
@@ -341,7 +341,7 @@ void __fastcall TCustomSynAutoComplete::ParseCompletionList()
 		for(stop = fAutoCompleteList->Count - 1, i = 0; i <= stop; i++)
 		{
 			s = fAutoCompleteList->Strings[i];
-			Len = (int) s.Length();
+			Len = s.Length();
 			if(BorlandDCI)
         // the style of the Delphi32.dci file
 			{
@@ -364,7 +364,7 @@ void __fastcall TCustomSynAutoComplete::ParseCompletionList()
 						++j;
 					sComment = s.SubString(j, Len);
 					if(sComment[sComment.Length()] == L']')
-						sComment.SetLength((int) (sComment.Length() - 1));
+						sComment.SetLength(sComment.Length() - 1);
 				}
 				else
 				{
@@ -409,7 +409,7 @@ bool __fastcall TCustomSynAutoComplete::RemoveEditor(TCustomSynEdit* AEditor)
 	if(AEditor != nullptr)
 	{
 		i = fEditors->IndexOf(AEditor);
-		if(i >  - 1)
+		if(i > -1)
 		{
 			if(FEditor == AEditor)
 				FEditor = nullptr;

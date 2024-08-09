@@ -11,29 +11,26 @@ using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterjson
 {
-#define SynHighlighterJSON__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterJSON__1 (TSysCharSet() <<  \
+#define Synhighlighterjson__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterjson__1 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterJSON__2 (TSysCharSet() <<  \
+#define Synhighlighterjson__2 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterJSON__3 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterJSON__4 (TSysCharSet() << L'+' << L'-')
-#define SynHighlighterJSON__5 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										97 << 98 << 99 << 100 << 101 << 102)
-#define SynHighlighterJSON__6 (TSysCharSet() << L'\x20' << L'\"')
-#define SynHighlighterJSON__7 (System::Set<TRangeState, rsUnKnown, rsArrayValue>() << rsObjectValue << rsArrayValue)
+#define Synhighlighterjson__3 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterjson__4 (TSysCharSet() << '+' << '-')
+#define Synhighlighterjson__5 (TSysCharSet() <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          97 << 98 << 99 << 100 << 101 << 102)
+#define Synhighlighterjson__6 (TSysCharSet() << '\x20' << '\"')
+#define Synhighlighterjson__7 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsArrayValue>() << rsObjectValue << rsArrayValue)
 
 
 
@@ -59,7 +56,7 @@ __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
 
   // reserved words ("true", "false", "null")
 	FReservedAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	FReservedAttri->Style = SynHighlighterJSON__0;
+	FReservedAttri->Style = Synhighlighterjson__0;
 	addAttribute(FReservedAttri);
 
   // numbers
@@ -135,8 +132,8 @@ void __fastcall TSynJSONSyn::NumberProc()
 	auto ExpectDigit = [&]() -> bool 
 	{
 		bool result = false;
-		result = CharInSet(fLine[Run], SynHighlighterJSON__1);
-		while(CharInSet(fLine[Run], SynHighlighterJSON__2))
+		result = CharInSet(fLine[Run], Synhighlighterjson__1);
+		while(CharInSet(fLine[Run], Synhighlighterjson__2))
 			++Run;
 		return result;
 	};
@@ -182,12 +179,12 @@ void __fastcall TSynJSONSyn::NumberProc()
 	}
 
   // check for an exponent
-	if(CharInSet(fLine[Run], SynHighlighterJSON__3))
+	if(CharInSet(fLine[Run], Synhighlighterjson__3))
 	{
 		++Run;
 
     // allow +/- here
-		if(CharInSet(fLine[Run], SynHighlighterJSON__4))
+		if(CharInSet(fLine[Run], Synhighlighterjson__4))
 			++Run;
 
     // at least any digit must appear here
@@ -271,7 +268,7 @@ void __fastcall TSynJSONSyn::StringProc()
 	auto IsHex = [&](Char digit) -> bool 
 	{
 		bool result = false;
-		result = CharInSet(digit, SynHighlighterJSON__5);
+		result = CharInSet(digit, Synhighlighterjson__5);
 		return result;
 	};
 	FTokenID = tkString;
@@ -305,7 +302,7 @@ void __fastcall TSynJSONSyn::StringProc()
                 // a 4 hex digit is expected
 					{
 						FTokenID = tkUnknown;
-						while(!CharInSet(fLine[Run], SynHighlighterJSON__6) && !IsLineEnd(Run))
+						while(!CharInSet(fLine[Run], Synhighlighterjson__6) && !IsLineEnd(Run))
 							++Run;
 						return;
 					}
@@ -450,7 +447,7 @@ TSynHighlighterAttributes* __fastcall TSynJSONSyn::GetTokenAttribute()
 	switch(GetTokenID())
 	{
 		case tkString:
-		if(SynHighlighterJSON__7.Contains(FRange))
+		if(Synhighlighterjson__7.Contains(FRange))
 			result = fValueAttri;
 		else
 			result = fAttributeAttri;
@@ -502,7 +499,7 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -523,7 +520,7 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == OpenBrace)
@@ -585,7 +582,7 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 
 void __fastcall TSynJSONSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynJSONSyn::IsFilterStored()
@@ -653,16 +650,8 @@ void SynHighlighterJSON_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynJSONSyn));
 }
-class SynHighlighterJSON_unit
-{
-public:
-	SynHighlighterJSON_unit()
-	{
-		SynHighlighterJSON_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterJSON_unit _SynHighlighterJSON_unit;
 
 }  // namespace SynHighlighterJSON
 

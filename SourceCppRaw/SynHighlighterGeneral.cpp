@@ -8,17 +8,16 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
+using namespace System::Types;
 
 namespace Synhighlightergeneral
 {
-#define SynHighlighterGeneral__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterGeneral__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterGeneral__2 (TSysCharSet() <<  \
+#define Synhighlightergeneral__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightergeneral__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightergeneral__2 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
 
@@ -30,7 +29,7 @@ bool __fastcall TSynGeneralSyn::IsIdentChar(WideChar AChar)
 	int i = 0;
 	int stop = 0;
 	result = false;
-	for(stop = (int) fIdentChars.Length(), i = 1; i <= stop; i++)
+	for(stop = fIdentChars.Length(), i = 1; i <= stop; i++)
 	{
 		if(AChar == fIdentChars[i])
 		{
@@ -100,14 +99,14 @@ __fastcall TSynGeneralSyn::TSynGeneralSyn(TComponent* AOwner)
 {
 	fKeywords = new TStringList();
 	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterGeneral__0;
+	fCommentAttri->Style = Synhighlightergeneral__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterGeneral__1;
+	fKeyAttri->Style = Synhighlightergeneral__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -127,8 +126,7 @@ __fastcall TSynGeneralSyn::~TSynGeneralSyn()
 {
 	delete fKeywords;
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 void __fastcall TSynGeneralSyn::AnsiProc()
 {
@@ -238,7 +236,7 @@ void __fastcall TSynGeneralSyn::AsciiCharProc()
 		{
 			++Run;
 		}
-		while(!!CharInSet(fLine[Run], SynHighlighterGeneral__2));
+		while(!!CharInSet(fLine[Run], Synhighlightergeneral__2));
 	}
 }
 
@@ -772,7 +770,7 @@ void __fastcall TSynGeneralSyn::ResetRange()
 
 void __fastcall TSynGeneralSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynGeneralSyn::SetKeyWords(TStrings* const Value)
@@ -789,7 +787,7 @@ void __fastcall TSynGeneralSyn::SetKeyWords(TStrings* const Value)
 		Value->EndUpdate();
 	}
 	((TStringList*) fKeywords)->Sorted = false;
-	fKeywords->Assign(Value);
+	fKeywords->Assign((TPersistent*) Value);
 	((TStringList*) fKeywords)->Sorted = true;
 	DefHighlightChange(nullptr);
 }
@@ -937,16 +935,8 @@ void SynHighlighterGeneral_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynGeneralSyn));
 }
-class SynHighlighterGeneral_unit
-{
-public:
-	SynHighlighterGeneral_unit()
-	{
-		SynHighlighterGeneral_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterGeneral_unit _SynHighlighterGeneral_unit;
 
 }  // namespace SynHighlighterGeneral
 

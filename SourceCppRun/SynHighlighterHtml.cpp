@@ -10,35 +10,32 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterhtml
 {
-#define SynHighlighterHtml__0 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHtml__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHtml__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHtml__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHtml__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterHtml__5 (TSysCharSet() <<  \
-										0 << 1 << 2 << 3 << 4 << 5 <<  \
-										6 << 7 << 8 << 9 << 10 << 11 <<  \
-										12 << 13 << 14 << 15 << 16 << 17 <<  \
-										18 << 19 << 20 << 21 << 22 << 23 <<  \
-										24 << 25 << 26 << 27 << 28 << 29 <<  \
-										30 << 31 << L'<')
-#define SynHighlighterHtml__6 (TSysCharSet() << L'X' << L'x')
-#define SynHighlighterHtml__7 (TSysCharSet() <<  \
+#define Synhighlighterhtml__0 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhtml__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhtml__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhtml__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhtml__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterhtml__5 (TSysCharSet() <<  \
+          0 << 1 << 2 << 3 << 4 << 5 <<  \
+          6 << 7 << 8 << 9 << 10 << 11 <<  \
+          12 << 13 << 14 << 15 << 16 << 17 <<  \
+          18 << 19 << 20 << 21 << 22 << 23 <<  \
+          24 << 25 << 26 << 27 << 28 << 29 <<  \
+          30 << 31 << '<')
+#define Synhighlighterhtml__6 (TSysCharSet() << 'X' << 'x')
+#define Synhighlighterhtml__7 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterHtml__8 (TSysCharSet() << L'X' << L'x')
-#define SynHighlighterHtml__9 (TSysCharSet() <<  \
+#define Synhighlighterhtml__8 (TSysCharSet() << 'X' << 'x')
+#define Synhighlighterhtml__9 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterHtml__10 (TSysCharSet() << L'\x00' << L'\x09' << L'\x0a' << L'\x0d')
-#define SynHighlighterHtml__11 (System::Set<TRangeState, rsAmpersand, rsDoubleQuoteValue>() << rsDoubleQuoteValue << rsQuoteValue)
+#define Synhighlighterhtml__10 (TSysCharSet() << '\x00' << '\x09' << '\x0a' << '\x0d')
+#define Synhighlighterhtml__11 (System::Set<TRangeState, TRangeState::rsAmpersand, TRangeState::rsDoubleQuoteValue>() << rsDoubleQuoteValue << rsQuoteValue)
 
 
 //  KeyWords: array[0..201] of string = (
@@ -155,71 +152,71 @@ namespace Synhighlighterhtml
 //    -1, -1, 156, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 //  );
 const String Keywords[257/*# range 0..256*/] = {L"!doctype", L"/!doctype", L"/a", L"/abbr", L"/acronym", L"/address", L"/applet", L"/area", L"/article", L"/aside"
-																				, L"/audio", L"/b", L"/base", L"/basefont", L"/bb", L"/bdo", L"/big", L"/blockquote", L"/body", L"/button", L"/canvas", L"/caption"
-																				, L"/center", L"/cite", L"/code", L"/col", L"/colgroup", L"/command", L"/datalist", L"/dd", L"/del", L"/details", L"/dfn"
-																				, L"/dialog", L"/dir", L"/div", L"/dl", L"/dt", L"/em", L"/embed", L"/fieldset", L"/figcaption", L"/figure", L"/font", L"/footer"
-																				, L"/form", L"/frame", L"/frameset", L"/h1", L"/h2", L"/h3", L"/h4", L"/h5", L"/h6", L"/head", L"/header", L"/hgroup", L"/html"
-																				, L"/i", L"/iframe", L"/img", L"/input", L"/ins", L"/kbd", L"/keygen", L"/label", L"/layer", L"/legend", L"/li", L"/link", L"/map"
-																				, L"/mark", L"/marquee", L"/menu", L"/meta", L"/meter", L"/multicol", L"/nav", L"/nobr", L"/noembed", L"/noframes", L"/nolayer"
-																				, L"/noscript", L"/object", L"/ol", L"/optgroup", L"/option", L"/output", L"/p", L"/param", L"/pre", L"/progress", L"/q"
-																				, L"/rp", L"/rt", L"/ruby", L"/s", L"/samp", L"/script", L"/section", L"/select", L"/server", L"/small", L"/source", L"/span", L"/strike"
-																				, L"/strong", L"/style", L"/sub", L"/summary", L"/sup", L"/table", L"/tbody", L"/td", L"/textarea", L"/tfoot", L"/th", L"/thead"
-																				, L"/time", L"/title", L"/tr", L"/track", L"/tt", L"/u", L"/ul", L"/var", L"/video", L"/wbr", L"/xmp", L"a", L"abbr", L"acronym", L"address"
-																				, L"applet", L"area", L"article", L"aside", L"audio", L"b", L"base", L"basefont", L"bb", L"bdo", L"big", L"blockquote", L"body"
-																				, L"button", L"canvas", L"caption", L"center", L"cite", L"code", L"col", L"colgroup", L"command", L"datalist", L"dd", L"del"
-																				, L"details", L"dfn", L"dialog", L"dir", L"div", L"dl", L"dt", L"em", L"embed", L"fieldset", L"figcaption", L"figure", L"font", L"footer"
-																				, L"form", L"frame", L"frameset", L"h1", L"h2", L"h3", L"h4", L"h5", L"h6", L"head", L"header", L"hgroup", L"html", L"i", L"iframe"
-																				, L"img", L"input", L"ins", L"kbd", L"keygen", L"label", L"layer", L"legend", L"li", L"link", L"map", L"mark", L"marquee", L"menu"
-																				, L"meta", L"meter", L"multicol", L"nav", L"nobr", L"noembed", L"noframes", L"nolayer", L"noscript", L"object", L"ol", L"optgroup"
-																				, L"option", L"output", L"p", L"param", L"pre", L"progress", L"q", L"rp", L"rt", L"ruby", L"s", L"samp", L"script", L"section", L"select"
-																				, L"server", L"small", L"source", L"span", L"strike", L"strong", L"style", L"sub", L"summary", L"sup", L"synedit", L"table", L"tbody"
-																				, L"td", L"textarea", L"tfoot", L"th", L"thead", L"time", L"title", L"tr", L"track", L"tt", L"u", L"ul", L"var", L"video", L"wbr"
-																				, L"xmp"};
+                    , L"/audio", L"/b", L"/base", L"/basefont", L"/bb", L"/bdo", L"/big", L"/blockquote", L"/body", L"/button", L"/canvas", L"/caption"
+                    , L"/center", L"/cite", L"/code", L"/col", L"/colgroup", L"/command", L"/datalist", L"/dd", L"/del", L"/details", L"/dfn"
+                    , L"/dialog", L"/dir", L"/div", L"/dl", L"/dt", L"/em", L"/embed", L"/fieldset", L"/figcaption", L"/figure", L"/font", L"/footer"
+                    , L"/form", L"/frame", L"/frameset", L"/h1", L"/h2", L"/h3", L"/h4", L"/h5", L"/h6", L"/head", L"/header", L"/hgroup", L"/html"
+                    , L"/i", L"/iframe", L"/img", L"/input", L"/ins", L"/kbd", L"/keygen", L"/label", L"/layer", L"/legend", L"/li", L"/link", L"/map"
+                    , L"/mark", L"/marquee", L"/menu", L"/meta", L"/meter", L"/multicol", L"/nav", L"/nobr", L"/noembed", L"/noframes", L"/nolayer"
+                    , L"/noscript", L"/object", L"/ol", L"/optgroup", L"/option", L"/output", L"/p", L"/param", L"/pre", L"/progress", L"/q"
+                    , L"/rp", L"/rt", L"/ruby", L"/s", L"/samp", L"/script", L"/section", L"/select", L"/server", L"/small", L"/source", L"/span", L"/strike"
+                    , L"/strong", L"/style", L"/sub", L"/summary", L"/sup", L"/table", L"/tbody", L"/td", L"/textarea", L"/tfoot", L"/th", L"/thead"
+                    , L"/time", L"/title", L"/tr", L"/track", L"/tt", L"/u", L"/ul", L"/var", L"/video", L"/wbr", L"/xmp", L"a", L"abbr", L"acronym", L"address"
+                    , L"applet", L"area", L"article", L"aside", L"audio", L"b", L"base", L"basefont", L"bb", L"bdo", L"big", L"blockquote", L"body"
+                    , L"button", L"canvas", L"caption", L"center", L"cite", L"code", L"col", L"colgroup", L"command", L"datalist", L"dd", L"del"
+                    , L"details", L"dfn", L"dialog", L"dir", L"div", L"dl", L"dt", L"em", L"embed", L"fieldset", L"figcaption", L"figure", L"font", L"footer"
+                    , L"form", L"frame", L"frameset", L"h1", L"h2", L"h3", L"h4", L"h5", L"h6", L"head", L"header", L"hgroup", L"html", L"i", L"iframe"
+                    , L"img", L"input", L"ins", L"kbd", L"keygen", L"label", L"layer", L"legend", L"li", L"link", L"map", L"mark", L"marquee", L"menu"
+                    , L"meta", L"meter", L"multicol", L"nav", L"nobr", L"noembed", L"noframes", L"nolayer", L"noscript", L"object", L"ol", L"optgroup"
+                    , L"option", L"output", L"p", L"param", L"pre", L"progress", L"q", L"rp", L"rt", L"ruby", L"s", L"samp", L"script", L"section", L"select"
+                    , L"server", L"small", L"source", L"span", L"strike", L"strong", L"style", L"sub", L"summary", L"sup", L"synedit", L"table", L"tbody"
+                    , L"td", L"textarea", L"tfoot", L"th", L"thead", L"time", L"title", L"tr", L"track", L"tt", L"u", L"ul", L"var", L"video", L"wbr"
+                    , L"xmp"};
 const int KeyIndices[2179/*# range 0..2178*/] = {-1, -1, -1, 3, -1, -1, 231, 250, -1, -1, -1, 212, -1, -1, -1, -1, -1, -1, -1, -1, 175, -1, -1, -1, -1, -1, 128, -1, -1, -1, -1, 155, -1, -1, -1, -1, -1, -1, -1
-																				, 83, -1, 201, 122, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 70, -1, -1, -1, -1, -1, -1, 183
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 216, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, 89, -1, -1, -1, 234, -1, -1
-																				, 188, -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, 61, -1, -1, -1, -1, -1, 21, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 225, -1, -1, 150, -1, -1, 91, -1, -1, -1, 88, -1, -1, -1
-																				, 158, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59, -1, -1, -1, 137, 12, -1, 67, -1, -1, 47, -1, -1, -1, -1, -1, 10, -1, -1, 135, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 218, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 170, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 174, -1, 7, -1, -1, -1, 142, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 133, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 232, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, -1, -1, -1, 178, -1, -1, -1, -1, -1, -1
-																				, 209, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 130, -1, 162, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 51, -1, -1, -1, 237, -1, -1, -1, 17, -1, -1, -1, -1, -1, 32, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 157, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 210, -1, -1, -1, 104, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 206, -1, -1, -1, -1, -1, -1, -1, -1, 165, -1, -1, -1, -1, -1, -1, -1, 254, -1, -1, -1, -1, -1, -1, 73, -1, -1, -1, -1, 126, -1, -1, -1
-																				, -1, -1, -1, -1, 24, -1, -1, 238, -1, 96, -1, 38, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 248, -1, -1, -1
-																				, 156, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, 239, 211, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, -1, 120, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 84
-																				, -1, -1, -1, -1, -1, 87, -1, -1, -1, -1, 186, -1, -1, -1, -1, -1, -1, -1, -1, 243, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, -1, 115, -1, -1, -1, -1, -1, -1, 26, 138, -1, -1, -1, -1, -1, -1, -1, 163, -1
-																				, -1, 144, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 181, 22, -1, -1, -1, -1, 255, -1, -1, -1, -1, -1, -1, 36, -1, -1, 240, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 112
-																				, -1, -1, -1, -1, -1, -1, 153, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, -1, -1, 106, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 256, -1, 164, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, 192, 145, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 37, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 114, -1
-																				, 197, 63, -1, -1, -1, -1, -1, -1, 64, -1, -1, -1, -1, -1, -1, 202, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 44, -1, 200, -1, -1, 2, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 151, -1, -1, -1, -1, -1, -1, 242, -1, -1, -1, -1, -1, -1, -1, -1, 193, 176, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 66, -1, -1, -1, -1, -1, 220, -1, -1, -1, 141, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 49, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, 93, 76, -1, -1, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, -1, -1, -1, 230, -1
-																				, 198, -1, -1, -1, -1, -1, -1, 69, -1, -1, -1, -1, 101, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 244, -1, -1, -1, -1, 208, -1, -1, -1, -1, -1, -1, -1, 100, 203, 5, -1, -1
-																				, -1, -1, -1, 41, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 116, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, 45, 92, -1, -1, -1, -1, 80, 204, -1, -1, -1
-																				, -1, -1, 42, -1, -1, -1, -1, -1, 132, -1, 249, -1, -1, -1, -1, -1, -1, -1, 82, -1, 16, -1, 121, 86, -1, -1, -1, 224, -1, 195, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 159, -1, -1, 54, -1, -1, -1, -1, -1, -1, -1, -1, 207, -1, -1, 68, -1, -1, -1, -1, -1, -1, 252, -1, 233, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, 251, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 179, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 191, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 90, 171, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, 72, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 168, -1, -1, -1, 226, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 222, -1, -1, -1, -1, -1, 253, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 246, -1, -1, -1, -1, -1, -1, -1, -1, -1, 196, -1, -1, -1, -1, -1, -1, 199, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1
-																				, -1, 0, -1, -1, 229, -1, -1, 228, -1, -1, -1, -1, -1, 215, -1, 125, 102, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 227, -1, 172, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 194, -1, -1, -1, -1, -1, -1, -1, 184, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 161, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 169, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 213, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 205, -1, -1, 190, -1, -1, -1, 97, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, 247, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 55, -1, 19, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 148, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 223, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, 187, -1, -1, -1, 95, -1, 136, -1, 177, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, 152, -1, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, -1, -1, 50
-																				, -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 143, -1, -1, -1, -1, -1, -1, -1, 214, -1, 166, 60, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, 147
-																				, -1, -1, -1, -1, -1, 15, -1, -1, 167, -1, -1, 173, -1, -1, -1, -1, -1, -1, -1, 131, -1, -1, -1, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 57, -1, -1, -1, -1, -1, -1, -1, 149, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 235, 35, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 110, -1, -1, -1, -1, -1, -1, -1, 27, -1
-																				, -1, -1, -1, -1, -1, -1, 160, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, 30, -1, 217, -1, -1, -1, -1, -1, 189, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 182, -1, 146, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 139, -1, -1, 98, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, -1, 180, -1, -1, 245, -1, -1, -1, -1, -1, -1, 241, -1, -1, -1, -1, 117, -1, 221, -1, -1, -1
-																				, -1, -1, 23, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 1, -1, -1, -1, -1, -1, -1, -1, 113, -1, -1, 134, -1, -1, -1, 94, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, 185, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 140, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, 105, -1, -1, -1
-																				, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 127, -1, -1, -1, 28, -1, -1, -1, -1, 123, -1, -1, -1, -1, -1, -1
-																				, -1, 236, -1, 219, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+                    , 83, -1, 201, 122, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 70, -1, -1, -1, -1, -1, -1, 183
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 216, -1, -1, -1, -1, -1, -1, 31, -1, -1, -1, -1, 89, -1, -1, -1, 234, -1, -1
+                    , 188, -1, -1, -1, -1, -1, -1, -1, -1, 107, -1, -1, 61, -1, -1, -1, -1, -1, 21, -1, -1, -1, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 225, -1, -1, 150, -1, -1, 91, -1, -1, -1, 88, -1, -1, -1
+                    , 158, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59, -1, -1, -1, 137, 12, -1, 67, -1, -1, 47, -1, -1, -1, -1, -1, 10, -1, -1, 135, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 218, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 170, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 174, -1, 7, -1, -1, -1, 142, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 133, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 232, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, -1, -1, -1, 178, -1, -1, -1, -1, -1, -1
+                    , 209, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 130, -1, 162, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 51, -1, -1, -1, 237, -1, -1, -1, 17, -1, -1, -1, -1, -1, 32, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, 79, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 157, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 210, -1, -1, -1, 104, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 206, -1, -1, -1, -1, -1, -1, -1, -1, 165, -1, -1, -1, -1, -1, -1, -1, 254, -1, -1, -1, -1, -1, -1, 73, -1, -1, -1, -1, 126, -1, -1, -1
+                    , -1, -1, -1, -1, 24, -1, -1, 238, -1, 96, -1, 38, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 248, -1, -1, -1
+                    , 156, -1, 103, -1, -1, -1, -1, -1, -1, -1, -1, 239, 211, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, -1, 120, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 84
+                    , -1, -1, -1, -1, -1, 87, -1, -1, -1, -1, 186, -1, -1, -1, -1, -1, -1, -1, -1, 243, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, -1, 115, -1, -1, -1, -1, -1, -1, 26, 138, -1, -1, -1, -1, -1, -1, -1, 163, -1
+                    , -1, 144, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 181, 22, -1, -1, -1, -1, 255, -1, -1, -1, -1, -1, -1, 36, -1, -1, 240, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 112
+                    , -1, -1, -1, -1, -1, -1, 153, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, -1, -1, -1, -1, -1, 106, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 256, -1, 164, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, 192, 145, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 37, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 114, -1
+                    , 197, 63, -1, -1, -1, -1, -1, -1, 64, -1, -1, -1, -1, -1, -1, 202, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 44, -1, 200, -1, -1, 2, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 151, -1, -1, -1, -1, -1, -1, 242, -1, -1, -1, -1, -1, -1, -1, -1, 193, 176, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 66, -1, -1, -1, -1, -1, 220, -1, -1, -1, 141, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 49, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 81, -1, -1, 93, 76, -1, -1, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 58, -1, -1, -1, -1, 230, -1
+                    , 198, -1, -1, -1, -1, -1, -1, 69, -1, -1, -1, -1, 101, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 244, -1, -1, -1, -1, 208, -1, -1, -1, -1, -1, -1, -1, 100, 203, 5, -1, -1
+                    , -1, -1, -1, 41, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 116, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, 45, 92, -1, -1, -1, -1, 80, 204, -1, -1, -1
+                    , -1, -1, 42, -1, -1, -1, -1, -1, 132, -1, 249, -1, -1, -1, -1, -1, -1, -1, 82, -1, 16, -1, 121, 86, -1, -1, -1, 224, -1, 195, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 159, -1, -1, 54, -1, -1, -1, -1, -1, -1, -1, -1, 207, -1, -1, 68, -1, -1, -1, -1, -1, -1, 252, -1, 233, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, 251, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 179, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 191, -1, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 52, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 90, 171, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, 72, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 168, -1, -1, -1, 226, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 222, -1, -1, -1, -1, -1, 253, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 246, -1, -1, -1, -1, -1, -1, -1, -1, -1, 196, -1, -1, -1, -1, -1, -1, 199, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1
+                    , -1, 0, -1, -1, 229, -1, -1, 228, -1, -1, -1, -1, -1, 215, -1, 125, 102, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 227, -1, 172, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 194, -1, -1, -1, -1, -1, -1, -1, 184, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 161, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 169, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 213, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 205, -1, -1, 190, -1, -1, -1, 97, -1, -1, -1, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, 247, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 55, -1, 19, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 148, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 223, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, 187, -1, -1, -1, 95, -1, 136, -1, 177, -1, -1, -1, -1, -1, -1, -1, -1, -1, 9, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, 152, -1, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, -1, -1, 50
+                    , -1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 143, -1, -1, -1, -1, -1, -1, -1, 214, -1, 166, 60, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 39, -1, -1, -1, -1, 147
+                    , -1, -1, -1, -1, -1, 15, -1, -1, 167, -1, -1, 173, -1, -1, -1, -1, -1, -1, -1, 131, -1, -1, -1, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 57, -1, -1, -1, -1, -1, -1, -1, 149, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 235, 35, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 110, -1, -1, -1, -1, -1, -1, -1, 27, -1
+                    , -1, -1, -1, -1, -1, -1, 160, -1, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, 30, -1, 217, -1, -1, -1, -1, -1, 189, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 154, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 182, -1, 146, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 139, -1, -1, 98, -1, -1, -1, -1, 129, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, -1, 180, -1, -1, 245, -1, -1, -1, -1, -1, -1, 241, -1, -1, -1, -1, 117, -1, 221, -1, -1, -1
+                    , -1, -1, 23, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, 53, -1, 1, -1, -1, -1, -1, -1, -1, -1, 113, -1, -1, 134, -1, -1, -1, 94, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, 185, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 140, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 109, -1, -1, -1, -1, -1, 105, -1, -1, -1
+                    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 85, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 127, -1, -1, -1, 28, -1, -1, -1, -1, 123, -1, -1, -1, -1, -1, -1
+                    , -1, 236, -1, 219, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
 
 /*$Q-*/
 
@@ -265,7 +262,7 @@ void __fastcall TSynHTMLSyn::InitIdent()
 	int stop = 0;
 	for(stop = 2178 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	for(stop = 2178 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -311,28 +308,28 @@ __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	fIdentifierAttri->Style = SynHighlighterHtml__0;
+	fIdentifierAttri->Style = Synhighlighterhtml__0;
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterHtml__1;
+	fKeyAttri->Style = Synhighlighterhtml__1;
 	fKeyAttri->Foreground = (TColor) 0x00FF0080;
 	addAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Style = SynHighlighterHtml__2;
+	fSymbolAttri->Style = Synhighlighterhtml__2;
 	addAttribute(fSymbolAttri);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	addAttribute(fTextAttri);
 	fUndefKeyAttri = new TSynHighlighterAttributes(SYNS_AttrUnknownWord, SYNS_FriendlyAttrUnknownWord);
-	fUndefKeyAttri->Style = SynHighlighterHtml__3;
+	fUndefKeyAttri->Style = Synhighlighterhtml__3;
 	fUndefKeyAttri->Foreground = clRed;
 	addAttribute(fUndefKeyAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = (TColor) 0x00ff8000;
+	fValueAttri->Foreground = (TColor) 0x00FF8000;
 	addAttribute(fValueAttri);
 	fAndAttri = new TSynHighlighterAttributes(SYNS_AttrEscapeAmpersand, SYNS_FriendlyAttrEscapeAmpersand);
-	fAndAttri->Style = SynHighlighterHtml__4;
+	fAndAttri->Style = Synhighlighterhtml__4;
 	fAndAttri->Foreground = (TColor) 0x0000FF00;
 	addAttribute(fAndAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -484,7 +481,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 		return result;
 	};
 	int i = 0;
-	if(CharInSet(fLine[Run], SynHighlighterHtml__5))
+	if(CharInSet(fLine[Run], Synhighlighterhtml__5))
 	{
 		NextProcedure();
 		return;
@@ -501,7 +498,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 				fAndCode = -1;
 				i = Run;
 				Run += 2;
-				if(CharInSet(fLine[Run], SynHighlighterHtml__6))
+				if(CharInSet(fLine[Run], Synhighlighterhtml__6))
 				{
 					++Run;
 					while(IsNumberChar())
@@ -509,7 +506,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 				}
 				else
 				{
-					while(CharInSet(fLine[Run], SynHighlighterHtml__7))
+					while(CharInSet(fLine[Run], Synhighlighterhtml__7))
 						++Run;
 				}
 				if(fLine[Run] == L';')
@@ -525,7 +522,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 				int stop = 0;
 				for(stop = 248 /*# High(EscapeAmps) */, i = 0 /*# Low(EscapeAmps) */; i <= stop; i++)
 				{
-					if(AnsiStrLComp((fLine + Run), const_cast<PWideChar>(EscapeAmps[i]), String(EscapeAmps[i]).Length()) == 0)
+					if(AnsiStrLComp((fLine + Run), const_cast<PWideChar>(EscapeAmps[i]), (unsigned int) String(EscapeAmps[i]).Length()) == 0)
 					{
 						fAndCode = i;
 						FRange = rsAmpersand;
@@ -585,7 +582,7 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 			{
 				fAndCode = -1;
 				Run += 2;
-				if(CharInSet(fLine[Run], SynHighlighterHtml__8))
+				if(CharInSet(fLine[Run], Synhighlighterhtml__8))
 				{
 					++Run;
 					while(IsNumberChar())
@@ -593,7 +590,7 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 				}
 				else
 				{
-					while(CharInSet(fLine[Run], SynHighlighterHtml__9))
+					while(CharInSet(fLine[Run], Synhighlighterhtml__9))
 						++Run;
 				}
 				if(fLine[Run] == L';')
@@ -617,7 +614,7 @@ void __fastcall TSynHTMLSyn::SpaceProc()
 	FTokenID = tkSpace;
 	while(fLine[Run] <= L'\x20')
 	{
-		if(CharInSet(fLine[Run], SynHighlighterHtml__10))
+		if(CharInSet(fLine[Run], Synhighlighterhtml__10))
 			break;
 		++Run;
 	}
@@ -665,7 +662,7 @@ void __fastcall TSynHTMLSyn::StringProc()
 		if(fLine[Run] == iOpenChar)
 		{
 			++Run;  /* jumps over the closing char */
-			if(SynHighlighterHtml__11.Contains(FRange))
+			if(Synhighlighterhtml__11.Contains(FRange))
 				FRange = rsParam;
 			else
 				FRange = rsText;
@@ -865,7 +862,7 @@ void* __fastcall TSynHTMLSyn::GetRange()
 
 void __fastcall TSynHTMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynHTMLSyn::ResetRange()
@@ -923,16 +920,8 @@ void SynHighlighterHtml_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynHTMLSyn));
 }
-class SynHighlighterHtml_unit
-{
-public:
-	SynHighlighterHtml_unit()
-	{
-		SynHighlighterHtml_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterHtml_unit _SynHighlighterHtml_unit;
 
 }  // namespace SynHighlighterHtml
 

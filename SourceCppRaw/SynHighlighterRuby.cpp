@@ -13,7 +13,7 @@ using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
-using namespace System::Sysutils;
+using namespace System::Types;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterruby
@@ -22,9 +22,9 @@ namespace Synhighlighterruby
 
 const int RubyKeysCount = 43;
 const String RubyKeys[43/*# range 1..RubyKeysCount*/] = {L"alias", L"attr", L"begin", L"break", L"case", L"class", L"def", L"do", L"else", L"elsif", L"end", L"ensure", L"exit"
-																				, L"extend", L"false", L"for", L"gets", L"if", L"in", L"include", L"load", L"loop", L"module", L"next", L"nil", L"not", L"print", L"private"
-																				, L"public", L"puts", L"raise", L"redo", L"require", L"rescue", L"retry", L"return", L"self", L"then", L"true", L"unless", L"when"
-																				, L"while", L"yield"};
+                    , L"extend", L"false", L"for", L"gets", L"if", L"in", L"include", L"load", L"loop", L"module", L"next", L"nil", L"not", L"print", L"private"
+                    , L"public", L"puts", L"raise", L"redo", L"require", L"rescue", L"retry", L"return", L"self", L"then", L"true", L"unless", L"when"
+                    , L"while", L"yield"};
 
 bool __fastcall TSynRubySyn::IsKeyword(const String AKeyword)
 {
@@ -109,10 +109,10 @@ __fastcall TSynRubySyn::TSynRubySyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TStringList();
 	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
 	fSecondKeys = new TStringList();
 	((TStringList*) fSecondKeys)->Sorted = true;
-	((TStringList*) fSecondKeys)->Duplicates = System::Classes::dupIgnore;
+	((TStringList*) fSecondKeys)->Duplicates = System::Types::dupIgnore;
 	if(!(ComponentState.Contains(csDesigning)))
 	{
 		int stop = 0;
@@ -151,8 +151,7 @@ __fastcall TSynRubySyn::~TSynRubySyn()
 	delete fKeywords;
 	delete fSecondKeys;
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 void __fastcall TSynRubySyn::BraceOpenProc()
 {
@@ -524,7 +523,7 @@ void __fastcall TSynRubySyn::ResetRange()
 
 void __fastcall TSynRubySyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynRubySyn::SetSecondKeys(TStrings* const Value)
@@ -540,7 +539,7 @@ void __fastcall TSynRubySyn::SetSecondKeys(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fSecondKeys->Assign(Value);
+	fSecondKeys->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -600,16 +599,8 @@ void SynHighlighterRuby_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynRubySyn));
 }
-class SynHighlighterRuby_unit
-{
-public:
-	SynHighlighterRuby_unit()
-	{
-		SynHighlighterRuby_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterRuby_unit _SynHighlighterRuby_unit;
 
 }  // namespace SynHighlighterRuby
 

@@ -1,3 +1,26 @@
+/* -------------------------------------------------------------------------------
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+  the specific language governing rights and limitations under the License.
+
+  Contributors to the SynEdit and mwEdit projects are listed in the
+  Contributors.txt file.
+
+  Alternatively, the contents of this file may be used under the terms of the
+  GNU General Public License Version 2 or later (the "GPL"), in which case
+  the provisions of the GPL are applicable instead of those above.
+  If you wish to allow use of your version of this file only under the terms
+  of the GPL and not to allow others to use your version of this file
+  under the MPL, indicate your decision by deleting the provisions above and
+  replace them with the notice and other provisions required by the GPL.
+  If you do not delete the provisions above, a recipient may use your version
+  of this file under either the MPL or the GPL.
+  ------------------------------------------------------------------------------- */
 #ifndef SynEditCodeFoldingH
 #define SynEditCodeFoldingH
 
@@ -123,7 +146,7 @@ class TSynCodeFoldingException : public System::Sysutils::Exception
 {
 	#include "SynEditCodeFolding_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall TSynCodeFoldingException(const String Msg);
 	__fastcall TSynCodeFoldingException(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall TSynCodeFoldingException(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -159,7 +182,7 @@ class TSynFoldRanges : public System::TObject
 {
 	#include "SynEditCodeFolding_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 private:
 	TSynCodeFoldingMode fCodeFoldingMode;
 	bool fRangesNeedFixing;
@@ -192,16 +215,16 @@ public:
     /*Scanning support*/
 	void __fastcall StoreCollapsedState();
 	void __fastcall RestoreCollapsedState();
-	void __fastcall StoreCollapsedState(System::Classes::TStream* Stream);
-	void __fastcall RestoreCollapsedState(System::Classes::TStream* Stream);
+	void __fastcall StoreCollapsedState(TStream* Stream);
+	void __fastcall RestoreCollapsedState(TStream* Stream);
 	void __fastcall StartScanning();
-	bool __fastcall StopScanning(System::Classes::TStrings* Lines); // Returns True of Ranges were updated
+	bool __fastcall StopScanning(TStrings* Lines); // Returns True of Ranges were updated
 	void __fastcall AddLineInfo(int ALine, int AFoldType, TFoldOpenClose AFoldOpenClose, int AIndent);
 	void __fastcall StartFoldRange(int ALine, int AFoldType, int AIndent = -1);
 	void __fastcall StopFoldRange(int ALine, int AFoldType, int AIndent = -1);
 	void __fastcall NoFoldInfo(int ALine);
 	int __fastcall GetIndentLevel(int Line);
-	void __fastcall RecreateFoldRanges(System::Classes::TStrings* Lines);
+	void __fastcall RecreateFoldRanges(TStrings* Lines);
 
     // plugin notifications and support routines
 	int __fastcall FoldLineToRow(int Line);
@@ -241,10 +264,10 @@ private:
 	void __fastcall SetShowHintMark(bool Value);
 	void __fastcall SetGutterShapeSize(int Value);
 public:
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditCodeFolding_friends.inc"
 	__fastcall TSynCodeFolding();
-	virtual void __fastcall Assign(System::Classes::TPersistent* Source);
+	virtual void __fastcall Assign(TPersistent* Source);
 	int __fastcall ScaledGutterShapeSize(int PPI);
 	__property TSynCodeFoldingChangeEvent OnChange = { read = FOnChange, write = FOnChange };
 __published:
@@ -262,22 +285,22 @@ class TSynCustomCodeFoldingHighlighter : public Synedithighlighter::TSynCustomHi
 {
 protected:
     // Utility functions
-	void* __fastcall GetLineRange(System::Classes::TStrings* Lines, int Line);
-	Synedithighlighter::TSynHighlighterAttributes* __fastcall GetHighlighterAttriAtRowCol(System::Classes::TStrings* const Lines, int Line, int Char);
-	bool __fastcall GetHighlighterAttriAtRowColEx(System::Classes::TStrings* const Lines, int Line, int Char, String& Token, int& TokenType, int& Start, Synedithighlighter::TSynHighlighterAttributes*& Attri);
-	int __fastcall TabWidth(System::Classes::TStrings* LinesToScan);
+	void* __fastcall GetLineRange(TStrings* Lines, int Line);
+	Synedithighlighter::TSynHighlighterAttributes* __fastcall GetHighlighterAttriAtRowCol(TStrings* const Lines, int Line, int Char);
+	bool __fastcall GetHighlighterAttriAtRowColEx(TStrings* const Lines, int Line, int Char, String& Token, int& TokenType, int& Start, Synedithighlighter::TSynHighlighterAttributes*& Attri);
+	int __fastcall TabWidth(TStrings* LinesToScan);
 public:
     // Called when a Highlighter is assigned to Synedit;
     // No need to override except to change the SynCodeFoldingMode
-	typedef Synedithighlighter::TSynCustomHighlighter inherited;	
+	typedef Synedithighlighter::TSynCustomHighlighter inherited;
 	#include "SynEditCodeFolding_friends.inc"
 	virtual void __fastcall InitFoldRanges(TSynFoldRanges* FoldRanges);
     // Called after Highlighter ranges have been set
-	virtual void __fastcall ScanForFoldRanges(TSynFoldRanges* FoldRanges, System::Classes::TStrings* LinesToScan, int FromLine, int ToLine){} // = 0;
+	virtual void __fastcall ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan, int FromLine, int ToLine){} // = 0;
     // Called immediately after FoldRanges have been recreated
     // Override only if some finetuning of the FoldRanges is need.
-	virtual void __fastcall AdjustFoldRanges(TSynFoldRanges* FoldRanges, System::Classes::TStrings* LinesToScan);
-	__fastcall TSynCustomCodeFoldingHighlighter(System::Classes::TComponent* AOwner);
+	virtual void __fastcall AdjustFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan);
+	__fastcall TSynCustomCodeFoldingHighlighter(TComponent* AOwner);
 };
 const int FoldRegionType = 99;
 

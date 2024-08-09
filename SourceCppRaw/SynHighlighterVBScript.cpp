@@ -15,35 +15,32 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Regularexpressions;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightervbscript
 {
-#define SynHighlighterVBScript__0 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 << L'_' << L'-')
-#define SynHighlighterVBScript__1 (TSysCharSet() <<  \
+#define Synhighlightervbscript__0 (TSysCharSet() <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 << '_' << '-')
+#define Synhighlightervbscript__1 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterVBScript__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterVBScript__3 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVBScript__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterVBScript__5 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterVBScript__6 (TRegExOptions() << roIgnoreCase)
-#define SynHighlighterVBScript__7 (TSysCharSet() << L'=' << L'>')
-#define SynHighlighterVBScript__8 (TSysCharSet() << L'E' << L'e')
-#define SynHighlighterVBScript__9 (TSysCharSet() << L'M' << L'm')
+#define Synhighlightervbscript__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightervbscript__3 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervbscript__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightervbscript__5 (TRegExOptions() << roIgnoreCase)
+#define Synhighlightervbscript__6 (TRegExOptions() << roIgnoreCase)
+#define Synhighlightervbscript__7 (TSysCharSet() << '=' << '>')
+#define Synhighlightervbscript__8 (TSysCharSet() << 'E' << 'e')
+#define Synhighlightervbscript__9 (TSysCharSet() << 'M' << 'm')
 
 
 const String Keywords = L"and, as, boolean, byref, byte, byval, call, case, class, const, currency,"
@@ -94,7 +91,7 @@ unsigned int __fastcall TSynVBScriptSyn::HashKey(PWideChar Str)
 {
 	unsigned int result = 0;
 	result = 0;
-	while(CharInSet((*Str), SynHighlighterVBScript__0))
+	while(CharInSet((*Str), Synhighlightervbscript__0))
 	{
 		if((*Str) != L'-')
 			switch((*Str))
@@ -111,7 +108,7 @@ unsigned int __fastcall TSynVBScriptSyn::HashKey(PWideChar Str)
 			}
 		++Str;
 	}
-	while(CharInSet((*Str), SynHighlighterVBScript__1))
+	while(CharInSet((*Str), Synhighlightervbscript__1))
 	{
 		result += int((*Str)) - int(L'0');
 		++Str;
@@ -172,17 +169,17 @@ __fastcall TSynVBScriptSyn::TSynVBScriptSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterVBScript__2;
+	fCommentAttri->Style = Synhighlightervbscript__2;
 	addAttribute(fCommentAttri);
 	fCOnstAttri = new TSynHighlighterAttributes(SYNS_AttrConst, SYNS_AttrConst);
-	fCOnstAttri->Style = SynHighlighterVBScript__3;
+	fCOnstAttri->Style = Synhighlightervbscript__3;
 	addAttribute(fCOnstAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
 	addAttribute(fFunctionAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterVBScript__4;
+	fKeyAttri->Style = Synhighlightervbscript__4;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -199,8 +196,8 @@ __fastcall TSynVBScriptSyn::TSynVBScriptSyn(TComponent* AOwner)
 	EnumerateKeywords(int(tkFunction), Functions, IsIdentChar, DoAddKeyword);
 
 //++ CodeFolding
-	RE_BlockBegin = TRegEx(L"\\b^(sub |function |private sub |private function |class )\\b", SynHighlighterVBScript__5);
-	RE_BlockEnd = TRegEx(L"\\b^(end sub|end function|end class)\\b", SynHighlighterVBScript__6);
+	RE_BlockBegin = TRegEx(L"\\b^(sub |function |private sub |private function |class )\\b", Synhighlightervbscript__5);
+	RE_BlockEnd = TRegEx(L"\\b^(end sub|end function|end class)\\b", Synhighlightervbscript__6);
 //-- CodeFolding
 }
 
@@ -209,7 +206,6 @@ __fastcall TSynVBScriptSyn::~TSynVBScriptSyn()
 	delete fKeywords;
 	//# inherited::Destroy();
 }
-
 
 //++ CodeFolding
 const int FT_Standard = 1;  // begin end, class end, record end
@@ -476,7 +472,7 @@ void __fastcall TSynVBScriptSyn::LowerProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterVBScript__7))
+	if(CharInSet(fLine[Run], Synhighlightervbscript__7))
 		++Run;
 }
 
@@ -756,7 +752,7 @@ String __fastcall TSynVBScriptSyn::GetFriendlyLanguageName()
 
 void __fastcall TSynVBScriptSyn::RemProc()
 {
-	if(CharInSet(fLine[Run + 1], SynHighlighterVBScript__8) && CharInSet(fLine[Run + 2], SynHighlighterVBScript__9) && (fLine[Run + 3] <= L'\x20'))
+	if(CharInSet(fLine[Run + 1], Synhighlightervbscript__8) && CharInSet(fLine[Run + 2], Synhighlightervbscript__9) && (fLine[Run + 3] <= L'\x20'))
 		ApostropheProc();
 	else
 	{
@@ -775,16 +771,8 @@ void SynHighlighterVBScript_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynVBScriptSyn));
 }
-class SynHighlighterVBScript_unit
-{
-public:
-	SynHighlighterVBScript_unit()
-	{
-		SynHighlighterVBScript_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterVBScript_unit _SynHighlighterVBScript_unit;
 
 }  // namespace SynHighlighterVBScript
 

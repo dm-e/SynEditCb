@@ -12,36 +12,33 @@ using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightersql
 {
-#define SynHighlighterSQL__0 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
-#define SynHighlighterSQL__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterSQL__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterSQL__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsUnderline)
-#define SynHighlighterSQL__4 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__5 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__6 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterSQL__7 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__8 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__10 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSQL__11 (TSysCharSet() << L'=' << L'&')
-#define SynHighlighterSQL__12 (TSysCharSet() << L'=' << L'>')
-#define SynHighlighterSQL__13 (TSysCharSet() << L'=' << L'>')
-#define SynHighlighterSQL__14 (System::Set<TtkTokenKind, tkComment, tkConsoleOutput>() << tkComment << tkConsoleOutput)
-#define SynHighlighterSQL__15 (TSysCharSet() << L'=' << L'|')
-#define SynHighlighterSQL__16 (TSysCharSet() << L'=' << L'+')
-#define SynHighlighterSQL__17 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
-#define SynHighlighterSQL__18 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
-#define SynHighlighterSQL__19 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlMySQL << sqlOracle)
-#define SynHighlighterSQL__20 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlOracle << sqlIngres)
-#define SynHighlighterSQL__21 (System::Set<TtkTokenKind, tkComment, tkConsoleOutput>() << tkDataType << tkException << tkFunction << tkKey << tkPLSQL << tkDefaultPackage)
-#define SynHighlighterSQL__22 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlOracle << sqlNexus)
-#define SynHighlighterSQL__23 (System::Set<TSQLDialect, sqlStandard, sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__0 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsUnderline)
+#define Synhighlightersql__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__7 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__8 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__10 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__11 (TSysCharSet() << '=' << '&')
+#define Synhighlightersql__12 (TSysCharSet() << '=' << '>')
+#define Synhighlightersql__13 (TSysCharSet() << '=' << '>')
+#define Synhighlightersql__14 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkComment << tkConsoleOutput)
+#define Synhighlightersql__15 (TSysCharSet() << '=' << '|')
+#define Synhighlightersql__16 (TSysCharSet() << '=' << '+')
+#define Synhighlightersql__17 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__18 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__19 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMySQL << sqlOracle)
+#define Synhighlightersql__20 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlIngres)
+#define Synhighlightersql__21 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkDataType << tkException << tkFunction << tkKey << tkPLSQL << tkDefaultPackage)
+#define Synhighlightersql__22 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlNexus)
+#define Synhighlightersql__23 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
 
 
 //---"Standard" (ANSI SQL keywords (Version 1, 2 and 3) (www.sql.org)-----------
@@ -1143,7 +1140,7 @@ int __fastcall TSynSQLSyn::HashKey(PWideChar Str)
 			result = 2 + int((*Str)) - int(L'A');
 			break;
 			case L'@':
-			if(SynHighlighterSQL__0.Contains(fDialect))
+			if(Synhighlightersql__0.Contains(fDialect))
 				result = 24;
 			else
 				result = 0;
@@ -1241,42 +1238,42 @@ __fastcall TSynSQLSyn::TSynSQLSyn(TComponent* AOwner)
 	fFunctionNames = new TStringList();
 	((TStringList*) fFunctionNames)->OnChange = FunctionNamesChanged;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterSQL__1;
+	fCommentAttri->Style = Synhighlightersql__1;
 	addAttribute(fCommentAttri);
 	fConditionalCommentAttri = new TSynHighlighterAttributes(SYNS_AttrConditionalComment, SYNS_FriendlyAttrConditionalComment);
-	fConditionalCommentAttri->Style = SynHighlighterSQL__2;
+	fConditionalCommentAttri->Style = Synhighlightersql__2;
 	addAttribute(fConditionalCommentAttri);
 	fConsoleOutputAttri = new TSynHighlighterAttributes(SYNS_AttrConsoleOutput, SYNS_FriendlyAttrConsoleOutput);
-	fConsoleOutputAttri->Style = SynHighlighterSQL__3;
+	fConsoleOutputAttri->Style = Synhighlightersql__3;
 	addAttribute(fConsoleOutputAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	fDataTypeAttri->Style = SynHighlighterSQL__4;
+	fDataTypeAttri->Style = Synhighlightersql__4;
 	addAttribute(fDataTypeAttri);
 	fDefaultPackageAttri = new TSynHighlighterAttributes(SYNS_AttrDefaultPackage, SYNS_FriendlyAttrDefaultPackage);
-	fDefaultPackageAttri->Style = SynHighlighterSQL__5;
+	fDefaultPackageAttri->Style = Synhighlightersql__5;
 	addAttribute(fDefaultPackageAttri);
 	fDelimitedIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrDelimitedIdentifier, SYNS_FriendlyAttrDelimitedIdentifier);
 	addAttribute(fDelimitedIdentifierAttri);
 	fExceptionAttri = new TSynHighlighterAttributes(SYNS_AttrException, SYNS_FriendlyAttrException);
-	fExceptionAttri->Style = SynHighlighterSQL__6;
+	fExceptionAttri->Style = Synhighlightersql__6;
 	addAttribute(fExceptionAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrFunction, SYNS_FriendlyAttrFunction);
-	fFunctionAttri->Style = SynHighlighterSQL__7;
+	fFunctionAttri->Style = Synhighlightersql__7;
 	addAttribute(fFunctionAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
-	fKeyAttri->Style = SynHighlighterSQL__8;
+	fKeyAttri->Style = Synhighlightersql__8;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
 	fPLSQLAttri = new TSynHighlighterAttributes(SYNS_AttrPLSQL, SYNS_FriendlyAttrPLSQL);
-	fPLSQLAttri->Style = SynHighlighterSQL__9;
+	fPLSQLAttri->Style = Synhighlightersql__9;
 	addAttribute(fPLSQLAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fSQLPlusAttri = new TSynHighlighterAttributes(SYNS_AttrSQLPlus, SYNS_FriendlyAttrSQLPlus);
-	fSQLPlusAttri->Style = SynHighlighterSQL__10;
+	fSQLPlusAttri->Style = Synhighlightersql__10;
 	addAttribute(fSQLPlusAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	addAttribute(fStringAttri);
@@ -1304,7 +1301,6 @@ __fastcall TSynSQLSyn::~TSynSQLSyn()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynSQLSyn::Assign(TPersistent* Source)
 {
 	inherited::Assign(Source);
@@ -1316,7 +1312,7 @@ void __fastcall TSynSQLSyn::AndSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterSQL__11))
+	if(CharInSet(fLine[Run], Synhighlightersql__11))
 		++Run;
 }
 
@@ -1389,7 +1385,7 @@ void __fastcall TSynSQLSyn::EqualProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterSQL__12))
+	if(CharInSet(fLine[Run], Synhighlightersql__12))
 		++Run;
 }
 
@@ -1397,7 +1393,7 @@ void __fastcall TSynSQLSyn::GreaterProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterSQL__13))
+	if(CharInSet(fLine[Run], Synhighlightersql__13))
 		++Run;
 }
 
@@ -1406,7 +1402,7 @@ void __fastcall TSynSQLSyn::IdentProc()
 	bool FoundDoubleMinus = false;
 	FTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
-	if(SynHighlighterSQL__14.Contains(FTokenID))
+	if(Synhighlightersql__14.Contains(FTokenID))
 	{
 		while(!IsLineEnd(Run))
 			++Run;
@@ -1533,7 +1529,7 @@ void __fastcall TSynSQLSyn::OrSymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterSQL__15))
+	if(CharInSet(fLine[Run], Synhighlightersql__15))
 		++Run;
 }
 
@@ -1541,7 +1537,7 @@ void __fastcall TSynSQLSyn::PlusProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	if(CharInSet(fLine[Run], SynHighlighterSQL__16))
+	if(CharInSet(fLine[Run], Synhighlightersql__16))
 		++Run;
 }
 
@@ -1660,7 +1656,7 @@ void __fastcall TSynSQLSyn::BacktickProc()
 
 void __fastcall TSynSQLSyn::BracketProc()
 {
-	if(SynHighlighterSQL__17.Contains(SQLDialect))
+	if(Synhighlightersql__17.Contains(SQLDialect))
 	{
 		FTokenID = tkDelimitedIdentifier;
 		++Run;
@@ -1701,17 +1697,17 @@ void __fastcall TSynSQLSyn::VariableProc()
 	int i = 0;
 	bool FoundDoubleMinus = false;
   // MS SQL Server uses @@ to indicate system functions/variables
-	if((SynHighlighterSQL__18.Contains(SQLDialect)) && (fLine[Run] == L'@') && (fLine[Run + 1] == L'@'))
+	if((Synhighlightersql__18.Contains(SQLDialect)) && (fLine[Run] == L'@') && (fLine[Run + 1] == L'@'))
 		IdentProc();
 	else
 	{
-		if((SynHighlighterSQL__19.Contains(SQLDialect)) && (fLine[Run] == L'@'))
+		if((Synhighlightersql__19.Contains(SQLDialect)) && (fLine[Run] == L'@'))
   // Oracle uses the ':' character to indicate bind variables
   // Ingres II also uses the ':' character to indicate variables
 			SymbolProc();
 		else
 		{
-			if(!(SynHighlighterSQL__20.Contains(SQLDialect)) && (fLine[Run] == L':'))
+			if(!(Synhighlightersql__20.Contains(SQLDialect)) && (fLine[Run] == L':'))
 				SymbolProc();
 			else
 			{
@@ -1777,7 +1773,7 @@ bool __fastcall TSynSQLSyn::IsKeyword(const String AKeyword)
 	bool result = false;
 	TtkTokenKind tk = tkComment;
 	tk = IdentKind(ustr2pwchar(AKeyword));
-	result = SynHighlighterSQL__21.Contains(tk);
+	result = Synhighlightersql__21.Contains(tk);
 	return result;
 }
 
@@ -2037,7 +2033,7 @@ void __fastcall TSynSQLSyn::ResetRange()
 
 void __fastcall TSynSQLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynSQLSyn::IsFilterStored()
@@ -2067,10 +2063,10 @@ bool __fastcall TSynSQLSyn::IsIdentChar(WideChar AChar)
 		break;                          // TODO: check this case, ANSI code wasn't clear here if this is exclusively Oracle
 		case L'#':
 		case L'$':
-		result = SynHighlighterSQL__22.Contains(fDialect);
+		result = Synhighlightersql__22.Contains(fDialect);
 		break;
 		case L'@':
-		result = SynHighlighterSQL__23.Contains(fDialect);
+		result = Synhighlightersql__23.Contains(fDialect);
 		break;
 		case L'!':
 		case L'^':
@@ -2104,7 +2100,7 @@ void __fastcall TSynSQLSyn::DoAddKeyword(String AKeyword, int AKind)
 
 void __fastcall TSynSQLSyn::SetTableNames(TStrings* const Value)
 {
-	fTableNames->Assign(Value);
+	fTableNames->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynSQLSyn::TableNamesChanged(TObject* Sender)
@@ -2200,12 +2196,12 @@ void __fastcall TSynSQLSyn::SetDialect(TSQLDialect Value)
 
 void __fastcall TSynSQLSyn::SetFunctionNames(TStrings* const Value)
 {
-	fFunctionNames->Assign(Value);
+	fFunctionNames->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynSQLSyn::SetProcNames(TStrings* const Value)
 {
-	FProcNames->Assign(Value);
+	FProcNames->Assign((TPersistent*) Value);
 }
 
 String __fastcall TSynSQLSyn::GetSampleSource()
@@ -2571,16 +2567,8 @@ void SynHighlighterSQL_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynSQLSyn));
 }
-class SynHighlighterSQL_unit
-{
-public:
-	SynHighlighterSQL_unit()
-	{
-		SynHighlighterSQL_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterSQL_unit _SynHighlighterSQL_unit;
 
 }  // namespace SynHighlighterSQL
 

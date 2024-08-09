@@ -15,37 +15,35 @@ using namespace Syneditstrconst;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Regularexpressions;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterdws
 {
-#define SynHighlighterDWS__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterDWS__1 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterDWS__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterDWS__3 (TRegExOptions() << roNotEmpty << roIgnoreCase)
-#define SynHighlighterDWS__4 (TRegExOptions() << roNotEmpty << roIgnoreCase)
-#define SynHighlighterDWS__5 (TRegExOptions() << roNotEmpty << roIgnoreCase)
-#define SynHighlighterDWS__6 (System::Set<WORD, 0, 255>() <<  \
+#define Synhighlighterdws__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterdws__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlighterdws__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlighterdws__3 (TRegExOptions() << roNotEmpty << roIgnoreCase)
+#define Synhighlighterdws__4 (TRegExOptions() << roNotEmpty << roIgnoreCase)
+#define Synhighlighterdws__5 (TRegExOptions() << roNotEmpty << roIgnoreCase)
+#define Synhighlighterdws__6 (System::Set<WORD, 0, 255>() <<  \
 										65 << 66 << 67 << 68 << 69 << 70 <<  \
 										71 << 72 << 73 << 74 << 75 << 76 <<  \
 										77 << 78 << 79 << 80 << 81 << 82 <<  \
 										83 << 84 << 85 << 86 << 87 << 88 <<  \
 										89 << 90)
-#define SynHighlighterDWS__7 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsDirective << rsDirectiveAsm)
-#define SynHighlighterDWS__8 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsBorAsm << rsDirectiveAsm)
-#define SynHighlighterDWS__9 (System::Set<TRangeState, rsANil, rsUnKnown>() << rsProperty << rsExports)
-#define SynHighlighterDWS__10 (System::Set<TtkTokenKind, tkAsm, tkChar>() << tkNull << tkComment << tkDirec << tkSpace)
-#define SynHighlighterDWS__11 (TRangeStates() << rsAnsi)
-#define SynHighlighterDWS__12 (TRangeStates() << rsAsm << rsAnsiAsm << rsBorAsm << rsDirectiveAsm)
-#define SynHighlighterDWS__13 (TRangeStates() << rsHereDocDouble)
-#define SynHighlighterDWS__14 (TRangeStates() << rsHereDocSingle)
-#define SynHighlighterDWS__15 (TRangeStates() << rsHereDocSingle)
-#define SynHighlighterDWS__16 (TRangeStates() << rsBor)
-#define SynHighlighterDWS__17 (TRangeStates() << rsDirective)
-#define SynHighlighterDWS__18 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
-#define SynHighlighterDWS__19 (System::Set<unsigned char, 0, 255>() << L'_' <<  \
+#define Synhighlighterdws__7 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsDirective << rsDirectiveAsm)
+#define Synhighlighterdws__8 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsBorAsm << rsDirectiveAsm)
+#define Synhighlighterdws__9 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsProperty << rsExports)
+#define Synhighlighterdws__10 (System::Set<TtkTokenKind, TtkTokenKind::tkAsm, TtkTokenKind::tkChar>() << tkNull << tkComment << tkDirec << tkSpace)
+#define Synhighlighterdws__11 (TRangeStates() << rsAnsi)
+#define Synhighlighterdws__12 (TRangeStates() << rsAsm << rsAnsiAsm << rsBorAsm << rsDirectiveAsm)
+#define Synhighlighterdws__13 (TRangeStates() << rsHereDocDouble)
+#define Synhighlighterdws__14 (TRangeStates() << rsHereDocSingle)
+#define Synhighlighterdws__15 (TRangeStates() << rsHereDocSingle)
+#define Synhighlighterdws__16 (TRangeStates() << rsBor)
+#define Synhighlighterdws__17 (TRangeStates() << rsDirective)
+#define Synhighlighterdws__18 (TSynHighlighterCapabilities() << hcUserSettings)
+#define Synhighlighterdws__19 (System::Set<unsigned char, 0, 255>() << L'_' <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57 <<  \
 										65 << 66 << 67 << 68 << 69 << 70 <<  \
@@ -62,8 +60,8 @@ namespace Synhighlighterdws
 __fastcall TAnsiStringList::TAnsiStringList() {}
 __fastcall TAnsiStringList::TAnsiStringList(bool OwnsObjects) : inherited(OwnsObjects) {}
 __fastcall TAnsiStringList::TAnsiStringList(Char QuoteChar, Char Delimiter) : inherited(QuoteChar, Delimiter) {}
-__fastcall TAnsiStringList::TAnsiStringList(Char QuoteChar, Char Delimiter, System::Classes::TStringsOptions Options) : inherited(QuoteChar, Delimiter, Options) {}
-__fastcall TAnsiStringList::TAnsiStringList(System::Classes::TDuplicates Duplicates, bool Sorted, bool CaseSensitive) : inherited(Duplicates, Sorted, CaseSensitive) {}
+__fastcall TAnsiStringList::TAnsiStringList(Char QuoteChar, Char Delimiter, TStringsOptions Options) : inherited(QuoteChar, Delimiter, Options) {}
+__fastcall TAnsiStringList::TAnsiStringList(TDuplicates Duplicates, bool Sorted, bool CaseSensitive) : inherited(Duplicates, Sorted, CaseSensitive) {}
 
 
    // if the language is case-insensitive keywords *must* be in lowercase
@@ -117,16 +115,16 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 	addAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = clGreen;
-	fCommentAttri->Style = SynHighlighterDWS__0;
+	fCommentAttri->Style = Synhighlighterdws__0;
 	addAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fDirecAttri->Foreground = ((TColor) 0x808000);
-	fDirecAttri->Style = SynHighlighterDWS__1;
+	fDirecAttri->Style = Synhighlighterdws__1;
 	addAttribute(fDirecAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterDWS__2;
+	fKeyAttri->Style = Synhighlighterdws__2;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = clBlue;
@@ -157,9 +155,9 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 	fDefaultFilter = SYNS_FilterDWS;
 
 //++ CodeFolding
-	new TRegEx(L"\\b(begin|record|class)\\b", SynHighlighterDWS__3);
-	new TRegEx(L"\\bend\\b", SynHighlighterDWS__4);
-	new TRegEx(L"^\\s*(function|procedure)\\b", SynHighlighterDWS__5);
+	RE_BlockBegin = TRegEx(L"\\b(begin|record|class)\\b", Synhighlighterdws__3);
+	RE_BlockEnd = TRegEx(L"\\bend\\b", Synhighlighterdws__4);
+	RE_Code = TRegEx(L"^\\s*(function|procedure)\\b", Synhighlighterdws__5);
 //-- CodeFolding
 }
 
@@ -174,7 +172,6 @@ __fastcall TSynDWSSyn::~TSynDWSSyn()
 	delete FKeywordsTypeScoped;
 }
 
-
 unsigned int __fastcall TSynDWSSyn::HashKey(PWideChar Str)
 {
 	unsigned int result = 0;
@@ -183,7 +180,7 @@ unsigned int __fastcall TSynDWSSyn::HashKey(PWideChar Str)
 	while(IsIdentChar((*Str)))
 	{
 		C = (WORD) int((*Str));
-		if(SynHighlighterDWS__6.Contains(C))
+		if(Synhighlighterdws__6.Contains(C))
 			C = (WORD) (C + (int(L'a') - int(L'A')));
 		result = (unsigned int) (result * 692 + C * 171);
 		++Str;
@@ -217,17 +214,17 @@ void __fastcall TSynDWSSyn::InitIdent()
 	int stop = 0;
 	for(stop = 95 /*# High(cKeyWords) */, i = 1 /*# Low(cKeyWords) */; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(ustr2pwchar(cKeyWords[i - 1], 1 - 1)), KeyWordFunc);
+		SetIdentFunc((int) HashKey(&((String)cKeyWords[i - 1])[1]), KeyWordFunc);
 		fKeywords->Add(cKeyWords[i - 1]);
 	}
 	for(stop = 4 /*# High(cKeyWordsPropertyScoped) */, i = 0; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(ustr2pwchar(cKeyWordsPropertyScoped[i], 1 - 1)), FuncPropertyScoped);
+		SetIdentFunc((int) HashKey(&((String)cKeyWordsPropertyScoped[i])[1]), FuncPropertyScoped);
 		FKeywordsPropertyScoped->Add(cKeyWordsPropertyScoped[i]);
 	}
 	for(stop = 1 /*# High(cKeywordsTypeScoped) */, i = 0; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(ustr2pwchar(cKeywordsTypeScoped[i], 1 - 1)), FuncTypeScoped);
+		SetIdentFunc((int) HashKey(&((String)cKeywordsTypeScoped[i])[1]), FuncTypeScoped);
 		FKeywordsTypeScoped->Add(cKeywordsTypeScoped[i]);
 	}
 	for(stop = 388 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -402,7 +399,7 @@ void __fastcall TSynDWSSyn::BorProc()
 		break;
 		default:
 		{
-			if(SynHighlighterDWS__7.Contains(FRange))
+			if(Synhighlighterdws__7.Contains(FRange))
 				FTokenID = tkDirec;
 			else
 				FTokenID = tkComment;
@@ -411,7 +408,7 @@ void __fastcall TSynDWSSyn::BorProc()
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					if(SynHighlighterDWS__8.Contains(FRange))
+					if(Synhighlighterdws__8.Contains(FRange))
 						FRange = rsAsm;
 					else
 						FRange = rsUnKnown;
@@ -693,7 +690,7 @@ void __fastcall TSynDWSSyn::SemiColonProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(SynHighlighterDWS__9.Contains(FRange))
+	if(Synhighlighterdws__9.Contains(FRange))
 		FRange = rsUnKnown;
 }
 
@@ -984,7 +981,7 @@ bool __fastcall TSynDWSSyn::GetEol()
 TtkTokenKind __fastcall TSynDWSSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAsm;
-	if(!fAsmStart && (FRange == rsAsm) && !(SynHighlighterDWS__10.Contains(FTokenID)))
+	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterdws__10.Contains(FTokenID)))
 		result = tkAsm;
 	else
 		result = FTokenID;
@@ -1057,7 +1054,7 @@ void* __fastcall TSynDWSSyn::GetRange()
 }
 
 //++ CodeFolding
-typedef System::Set<TRangeState, rsANil, rsUnKnown> TRangeStates;
+typedef System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown> TRangeStates;
 const int FT_Standard = 1;  // begin end, class end, record end
 const int FT_Comment = 11;
 const int FT_Asm = 12;
@@ -1160,16 +1157,16 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	{
 		bool result = false;
 		result = true;
-		if(Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line)))
+		if(Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line)))
 		{
-			if(Fold && !(Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line - 1))))
+			if(Fold && !(Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1))))
 				FoldRanges->StartFoldRange(Line + 1, FoldType);
 			else
 				FoldRanges->NoFoldInfo(Line + 1);
 		}
 		else
 		{
-			if(Fold && (Ranges.Contains((TRangeState)(int)GetLineRange(LinesToScan, Line - 1))))
+			if(Fold && (Ranges.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, Line - 1))))
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldType);
 			}
@@ -1182,7 +1179,7 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline statements
-		if(IsMultiLineStatement((int) Line, SynHighlighterDWS__11, true, FT_Comment) || IsMultiLineStatement((int) Line, SynHighlighterDWS__12, true, FT_Asm) || IsMultiLineStatement((int) Line, SynHighlighterDWS__13, true, FT_HereDocDouble) || IsMultiLineStatement((int) Line, SynHighlighterDWS__14, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, SynHighlighterDWS__15, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, SynHighlighterDWS__16, true, FT_Comment) || IsMultiLineStatement((int) Line, SynHighlighterDWS__17, false))
+		if(IsMultiLineStatement((int) Line, Synhighlighterdws__11, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterdws__12, true, FT_Asm) || IsMultiLineStatement((int) Line, Synhighlighterdws__13, true, FT_HereDocDouble) || IsMultiLineStatement((int) Line, Synhighlighterdws__14, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, Synhighlighterdws__15, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, Synhighlighterdws__16, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterdws__17, false))
 			continue;
 		CurLine = LinesToScan->Strings[Line];
 
@@ -1322,7 +1319,7 @@ void __fastcall TSynDWSSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 
 void __fastcall TSynDWSSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynDWSSyn::ResetRange()
@@ -1369,7 +1366,7 @@ String __fastcall TSynDWSSyn::GetLanguageName()
 TSynHighlighterCapabilities __fastcall TSynDWSSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterDWS__18;
+	result = inherited::GetCapabilities() + Synhighlighterdws__18;
 	return result;
 }
 
@@ -1415,7 +1412,7 @@ bool __fastcall TSynDWSSyn::IsIdentChar(WideChar AChar)
 {
 	bool result = false;
 	if(int(AChar) <= 0x7F)
-		result = SynHighlighterDWS__19.Contains(((AnsiChar) AChar));
+		result = Synhighlighterdws__19.Contains(((AnsiChar) AChar));
 	else
 		result = IsLetterOrDigit(AChar);
 	return result;
@@ -1439,16 +1436,8 @@ void SynHighlighterDWS_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynDWSSyn));
 }
-class SynHighlighterDWS_unit
-{
-public:
-	SynHighlighterDWS_unit()
-	{
-		SynHighlighterDWS_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterDWS_unit _SynHighlighterDWS_unit;
 
 }  // namespace SynHighlighterDWS
 

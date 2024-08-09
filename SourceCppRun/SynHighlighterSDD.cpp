@@ -10,17 +10,14 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightersdd
 {
-#define SynHighlighterSDD__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterSDD__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSDD__2 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterSDD__3 (TSysCharSet() <<  \
+#define Synhighlightersdd__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersdd__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersdd__2 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersdd__3 (TSysCharSet() <<  \
 										1 << 2 << 3 << 4 << 5 << 6 <<  \
 										7 << 8 << 9 << 10 << 11 << 12 <<  \
 										13 << 14 << 15 << 16 << 17 << 18 <<  \
@@ -30,8 +27,8 @@ namespace Synhighlightersdd
 
 
 const String Keywords[27/*# range 0..26*/] = {L"array", L"binarydata", L"block", L"byte", L"database", L"date", L"end", L"endblock", L"integer", L"keys"
-																				, L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
-																				, L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
+                    , L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
+                    , L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
 const int KeyIndices[37/*# range 0..36*/] = {8, 3, 18, 0, 25, 14, 16, 22, 5, 19, 10, 20, -1, -1, 2, 26, -1, 21, -1, 12, 1, 17, 15, -1, 9, -1, 11, 7, -1, 4, 6, -1, 13, -1, -1, 24, 23};
 
 /*$Q-*/
@@ -70,7 +67,7 @@ void __fastcall TSynSDDSyn::InitIdent()
 	int stop = 0;
 	for(stop = 36 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[3] = FuncArray;
@@ -394,16 +391,16 @@ __fastcall TSynSDDSyn::TSynSDDSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = clNavy;
-	fCommentAttri->Style = SynHighlighterSDD__0;
+	fCommentAttri->Style = Synhighlightersdd__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterSDD__1;
+	fKeyAttri->Style = Synhighlightersdd__1;
 	fKeyAttri->Foreground = clGreen;
 	addAttribute(fKeyAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	fDataTypeAttri->Style = SynHighlighterSDD__2;
+	fDataTypeAttri->Style = Synhighlightersdd__2;
 	fDataTypeAttri->Foreground = clTeal;
 	addAttribute(fDataTypeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
@@ -446,7 +443,7 @@ void __fastcall TSynSDDSyn::SpaceProc()
 	{
 		++Run;
 	}
-	while(!!CharInSet(fLine[Run], SynHighlighterSDD__3));
+	while(!!CharInSet(fLine[Run], Synhighlightersdd__3));
 } /* SpaceProc */
 
 void __fastcall TSynSDDSyn::BraceCommentProc()
@@ -667,7 +664,7 @@ void __fastcall TSynSDDSyn::ResetRange()
 void __fastcall TSynSDDSyn::SetRange(void* Value)
 {
 	inherited::SetRange(Value);
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 } /* SetRange */
 
 void* __fastcall TSynSDDSyn::GetRange()
@@ -755,16 +752,8 @@ void SynHighlighterSDD_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynSDDSyn));
 }
-class SynHighlighterSDD_unit
-{
-public:
-	SynHighlighterSDD_unit()
-	{
-		SynHighlighterSDD_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterSDD_unit _SynHighlighterSDD_unit;
 
 }  // namespace SynHighlighterSDD
 

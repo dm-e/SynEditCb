@@ -9,22 +9,21 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
 
 namespace Synhighlighterhp48
 {
-#define SynHighlighterHP48__0 (TSysCharSet() << L'\x0a' << L'\x0d')
-#define SynHighlighterHP48__1 (TSysCharSet() <<  \
+#define Synhighlighterhp48__0 (TSysCharSet() << '\x0a' << '\x0d')
+#define Synhighlighterhp48__1 (TSysCharSet() <<  \
 										1 << 2 << 3 << 4 << 5 << 6 <<  \
 										7 << 8 << 9 << 10 << 11 << 12 <<  \
 										13 << 14 << 15 << 16 << 17 << 18 <<  \
 										19 << 20 << 21 << 22 << 23 << 24 <<  \
 										25 << 26 << 27 << 28 << 29 << 30 <<  \
 										31 << 32)
-#define SynHighlighterHP48__2 (TSysCharSet() <<  \
+#define Synhighlighterhp48__2 (TSysCharSet() <<  \
 										1 << 2 << 3 << 4 << 5 << 6 <<  \
 										7 << 8 << 9 << 10 << 11 << 12 <<  \
 										13 << 14 << 15 << 16 << 17 << 18 <<  \
@@ -74,10 +73,10 @@ int __fastcall StringCrc(String s)
 	int i = 0;
 	int stop = 0;
 	result = 0;
-	for(stop = (int) s.Length(), i = 1; i <= stop; i++)
+	for(stop = s.Length(), i = 1; i <= stop; i++)
 	{
-		result = (result >> 4) ^ (((result ^ int(s[i])) & 0xf) * 0x1081);
-		result = (result >> 4) ^ (((result ^ (int(s[i]) >> 4)) & 0xf) * 0x1081);
+		result = (result >> 4) ^ (((result ^ int(s[i])) & 0xF) * 0x1081);
+		result = (result >> 4) ^ (((result ^ (int(s[i]) >> 4)) & 0xF) * 0x1081);
 	}
 	return result;
 }
@@ -98,7 +97,6 @@ __fastcall TSpeedListObject::~TSpeedListObject()
 		FSpeedList->ObjectDeleted(this);
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSpeedListObject::SetName(const String Value)
 {
@@ -185,7 +183,6 @@ __fastcall TSpeedStringList::~TSpeedStringList()
 	Clear();
 	//# inherited::Destroy();
 }
-
 
 TSpeedListObject* __fastcall TSpeedStringList::Find(const String Name)
 {
@@ -314,7 +311,7 @@ void __fastcall TSpeedStringList::NameChange(TSpeedListObject* const Obj, const 
 			{
 				--SumOfUsed[j];
 			}
-			if(DatasUsed[crc] < (int)(LengthDatas[crc] / 2))
+			if(DatasUsed[crc] < (int)(LengthDatas[crc] / /*div*/ 2))
 			{
 				Datas[crc] = (PSpeedListObjects) ReallocMemory(Datas[crc], DatasUsed[crc] * sizeof((*Datas[crc])[0]));
 				LengthDatas[crc] = DatasUsed[crc];
@@ -449,8 +446,7 @@ __fastcall TSynHP48Syn::~TSynHP48Syn()
 	delete FRplKeyWords;
 	delete FSAsmNoField;
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 TtkTokenKind __fastcall TSynHP48Syn::AsmComProc(WideChar C)
 {
@@ -514,7 +510,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SlashProc()
 				Run += 2;
 				result = tkAsmComment;
 				while((Run <= fLineStr.Length()))
-					if(CharInSet(fLineStr[Run], SynHighlighterHP48__0))
+					if(CharInSet(fLineStr[Run], Synhighlighterhp48__0))
 					{
 						++Run;
 						break;
@@ -711,7 +707,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SpaceProc()
 {
 	TtkTokenKind result = tkNull;
 	++Run;
-	while((Run <= fLineStr.Length()) && CharInSet(fLineStr[Run], SynHighlighterHP48__1))
+	while((Run <= fLineStr.Length()) && CharInSet(fLineStr[Run], Synhighlighterhp48__1))
 		++Run;
 	result = GetTokenFromRange();
 	return result;
@@ -749,7 +745,7 @@ TtkTokenKind __fastcall TSynHP48Syn::Next1()
 								result = SasmProc3();
 							else
 							{
-								if(CharInSet(fLineStr[Run], SynHighlighterHP48__2))
+								if(CharInSet(fLineStr[Run], Synhighlighterhp48__2))
 									result = SpaceProc();
 								else
 								{
@@ -810,7 +806,7 @@ void* __fastcall TSynHP48Syn::GetRange()
 
 void __fastcall TSynHP48Syn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynHP48Syn::ResetRange()
@@ -888,11 +884,11 @@ bool __fastcall TSynHP48Syn::SaveToRegistry(HKEY RootKey, String key)
 
 void __fastcall TSynHP48Syn::Assign(TPersistent* Source)
 {
-	int i = tkNull;
+	TtkTokenKind i = tkNull;
 	if(ObjectIs(Source, TSynHP48Syn*))
 	{
 		int stop = 0;
-		for(stop = 9 /*# High(Attribs) */, i = 0 /*# Low(Attribs) */; i <= stop; Inc(i))
+		for(stop = (TtkTokenKind) 9 /*# High(Attribs) */, i = (TtkTokenKind) 0 /*# Low(Attribs) */; i <= stop; Inc(i))
 		{
 			Attribs[i]->Background = ((TSynHP48Syn*) Source)->Attribs[i]->Background;
 			Attribs[i]->Foreground = ((TSynHP48Syn*) Source)->Attribs[i]->Foreground;
@@ -939,9 +935,9 @@ String __fastcall TSynHP48Syn::GetLanguageName()
 
 void __fastcall TSynHP48Syn::SetHighLightChange()
 {
-	int i = tkNull;
+	TtkTokenKind i = tkNull;
 	int stop = 0;
-	for(stop = 9 /*# High(Attribs) */, i = 0 /*# Low(Attribs) */; i <= stop; Inc(i))
+	for(stop = (TtkTokenKind) 9 /*# High(Attribs) */, i = (TtkTokenKind) 0 /*# Low(Attribs) */; i <= stop; Inc(i))
 	{
 		Attribs[i]->OnChange = DefHighlightChange;
 		Attribs[i]->InternalSaveDefaultValues();
@@ -1103,16 +1099,8 @@ void SynHighlighterHP48_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynHP48Syn));
 }
-class SynHighlighterHP48_unit
-{
-public:
-	SynHighlighterHP48_unit()
-	{
-		SynHighlighterHP48_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterHP48_unit _SynHighlighterHP48_unit;
 
 }  // namespace SynHighlighterHP48
 

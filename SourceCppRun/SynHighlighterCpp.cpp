@@ -10,33 +10,31 @@ using namespace std;
 using namespace d2c_system;
 using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
+using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
-using namespace System::Sysutils;
-using namespace System::Uitypes;
 
 namespace Synhighlightercpp
 {
-#define SynHighlighterCpp__0 (TFontStyles() << TFontStyle::fsItalic)
-#define SynHighlighterCpp__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynHighlighterCpp__2 (TSysCharSet() << L'\x27' << L'\\')
-#define SynHighlighterCpp__3 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterCpp__4 (TSysCharSet() <<  \
+#define Synhighlightercpp__0 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightercpp__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightercpp__2 (TSysCharSet() << '\x27' << '\\')
+#define Synhighlightercpp__3 (TSysCharSet() << 'e' << 'E')
+#define Synhighlightercpp__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterCpp__5 (TSysCharSet() << L'e' << L'E')
-#define SynHighlighterCpp__6 (TSysCharSet() << L'f' << L'F')
-#define SynHighlighterCpp__7 (TSysCharSet() << L'l' << L'L')
-#define SynHighlighterCpp__8 (TSysCharSet() << L'l' << L'L')
-#define SynHighlighterCpp__9 (TSysCharSet() << L'f' << L'F')
-#define SynHighlighterCpp__10 (TSysCharSet() << L'u' << L'U')
-#define SynHighlighterCpp__11 (TSysCharSet() << L'x' << L'X')
-#define SynHighlighterCpp__12 (TSysCharSet() <<  \
+#define Synhighlightercpp__5 (TSysCharSet() << 'e' << 'E')
+#define Synhighlightercpp__6 (TSysCharSet() << 'f' << 'F')
+#define Synhighlightercpp__7 (TSysCharSet() << 'l' << 'L')
+#define Synhighlightercpp__8 (TSysCharSet() << 'l' << 'L')
+#define Synhighlightercpp__9 (TSysCharSet() << 'f' << 'F')
+#define Synhighlightercpp__10 (TSysCharSet() << 'u' << 'U')
+#define Synhighlightercpp__11 (TSysCharSet() << 'x' << 'X')
+#define Synhighlightercpp__12 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define SynHighlighterCpp__13 (System::Set<TtkTokenKind, tkBracket, tkOctal>() << tkComment << tkSpace << tkNull)
-#define SynHighlighterCpp__14 (TSynHighlighterCapabilities() << TSynHighlighterCapability::hcUserSettings)
+#define Synhighlightercpp__13 (System::Set<TtkTokenKind, TtkTokenKind::tkBracket, TtkTokenKind::tkOctal>() << tkComment << tkSpace << tkNull)
+#define Synhighlightercpp__14 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
 const String Keywords[130/*# range 0..129*/] = {L"__asm", L"__automated", L"__cdecl", L"__classid", L"__closure", L"__declspec", L"__dispid", L"__except", L"__export"
@@ -102,7 +100,7 @@ void __fastcall TSynCppSyn::InitIdent()
 	int stop = 0;
 	for(stop = 640 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
 	{
-		if(KeyIndices[i] ==  - 1)
+		if(KeyIndices[i] == -1)
 			fIdentFuncTable[i] = AltFunc;
 	}
 	fIdentFuncTable[352] = FuncAsm;
@@ -176,14 +174,14 @@ __fastcall TSynCppSyn::TSynCppSyn(TComponent* AOwner)
 	fBracketAttri = new TSynHighlighterAttributes(SYNS_AttrBrackets, SYNS_AttrBrackets);
 	addAttribute(fBracketAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Style = SynHighlighterCpp__0;
+	fCommentAttri->Style = Synhighlightercpp__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Style = SynHighlighterCpp__1;
+	fKeyAttri->Style = Synhighlightercpp__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
@@ -305,7 +303,7 @@ void __fastcall TSynCppSyn::AsciiCharProc()
 	{
 		if(fLine[Run] == L'\\')
 		{
-			if(CharInSet(fLine[Run + 1], SynHighlighterCpp__2))
+			if(CharInSet(fLine[Run + 1], Synhighlightercpp__2))
 				++Run;
 		}
 		++Run;
@@ -812,7 +810,7 @@ void __fastcall TSynCppSyn::NumberProc()
 			{
 				if(FTokenID != tkFloat) // number <> float. an arithmetic operator
 					return;
-				if(!CharInSet(fLine[Pred(Run)], SynHighlighterCpp__3))
+				if(!CharInSet(fLine[Pred(Run)], Synhighlightercpp__3))
 					return; // number = float, but no exponent. an arithmetic operator
 				if(!IsDigitPlusMinusChar(Succ(Run))) // invalid
 				{
@@ -840,12 +838,12 @@ void __fastcall TSynCppSyn::NumberProc()
 			case L'E':
 			if(FTokenID != tkHex)
 			{
-				if(CharInSet(fLine[Pred(Run)], SynHighlighterCpp__4)) // exponent
+				if(CharInSet(fLine[Pred(Run)], Synhighlightercpp__4)) // exponent
 				{
 					int stop = 0;
 					for(stop = Pred(Run), i = idx1; i <= stop; i++)
 					{
-						if(CharInSet(fLine[i], SynHighlighterCpp__5)) // too many exponents
+						if(CharInSet(fLine[i], Synhighlightercpp__5)) // too many exponents
 						{
 							FTokenID = tkUnknown;
 							return;
@@ -867,7 +865,7 @@ void __fastcall TSynCppSyn::NumberProc()
 				int stop = 0;
 				for(stop = Pred(Run), i = idx1; i <= stop; i++)
 				{
-					if(CharInSet(fLine[i], SynHighlighterCpp__6)) // declaration syntax error
+					if(CharInSet(fLine[i], Synhighlightercpp__6)) // declaration syntax error
 					{
 						FTokenID = tkUnknown;
 						return;
@@ -875,7 +873,7 @@ void __fastcall TSynCppSyn::NumberProc()
 				}
 				if(FTokenID == tkFloat)
 				{
-					if(CharInSet(fLine[Pred(Run)], SynHighlighterCpp__7))
+					if(CharInSet(fLine[Pred(Run)], Synhighlightercpp__7))
 						goto label8;
 				}
 				else
@@ -888,7 +886,7 @@ void __fastcall TSynCppSyn::NumberProc()
 				int stop = 0;
 				for(stop = Run - 2, i = idx1; i <= stop; i++)
 				{
-					if(CharInSet(fLine[i], SynHighlighterCpp__8)) // declaration syntax error
+					if(CharInSet(fLine[i], Synhighlightercpp__8)) // declaration syntax error
 					{
 						FTokenID = tkUnknown;
 						return;
@@ -896,7 +894,7 @@ void __fastcall TSynCppSyn::NumberProc()
 				}
 				if(FTokenID == tkFloat)
 				{
-					if(CharInSet(fLine[Pred(Run)], SynHighlighterCpp__9))
+					if(CharInSet(fLine[Pred(Run)], Synhighlightercpp__9))
 						goto label9;
 				}
 			}
@@ -910,7 +908,7 @@ void __fastcall TSynCppSyn::NumberProc()
 				int stop = 0;
 				for(stop = Pred(Run), i = idx1; i <= stop; i++)
 				{
-					if(CharInSet(fLine[i], SynHighlighterCpp__10)) // declaration syntax error
+					if(CharInSet(fLine[i], Synhighlightercpp__10)) // declaration syntax error
 					{
 						FTokenID = tkUnknown;
 						return;
@@ -927,7 +925,7 @@ void __fastcall TSynCppSyn::NumberProc()
 			else
  // invalid char
 			{
-				if(!IsIdentChar(fLine[Succ(Run)]) && CharInSet(fLine[Succ(idx1)], SynHighlighterCpp__11))
+				if(!IsIdentChar(fLine[Succ(Run)]) && CharInSet(fLine[Succ(idx1)], Synhighlightercpp__11))
 				{
 					++Run; // highlight 'x' too
 					FTokenID = tkUnknown;
@@ -1015,7 +1013,7 @@ void __fastcall TSynCppSyn::PointProc()
 	}
 	else
 	{
-		if(CharInSet(fLine[Run + 1], SynHighlighterCpp__12)) // float
+		if(CharInSet(fLine[Run + 1], Synhighlightercpp__12)) // float
 		{
 			--Run; // numberproc must see the point
 			NumberProc();
@@ -1061,7 +1059,7 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -1082,7 +1080,7 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -1147,9 +1145,9 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(int)GetLineRange(LinesToScan, (int) Line) == rsAnsiC)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsAnsiC)
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsiC)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsiC)
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -1157,7 +1155,7 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		}
 		else
 		{
-			if((TRangeState)(int)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsiC)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsiC)
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -1637,7 +1635,7 @@ TtkTokenKind __fastcall TSynCppSyn::GetTokenID()
 {
 	TtkTokenKind result = tkBracket;
 	result = FTokenID;
-	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(SynHighlighterCpp__13.Contains(FTokenID)))
+	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercpp__13.Contains(FTokenID)))
 		result = tkAsm;
 	return result;
 }
@@ -1721,7 +1719,7 @@ void __fastcall TSynCppSyn::ResetRange()
 
 void __fastcall TSynCppSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(int)Value;
+	FRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynCppSyn::EnumUserSettings(TStrings* Settings)
@@ -1776,7 +1774,7 @@ bool __fastcall TSynCppSyn::UseUserSettings(int settingIndex)
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = (int) Name.Length(), i = 1; i <= stop; i++)
+				for(stop = Name.Length(), i = 1; i <= stop; i++)
 				{
 					if(Name[i] == L' ')
 						Name[i] = L'_';
@@ -1924,7 +1922,7 @@ String __fastcall TSynCppSyn::GetLanguageName()
 TSynHighlighterCapabilities __fastcall TSynCppSyn::GetCapabilities()
 {
 	TSynHighlighterCapabilities result;
-	result = inherited::GetCapabilities() + SynHighlighterCpp__14;
+	result = inherited::GetCapabilities() + Synhighlightercpp__14;
 	return result;
 }
 
@@ -1982,16 +1980,8 @@ void SynHighlighterCpp_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynCppSyn));
 }
-class SynHighlighterCpp_unit
-{
-public:
-	SynHighlighterCpp_unit()
-	{
-		SynHighlighterCpp_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterCpp_unit _SynHighlighterCpp_unit;
 
 }  // namespace SynHighlighterCpp
 
