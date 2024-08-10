@@ -14,7 +14,7 @@ __fastcall TForm1::TForm1(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TForm1* Form1 = nullptr;
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 void __fastcall TForm1::actCodeFoldingExecute(TObject* Sender)
@@ -291,7 +291,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		int i = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), i = StartCol; i <= stop; i++)
+		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
 			if(CurLine[i] == Character)
         // Char must have proper highlighting (ignore stuff inside comments...)
@@ -312,7 +312,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		int Col = 0;
 		int stop = 0;
 		result = false;
-		for(stop = (int) CurLine.Length(), Col = 1; Col <= stop; Col++)
+		for(stop = CurLine.Length(), Col = 1; Col <= stop; Col++)
 		{
       // We've found a starting character
 			if(CurLine[Col] == L'{')
@@ -377,9 +377,9 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((Synhighlightercpp::TRangeState)(int)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line] == Synhighlightercpp::rsAnsiC)
+		if((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line] == Synhighlightercpp::rsAnsiC)
 		{
-			if((Line == 0) || ((Synhighlightercpp::TRangeState)(int)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] != Synhighlightercpp::rsAnsiC))
+			if((Line == 0) || ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] != Synhighlightercpp::rsAnsiC))
 				TopFoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				TopFoldRanges->NoFoldInfo((int) (Line + 1));
@@ -387,7 +387,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		}
 		else
 		{
-			if((Line > 0) && ((Synhighlightercpp::TRangeState)(int)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] == Synhighlightercpp::rsAnsiC))
+			if((Line > 0) && ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] == Synhighlightercpp::rsAnsiC))
 			{
 				TopFoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;

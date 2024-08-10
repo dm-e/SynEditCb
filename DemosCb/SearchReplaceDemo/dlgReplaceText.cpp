@@ -9,7 +9,7 @@ using namespace d2c_system;
 __fastcall TTextReplaceDialog::TTextReplaceDialog(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 /* TTextReplaceDialog */
@@ -59,7 +59,7 @@ void __fastcall TTextReplaceDialog::FormCloseQuery(TObject* Sender, bool& CanClo
 		if(s != L"")
 		{
 			i = cbReplaceText->Items->IndexOf(s);
-			if(i >  - 1)
+			if(i > -1)
 			{
 				cbReplaceText->Items->Delete(i);
 				cbReplaceText->Items->Insert(0, s);

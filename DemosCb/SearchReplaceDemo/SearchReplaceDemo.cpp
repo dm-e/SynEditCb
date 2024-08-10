@@ -1,37 +1,35 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
+#include <Vcl.Forms.hpp>
 USEFORM("dlgConfirmReplace.cpp", ConfirmReplaceDialog);
 USEFORM("dlgSearchText.cpp", TextSearchDialog);
 USEFORM("frmMain.cpp", SearchReplaceDemoForm);
 //---------------------------------------------------------------------------
-int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
+	HInstance = hInstance;
 	try
 	{
 		Application->Initialize();
-		Application->MainFormOnTaskBar = true;
-		Application->CreateForm(__classid(TSearchReplaceDemoForm), &SearchReplaceDemoForm);
+		Application->CreateForm(__classid(TSearchReplaceDemoForm), (void**)&SearchReplaceDemoForm);
 		Application->Run();
 	}
-	catch (Exception &exception)
+	catch (Exception& exception)
 	{
-		Application->ShowException(&exception);
+	  Application->ShowException(&exception);
 	}
 	catch (...)
 	{
 		try
 		{
-			throw Exception("");
+		  throw Exception("");
 		}
-		catch (Exception &exception)
+		catch (Exception& exception)
 		{
-			Application->ShowException(&exception);
+		  Application->ShowException(&exception);
 		}
 	}
 	return 0;
 }
-//---------------------------------------------------------------------------

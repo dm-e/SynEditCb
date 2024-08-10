@@ -10,7 +10,7 @@ __fastcall TWorkbookMainForm::TWorkbookMainForm(TComponent* AOwner) : inherited(
 
 
 TWorkbookMainForm* WorkbookMainForm = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 /* TWorkbookMainForm */

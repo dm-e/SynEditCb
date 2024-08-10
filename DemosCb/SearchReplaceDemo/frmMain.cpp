@@ -11,14 +11,14 @@
 
 using namespace std;
 using namespace d2c_system;
-#define FrmMain__0 (TSynSearchOptions() << TSynSearchOption::ssoPrompt << TSynSearchOption::ssoReplace << TSynSearchOption::ssoReplaceAll)
-#define FrmMain__1 TSynSearchOptions()
+#define Frmmain__0 (TSynSearchOptions() << ssoPrompt << ssoReplace << ssoReplaceAll)
+#define Frmmain__1 TSynSearchOptions()
 
 __fastcall TSearchReplaceDemoForm::TSearchReplaceDemoForm(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TSearchReplaceDemoForm* SearchReplaceDemoForm = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
   // options - to be saved to the registry
@@ -82,19 +82,19 @@ void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool 
 	TSynSearchOptions Options;
 	StatusBar->SimpleText = L"";
 	if(AReplace)
-		Options = FrmMain__0;
+		Options = Frmmain__0;
 	else
-		Options = FrmMain__1;
+		Options = Frmmain__1;
 	if(ABackwards)
-		Options << TSynSearchOption::ssoBackwards;
+		Options << ssoBackwards;
 	if(gbSearchCaseSensitive)
-		Options << TSynSearchOption::ssoMatchCase;
+		Options << ssoMatchCase;
 	if(!fSearchFromCaret)
-		Options << TSynSearchOption::ssoEntireScope;
+		Options << ssoEntireScope;
 	if(gbSearchSelectionOnly)
-		Options << TSynSearchOption::ssoSelectedOnly;
+		Options << ssoSelectedOnly;
 	if(gbSearchWholeWords)
-		Options << TSynSearchOption::ssoWholeWord;
+		Options << ssoWholeWord;
 	if(gbSearchRegex)
 		SynEditor->SearchEngine = SynEditRegexSearch;
 	else
@@ -103,7 +103,7 @@ void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool 
 	{
 		MessageBeep((UINT) MB_ICONASTERISK);
 		StatusBar->SimpleText = STextNotFound;
-		if(Options.Contains(TSynSearchOption::ssoBackwards))
+		if(Options.Contains(ssoBackwards))
 			SynEditor->BlockEnd = SynEditor->BlockBegin;
 		else
 			SynEditor->BlockBegin = SynEditor->BlockEnd;
@@ -229,33 +229,29 @@ void __fastcall TSearchReplaceDemoForm::SynEditorReplaceText(TObject* Sender, co
 	TPoint APos = {};
 	TRect EditRect = {};
 	if(ASearch == AReplace)
-		Action = TSynReplaceAction::raSkip;
+		Action = raSkip;
 	else
 	{
 		APos = SynEditor->ClientToScreen(SynEditor->RowColumnToPixels(SynEditor->BufferToDisplayPos(BufferCoord(Column, Line))));
 		EditRect = ClientRect;
-		TRect tmp = ClientToScreen(EditRect.TopLeft());
-		EditRect.Top = tmp.Top;
-		EditRect.Left = tmp.Left;
-		tmp = ClientToScreen(EditRect.BottomRight());
-		EditRect.Bottom = tmp.Bottom;
-		EditRect.Right = tmp.Right;
+		EditRect.TopLeft() = ClientToScreen(EditRect.TopLeft());
+		EditRect.BottomRight() = ClientToScreen(EditRect.BottomRight());
 		if(ConfirmReplaceDialog == nullptr)
 			ConfirmReplaceDialog = new TConfirmReplaceDialog(Application);
 		ConfirmReplaceDialog->PrepareShow(EditRect, APos.X, APos.Y, APos.Y + SynEditor->LineHeight, ASearch);
 		switch(ConfirmReplaceDialog->ShowModal())
 		{
 			case mrYes:
-			Action = TSynReplaceAction::raReplace;
+			Action = raReplace;
 			break;
 			case mrYesToAll:
-			Action = TSynReplaceAction::raReplaceAll;
+			Action = raReplaceAll;
 			break;
 			case mrNo:
-			Action = TSynReplaceAction::raSkip;
+			Action = raSkip;
 			break;
 			default:
-			Action = TSynReplaceAction::raCancel;
+			Action = raCancel;
 			break;
 		}
 	}

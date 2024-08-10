@@ -18,7 +18,7 @@ class TSearchTextHightlighterSynEditPlugin : public TSynEditPlugin
 {
 
 public:
-	typedef TSynEditPlugin inherited;	
+	typedef TSynEditPlugin inherited;
 private:
 	TSynHighlighterAttributes* FAttribute;
 protected:
@@ -31,5 +31,6 @@ public:
 	__fastcall TSearchTextHightlighterSynEditPlugin(TCustomSynEdit* AOwner, TPlugInHandlers AHandlers);
 	__fastcall TSearchTextHightlighterSynEditPlugin();
 };
+
 #endif // plgSearchHighlighterH
 

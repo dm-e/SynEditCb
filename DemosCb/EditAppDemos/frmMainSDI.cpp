@@ -10,7 +10,7 @@ __fastcall TSDIMainForm::TSDIMainForm(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TSDIMainForm* SDIMainForm = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 /* TSDIMainForm */

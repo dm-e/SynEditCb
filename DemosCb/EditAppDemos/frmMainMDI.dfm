@@ -2,7 +2,7 @@ inherited MDIMainForm: TMDIMainForm
   Caption = 'Multiple Document Edit Demo'
   FormStyle = fsMDIForm
   WindowMenu = mWindow
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
   TextHeight = 13
   inherited mnuMain: TMainMenu
     object mWindow: TMenuItem

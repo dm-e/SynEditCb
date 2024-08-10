@@ -11,7 +11,7 @@ __fastcall TForm1::TForm1(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TForm1* Form1 = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender, UnicodeString& AString, int& X, int& Y, bool& CanExecute)
@@ -44,7 +44,7 @@ void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender
     //go back from the cursor and find the first open paren
 		TmpX = with0->CaretX;
 		if(TmpX > locline.Length())
-			TmpX = (int) locline.Length();
+			TmpX = locline.Length();
 		else
 			--TmpX;
 		FoundMatch = false;
@@ -92,7 +92,7 @@ void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender
 								--TmpX;
 							++TmpX;
 							Lookup = UpperCase(locline.SubString(TmpX, SavePos - TmpX + 1));
-							FoundMatch = LookupList->IndexOf(Lookup) >  - 1;
+							FoundMatch = LookupList->IndexOf(Lookup) > -1;
 							if(!(FoundMatch))
 							{
 								TmpX = startX;

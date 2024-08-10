@@ -4,9 +4,9 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
+USEFORM("dmCommands.cpp", CommandsDataModule); /* TDataModule: File Type */
 USEFORM("frmEditor.cpp", EditorForm);
 USEFORM("frmMain.cpp", MainForm);
-USEFORM("dmCommands.cpp", CommandsDataModule); /* TDataModule: File Type */
 USEFORM("frmMainMDI.cpp", MDIMainForm);
 USEFORM("..\SearchReplaceDemo\dlgConfirmReplace.cpp", ConfirmReplaceDialog);
 USEFORM("..\SearchReplaceDemo\dlgSearchText.cpp", TextSearchDialog);

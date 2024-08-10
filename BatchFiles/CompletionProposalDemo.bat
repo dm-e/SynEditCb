@@ -1,2 +1,2 @@
-D:\develop\Delphi2Cpp\Win32\Debug\Delphi2Cpp.exe -p CompletionProposalDemo.prj -s ..\Demos\CompletionProposalDemo\*.pas;*.dpr
+"C:\Program Files (x86)\Delphi2CB\Delphi2CB.exe" -p CompletionProposalDemo.prj -s ..\Demos\CompletionProposalDemo\*.pas;*.dpr
 Pause

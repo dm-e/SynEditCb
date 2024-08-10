@@ -5,20 +5,20 @@
 
 using namespace std;
 using namespace d2c_system;
-#define FormMain_ctCode__0 (TSynCompletionOptions() << TSynCompletionOption::scoCaseSensitive)
-#define FormMain_ctCode__1 (TSynCompletionOptions() << TSynCompletionOption::scoUsePrettyText)
-#define FormMain_ctCode__2 (TSynCompletionOptions() << TSynCompletionOption::scoUseInsertList)
-#define FormMain_ctCode__3 (TSynCompletionOptions() << TSynCompletionOption::scoLimitToMatchedText)
-#define FormMain_ctCode__4 (TSynCompletionOptions() << TSynCompletionOption::scoCaseSensitive)
-#define FormMain_ctCode__5 (TSynCompletionOptions() << TSynCompletionOption::scoUsePrettyText)
-#define FormMain_ctCode__6 (TSynCompletionOptions() << TSynCompletionOption::scoUseInsertList)
-#define FormMain_ctCode__7 (TSynCompletionOptions() << TSynCompletionOption::scoLimitToMatchedText)
+#define Formmain_ctcode__0 (TSynCompletionOptions() << scoCaseSensitive)
+#define Formmain_ctcode__1 (TSynCompletionOptions() << scoUsePrettyText)
+#define Formmain_ctcode__2 (TSynCompletionOptions() << scoUseInsertList)
+#define Formmain_ctcode__3 (TSynCompletionOptions() << scoLimitToMatchedText)
+#define Formmain_ctcode__4 (TSynCompletionOptions() << scoCaseSensitive)
+#define Formmain_ctcode__5 (TSynCompletionOptions() << scoUsePrettyText)
+#define Formmain_ctcode__6 (TSynCompletionOptions() << scoUseInsertList)
+#define Formmain_ctcode__7 (TSynCompletionOptions() << scoLimitToMatchedText)
 
 __fastcall TForm1::TForm1(TComponent* AOwner) : inherited(AOwner) {}
 
 
 TForm1* Form1 = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 void __fastcall TForm1::FormCreate(TObject* Sender)
@@ -192,16 +192,16 @@ void __fastcall TForm1::CheckBoxClick(TObject* Sender)
 			switch(((TCheckBox*) Sender)->Tag)
 			{
 				case cCaseSensitive:
-				scpDemo->Options = scpDemo->Options + FormMain_ctCode__0;
+				scpDemo->Options = scpDemo->Options + Formmain_ctcode__0;
 				break;
 				case cPrettyText:
-				scpDemo->Options = scpDemo->Options + FormMain_ctCode__1;
+				scpDemo->Options = scpDemo->Options + Formmain_ctcode__1;
 				break;
 				case cInsertList:
-				scpDemo->Options = scpDemo->Options + FormMain_ctCode__2;
+				scpDemo->Options = scpDemo->Options + Formmain_ctcode__2;
 				break;
 				case cMatchedText:
-				scpDemo->Options = scpDemo->Options + FormMain_ctCode__3;
+				scpDemo->Options = scpDemo->Options + Formmain_ctcode__3;
 				break;
 				default:
 				  ;
@@ -213,16 +213,16 @@ void __fastcall TForm1::CheckBoxClick(TObject* Sender)
 			switch(((TCheckBox*) Sender)->Tag)
 			{
 				case cCaseSensitive:
-				scpDemo->Options = scpDemo->Options - FormMain_ctCode__4;
+				scpDemo->Options = scpDemo->Options - Formmain_ctcode__4;
 				break;
 				case cPrettyText:
-				scpDemo->Options = scpDemo->Options - FormMain_ctCode__5;
+				scpDemo->Options = scpDemo->Options - Formmain_ctcode__5;
 				break;
 				case cInsertList:
-				scpDemo->Options = scpDemo->Options - FormMain_ctCode__6;
+				scpDemo->Options = scpDemo->Options - Formmain_ctcode__6;
 				break;
 				case cMatchedText:
-				scpDemo->Options = scpDemo->Options - FormMain_ctCode__7;
+				scpDemo->Options = scpDemo->Options - Formmain_ctcode__7;
 				break;
 				default:
 				  ;

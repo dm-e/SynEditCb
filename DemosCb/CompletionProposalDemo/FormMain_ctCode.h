@@ -63,8 +63,10 @@ private:
 	TSynEdit* SynEdit1;
 public:
     /* Public declarations */
-	typedef TForm inherited;	
+	typedef TForm inherited;
 	__fastcall TForm1(TComponent* AOwner);
 };
 extern PACKAGE TForm1* Form1;
+
 #endif // FormMain_ctCodeH
+

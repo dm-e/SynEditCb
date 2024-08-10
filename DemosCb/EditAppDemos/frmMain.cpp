@@ -11,7 +11,7 @@ using namespace d2c_system;
 __fastcall TMainForm::TMainForm(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 /* TMainForm */

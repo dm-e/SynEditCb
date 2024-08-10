@@ -26,7 +26,6 @@ __fastcall TSearchTextHightlighterSynEditPlugin::~TSearchTextHightlighterSynEdit
 	// inherited;
 }
 
-
 void __fastcall TSearchTextHightlighterSynEditPlugin::AfterPaint(TCanvas* ACanvas, const TRect& AClip, int FirstLine, int LastLine)
 {
 	String SearchText;
@@ -74,7 +73,7 @@ void __fastcall TSearchTextHightlighterSynEditPlugin::AfterPaint(TCanvas* ACanva
 					continue;
 				SearchResultText = Editor->Lines->Strings[LineIndex - 1].SubString(Editor->SearchEngine->Results[ItemIndex], Editor->SearchEngine->Lengths[ItemIndex]);
 				Pt = Editor->RowColumnToPixels(Editor->BufferToDisplayPos(CurrCoord));
-				Rct = Rect(Pt.X, Pt.Y, (int) (Pt.X + Editor->CharWidth * SearchResultText.Length()), Pt.Y + Editor->LineHeight);
+				Rct = Rect(Pt.X, Pt.Y, Pt.X + Editor->CharWidth * SearchResultText.Length(), Pt.Y + Editor->LineHeight);
 				ACanvas->FillRect(Rct);
 				ACanvas->TextRect(Rct, Pt.X, Pt.Y, SearchResultText);
 			}

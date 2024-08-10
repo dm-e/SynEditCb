@@ -1,35 +1,36 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
+#include <Vcl.Forms.hpp>
+#include <Vcl.Themes.hpp>
+#include "uHighlighterProcs.h"
 USEFORM("Unit1.cpp", Form1);
 //---------------------------------------------------------------------------
-int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
+	HInstance = hInstance;
 	try
 	{
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
-		Application->CreateForm(__classid(TForm1), &Form1);
+		Application->CreateForm(__classid(TForm1), (void**)&Form1);
 		Application->Run();
 	}
-	catch (Exception &exception)
+	catch (Exception& exception)
 	{
-		Application->ShowException(&exception);
+	  Application->ShowException(&exception);
 	}
 	catch (...)
 	{
 		try
 		{
-			throw Exception("");
+		  throw Exception("");
 		}
-		catch (Exception &exception)
+		catch (Exception& exception)
 		{
-			Application->ShowException(&exception);
+		  Application->ShowException(&exception);
 		}
 	}
 	return 0;
 }
-//---------------------------------------------------------------------------

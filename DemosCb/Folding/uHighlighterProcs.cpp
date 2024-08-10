@@ -24,7 +24,7 @@ void __fastcall GetHighlighters(TComponent* AOwner, TStringList* AHighlighters, 
 				continue;
 			Highlighter = (TSynCustomHighlighter*) AOwner->Components[i];
       // only one highlighter for each language
-			if(AHighlighters->IndexOf(Highlighter->GetLanguageName()) ==  - 1)
+			if(AHighlighters->IndexOf(Highlighter->GetLanguageName()) == -1)
 				AHighlighters->AddObject(Highlighter->GetLanguageName(), Highlighter);
 		}
 		AHighlighters->Sort();
@@ -64,7 +64,7 @@ TSynCustomHighlighter* __fastcall GetHighlighterFromFileExt(TStringList* AHighli
 	TSynCustomHighlighter* Highlighter = nullptr;
 	String Filter;
 	Extension = LowerCase(Extension);
-	ExtLen = (int) Extension.Length();
+	ExtLen = Extension.Length();
 	if(ASSIGNED(AHighlighters) && (ExtLen > 0))
 	{
 		int stop = 0;

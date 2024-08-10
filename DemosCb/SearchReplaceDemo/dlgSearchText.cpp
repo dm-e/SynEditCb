@@ -9,7 +9,7 @@ using namespace d2c_system;
 __fastcall TTextSearchDialog::TTextSearchDialog(TComponent* AOwner) : inherited(AOwner) {}
 
 
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 
 /* TTextSearchDialog */
@@ -132,7 +132,7 @@ void __fastcall TTextSearchDialog::FormCloseQuery(TObject* Sender, bool& CanClos
 		if(s != L"")
 		{
 			i = cbSearchText->Items->IndexOf(s);
-			if(i >  - 1)
+			if(i > -1)
 			{
 				cbSearchText->Items->Delete(i);
 				cbSearchText->Items->Insert(0, s);

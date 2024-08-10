@@ -10,7 +10,7 @@ __fastcall TConfirmReplaceDialog::TConfirmReplaceDialog(TComponent* AOwner) : in
 
 
 TConfirmReplaceDialog* ConfirmReplaceDialog = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 const System::Char SAskReplaceText[] = L"Replace this occurence of \"%s\"?";
 
@@ -35,7 +35,7 @@ void __fastcall TConfirmReplaceDialog::PrepareShow(const TRect& cAEditorRect, in
 	nW = AEditorRect.Right - AEditorRect.Left;
 	nH = AEditorRect.Bottom - AEditorRect.Top;
 	if(nW <= Width)
-		X = AEditorRect.Left - (int)((Width - nW) / 2);
+		X = AEditorRect.Left - (int)((Width - nW) / /*div*/ 2);
 	else
 	{
 		if(X + Width > AEditorRect.Right)
