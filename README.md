@@ -12,31 +12,19 @@ The Delphi2CB project files used for this are located in the “BatchFiles” folder
 
 The directories of the C++ code are designed in such a way that simple code comparisons are possible. In the following, the directories of the original code and the converted code are shown and explained:
 
-Demos				|  original Delphi code and translated C++ code using the installed SynEdit components
-
-DemosCb			|  using the code translated for 32 bit with the classic compiler and with manually created dfm replacement code
-
-DemosCb64		|  using the code translated for 64 bit with the modern compiler and with automatic translation of the dfm files
-
-Source			|  original Delphi code
-
-SourceRaw		|  result of the automatic conversion for 32 bit with the classic compiler
-
-SourceRaw64	|  result of the automatic conversion for 64 bit with the modern compiler
-
-SourceRun		|  post-processed, compiing code for 32 bit with the classic compiler
-
-SourceRun64	|  post-processed, compiing code for 64 bit with the modern compiler
-
-SynGen			|  original Delphi code
-
-SynGenRaw		|  result of the automatic conversion for 32 bit with the classic compiler
-
-SynGenRun		|  post-processed, compiing code for 32 bit with the classic compiler
-
-TestCpp			|  project to assert that all files in SourceRun compile with the classic 32 bit compiler
-
-TestCpp64		|  project to assert that all files in SourceRun64 compile with the modern 64 bit compiler 
+| Demos				|  original Delphi code and translated C++ code using the installed SynEdit components |
+| DemosCb			|  using the code translated for 32 bit with the classic compiler and with manually created dfm replacement code |
+| DemosCb64		|  using the code translated for 64 bit with the modern compiler and with automatic translation of the dfm files |
+| Source			|  original Delphi code |
+| SourceRaw		|  result of the automatic conversion for 32 bit with the classic compiler |
+| SourceRaw64	|  result of the automatic conversion for 64 bit with the modern compiler |
+| SourceRun		|  post-processed, compiing code for 32 bit with the classic compiler |
+| SourceRun64	|  post-processed, compiing code for 64 bit with the modern compiler |
+| SynGen			|  original Delphi code |
+| SynGenRaw		|  result of the automatic conversion for 32 bit with the classic compiler |
+| SynGenRun		|  post-processed, compiing code for 32 bit with the classic compiler |
+| TestCpp			|  project to assert that all files in SourceRun compile with the classic 32 bit compiler |
+| TestCpp64		|  project to assert that all files in SourceRun64 compile with the modern 64 bit compiler  |
 
 
 The demos were only tested sporadically. I'm presentig it here in hopes of getting feedback on bugs and suggestions for improvments.
