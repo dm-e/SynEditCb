@@ -65,9 +65,6 @@
 #include "SynHighlighterST.h"
 #include "SynHighlighterLDraw.h"
 #include "SynURIOpener.h"
-#include "SynHighlighterLLVM.h"
-#include "SynHighlighterRexx.h"
-#include "SynHighlighterWebIDL.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -142,9 +139,6 @@ void __fastcall Synedit_init()
 	Synhighlighterst::SynHighlighterST_initialization();
 	Synhighlighterldraw::SynHighlighterLDraw_initialization();
 	Synuriopener::SynURIOpener_initialization();
-	Synhighlighterllvm::SynHighlighterLLVM_initialization();
-	Synhighlighterrexx::SynHighlighterRexx_initialization();
-	Synhighlighterwebidl::SynHighlighterWebIDL_initialization();
 }
 
 

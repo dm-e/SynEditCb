@@ -43,7 +43,7 @@ namespace Synhighlighterdws
 #define Synhighlighterdws__16 (TRangeStates() << rsBor)
 #define Synhighlighterdws__17 (TRangeStates() << rsDirective)
 #define Synhighlighterdws__18 (TSynHighlighterCapabilities() << hcUserSettings)
-#define Synhighlighterdws__19 (System::Set<unsigned char, 0, 255>() << L'_' <<  \
+#define Synhighlighterdws__19 (TSysCharSet() << L'_' <<  \
           48 << 49 << 50 << 51 << 52 << 53 <<  \
           54 << 55 << 56 << 57 <<  \
           65 << 66 << 67 << 68 << 69 << 70 <<  \

@@ -145,7 +145,7 @@ The SynHighlighterPython implements a highlighter for Python for the SynEdit pro
 //++ CodeFolding
 
 //-- CodeFolding
-const System::Set<unsigned char, 0, 255> ALPHA_CHARS = System::Set<unsigned char, 0, 255>() << L'_' <<  \
+const TSysCharSet ALPHA_CHARS = TSysCharSet() << L'_' <<  \
           97 << 98 << 99 << 100 << 101 << 102 <<  \
           103 << 104 << 105 << 106 << 107 << 108 <<  \
           109 << 110 << 111 << 112 << 113 << 114 <<  \

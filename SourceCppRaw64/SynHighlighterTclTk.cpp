@@ -889,7 +889,7 @@ String __fastcall TSynTclTkSyn::GetFriendlyLanguageName()
 
 void __fastcall TSynTclTkSyn::MinusProc()
 {
-	const System::Set<unsigned char, 0, 255> EmptyChars = System::Set<unsigned char, 0, 255>() << L' ' << L'\x09' << L'\x00' << L'\x0a' << L'\x0d';
+	const TSysCharSet EmptyChars = TSysCharSet() << L' ' << L'\x09' << L'\x00' << L'\x0a' << L'\x0d';
 	bool OK = false;
 	OK = false;
 	++Run;
