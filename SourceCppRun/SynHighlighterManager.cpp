@@ -158,7 +158,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 					compLeft = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Lo;
 					compTop = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Hi;
 					compRect = Rect(compLeft, compTop, compLeft + 31, compTop + 31);
-					if(IntersectRect(&interRect, testRect, compRect))
+					if(IntersectRect(&interRect, &testRect, &compRect))
 					{
 						result = true;
 						return result;

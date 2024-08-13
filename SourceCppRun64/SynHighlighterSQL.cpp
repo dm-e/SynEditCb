@@ -1,0 +1,2574 @@
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "SynHighlighterSQL.h"
+#include "SynEditStrConst.h"
+#include "d2c_convert.h"
+
+using namespace std;
+using namespace d2c_system;
+using namespace Synedithighlighter;
+using namespace Syneditstrconst;
+using namespace Synhighlighterhashentries;
+using namespace System;
+
+namespace Synhighlightersql
+{
+#define Synhighlightersql__0 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__1 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__3 (TFontStyles() << TFontStyle::fsBold << TFontStyle::fsUnderline)
+#define Synhighlightersql__4 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synhighlightersql__7 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__8 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__10 (TFontStyles() << TFontStyle::fsBold)
+#define Synhighlightersql__11 (TSysCharSet() << '=' << '&')
+#define Synhighlightersql__12 (TSysCharSet() << '=' << '>')
+#define Synhighlightersql__13 (TSysCharSet() << '=' << '>')
+#define Synhighlightersql__14 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkComment << tkConsoleOutput)
+#define Synhighlightersql__15 (TSysCharSet() << '=' << '|')
+#define Synhighlightersql__16 (TSysCharSet() << '=' << '+')
+#define Synhighlightersql__17 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__18 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+#define Synhighlightersql__19 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMySQL << sqlOracle)
+#define Synhighlightersql__20 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlIngres)
+#define Synhighlightersql__21 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkDataType << tkException << tkFunction << tkKey << tkPLSQL << tkDefaultPackage)
+#define Synhighlightersql__22 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlNexus)
+#define Synhighlightersql__23 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
+
+
+//---"Standard" (ANSI SQL keywords (Version 1, 2 and 3) (www.sql.org)-----------
+const String StandardKW = L"absolute,action,active,actor,add,after,alias,all,allocate,alter,"
+	           L"and,any,are,as,asc,ascending,assertion,async,at,attributes,auto,"
+	           L"base_name,before,begin,between,bit,bit_length,boolean,both,breadth,by,"
+	           L"cache,call,cascade,cascaded,case,cast,catalog,char_length,"
+	           L"character_length,check,coalesce,collate,collation,column,commit,"
+	           L"committed,completion,computed,conditional,connect,connection,constraint,"
+	           L"constraints,containing,convert,corresponding,count,create,cross,current,"
+	           L"current_date,current_path,current_time,current_timestamp,current_user,"
+	           L"cursor,cycle,data,database,date,day,deallocate,debug,declare,default,"
+	           L"deferrable,deferred,delete,depth,desc,descending,describe,descriptor,"
+	           L"destroy,diagnostics,dictionary,disconnect,distinct,do,domain,"
+	           L"drop,each,element,else,elseif,end,end-exec,entry_point,equals,escape,"
+	           L"except,exception,execute,exists,exit,external,extract,factor,false,"
+	           L"filter,first,for,foreign,from,full,function,general,generator,get,"
+	           L"global,grant,group,having,hold,hour,identity,if,ignore,immediate,in,"
+	           L"inactive,index,initially,inner,input,insensitive,insert,instead,"
+	           L"intersect,interval,into,is,isolation,join,key,last,leading,leave,left,"
+	           L"less,level,like,limit,list,local,loop,lower,match,merge,minute,modify,"
+	           L"month,names,national,natural,nchar,new,new_table,next,no,none,not,null,"
+	           L"nullif,object,octet_length,of,off,old,old_table,on,only,operation,"
+	           L"operator,operators,or,order,others,outer,output,overlaps,pad,"
+	           L"parameter,parameters,partial,password,path,pendant,plan,position,"
+	           L"postfix,prefix,preorder,prepare,preserve,primary,prior,private,"
+	           L"privileges,procedure,protected,read,recursive,ref,referencing,relative,"
+	           L"replace,resignal,restrict,retain,return,returns,revoke,right,role,"
+	           L"rollback,routine,row,rows,savepoint,schema,scroll,search,second,select,"
+	           L"sensitive,sequence,session,session_user,set,shadow,shared,signal,"
+	           L"similar,size,snapshot,some,space,sqlexception,sqlstate,sqlwarning,start,"
+	           L"state,structure,substring,suspend,symbol,system_user,table,temporary,"
+	           L"term,test,then,there,time,timestamp,timezone_hour,timezone_minute,to,"
+	           L"trailing,transaction,translate,translation,trigger,trim,true,tuple,type,"
+	           L"uncommitted,under,union,unique,unknown,update,upper,usage,user,using,"
+	           L"value,varchar,variable,varying,view,virtual,visible,wait,when,where,"
+	           L"while,with,without,work,write,year,zone";
+
+//---Sybase keywords------------------------------------------------------------
+const String SybaseKW = L"absolute,action,add,after,alias,all,allocate,alter,and,any,are,"
+	           L"arith_overflow,as,asc,assertion,async,at,authorization,avg,before,begin,"
+	           L"between,bit,bit_length,boolean,both,breadth,break,browse,bulk,by,call,"
+	           L"cascade,cascaded,case,cast,catalog,char,char_convert,char_length,"
+	           L"character,character_length,check,checkpoint,close,clustered,coalesce,"
+	           L"collate,collation,column,commit,completion,compute,confirm,"
+	           L"connect,connection,constraint,constraints,continue,controlrow,convert,"
+	           L"corresponding,count,create,cross,current,current_date,current_time,"
+	           L"current_timestamp,current_user,cursor,cycle,data,database,date,day,dbcc,"
+	           L"deallocate,dec,decimal,declare,default,deferrable,deferred,delete,depth,"
+	           L"desc,describe,descriptor,diagnostics,dictionary,dis,disconnect,distinct,"
+	           L"domain,double,drop,dummy,dump,each,else,elseif,en,end,endtran,equals,"
+	           L"errlvl,errordata,errorexit,escape,except,exception,exclusive,exec,"
+	           L"execute,exists,exit,exp_row_size,external,extract,false,fetch,"
+	           L"fillfactor,first,float,for,foreign,found,from,full,general,get,global,"
+	           L"go,goto,grant,group,having,holdlock,hour,identity,identity_gap,"
+	           L"identity_insert,identity_start,if,ignore,immediate,in,index,indicator,"
+	           L"initially,inner,input,insensitive,insert,install,int,integer,intersect,"
+	           L"interval,into,is,isolation,jar,join,key,kill,language,last,leading,"
+	           L"leave,left,less,level,like,limit,lineno,load,local,lock,loop,lower,"
+	           L"match,max,max_rows_per_page,min,minute,mirror,mirrorexit,modify,module,"
+	           L"month,names,national,natural,nchar,new,next,no,noholdlock,nonclustered,"
+	           L"none,not,null,nullif,numeric,numeric_truncation,object,"
+	           L"octet_length,of,off,offsets,oid,old,on,once,online,only,open,operation,"
+	           L"operators,option,or,order,others,outer,output,over,overlaps,pad,"
+	           L"parameters,partial,partition,pendant,perm,permanent,plan,position,"
+	           L"precision,preorder,prepare,preserve,primary,print,prior,private,"
+	           L"privileges,proc,procedure,processexit,protected,proxy_table,public,"
+	           L"quiesce,raiserror,read,readpast,readtext,real,reconfigure,recursive,"
+	           L"ref,reference,referencing,relative,remove,reorg,replace,replication,"
+	           L"reservepagegap,resignal,restrict,return,returns,revoke,right,role,"
+	           L"rollback,routine,row,rowcount,rows,rule,save,savepoint,schema,scroll,"
+	           L"search,second,section,select,sensitive,sequence,session_user,set,"
+	           L"setuser,shared,shutdown,signal,similar,size,smallint,some,space,sql,"
+	           L"sqlcode,sqlerror,sqlexception,sqlstate,statistics,stripe,structure,"
+	           L"substring,sum,syb_identity,syb_restree,system_user,table,temp,temporary,"
+	           L"test,textsize,then,there,time,timestamp,timezone_hour,timezone_minute,"
+	           L"to,trailing,tran,transaction,translate,translation,trigger,trim,true,"
+	           L"truncate,tsequal,type,under,union,unique,unknown,unpartition,update,"
+	           L"upper,usage,use,user,user_option,using,value,values,varchar,variable,"
+	           L"varying,view,virtual,visible,wait,waitfor,when,whenever,where,while,"
+	           L"with,without,work,write,writetext,year,zone";
+
+//---Oracle---------------------------------------------------------------------
+  // Oracle SQL keywords
+const String OracleKW = L"ACCESS,ACCESSED,ACCOUNT,ACTIVATE,ACTIVE_INSTANCE_COUNT,ADD,ADMIN,ADVISE,"
+	           L"AGENT,ALL,ALLOCATE,ALTER,ANALYZE,ANCILLARY,AND,ANY,AQ_TM_PROCESSES,"
+	           L"ARCHIVE_LAG_TARGET,ARCHIVELOG,AS,ASC,ASSOCIATE,ATTRIBUTES,AUDIT,"
+	           L"AUDIT_FILE_DEST,AUDIT_SYS_OPERATIONS,AUDIT_TRAIL,AUTHENTICATED,AUTHID,"
+	           L"AUTOALLOCATE,AUTOEXTEND,AUTOMATIC,BACKGROUND_CORE_DUMP,"
+	           L"BACKGROUND_DUMP_DEST,BACKUP,BACKUP_TAPE_IO_SLAVES,BECOME,BEFORE,"
+	           L"BEHALF,BETWEEN,BINDING,BITMAP,BITMAP_MERGE_AREA_SIZE,BLANK_TRIMMING,"
+	           L"BLOCK,BLOCKSIZE,BUFFER_POOL,BUFFER_POOL_KEEP,BUFFER_POOL_RECYCLE,BY,"
+	           L"CACHE,CANCEL,CASCADE,CAST,CATEGORY,CHAINED,CHANGE,CHARACTER,CHECK,"
+	           L"CHECKPOINT,CHILD,CHUNK,CIRCUITS,CLASS,CLONE,CLUSTER,CLUSTER_DATABASE,"
+	           L"CLUSTER_DATABASE_INSTANCES,CLUSTER_INTERCONNECTS,COALESCE,COBOL,"
+	           L"COLUMN,COLUMNS,COMMENT,COMMIT_POINT_STRENGTH,COMPATIBLE,COMPILE,"
+	           L"COMPLETE,COMPOSITE_LIMIT,COMPRESS,COMPUTE,CONNECT,"
+	           L"CONNECT_TIME,CONSIDER,CONSTRAINT,CONSTRAINTS,CONTENTS,CONTEXT,CONTINUE,"
+	           L"CONTROL,CONTROL_FILE_RECORD_KEEP_TIME,CONTROL_FILES,CONTROLFILE,"
+	           L"CORE_DUMP_DEST,COST,CPU_COUNT,CPU_PER_CALL,CPU_PER_SESSION,CREATE,"
+	           L"CREATE_BITMAP_AREA_SIZE,CREATE_STORED_OUTLINES,CURRENT,CURRENT_USER,"
+	           L"CURSOR_SHARING,CURSOR_SPACE_FOR_TIME,CYCLE,DANGLING,DATAFILE,"
+	           L"DB_BLOCK_BUFFERS,DB_BLOCK_CHECKING,DB_BLOCK_CHECKSUM,DB_BLOCK_SIZE,"
+	           L"DB_CACHE_ADVICE,DB_CACHE_SIZE,DB_CREATE_FILE_DEST,DB_DOMAIN,"
+	           L"DB_FILE_MULTIBLOCK_READ_COUNT,DB_FILE_NAME_CONVERT,DB_FILES,"
+	           L"DB_KEEP_CACHE_SIZE,DB_NAME,DB_RECYCLE_CACHE_SIZE,DB_WRITER_PROCESSES,"
+	           L"DBLINK_ENCRYPT_LOGIN,DBWR_IO_SLAVES,DEALLOCATE,DEBUG,DEFAULT,DEFERRED,"
+	           L"DEFINER,DELETE,DEMAND,DETERMINES,DG_BROKER_START,DICTIONARY,DIMENSION,"
+	           L"DIRECTORY,DISABLE,DISASSOCIATE,DISK_ASYNCH_IO,DISMOUNT,DISPATCHERS,"
+	           L"DISTINCT,DISTRIBUTED,DISTRIBUTED_LOCK_TIMEOUT,DML,DML_LOCKS,DOCUMENT,"
+	           L"DROP,DRS_START,ELSE,ENABLE,ENQUEUE_RESOURCES,ESCAPE,ESTIMATE,EVENT,"
+	           L"EVENTS,EXCEPT,EXCEPTIONS,EXCHANGE,EXCLUDING,EXCLUSIVE,EXISTS,EXPIRE,"
+	           L"EXPLAIN,EXTENT,EXTERNALLY,FAILED_LOGIN_ATTEMPTS,FAL_CLIENT,FAL_SERVER,"
+	           L"FAST,FAST_START_IO_TARGET,FAST_START_MTTR_TARGET,"
+	           L"FAST_START_PARALLEL_ROLLBACK,FILE,FILE_MAPPING,FILESYSTEMIO_OPTIONS,"
+	           L"FIXED_DATE,FLUSH,FOR,FORCE,FOREIGN,FORTRAN,FREELIST,FREELISTS,FRESH,"
+	           L"FROM,FROM_TZ,FUNCTIONS,FULL,GC_FILES_TO_LOCKS,GENERATED,GLOBAL,"
+	           L"GLOBAL_CONTEXT_POOL_SIZE,GLOBAL_NAME,GLOBAL_NAMES,GLOBALLY,GO,GRANT,"
+	           L"GROUP,GROUPS,HASH,HASH_AREA_SIZE,HASH_JOIN_ENABLED,HASHKEYS,HAVING,HEAP,"
+	           L"HI_SHARED_MEMORY_ADDRESS,HIERARCHY,HS_AUTOREGISTER,IDENTIFIED,IDLE_TIME,"
+	           L"IFILE,IMMEDIATE,IN,INCLUDING,INCREMENT,INDEX,INDEXTYPE,INDEXTYPES,"
+	           L"INFILE,INITIAL,INITIALIZED,INITIALLY,INITRANS,INSERT,INSTANCE,"
+	           L"INSTANCE_GROUPS,INSTANCE_NAME,INSTANCE_NUMBER,INT,INTERSECT,INTO,"
+	           L"INVALIDATE,IS,ISOLATION,JAVA,JAVA_MAX_SESSIONSPACE_SIZE,JAVA_POOL_SIZE,"
+	           L"JAVA_SOFT_SESSIONSPACE_LIMIT,JOB_QUEUE_PROCESSES,JOIN,KEEP,KEY,KILL,"
+	           L"LARGE_POOL_SIZE,LAYERLISTS,LEFT,LEVEL,LIBRARY,LICENSE_MAX_SESSIONS,"
+	           L"LICENSE_MAX_USERS,LICENSE_SESSIONS_WARNING,LIKE,LIMIT,LINK,LIST,LOB,"
+	           L"LOCAL,LOCAL_LISTENER,LOCATOR,LOCK,LOCK_NAME_SPACE,LOCK_SGA,"
+	           L"LOG_ARCHIVE_DEST,LOG_ARCHIVE_DUPLEX_DEST,LOG_ARCHIVE_FORMAT,"
+	           L"LOG_ARCHIVE_MAX_PROCESSES,LOG_ARCHIVE_MIN_SUCCEED_DEST,"
+	           L"LOG_ARCHIVE_START,LOG_ARCHIVE_TRACE,LOG_BUFFER,LOG_CHECKPOINT_INTERVAL,"
+	           L"LOG_CHECKPOINT_TIMEOUT,LOG_CHECKPOINTS_TO_ALERT,LOG_FILE_NAME_CONVERT,"
+	           L"LOG_PARALLELISM,LOGFILE,LOGGING,LOGICAL_READS_PER_CALL,"
+	           L"LOGICAL_READS_PER_SESSION,LOGMNR_MAX_PERSISTENT_SESSIONS,MANAGE,MANAGED,"
+	           L"MANAGEMENT,MANUAL,MAP,MASTER,MATCHED,MATERIALIZED,MAX_COMMIT_PROPAGATION_DELAY,"
+	           L"MAX_DISPATCHERS,MAX_DUMP_FILE_SIZE,MAX_ENABLED_ROLES,"
+	           L"MAX_ROLLBACK_SEGMENTS,MAX_SHARED_SERVERS,MAXDATAFILES,MAXEXTENTS,"
+	           L"MAXINSTANCES,MAXLOGFILES,MAXLOGHISTORY,MAXLOGMEMBERS,MAXSIZE,MAXTRANS,"
+	           L"MAXVALUE,MEMBER,MERGE,MINEXTENTS,MINIMIZE,MINIMUM,MINUS,MINVALUE,MODE,"
+	           L"MODIFY,MODULE,MONITORING,MOUNT,MOVE,MOVEMENT,MULTISET,NAMED,NATIONAL,"
+	           L"NESTED,NEVER,NEXT,NLS_CALENDAR,NLS_COMP,NLS_CURRENCY,NLS_DATE_FORMAT,"
+	           L"NLS_DATE_LANGUAGE,NLS_DUAL_CURRENCY,NLS_ISO_CURRENCY,NLS_LANGUAGE,"
+	           L"NLS_LENGTH_SEMANTICS,NLS_NCHAR_CONV_EXCP,NLS_NUMERIC_CHARACTERS,"
+	           L"NLS_TERRITORY,NLS_TIMESTAMP_FORMAT,NLS_TIMESTAMP_TZ_FORMAT,NO,"
+	           L"NOARCHIVELOG,NOAUDIT,NOCACHE,NOCOMPRESS,NOCOPY,NOCYCLE,NOFORCE,"
+	           L"NOLOGGING,NOMAXVALUE,NOMINIMIZE,NOMINVALUE,NOMONITORING,NOMOUNT,NONE,"
+	           L"NOORDER,NORELY,NORESETLOGS,NOREVERSE,NORMAL,NOROWDEPENDENCIES,NOSORT,"
+	           L"NOT,NOTHING,NOVALIDATE,NOWAIT,NULL,O7_DICTIONARY_ACCESSIBILITY,"
+	           L"OBJECT_CACHE_MAX_SIZE_PERCENT,OBJECT_CACHE_OPTIMAL_SIZE,OF,OFFLINE,OID,"
+	           L"OLAP_PAGE_POOL_SIZE,ON,ONLINE,ONLY,OPEN_CURSORS,OPEN_LINKS,"
+	           L"OPEN_LINKS_PER_INSTANCE,OPERATOR,OPTIMAL,OPTIMIZER_DYNAMIC_SAMPLING,"
+	           L"OPTIMIZER_FEATURES_ENABLE,OPTIMIZER_INDEX_CACHING,"
+	           L"OPTIMIZER_INDEX_COST_ADJ,OPTIMIZER_MAX_PERMUTATIONS,OPTIMIZER_MODE,"
+	           L"OPTION,OR,ORACLE_TRACE_COLLECTION_NAME,ORACLE_TRACE_COLLECTION_PATH,"
+	           L"ORACLE_TRACE_COLLECTION_SIZE,ORACLE_TRACE_ENABLE,"
+	           L"ORACLE_TRACE_FACILITY_NAME,ORACLE_TRACE_FACILITY_PATH,ORDER,"
+	           L"OS_AUTHENT_PREFIX,OS_ROLES,OUTER,OUTLINE,OVERFLOW,OWN,PACKAGES,PARALLEL,"
+	           L"PARALLEL_ADAPTIVE_MULTI_USER,PARALLEL_AUTOMATIC_TUNING,"
+	           L"PARALLEL_EXECUTION_MESSAGE_SIZE,PARALLEL_INSTANCE_GROUP,"
+	           L"PARALLEL_MAX_SERVERS,PARALLEL_MIN_PERCENT,PARALLEL_MIN_SERVERS,"
+	           L"PARALLEL_THREADS_PER_CPU,PARAMETERS,PARTITION_VIEW_ENABLED,PARTITIONS,"
+	           L"PASSWORD,PASSWORD_GRACE_TIME,PASSWORD_LIFE_TIME,PASSWORD_LOCK_TIME,"
+	           L"PASSWORD_REUSE_MAX,PASSWORD_REUSE_TIME,PASSWORD_VERIFY_FUNCTION,"
+	           L"PCTFREE,PCTINCREASE,PCTTHRESHOLD,PCTUSED,PCTVERSION,PERCENT,PERMANENT,"
+	           L"PGA_AGGREGATE_TARGET,PIPELINED,PLAN,PLI,PLSQL_COMPILER_FLAGS,"
+	           L"PLSQL_NATIVE_C_COMPILER,PLSQL_NATIVE_LIBRARY_DIR,"
+	           L"PLSQL_NATIVE_LIBRARY_SUBDIR_COUNT,PLSQL_NATIVE_LINKER,"
+	           L"PLSQL_NATIVE_MAKE_FILE_NAME,PLSQL_NATIVE_MAKE_UTILITY,"
+	           L"PLSQL_V2_COMPATIBILITY,POST_TRANSACTION,PRE_PAGE_SGA,PREBUILD,PRECISION,"
+	           L"PRIMARY,PRIOR,PRIVATE_SGA,PRIVILEGES,PROCESSES,PROFILE,PUBLIC,QUERY,"
+	           L"QUERY_REWRITE_ENABLED,QUERY_REWRITE_INTEGRITY,QUIESCE,QUOTA,"
+	           L"RDBMS_SERVER_DN,READ,READ_ONLY_OPEN_DELAYED,REBUILD,RECORDS_PER_BLOCK,"
+	           L"RECOVER,RECOVERABLE,RECOVERY,RECOVERY_PARALLELISM,RECYCLE,RECYCLEBIN,REDUCED,"
+	           L"REFERENCES,REFRESH,REGISTER,RELY,REMOTE_ARCHIVE_ENABLE,"
+	           L"REMOTE_DEPENDENCIES_MODE,REMOTE_LISTENER,REMOTE_LOGIN_PASSWORDFILE,"
+	           L"REMOTE_OS_AUTHENT,REMOTE_OS_ROLES,RENAME,"
+	           L"REPLICATION_DEPENDENCY_TRACKING,RESET,RESETLOGS,RESIZE,RESOLVE,RESOLVER,"
+	           L"RESOURCE,RESOURCE_LIMIT,RESOURCE_MANAGER_PLAN,RESTRICT,RESTRICTED,"
+	           L"RESUMABLE,RESUME,REUSE,REVOKE,REWRITE,RIGHT,RNDS,RNPS,ROLE,ROLES,"
+	           L"ROLLBACK_SEGMENTS,ROW,ROW_LOCKING,ROWDEPENDENCIES,ROWLABEL,ROWNUM,"
+	           L"ROWS,SAMPLE,SCN,SCOPE,SECTION,SEGMENT,SELECT,SELECTIVITY,SEQUENCE,"
+	           L"SERIAL_REUSE,SERVICE_NAMES,SESSION,SESSION_CACHED_CURSORS,"
+	           L"SESSION_MAX_OPEN_FILES,SESSIONS,SESSIONS_PER_USER,SGA_MAX_SIZE,"
+	           L"SHADOW_CORE_DUMP,SHARE,SHARED,SHARED_MEMORY_ADDRESS,SHARED_POOL,"
+	           L"SHARED_POOL_RESERVED_SIZE,SHARED_POOL_SIZE,SHARED_SERVER_SESSIONS,"
+	           L"SHARED_SERVERS,SHRINK,SIZE,SNAPSHOT,SOME,SORT,SORT_AREA_RETAINED_SIZE,"
+	           L"SORT_AREA_SIZE,SOURCE,SPECIFICATION,SPECIFIED,SPFILE,SPLIT,SQL_TRACE,"
+	           L"SQL92_SECURITY,STANDBY,STANDBY_ARCHIVE_DEST,STANDBY_FILE_MANAGEMENT,"
+	           L"STAR_TRANSFORMATION_ENABLED,START,START_DATE,STATIC,STATISTICS,"
+	           L"STATISTICS_LEVEL,STOP,STORAGE,STRUCTURE,SUBPARTITION,SUBPARTITIONS,"
+	           L"SUCCESSFUL,SUSPEND,SWITCH,SYNONYM,SYSTEM,TABLE,TABLESPACE,"
+	           L"TAPE_ASYNCH_IO,TEMPFILE,TEMPORARY,THE,THEN,THREAD,THROUGH,TIME,"
+	           L"TIMED_OS_STATISTICS,TIMED_STATISTICS,TIMEOUT,TO,TRACE_ENABLED,"
+	           L"TRACEFILE_IDENTIFIER,TRACING,TRANSACTION,TRANSACTION_AUDITING,"
+	           L"TRANSACTIONS,TRANSACTIONS_PER_ROLLBACK_SEGMENT,TRIGGER,TRUNCATE,TRUST,"
+	           L"TYPES,UNARCHIVED,UNDER,UNDO,UNDO_MANAGEMENT,UNDO_RETENTION,"
+	           L"UNDO_SUPPRESS_ERRORS,UNDO_TABLESPACE,UNIFORM,UNION,UNIQUE,UNLIMITED,"
+	           L"UNLOCK,UNQUIESCE,UNRECOVERABLE,UNTIL,UNUSABLE,UNUSED,UPDATE,USAGE,"
+	           L"USE_INDIRECT_DATA_BUFFERS,USER_DUMP_DEST,VALIDATE,VALIDATION,VALUES,"
+	           L"VARGRAPHIC,VARRAY,VIEW,WHERE,WITH,WITHOUT,WNDS,WNPS,"
+	           L"WORKAREA_SIZE_POLICY";
+
+//---Postgresql-----------------------------------------------------------------
+  //Postgresql Keywords
+const String PostgresKW = L"IF,LOOP,ABORT,ABSOLUTE,ACCESS,ACTION,ADA,ADD,ADMIN,AFTER,AGGREGATE,ALIAS"
+	           L",ALLOCATE,ALTER,ANALYSE,ANALYZE,AND,ARE,AS,ASC,ASENSITIVE"
+	           L",ASSERTION,ASSIGNMENT,ASYMMETRIC,AT,ATOMIC,AUTHORIZATION,BACKWARD"
+	           L",BEFORE,BEGIN,BETWEEN"
+	           L",BOTH,BREADTH,BY,C,CACHE,CALL,CALLED,CARDINALITY,CASCADE,CASCADED,CASE"
+	           L",CAST,CATALOG,CATALOG_NAME,CHAIN,CHARACTERISTICS"
+	           L",CHARACTER_SET_CATALOG,CHARACTER_SET_NAME,CHARACTER_SET_SCHEMA"
+	           L",CHECK,CHECKED,CHECKPOINT,CLASS,CLASS_ORIGIN,CLOB,CLOSE,CLUSTER,COBOL,COLLATE"
+	           L",COLLATION,COLLATION_CATALOG,COLLATION_NAME,COLLATION_SCHEMA,COLUMN,COLUMN_NAME"
+	           L",COMMAND_Function,COMMAND_Function_CODE,COMMENT,COMMIT,COMMITTED,COMPLETION"
+	           L",CONDITION_NUMBER,CONNECT,CONNECTION,CONNECTION_NAME,CONSTRAINT,CONSTRAINTS"
+	           L",CONSTRAINT_CATALOG,CONSTRAINT_NAME,CONSTRAINT_SCHEMA,CONSTRUCTOR,CONTAINS"
+	           L",CONTINUE,CONVERSION,COPY,CORRESPONDING,CREATE,CREATEDB,CREATEUSER"
+	           L",CROSS,CUBE,CURRENT,CURRENT_PATH,CURRENT_ROLE"
+	           L",CURSOR,CURSOR_NAME,CYCLE,DATA,DATABASE,DATETIME_INTERVAL_CODE"
+	           L",DATETIME_INTERVAL_PRECISION,DAY,DEALLOCATE,DEC,DECLARE,DEFAULT,DEFERRABLE"
+	           L",DEFERRED,DEFINED,DEFINER,DELETE,DELIMITER,DELIMITERS,DEPTH,DEREF,DESC,DESCRIBE"
+	           L",DESCRIPTOR,DESTROY,DESTRUCTOR,DETERMINISTIC,DIAGNOSTICS,DICTIONARY,DISCONNECT"
+	           L",DISPATCH,DISTINCT,DO,DOMAIN,DROP,DYNAMIC,DYNAMIC_Function,DYNAMIC_Function_CODE"
+	           L",EACH,ELSE,ELSIF,ELSEIF,ENCODING,ENCRYPTED,END,EQUALS,ESCAPE,EXCEPT,EXCEPTION"
+	           L",EXCLUSIVE,EXEC,EXECUTE,EXISTING,EXPLAIN,EXTERNAL,FALSE,FETCH"
+	           L",FINAL,FIRST,FOR,FORCE,FOREIGN,FORTRAN,FORWARD,FOUND,FREE,FREEZE,FROM"
+	           L",FULL,Function,G,GENERAL,GENERATED,GET,GLOBAL,GO,GOTO,GRANT,GRANTED,GROUP"
+	           L",GROUPING,HANDLER,HAVING,HIERARCHY,HOLD,HOUR,IDENTITY,IGNORE,ILIKE"
+	           L",IMMEDIATE,IMMUTABLE,IMPLEMENTATION,IMPLICIT,INCREMENT,INDEX,INDICATOR"
+	           L",INFIX,INHERITS,INITIALIZE,INITIALLY,INNER,INOUT,INPUT,INSENSITIVE,INSERT"
+	           L",INSTANCE,INSTANTIABLE,INSTEAD,INT,INTERSECT,INTO,INVOKER"
+	           L",IS,ISNULL,ISOLATION,ITERATE,JOIN,K,KEY,KEY_MEMBER,KEY_TYPE,LANCOMPILER,LANGUAGE"
+	           L",LARGE,LAST,LATERAL,LEADING,LEFT,LESS,LEVEL,LIKE,LIMIT,LISTEN,LOAD,LOCAL"
+	           L" LOCATION,LOCATOR,LOCK,M,MAP,MATCH,MAXVALUE,MESSAGE_LENGTH"
+	           L",MESSAGE_OCTET_LENGTH,MESSAGE_TEXT,METHOD,MINUTE,MINVALUE,MODE,MODIFIES"
+	           L",MODIFY,MODULE,MONTH,MORE,MOVE,MUMPS,NAME,NAMES,NATIONAL,NATURAL,NCHAR,NCLOB"
+	           L",NEW,NEXT,NO,NOCREATEDB,NOCREATEUSER,NONE,NOT,NOTHING,NOTIFY,NOTNULL,NULL,NULLABLE"
+	           L",NUMBER,OBJECT,OF,OFF,OFFSET,OIDS,OLD,ON,ONLY,OPEN"
+	           L",OPERATION,Operator,OPTION,OPTIONS,OR,ORDER,ORDINALITY,OUT,OUTER,OUTPUT,OVERLAPS"
+	           L",OVERRIDING,OWNER,PAD,PARAMETER,PARAMETERS,PARAMETER_MODE,PARAMETER_NAME,PARAMETER_ORDINAL_POSITION"
+	           L",PARAMETER_SPECIFIC_CATALOG,PARAMETER_SPECIFIC_NAME,PARAMETER_SPECIFIC_SCHEMA,PARTIAL,PASCAL,PASSWORD"
+	           L",PENDANT,PLACING,PLI,POSTFIX,PRECISION,PREFIX,PREORDER,PREPARE,PRESERVE,PRIMARY"
+	           L",PRIOR,PRIVILEGES,PROCEDURAL,PROCEDURE,PUBLIC,READ,READS,RECHECK,RECURSIVE,REF,REFERENCES"
+	           L",REFERENCING,REINDEX,RELATIVE,RENAME ,REPEATABLE,RESET,RESTRICT,RESULT,RETURN,RETURNED_LENGTH"
+	           L",RETURNED_OCTET_LENGTH,RETURNED_SQLSTATE,RETURNS,REVOKE,RIGHT,ROLE,ROLLBACK,ROLLUP,ROUTINE,ROUTINE_CATALOG"
+	           L",ROUTINE_NAME,ROUTINE_SCHEMA,ROW,ROWS,ROW_COUNT,RULE,SAVEPOINT,SCALE,SCHEMA,SCHEMA_NAME"
+	           L",SCOPE,SCROLL,SEARCH,SECOND,SECTION,SECURITY,SELECT,SELF,SENSITIVE,SEQUENCE,SERIALIZABLE,SERVER_NAME"
+	           L",SESSION,SET,SETOF,SETS,SHARE,SHOW,SIMILAR,SIMPLE,SIZE,SOURCE,SPACE"
+	           L",SPECIFIC,SPECIFICTYPE,SPECIFIC_NAME,SQLCODE,SQLERROR,SQLEXCEPTION,SQLSTATE,SQLWARNING"
+	           L",STABLE,START,STATE,STATEMENT,STATIC,STATISTICS,STDIN,STDOUT,STORAGE,STRICT,STRUCTURE"
+	           L",STYLE,SUBCLASS_ORIGIN,SUBLIST,SYMMETRIC,SYSID,SYSTEM,SYSTEM_USER,TABLE"
+	           L",TABLE_NAME,TEMP,TEMPLATE,TEMPORARY,TERMINATE,THAN,THEN,TIMEZONE_HOUR"
+	           L",TIMEZONE_MINUTE,TO,TOAST,TRAILING,TRANSACTION,TRANSACTIONS_COMMITTED,TRANSACTIONS_ROLLED_BACK"
+	           L",TRANSACTION_ACTIVE,TRANSFORM,TRANSFORMS,TRANSLATION,TREAT,TRIGGER_CATALOG"
+	           L",TRIGGER_NAME,TRIGGER_SCHEMA,TRUE,TRUNCATE,TRUSTED,TYPE,UNCOMMITTED,UNDER,UNENCRYPTED,UNION"
+	           L",UNIQUE,UNKNOWN,UNLISTEN,UNNAMED,UNNEST,UNTIL,UPDATE,USAGE,USER_DEFINED_TYPE_CATALOG"
+	           L",USER_DEFINED_TYPE_NAME,USER_DEFINED_TYPE_SCHEMA,USING,VACUUM,VALID,VALIDATOR,VALUE,VALUES"
+	           L",VARIABLE,VARYING,VERBOSE,VIEW,VOLATILE,WHEN,WHENEVER,WHERE,WITH,WITHOUT,WORK,WRITE,YEAR,ZONE";
+
+  //Postgresql Functions
+const String PostgresFunctions = L"abs,cbrt,ceil,ceiling,degrees,exp,floor,ln,log,mod,pi,power,radians,random,"
+	           L"round,setseed,sign,sqrt,trunc,width_bucket,acos,asin,atan,atan2,cos,cot,"
+	           L"sin,tan,bit_length,char_length,character_length,convert,lower,octet_length,"
+	           L"overlay,position,substring,trim,upper,ascii,btrim,chr,decode,"
+	           L"encode,initcap,length,lpad,ltrim,md5,pg_client_encoding,quote_ident,quote_literal,"
+	           L"replace,rpad,rtrim,split_part,strpos,substr,to_ascii,to_hex,translate,get_byte,"
+	           L"set_byte,get_bit,set_bit,to_char,to_date,"
+	           L"to_timestamp,to_number,age,date_part,date_trunc,extract,now,"
+	           L"timeofday,isfinite,area,box_intersect,center,diameter,height,isclosed,isopen,"
+	           L"npoints,pclose,popen,radius,width,"
+	           L"broadcast,"
+	           L"host,masklen,set_masklen,netmask,hostmask,network,abbrev,family,nextval,"
+	           L"currval,setval,coalesce,nullif,array_cat ,array_append ,array_prepend ,array_dims,"
+	           L"array_lower ,array_upper ,array_to_string ,string_to_array ,avg,bit_and,bit_or,bool_and,"
+	           L"bool_or,count,every,max,min,stddev,sum,variance,exists ,in ,some,"
+	           L"all ,generate_series,current_database,current_schema,"
+	           L"current_schemas,,inet_client_addr,inet_client_port,inet_server_addr,inet_server_port,"
+	           L"version,has_table_privilege,has_database_privilege,"
+	           L"has_function_privilege,has_language_privilege,"
+	           L"has_schema_privilege,has_tablespace_privilege,"
+	           L"pg_table_is_visible,pg_type_is_visible,pg_function_is_visible,pg_operator_is_visible,"
+	           L"pg_opclass_is_visible,pg_conversion_is_visible,format_type,pg_get_viewdef,"
+	           L"pg_get_ruledef,pg_get_indexdef,"
+	           L"pg_get_triggerdef,pg_get_constraintdef,pg_get_expr,"
+	           L"pg_get_userbyid,pg_get_serial_sequence,pg_tablespace_databases,obj_description,"
+	           L"col_description,current_setting,set_config,pg_cancel_backend,pg_start_backup,pg_stop_backup,"
+	           L"current_user,current_date,current_time,current_timestamp,localtime,localtimestamp,session_user,user";
+
+  //Postgresql Types
+const String PostgresTypes = L"smallint,integer,bigint,decimal,numeric,real,double,serial,bigserial,"
+	           L"character,varchar,char,text,bytea,timestamp, interval,date,"
+	           L"time,boolean,point,line,lseg,box,path,polygon,circle,cidr,inet,"
+	           L"macaddr,BIT,bitvar,ARRAY,oid,regproc,regprocedure,regoper,regoperator,regclass,"
+	           L"regtype,any,anyarray,anyelement,cstring,internal,language_handler,record,"
+	           L"trigger,void,opaque,refcursor,binary,blob,int4,int2,int8,float,float4,float8";
+
+  //Postgresql Exceptions
+const String PostgresExceptions = L"$BODY$,SUCCESSFUL_COMPLETION,WARNING,DYNAMIC_RESULT_SETS_RETURNED,IMPLICIT_ZERO_BIT_PADDING,NULL_VALUE_ELIMINATED_IN_SET_FUNCTION,"
+	           L"PRIVILEGE_NOT_GRANTED,PRIVILEGE_NOT_REVOKED,STRING_DATA_RIGHT_TRUNCATION,DEPRECATED_FEATURE,NO_DATA,NO_ADDITIONAL_DYNAMIC_RESULT_SETS_RETURNED,"
+	           L"SQL_STATEMENT_NOT_YET_COMPLETE,CONNECTION_EXCEPTION,CONNECTION_DOES_NOT_EXIST,CONNECTION_FAILURE,SQLCLIENT_UNABLE_TO_ESTABLISH_SQLCONNECTION,"
+	           L"SQLSERVER_REJECTED_ESTABLISHMENT_OF_SQLCONNECTION,TRANSACTION_RESOLUTION_UNKNOWN,PROTOCOL_VIOLATION,TRIGGERED_ACTION_EXCEPTION,"
+	           L"FEATURE_NOT_SUPPORTED,INVALID_TRANSACTION_INITIATION,LOCATOR_EXCEPTION,INVALID_LOCATOR_SPECIFICATION,INVALID_GRANTOR,INVALID_GRANT_OPERATION,"
+	           L"INVALID_ROLE_SPECIFICATION,CARDINALITY_VIOLATION,DATA_EXCEPTION,ARRAY_SUBSCRIPT_ERROR,CHARACTER_NOT_IN_REPERTOIRE,DATETIME_FIELD_OVERFLOW,"
+	           L"DIVISION_BY_ZERO,ERROR_IN_ASSIGNMENT,ESCAPE_CHARACTER_CONFLICT,INDICATOR_OVERFLOW,INTERVAL_FIELD_OVERFLOW,INVALID_ARGUMENT_FOR_LOGARITHM,"
+	           L"INVALID_ARGUMENT_FOR_POWER_FUNCTION,INVALID_ARGUMENT_FOR_WIDTH_BUCKET_FUNCTION,INVALID_CHARACTER_VALUE_FOR_CAST,INVALID_DATETIME_FORMAT,"
+	           L"INVALID_ESCAPE_CHARACTER,INVALID_ESCAPE_OCTET,INVALID_ESCAPE_SEQUENCE,INVALID_INDICATOR_PARAMETER_VALUE,INVALID_LIMIT_VALUE,"
+	           L"INVALID_PARAMETER_VALUE,INVALID_REGULAR_EXPRESSION,INVALID_TIME_ZONE_DISPLACEMENT_VALUE,INVALID_USE_OF_ESCAPE_CHARACTER,"
+	           L"MOST_SPECIFIC_TYPE_MISMATCH,NULL_VALUE_NOT_ALLOWED,NULL_VALUE_NO_INDICATOR_PARAMETER,NUMERIC_VALUE_OUT_OF_RANGE,STRING_DATA_LENGTH_MISMATCH,"
+	           L"SUBSTRING_ERROR,TRIM_ERROR,UNTERMINATED_C_STRING,ZERO_LENGTH_CHARACTER_STRING,FLOATING_POINT_EXCEPTION,"
+	           L"INVALID_TEXT_REPRESENTATION,INVALID_BINARY_REPRESENTATION,BAD_COPY_FILE_FORMAT,UNTRANSLATABLE_CHARACTER,INTEGRITY_CONSTRAINT_VIOLATION,"
+	           L"RESTRICT_VIOLATION,NOT_NULL_VIOLATION,FOREIGN_KEY_VIOLATION,UNIQUE_VIOLATION,CHECK_VIOLATION,INVALID_CURSOR_STATE,INVALID_TRANSACTION_STATE,"
+	           L"ACTIVE_SQL_TRANSACTION,BRANCH_TRANSACTION_ALREADY_ACTIVE,HELD_CURSOR_REQUIRES_SAME_ISOLATION_LEVEL,INAPPROPRIATE_ACCESS_MODE_FOR_BRANCH_TRANSACTION,"
+	           L"INAPPROPRIATE_ISOLATION_LEVEL_FOR_BRANCH_TRANSACTION,NO_ACTIVE_SQL_TRANSACTION_FOR_BRANCH_TRANSACTION,READ_ONLY_SQL_TRANSACTION,"
+	           L"SCHEMA_AND_DATA_STATEMENT_MIXING_NOT_SUPPORTED,NO_ACTIVE_SQL_TRANSACTION,IN_FAILED_SQL_TRANSACTION,INVALID_SQL_STATEMENT_NAME,TRIGGERED_DATA_CHANGE_VIOLATION,"
+	           L"INVALID_AUTHORIZATION_SPECIFICATION,DEPENDENT_PRIVILEGE_DESCRIPTORS_STILL_EXIST,DEPENDENT_OBJECTS_STILL_EXIST,INVALID_TRANSACTION_TERMINATION,"
+	           L"SQL_ROUTINE_EXCEPTION,FUNCTION_EXECUTED_NO_RETURN_STATEMENT,MODIFYING_SQL_DATA_NOT_PERMITTED,PROHIBITED_SQL_STATEMENT_ATTEMPTED,READING_SQL_DATA_NOT_PERMITTED,"
+	           L"INVALID_CURSOR_NAME,EXTERNAL_ROUTINE_EXCEPTION,CONTAINING_SQL_NOT_PERMITTED,"
+	           L"EXTERNAL_ROUTINE_INVOCATION_EXCEPTION,INVALID_SQLSTATE_RETURNED,TRIGGER_PROTOCOL_VIOLATED,"
+	           L"SRF_PROTOCOL_VIOLATED,SAVEPOINT_EXCEPTION,INVALID_SAVEPOINT_SPECIFICATION,INVALID_CATALOG_NAME,INVALID_SCHEMA_NAME,TRANSACTION_ROLLBACK,"
+	           L"TRANSACTION_INTEGRITY_CONSTRAINT_VIOLATION,SERIALIZATION_FAILURE,STATEMENT_COMPLETION_UNKNOWN,DEADLOCK_DETECTED,SYNTAX_ERROR_OR_ACCESS_RULE_VIOLATION,"
+	           L"SYNTAX_ERROR,INSUFFICIENT_PRIVILEGE,CANNOT_COERCE,GROUPING_ERROR,INVALID_FOREIGN_KEY,INVALID_NAME,NAME_TOO_LONG,RESERVED_NAME,DATATYPE_MISMATCH,"
+	           L"INDETERMINATE_DATATYPE,WRONG_OBJECT_TYPE,UNDEFINED_COLUMN,UNDEFINED_FUNCTION,UNDEFINED_TABLE,UNDEFINED_PARAMETER,UNDEFINED_OBJECT,"
+	           L"DUPLICATE_COLUMN,DUPLICATE_CURSOR,DUPLICATE_DATABASE,DUPLICATE_FUNCTION,DUPLICATE_PREPARED_STATEMENT,DUPLICATE_SCHEMA,DUPLICATE_TABLE,"
+	           L"DUPLICATE_ALIAS,DUPLICATE_OBJECT,AMBIGUOUS_COLUMN,AMBIGUOUS_FUNCTION,AMBIGUOUS_PARAMETER,AMBIGUOUS_ALIAS,INVALID_COLUMN_REFERENCE,"
+	           L"INVALID_COLUMN_DEFINITION,INVALID_CURSOR_DEFINITION,INVALID_DATABASE_DEFINITION,INVALID_FUNCTION_DEFINITION,INVALID_PREPARED_STATEMENT_DEFINITION,"
+	           L"INVALID_SCHEMA_DEFINITION,INVALID_TABLE_DEFINITION,INVALID_OBJECT_DEFINITION,WITH_CHECK_OPTION_VIOLATION,INSUFFICIENT_RESOURCES,"
+	           L"DISK_FULL,OUT_OF_MEMORY,TOO_MANY_CONNECTIONS,PROGRAM_LIMIT_EXCEEDED,STATEMENT_TOO_COMPLEX,TOO_MANY_COLUMNS,TOO_MANY_ARGUMENTS,"
+	           L"OBJECT_NOT_IN_PREREQUISITE_STATE,OBJECT_IN_USE,CANT_CHANGE_RUNTIME_PARAM,LOCK_NOT_AVAILABLE,OPERATOR_INTERVENTION,QUERY_CANCELED,"
+	           L"ADMIN_SHUTDOWN,CRASH_SHUTDOWN,CANNOT_CONNECT_NOW,IO_ERROR,UNDEFINED_FILE,DUPLICATE_FILE,CONFIG_FILE_ERROR,LOCK_FILE_EXISTS,"
+	           L"PLPGSQL_ERROR,RAISE_EXCEPTION,INTERNAL_ERROR,DATA_CORRUPTED,INDEX_CORRUPTED";
+
+  // PLSQL keywords
+const String OraclePLSQLKW = L"ABORT,ACCEPT,AFTER,ARRAY,ARRAYLEN,ASSERT,ASSIGN,AT,AUTHORIZATION,"
+	           L"AUTONOMOUS_TRANSACTION,BASE_TABLE,BEGIN,BODY,BULK,BULK_ROWCOUNT,CALL,"
+	           L"CALLING,CASE,CHAR_BASE,CHARSETFORM,CHARSETID,CLOSE,CLUSTERS,COLAUTH,"
+	           L"COLLECT,COMMIT,CONNECTION,CONSTANT,COOKIE,COOKIE_TABLE,CRASH,CURRVAL,"
+	           L"CURSOR,DATA_BASE,DATABASE,DBA,DEBUGOFF,DEBUGON,DECLARE,DEFINITION,"
+	           L"DELAY,DELTA,DEQUEUE_OPTIONS_T,DETERMINISTIC,DIGITS,DISPOSE,DO,EACH,"
+	           L"ELSIF,END,ENQUEUE_OPTIONS_T,ENTRY,EXCEPTION,EXCEPTION_INIT,EXIT,"
+	           L"EXTERNAL,FALSE,FETCH,FIXED,FORALL,FORM,FOUND,FUNCTION,GENERIC,GOTO,IF,"
+	           L"INDEXES,INDICATOR,INSTEAD,INTERFACE,ISOPEN,LANGUAGE,LCR$_DDL_RECORD,"
+	           L"LCR$_ROW_LIST,LCR$_ROW_RECORD,LCR$_ROW_UNIT,LIMITED,LOOP,MAXLEN,"
+	           L"MESSAGE_PROPERTIES_T,MGW_BASIC_MSG_T,MGW_MQSERIES_PROPERTIES,"
+	           L"MGW_NAME_TYPE_ARRAY_T,MGW_NAME_VALUE_T,MGW_PROPERTIES,MGW_PROPERTY,"
+	           L"MGW_RAW_VALUE_T,MGW_TEXT_VALUE_T,NAME,NEW,NEXTVAL,NOTFOUND,"
+	           L"NUMBER_BASE,OLD,OPEN,OUT,PACKAGE,PARALLEL_ENABLE,PARTITION,PASCAL,"
+	           L"PRAGMA,PRIVATE,PROCEDURE,RAISE,RAISE_APPLICATION_ERROR,RANGE,RE$ATTRIBUTE_VALUE,"
+	           L"RE$ATTRIBUTE_VALUE_LIST,RE$COLUMN_VALUE,RE$COLUMN_VALUE_LIST,"
+	           L"RE$NAME_ARRAY,RE$NV_ARRAY,RE$NV_LIST,RE$NV_NODE,RE$RULE_HIT,"
+	           L"RE$RULE_HIT_LIST,RE$TABLE_ALIAS,RE$TABLE_ALIAS_LIST,"
+	           L"RE$TABLE_VALUE,RE$TABLE_VALUE_LIST,RE$VARIABLE_TYPE,"
+	           L"RE$VARIABLE_TYPE_LIST,RE$VARIABLE_VALUE,RE$VARIABLE_VALUE_LIST,RECORD,"
+	           L"REF,REFERENCING,RELEASE,REMR,REQ,RESP,RESTRICT_REFERENCES,RETURN,"
+	           L"REVERSE,ROLLBACK,ROWCOUNT,ROWTYPE,RUNTIME_INFO,SAVEPOINT,SCHEMA,"
+	           L"SELF,SEPARATE,SERIALLY_REUSABLE,SPACE,SQL,SQLERROR,STATEMENT,STRUCT,"
+	           L"SUBTYPE,TABAUTH,TABLES,TASK,TDO,TERMINATE,TRUE,TYPE,USE,VARYING,VIEWS,"
+	           L"WHEN,WHILE,WORK,WRITE,XOR";
+
+  // Oracle data types
+const String OracleTypes = L"ANYDATA,ANYDATASET,ANYTYPE,BFILE,BINARY_DOUBLE,BINARY_FLOAT,BINARY_INTEGER,"
+	           L"BLOB,BOOLEAN,CHAR,CLOB,DATE,DAY,DBURITYPE,DEC,DECIMAL,DOUBLE,FLOAT,"
+	           L"HTTPURITYPE,IDENTITY,INTEGER,INTERVAL,LONG,MLSLABEL,MONTH,NATURAL,NATURALN,NCHAR,"
+	           L"NCLOB,NUMBER,NUMERIC,NVARCHAR2,PLS_INTEGER,POSITIVE,POSITIVEN,RAW,REAL,"
+	           L"ROWID,SECOND,SMALLINT,TIMESTAMP,URITYPE,UROWID,VARCHAR,VARCHAR2,XDBURITYPE,"
+	           L"XMLDATA,XMLTYPE,YEAR,ZONE";
+
+  // Oracle built in exceptions
+const String OracleExceptions = L"ACCESS_INTO_NULL,CASE_NOT_FOUND,COLLECTION_IS_NULL,CURSOR_ALREADY_OPEN,"
+	           L"DUP_VAL_ON_INDEX,INVALID_CURSOR,INVALID_NUMBER,LOGIN_DENIED,"
+	           L"NO_DATA_FOUND,NOT_LOGGED_ON,OTHERS,PROGRAM_ERROR,ROWTYPE_MISMATCH,"
+	           L"SELF_IS_NULL,STORAGE_ERROR,SUBSCRIPT_BEYOND_COUNT,SUBSCRIPT_OUTSIDE_LIMIT,"
+	           L"SYS_INVALID_ROWID,TIMEOUT_ON_RESOURCE,TOO_MANY_ROWS,VALUE_ERROR,"
+	           L"ZERO_DIVIDE";
+
+  // Oracle built in functions
+const String OracleFunctions = L"ABS,ACOS,ADD_MONTHS,AGGREGATE,ANALYTIC,ASCII,ASCIISTR,ASIN,ATAN,ATAN2,"
+	           L"AVERAGE,AVG,BASE64_DECODE,BASE64_ENCODE,BEGIN_REQUEST,BFILENAME,"
+	           L"BIN_TO_NUM,BIT_AND,BIT_COMPLEMENT,BIT_OR,BIT_XOR,BITAND,"
+	           L"CAST_FROM_BINARY_INTEGER,CAST_FROM_NUMBER,CAST_TO_BINARY_INTEGER,"
+	           L"CAST_TO_NUMBER,CAST_TO_RAW,CAST_TO_VARCHAR2,CEIL,CHARTOROWID,CHR,"
+	           L"COLUMN_PRESENT,COMPARE,COMPARE_TEMPLATES,COMPOSE,CONCAT,CONVERSION,"
+	           L"CONVERT,CONVERT_ANYDATA_TO_LCR_DDL,CONVERT_ANYDATA_TO_LCR_ROW,"
+	           L"COPIES,COPY_TEMPLATE,CORR,COS,COSH,COUNT,COVAR_POP,COVAR_SAMP,"
+	           L"CREATE_OBJECT_FROM_EXISTING,CREATE_PIPE,CREATE_REFRESH_TEMPLATE,"
+	           L"CREATE_TEMPLATE_OBJECT,CREATE_TEMPLATE_PARM,CREATE_USER_AUTHORIZATION,"
+	           L"CREATE_USER_PARM_VALUE,CRLF,CUBE,CUME_DIST,CURRENT_DATE,"
+	           L"CURRENT_INSTANCE,CURRENT_TIMESTAMP,DATA_BLOCK_ADDRESS_BLOCK,"
+	           L"DATA_BLOCK_ADDRESS_FILE,DBTIMEZONE,DECODE,DECOMPOSE,DELETE_BREAKPOINT,"
+	           L"DELETE_OER_BREAKPOINT,DENSE_RANK,DEPTH,DEREF,DISABLE_BREAKPOINT,"
+	           L"DISABLED,DISPLAY,DROP_ALL,DROP_ELEMENT,DROP_FILE,DUMP,"
+	           L"EMPTY_BLOB,EMPTY_CLOB,ENABLE_BREAKPOINT,EQUALS_PATH,ESTIMATE_CPU_UNITS,"
+	           L"EXCLUDE_PUSH,EXECUTE_AND_FETCH,EXECUTE_NON_QUERY,EXISTSNODE,EXP,EXTEND,"
+	           L"EXTRACT,EXTRACTVALUE,FCOPY,FETCH_ROW,FETCH_ROWS,FGETPOS,FILEEXISTS,"
+	           L"FILEISOPEN,FIRST,FIRST_VALUE,FLOOR,FLUSH_DATA,FOPEN,FOPEN_NCHAR,"
+	           L"FORMAT_CALL_STACK,FORMAT_ERROR_STACK,FREMOVE,FRENAME,FROM_REMOTE,FSEEK,"
+	           L"GET_ARG_FORM,GET_ARG_TYPE,GET_COOKIE_COUNT,GET_COOKIES,"
+	           L"GET_DETAILED_SQLCODE,GET_DETAILED_SQLERRM,GET_ERROR_MESSAGE,"
+	           L"GET_HASH_VALUE,GET_HEADER_COUNT,GET_INDEXES,GET_INFORMATION,"
+	           L"GET_OBJECT_NULL_VECTOR_ARG,GET_PARAMETER_VALUE,"
+	           L"GET_PERSISTENT_CONN_COUNT,GET_RAW,GET_RESPONSE,GET_RUNTIME_INFO,"
+	           L"GET_RUNTIME_PARM_ID,GET_SESSION_TIMEOUT,GET_SYSTEM_CHANGE_NUMBER,"
+	           L"GET_TAG,GET_TIME,GET_TIMEOUT,GET_TIMEOUT_BEHAVIOR,GET_VALUE,"
+	           L"GETCHUNKSIZE,GETLENGTH,GLB,GREATEST,GREATEST_LB,GROUP_ID,GROUPING,"
+	           L"GROUPING_ID,HEXTORAW,I_AM_A_REFRESH,INITCAP,INITIALIZE,"
+	           L"INSTANTIATE_OFFLINE,INSTANTIATE_ONLINE,INSTR,INSTRB,"
+	           L"INTERNAL_VERSION_CHECK,IS_CLUSTER_DATABASE,IS_LOCATOR,IS_OPEN,"
+	           L"IS_ROLE_ENABLED,IS_SESSION_ALIVE,IS_TRIGGER_FIRE_ONCE,ISTEMPORARY,LAG,"
+	           L"LAST,LAST_DAY,LAST_ERROR_POSITION,LAST_ROW_COUNT,LAST_ROW_ID,"
+	           L"LAST_SQL__CODE,LAST_VALUE,LEAD,LEAST,LEAST_LB,LENGTH,LENGTHB,LINEAR,LN,"
+	           L"LOCAL_TRANSACTION_ID,LOCALTIMESTAMP,LOG,LOWER,LPAD,LTRIM,LUB,"
+	           L"MAKE_DATA_BLOCK_ADDRESS,MAKE_REF,MAP_ALL,MAP_ELEMENT,MAP_FILE,"
+	           L"MAP_OBJECT,MAX,MIN,MINE_VALUE,MISCELLANEOUS,MOD,MONTHS_BETWEEN,NCHR,"
+	           L"NEW_TIME,NEXT_DAY,NEXT_ITEM_TYPE,NLS_CHARSET_DECL_LEN,NLS_CHARSET_ID,"
+	           L"NLS_CHARSET_NAME,NLS_INITCAP,NLS_LOWER,NLS_SORT,NLS_UPPER,NLSSORT,NTILE,"
+	           L"NULLIF,NUMTODSINTERVAL,NUMTOYMINTERVAL,NVARRAY_FIND_NAME,"
+	           L"NVARRAY_FIND_NAME_TYPE,NVARRAY_GET,NVARRAY_GET_BOOLEAN,NVARRAY_GET_BYTE,"
+	           L"NVARRAY_GET_DATE,NVARRAY_GET_DOUBLE,NVARRAY_GET_FLOAT,"
+	           L"NVARRAY_GET_INTEGER,NVARRAY_GET_LONG,NVARRAY_GET_RAW,NVARRAY_GET_SHORT,"
+	           L"NVARRAY_GET_TEXT,NVL,NVL2,OBJECT,OPEN_CURSOR,OVER,OVERLAY,PATH,"
+	           L"PAUSE_PROFILER,PERCENT_RANK,PERCENTILE_CONT,PERCENTILE_DISC,PMARKER,"
+	           L"PORT_STRING,POWER,PURGE,PUSH,PUT_RAW,QUOTED_PRINTABLE_DECODE,"
+	           L"QUOTED_PRINTABLE_ENCODE,RANDOM,RANK,RATIO_TO_REPORT,RATION_TO_REPORT,"
+	           L"RAWTOHEX,RAWTONHEX,RECEIVE_MESSAGE,REFERENCE,REFTOHEX,REGR_AVGX,"
+	           L"REGR_AVGY,REGR_COUNT,REGR_INTERCEPT,REGR_R2,REGR_SLOPE,REGR_SXX,"
+	           L"REGR_SXY,REGR_SYY,REGRESSION,REMOVE_PIPE,REPLACE,REPLICATION_IS_ON,"
+	           L"REQUEST,REQUEST_PIECES,RESTORE,RESUME_PROFILER,RETURNING,ROLLUP,ROUND,"
+	           L"ROW_NUMBER,ROWID_BLOCK_NUMBER,ROWID_CREATE,ROWID_OBJECT,"
+	           L"ROWID_RELATIVE_FNO,ROWID_ROW_NUMBER,ROWID_TO_ABSOLUTE_FNO,"
+	           L"ROWID_TO_EXTENDED,ROWID_TO_RESTRICTED,ROWID_TYPE,ROWID_VERIFY,"
+	           L"ROWIDTOCHAR,ROWIDTONCHAR,RPAD,RTRIM,SEND_MESSAGE,SESSIONTIMEZONE,"
+	           L"SET_BREAKPOINT,SET_OER_BREAKPOINT,SET_TIMEOUT,SET_VALUE,SIGN,SIN,SINH,"
+	           L"SOUNDEX,SPACE_ERROR_INFO,SQLCODE,SQLERRM,SQRT,START_PROFILER,STDDEV,"
+	           L"STDDEV_POP,STDDEV_SAMP,STDDEVP,STDDEVS,STEP_ID,STOP_PROFILER,SUBSTR,"
+	           L"SUBSTRB,SUM,SYNCHRONIZE,SYS_CONNECT_BY_PATH,SYS_CONTEXT,SYS_DBURIGEN,"
+	           L"SYS_EXTRACT_UTC,SYS_GUID,SYS_TYPEID,SYS_XMLAGG,SYS_XMLGEN,SYSDATE,"
+	           L"SYSTIMESTAMP,TAN,TANH,TO_CHAR,TO_CLOB,TO_DATE,TO_DSINTERVAL,TO_LABEL,"
+	           L"TO_LOB,TO_MULTI_BYTE,TO_NCHAR,TO_NCLOB,TO_NUMBER,TO_SINGLE_BYTE,"
+	           L"TO_TIMESTAMP,TO_TIMESTAMP_TZ,TO_YMINTERVAL,TRANSLATE,TRANSLITERATE,"
+	           L"TREAT,TRIM,TRUNC,TZ_OFFSET,UID,UNDER_PATH,UNESCAPE,UNIQUE_SESSION_ID,"
+	           L"UNIQUE_SESSION_NAME,UNISTR,UPDATEXML,UPPER,USER,USERENV,USING,UUDECODE,"
+	           L"UUENCODE,VALUE,VAR_POP,VAR_SAMP,VARIANCE,VARP,VARS,VSIZE,WIDTH_BUCKET,"
+	           L"XMLAGG,XMLCOLATTVAL,XMLCONCAT,XMLELEMENT,XMLFOREST,XMLSEQUENCE,"
+	           L"XMLTRANSFORM,XRANGE";
+const String OracleDefaultPackages = L"CTX_ADM,CTX_CLS,CTX_DDL,CTX_DOC,CTX_OUTPUT,CTX_QUERY,CTX_REPORT,CTX_THES,CTX_ULEXER,"
+	           L"DBMS_ADVANCED_REWRITE,DBMS_ADVISOR,DBMS_ALERT,DBMS_APPLICATION_INFO,"
+	           L"DBMS_APPLY_ADM,DBMS_AQ,DBMS_AQ_EXP_HISTORY_TABLES,DBMS_AQ_EXP_INDEX_TABLES,"
+	           L"DBMS_AQ_EXP_QUEUE_TABLES,DBMS_AQ_EXP_QUEUES,"
+	           L"DBMS_AQ_EXP_SUBSCRIBER_TABLES,DBMS_AQ_EXP_TIMEMGR_TABLES,"
+	           L"DBMS_AQ_EXP_ZECURITY,DBMS_AQ_IMP_INTERNAL,DBMS_AQ_IMP_ZECURITY,"
+	           L"DBMS_AQ_IMPORT_INTERNAL,DBMS_AQ_SYS_EXP_ACTIONS,"
+	           L"DBMS_AQ_SYS_EXP_INTERNAL,DBMS_AQ_SYS_IMP_INTERNAL,DBMS_AQADM,"
+	           L"DBMS_AQADM_SYS,DBMS_AQADM_SYSCALLS,DBMS_AQELM,DBMS_AQIN,"
+	           L"DBMS_AQJMS,DBMS_ASSERT,DBMS_AUTO_TASK_ADMIN,DBMS_AW_STATS,DBMS_BACKUP_RESTORE,"
+	           L"DBMS_CAPTURE_ADM,DBMS_CDC_PUBLISH,DBMS_CDC_SUBSCRIBE,DBMS_COMPARISON,"
+	           L"DBMS_CONNECTION_POOL,DBMS_CQ_NOTIFICATION,DBMS_CRYPTO,DBMS_CSX_ADMIN,"
+	           L"DBMS_CUBE,DBMS_CUBE_ADVISE,DBMS_DATA_MINING,DBMS_DATA_MINING_TRANSFORM,"
+	           L"DBMS_DATAPUMP,DBMS_DB_VERSION,DBMS_DDL,"
+	           L"DBMS_DEBUG,DBMS_DEFER,DBMS_DEFER_IMPORT_INTERNAL,DBMS_DEFER_QUERY,"
+	           L"DBMS_DEFER_SYS,DBMS_DESCRIBE,DBMS_DG,DBMS_DIMENSION,DBMS_DISTRIBUTED_TRUST_ADMIN,"
+	           L"DBMS_EPG,DBMS_ERRLOG,DBMS_EXPFIL,DBMS_EXPORT_EXTENSION,DBMS_FGA,DBMS_FILE_GROUP,"
+	           L"DBMS_FILE_TRANSFER,DBMS_FLASHBACK,DBMS_FREQUENT_ITEMSET,DBMS_HM,DBMS_HPROF,"
+	           L"DBMS_HS_PARALLEL,DBMS_HS_PASSTHROUGH,DBMS_IJOB,DBMS_INTERNAL_TRIGGER,DBMS_IOT,"
+	           L"DBMS_IREFRESH,DBMS_ISNAPSHOT,DBMS_JAVA,DBMS_JAVA_TEST,DBMS_JOB,DBMS_LDAP,DBMS_LDAP_UTL,"
+	           L"DBMS_LIBCACHE,DBMS_LOB,DBMS_LOCK,DBMS_LOGMNR,DBMS_LOGMNR_CDC_PUBLISH,"
+	           L"DBMS_LOGMNR_CDC_SUBSCRIBE,DBMS_LOGMNR_D,DBMS_LOGSTDBY,DBMS_METADATA,"
+	           L"DBMS_MGD_ID_UTL,DBMS_MGWADM,DBMS_MGWMSG,DBMS_MONITOR,DBMS_MVIEW,"
+	           L"DBMS_NETWORK_ACL_ADMIN,DBMS_NETWORK_UTL, DBMS_OBFUSCATION_TOOLKIT,DBMS_ODCI,"
+	           L"DBMS_OFFLINE_OG,DBMS_OFFLINE_SNAPSHOT,DBMS_OLAP,"
+	           L"DBMS_ORACLE_TRACE_AGENT,DBMS_ORACLE_TRACE_USER,DBMS_OUTLN,"
+	           L"DBMS_OUTLN_EDIT,DBMS_OUTPUT,DBMS_PCLXUTIL,DBMS_PICKLER,DBMS_PIPE,"
+	           L"DBMS_PITR,DBMS_PLUGTS,DBMS_PROFILER,DBMS_PROPAGATION_ADM,"
+	           L"DBMS_PRVTAQIM,DBMS_PRVTAQIP,DBMS_PRVTAQIS,DBMS_PRVTRMIE,DBMS_PSP,"
+	           L"DBMS_PSWMG_IMPORT,DBMS_PREDICTIVE_ANALYTICS,DBMS_PREPROCESSOR,"
+	           L"DBMS_RANDOM,DBMS_RCVMAN,DBMS_RECTIFIER_DIFF,DBMS_REDEFINITION,DBMS_REFRESH,"
+	           L"DBMS_REFRESH_EXP_LWM,DBMS_REFRESH_EXP_SITES,DBMS_REPAIR,DBMS_REPCAT,DBMS_REPCAT_ADMIN,"
+	           L"DBMS_REPCAT_AUTH,DBMS_REPCAT_INSTANTIATE,DBMS_REPCAT_RGT,DBMS_REPUTIL,"
+	           L"DBMS_RESCONFIG,DBMS_RESOURCE_MANAGER,DBMS_RESOURCE_MANAGER_PRIVS,DBMS_RESULT_CACHE,"
+	           L"DBMS_RESUMABLE,DBMS_RLMGR,DBMS_RLS,DBMS_RMGR_GROUP_EXPORT,DBMS_RMGR_PACT_EXPORT,"
+	           L"DBMS_RMGR_PLAN_EXPORT,DBMS_RMIN,DBMS_ROWID,DBMS_RULE,DBMS_RULE_ADM,"
+	           L"DBMS_RULE_EXIMP,DBMS_SCHEDULER,DBMS_SERVER_ALERT,DBMS_SERVICE,DBMS_SESSION,"
+	           L"DBMS_SHARED_POOL,DBMS_SNAP_INTERNAL,DBMS_SNAP_REPAPI,DBMS_SNAPSHOT,DBMS_SNAPSHOT_UTL,"
+	           L"DBMS_SPACE,DBMS_SPACE_ADMIN,DBMS_SQL,DBMS_SQLDIAG,DBMS_SQLTUNE,DBMS_STANDARD,"
+	           L"DBMS_STAT_FUNCS,DBMS_STATS,DBMS_STORAGE_MAP,"
+	           L"DBMS_STREAMS,DBMS_STREAMS_ADM,DBMS_STREAMS_AUTH,DBMS_STREAMS_ADVISOR_ADM,"
+	           L"DBMS_STREAMS_MESSAGING,DBMS_STREAMS_TABLESPACE_ADM,DBMS_SUMADV,DBMS_SUMMARY,"
+	           L"DBMS_SUMREF_CHILD,DBMS_SUMREF_PARENT,DBMS_SUMREF_UTIL,"
+	           L"DBMS_SUMREF_UTIL2,DBMS_SUMVDM,DBMS_SYS_ERROR,DBMS_SYS_SQL,"
+	           L"DBMS_SYSTEM,DBMS_TDB,DBMS_TRACE,DBMS_TRANSACTION,DBMS_TRANSFORM,DBMS_TTS,"
+	           L"DBMS_TYPES,DBMS_UTILITY,DBMS_WORKLOAD_CAPTURE,DBMS_WORKLOAD_REPLAY,"
+	           L"DBMS_WORKLOAD_REPOSITORY,DBMS_WM,DBMS_XA,DBMS_XDB,DBMS_XDB_ADMIN,"
+	           L"DBMS_XDB_VERSION,DBMS_XDBRESOURCE,DBMS_XDBT,DBMS_XDBZ,DBMS_XEVENT,"
+	           L"DBMS_XMLDOM,DBMS_XMLGEN,DBMS_XMLINDEX,DBMS_XMLPARSER,DBMS_XMLQUERY,"
+	           L"DBMS_XMLSAVE,DBMS_XMLSCHEMA,DBMS_XMLSTORE,DBMS_XMLTRANSLATIONS,DBMS_XPLAN,"
+	           L"DBMS_XSLPROCESSOR,DBMS_ZHELP,DBMS_ZHELP_IR,DBMSZEXP_SYSPKGGRNT,DEBUG_EXTPROC,"
+	           L"DIANA,DIUTIL,HTF,HTP,ODCICONST,OUTLN_PKG,PBREAK,PBRPH,PBSDE,PBUTL,PIDL,PLITBLM,"
+	           L"SDO_CS,SDO_GEOM,SDO_LRS,SDO_MIGRATE,SDO_TUNE,SDO_UTIL,STANDARD,"
+	           L"SYS_STUB_FOR_PURITY_ANALYSIS,UTL_COLL,UTL_ENCODE,UTL_FILE,UTL_FILE_DIR,UTL_HTTP,"
+	           L"UTL_I18N,UTL_INADDR,UTL_LMS,UTL_MAIL,UTL_NLA,UTL_PG,UTL_RAW,UTL_REF,UTL_SMTP,"
+	           L"UTL_SPADV,UTL_TCP,UTL_URL,WPG_DOCLOAD";
+const String OracleSQLPlusCommands = L"APP,APPINFO,AQ$_AGENT,AQ$_AGENT_LIST_T,AQ$_DESCRIPTOR,AQ$_POST_INFO,"
+	           L"AQ$_POST_INFO_LIST,AQ$_RECIPIENT_LIST_T,AQ$_REG_INFO,AQ$_REG_INFO_LIST,"
+	           L"AQ$_SUBSCRIBER_LIST_T,ARCHIVE,ARRAYSIZE,ATTRIBUTE,AUTOCOMMIT,AUTOP,"
+	           L"AUTOPRINT,AUTORECOVERY,AUTOT,AUTOTRACE,BLO,BLOCKTERMINATOR,BRE,BREAK,"
+	           L"BTI,BTITLE,BUFFER,CL,CLEAR,CLOSECURSOR,CMDS,CMDSEP,COL,COLSEP,COM,COMP,"
+	           L"COMPAT,COMPATIBILITY,CON,CONN,COPY,COPYC,COPYCOMMIT,COPYTYPECHECK,DEF,"
+	           L"DEFINE,DESC,DESCR,DESCRI,DESCRIB,DESCRIBE,DISC,DISCO,DISCON,DISCONN,"
+	           L"DISCONNE,DISCONNEC,DISCONNECT,EA,ECHO,EDITF,EDITFILE,EMB,"
+	           L"EMBEDDED,ESC,EXEC,EXECUTE,FAILURE,FEED,FEEDBACK,FLAGGER,FLU,GET,"
+	           L"HEA,HEADING,HEADS,HEADSEP,HELP,HO,HOST,INPUT,INTERMED,INTERMEDIATE,INV,"
+	           L"INVISIBLE,LIN,LINESIZE,LO,LOBOF,LOBOFFSET,LOGON,LOGSOURCE,LONGC,"
+	           L"LONGCHUNKSIZE,MARKUP,MAXDATA,MIX,MIXED,NATIVE,NEWP,NEWPAGE,NUM,"
+	           L"NUMF,NUMFORMAT,NUMWIDTH,OFF,OSERROR,PAGES,PAGESIZE,PASSW,PAU,PAUSE,"
+	           L"PPRINT,PRI,PRINT,RECSEP,RECSEPCHAR,REPF,REPFOOTER,REPH,REPHEADER,"
+	           L"RUN,SAVE,SCAN,SERVEROUTPUT,SET,SHIFT,SHIFTINOUT,SHO,SHOW,SHUTDOWN,"
+	           L"SILENT,SPOOL,SQLBL,SQLBLANKLINES,SQLC,SQLCASE,SQLCO,SQLCONTINUE,SQLN,"
+	           L"SQLNUMBER,SQLP,SQLPRE,SQLPREFIX,SQLPROMPT,SQLT,SQLTERMINATOR,STA,"
+	           L"STARTUP,STATEMENT_ID,STORE,SUCCESS,SUF,SUFFIX,TAB,TERM,TERMOUT,TI,TIMI,"
+	           L"TIMING,TRIMOUT,TRIMS,TRIMSPOOL,TTI,TTITLE,UND,UNDEF,UNDEFINE,"
+	           L"UNDERLINE,UP,VAR,VARIABLE,VER,VERIFY,VERSION,VIS,VISIBLE,WHENEVER,WR,"
+	           L"WRA,WRAP,WRAPPED";
+const String OracleCommentKW = L"REM,REMA,REMAR,REMARK";
+const String OracleConsoleOutputKW = L"PRO,PROM,PROMP,PROMPT";
+
+//---MS-SQL 7-------------------------------------------------------------------
+  // keywords
+const String MSSQL7KW = L"ABSOLUTE,ADD,ALL,ALTER,ANY,AS,ASC,AUTHORIZATION,AVG,BACKUP,BEGIN,"
+	           L"BETWEEN,BREAK,BROWSE,BULK,BY,CASCADE,CHECK,CHECKPOINT,CLOSE,CLUSTERED,"
+	           L"COLUMN,COMMIT,COMMITTED,COMPUTE,CONFIRM,CONSTRAINT,CONTAINS,"
+	           L"CONTAINSTABLE,CONTINUE,CONTROLROW,COUNT,CREATE,CROSS,CURRENT,"
+	           L"CURRENT_DATE,CURRENT_TIME,CURSOR,DATABASE,DBCC,DEALLOCATE,DECLARE,"
+	           L"DEFAULT,DELETE,DENY,DESC,DISK,DISTINCT,DISTRIBUTED,DOUBLE,DROP,DUMMY,"
+	           L"DUMP,ELSE,END,ERRLVL,ERROREXIT,ESCAPE,EXCEPT,EXEC,EXECUTE,EXISTS,EXIT,"
+	           L"FETCH,FILE,FILLFACTOR,FIRST,FLOPPY,FOR,FOREIGN,FREETEXT,FREETEXTTABLE,"
+	           L"FROM,FULL,GLOBAL,GOTO,GRANT,GROUP,HAVING,HOLDLOCK,IDENTITY,IDENTITYCOL,"
+	           L"IDENTITY_INSERT,IF,IN,INDEX,INNER,INSERT,INTERSECT,INTO,IS,ISOLATION,"
+	           L"JOIN,KEY,KILL,LAST,LEFT,LEVEL,LIKE,LINENO,LOAD,MAX,MIN,MIRROREXIT,"
+	           L"NATIONAL,NEXT,NOCHECK,NONCLUSTERED,NOT,NULL,OF,OFF,OFFSETS,ON,ONCE,"
+	           L"ONLY,OPEN,OPENDATASOURCE,OPENQUERY,OPENROWSET,OPTION,OR,ORDER,OUTER,"
+	           L"OVER,PERCENT,PERM,PERMANENT,PIPE,PLAN,PRECISION,PREPARE,PRIMARY,PRINT,"
+	           L"PRIOR,PRIVILEGES,PROC,PROCEDURE,PROCESSEXIT,PUBLIC,RAISERROR,READ,"
+	           L"READTEXT,RECONFIGURE,REFERENCES,RELATIVE,REPEATABLE,REPLICATION,RESTORE,"
+	           L"RESTRICT,RETURN,REVOKE,RIGHT,ROLLBACK,ROWCOUNT,ROWGUIDCOL,RULE,SAVE,"
+	           L"SCHEMA,SELECT,SERIALIZABLE,SET,SETUSER,SHUTDOWN,SOME,STATISTICS,SUM,"
+	           L"TABLE,TAPE,TEMP,TEMPORARY,TEXTSIZE,THEN,TO,TOP,TRAN,TRANSACTION,TRIGGER,"
+	           L"TRUNCATE,TSEQUAL,UNCOMMITTED,UNION,UNIQUE,UPDATE,UPDATETEXT,USE,USER,"
+	           L"VALUES,VARYING,VIEW,WAITFOR,WHEN,WHERE,WHILE,WITH,WORK,WRITETEXT";
+
+  // functions
+const String MSSQL7Functions = L"@@CONNECTIONS,@@CPU_BUSY,@@CURSOR_ROWS,@@DATEFIRST,@@DBTS,@@ERROR,"
+	           L"@@FETCH_STATUS,@@IDENTITY,@@IDLE,@@IO_BUSY,@@LANGID,@@LANGUAGE,"
+	           L"@@LOCK_TIMEOUT,@@MAX_CONNECTIONS,@@MAX_PRECISION,@@NESTLEVEL,@@OPTIONS,"
+	           L"@@PACKET_ERRORS,@@PACK_RECEIVED,@@PACK_SENT,@@PROCID,@@REMSERVER,"
+	           L"@@ROWCOUNT,@@SERVERNAME,@@SERVICENAME,@@SPID,@@TEXTSIZE,@@TIMETICKS,"
+	           L"@@TOTAL_ERRORS,@@TOTAL_READ,@@TOTAL_WRITE,@@TRANCOUNT,@@VERSION,ABS,"
+	           L"ACOS,AND,APP_NAME,ASCII,ASIN,ATAN,ATN2,CASE,CAST,CEILING,CHARINDEX,"
+	           L"COALESCE,COLUMNPROPERTY,COL_LENGTH,COL_NAME,CONVERT,COS,COT,"
+	           L"CURRENT_TIMESTAMP,CURRENT_USER,CURSOR_STATUS,DATABASEPROPERTY,"
+	           L"DATALENGTH,DATEADD,DATEDIFF,DATENAME,DATEPART,DAY,DB_ID,DB_NAME,"
+	           L"DEGREES,DIFFERENCE,EXP,FILEGROUPPROPERTY,FILEGROUP_ID,FILEGROUP_NAME,"
+	           L"FILEPROPERTY,FILE_ID,FILE_NAME,FLOOR,FORMATMESSAGE,"
+	           L"FULLTEXTCATALOGPROPERTY,FULLTEXTSERVICEPROPERTY,GETANSINULL,GETDATE,"
+	           L"HOST_ID,HOST_NAME,IDENT_INCR,IDENT_SEED,INDEXPROPERTY,INDEX_COL,"
+	           L"ISDATE,ISNULL,ISNUMERIC,IS_MEMBER,IS_SRVROLEMEMBER,LEN,LOG,LOG10,LOWER,"
+	           L"LTRIM,MONTH,NEWID,NULLIF,OBJECTPROPERTY,OBJECT_ID,OBJECT_NAME,PARSENAME,"
+	           L"PATINDEX,PERMISSIONS,PI,POWER,QUOTENAME,RADIANS,RAND,REPLACE,REPLICATE,"
+	           L"REVERSE,ROUND,RTRIM,SESSION_USER,SIGN,SIN,SOUNDEX,SPACE,SQRT,SQUARE,"
+	           L"STATS_DATE,STR,STUFF,SUBSTRING,SUSER_ID,SUSER_NAME,SUSER_SID,"
+	           L"SUSER_SNAME,SYSTEM_USER,TAN,TEXTPTR,TEXTVALID,TYPEPROPERTY,UNICODE,"
+	           L"UPPER,USER_ID,USER_NAME,YEAR";
+
+  // types
+const String MSSQL7Types = L"BINARY,BIT,CHAR,DATETIME,DECIMAL,FLOAT,IMAGE,INT,MONEY,NCHAR,NTEXT,"
+	           L"NUMERIC,NVARCHAR,REAL,SMALLDATETIME,SMALLINT,SMALLMONEY,SYSNAME,TEXT,"
+	           L"TIMESTAMP,TINYINT,UNIQUEIDENTIFIER,VARBINARY,VARCHAR";
+
+//---MS-SQL2K-------------------------------------------------------------------
+  // keywords
+const String MSSQL2000KW = L"ADD,ALL,ALTER,AND,ANY,AS,ASC,AUTHORIZATION,BACKUP,"
+	           L"BEGIN,BETWEEN,BREAK,BROWSE,BULK,BY,CASCADE,CASE,"
+	           L"CHECK,CHECKPOINT,CLOSE,CLUSTERED,COLLATE,"
+	           L"COLUMN,COMMIT,COMPUTE,CONSTRAINT,CONTAINS,CONTAINSTABLE,"
+	           L"CONTINUE,CREATE,CROSS,CURRENT,CURSOR,DATABASE,"
+	           L"DBCC,DEALLOCATE,DECLARE,DEFAULT,DELETE,DENY,DESC,DISK,"
+	           L"DISTINCT,DISTRIBUTED,DOUBLE,DROP,DUMMY,DUMP,ELSE,END,"
+	           L"ERRLVL,ESCAPE,EXCEPT,EXEC,EXECUTE,EXISTS,EXIT,FETCH,FILE,"
+	           L"FILLFACTOR,FOR,FOREIGN,FORMSOF,FREETEXT,FREETEXTTABLE,FROM,FULL,"
+	           L"FUNCTION,GOTO,GRANT,GROUP,HAVING,HOLDLOCK,IDENTITY,"
+	           L"IDENTITYCOL,IDENTITY_INSERT,IF,IN,INFLECTIONAL,INDEX,INNER,INSERT,"
+	           L"INTERSECT,INTO,IS,ISABOUT,JOIN,KEY,KILL,LEFT,LIKE,LINENO,LOAD,"
+	           L"NATIONAL,NOCHECK,NONCLUSTERED,NOT,NULL,NULLIF,OF,OFF,"
+	           L"OFFSETS,ON,OPEN,OPENDATASOURCE,OPENQUERY,OPENROWSET,OPENXML,"
+	           L"OPTION,OR,ORDER,OUTER,OVER,PERCENT,PLAN,PRECISION,"
+	           L"PRIMARY,PRINT,PROC,PROCEDURE,PUBLIC,RAISERROR,READ,"
+	           L"READTEXT,RECONFIGURE,REFERENCES,REPLICATION,RESTORE,"
+	           L"RESTRICT,RETURN,REVOKE,RIGHT,ROLLBACK,ROWCOUNT,ROWGUIDCOL,"
+	           L"RULE,SAVE,SCHEMA,SELECT,SESSION_USER,SET,SETUSER,SHUTDOWN,"
+	           L"SOME,STATISTICS,TABLE,TEXTSIZE,THEN,TO,TOP,TRAN,TRANSACTION,"
+	           L"TRIGGER,TRUNCATE,TSEQUAL,UNION,UNIQUE,UPDATE,UPDATETEXT,"
+	           L"USE,USER,VALUES,VARYING,VIEW,WAITFOR,WEIGHT,WHEN,WHERE,WHILE,"
+	           L"WITH,WRITETEXT";
+
+  // functions
+const String MSSQL2000Functions = L"@@CONNECTIONS,@@CPU_BUSY,@@CURSOR_ROWS,@@DATEFIRST,@@DBTS,@@ERROR,"
+	           L"@@FETCH_STATUS,@@IDENTITY,@@IDLE,@@IO_BUSY,@@LANGID,@@LANGUAGE,"
+	           L"@@LOCK_TIMEOUT,@@MAX_CONNECTIONS,@@MAX_PRECISION,@@NESTLEVEL,@@OPTIONS,"
+	           L"@@PACKET_ERRORS,@@PACK_RECEIVED,@@PACK_SENT,@@PROCID,@@REMSERVER,"
+	           L"@@ROWCOUNT,@@SERVERNAME,@@SERVICENAME,@@SPID,@@TEXTSIZE,@@TIMETICKS,"
+	           L"@@TOTAL_ERRORS,@@TOTAL_READ,@@TOTAL_WRITE,@@TRANCOUNT,@@VERSION,"
+	           L"ABS,ACOS,APP_NAME,ASCII,ASIN,ATAN,ATN2,AVG,BINARY_CHECKSUM,CAST,"
+	           L"CEILING,CHARINDEX,CHECKSUM,CHECKSUM_AGG,COALESCE,COLLATIONPROPERTY,"
+	           L"COLUMNPROPERTY,COL_LENGTH,COL_NAME,CONVERT,COS,COT,COUNT,"
+	           L"COUNT_BIG,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,"
+	           L"CURRENT_USER,CURSOR_STATUS,DATABASEPROPERTY,DATABASEPROPERTYEX,"
+	           L"DATALENGTH,DATEADD,DATEDIFF,DATENAME,DATEPART,DAY,DB_ID,DB_NAME,DEGREES,"
+	           L"DIFFERENCE,EXP,FILEGROUPPROPERTY,FILEGROUP_ID,FILEGROUP_NAME,"
+	           L"FILEPROPERTY,FILE_ID,FILE_NAME,FLOOR,fn_helpcollations,"
+	           L"fn_listextendedproperty,fn_servershareddrives,fn_trace_geteventinfo,"
+	           L"fn_trace_getfilterinfo,fn_trace_getinfo,fn_trace_gettable,"
+	           L"fn_virtualfilestats,FORMATMESSAGE,FULLTEXTCATALOGPROPERTY,"
+	           L"FULLTEXTSERVICEPROPERTY,GETANSINULL,GETDATE,GETUTCDATE,GROUPING,"
+	           L"HAS_DBACCESS,HOST_ID,HOST_NAME,IDENT_CURRENT,IDENT_INCR,IDENT_SEED,"
+	           L"INDEXKEY_PROPERTY,INDEXPROPERTY,INDEX_COL,ISDATE,ISNULL,ISNUMERIC,"
+	           L"IS_MEMBER,IS_SRVROLEMEMBER,LEN,LOG,LOG10,LOWER,LTRIM,MAX,MIN,MONTH,"
+	           L"NEWID,OBJECTPROPERTY,OBJECT_ID,OBJECT_NAME,PARSENAME,PATINDEX,"
+	           L"PERMISSIONS,PI,POWER,QUOTENAME,RADIANS,RAND,REPLACE,REPLICATE,REVERSE,"
+	           L"ROUND,ROWCOUNT_BIG,RTRIM,SCOPE_IDENTITY,SERVERPROPERTY,SESSIONPROPERTY,"
+	           L"SIGN,SIN,SOUNDEX,SPACE,SQL_VARIANT_PROPERTY,SQRT,SQUARE,"
+	           L"STATS_DATE,STDEV,STDEVP,STR,STUFF,SUBSTRING,SUM,SUSER_SID,SUSER_SNAME,"
+	           L"SYSTEM_USER,TAN,TEXTPTR,TEXTVALID,TYPEPROPERTY,UNICODE,UPPER,"
+	           L"USER_ID,USER_NAME,VAR,VARP,YEAR";
+
+  // types
+const String MSSQL2000Types = L"bigint,binary,bit,char,character,datetime,"
+	           L"dec,decimal,float,image,int,"
+	           L"integer,money,nchar,ntext,numeric,nvarchar,real,"
+	           L"rowversion,smalldatetime,smallint,smallmoney,"
+	           L"sql_variant,sysname,text,timestamp,tinyint,uniqueidentifier,"
+	           L"varbinary,varchar";
+
+//---Interbase 6----------------------------------------------------------------
+  // functions
+const String Interbase6Functions = L"AVG,CAST,COUNT,GEN_ID,MAX,MIN,SUM,UPPER";
+
+  // keywords
+const String Interbase6KW = L"ACTIVE,ADD,AFTER,ALL,ALTER,AND,ANY,AS,ASC,"
+	           L"ASCENDING,AT,AUTO,AUTODDL,BASED,BASENAME,BASE_NAME,BEFORE,BEGIN,BETWEEN,"
+	           L"BLOBEDIT,BUFFER,BY,CACHE,CHARACTER_LENGTH,CHAR_LENGTH,CHECK,"
+	           L"CHECK_POINT_LEN,CHECK_POINT_LENGTH,COLLATE,COLLATION,COLUMN,COMMIT,"
+	           L"COMMITED,COMPILETIME,COMPUTED,CLOSE,CONDITIONAL,CONNECT,CONSTRAINT,"
+	           L"CONTAINING,CONTINUE,CREATE,CURRENT,CURRENT_DATE,CURRENT_TIME,"
+	           L"CURRENT_TIMESTAMP,CURSOR,DATABASE,DAY,DB_KEY,DEBUG,DEC,DECLARE,DEFAULT,"
+	           L"DELETE,DESC,DESCENDING,DESCRIBE,DESCRIPTOR,DISCONNECT,DISTINCT,DO,"
+	           L"DOMAIN,DROP,ECHO,EDIT,ELSE,END,ENTRY_POINT,ESCAPE,EVENT,EXCEPTION,"
+	           L"EXECUTE,EXISTS,EXIT,EXTERN,EXTERNAL,EXTRACT,FETCH,FILE,FILTER,FOR,"
+	           L"FOREIGN,FOUND,FROM,FULL,FUNCTION,GDSCODE,GENERATOR,GLOBAL,GOTO,GRANT,"
+	           L"GROUP,GROUP_COMMIT_WAIT,GROUP_COMMIT_WAIT_TIME,HAVING,HELP,HOUR,IF,"
+	           L"IMMEDIATE,IN,INACTIVE,INDEX,INDICATOR,INIT,INNER,INPUT,INPUT_TYPE,"
+	           L"INSERT,INT,INTO,IS,ISOLATION,ISQL,JOIN,KEY,LC_MESSAGES,LC_TYPE,LEFT,"
+	           L"LENGTH,LEV,LEVEL,LIKE,LOGFILE,LOG_BUFFER_SIZE,LOG_BUF_SIZE,LONG,MANUAL,"
+	           L"MAXIMUM,MAXIMUM_SEGMENT,MAX_SEGMENT,MERGE,MESSAGE,MINIMUM,MINUTE,"
+	           L"MODULE_NAME,MONTH,NAMES,NATIONAL,NATURAL,NCHAR,NO,NOAUTO,NOT,NULL,"
+	           L"NUM_LOG_BUFFS,NUM_LOG_BUFFERS,OCTET_LENGTH,OF,ON,ONLY,OPEN,OPTION,OR,"
+	           L"ORDER,OUTER,OUTPUT,OUTPUT_TYPE,OVERFLOW,PAGE,PAGELENGTH,PAGES,PAGE_SIZE,"
+	           L"PARAMETER,PASSWORD,PLAN,POSITION,POST_EVENT,PRECISION,PREPARE,PROCEDURE,"
+	           L"PROTECTED,PRIMARY,PRIVILEGES,PUBLIC,QUIT,RAW_PARTITIONS,READ,REAL,"
+	           L"RECORD_VERSION,REFERENCES,RELEASE,RESERV,RESERVING,RETAIN,RETURN,"
+	           L"RETURNING_VALUES,RETURNS,REVOKE,RIGHT,ROLLBACK,RUNTIME,SCHEMA,SECOND,"
+	           L"SEGMENT,SELECT,SET,SHADOW,SHARED,SHELL,SHOW,SINGULAR,SIZE,SNAPSHOT,SOME,"
+	           L"SORT,SQL,SQLCODE,SQLERROR,SQLWARNING,STABILITY,STARTING,STARTS,"
+	           L"STATEMENT,STATIC,STATISTICS,SUB_TYPE,SUSPEND,TABLE,TERMINATOR,THEN,TO,"
+	           L"TRANSACTION,TRANSLATE,TRANSLATION,TRIGGER,TRIM,TYPE,UNCOMMITTED,UNION,"
+	           L"UNIQUE,UPDATE,USER,USING,VALUE,VALUES,VARIABLE,VARYING,VERSION,VIEW,"
+	           L"WAIT,WEEKDAY,WHEN,WHENEVER,WHERE,WHILE,WITH,WORK,WRITE,YEAR,YEARDAY";
+
+  // types
+const String Interbase6Types = L"BLOB,CHAR,CHARACTER,DATE,DECIMAL,DOUBLE,FLOAT,INTEGER,"
+	           L"NUMERIC,SMALLINT,TIME,TIMESTAMP,VARCHAR";
+
+//---MySQL----------------------------------------------------------------------
+  // keywords
+const String MySqlKW = L"ACCOUNT,ACTION,ADD,AFTER,AGAINST,ALGORITHM,ALL,ALTER,ANY,ALWAYS,ANALYZE,"
+	           L"AND,AS,ASC,AT,AUTO_INCREMENT,AVG_ROW_LENGTH,BEFORE,BEGIN,BETWEEN,BINLOG,"
+	           L"BLOCK,BOTH,BY,CACHE,CALL,CASCADE,CASCADED,CATALOG_NAME,CHANGE,CHANGED,"
+	           L"CHANNEL,CHAIN,CHARACTER,CHARSET,CHECK,CHECKSUM,CLASS_ORIGIN,CLIENT,CODE,"
+	           L"COLLATE,COLLATION,COLUMN,COLUMN_FORMAT,COLUMN_NAME,COLUMNS,COMMENT,"
+	           L"COMMIT,COMMITTED,COMPLETION,CONCURRENT,CONDITION,CONNECTION,CONSISTENT,"
+	           L"CONSTRAINT,CONSTRAINT_CATALOG,CONSTRAINT_NAME,CONSTRAINT_SCHEMA,"
+	           L"CONTAINS,CONTEXT,CONTINUE,CONVERT,COPY,CPU,CREATE,CROSS,CURRENT,CURSOR,"
+	           L"CURSOR_NAME,CYCLE,DATA,DATABASE,DATABASES,DATAFILE,DAY_HOUR,"
+	           L"DAY_MICROSECOND,DAY_MINUTE,DAY_SECOND,DEALLOCATE,DECLARE,DEFAULT,"
+	           L"DEFINER,DELAY_KEY_WRITE,DELAYED,DELETE,DESC,DESCRIBE,DETERMINISTIC,"
+	           L"DIAGNOSTICS,DIRECTORY,DISABLE,DISCARD,DISTINCT,DISTINCTROW,DIV,DO,DROP,"
+	           L"DUAL,DUMPFILE,DUPLICATE,EACH,ELSE,ELSEIF,ENABLE,ENCLOSED,END,ENDS,"
+	           L"ENGINE,ENGINES,ERROR,ERRORS,ESCAPE,ESCAPED,EVENT,EVENTS,EVERY,EXCHANGE,"
+	           L"EXCLUSIVE,EXECUTE,EXISTS,EXPANSION,EXPIRE,EXPLAIN,EXTENDED,FALSE,FAST,"
+	           L"FAULTS,FILE_BLOCK_SIZE,FLUSH,FIELDS,FILE,FIRST,FOLLOWS,FOR,FORCE,"
+	           L"FOREIGN,FOUND,FROM,FULL,FULLTEXT,FUNCTION,GENERAL,GENERATED,GET,GLOBAL,"
+	           L"GRANT,GRANTS,GROUP,HAVING,HELP,HIGH_PRIORITY,HOST,HOSTS,"
+	           L"HOUR_MICROSECOND,HOUR_MINUTE,HOUR_SECOND,IDENTIFIED,IGNORE,"
+	           L"IGNORE_SERVER_IDS,IMPORT,IN,INCREMENT,INDEX,INDEXES,INFILE,INITIAL_SIZE,"
+	           L"INNER,INOUT,INPLACE,INSTANCE,INSERT,INSERT_METHOD,INSTALL,INTO,INVOKER,"
+	           L"IO,IPC,IS,ISOLATION,JOIN,JSON,KEY,KEY_BLOCK_SIZE,KEYS,KILL,LANGUAGE,"
+	           L"LAST,LEADING,LESS,LEVEL,LIKE,LIMIT,LINEAR,LINES,LIST,LOAD,LOCAL,LOCK,"
+	           L"LOGS,LOW_PRIORITY,MASTER,MASTER_AUTO_POSITION,MASTER_BIND,"
+	           L"MASTER_CONNECT_RETRY,MASTER_DELAY,MASTER_HEARTBEAT_PERIOD,MASTER_HOST,"
+	           L"MASTER_LOG_FILE,MASTER_LOG_POS,MASTER_PASSWORD,MASTER_PORT,"
+	           L"MASTER_RETRY_COUNT,MASTER_SSL,MASTER_SSL_CA,MASTER_SSL_CAPATH,"
+	           L"MASTER_SSL_CERT,MASTER_SSL_CIPHER,MASTER_SSL_CRL,MASTER_SSL_CRLPATH,"
+	           L"MASTER_SSL_KEY,MASTER_SSL_VERIFY_SERVER_CERT,MASTER_TLS_VERSION,"
+	           L"MASTER_USER,MATCH,MAX_QUERIES_PER_HOUR,MAX_ROWS,"
+	           L"MAX_CONNECTIONS_PER_HOUR,MAX_STATEMENT_TIME,MAX_UPDATES_PER_HOUR,"
+	           L"MAX_USER_CONNECTIONS,MAXVALUE,MEDIUM,MESSAGE_TEXT,MIGRATE,MIN_ROWS,"
+	           L"MINUTE_MICROSECOND,MINUTE_SECOND,MINVALUE,MOD,MODE,MODIFIES,MODIFY,"
+	           L"MUTEX,MYSQL_ERRNO,NAME,NAMES,NATURAL,NEVER,NEW,NEXT,NO,NOCACHE,NOCYCLE,"
+	           L"NOMAXVALUE,NOMINVALUE,NONE,NOT,NULL,NO_WRITE_TO_BINLOG,NUMBER,OFFSET,"
+	           L"OJ,OLD,ON,ONE,ONLINE,ONLY,OPEN,OPTIMIZE,OPTION,OPTIONALLY,OPTIONS,OR,"
+	           L"ORDER,OUT,OUTER,OUTFILE,OWNER,PACK_KEYS,PAGE,PAGE_CHECKSUM,PARSER,"
+	           L"PARTIAL,PARTITION,PARTITIONING,PARTITIONS,PERSIST,PERSISTENT,PHASE,"
+	           L"PLUGINS,PLUGIN,PORT,PRECEDES,PREPARE,PRESERVE,PRIMARY,PRIVILEGES,"
+	           L"PROCEDURE,PROCESS,PROCESSLIST,PROFILE,PROFILES,PROXY,PURGE,QUERY,QUICK,"
+	           L"RANGE,READ,READS,REBUILD,RECOVER,REFERENCES,REGEXP,RELAY,RELAYLOG,"
+	           L"RELEASE,RELAY_LOG_FILE,RELAY_LOG_POS,RELOAD,REMOVE,RENAME,REORGANIZE,"
+	           L"REPAIR,REPEATABLE,REPLACE,REPLICATION,REQUIRE,RESET,RESIGNAL,"
+	           L"RESTRICT,RESUME,RETURN,RETURNED_SQLSTATE,RETURNS,REVOKE,RLIKE,ROLLBACK,"
+	           L"ROLLUP,ROTATE,ROUTINE,ROW,ROW_FORMAT,ROWS,SAVEPOINT,SCHEDULE,SCHEMA,"
+	           L"SCHEMA_NAME,SECOND_MICROSECOND,SECURITY,SELECT,SEPARATOR,SEQUENCE,"
+	           L"SERIALIZABLE,SERVER,SESSION,SET,SHARE,SHARED,SHOW,SHUTDOWN,SIGNAL,"
+	           L"SIMPLE,SLAVE,SLOW,SNAPSHOT,SOCKET,SOME,SONAME,SOUNDS,SOURCE,SPATIAL,"
+	           L"SQL,SQL_BIG_RESULT,SQL_BUFFER_RESULT,SQL_CACHE,SQL_CALC_FOUND_ROWS,"
+	           L"SQL_NO_CACHE,SQL_SMALL_RESULT,SQL_TSI_DAY,SQL_TSI_HOUR,"
+	           L"SQL_TSI_MICROSECOND,SQL_TSI_MINUTE,SQL_TSI_MONTH,SQL_TSI_QUARTER,"
+	           L"SQL_TSI_SECOND,SQL_TSI_WEEK,SQL_TSI_YEAR,SQLEXCEPTION,SQLSTATE,"
+	           L"SQLWARNING,STACKED,STARTING,START,STARTS,STATS_AUTO_RECALC,"
+	           L"STATS_PERSISTENT,STATS_SAMPLE_PAGES,STATUS,STOP,STORAGE,STORED,"
+	           L"STRAIGHT_JOIN,SUBCLASS_ORIGIN,SUBPARTITION,SUBPARTITIONS,SUPER,SUSPEND,"
+	           L"SWAPS,SWITCHES,TABLE,TABLE_CHECKSUM,TABLE_NAME,TABLES,TABLESPACE,"
+	           L"TEMPORARY,TERMINATED,THAN,TO,TRADITIONAL,TRAILING,TRANSACTION,"
+	           L"TRANSACTIONAL,TRIGGER,TRIGGERS,TRUE,TYPE,UNCOMMITTED,UNDO,UNINSTALL,"
+	           L"UNION,UNIQUE,UNKNOWN,UNLOCK,UPDATE,UPGRADE,USAGE,USE,USE_FRM,"
+	           L"USING,VALIDATION,VALUE,VALUES,VARIABLES,VIEW,VIRTUAL,WAIT,WARNINGS,"
+	           L"WHERE,WRAPPER,WRITE,WITH,WITHOUT,WORK,XA,XID,XML,XOR,YEAR_MONTH";
+
+  // PLSQL keywords
+const String MySQLPLSQLKW = L"CASE,CLOSE,EXIT,FETCH,GOTO,HANDLER,ITERATE,IF,LEAVE,LOOP,REPEAT,THEN," L"UNTIL,WHEN,WHILE";
+const String MySQLTypes = L"ARCHIVE,BDB,BERKELEYDB,BLACKHOLE,CSV,EXAMPLE,FEDERATED,HEAP,INNOBASE,"
+	           L"InnoDB,ISAM,MEMORY,MERGE,MRG_ISAM,MRG_MYISAM,MyISAM,NDB,NDBCLUSTER,"
+	           L"BTREE,HASH,"
+	           L"bigint,blob,bool,boolean,byte,char,date,datetime,decimal,double,enum,"
+	           L"float,geometry,geometrycollection,int,integer,linestring,longblob,"
+	           L"longtext,mediumblob,mediumint,mediumtext,multilinestring,multipoint,"
+	           L"multipolygon,national,numeric,point,polygon,precision,real,serial,"
+	           L"signed,smallint,string,text,time,timestamp,tinyblob,tinyint,tinytext,"
+	           L"unicode,unsigned,varbinary,varchar,year,zerofill,"
+	           L"COMPACT,COMPRESSED,DISK,DYNAMIC,FIXED,REDUNDANT,"
+	           L"RAID0,STRIPED,"
+	           L"UNDEFINED,TEMPTABLE,"
+	           L"armscii8,big5,cp1250,cp1251,cp1256,cp1257,cp850,cp852,"
+	           L"cp866,cp932,dec8,eucjpms,euckr,gb18030,gb2312,gbk,geostd8,greek,hebrew,"
+	           L"hp8,keybcs2,koi8r,koi8u,latin1,latin2,latin5,latin7,macce,macroman,sjis,"
+	           L"swe7,tis620,ucs2,ujis,utf16,utf16le,utf32,utf8,utf8mb4,"
+	           L"_armscii8,_big5,_cp1250,_cp1251,_cp1256,_cp1257,_cp850,"
+	           L"_cp852,_cp866,_cp932,_dec8,_eucjpms,_euckr,_gb18030,_gb2312,_gbk,"
+	           L"_geostd8,_greek,_hebrew,_hp8,_keybcs2,_koi8r,_koi8u,_latin1,_latin2,"
+	           L"_latin5,_latin7,_macce,_macroman,_sjis,_swe7,_tis620,_ucs2,_ujis,_utf16,"
+	           L"_utf16le,_utf32,_utf8,_utf8mb4,"
+	           L"armscii8_bin,armscii8_general_ci,ascii_bin,ascii_general_ci,big5_bin,"
+	           L"big5_chinese_ci,binary,cp1250_bin,cp1250_croatian_ci,cp1250_czech_cs,"
+	           L"cp1250_general_ci,cp1250_polish_ci,cp1251_bin,cp1251_bulgarian_ci,"
+	           L"cp1251_general_ci,cp1251_general_cs,cp1251_ukrainian_ci,cp1256_bin,"
+	           L"cp1256_general_ci,cp1257_bin,cp1257_general_ci,cp1257_lithuanian_ci,"
+	           L"cp850_bin,cp850_general_ci,cp852_bin,cp852_general_ci,cp866_bin,"
+	           L"cp866_general_ci,cp932_bin,cp932_japanese_ci,dec8_bin,dec8_swedish_ci,"
+	           L"eucjpms_bin,eucjpms_japanese_ci,euckr_bin,euckr_korean_ci,gb18030_bin,"
+	           L"gb18030_chinese_ci,gb18030_unicode_520_ci,gb2312_bin,gb2312_chinese_ci,"
+	           L"gbk_bin,gbk_chinese_ci,geostd8_bin,geostd8_general_ci,greek_bin,"
+	           L"greek_general_ci,hebrew_bin,hebrew_general_ci,hp8_bin,hp8_english_ci,"
+	           L"keybcs2_bin,keybcs2_general_ci,koi8r_bin,koi8r_general_ci,koi8u_bin,"
+	           L"koi8u_general_ci,latin1_bin,latin1_danish_ci,latin1_general_ci,"
+	           L"latin1_general_cs,latin1_german1_ci,latin1_german2_ci,latin1_spanish_ci,"
+	           L"latin1_swedish_ci,latin2_bin,latin2_croatian_ci,latin2_czech_cs,"
+	           L"latin2_general_ci,latin2_hungarian_ci,latin5_bin,latin5_turkish_ci,"
+	           L"latin7_bin,latin7_estonian_cs,latin7_general_ci,latin7_general_cs,"
+	           L"macce_bin,macce_general_ci,macroman_bin,macroman_general_ci,sjis_bin,"
+	           L"sjis_japanese_ci,swe7_bin,swe7_swedish_ci,tis620_bin,tis620_thai_ci,"
+	           L"ucs2_bin,ucs2_croatian_ci,ucs2_czech_ci,ucs2_danish_ci,"
+	           L"ucs2_esperanto_ci,ucs2_estonian_ci,ucs2_general_ci,"
+	           L"ucs2_general_mysql500_ci,ucs2_german2_ci,ucs2_hungarian_ci,"
+	           L"ucs2_icelandic_ci,ucs2_latvian_ci,ucs2_lithuanian_ci,ucs2_persian_ci,"
+	           L"ucs2_polish_ci,ucs2_romanian_ci,ucs2_roman_ci,ucs2_sinhala_ci,"
+	           L"ucs2_slovak_ci,ucs2_slovenian_ci,ucs2_spanish2_ci,ucs2_spanish_ci,"
+	           L"ucs2_swedish_ci,ucs2_turkish_ci,ucs2_unicode_520_ci,ucs2_unicode_ci,"
+	           L"ucs2_vietnamese_ci,ujis_bin,ujis_japanese_ci,utf16le_bin,"
+	           L"utf16le_general_ci,utf16_bin,utf16_croatian_ci,utf16_czech_ci,"
+	           L"utf16_danish_ci,utf16_esperanto_ci,utf16_estonian_ci,utf16_general_ci,"
+	           L"utf16_german2_ci,utf16_hungarian_ci,utf16_icelandic_ci,utf16_latvian_ci,"
+	           L"utf16_lithuanian_ci,utf16_persian_ci,utf16_polish_ci,utf16_romanian_ci,"
+	           L"utf16_roman_ci,utf16_sinhala_ci,utf16_slovak_ci,utf16_slovenian_ci,"
+	           L"utf16_spanish2_ci,utf16_spanish_ci,utf16_swedish_ci,utf16_turkish_ci,"
+	           L"utf16_unicode_520_ci,utf16_unicode_ci,utf16_vietnamese_ci,utf32_bin,"
+	           L"utf32_croatian_ci,utf32_czech_ci,utf32_danish_ci,utf32_esperanto_ci,"
+	           L"utf32_estonian_ci,utf32_general_ci,utf32_german2_ci,utf32_hungarian_ci,"
+	           L"utf32_icelandic_ci,utf32_latvian_ci,utf32_lithuanian_ci,"
+	           L"utf32_persian_ci,utf32_polish_ci,utf32_romanian_ci,utf32_roman_ci,"
+	           L"utf32_sinhala_ci,utf32_slovak_ci,utf32_slovenian_ci,utf32_spanish2_ci,"
+	           L"utf32_spanish_ci,utf32_swedish_ci,utf32_turkish_ci,utf32_unicode_520_ci,"
+	           L"utf32_unicode_ci,utf32_vietnamese_ci,utf8mb4_bin,utf8mb4_croatian_ci,"
+	           L"utf8mb4_czech_ci,utf8mb4_danish_ci,utf8mb4_esperanto_ci,"
+	           L"utf8mb4_estonian_ci,utf8mb4_general_ci,utf8mb4_german2_ci,"
+	           L"utf8mb4_hungarian_ci,utf8mb4_icelandic_ci,utf8mb4_latvian_ci,"
+	           L"utf8mb4_lithuanian_ci,utf8mb4_persian_ci,utf8mb4_polish_ci,"
+	           L"utf8mb4_romanian_ci,utf8mb4_roman_ci,utf8mb4_sinhala_ci,"
+	           L"utf8mb4_slovak_ci,utf8mb4_slovenian_ci,utf8mb4_spanish2_ci,"
+	           L"utf8mb4_spanish_ci,utf8mb4_swedish_ci,utf8mb4_turkish_ci,"
+	           L"utf8mb4_unicode_520_ci,utf8mb4_unicode_ci,utf8mb4_vietnamese_ci,"
+	           L"utf8_bin,utf8_croatian_ci,utf8_czech_ci,utf8_danish_ci,"
+	           L"utf8_esperanto_ci,utf8_estonian_ci,utf8_general_ci,"
+	           L"utf8_general_mysql500_ci,utf8_german2_ci,utf8_hungarian_ci,"
+	           L"utf8_icelandic_ci,utf8_latvian_ci,utf8_lithuanian_ci,utf8_persian_ci,"
+	           L"utf8_polish_ci,utf8_romanian_ci,utf8_roman_ci,utf8_sinhala_ci,"
+	           L"utf8_slovak_ci,utf8_slovenian_ci,utf8_spanish2_ci,utf8_spanish_ci,"
+	           L"utf8_swedish_ci,utf8_turkish_ci,utf8_unicode_520_ci,utf8_unicode_ci,"
+	           L"utf8_vietnamese_ci";
+
+  // functions
+const String MySQLFunctions = L"ABS,ACOS,ADDDATE,ADDTIME,AES_DECRYPT,AES_ENCRYPT,ANY_VALUE,AREA,"
+	           L"ASBINARY,ASCII,ASIN,ASTEXT,ASWKBASWKT,ASYMMETRIC_DECRYPT,"
+	           L"ASYMMETRIC_DERIVE,ASYMMETRIC_ENCRYPT,ASYMMETRIC_SIGN,ASYMMETRIC_VERIFY,"
+	           L"ATAN,ATAN2,AVG,BIN,BIT_AND,BIT_COUNT,BIT_LENGTH,BIT_OR,BIT_XOR,BUFFER,"
+	           L"CAST,CEIL,CEILING,CENTROID,CHAR_LENGTH,CHARACTER_LENGTH,COALESCE,"
+	           L"COERCIBILITY,COMPRESS,CONCAT,CONCAT_WS,CONNECTION_ID,CONV,CONVERT_TZ,"
+	           L"CONVEXHULL,COS,COT,COUNT,CRC32,CREATE_ASYMMETRIC_PRIV_KEY,"
+	           L"CREATE_ASYMMETRIC_PUB_KEY,CREATE_DH_PARAMETERS,CREATE_DIGEST,CROSSES,"
+	           L"CURDATE,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,CURRENT_USER,"
+	           L"CURTIME,DATE_ADD,DATE_FORMAT,DATE_SUB,DATEDIFF,DAY,DAYNAME,DAYOFMONTH,"
+	           L"DAYOFWEEK,DAYOFYEAR,DECODE,DEGREES,DES_DECRYPT,DES_ENCRYPT,DIMENSION,"
+	           L"DISJOINT,DISTANCE,ELT,ENCODE,ENCRYPT,ENDPOINT,ENVELOPE,EQUALS,EXP,"
+	           L"EXPORT_SET,EXTERIORRING,EXTRACT,EXTRACTVALUE,FIELD,FIND_IN_SET,FLOOR,"
+	           L"FORMAT,FOUND_ROWS,FROM_BASE64,FROM_DAYS,FROM_UNIXTIME,GEOMCOLLFROMTEXT,"
+	           L"GEOMCOLLFROMWKB,GEOMETRYCOLLECTIONFROMTEXT,GEOMETRYCOLLECTIONFROMWKB,"
+	           L"GEOMETRYFROMTEXT,GEOMETRYFROMWKB,GEOMETRYN,GEOMETRYTYPE,GEOMFROMTEXT,"
+	           L"GEOMFROMWKB,GET_FORMAT,GET_LOCK,GLENGTH,GREATEST,GROUP_CONCAT,"
+	           L"GTID_SUBSET,GTID_SUBTRACT,HEX,HOUR,IFNULL,INET_ATON,INET_NTOA,"
+	           L"INET6_ATON,INET6_NTOA,INSTR,INTERIORRINGN,INTERSECTS,INTERVAL,"
+	           L"IS_FREE_LOCK,IS_IPV4,IS_IPV4_COMPAT,IS_IPV4_MAPPED,IS_IPV6,IS_USED_LOCK,"
+	           L"ISCLOSED,ISEMPTY,ISNULL,ISSIMPLE,JSON_APPEND,JSON_ARRAY,"
+	           L"JSON_ARRAY_APPEND,JSON_ARRAY_INSERT,JSON_CONTAINS,JSON_CONTAINS_PATH,"
+	           L"JSON_DEPTH,JSON_EXTRACT,JSON_INSERT,JSON_KEYS,JSON_LENGTH,JSON_MERGE,"
+	           L"JSON_OBJECT,JSON_QUOTE,JSON_REMOVE,JSON_REPLACE,JSON_SEARCH,JSON_SET,"
+	           L"JSON_TYPE,JSON_UNQUOTE,JSON_VALID,LAST_DAY,LAST_INSERT_ID,LCASE,LEAST,"
+	           L"LEFT,LENGTH,LINEFROMTEXT,LINEFROMWKB,LINESTRINGFROMTEXT,"
+	           L"LINESTRINGFROMWKB,LN,LOAD_FILE,LOCALTI,LOCALTIME,LOCALTIMESTAMP,LOCATE,"
+	           L"LOG,LOG10,LOG2,LOWER,LPAD,LTRIM,MAKE_SET,MAKEDATE,MAKETIME,"
+	           L"MASTER_POS_WAIT,MAX,MBRCONTAINS,MBRCOVEREDBY,MBRCOVERS,MBRDISJOINT,"
+	           L"MBREQUAL,MBREQUALS,MBRINTERSECTS,MBROVERLAPS,MBRTOUCHES,MBRWITHIN,MD5,"
+	           L"MICROSECOND,MID,MIN,MINUTE,MLINEFROMTEXT,MLINEFROMWKB,MONTH,"
+	           L"MONTHNAME,MPOINTFROMTEXT,MPOINTFROMWKB,MPOLYFROMTEXT,MPOLYFROMWKB,"
+	           L"MULTILINESTRINGFROMTEXT,MULTILINESTRINGFROMWKB,MULTIPOINTFROMTEXT,"
+	           L"MULTIPOINTFROMWKB,MULTIPOLYGONFROMTEXT,MULTIPOLYGONFROMWKB,NAME_CONST,"
+	           L"NOW,NULLIF,NUMGEOMETRIES,NUMINTERIORRINGS,NUMPOINTS,OCT,OCTET_LENGTH,"
+	           L"OLD_PASSWORD,ORD,OVERLAPS,PASSWORD,PERIOD_ADD,PERIOD_DIFF,PI,"
+	           L"POINTFROMTEXT,POINTFROMWKB,POINTN,POLYFROMTEXT,POLYFROMWKB,"
+	           L"POLYGONFROMTEXT,POLYGONFROMWKB,POSITION,POW,POWER,QUARTER,QUOTE,RADIANS,"
+	           L"RAND,RANDOM_BYTES,RELEASE_ALL_LOCKS,RELEASE_LOCK,REVERSE,RIGHT,ROUND,"
+	           L"ROW_COUNT,RPAD,RTRIM,SEC_TO_TIME,SECOND,SESSION_USER,SHA,SHA1,SHA2,SIGN,"
+	           L"SIN,SLEEP,SOUNDEX,SPACE,SQRT,SRID,ST_AREA,ST_ASBINARY,ST_ASGEOJSON,"
+	           L"ST_ASTEXT,ST_ASWKB,ST_ASWKT,ST_BUFFER,ST_BUFFER_STRATEGY,ST_CENTROID,"
+	           L"ST_CONTAINS,ST_CONVEXHULL,ST_CROSSES,ST_DIFFERENCE,ST_DIMENSION,"
+	           L"ST_DISJOINT,ST_DISTANCE,ST_DISTANCE_SPHERE,ST_ENDPOINT,ST_ENVELOPE,"
+	           L"ST_EQUALS,ST_EXTERIORRING,ST_GEOHASH,ST_GEOMCOLLFROMTEXT,"
+	           L"ST_GEOMCOLLFROMTXT,ST_GEOMCOLLFROMWKB,ST_GEOMETRYCOLLECTIONFROMTEXT,"
+	           L"ST_GEOMETRYCOLLECTIONFROMWKB,ST_GEOMETRYFROMTEXT,ST_GEOMETRYFROMWKB,"
+	           L"ST_GEOMETRYN,ST_GEOMETRYTYPE,ST_GEOMFROMGEOJSON,ST_GEOMFROMTEXT,"
+	           L"ST_GEOMFROMWKB,ST_INTERIORRINGN,ST_INTERSECTION,ST_INTERSECTS,"
+	           L"ST_ISCLOSED,ST_ISEMPTY,ST_ISSIMPLE,ST_ISVALID,ST_LATFROMGEOHASH,"
+	           L"ST_LENGTH,ST_LINEFROMTEXT,ST_LINEFROMWKB,ST_LINESTRINGFROMTEXT,"
+	           L"ST_LINESTRINGFROMWKB,ST_LONGFROMGEOHASH,ST_MAKEENVELOPE,"
+	           L"ST_MLINEFROMTEXT,ST_MLINEFROMWKB,ST_MPOINTFROMTEXT,ST_MPOINTFROMWKB,"
+	           L"ST_MPOLYFROMTEXT,ST_MPOLYFROMWKB,ST_MULTILINESTRINGFROMTEXT,"
+	           L"ST_MULTILINESTRINGFROMWKB,ST_MULTIPOINTFROMTEXT,ST_MULTIPOINTFROMWKB,"
+	           L"ST_MULTIPOLYGONFROMTEXT,ST_MULTIPOLYGONFROMWKB,ST_NUMGEOMETRIES,"
+	           L"ST_NUMINTERIORRING,ST_NUMINTERIORRINGS,ST_NUMPOINTS,ST_OVERLAPS,"
+	           L"ST_POINTFROMGEOHASH,ST_POINTFROMTEXT,ST_POINTFROMWKB,ST_POINTN,"
+	           L"ST_POLYFROMTEXT,ST_POLYFROMWKB,ST_POLYGONFROMTEXT,ST_POLYGONFROMWKB,"
+	           L"ST_SIMPLIFY,ST_SRID,ST_STARTPOINT,ST_SYMDIFFERENCE,ST_TOUCHES,ST_UNION,"
+	           L"ST_VALIDATE,ST_WITHIN,ST_X,ST_Y,STARTPOINT,STD,STDDEV,STDDEV_POP,"
+	           L"STDDEV_SAMP,STR_TO_DATE,STRCMP,SUBDATE,SUBSTR,SUBSTRING,SUBSTRING_INDEX,"
+	           L"SUBTIME,SUM,SYSDATE,SYSTEM_USER,TAN,TIME_FORMAT,TIME_TO_SEC,TIMEDIFF,"
+	           L"TIMESTAMPADD,TIMESTAMPDIFF,TO_BASE64,TO_DAYS,TO_SECONDS,TOUCHES,TRIM,"
+	           L"TRUNCATE,UCASE,UNCOMPRESS,UNCOMPRESSED_LENGTH,UNHEX,UNIX_TIMESTAMP,"
+	           L"UPDATEXML,UPPER,USER,UTC_DATE,UTC_TIME,UTC_TIMESTAMP,UUID,UUID_SHORT,"
+	           L"VALIDATE_PASSWORD_STRENGTH,VAR_POP,VAR_SAMP,VARIANCE,VERSION,"
+	           L"WAIT_FOR_EXECUTED_GTID_SET,WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS,WEEK,"
+	           L"WEEKDAY,WEEKOFYEAR,WEIGHT_STRING,WITHIN,X,Y,YEARWEEK";
+
+//---Ingres---------------------------------------------------------------------
+  // keywords
+const String IngresKW = L"ABORT,ACTIVATE,ADD,ADDFORM,AFTER,AGGREGATE,ALL,ALTER,AND,APPEND,ARRAY,"
+	           L"AS,ASC,AT,AUDIT_LOG,AUTHORIZATION,AUTOCOMMIT,AVGU,BEFORE,BEGIN,BETWEEN,"
+	           L"BREAKDISPLAY,BY,BYREF,CACHE,CALL,CALLFRAME,CALLPROC,CASCADE,CHECK,CLEAR,"
+	           L"CLEARROW,CLOSE,COLUMN,COMMAND,COMMENT,COMMIT,CONNECT,CONSTRAINT,"
+	           L"CONTINUE,COPY,COUNTU,CPUFACTOR,CREATE,CURRENT,CURRENT_USER,CURSOR,DATA,"
+	           L"DATAHANDLER,DATE_FORMAT,DBEVENT,DDL_CONCURRENCY,DEADLOCK,DECLARE,"
+	           L"DEFAULT,DEFERRED,DEFINE,DELETE,DELETEROW,DESC,DESCRIBE,DESCRIPTOR,"
+	           L"DESTROY,DIRECT,DISABLE,DISCONNECT,DISPLAY,DISTINCT,DISTRIBUTE,DO,DOWN,"
+	           L"DROP,ELSE,ELSEIF,ENABLE,END,ENDDATA,ENDDISPLAY,ENDFORMS,ENDIF,ENDLOOP,"
+	           L"ENDRETRIEVE,ENDSELECT,ENDWHILE,ERROR,ESCAPE,EXCLUDE,EXCLUDING,EXEC,"
+	           L"EXECUTE,EXISTS,EXIT,FETCH,FIELD,FINALIZE,FOR,FOREIGN,FORMDATA,FORMINIT,"
+	           L"FORMS,FROM,FULL,GET,GETFORM,GETOPER,GETROW,GLOBAL,GOTO,GRANT,GRANTED,"
+	           L"HAVING,HELP,HELP_FORMS,HELP_FRS,HELPFILE,IDENTIFIED,IF,IIMESSAGE,"
+	           L"IIPRINTF,IIPROMPT,IISTATEMENT,IMMEDIATE,IMPORT,IN,INCLUDE,INDEX,"
+	           L"INDICATOR,INGRES,INITIALIZE,INITTABLE,INNER,INQUIRE_EQUEL,INQUIRE_FORMS,"
+	           L"INQUIRE_FRS,INQUIRE_INGRES,INSERT,INSERTROW,INSTALLATION,INTEGRITY,INTO,"
+	           L"IO_TRACE,IS,J_FREESZ1,J_FREESZ2,J_FREESZ3,J_FREESZ4,J_SORTBUFSZ,"
+	           L"JCPUFACTOR,JOIN,JOINOP,JOURNALING,KEY,LEVEL,LIKE,LINK,LOADTABLE,LOCAL,"
+	           L"LOCATION,LOCK_TRACE,LOG_TRACE,LOGDBEVENTS,LOGGING,MAXCOST,MAXCPU,"
+	           L"MAXPAGE,MENUITEM,MESSAGE,MODE,MODIFY,MODULE,MONEY_FORMAT,MONEY_PREC,"
+	           L"MOVE,NATURAL,NEXT,NODEADLOCK,NOECHO,NOIO_TRACE,NOJIONOP,NOJOURNALING,"
+	           L"NOLOCK_TRACE,NOLOG_TRACE,NOLOGDBEVENTS,NOLOGGING,NOMAXCOST,NOMAXCPU,"
+	           L"NOMAXIO,NOMAXPAGE,NOMAXQUERY,NOMAXROW,NOOPTIMIZEONLY,NOPRINTDBEVENTS,"
+	           L"NOPRINTQRY,NOPRINTRULES,NOQEP,NORULES,NOSQL,NOSTATISTICS,NOT,NOTRACE,"
+	           L"NULL,OF,ON,ONLY,OPEN,OPTIMIZEONLY,OPTION,OR,ORDER,OUT,PARAM,PERMIT,"
+	           L"PREPARE,PRESERVE,PRIMARY,PRINT,PRINTDBEVENTS,PRINTQRY,PRINTSCREEN,"
+	           L"PRIVILEGES,PROCEDURE,PROMPT,PUBLIC,PUT,PUTFORM,PUTOPER,PUTROW,QBUFSIZE,"
+	           L"QEP,QRY,QUALIFICATION,QUERY_SIZE,RAISE,RANGE,READONLY,REDISPLAY,"
+	           L"REFERENCES,REFERENCING,REGISTER,RELOCATE,REMOVE,RENAME,REPEAT,REPEATED,"
+	           L"REPLACE,REPLICATE,RESTRICT,RESULT_STRUCTURE,RESUME,RET_INTO,RETRIEVE,"
+	           L"RETURN,RETURNING,REVOKE,ROLLBACK,ROWS,RULE,RUN,SAVE,SAVEPOINT,SCHEMA,"
+	           L"SCREEN,SCROLL,SCROLLDOWN,SCROLLUP,SECTION,SECURITY_ALARM,SECURITY_AUDIT,"
+	           L"SELECT,SESSION,SET,SET_4GL,SET_EQUAL,SET_FORMS,SET_FRS,SET_INGRES,"
+	           L"SET_SQL,SHORT_REMARK,SLEEP,SOME,SORT,SORTBUFSIZE,SQL,STATISTICS,STOP,"
+	           L"SUBMENU,SUMU,SYNONYM,SYSTEM,TABLE,TABLEDATA,TEWMPORARY,THEN,TO,TRACE,"
+	           L"TRANSACTION,TYPE,UNION,UNIQUE,UNLOADTABLE,UNTIL,UP,UPDATE,USER,USING,"
+	           L"VALIDATE,VALIDROW,VALUES,VIEW,WHEN,WHENEVER,WHERE,WHILE,WITH,WORK";
+
+  // types
+const String IngresTypes = L"BYTE,C,CHAR,CHARACTER,DATE,DECIMAL,FLOAT,FLOAT4,FLOAT8,INTEGER,INTEGER1,"
+	           L"INTEGER2,INTEGER4,LONG,MONEY,OBJECT_KEY,SECURITY_LABEL,SHORT,SMALLINT,"
+	           L"TABLE_KEY,TEXT,VARCHAR,VARYING";
+
+  // functions
+const String IngresFunctions = L"_BINTIM,_CPU_MS,_DATE,_DIO_CNT,_ET_SEC,_PFAULT_CNT,_TIME,_VERSION,ABS,"
+	           L"ANY,ATAN,AUTOCOMMIT_STATE,AVG,BIOCNT,CHAREXTRACT,COLLATION,CONCAT,"
+	           L"CONNECT_TIME_LIMIT,COS,COUNT,CREATE_PROCEDURE,CREATE_TABLE,DATABASE,"
+	           L"DATE_GMT,DATE_PART,DATE_TRUNC,DB_ADMIN,DB_DELIMITED_CASE,DB_NAME_CASE,"
+	           L"DBA,DBMS_BIO,DBMS_CPU,DBMS_DIO,DBMSINFO,DOW,EXP,FLATTEN_AGGREGATE,"
+	           L"FLATTEN_NONE,FLATTEN_OPTIMIZE,FLATTEN_SINGLETON,GROUP,HEX,"
+	           L"IDLE_TIME_LIMIT,IFNULL,INITIAL_USER,INQUIRE_SQL,INT1,INT2,INT4,INTERVAL,"
+	           L"LANGUAGE,LEFT,LENGTH,LOCATE,LOCKMODE,LOG,LONG_BYTE,LONG_VARCHAR,"
+	           L"LOWERCASE,MAX,MAXCONNECT,MAXIDLE,MAXIO,MAXQUERY,MAXROW,MIN,MOD,NOTRIM,"
+	           L"ON_ERROR_STATE,PAD,QUERY_IO_LIMIT,QUERY_LANGUAGE,QUERY_ROW_LIMIT,RIGHT,"
+	           L"ROLE,SECURITY_AUDIT_LOG,SECURITY_AUDIT_STATE,SECURITY_PRIV,"
+	           L"SELECT_SYSCAT,SERVER_CLASS,SESSION_ID,SESSION_PRIORITY,"
+	           L"SESSION_PRIORITY_LIMIT,SESSION_PRIV,SESSION_SECLABEL,SESSION_USER,SHIFT,"
+	           L"SIN,SIZE,SQRT,SQUEEZE,SUM,SYSTEM_USER,TABLE_STATISTICS,TERMINAL,"
+	           L"TRANSACTION_STATE,TRIM,UPDATE_ROWCNT,UPDATE_SYSCAT,UPPERCASE,USERNAME,"
+	           L"VARBYTE";
+
+//---Nexus----------------------------------------------------------------------
+  // keywords
+const String NexusKW = L"ABSOLUTE,AFTER,ALTER,ANY,ASC,ASSERT,ATOMIC,"
+	           L"ADD,ALL,AND,AS,ASSEMBLY,AUTHORIZATION,BEFORE,"
+	           L"BETWEEN,BINARY,BLOCK,BY,BEGIN,"
+	           L"BLOCKSIZE,CALL,CASCADE,CAST,,"
+	           L"CHARACTERS,CLR,CLOSE,CODEPAGE,COLLATION,COMMIT,CONTAINS,"
+	           L"CROSS,CALLED,CASE,CATCH,"
+	           L"CHECK,COALESCE,COLLATE,COLUMN,CONSTRAINT,"
+	           L"CREATE,CURSOR,DATA,DECLARE,"
+	           L"DELETE,DESC,DETERMINISTIC,DO,DROP,DAY,DEFAULT,DELETING,"
+	           L"DESCRIPTION,DISTINCT,EACH,ELSEIF,ENCRYPT,END,EQUIVALENT,"
+	           L"ESCAPE,EXECUTE,EXISTS,ELSE,EMPTY,ENCRYPTION,ENGINE,"
+	           L"EXCEPT,EXTERNAL,FALSE,FETCH,FETCH_STATUS,FOR,FROM,FUNCTION,FIRST,FOREIGN,"
+	           L"FULL,HAVING,HOUR,GLOBAL,GROW,GROUP,GROWSIZE,IDENTITY,IGNORE,"
+	           L"IMMEDIATE,IN,INITIAL,INNER,INPUT,INSERTING,INTERVAL,IS,IF,INDEX,"
+	           L"INITIALSIZE,INOUT,INSERT,INTERSECT,INTO,ITERATE,JOIN,"
+	           L"KANA,KEY,LANGUAGE,LEAVE,LIKE,LOCALE,"
+	           L"LARGE,LAST,LEFT,LOCAL,MATCH,"
+	           L"MINUTE,MODIFIES,MONTH,NAME,NATURAL,NEXT,NONSPACE,"
+	           L"NULLIF,NATIONAL,"
+	           L"NEW,NO,NORESTRICT,NOT,NULL,NULLS,OBJECT,OCTETS,OF,ON,OUT,OCTET_LENGTH,"
+	           L"ODD,OLD,OPEN,OR,ORDER,OUTER,PARTIAL,PERCENT,PRECISION,"
+	           L"PRIOR,PROCEDURE,PASSWORDS,PRIMARY,REFERENCES,RELATIVE,REMOVE,RESTRICT,"
+	           L"RETURNS,ROLLBACK,ROUTINE,READS,"
+	           L"REFERENCING,REPEAT,RETURN,RIGHT,ROW,SECOND,"
+	           L"SERIALIZABLE,SET,SIMPLE,SNAPSHOT,SORT,"
+	           L"STRING,SELECT,SIGNAL,"
+	           L"SOME,SQL,START,STORAGE,SYMBOLS,TABLE,"
+	           L"TOP,TRANSACTION,TRY,THEN,"
+	           L"TO,TRIGGER,TRUE,TYPE,UNION,UNKNOWN,UPDATE,"
+	           L"UNIQUE,UNTIL,UPDATING,USE,VALUES,VARYING,"
+	           L"VIEW,WHEN,WHILE,WITH,WORK,WHERE,WIDTH,YEAR";
+
+  // functions
+const String NexusFunctions = L"ABS,ATAN,ATAN2,ATN2,AVG,BOTH,BROUND,CEIL,CEILING,CHAR_LENGTH,CHARACTER_LENGTH,"
+	           L"CHR,COS,COUNT,CURRENT_DATE,CURRENT_TIME,CURRENT_TIMESTAMP,CURRENT_USER,ERROR_MESSAGE,EXP,EXTRACT,"
+	           L"FLOOR,LASTAUTOINC,LEADING,LIST,LN,LOCALTIME,LOCALTIMESTAMP,LOWER,MAX,MED,MIN,MOD,NEWGUID,OCTECT,"
+	           L"OCTECT_LENGTH,ORD,PI,POSITION,POWER,RAND,ROUND,ROWSAFFECTED,ROWSREAD,SESSION_USER,SIN,SQRT,STD,"
+	           L"SUBSTRING,SUM,SYSTEM_ROW#,TOSTRING,TOSTRINGLEN,TRAILING,TRIM,UPPER,USER,USING";
+
+  // types
+const String NexusTypes = L"CHARACTER,CHAR,NULLSTRING,SHORTSTRING,SINGLECHAR,VARCHAR,"
+	           L"CLOB,TEXT,NSINGLECHAR,NCHAR,"
+	           L"NVARCHAR,NCLOB,BLOB,IMAGE,NUMERIC,DECIMAL,DEC,BYTE,TINYINT,SHORTINT,SMALLINT,INTEGER,INT,"
+	           L"AUTOINC,BIGINT,LARGEINT,WORD,DWORD,FLOAT,REAL,DOUBLE,EXTENDED,MONEY,"
+	           L"BOOLEAN,BOOL,DATE,TIME,TIMESTAMP,DATETIME,GUID,BYTEARRAY,RECREV";
+
+//---Informix-------------------------------------------------------------------
+  // keywords
+const String InformixKW = L"ABSOLUTE,ACCESS,ACCESS_METHOD,ACTIVE,ADD,AFTER,AGGREGATE,ALIGNMENT,ALL,"
+	           L"ALL_ROWS,ALLOCATE,ALTER,AND,ANSI,ANY,APPEND,AS,ASC,AT,ATTACH,AUDIT,"
+	           L"AUTHORIZATION,AUTO,AUTOFREE,AVOID_EXECUTE,AVOID_SUBQF,BEFORE,BEGIN,"
+	           L"BETWEEN,BINARY,BOTH,BUFFERED,BUILTIN,BY,CACHE,CANNOTHASH,CASCADE,CHECK,"
+	           L"CLASS,CLIENT,CLOSE,CLUSTER,CLUSTERSIZE,COARSE,COBOL,CODESET,COLLATION,"
+	           L"COLLECTION,COLUMN,COMMIT,COMMITTED,COMMUTATOR,CONCURRENT,CONNECT,"
+	           L"CONNECTION,CONST,CONSTRAINT,CONSTRAINTS,CONSTRUCTOR,COPY,COSTFUNC,"
+	           L"CRCOLS,CREATE,CROSS,CURRENT_ROLE,CURSOR,CYCLE,DATABASE,DATAFILES,"
+	           L"DATASKIP,DBA,DBDATE,DBPASSWORD,DEALLOCATE,DEBUG,DEC_T,DECLARE,DEFAULT,"
+	           L"DEFERRED,DEFERRED_PREPARE,DELAY,DELETE,DELIMITER,DELUXE,DEREF,DESC,"
+	           L"DESCRIBE,DESCRIPTOR,DETACH,DIAGNOSTICS,DIRECTIVES,DIRTY,DISABLED,"
+	           L"DISCONNECT,DISTINCT,DISTRIBUTEBINARY,DISTRIBUTESREFERENCES,"
+	           L"DISTRIBUTIONS,DOCUMENT,DOMAIN,DONOTDISTRIBUTE,DORMANT,DROP,DTIME_T,EACH,"
+	           L"ELIF,ELSE,ENABLED,ENCRYPTION,END,ENUM,ENVIRONMENT,ESCAPE,EXCLUSIVE,EXEC,"
+	           L"EXECUTE,EXECUTEANYWHERE,EXISTS,EXPLAIN,EXPLICIT,EXPRESS,EXPRESSION,"
+	           L"EXTENT,EXTERNAL,FALSE,FAR,FETCH,FILE,FILLFACTOR,FILTERING,FIRST,"
+	           L"FIRST_ROWS,FIXCHAR,FIXED,FLUSH,FOREIGN,FORMAT,FORTRAN,FOUND,FRACTION,"
+	           L"FRAGMENT,FREE,FROM,FULL,FUNCTION,GENERAL,GET,GK,GLOBAL,GO,GOTO,GRANT,"
+	           L"GROUP,HANDLESNULLS,HASH,HAVING,HIGH,HINT,HOLD,HOUR,HYBRID,IFX_INT8_T,"
+	           L"IFX_LO_CREATE_SPEC_T,IFX_LO_STAT_T,IMMEDIATE,IMPLICIT,IN,INACTIVE,"
+	           L"INCREMENT,INDEX,INDEXES,INDICATOR,INFORMIX,INIT,INLINE,INNER,INOUT,"
+	           L"INSERT,INSTEAD,INTEG,INTERNAL,INTERNALLENGTH,INTO,INTRVL_T,IS,"
+	           L"ISCANONICAL,ISOLATION,ITEM,ITERATOR,JOIN,KEEP,KEY,LABELEQ,LABELGE,"
+	           L"LABELGLB,LABELGT,LABELLE,LABELLT,LABELLUB,LABELTOSTRING,LANGUAGE,LAST,"
+	           L"LEADING,LEFT,LEVEL,LIKE,LIMIT,LISTING,LOAD,LOC_T,LOCAL,LOCATOR,LOCK,"
+	           L"LOCKS,LOG,LONG,LOW,MATCHES,MAXERRORS,MAXLEN,MAXVALUE,MEDIAN,MEDIUM,"
+	           L"MEMORY_RESIDENT,MIDDLE,MINUTE,MINVALUE,MODE,MODERATE,MODIFY,MODULE,"
+	           L"MOUNTING,NAME,NEGATOR,NEW,NEXT,NO,NOCACHE,NOCYCLE,NOMAXVALUE,NOMIGRATE,"
+	           L"NOMINVALUE,NON_RESIDENT,NONE,NOORDER,NORMAL,NOT,NOTEMPLATEARG,NULL,"
+	           L"OF,OFF,OLD,ONLINE,ONLY,OPAQUE,OPCLASS,OPEN,OPERATIONAL,OPTCOMPIND,"
+	           L"OPTICAL,OPTIMIZATION,OPTION,OR,ORDER,OUT,OUTER,OUTPUT,PAGE,"
+	           L"PARALLELIZABLE,PARAMETER,PARTITION,PASCAL,PASSEDBYVALUE,PASSWORD,"
+	           L"PDQPRIORITY,PERCALL_COST,PLI,PLOAD,PREPARE,PREVIOUS,PRIMARY,PRIOR,"
+	           L"PRIVATE,PRIVILEGES,PROCEDURE,PUBLIC,PUT,RAW,READ,RECORDEND,REF,"
+	           L"REFERENCES,REFERENCING,REGISTER,REJECTFILE,RELATIVE,RELEASE,REMAINDER,"
+	           L"RENAME,REOPTIMIZATION,REPEATABLE,REPLICATION,RESERVE,RESOLUTION,"
+	           L"RESOURCE,RESTART,RESTRICT,RESUME,RETAIN,RETURNING,RETURNS,REUSE,REVOKE,"
+	           L"RIGHT,ROBIN,ROLE,ROLLBACK,ROLLFORWARD,ROUTINE,ROWID,ROWIDS,ROWS,SAMEAS,"
+	           L"SAMPLES,SAVE,SCHEDULE,SCHEMA,SCRATCH,SCROLL,SECOND,SECONDARY,SECTION,"
+	           L"SELCONST,SELECT,SELFUNC,SEQUENCE,SERIALIZABLE,SERVERUUID,SESSION,SHARE,"
+	           L"SHORT,SIGNED,SIZE,SKALL,SKINHIBIT,SKIP,SKSHOW,SOME,SPECIFIC,SQL,SQLCODE,"
+	           L"SQLCONTEXT,SQLERROR,SQLSTATE,SQLWARNING,STABILITY,STACK,STANDARD,START,"
+	           L"STATIC,STATISTICS,STEP,STOP,STORAGE,STRATEGIES,STRING,STRINGTOLABEL,"
+	           L"STRUCT,STYLE,SUPPORT,SYNC,SYNONYM,TABLE,TEMP,TEMPLATE,TEST,TIME,TIMEOUT,"
+	           L"TO,TRAILING,TRANSACTION,TRIGGER,TRIGGERS,TRUE,TRUNCATE,TYPE,TYPEDEF,"
+	           L"TYPEID,TYPENAME,TYPEOF,UNCOMMITTED,UNDER,UNION,UNIQUE,UNKNOWN,UNLOAD,"
+	           L"UNLOCK,UNSIGNED,UPDATE,USAGE,USE_SUBQF,USING,VALUE,VALUES,VAR,VARIABLE,"
+	           L"VARIANT,VIEW,VIOLATIONS,VOID,VOLATILE,WAIT,WARNING,WHERE,WITH,WITHOUT,"
+	           L"WORK,WRITE,XADATASOURCE,XID,XLOAD,XUNLOAD";
+
+  // types
+const String InformixTypes = L"BLOB,BOOLEAN,BYTE,CHAR,CHARACTER,VARYING,CLOB,DATE,DATETIME,DEC,DECIMAL,"
+	           L"DOUBLE,PRECISION,FLOAT,INT,INT8,INTEGER,INTERVAL,LIST,LVARCHAR,MONEY,"
+	           L"MULTISET,NCHAR,NUMERIC,NVARCHAR,REAL,ROW,SERIAL,SERIAL8,SET,SMALLFLOAT,"
+	           L"SMALLINT,TEXT,VARCHAR";
+
+  // PLSQL keywords
+const String InformixPLSQLKW = L"CALL,CONTINUE,DEFINE,ERROR,EXCEPTION,EXIT,FOR,FOREACH,IF,LET,ON,RAISE,"
+	           L"RETURN,SYSTEM,TRACE,WHENEVER,WHILE";
+
+  // functions
+const String InformixFunctions = L"ABS,ACOS,ASIN,ATAN,ATAN2,AVG,CARDINALITY,CASE,CAST,CHARACTER_LENGTH,"
+	           L"CHAR_LENGTH,COS,COUNT,CURRENT,DAY,DBINFO,DBSERVERNAME,DECODE,"
+	           L"DECRYPT_CHAR,DECRYPT_BINARY,DEFAULT_ROLE,ENCRYPT_AES,ENCRYPT_TDES,EXP,"
+	           L"EXTEND,FILETOBLOB,FILETOCLOB,GETHINT,HEX,IFX_ALLOW_NEWLINE,"
+	           L"IFX_REPLACE_MODULE,INITCAP,LENGTH,LOCOPY,LOGN,LOG10,LOTOFILE,LOWER,LPAD,"
+	           L"MAX,MDY,MIN,MOD,MONTH,NVL,OCTET_LENGTH,POW,RANGE,REPLACE,ROOT,ROUND,"
+	           L"RPAD,SIN,SITENAME,SQRT,STDEV,SUBSTR,SUBSTRING,SUM,TAN,THEN,TO_CHAR,TO_DATE,"
+	           L"TODAY,TRIM,TRUNC,UNITS,UPPER,USER,VARIANCE,WEEKDAY,WHEN,YEAR";
+
+int __fastcall TSynSQLSyn::HashKey(PWideChar Str)
+{
+	int result = 0;
+	bool FoundDoubleMinus = false;
+
+	auto GetOrd = [&]() -> int 
+	{
+		int result = 0;
+		switch((*Str))
+		{
+			case L'_':
+			result = 1;
+			break;
+			case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
+			 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
+			 case 117: case 118: case 119: case 120: case 121: case 122:
+			result = 2 + int((*Str)) - int(L'a');
+			break;
+			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
+			 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
+			 case 85: case 86: case 87: case 88: case 89: case 90:
+			result = 2 + int((*Str)) - int(L'A');
+			break;
+			case L'@':
+			if(Synhighlightersql__0.Contains(fDialect))
+				result = 24;
+			else
+				result = 0;
+			break;
+			default:
+			result = 0;
+			break;
+		}
+		return result;
+	};
+	result = 0;
+	while(IsIdentChar((*Str)))
+	{
+		FoundDoubleMinus = ((*Str) == L'-') && ((*(Str + 1)) == L'-');
+		if(FoundDoubleMinus)
+			break;
+		result = (2 * result + GetOrd()) & 0xFFFFFF;
+		++Str;
+	}
+	result = result & 0xFF; // 255
+	if(ASSIGNED(fToIdent))
+		fStringLen = Str - fToIdent;
+	else
+		fStringLen = 0;
+	return result;
+}
+
+TtkTokenKind __fastcall TSynSQLSyn::IdentKind(PWideChar Maybe)
+{
+	TtkTokenKind result = tkComment;
+	TSynHashEntry* Entry = nullptr;
+	fToIdent = Maybe;
+	Entry = fKeywords->Items[HashKey(Maybe)];
+	while(ASSIGNED(Entry))
+	{
+		if(Entry->KeywordLen > fStringLen)
+			break;
+		else
+		{
+			if(Entry->KeywordLen == fStringLen)
+			{
+				if(IsCurrentToken(Entry->Keyword))
+				{
+					result = ((TtkTokenKind) Entry->Kind);
+					return result;
+				}
+			}
+		}
+		Entry = Entry->Next;
+	}
+	if(FTableDict->ContainsKey(Sysutils::AnsiLowerCase(StrPas(fToIdent).SubString(1, fStringLen))))
+		result = tkTableName;
+	else
+		result = tkIdentifier;
+	return result;
+}
+
+__fastcall TSynSQLSyn::TSynSQLSyn(TComponent* AOwner)
+ : inherited(AOwner),
+			FRange(rsUnKnown),
+			FTokenID(tkComment),
+			fKeywords(nullptr),
+			FProcNames(nullptr),
+			fTableNames(nullptr),
+			FTableDict(nullptr),
+			fFunctionNames(nullptr),
+			fDialect(sqlStandard),
+			fCommentAttri(nullptr),
+			fConditionalCommentAttri(nullptr),
+			fConsoleOutputAttri(nullptr),
+			fDataTypeAttri(nullptr),
+			fDefaultPackageAttri(nullptr),
+			fDelimitedIdentifierAttri(nullptr),
+			fExceptionAttri(nullptr),
+			fFunctionAttri(nullptr),
+			fIdentifierAttri(nullptr),
+			fKeyAttri(nullptr),
+			fNumberAttri(nullptr),
+			fPLSQLAttri(nullptr),
+			fSpaceAttri(nullptr),
+			fSQLPlusAttri(nullptr),
+			fStringAttri(nullptr),
+			fSymbolAttri(nullptr),
+			fTableNameAttri(nullptr),
+			fProcNameAttri(nullptr),
+			fVariableAttri(nullptr)
+{
+	FCaseSensitive = false;
+	fKeywords = new TSynHashEntryList();
+	FProcNames = new TStringList();
+	((TStringList*) FProcNames)->OnChange = ProcNamesChanged;
+	fTableNames = new TStringList();
+	((TStringList*) fTableNames)->OnChange = TableNamesChanged;
+	FTableDict = new TDictionary__2<String, bool>();
+	fFunctionNames = new TStringList();
+	((TStringList*) fFunctionNames)->OnChange = FunctionNamesChanged;
+	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
+	fCommentAttri->Style = Synhighlightersql__1;
+	addAttribute(fCommentAttri);
+	fConditionalCommentAttri = new TSynHighlighterAttributes(SYNS_AttrConditionalComment, SYNS_FriendlyAttrConditionalComment);
+	fConditionalCommentAttri->Style = Synhighlightersql__2;
+	addAttribute(fConditionalCommentAttri);
+	fConsoleOutputAttri = new TSynHighlighterAttributes(SYNS_AttrConsoleOutput, SYNS_FriendlyAttrConsoleOutput);
+	fConsoleOutputAttri->Style = Synhighlightersql__3;
+	addAttribute(fConsoleOutputAttri);
+	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
+	fDataTypeAttri->Style = Synhighlightersql__4;
+	addAttribute(fDataTypeAttri);
+	fDefaultPackageAttri = new TSynHighlighterAttributes(SYNS_AttrDefaultPackage, SYNS_FriendlyAttrDefaultPackage);
+	fDefaultPackageAttri->Style = Synhighlightersql__5;
+	addAttribute(fDefaultPackageAttri);
+	fDelimitedIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrDelimitedIdentifier, SYNS_FriendlyAttrDelimitedIdentifier);
+	addAttribute(fDelimitedIdentifierAttri);
+	fExceptionAttri = new TSynHighlighterAttributes(SYNS_AttrException, SYNS_FriendlyAttrException);
+	fExceptionAttri->Style = Synhighlightersql__6;
+	addAttribute(fExceptionAttri);
+	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrFunction, SYNS_FriendlyAttrFunction);
+	fFunctionAttri->Style = Synhighlightersql__7;
+	addAttribute(fFunctionAttri);
+	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
+	addAttribute(fIdentifierAttri);
+	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
+	fKeyAttri->Style = Synhighlightersql__8;
+	addAttribute(fKeyAttri);
+	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
+	addAttribute(fNumberAttri);
+	fPLSQLAttri = new TSynHighlighterAttributes(SYNS_AttrPLSQL, SYNS_FriendlyAttrPLSQL);
+	fPLSQLAttri->Style = Synhighlightersql__9;
+	addAttribute(fPLSQLAttri);
+	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
+	addAttribute(fSpaceAttri);
+	fSQLPlusAttri = new TSynHighlighterAttributes(SYNS_AttrSQLPlus, SYNS_FriendlyAttrSQLPlus);
+	fSQLPlusAttri->Style = Synhighlightersql__10;
+	addAttribute(fSQLPlusAttri);
+	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
+	addAttribute(fStringAttri);
+	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
+	addAttribute(fSymbolAttri);
+	fProcNameAttri = new TSynHighlighterAttributes(SYNS_AttrProcName, SYNS_FriendlyAttrProcName);
+	addAttribute(fProcNameAttri);
+	fTableNameAttri = new TSynHighlighterAttributes(SYNS_AttrTableName, SYNS_FriendlyAttrTableName);
+	addAttribute(fTableNameAttri);
+	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
+	addAttribute(fVariableAttri);
+	SetAttributesOnChange(DefHighlightChange);
+	fDefaultFilter = SYNS_FilterSQL;
+	fDialect = sqlStandard;
+	InitializeKeywordLists();
+}
+
+__fastcall TSynSQLSyn::~TSynSQLSyn()
+{
+	delete fKeywords;
+	delete FProcNames;
+	delete fTableNames;
+	delete FTableDict;
+	delete fFunctionNames;
+	//# inherited::Destroy();
+}
+
+void __fastcall TSynSQLSyn::Assign(TPersistent* Source)
+{
+	inherited::Assign(Source);
+	if(ObjectIs(Source, TSynSQLSyn*))
+		SQLDialect = ((TSynSQLSyn*) Source)->SQLDialect;
+}
+
+void __fastcall TSynSQLSyn::AndSymbolProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(CharInSet(fLine[Run], Synhighlightersql__11))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::AsciiCharProc()
+{
+	bool IsEsc = false;
+  // Oracle SQL allows strings to go over multiple lines
+	if(fLine[Run] == L'\x00')
+		NullProc();
+	else
+	{
+		FTokenID = tkString;
+    // else it's end of multiline string
+		if(SQLDialect != sqlMySQL)
+		{
+			if((Run > 0) || (FRange != rsString) || (fLine[Run] != L'\x27'))
+			{
+				FRange = rsString;
+				do
+				{
+					++Run;
+				}
+				while(!(IsLineEnd(Run) || (fLine[Run] == L'\x27')));
+			}
+			if(fLine[Run] == L'\x27')
+			{
+				++Run;
+				FRange = rsUnKnown;
+			}
+		}
+		else
+		{
+			IsEsc = false;
+			if((Run > 0) || (FRange != rsString) || ((fLine[Run] != L'\x27') && (fLine[Run - 1] != L'\\')))
+			{
+				FRange = rsString;
+				do
+				{
+					if(fLine[Run] == L'\\')
+						IsEsc = !IsEsc;
+					else
+						IsEsc = false;
+					if((!IsEsc) && (fLine[Run + 1] == L'\x27'))
+					{
+						++Run;
+						break;
+					}
+					++Run;
+				}
+				while(!IsLineEnd(Run));
+			}
+			if((fLine[Run] == L'\x27') && (!IsEsc))
+			{
+				++Run;
+				FRange = rsUnKnown;
+			}
+		}
+	}
+}
+
+void __fastcall TSynSQLSyn::CRProc()
+{
+	FTokenID = tkSpace;
+	++Run;
+	if(fLine[Run] == L'\x0a')
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::EqualProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(CharInSet(fLine[Run], Synhighlightersql__12))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::GreaterProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(CharInSet(fLine[Run], Synhighlightersql__13))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::IdentProc()
+{
+	bool FoundDoubleMinus = false;
+	FTokenID = IdentKind((fLine + Run));
+	Run += fStringLen;
+	if(Synhighlightersql__14.Contains(FTokenID))
+	{
+		while(!IsLineEnd(Run))
+			++Run;
+	}
+	else
+	{
+		while(IsIdentChar(fLine[Run]))
+		{
+			FoundDoubleMinus = (fLine[Run] == L'-') && (fLine[Run + 1] == L'-');
+			if(FoundDoubleMinus)
+				break;
+			++Run;
+		}
+	}
+}
+
+void __fastcall TSynSQLSyn::LFProc()
+{
+	FTokenID = tkSpace;
+	++Run;
+}
+
+void __fastcall TSynSQLSyn::LowerProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	switch(fLine[Run])
+	{
+		case L'=':
+		++Run;
+		break;
+		case L'<':
+		{
+			++Run;
+			if(fLine[Run] == L'=')
+				++Run;
+		}
+		break;
+		default:
+		  ;
+		break;
+	}
+}
+
+void __fastcall TSynSQLSyn::MinusProc()
+{
+	++Run;
+	if((fLine[Run] == L'-') && ((fDialect != sqlMySQL) || (fLine[Run + 1] == L' ')))
+	{
+		FTokenID = tkComment;
+		do
+		{
+			++Run;
+		}
+		while(!IsLineEnd(Run));
+	}
+	else
+	FTokenID = tkSymbol;
+}
+
+void __fastcall TSynSQLSyn::HashProc()
+{
+	if(SQLDialect == sqlMySQL)
+	{
+		FTokenID = tkComment;
+		do
+		{
+			++Run;
+		}
+		while(!IsLineEnd(Run));
+	}
+	else
+	{
+		++Run;
+		FTokenID = tkUnknown;
+	}
+}
+
+void __fastcall TSynSQLSyn::NullProc()
+{
+	FTokenID = tkNull;
+	++Run;
+}
+
+void __fastcall TSynSQLSyn::NumberProc()
+{
+
+	auto IsNumberChar = [&]() -> bool 
+	{
+		bool result = false;
+		switch(fLine[Run])
+		{
+			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
+			case L'.':
+			case L'-':
+			result = true;
+			break;
+			default:
+			result = false;
+			break;
+		}
+		return result;
+	};
+	++Run;
+	FTokenID = tkNumber;
+	while(IsNumberChar())
+	{
+		switch(fLine[Run])
+		{
+			case L'.':
+			if(fLine[Run + 1] == L'.')
+				goto label0;
+			break;
+			default:
+			  ;
+			break;
+		}
+		++Run;
+	}
+	label0:;
+}
+
+void __fastcall TSynSQLSyn::OrSymbolProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(CharInSet(fLine[Run], Synhighlightersql__15))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::PlusProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(CharInSet(fLine[Run], Synhighlightersql__16))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::FunctionNamesChanged(TObject* Sender)
+{
+	InitializeKeywordLists();
+}
+
+void __fastcall TSynSQLSyn::ProcNamesChanged(TObject* Sender)
+{
+	InitializeKeywordLists();
+}
+
+void __fastcall TSynSQLSyn::SlashProc()
+{
+	++Run;
+	switch(fLine[Run])
+	{
+		case L'*':
+		{
+			if((SQLDialect == sqlMySQL) && (fLine[Run + 1] == L'!'))
+			{
+				FRange = rsConditionalComment;
+				FTokenID = tkConditionalComment;
+			}
+			else
+			{
+				FRange = rsComment;
+				FTokenID = tkComment;
+			}
+			do
+			{
+				++Run;
+				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+				{
+					FRange = rsUnKnown;
+					Run += 2;
+					break;
+				}
+			}
+			while(!IsLineEnd(Run));
+		}
+		break;
+		case L'=':
+		{
+			++Run;
+			FTokenID = tkSymbol;
+		}
+		break;
+		case L'/':
+		{
+			if(SQLDialect == sqlNexus)
+			{
+				FTokenID = tkComment;
+				do
+				{
+					++Run;
+				}
+				while(!IsLineEnd(Run));
+			}
+		}
+		break;
+		default:
+		FTokenID = tkSymbol;
+		break;
+	}
+}
+
+void __fastcall TSynSQLSyn::SpaceProc()
+{
+	++Run;
+	FTokenID = tkSpace;
+	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::QuoteProc()
+{
+	FTokenID = tkDelimitedIdentifier;
+	++Run;
+	while(!IsLineEnd(Run))
+	{
+		if(fLine[Run] == L'\x22')
+		{
+			++Run;
+			if(fLine[Run] != L'\x22')
+				break;
+		}
+		++Run;
+	}
+}
+
+void __fastcall TSynSQLSyn::BacktickProc()
+{
+	if(SQLDialect == sqlMySQL)
+	{
+		FTokenID = tkDelimitedIdentifier;
+		++Run;
+		while(!IsLineEnd(Run))
+		{
+			if(fLine[Run] == L'`')
+			{
+				++Run;
+				if(fLine[Run] != L'`')
+					break;
+			}
+			++Run;
+		}
+	}
+	else
+	{
+		++Run;
+		FTokenID = tkUnknown;
+	}
+}
+
+void __fastcall TSynSQLSyn::BracketProc()
+{
+	if(Synhighlightersql__17.Contains(SQLDialect))
+	{
+		FTokenID = tkDelimitedIdentifier;
+		++Run;
+		while(!IsLineEnd(Run))
+		{
+			if(fLine[Run] == L']')
+			{
+				++Run;
+				if(fLine[Run] != L']')
+					break;
+			}
+			++Run;
+		}
+	}
+	else
+	{
+		++Run;
+		FTokenID = tkSymbol;
+	}
+}
+
+void __fastcall TSynSQLSyn::SymbolProc()
+{
+	++Run;
+	FTokenID = tkSymbol;
+}
+
+void __fastcall TSynSQLSyn::SymbolAssignProc()
+{
+	FTokenID = tkSymbol;
+	++Run;
+	if(fLine[Run] == L'=')
+		++Run;
+}
+
+void __fastcall TSynSQLSyn::VariableProc()
+{
+	int i = 0;
+	bool FoundDoubleMinus = false;
+  // MS SQL Server uses @@ to indicate system functions/variables
+	if((Synhighlightersql__18.Contains(SQLDialect)) && (fLine[Run] == L'@') && (fLine[Run + 1] == L'@'))
+		IdentProc();
+	else
+	{
+		if((Synhighlightersql__19.Contains(SQLDialect)) && (fLine[Run] == L'@'))
+  // Oracle uses the ':' character to indicate bind variables
+  // Ingres II also uses the ':' character to indicate variables
+			SymbolProc();
+		else
+		{
+			if(!(Synhighlightersql__20.Contains(SQLDialect)) && (fLine[Run] == L':'))
+				SymbolProc();
+			else
+			{
+				FTokenID = tkVariable;
+				i = Run;
+				do
+				{
+					FoundDoubleMinus = (fLine[i] == L'-') && (fLine[i + 1] == L'-');
+					if(FoundDoubleMinus)
+						break;
+					++i;
+				}
+				while(!!IsIdentChar(fLine[i]));
+				Run = i;
+			}
+		}
+	}
+}
+
+void __fastcall TSynSQLSyn::UnknownProc()
+{
+	++Run;
+	FTokenID = tkUnknown;
+}
+
+void __fastcall TSynSQLSyn::AnsiCProc()
+{
+	switch(fLine[Run])
+	{
+		case L'\x00':
+		NullProc();
+		break;
+		case L'\x0a':
+		LFProc();
+		break;
+		case L'\x0d':
+		CRProc();
+		break;
+		default:
+		{
+			if(FRange == rsConditionalComment)
+				FTokenID = tkConditionalComment;
+			else
+				FTokenID = tkComment;
+			do
+			{
+				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
+				{
+					FRange = rsUnKnown;
+					Run += 2;
+					break;
+				}
+				++Run;
+			}
+			while(!IsLineEnd(Run));
+		}
+		break;
+	}
+}
+
+bool __fastcall TSynSQLSyn::IsKeyword(const String AKeyword)
+{
+	bool result = false;
+	TtkTokenKind tk = tkComment;
+	tk = IdentKind(ustr2pwchar(AKeyword));
+	result = Synhighlightersql__21.Contains(tk);
+	return result;
+}
+
+void __fastcall TSynSQLSyn::Next()
+{
+	fTokenPos = Run;
+	switch(FRange)
+	{
+		case rsComment:
+		case rsConditionalComment:
+		AnsiCProc();
+		break;
+		case rsConsoleOutput:
+		{
+			while(!IsLineEnd(Run))
+				++Run;
+		}
+		break;
+		case rsString:
+		AsciiCharProc();
+		break;
+		default:
+		switch(fLine[Run])
+		{
+			case L'\x00':
+			NullProc();
+			break;
+			case L'\x0a':
+			LFProc();
+			break;
+			case L'\x0d':
+			CRProc();
+			break;
+			case L'\x27':
+			AsciiCharProc();
+			break;
+			case L'=':
+			EqualProc();
+			break;
+			case L'>':
+			GreaterProc();
+			break;
+			case L'<':
+			LowerProc();
+			break;
+			case L'-':
+			MinusProc();
+			break;
+			case L'#':
+			HashProc();
+			break;
+			case L'|':
+			OrSymbolProc();
+			break;
+			case L'+':
+			PlusProc();
+			break;
+			case L'/':
+			SlashProc();
+			break;
+			case L'&':
+			AndSymbolProc();
+			break;
+			case L'\x22':
+			QuoteProc();
+			break;
+			case L'`':
+			BacktickProc();
+			break;
+			case L'[':
+			BracketProc();
+			break;
+			case L':':
+			case L'@':
+			VariableProc();
+			break;
+			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
+			 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
+			 case 85: case 86: case 87: case 88: case 89: case 90:
+			case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
+			 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
+			 case 117: case 118: case 119: case 120: case 121: case 122:
+			case L'_':
+			IdentProc();
+			break;
+			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
+			NumberProc();
+			break;
+			case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+			case L'\x0b':
+			case L'\x0c':
+			case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
+			 case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
+			SpaceProc();
+			break;
+			case L'^':
+			case L'%':
+			case L'*':
+			case L'!':
+			SymbolAssignProc();
+			break;
+			case L'{':
+			case L'}':
+			case L'.':
+			case L',':
+			case L';':
+			case L'?':
+			case L'(':
+			case L')':
+			case L']':
+			case L'~':
+			SymbolProc();
+			break;
+			default:
+			UnknownProc();
+			break;
+		}
+		break;
+	}
+	inherited::Next();
+}
+
+TSynHighlighterAttributes* __fastcall TSynSQLSyn::GetDefaultAttribute(int Index)
+{
+	TSynHighlighterAttributes* result = nullptr;
+	switch(Index)
+	{
+		case SYN_ATTR_COMMENT:
+		result = fCommentAttri;
+		break;
+		case SYN_ATTR_IDENTIFIER:
+		result = fIdentifierAttri;
+		break;
+		case SYN_ATTR_KEYWORD:
+		result = fKeyAttri;
+		break;
+		case SYN_ATTR_STRING:
+		result = fStringAttri;
+		break;
+		case SYN_ATTR_WHITESPACE:
+		result = fSpaceAttri;
+		break;
+		case SYN_ATTR_SYMBOL:
+		result = fSymbolAttri;
+		break;
+		default:
+		result = nullptr;
+		break;
+	}
+	return result;
+}
+
+bool __fastcall TSynSQLSyn::GetEol()
+{
+	bool result = false;
+	result = Run == fLineLen + 1;
+	return result;
+}
+
+void* __fastcall TSynSQLSyn::GetRange()
+{
+	void* result = nullptr;
+	result = ((void*) FRange);
+	return result;
+}
+
+TtkTokenKind __fastcall TSynSQLSyn::GetTokenID()
+{
+	TtkTokenKind result = tkComment;
+	result = FTokenID;
+	return result;
+}
+
+TSynHighlighterAttributes* __fastcall TSynSQLSyn::GetTokenAttribute()
+{
+	TSynHighlighterAttributes* result = nullptr;
+	switch(GetTokenID())
+	{
+		case tkComment:
+		result = fCommentAttri;
+		break;
+		case tkConditionalComment:
+		result = fConditionalCommentAttri;
+		break;
+		case tkConsoleOutput:
+		result = fConsoleOutputAttri;
+		break;
+		case tkDataType:
+		result = fDataTypeAttri;
+		break;
+		case tkDefaultPackage:
+		result = fDefaultPackageAttri;
+		break;
+		case tkDelimitedIdentifier:
+		result = fDelimitedIdentifierAttri;
+		break;
+		case tkException:
+		result = fExceptionAttri;
+		break;
+		case tkFunction:
+		result = fFunctionAttri;
+		break;
+		case tkIdentifier:
+		result = fIdentifierAttri;
+		break;
+		case tkKey:
+		result = fKeyAttri;
+		break;
+		case tkNumber:
+		result = fNumberAttri;
+		break;
+		case tkPLSQL:
+		result = fPLSQLAttri;
+		break;
+		case tkSpace:
+		result = fSpaceAttri;
+		break;
+		case tkSQLPlus:
+		result = fSQLPlusAttri;
+		break;
+		case tkString:
+		result = fStringAttri;
+		break;
+		case tkSymbol:
+		result = fSymbolAttri;
+		break;
+		case tkProcName:
+		result = fProcNameAttri;
+		break;
+		case tkTableName:
+		result = fTableNameAttri;
+		break;
+		case tkVariable:
+		result = fVariableAttri;
+		break;
+		case tkUnknown:
+		result = fIdentifierAttri;
+		break;
+		default:
+		result = nullptr;
+		break;
+	}
+	return result;
+}
+
+int __fastcall TSynSQLSyn::GetTokenKind()
+{
+	int result = 0;
+	result = int(FTokenID);
+	return result;
+}
+
+void __fastcall TSynSQLSyn::ResetRange()
+{
+	FRange = rsUnKnown;
+}
+
+void __fastcall TSynSQLSyn::SetRange(void* Value)
+{
+	FRange = (TRangeState)(NativeInt)Value;
+}
+
+bool __fastcall TSynSQLSyn::IsFilterStored()
+{
+	bool result = false;
+	result = fDefaultFilter != SYNS_FilterSQL;
+	return result;
+}
+
+bool __fastcall TSynSQLSyn::IsIdentChar(WideChar AChar)
+{
+	bool result = false;
+	switch(AChar)
+	{
+		case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
+		 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
+		 case 117: case 118: case 119: case 120: case 121: case 122:
+		case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
+		 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
+		 case 85: case 86: case 87: case 88: case 89: case 90:
+		case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
+		case L'_':
+		result = true;
+		break;
+		case L'-':
+		result = fDialect == sqlStandard;
+		break;                          // TODO: check this case, ANSI code wasn't clear here if this is exclusively Oracle
+		case L'#':
+		case L'$':
+		result = Synhighlightersql__22.Contains(fDialect);
+		break;
+		case L'@':
+		result = Synhighlightersql__23.Contains(fDialect);
+		break;
+		case L'!':
+		case L'^':
+		case L'{':
+		case L'}':
+		case L'~':
+		result = fDialect == sqlNexus;
+		break;
+		default:
+		result = false;
+		break;
+	}
+	return result;
+}
+
+/*#static*/
+String __fastcall TSynSQLSyn::GetLanguageName()
+{
+	String result;
+	result = SYNS_LangSQL;
+	return result;
+}
+
+void __fastcall TSynSQLSyn::DoAddKeyword(String AKeyword, int AKind)
+{
+	int HashValue = 0;
+	AKeyword = Sysutils::AnsiLowerCase(AKeyword);
+	HashValue = HashKey(ustr2pwchar(AKeyword));
+	fKeywords->Items[HashValue] = new TSynHashEntry(AKeyword, AKind);
+}
+
+void __fastcall TSynSQLSyn::SetTableNames(TStrings* const Value)
+{
+	fTableNames->Assign((TPersistent*) Value);
+}
+
+void __fastcall TSynSQLSyn::TableNamesChanged(TObject* Sender)
+{
+	InitializeKeywordLists();
+}
+
+void __fastcall TSynSQLSyn::PutTableNamesInKeywordList()
+{
+	int i = 0;
+	TSynHashEntry* Entry = nullptr;
+	int stop = 0;
+	for(stop = fTableNames->Count - 1, i = 0; i <= stop; i++)
+	{
+		Entry = fKeywords->Items[HashKey(ustr2pwchar(fTableNames->Strings[i]))];
+		while(ASSIGNED(Entry))
+		{
+			if(Sysutils::AnsiLowerCase(Entry->Keyword) == Sysutils::AnsiLowerCase(fTableNames->Strings[i]))
+				break;
+			Entry = Entry->Next;
+		}
+		if(!ASSIGNED(Entry))
+		{
+			if(!FTableDict->ContainsKey(Sysutils::AnsiLowerCase(fTableNames->Strings[i])))
+				FTableDict->Add(Sysutils::AnsiLowerCase(fTableNames->Strings[i]), true);
+		}
+	}
+}
+
+void __fastcall TSynSQLSyn::PutFunctionNamesInKeywordList()
+{
+	int i = 0;
+	TSynHashEntry* Entry = nullptr;
+	int stop = 0;
+	for(stop = (fFunctionNames->Count - 1), i = 0; i <= stop; i++)
+	{
+		Entry = fKeywords->Items[HashKey(ustr2pwchar(fFunctionNames->Strings[i]))];
+		while(ASSIGNED(Entry))
+		{
+			if(Sysutils::AnsiLowerCase(Entry->Keyword) == Sysutils::AnsiLowerCase(fFunctionNames->Strings[i]))
+				break;
+			Entry = Entry->Next;
+		}
+		if(!ASSIGNED(Entry))
+			DoAddKeyword(fFunctionNames->Strings[i], int(tkFunction));
+	}
+}
+
+void __fastcall TSynSQLSyn::PutProcNamesInKeywordList()
+{
+	int i = 0;
+	TSynHashEntry* Entry = nullptr;
+	int stop = 0;
+	for(stop = FProcNames->Count - 1, i = 0; i <= stop; i++)
+	{
+		Entry = fKeywords->Items[HashKey(ustr2pwchar(FProcNames->Strings[i]))];
+		while(ASSIGNED(Entry))
+		{
+			if(Sysutils::AnsiLowerCase(Entry->Keyword) == Sysutils::AnsiLowerCase(FProcNames->Strings[i]))
+				break;
+			Entry = Entry->Next;
+		}
+		if(!ASSIGNED(Entry))
+			DoAddKeyword(FProcNames->Strings[i], int(tkProcName));
+	}
+}
+
+void __fastcall TSynSQLSyn::InitializeKeywordLists()
+{
+	int i = 0;
+	int stop = 0;
+	fKeywords->Clear();
+	FTableDict->Clear();
+	fToIdent = nullptr;
+	for(stop = int((TtkTokenKind) 20 /*# High(TtkTokenKind) */), i = 0; i <= stop; i++)
+	{
+		EnumerateKeywords(i, GetKeyWords(i), IsIdentChar, DoAddKeyword);
+	}
+	PutProcNamesInKeywordList();
+	PutTableNamesInKeywordList();
+	PutFunctionNamesInKeywordList();
+	DefHighlightChange(this);
+}
+
+void __fastcall TSynSQLSyn::SetDialect(TSQLDialect Value)
+{
+	if(Value != fDialect)
+	{
+		fDialect = Value;
+		InitializeKeywordLists();
+	}
+}
+
+void __fastcall TSynSQLSyn::SetFunctionNames(TStrings* const Value)
+{
+	fFunctionNames->Assign((TPersistent*) Value);
+}
+
+void __fastcall TSynSQLSyn::SetProcNames(TStrings* const Value)
+{
+	FProcNames->Assign((TPersistent*) Value);
+}
+
+String __fastcall TSynSQLSyn::GetSampleSource()
+{
+	String result;
+	result = L"";
+	switch(fDialect)
+	{
+		case sqlPostgres:
+		result = L"-- ANSI SQL sample source\x0d\x0a"
+		           L"SELECT *\x0d\x0a"
+		           L"FROM planets\x0d\x0a"
+		           L"WHERE diameter < 13000\x0d\x0a"
+		           L"  AND name <> 'Earth'";
+		break;
+		case sqlStandard:
+		result = L"-- ANSI SQL sample source\x0d\x0a"
+		           L"SELECT *\x0d\x0a"
+		           L"FROM planets\x0d\x0a"
+		           L"WHERE diameter < 13000\x0d\x0a"
+		           L"  AND name <> 'Earth'";
+		break;
+		case sqlInterbase6:
+		result = L"/* Interbase sample source */\x0d\x0a"
+		           L"SET TERM !! ;\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"CREATE PROCEDURE HelloWorld(P_MSG VARCHAR(80)) AS\x0d\x0a"
+		           L"BEGIN\x0d\x0a"
+		           L"  EXECUTE PROCEDURE WRITELN(:P_MSG);\x0d\x0a"
+		           L"END !!\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"SET TERM ; !!";
+		break;
+		case sqlMySQL:
+		result = L"/* MySQL sample source*/\x0d\x0a"
+		           L"SET @variable = 1;\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"CREATE /*!32302 TEMPORARY */ TABLE t (a INT);\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"CREATE TABLE sample (\x0d\x0a"
+		           L"        id INT NOT NULL,\x0d\x0a"
+		           L"        first_name CHAR(30) NOT NULL,\x0d\x0a"
+		           L"        PRIMARY KEY (id),\x0d\x0a"
+		           L"        INDEX name (first_name));\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"SELECT DATE_ADD('1997-12-31 23:59:59',\x0d\x0a"
+		           L"        INTERVAL 1 SECOND);\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"# End of sample";
+		break;
+		case sqlOracle:
+		result = L"PROMPT Oracle sample source\x0d\x0a"
+		           L"declare\x0d\x0a"
+		           L"  x varchar2(2000);\x0d\x0a"
+		           L"begin   -- Show some text here\x0d\x0a"
+		           L"  select to_char(count(*)) into x\x0d\x0a"
+		           L"  from tab;\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"  dbms_output.put_line('Hello World: ' || x);\x0d\x0a"
+		           L"exception\x0d\x0a"
+		           L"  when others then\x0d\x0a"
+		           L"    null;\x0d\x0a"
+		           L"end;";
+		break;
+		case sqlSybase:
+		result = L"/* SyBase example source */\x0d\x0a"
+		           L"declare @Integer        int\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"/* Good for positive numbers only. */\x0d\x0a"
+		           L"select @Integer = 1000\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"select \"Positives Only\" =\x0d\x0a"
+		           L"  right(replicate(\"0\",12) + \x0d\x0a"
+		           L"    convert(varchar, @Integer),12)\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"/* Good for positive and negative numbers. */\x0d\x0a"
+		           L"select @Integer = -1000\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"select \"Both Signs\" =\x0d\x0a"
+		           L"  substring( \"- +\", (sign(@Integer) + 2), 1) +\x0d\x0a"
+		           L"  right(replicate(\"0\",12) + \x0d\x0a"
+		           L"    convert(varchar, abs(@Integer)),12)\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"select @Integer = 1000\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"select \"Both Signs\" =\x0d\x0a"
+		           L"  substring( \"- +\", (sign(@Integer) + 2), 1) +\x0d\x0a"
+		           L"  right(replicate(\"0\",12) + \x0d\x0a"
+		           L"    convert(varchar, abs(@Integer)),12)\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"go";
+		break;
+		case sqlIngres:
+		result = L"/* Ingres example source */\x0d\x0a"
+		           L"DELETE\x0d\x0a"
+		           L"FROM t1\x0d\x0a"
+		           L"WHERE EXISTS\x0d\x0a"
+		           L"(SELECT t2.column1, t2.column2\x0d\x0a"
+		           L"FROM t2\x0d\x0a"
+		           L"WHERE t1.column1 = t2.column1 and\x0d\x0a"
+		           L"t1.column2 = t2.column2)";
+		break;
+		case sqlMSSQL7:
+		result = L"/* SQL Server 7 example source */\x0d\x0a"
+		           L"SET QUOTED_IDENTIFIER ON\x0d\x0a"
+		           L"GO\x0d\x0a"
+		           L"SET ANSI_NULLS OFF\x0d\x0a"
+		           L"GO\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"/* Object:  Stored Procedure dbo.sp_PPQInsertOrder */\x0d\x0a"
+		           L"CREATE PROCEDURE sp_PPQInsertOrder\x0d\x0a"
+		           L"  @Name    varchar(25),\x0d\x0a"
+		           L"  @Address varchar(255),\x0d\x0a"
+		           L"  @ZipCode varchar(15)\x0d\x0a"
+		           L"AS\x0d\x0a"
+		           L"  INSERT INTO PPQOrders(Name, Address, ZipCode, OrderDate)\x0d\x0a"
+		           L"  VALUES (@Name, @Address, @ZipCode, GetDate())\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"  SELECT SCOPE_IDENTITY()\x0d\x0a"
+		           L"GO";
+		break;
+		case sqlMSSQL2K:
+		result = L"/* SQL Server2000 example source */\x0d\x0a"
+		           L"SET QUOTED_IDENTIFIER ON\x0d\x0a"
+		           L"GO\x0d\x0a"
+		           L"SET ANSI_NULLS OFF\x0d\x0a"
+		           L"GO\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"/* Object:  Stored Procedure dbo.sp_PPQInsertOrder */\x0d\x0a"
+		           L"CREATE PROCEDURE sp_PPQInsertOrder\x0d\x0a"
+		           L"  @Name    varchar(25),\x0d\x0a"
+		           L"  @Address varchar(255),\x0d\x0a"
+		           L"  @ZipCode varchar(15)\x0d\x0a"
+		           L"AS\x0d\x0a"
+		           L"  INSERT INTO PPQOrders(Name, Address, ZipCode, OrderDate)\x0d\x0a"
+		           L"  VALUES (@Name, @Address, @ZipCode, GetDate())\x0d\x0a"
+		           L"\x0d\x0a"
+		           L"  SELECT SCOPE_IDENTITY()\x0d\x0a"
+		           L"GO";
+		break;
+		default:
+		  ;
+		break;
+	}
+	return result;
+}
+
+/*#static*/
+String __fastcall TSynSQLSyn::GetFriendlyLanguageName()
+{
+	String result;
+	result = SYNS_FriendlyLangSQL;
+	return result;
+}
+
+String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
+{
+	String result;
+	result = L"";
+	switch(fDialect)
+	{
+		case sqlPostgres:
+		{
+			switch(((TtkTokenKind) TokenKind))
+			{
+				case tkDataType:
+				result = PostgresTypes;
+				break;
+				case tkKey:
+				result = PostgresKW;
+				break;
+				case tkFunction:
+				result = PostgresFunctions;
+				break;
+				case tkException:
+				result = PostgresExceptions;
+				break;
+				default:
+				  ;
+				break;
+			}
+		}
+		break;
+		case sqlIngres:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkDataType:
+			result = IngresTypes;
+			break;
+			case tkKey:
+			result = IngresKW;
+			break;
+			case tkFunction:
+			result = IngresFunctions;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlInterbase6:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkDataType:
+			result = Interbase6Types;
+			break;
+			case tkFunction:
+			result = Interbase6Functions;
+			break;
+			case tkKey:
+			result = Interbase6KW;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlMSSQL7:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = MSSQL7KW;
+			break;
+			case tkDataType:
+			result = MSSQL7Types;
+			break;
+			case tkFunction:
+			result = MSSQL7Functions;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlMSSQL2K:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = MSSQL2000KW;
+			break;
+			case tkDataType:
+			result = MSSQL2000Types;
+			break;
+			case tkFunction:
+			result = MSSQL2000Functions;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlMySQL:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = MySqlKW;
+			break;
+			case tkDataType:
+			result = MySQLTypes;
+			break;
+			case tkFunction:
+			result = MySQLFunctions;
+			break;
+			case tkPLSQL:
+			result = MySQLPLSQLKW;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlOracle:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = OracleKW;
+			break;
+			case tkDataType:
+			result = OracleTypes;
+			break;
+			case tkException:
+			result = OracleExceptions;
+			break;
+			case tkFunction:
+			result = OracleFunctions;
+			break;
+			case tkComment:
+			result = OracleCommentKW;
+			break;
+			case tkConsoleOutput:
+			result = OracleConsoleOutputKW;
+			break;
+			case tkDefaultPackage:
+			result = OracleDefaultPackages;
+			break;
+			case tkPLSQL:
+			result = OraclePLSQLKW;
+			break;
+			case tkSQLPlus:
+			result = OracleSQLPlusCommands;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlStandard:
+		if(((TtkTokenKind) TokenKind) == tkKey)
+			result = StandardKW;
+		break;
+		case sqlSybase:
+		if(((TtkTokenKind) TokenKind) == tkKey)
+			result = SybaseKW;
+		break;
+		case sqlNexus:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = NexusKW;
+			break;
+			case tkDataType:
+			result = NexusTypes;
+			break;
+			case tkFunction:
+			result = NexusFunctions;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		case sqlInformix:
+		switch(((TtkTokenKind) TokenKind))
+		{
+			case tkKey:
+			result = InformixKW;
+			break;
+			case tkDataType:
+			result = InformixTypes;
+			break;
+			case tkFunction:
+			result = InformixFunctions;
+			break;
+			default:
+			  ;
+			break;
+		}
+		break;
+		default:
+		  ;
+		break;
+	}
+	return result;
+}
+static bool SynHighlighterSQL_Initialized = false;
+
+void SynHighlighterSQL_initialization()
+{
+	if(SynHighlighterSQL_Initialized)
+		return;
+	
+	SynHighlighterSQL_Initialized = true;
+	
+	RegisterPlaceableHighlighter(__classid(TSynSQLSyn));
+}
+// using unit initialization order file, so unit singleton has not been created
+
+
+}  // namespace SynHighlighterSQL
+

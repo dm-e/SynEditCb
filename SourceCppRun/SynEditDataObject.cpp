@@ -329,29 +329,9 @@ void SynEditDataObject_initialization()
 	SynEditClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(L"Internal SynEdit clipboard format"));
 	HTMLClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
 }
-//static bool SynEditDataObject_Finalized = false;
-//
-//void SynEditDataObject_finalization()
-//{
-//	if(SynEditDataObject_Finalized)
-//		return;
-//
-//	SynEditDataObject_Finalized = true;
-//
-//	OleFlushClipboard();
-//	OleUninitialize();
-//}
-//class SynEditDataObject_unit
-//{
-//public:
-//	SynEditDataObject_unit()
-//	{
-//		SynEditDataObject_initialization();
-//	}
-//	~SynEditDataObject_unit(){SynEditDataObject_finalization(); }
-//};
-//
-//SynEditDataObject_unit _SynEditDataObject_unit;
 
-}  // namespace SynEditDataObject
+// using unit initialization order file, so unit singleton has not been created
+
+
+}  // namespace Syneditdataobject
 

@@ -1,0 +1,106 @@
+D2Cpp VERSION = 2.4.0
+
+==========[INPUT]
+SYSTEM_PAS =System.pas
+
+[DEFINITIONS]
+COMPILERVERSION=33
+CPUX64=1
+JEDI_INC=1
+MSWINDOWS=1
+SYN_COMPILER_10_UP=1
+UNICODE=1
+WIN64=1
+
+[INCLUDEPATHS]
+..\DemosCb\SearchReplaceDemo
+..\Source
+..\DemosCb
+[LIBINCLUDEPATHS]
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\sys
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\common
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\win
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\vcl
+[UNITSCOPENAMES]
+System
+Winapi
+Vcl
+System.Win
+Data
+Xml
+System.Generics
+
+==========[PROCESSORS]
+
+ENABLEDFMTRANSLATOR =true
+
+==========[SUBSTITUTIONS]
+IDENT_FILE =DemoIds.txt
+
+[PREREPLACEMENTS]
+
+[IDREPLACEMENTS]
+[ELEMENTIDREPLACEMENTS]
+[HELPERREPLACEMENTS]
+
+[REFACTORING]
+IComparer,IComparer__1,interface,,,0,0,,,true,false
+TComparer,TComparer__1,class,,,0,0,,,true,false
+TDictionary,TDictionary__2,class,,,0,0,,,true,false
+TEnumerable,TEnumerable__1,,,,0,0,,,true,false
+TList,TList__1,class,,,0,0,,,true,false
+TObjectList,TObjectList__1,class,,,0,0,,,true,false
+[DFMCONVERSION]
+DataModule,Height
+DataModule,OldCreateOrder
+DataModule,Width
+Form,IgnoreFontProperty
+Form,OldCreateOrder
+Form,PixelsPerInch
+Form,TextHeight
+TBitmap,Data
+TListColumns,item
+TMainMenu,TMenuItem
+TMenuItem,TMenuItem
+TPicture,Data
+TSynEdit,AddKeystrokes
+TSynEdit,RemovedKeystrokes
+
+
+
+==========[TYPES]
+
+DELPHISTRING =Delphi
+==========[NAMESPACES]
+
+CREATE_NAMESPACES =false
+NORMALIZE_NAMESPACES =true
+[NONAMESPACES]
+Windows
+Winapi.Windows
+Winapi.ImageHlp
+WINAPI.Messages
+Winapi.PsAPI
+Winapi.SHFolder
+[FORCENAMESPACE]
+
+
+==========[TUNING]
+
+APPLYEXTERNAL =true
+APPLYNODEFINE =true
+NOABSTRACT =true
+VIRTUALCLASSMETHODASSTATIC =false
+
+==========[TARGET]
+COMPILER =ModernCBuilder
+PHEADER =<vcl.h>
+TARGETPLATFORM =WINDOWS
+
+==========[OUTPUT]
+
+CREATEINITEXITORDERFILE =true
+INDENTER =Tab
+INDENTDELTA =1
+
+
