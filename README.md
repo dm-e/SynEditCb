@@ -61,7 +61,7 @@ https://www.youtube.com/watch?v=fuwcN4g-vgw
 History:
 
 - Februar 2022: original version made for RAD Studio 11 Alexandria
-. August 2024: version for RAD Studio 12 Athens: 64 bit  projects for the modern C++Builder compiler added
+- August 2024: version for RAD Studio 12 Athens: 64 bit  projects for the modern C++Builder compiler added
 
 The Synedit components have been further developed since SynEditCb was first released. Whether I will translate the new code depends on whether there is any interest and feedback.
 
