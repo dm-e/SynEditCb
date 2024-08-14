@@ -186,9 +186,17 @@
             <DependentOn>..\d2c_cb\d2c_convert.h</DependentOn>
             <BuildOrder>123</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\d2c_cb\d2c_dfm.cpp">
+            <DependentOn>..\d2c_cb\d2c_dfm.h</DependentOn>
+            <BuildOrder>120</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\d2c_cb\d2c_graphics.cpp">
             <DependentOn>..\d2c_cb\d2c_graphics.h</DependentOn>
             <BuildOrder>117</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\d2c_cb\d2c_sysfile.cpp">
+            <DependentOn>..\d2c_cb\d2c_sysfile.h</DependentOn>
+            <BuildOrder>121</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\d2c_cb\d2c_syshelper.cpp">
             <DependentOn>..\d2c_cb\d2c_syshelper.h</DependentOn>
@@ -778,7 +786,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName=".\Win32\Debug\SyneditTest.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName=".\Win32\Debug\SyneditTest.tds" Configuration="Debug" Class="DebugSymbols"/>
+                <DeployFile LocalName=".\Win64x\Debug\SyneditTest.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win64x">
+                        <RemoteName>SyneditTest.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

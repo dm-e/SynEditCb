@@ -44,11 +44,14 @@
 *.007
 *.008
 *.009
-*_dme.bat
+
 
 # Temporary Files
 *.local
+*.lnk
 
+# Private
+*_dme.bat
 
 d2c_cb/__astcache
 d2c_cb/__history
@@ -88,19 +91,20 @@ DemosCb/SearchReplaceDemo/Win32
 DemosCb64/CompletionProposalDemo/__astcache
 DemosCb64/CompletionProposalDemo/__history
 DemosCb64/CompletionProposalDemo/__recovery
-DemosCb64/CompletionProposalDemo/Win32
+DemosCb64/CompletionProposalDemo/Win64x
 DemosCb64/EditAppDemos/__astcache
 DemosCb64/EditAppDemos/__history
 DemosCb64/EditAppDemos/__recovery
-DemosCb64/EditAppDemos/Win32
+DemosCb64/EditAppDemos/Win64x
 DemosCb64/Folding/__astcache
 DemosCb64/Folding/__history
 DemosCb64/Folding/__recovery
-DemosCb64/Folding/Win32
+DemosCb64/Folding/Win64x
 DemosCb64/SearchReplaceDemo/__astcache
 DemosCb64/SearchReplaceDemo/__history
 DemosCb64/SearchReplaceDemo/__recovery
-DemosCb64/SearchReplaceDemo/Win32SourceCppRun/__astcache
+DemosCb64/SearchReplaceDemo/Win64x
+SourceCppRun/__astcache
 SourceCppRun/__history
 SourceCppRun/__recovery
 SourceCppRun64/__history
@@ -113,3 +117,8 @@ TestCpp/__astcache
 TestCpp/__history
 TestCpp/__recovery
 TestCpp/Win32
+TestCpp64/__astcache
+TestCpp64/__history
+TestCpp64/__recovery
+TestCpp64/Win64x
+SourceCppReworked64

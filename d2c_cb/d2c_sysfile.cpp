@@ -981,13 +981,13 @@ void Reset( TTextRec& t )
 
 int GetFileHandle( file& F )
 {
-  return (int) ((TFileRec*) &F )->Handle;
+  return (NativeInt) ((TFileRec*) &F )->Handle;
 }
 
 
 int GetFileHandle( TTextRec& F )
 {
-  return (int) ((TTextRec*) &F )->Handle;
+  return (NativeInt) ((TTextRec*) &F )->Handle;
 }
 
 
@@ -1577,15 +1577,15 @@ int indexbyte( const void* buf, int Len, unsigned char b )
   psrc = (PByte) buf;
   /* simulate assembler implementations behaviour, which is expected */
   /* fpc_pchar_to_ansistr in astrings.inc                           */
-  if ( ( Len < 0 ) || ( ((int) psrc ) + Len < ((int) psrc ) ) )
+  if ( ( Len < 0 ) || (psrc + Len < psrc) )
     pend = ((PByte) numeric_limits<DWORD>::max() ) - sizeof( unsigned char );
   else
   pend = (PByte) (psrc + Len);
-  while ( ((int) psrc ) < ((int) pend ) )
+  while (psrc < pend)
   {
     if ( *psrc == b )
     {
-      result = ((int) psrc ) - ((int) ((PByte) buf ) );
+      result = psrc - (PByte) buf;
       return result;
     }
     psrc++;

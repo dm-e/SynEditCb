@@ -5,10 +5,10 @@
 #include <tchar.h>
 //---------------------------------------------------------------------------
 USEFORM("main.cpp", SyneditTest_frm);
-USEFORM("..\SourceCppRun\SynEditKeyCmdEditor.cpp", SynEditKeystrokeEditorForm);
-USEFORM("..\SourceCppRun\SynEditOptionsDialog.cpp", fmEditorOptionsDialog);
-USEFORM("..\SourceCppRun\SynEditKeyCmdsEditor.cpp", SynEditKeystrokesEditorForm);
-USEFORM("..\SourceCppRun\SynEditPrintMarginsDialog.cpp", SynEditPrintMarginsDlg);
+USEFORM("..\SourceCppRun64\SynEditKeyCmdEditor.cpp", SynEditKeystrokeEditorForm);
+USEFORM("..\SourceCppRun64\SynEditKeyCmdsEditor.cpp", SynEditKeystrokesEditorForm);
+USEFORM("..\SourceCppRun64\SynEditOptionsDialog.cpp", fmEditorOptionsDialog);
+USEFORM("..\SourceCppRun64\SynEditPrintMarginsDialog.cpp", SynEditPrintMarginsDlg);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
