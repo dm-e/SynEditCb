@@ -12,18 +12,9 @@
 #include "dlgSearchText.h"
 #include "dlgReplaceText.h"
 #include "dlgConfirmReplace.h"
-#include "EditAppDemosCb_initexit.h"
 
 
-USEFORM("dmCommands.cpp", CommandsDataModule); /* TDataModule: File Type */
-USEFORM("frmEditor.cpp", EditorForm);
-USEFORM("frmMain.cpp", MainForm);
-USEFORM("..\SearchReplaceDemo\dlgSearchText.cpp", TextSearchDialog);
-USEFORM("frmMainWorkbook.cpp", WorkbookMainForm);
-USEFORM("..\SearchReplaceDemo\dlgConfirmReplace.cpp", ConfirmReplaceDialog);
-//---------------------------------------------------------------------------
-CEditAppDemosCb_initexit _UnitsInitExit;
-//---------------------------------------------------------------------------
+
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;
