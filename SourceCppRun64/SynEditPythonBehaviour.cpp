@@ -33,29 +33,29 @@ void __fastcall TSynEditPythonBehaviour::SetEditor(TSynEdit* Value)
 
 void __fastcall TSynEditPythonBehaviour::doProcessUserCommand(TObject* Sender, bool AfterProcessing, bool& Handled, TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData)
 {
-	TCustomSynEdit* iEditor = nullptr;
+	TCustomSynEdit* IEditor = nullptr;
 	String iPrevLine;
 	int cSpace = 0;
 	if((Command == ecLineBreak) && AfterProcessing)
 	{
-		iEditor = (TCustomSynEdit*) Sender;
+		IEditor = (TCustomSynEdit*) Sender;
     /* CaretY should never be lesser than 2 right after ecLineBreak, so there's
     no need for a check */
-		iPrevLine = TrimRight(iEditor->Lines->Strings[iEditor->CaretY - 2]);
+		iPrevLine = TrimRight(IEditor->Lines->Strings[IEditor->CaretY - 2]);
 		if((iPrevLine != L"") && (iPrevLine[iPrevLine.Length()] == L':'))
 		{
-			iEditor->BeginUndoBlock();
+			IEditor->BeginUndoBlock();
 			try
 			{
 				int stop = 0;
 				for(stop = Indent, cSpace = 1; cSpace <= stop; cSpace++)
 				{
-					iEditor->ExecuteCommand((TSynEditorCommand) ecChar, L'\x20', nullptr);
+					IEditor->ExecuteCommand((TSynEditorCommand) ecChar, L'\x20', nullptr);
 				}
 			}
 			__finally
 			{
-				iEditor->EndUndoBlock();
+				IEditor->EndUndoBlock();
 			}
 		}
 	}

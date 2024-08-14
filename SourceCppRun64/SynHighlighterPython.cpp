@@ -51,10 +51,10 @@ namespace Synhighlighterpython
 										54 << 55 << 56 << 57)
 #define Synhighlighterpython__18 (TSysCharSet() << 'j' << 'J')
 #define Synhighlighterpython__19 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
 #define Synhighlighterpython__20 (TSysCharSet() << 'l' << 'L')
 #define Synhighlighterpython__21 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
@@ -83,17 +83,17 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
   // List of keywords
 	const int KEYWORDCOUNT = 29;
 	const String Keywords[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
-																				, L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
-																				, L"while", L"yield"};
+                    , L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
+                    , L"while", L"yield"};
 
   // List of non-keyword identifiers
 	const int NONKEYWORDCOUNT = 66;
 	const String NONKEYWORDS[66/*# range 1..NONKEYWORDCOUNT*/] = {L"__future__", L"__import__", L"abs", L"apply", L"as", L"buffer", L"callable", L"chr", L"cmp", L"coerce", L"compile"
-																				, L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
-																				, L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
-																				, L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
-																				, L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
-																				, L"unicode", L"vars", L"xrange", L"zip"};
+                    , L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
+                    , L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
+                    , L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
+                    , L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
+                    , L"unicode", L"vars", L"xrange", L"zip"};
 	int f = 0;
 	if(!ASSIGNED(GlobalKeywords))
     // Create the string list of keywords - only once
@@ -137,7 +137,7 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
 	}
 	else
 	i = -1;
-	if(i !=  - 1)
+	if(i != -1)
 
   // Check if it is a system identifier (__*__)
 		result = (TtkTokenKind) (NativeInt) fKeywords->Objects[i];
@@ -182,8 +182,7 @@ __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
 
 //++ CodeFolding
 	BlockOpenerRE	= TRegEx(L"^(def|class|while|for|if|else|elif|try|except|with"
-												 L"|(async[ \\t]+def)|(async[ \\t]+with)|(async[ \\t]+for))\\b", TRegExOptions());
-//-- CodeFolding
+												 L"|(async[ \\t]+def)|(async[ \\t]+with)|(async[ \\t]+for))\\b", TRegExOptions());//-- CodeFolding
 	FRange = rsUnKnown;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = clGray;
@@ -276,8 +275,8 @@ void __fastcall TSynPythonSyn::GreaterProc()
 		break;
 		default:
 		{
-		++Run;
-		FTokenID = tkSymbol;
+			++Run;
+			FTokenID = tkSymbol;
 		}
 		break;
 	}
@@ -313,8 +312,8 @@ void __fastcall TSynPythonSyn::LowerProc()
 		break;
 		default:
 		{
-		++Run;
-		FTokenID = tkSymbol;
+			++Run;
+			FTokenID = tkSymbol;
 		}
 		break;
 	}
@@ -1081,14 +1080,14 @@ void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 					;  /*The same backslash stuff above...*/
 			}
 			{
-			if(fLine[Run + 1] == fStringStarter)
-			{
-				fBackslashCount = 1;
-				while(((Run > fBackslashCount) && (fLine[Run - fBackslashCount] == L'\\')))
-					fBackslashCount = fBackslashCount + 1;
-				if(fBackslashCount % 2 == 1)
-					++Run;
-			}// if FLine[Run]...
+				if(fLine[Run + 1] == fStringStarter)
+				{
+					fBackslashCount = 1;
+					while(((Run > fBackslashCount) && (fLine[Run - fBackslashCount] == L'\\')))
+						fBackslashCount = fBackslashCount + 1;
+					if(fBackslashCount % 2 == 1)
+						++Run;
+				}// if FLine[Run]...
 			}
 			++Run;
 		}

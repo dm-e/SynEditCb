@@ -22,7 +22,7 @@ using namespace Vcl::Clipbrd;
 
 namespace Synunicode
 {
-#define Synunicode__0 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__0 (TSysCharSet() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
@@ -34,21 +34,21 @@ namespace Synunicode
 										176 << 177 << 178 << 179 << 180 << 181 <<  \
 										182 << 183 << 184 << 185 << 186 << 187 <<  \
 										188 << 189 << 190 << 191)
-#define Synunicode__1 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__1 (TSysCharSet() <<  \
 										160 << 161 << 162 << 163 << 164 << 165 <<  \
 										166 << 167 << 168 << 169 << 170 << 171 <<  \
 										172 << 173 << 174 << 175 << 176 << 177 <<  \
 										178 << 179 << 180 << 181 << 182 << 183 <<  \
 										184 << 185 << 186 << 187 << 188 << 189 <<  \
 										190 << 191)
-#define Synunicode__2 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__2 (TSysCharSet() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
 										146 << 147 << 148 << 149 << 150 << 151 <<  \
 										152 << 153 << 154 << 155 << 156 << 157 <<  \
 										158 << 159)
-#define Synunicode__3 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__3 (TSysCharSet() <<  \
 										144 << 145 << 146 << 147 << 148 << 149 <<  \
 										150 << 151 << 152 << 153 << 154 << 155 <<  \
 										156 << 157 << 158 << 159 << 160 << 161 <<  \
@@ -57,7 +57,7 @@ namespace Synunicode
 										174 << 175 << 176 << 177 << 178 << 179 <<  \
 										180 << 181 << 182 << 183 << 184 << 185 <<  \
 										186 << 187 << 188 << 189 << 190 << 191)
-#define Synunicode__4 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__4 (TSysCharSet() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143)
@@ -153,7 +153,7 @@ TSize __fastcall GetTextSize(HDC DC, PWideChar Str, int Count)
 	result.cx = 0;
 	result.cy = 0;
 	{
-	GetTextExtentPoint32W(DC, Str, Count, &result);
+		GetTextExtentPoint32W(DC, Str, Count, &result);
 	}
 	return result;
 }
@@ -199,7 +199,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
-	BufferSize = (int) Min((__int64)BytesToCheck, Stream->Size - Stream->Position);
+	BufferSize = (int) Min((__int64) BytesToCheck, Stream->Size - Stream->Position);
 
   // if no special characteristics are found it is not UTF-8
 	result = false;

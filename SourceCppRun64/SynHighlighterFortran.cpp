@@ -21,16 +21,16 @@ namespace Synhighlighterfortran
 
 
 const String Keywords[70/*# range 0..69*/] = {L"allocatable", L"allocate", L"allocated", L"associated", L"call", L"case", L"character", L"close", L"common"
-																				, L"complex", L"contains", L"continue", L"cycle", L"data", L"deallocate", L"default", L"define", L"dimension", L"do", L"else"
-																				, L"elseif", L"elsewhere", L"end", L"enddo", L"endif", L"entry", L"equivalence", L"exit", L"external", L"forall", L"format", L"function"
-																				, L"if", L"implicit", L"include", L"integer", L"interface", L"logical", L"map", L"module", L"namelist", L"nullify", L"open"
-																				, L"optional", L"parameter", L"pause", L"pointer", L"print", L"private", L"program", L"public", L"pure", L"read", L"real", L"record"
-																				, L"return", L"save", L"select", L"stop", L"subroutine", L"target", L"then", L"type", L"union", L"use", L"value", L"volatile", L"where"
-																				, L"while", L"write"};
+                    , L"complex", L"contains", L"continue", L"cycle", L"data", L"deallocate", L"default", L"define", L"dimension", L"do", L"else"
+                    , L"elseif", L"elsewhere", L"end", L"enddo", L"endif", L"entry", L"equivalence", L"exit", L"external", L"forall", L"format", L"function"
+                    , L"if", L"implicit", L"include", L"integer", L"interface", L"logical", L"map", L"module", L"namelist", L"nullify", L"open"
+                    , L"optional", L"parameter", L"pause", L"pointer", L"print", L"private", L"program", L"public", L"pure", L"read", L"real", L"record"
+                    , L"return", L"save", L"select", L"stop", L"subroutine", L"target", L"then", L"type", L"union", L"use", L"value", L"volatile", L"where"
+                    , L"while", L"write"};
 const int KeyIndices[193/*# range 0..192*/] = {8, -1, -1, -1, -1, 11, -1, -1, -1, 31, 2, -1, -1, 59, -1, -1, -1, -1, -1, 13, 55, -1, -1, -1, 65, -1, 38, 54, 40, 10, 37, -1, -1, 25, -1, -1, 5, -1, -1, -1, -1, -1, -1
-																				, 4, -1, -1, 21, -1, -1, 49, -1, -1, -1, -1, 9, -1, -1, 27, -1, 22, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1, 64, -1, -1, 53, 68, -1, 34, -1, -1, 69, 30, -1, -1, -1, 32, -1, -1, -1, 19, 16, -1, -1, -1, -1, -1
-																				, -1, -1, 62, -1, -1, -1, -1, -1, -1, 36, 60, 14, -1, -1, 66, 29, -1, -1, -1, -1, 24, -1, 67, -1, 15, -1, -1, -1, -1, -1, -1, 44, 35, -1, -1, 46, -1, 17, -1, -1, 28, -1, 56, 61, -1, -1, 63, 45, 18, -1, 0
-																				, 20, -1, -1, -1, -1, -1, -1, 42, -1, 50, 3, 58, 52, -1, -1, -1, 51, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, 12, 23, -1, 26, 1, -1, 41, 43, -1, -1, -1, 33, 7, -1, -1, -1, 47, 39, 57, -1};
+                    , 4, -1, -1, 21, -1, -1, 49, -1, -1, -1, -1, 9, -1, -1, 27, -1, 22, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1, 64, -1, -1, 53, 68, -1, 34, -1, -1, 69, 30, -1, -1, -1, 32, -1, -1, -1, 19, 16, -1, -1, -1, -1, -1
+                    , -1, -1, 62, -1, -1, -1, -1, -1, -1, 36, 60, 14, -1, -1, 66, 29, -1, -1, -1, -1, 24, -1, 67, -1, 15, -1, -1, -1, -1, -1, -1, 44, 35, -1, -1, 46, -1, 17, -1, -1, 28, -1, 56, 61, -1, -1, 63, 45, 18, -1, 0
+                    , 20, -1, -1, -1, -1, -1, -1, 42, -1, 50, 3, 58, 52, -1, -1, -1, 51, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, 12, 23, -1, 26, 1, -1, 41, 43, -1, -1, -1, 33, 7, -1, -1, -1, 47, 39, 57, -1};
 
 /*$Q-*/
 

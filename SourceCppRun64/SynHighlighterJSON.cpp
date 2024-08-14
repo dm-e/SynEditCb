@@ -25,10 +25,10 @@ namespace Synhighlighterjson
 #define Synhighlighterjson__3 (TSysCharSet() << 'e' << 'E')
 #define Synhighlighterjson__4 (TSysCharSet() << '+' << '-')
 #define Synhighlighterjson__5 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										97 << 98 << 99 << 100 << 101 << 102)
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          97 << 98 << 99 << 100 << 101 << 102)
 #define Synhighlighterjson__6 (TSysCharSet() << '\x20' << '\"')
 #define Synhighlighterjson__7 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsArrayValue>() << rsObjectValue << rsArrayValue)
 

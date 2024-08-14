@@ -23,13 +23,13 @@ namespace Synexporthtml
 {
 #define Synexporthtml__0 (TSysCharSet() << '.' << '_')
 #define Synexporthtml__1 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << '-')
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '-')
 #define Synexporthtml__2 (System::Set<TSynEncoding, TSynEncoding::seUTF8, TSynEncoding::seAnsi>() << seUTF16LE << seUTF16BE)
 #define Synexporthtml__3 (TSynEncodings() << seUTF8 << seUTF16LE << seUTF16BE)
 
@@ -209,7 +209,7 @@ String __fastcall TSynExporterHTML::GetHeader()
 	{
 		Header2 = L"<!--StartFragment--><pre><code>";
 		result = Format(NativeHeader, ARRAYOFCONST((DescriptionSize, DescriptionSize + Header.Length() + Header2.Length() + GetBufferSize() + FooterSize1, DescriptionSize + Header.Length()
-																				, DescriptionSize + Header.Length() + Header2.Length() + GetBufferSize() + FooterSize2)));
+                    , DescriptionSize + Header.Length() + Header2.Length() + GetBufferSize() + FooterSize2)));
 		result = result + Header + Header2;
 	}
 	return result;

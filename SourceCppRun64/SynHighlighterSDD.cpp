@@ -27,8 +27,8 @@ namespace Synhighlightersdd
 
 
 const String Keywords[27/*# range 0..26*/] = {L"array", L"binarydata", L"block", L"byte", L"database", L"date", L"end", L"endblock", L"integer", L"keys"
-																				, L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
-																				, L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
+                    , L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
+                    , L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
 const int KeyIndices[37/*# range 0..36*/] = {8, 3, 18, 0, 25, 14, 16, 22, 5, 19, 10, 20, -1, -1, 2, 26, -1, 21, -1, 12, 1, 17, 15, -1, 9, -1, 11, 7, -1, 4, 6, -1, 13, -1, -1, 24, 23};
 
 /*$Q-*/

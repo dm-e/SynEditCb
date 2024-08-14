@@ -909,7 +909,7 @@ void __fastcall TCustomSynEdit::InvalidateGutterLines(int FirstLine, int LastLin
 	TRect rcInval = {};
 	if(Visible && HandleAllocated())
 	{
-		if((FirstLine ==  - 1) && (LastLine ==  - 1))
+		if((FirstLine == -1) && (LastLine == -1))
 		{
 			rcInval = Rect(0, 0, fGutterWidth, ClientHeight);
 			if(fStateFlags.Contains(sfLinesChanging))
@@ -960,7 +960,7 @@ void __fastcall TCustomSynEdit::InvalidateLines(int FirstLine, int LastLine)
 	TRect rcInval = {};
 	if(Visible && HandleAllocated())
 	{
-		if((FirstLine ==  - 1) && (LastLine ==  - 1))
+		if((FirstLine == -1) && (LastLine == -1))
 		{
 			rcInval = ClientRect;
 			rcInval.Left += fGutterWidth;
@@ -5764,7 +5764,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 												break;
 											--BackCounter;
 										}
-										if((BackCounter ==  - 1) && (SpaceCount2 > SpaceCount1))
+										if((BackCounter == -1) && (SpaceCount2 > SpaceCount1))
 											SpaceCount2 = 0;
 									}
 									if(SpaceCount2 == SpaceCount1)
@@ -5821,7 +5821,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 												break;
 											--BackCounter;
 										}
-										if((BackCounter ==  - 1) && (SpaceCount2 >= SpaceCount1))
+										if((BackCounter == -1) && (SpaceCount2 >= SpaceCount1))
 											SpaceCount2 = 0;
 										Temp.Delete(1, 	LeftSpaces(Temp));
 										Temp2 = GetLeftSpacing(SpaceCount2, true);
@@ -7270,7 +7270,7 @@ void __fastcall TCustomSynEdit::MoveCaretHorz(int DX, bool SelectionCommand)
 	nLineLen = s.Length();
   // only moving or selecting one char can change the line
 	bChangeY = !(fOptions.Contains(eoScrollPastEol));
-	if(bChangeY && (DX ==  - 1) && (pTo.Char == 1) && (pTo.Line > 1))
+	if(bChangeY && (DX == -1) && (pTo.Char == 1) && (pTo.Line > 1))
     // end of previous line
 	{
 		--ptDst.Line;
@@ -7397,7 +7397,7 @@ void __fastcall TCustomSynEdit::SetCaretAndSelection(const TBufferCoord& ptCaret
 void __fastcall TCustomSynEdit::RecalcCharExtent()
 {
 	const TFontStyles iFontStyles[4/*# range 0..3*/] = {System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>(), System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic, System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsBold
-																				, System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic << TFontStyle::fsBold};
+                    , System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic << TFontStyle::fsBold};
 	bool iHasStyle[4/*# range 0..3*/];
 	int cAttr = 0;
 	int cStyle = 0;
@@ -8510,7 +8510,7 @@ void __fastcall TCustomSynEdit::RegisterCommandHandler(const THookedCommandEvent
 	}
 	if(!ASSIGNED(fHookedCommandHandlers))
 		fHookedCommandHandlers = new TObjectList();
-	if(FindHookedCmdEvent(AHandlerProc) ==  - 1)
+	if(FindHookedCmdEvent(AHandlerProc) == -1)
 		fHookedCommandHandlers->Add(new THookedCommandHandlerEntry(AHandlerProc, AHandlerData));
 	else
 		;
@@ -8524,7 +8524,7 @@ void __fastcall TCustomSynEdit::UnregisterCommandHandler(THookedCommandEvent AHa
 		return;
 	}
 	i = FindHookedCmdEvent(AHandlerProc);
-	if(i >  - 1)
+	if(i > -1)
 		fHookedCommandHandlers->Delete(i);
 	else
 		;
@@ -9704,7 +9704,7 @@ TCustomSynEdit* __fastcall TSynEditMark::GetEdit()
 	if(fEdit != nullptr)
 		try
 		{
-			if(fEdit->Marks->IndexOf(this) ==  - 1)
+			if(fEdit->Marks->IndexOf(this) == -1)
 				fEdit = nullptr;
 		}
 		catch(...)

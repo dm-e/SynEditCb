@@ -245,7 +245,7 @@ public:
 	__property String Title = { read = FTitle, write = SetTitle };
 	__property TColor ClSelect = { read = FClSelect, write = FClSelect, default = clHighlight };
 	__property TColor ClSelectedText = { read = fClSelectText, write = fClSelectText, default = clHighlightText };
-	__property TColor clBackground = { read = fClBackGround, write = fClBackGround, default = clWindow };
+	__property TColor ClBackground = { read = fClBackGround, write = fClBackGround, default = clWindow };
 	__property TColor ClTitleBackground = { read = FClTitleBackground, write = FClTitleBackground, default = clBtnFace };
 	__property int ItemHeight = { read = FItemHeight, write = SetItemHeight, default = 0 };
 	__property int Margin = { read = FMargin, write = FMargin, default = 2 };
@@ -384,7 +384,7 @@ public:
 	__property int NbLinesInWindow = { read = FNbLinesInWindow, write = SetNbLinesInWindow, default = 8 };
 	__property TColor ClSelect = { read = GetClSelect, write = SetClSelect, default = clHighlight };
 	__property TColor ClSelectedText = { read = GetClSelectedText, write = SetClSelectedText, default = clHighlightText };
-	__property TColor clBackground = { read = GetClBack, write = SetClBack, default = clWindow };
+	__property TColor ClBackground = { read = GetClBack, write = SetClBack, default = clWindow };
 	__property TColor ClTitleBackground = { read = GetClTitleBackground, write = SetClTitleBackground, default = clBtnFace };
 	__property int Width = { read = FWidth, write = SetWidth, default = 260 };
 	__property String EndOfTokenChr = { read = GetEndOfTokenChar, write = SetEndOfTokenChar };

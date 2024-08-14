@@ -24,17 +24,17 @@ namespace Synhighlightercs
 
 
 const String Keywords[77/*# range 0..76*/] = {L"abstract", L"as", L"base", L"bool", L"break", L"byte", L"case", L"catch", L"class", L"const", L"continue", L"decimal"
-																				, L"default", L"delegate", L"do", L"double", L"else", L"enum", L"event", L"explicit", L"extern", L"false", L"finally", L"fixed"
-																				, L"float", L"for", L"foreach", L"goto", L"char", L"checked", L"if", L"implicit", L"in", L"int", L"interface", L"internal", L"is"
-																				, L"lock", L"long", L"namespace", L"new", L"null", L"object", L"operator", L"out", L"override", L"params", L"private", L"protected", L"public"
-																				, L"readonly", L"ref", L"return", L"sbyte", L"sealed", L"short", L"sizeof", L"stackalloc", L"static", L"string", L"struct", L"switch"
-																				, L"this", L"throw", L"true", L"try", L"typeof", L"uint", L"ulong", L"unchecked", L"unsafe", L"ushort", L"using", L"virtual", L"void"
-																				, L"volatile", L"while"};
+                    , L"default", L"delegate", L"do", L"double", L"else", L"enum", L"event", L"explicit", L"extern", L"false", L"finally", L"fixed"
+                    , L"float", L"for", L"foreach", L"goto", L"char", L"checked", L"if", L"implicit", L"in", L"int", L"interface", L"internal", L"is"
+                    , L"lock", L"long", L"namespace", L"new", L"null", L"object", L"operator", L"out", L"override", L"params", L"private", L"protected", L"public"
+                    , L"readonly", L"ref", L"return", L"sbyte", L"sealed", L"short", L"sizeof", L"stackalloc", L"static", L"string", L"struct", L"switch"
+                    , L"this", L"throw", L"true", L"try", L"typeof", L"uint", L"ulong", L"unchecked", L"unsafe", L"ushort", L"using", L"virtual", L"void"
+                    , L"volatile", L"while"};
 const int KeyIndices[211/*# range 0..210*/] = {-1, 37, -1, -1, -1, -1, 27, -1, 70, -1, -1, 75, 7, -1, -1, 68, -1, -1, -1, -1, -1, -1, 43, -1, 73, -1, -1, -1, 55, -1, 22, 39, -1, 10, -1, 6, -1, 34, 61, -1, 40, -1, -1
-																				, 60, 26, -1, -1, -1, -1, 45, -1, 29, 30, 67, 13, -1, 62, 72, -1, -1, 74, -1, -1, 41, -1, 1, 51, -1, -1, -1, -1, -1, 36, -1, 53, -1, -1, -1, -1, 11, -1, -1, -1, 46, 58, 71, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 28, 25, 0, -1, 16, -1, 63, -1, -1, 44, -1, 50, -1, 5, -1, -1, -1, 23, 38, 32, 33, 20, -1, -1, -1, -1, -1, -1, -1, 3, -1, -1, -1, 18, -1, -1, -1, -1, 54, -1, -1, 12, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59
-																				, 56, 21, 47, 69, 64, -1, -1, -1, 65, -1, -1, 9, 15, -1, -1, -1, -1, -1, 76, 24, -1, -1, 14, -1, -1, -1, 19, 4, -1, -1, -1, -1, -1, -1, -1, 31, 48, 35, 66, -1, 52, -1, -1, -1, -1, -1, -1, -1, 57, -1, 49, -1
-																				, 17, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, 42};
+                    , 60, 26, -1, -1, -1, -1, 45, -1, 29, 30, 67, 13, -1, 62, 72, -1, -1, 74, -1, -1, 41, -1, 1, 51, -1, -1, -1, -1, -1, 36, -1, 53, -1, -1, -1, -1, 11, -1, -1, -1, 46, 58, 71, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 28, 25, 0, -1, 16, -1, 63, -1, -1, 44, -1, 50, -1, 5, -1, -1, -1, 23, 38, 32, 33, 20, -1, -1, -1, -1, -1, -1, -1, 3, -1, -1, -1, 18, -1, -1, -1, -1, 54, -1, -1, 12, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, 59
+                    , 56, 21, 47, 69, 64, -1, -1, -1, 65, -1, -1, 9, 15, -1, -1, -1, -1, -1, 76, 24, -1, -1, 14, -1, -1, -1, 19, 4, -1, -1, -1, -1, -1, -1, -1, 31, 48, 35, 66, -1, 52, -1, -1, -1, -1, -1, -1, -1, 57, -1, 49, -1
+                    , 17, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, 42};
 
 /*$Q-*/
 

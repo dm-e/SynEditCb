@@ -30,11 +30,11 @@ const System::Char SYNS_AttrExtended[] = L"Extended";
 const System::Char SYNS_FriendlyAttrExtended[] = L"Extended";
   // as this language is case-insensitive keywords *must* be in lowercase
 const UnicodeString Keywords[38/*# range 0..37*/] = {L"any", L"attribute", L"boolean", L"byte", L"bytestring", L"callback", L"const", L"creator", L"date", L"deleter"
-																				, L"dictionary", L"domstring", L"double", L"enum", L"exception", L"float", L"getter", L"implements", L"inherit", L"interface"
-																				, L"legacycaller", L"long", L"object", L"octet", L"optional", L"partial", L"readonly", L"regexp", L"sequence", L"setter"
-																				, L"short", L"static", L"stringifier", L"typedef", L"unresticted", L"unrestricted", L"unsigned", L"void"};
+                    , L"dictionary", L"domstring", L"double", L"enum", L"exception", L"float", L"getter", L"implements", L"inherit", L"interface"
+                    , L"legacycaller", L"long", L"object", L"octet", L"optional", L"partial", L"readonly", L"regexp", L"sequence", L"setter"
+                    , L"short", L"static", L"stringifier", L"typedef", L"unresticted", L"unrestricted", L"unsigned", L"void"};
 const int KeyIndices[59/*# range 0..58*/] = {14, 28, 4, 37, 21, -1, -1, 12, 17, -1, -1, 22, -1, 3, -1, -1, 29, -1, 27, 31, -1, 1, 20, -1, 24, 15, 2, -1, -1, -1, -1, 23, -1, 19, 0, 13, 11, 16, 34, 10, 36, 25, -1, 30
-																				, -1, 33, 32, 6, -1, 9, 7, -1, 8, -1, 26, 18, -1, 5, 35};
+                    , -1, 33, 32, 6, -1, 9, 7, -1, 8, -1, 26, 18, -1, 5, 35};
 
 __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
  : inherited(AOwner),

@@ -18,10 +18,10 @@ namespace Synhighlighterhc11
 #define Synhighlighterhc11__0 (TFontStyles() << TFontStyle::fsItalic)
 #define Synhighlighterhc11__1 (TFontStyles() << TFontStyle::fsBold)
 #define Synhighlighterhc11__2 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										97 << 98 << 99 << 100 << 101 << 102)
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          97 << 98 << 99 << 100 << 101 << 102)
 #define Synhighlighterhc11__3 (TSysCharSet() <<  \
 										48 << 49)
 #define Synhighlighterhc11__4 (TSysCharSet() <<  \

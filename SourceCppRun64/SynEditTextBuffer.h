@@ -204,7 +204,7 @@ protected:
 	void __fastcall UpdateCharIndexes();
 public:
     // TStrings overriden public methods
-	typedef System::Classes::TStrings inherited;	
+	typedef System::Classes::TStrings inherited;
 	#include "SynEditTextBuffer_friends.inc"
 	virtual void __fastcall Clear();
 	virtual void __fastcall Delete(int Index);
@@ -247,7 +247,7 @@ class ESynEditStringList : public System::Sysutils::Exception
 {
 	#include "SynEditTextBuffer_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall ESynEditStringList(const String Msg);
 	__fastcall ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);

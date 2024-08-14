@@ -16,8 +16,8 @@ namespace Synhighlighterldraw
 {
 #define Synhighlighterldraw__0 (TFontStyles() << TFontStyle::fsBold)
 #define Synhighlighterldraw__1 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << '.')
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '.')
 
 
 const String Keywords[1/*# range 0..0*/] = {L"author"};

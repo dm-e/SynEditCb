@@ -18,25 +18,25 @@ namespace Synhighlighterbaan
 
 
 const String Keywords[113/*# range 0..112*/] = {L"__based", L"__cdecl", L"__declspe", L"__except", L"__export", L"__far", L"__fastcal", L"__fortran", L"__import"
-																				, L"__int16", L"__int32", L"__int64", L"__int8", L"__interrup", L"__loadds", L"__near", L"__pascal", L"__rtti", L"__segment"
-																				, L"__segname", L"__self", L"__stdcall", L"__thread", L"__try", L"_cdecl", L"_export", L"_fastcall", L"_import", L"_pascal"
-																				, L"_stdcall", L"auto", L"bool", L"break", L"brp.open", L"case", L"catch", L"cdecl", L"char", L"class", L"const", L"continue", L"date.num"
-																				, L"default", L"defined", L"delete", L"do", L"domain", L"double", L"else", L"endif", L"endselect", L"enum", L"explicit", L"export"
-																				, L"extern", L"false", L"fastcall", L"finally", L"float", L"for", L"friend", L"from", L"function", L"goto", L"if", L"import", L"inline"
-																				, L"int", L"interrupt", L"long", L"mutable", L"namespace", L"new", L"null", L"operator", L"pascal", L"private", L"protected", L"public"
-																				, L"register", L"reinterpr", L"return", L"select", L"selectdo", L"short", L"signed", L"sizeof", L"sql.close", L"static", L"static_ca"
-																				, L"stdcall", L"string", L"strip$", L"struct", L"switch", L"table", L"template", L"this", L"throw", L"true", L"try", L"typedef"
-																				, L"typeid", L"typename", L"union", L"unsigned", L"using", L"virtual", L"void", L"volatile", L"wchar_t", L"where", L"while"};
+                    , L"__int16", L"__int32", L"__int64", L"__int8", L"__interrup", L"__loadds", L"__near", L"__pascal", L"__rtti", L"__segment"
+                    , L"__segname", L"__self", L"__stdcall", L"__thread", L"__try", L"_cdecl", L"_export", L"_fastcall", L"_import", L"_pascal"
+                    , L"_stdcall", L"auto", L"bool", L"break", L"brp.open", L"case", L"catch", L"cdecl", L"char", L"class", L"const", L"continue", L"date.num"
+                    , L"default", L"defined", L"delete", L"do", L"domain", L"double", L"else", L"endif", L"endselect", L"enum", L"explicit", L"export"
+                    , L"extern", L"false", L"fastcall", L"finally", L"float", L"for", L"friend", L"from", L"function", L"goto", L"if", L"import", L"inline"
+                    , L"int", L"interrupt", L"long", L"mutable", L"namespace", L"new", L"null", L"operator", L"pascal", L"private", L"protected", L"public"
+                    , L"register", L"reinterpr", L"return", L"select", L"selectdo", L"short", L"signed", L"sizeof", L"sql.close", L"static", L"static_ca"
+                    , L"stdcall", L"string", L"strip$", L"struct", L"switch", L"table", L"template", L"this", L"throw", L"true", L"try", L"typedef"
+                    , L"typeid", L"typename", L"union", L"unsigned", L"using", L"virtual", L"void", L"volatile", L"wchar_t", L"where", L"while"};
 const int KeyIndices[461/*# range 0..460*/] = {-1, -1, -1, -1, -1, -1, 83, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, 33, 26, -1, 78, -1, -1, -1, -1, -1, 5, -1, 14, -1, 27, -1, 92, -1, -1, -1, -1, 42, -1
-																				, 77, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 93, 2, -1, -1, -1, 50, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, 63, -1, 94, -1, -1, 69, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, 44, -1
-																				, -1, -1, 110, -1, -1, 51, -1, -1, -1, -1, 56, -1, 32, -1, -1, 109, -1, -1, -1, -1, 16, -1, -1, -1, -1, 23, 88, -1, -1, 10, -1, -1, -1, -1, 67, -1, -1, -1, 72, 81, -1, -1, -1, 82, 24, -1, -1, -1, -1, -1
-																				, -1, -1, -1, 79, -1, -1, 64, 21, 80, -1, -1, 59, 0, -1, -1, -1, 12, -1, -1, 107, -1, 36, -1, -1, -1, -1, 31, -1, -1, -1, 62, -1, -1, 112, -1, -1, -1, -1, -1, -1, 7, -1, 106, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 52, 104, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, 28, 43, -1, 20, -1, -1, -1, 38, -1, -1
-																				, -1, -1, -1, 103, -1, 70, 87, -1, -1, -1, 85, -1, 74, -1, -1, -1, -1, -1, 35, 39, -1, -1, 97, 53, -1, -1, -1, -1, -1, -1, -1, 84, -1, 95, -1, -1, -1, -1, -1, -1, -1, 100, 98, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 111, 73, -1, 47, -1, -1, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1, -1, 66, 86, -1, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 37, 55, -1, -1, -1, 89, -1
-																				, 11, -1, -1, -1, 19, -1, -1, -1, -1, 90, -1, 102, 54, -1, -1, 45, -1, -1, 6, 30, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 46, 8, 22, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, -1, -1
-																				, -1, -1, -1, -1, 71, -1, -1, -1, -1, -1, 96, 48, -1, -1, -1, -1, -1, 75, -1, 60, -1, -1, 58, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 17, 4, -1, -1, -1, -1, 49, -1, -1, -1, -1, 57, -1, -1, -1, -1, 15, 91
-																				, -1, -1, 41, -1, -1, -1, 76, 68, -1, -1, -1, 108, -1, -1};
+                    , 77, -1, -1, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 93, 2, -1, -1, -1, 50, -1, -1, -1, -1, -1, 40, -1, -1, -1, -1, 63, -1, 94, -1, -1, 69, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 25, -1, -1, 44, -1
+                    , -1, -1, 110, -1, -1, 51, -1, -1, -1, -1, 56, -1, 32, -1, -1, 109, -1, -1, -1, -1, 16, -1, -1, -1, -1, 23, 88, -1, -1, 10, -1, -1, -1, -1, 67, -1, -1, -1, 72, 81, -1, -1, -1, 82, 24, -1, -1, -1, -1, -1
+                    , -1, -1, -1, 79, -1, -1, 64, 21, 80, -1, -1, 59, 0, -1, -1, -1, 12, -1, -1, 107, -1, 36, -1, -1, -1, -1, 31, -1, -1, -1, 62, -1, -1, 112, -1, -1, -1, -1, -1, -1, 7, -1, 106, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 52, 104, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 65, -1, -1, -1, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 29, 28, 43, -1, 20, -1, -1, -1, 38, -1, -1
+                    , -1, -1, -1, 103, -1, 70, 87, -1, -1, -1, 85, -1, 74, -1, -1, -1, -1, -1, 35, 39, -1, -1, 97, 53, -1, -1, -1, -1, -1, -1, -1, 84, -1, 95, -1, -1, -1, -1, -1, -1, -1, 100, 98, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 111, 73, -1, 47, -1, -1, -1, -1, -1, -1, -1, 105, -1, -1, -1, -1, -1, 66, 86, -1, -1, -1, -1, -1, -1, -1, -1, 34, -1, -1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 37, 55, -1, -1, -1, 89, -1
+                    , 11, -1, -1, -1, 19, -1, -1, -1, -1, 90, -1, 102, 54, -1, -1, 45, -1, -1, 6, 30, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 46, 8, 22, -1, -1, -1, -1, 99, -1, -1, -1, -1, -1, -1, -1, -1, -1, 101, -1, -1, -1
+                    , -1, -1, -1, -1, 71, -1, -1, -1, -1, -1, 96, 48, -1, -1, -1, -1, -1, 75, -1, 60, -1, -1, 58, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, 17, 4, -1, -1, -1, -1, 49, -1, -1, -1, -1, 57, -1, -1, -1, -1, 15, 91
+                    , -1, -1, 41, -1, -1, -1, 76, 68, -1, -1, -1, 108, -1, -1};
 
 /*$Q-*/
 

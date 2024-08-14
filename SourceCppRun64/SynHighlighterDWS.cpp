@@ -43,19 +43,19 @@ namespace Synhighlighterdws
 #define Synhighlighterdws__16 (TRangeStates() << rsBor)
 #define Synhighlighterdws__17 (TRangeStates() << rsDirective)
 #define Synhighlighterdws__18 (TSynHighlighterCapabilities() << hcUserSettings)
-#define Synhighlighterdws__19 (System::Set<unsigned char, 0, 255>() << L'_' <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122)
+#define Synhighlighterdws__19 (TSysCharSet() << '_' <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122)
 
 __fastcall TAnsiStringList::TAnsiStringList() {}
 __fastcall TAnsiStringList::TAnsiStringList(bool OwnsObjects) : inherited(OwnsObjects) {}
@@ -66,14 +66,14 @@ __fastcall TAnsiStringList::TAnsiStringList(TDuplicates Duplicates, bool Sorted,
 
    // if the language is case-insensitive keywords *must* be in lowercase
 const String cKeyWords[95/*# range 1..95*/] = {L"abstract", L"and", L"array", L"as", L"asm", L"begin", L"break", L"case", L"cdecl", L"class", L"const", L"constructor"
-																				, L"continue", L"deprecated", L"destructor", L"div", L"do", L"downto", L"else", L"end", L"ensure", L"empty", L"except"
-																				, L"exit", L"export", L"exports", L"external", L"final", L"finalization", L"finally", L"for", L"forward", L"function", L"helper"
-																				, L"if", L"implementation", L"implements", L"implies", L"in", L"inherited", L"initialization", L"inline", L"interface", L"is"
-																				, L"lambda", L"lazy", L"library", L"method", L"mod", L"new", L"nil", L"not", L"object", L"of", L"old", L"on", L"operator", L"or", L"overload"
-																				, L"override", L"pascal", L"partial", L"private", L"procedure", L"program", L"property", L"protected", L"public", L"published"
-																				, L"raise", L"record", L"register", L"reintroduce", L"repeat", L"require", L"resourcestring", L"sar", L"sealed", L"set"
-																				, L"shl", L"shr", L"static", L"step", L"strict", L"then", L"to", L"try", L"type", L"unit", L"until", L"uses", L"var", L"virtual", L"while"
-																				, L"xor"};
+                    , L"continue", L"deprecated", L"destructor", L"div", L"do", L"downto", L"else", L"end", L"ensure", L"empty", L"except"
+                    , L"exit", L"export", L"exports", L"external", L"final", L"finalization", L"finally", L"for", L"forward", L"function", L"helper"
+                    , L"if", L"implementation", L"implements", L"implies", L"in", L"inherited", L"initialization", L"inline", L"interface", L"is"
+                    , L"lambda", L"lazy", L"library", L"method", L"mod", L"new", L"nil", L"not", L"object", L"of", L"old", L"on", L"operator", L"or", L"overload"
+                    , L"override", L"pascal", L"partial", L"private", L"procedure", L"program", L"property", L"protected", L"public", L"published"
+                    , L"raise", L"record", L"register", L"reintroduce", L"repeat", L"require", L"resourcestring", L"sar", L"sealed", L"set"
+                    , L"shl", L"shr", L"static", L"step", L"strict", L"then", L"to", L"try", L"type", L"unit", L"until", L"uses", L"var", L"virtual", L"while"
+                    , L"xor"};
 const String cKeyWordsPropertyScoped[5/*# range 0..4*/] = {L"default", L"index", L"read", L"stored", L"write"};
 const String cKeywordsTypeScoped[2/*# range 0..1*/] = {L"enum", L"flag"};
 
@@ -400,23 +400,23 @@ void __fastcall TSynDWSSyn::BorProc()
 		default:
 		{
 			if(Synhighlighterdws__7.Contains(FRange))
-			FTokenID = tkDirec;
-		else
-			FTokenID = tkComment;
-		do
-		{
-			if(fLine[Run] == L'}')
+				FTokenID = tkDirec;
+			else
+				FTokenID = tkComment;
+			do
 			{
-				++Run;
+				if(fLine[Run] == L'}')
+				{
+					++Run;
 					if(Synhighlighterdws__8.Contains(FRange))
-					FRange = rsAsm;
-				else
-					FRange = rsUnKnown;
-				break;
+						FRange = rsAsm;
+					else
+						FRange = rsUnKnown;
+					break;
+				}
+				++Run;
 			}
-			++Run;
-		}
-		while(!IsLineEnd(Run));
+			while(!IsLineEnd(Run));
 		}
 		break;
 	}
@@ -511,12 +511,12 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 	{
 		int i = 0;
 		i = fKeywords->IndexOf(AName);
-		if(i !=  - 1)
+		if(i != -1)
 			fKeywords->Delete(i);
 	};
-	const TColor clID = clNavy;
-	const TColor clString = clBlue;
-	const TColor clComment = clGreen;
+	const int clID = clNavy;
+	const int clString = clBlue;
+	const int clComment = clGreen;
 	const String cKeywordsToAdd[1/*# range 0..0*/] = {L"string"};
 	const String cKeywordsToRemove[2/*# range 0..1*/] = {L"break", L"exit"};
 	int i = 0;
@@ -526,9 +526,9 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 
   // Delphi colors...
 	int stop = 0;
-	KeyAttri->Foreground = clID;
-	StringAttri->Foreground = clString;
-	CommentAttri->Foreground = clComment;
+	KeyAttri->Foreground = (TColor) clID;
+	StringAttri->Foreground = (TColor) clString;
+	CommentAttri->Foreground = (TColor) clComment;
 
   // These are keywords highlighted in Delphi but not in TSynDWSSyn ..
 	for(stop = 0 /*# High(cKeywordsToAdd) */, i = 0 /*# Low(cKeywordsToAdd) */; i <= stop; i++)
@@ -1097,14 +1097,14 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 			if(Match.Success)
 			{
 				{
-				Index = Match.Index;
-				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
-				{
-					FoldRanges->StopFoldRange(Line + 1, FT_Standard);
-					result = true;
+					Index = Match.Index;
+					if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
+					{
+						FoldRanges->StopFoldRange(Line + 1, FT_Standard);
+						result = true;
+					}
 				}
 			}
-		}
 		}
 		return result;
 	};
@@ -1291,16 +1291,16 @@ void __fastcall TSynDWSSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 						break;
 						default:
 						{
-						if(FoldRange.ToLine <= SkipTo)
-							continue;
-						else
+							if(FoldRange.ToLine <= SkipTo)
+								continue;
+							else
 
               // Otherwise delete
               // eg. function definitions within a class definition
-						{
-							FoldRanges->Ranges->Delete(i);
-							break;
-						}
+							{
+								FoldRanges->Ranges->Delete(i);
+								break;
+							}
 						}
 						break;
 					}

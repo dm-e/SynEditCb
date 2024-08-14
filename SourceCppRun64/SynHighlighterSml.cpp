@@ -20,11 +20,11 @@ namespace Synhighlightersml
 
 
 const String Keywords[41/*# range 0..40*/] = {L"abstype", L"and", L"andalso", L"as", L"case", L"datatype", L"do", L"else", L"end", L"eqtype", L"exception", L"fn"
-																				, L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
-																				, L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"
-																				, L"withtype"};
+                    , L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
+                    , L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"
+                    , L"withtype"};
 const int KeyIndices[71/*# range 0..70*/] = {28, -1, -1, -1, 23, 4, 19, -1, -1, 32, 8, 6, -1, 33, 0, -1, 14, -1, 2, -1, -1, 29, 35, -1, -1, -1, -1, 13, -1, -1, 9, -1, 11, 30, 1, -1, 25, 36, -1, -1, -1, 40, -1, 7, -1, 16
-																				, 26, 37, -1, 15, 21, -1, 18, 12, 5, -1, -1, 10, 22, 27, 34, 17, -1, 20, -1, 39, -1, 3, 38, 31, 24};
+                    , 26, 37, -1, 15, 21, -1, 18, 12, 5, -1, -1, 10, 22, 27, 34, 17, -1, 20, -1, 39, -1, 3, 38, 31, 24};
 
 /*$Q-*/
 

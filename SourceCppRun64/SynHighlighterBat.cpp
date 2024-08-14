@@ -17,14 +17,14 @@ namespace Synhighlighterbat
 #define Synhighlighterbat__0 (TFontStyles() << TFontStyle::fsItalic)
 #define Synhighlighterbat__1 (TFontStyles() << TFontStyle::fsBold)
 #define Synhighlighterbat__2 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << '.')
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << '.')
 #define Synhighlighterbat__3 (TSysCharSet() << 'E' << 'e')
 #define Synhighlighterbat__4 (TSysCharSet() << 'M' << 'm')
 
 
 const String Keywords[21/*# range 0..20*/] = {L"call", L"cd", L"cls", L"copy", L"del", L"do", L"echo", L"errorlevel", L"exist", L"for", L"goto", L"if", L"in"
-																				, L"not", L"off", L"on", L"pause", L"set", L"shift", L"start", L"title"};
+                    , L"not", L"off", L"on", L"pause", L"set", L"shift", L"start", L"title"};
 const int KeyIndices[25/*# range 0..24*/] = {14, 4, -1, 6, 17, 12, 8, 18, 19, 15, -1, -1, 10, 3, 13, 0, 1, 11, 20, 7, 2, 5, -1, 16, 9};
 
 /*$Q-*/

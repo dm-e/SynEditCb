@@ -42420,6 +42420,7 @@ Item
 Item1
 Item2
 itemAction
+ItemArray
 ItemAt
 ItemAtPos
 itemByName
@@ -72239,7 +72240,7 @@ SlideAnimationStyle
 SliderVisible
 SLightYearsDescription
 sLine
-sLineBreak
+sLinebreak
 sLineExpandedAtWideGlyphs
 SLineTooLong
 sLinkageCategoryName

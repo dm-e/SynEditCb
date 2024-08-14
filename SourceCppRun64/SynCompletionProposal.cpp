@@ -96,7 +96,7 @@ class TFormatChunkList : public TObject
 {
 	#include "SynCompletionProposal_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 private:
 	TList* FChunks;
 	int __fastcall GetCount();
@@ -824,7 +824,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 	FFont->Size = 8;
 	ClSelect = clHighlight;
 	ClSelectedText = clHighlightText;
-	clBackground = clWindow;
+	ClBackground = clWindow;
 	ClTitleBackground = clBtnFace;
 	((TStringList*) FItemList)->OnChange = StringListChange;  // Really necessary? It seems to work
 	FTitle = L"";                                             // fine without it
@@ -2134,13 +2134,13 @@ void __fastcall TSynBaseCompletionProposal::DefineProperties(TFiler* Filer)
 TColor __fastcall TSynBaseCompletionProposal::GetClBack()
 {
 	TColor result = (TColor) 0;
-	result = Form->clBackground;
+	result = Form->ClBackground;
 	return result;
 }
 
 void __fastcall TSynBaseCompletionProposal::SetClBack(const TColor Value)
 {
-	Form->clBackground = Value;
+	Form->ClBackground = Value;
 }
 
 TColor __fastcall TSynBaseCompletionProposal::GetClSelectedText()
@@ -2496,7 +2496,7 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 					}
 					else
 
-			// Added check to make sure item is only used when no EndChar
+            // Added check to make sure item is only used when no EndChar
 					{
 						if((InsertList->Count > Position) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
 							Value = InsertList->Strings[Position];
@@ -2805,7 +2805,7 @@ void __fastcall TSynCompletionProposal::AddEditor(TCustomSynEdit* AEditor)
 {
 	int i = 0;
 	i = fEditors->IndexOf(AEditor);
-	if(i ==  - 1)
+	if(i == -1)
 	{
 		AEditor->FreeNotification(this);
 		fEditors->Add(AEditor);
@@ -2837,7 +2837,7 @@ bool __fastcall TSynCompletionProposal::RemoveEditor(TCustomSynEdit* AEditor)
 	bool result = false;
 	int i = 0;
 	i = fEditors->Remove(AEditor);
-	result = i !=  - 1;
+	result = i != -1;
 	if(result)
 	{
 		if(Form->CurrentEditor == AEditor)
@@ -2861,7 +2861,7 @@ void __fastcall TSynCompletionProposal::DoExecute(TCustomSynEdit* AEditor)
 	TPoint P = {};
 	int i = 0;
 	i = fEditors->IndexOf(AEditor);
-	if(i !=  - 1)
+	if(i != -1)
 		/*# with AEditor do */
 		{
 			auto with0 = AEditor;
@@ -3089,7 +3089,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 	try
 	{
 		i = AutoCompleteList->IndexOf(Token);
-		if((Token.Length() > 0) && (i !=  - 1))
+		if((Token.Length() > 0) && (i != -1))
 		{
 			Editor->Lines->BeginUpdate();
 			Editor->BeginUndoBlock();
@@ -3154,7 +3154,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 						}
 					}
 				}
-				if((StartOfBlock.Char !=  - 1) && (StartOfBlock.Line !=  - 1))
+				if((StartOfBlock.Char != -1) && (StartOfBlock.Line != -1))
 				{
 					Editor->CaretXY = StartOfBlock;
 					Editor->CommandProcessor((TSynEditorCommand) ecDeleteLastChar, L' ', nullptr);
@@ -3291,7 +3291,7 @@ String __fastcall TSynAutoComplete::GetTokenValue(String Token)
 	TStringList* List = nullptr;
 	result = L"";
 	i = AutoCompleteList->IndexOf(Token);
-	if(i !=  - 1)
+	if(i != -1)
 	{
 		List = new TStringList();
 		++i;

@@ -31,13 +31,13 @@ namespace Synhighlighterjava
 
 
 const String Keywords[52/*# range 0..51*/] = {L"abstract", L"assert", L"boolean", L"break", L"byte", L"case", L"catch", L"char", L"class", L"const", L"continue"
-																				, L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
-																				, L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"
-																				, L"public", L"return", L"short", L"static", L"strictfp", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws"
-																				, L"transient", L"true", L"try", L"void", L"volatile", L"while"};
+                    , L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
+                    , L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"
+                    , L"public", L"return", L"short", L"static", L"strictfp", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws"
+                    , L"transient", L"true", L"try", L"void", L"volatile", L"while"};
 const int KeyIndices[113/*# range 0..112*/] = {1, -1, -1, 45, -1, -1, 39, -1, -1, -1, 9, 36, 26, -1, -1, 4, 27, 5, 50, 25, 33, -1, 18, -1, 17, 6, 28, -1, -1, -1, 51, -1, -1, -1, -1, 21, 48, -1, 7, 3, -1, -1, -1, 49, 41
-																				, -1, 35, -1, 46, 40, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 13, 24, -1, 37, -1, -1, 31, 11, -1, 22, -1, -1, -1, 44, -1, 10, 19, 8, -1, -1, 38, 15, -1, -1, 34, -1, 14, -1, -1, -1
-																				, 0, 12, -1, 20, -1, 23, -1, 47, -1, -1, 29, 30, -1, -1, 16, 32, 2};
+                    , -1, 35, -1, 46, 40, -1, -1, -1, 42, -1, -1, -1, -1, -1, -1, 43, -1, -1, -1, -1, -1, 13, 24, -1, 37, -1, -1, 31, 11, -1, 22, -1, -1, -1, 44, -1, 10, 19, 8, -1, -1, 38, 15, -1, -1, 34, -1, 14, -1, -1, -1
+                    , 0, 12, -1, 20, -1, 23, -1, 47, -1, -1, 29, 30, -1, -1, 16, 32, 2};
 
 /*$Q-*/
 

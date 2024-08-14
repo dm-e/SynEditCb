@@ -38,7 +38,7 @@ System.Generics
 ENABLEDFMTRANSLATOR =true
 
 ==========[SUBSTITUTIONS]
-IDENT_FILE =DemoIds.txt
+IDENT_FILE =SynEditIdents.txt
 
 [PREREPLACEMENTS]
 

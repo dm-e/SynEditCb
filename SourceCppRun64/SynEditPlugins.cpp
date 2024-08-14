@@ -122,13 +122,13 @@ int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* AEditor)
 
 void __fastcall TAbstractSynPlugin::SetEditor(TCustomSynEdit* const Value)
 {
-	TCustomSynEdit* iEditor = nullptr;
-	iEditor = Editor;
-	if(iEditor != Value)
+	TCustomSynEdit* IEditor = nullptr;
+	IEditor = Editor;
+	if(IEditor != Value)
 		try
 		{
-			if((iEditor != nullptr) && (fEditors->Count == 1))
-				RemoveEditor(iEditor);
+			if((IEditor != nullptr) && (fEditors->Count == 1))
+				RemoveEditor(IEditor);
 			if(Value != nullptr)
 				AddEditor(const_cast<TCustomSynEdit*>(Value));
 		}

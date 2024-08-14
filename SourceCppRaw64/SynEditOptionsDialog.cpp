@@ -590,7 +590,7 @@ void __fastcall TfmEditorOptionsDialog::FormShow(TObject* Sender)
 			delete Commands;
 		}
 	}
-	PageControl1->ActivePage = PageControl1->pages[0];
+	PageControl1->ActivePage = PageControl1->Pages[0];
 }
 
 void __fastcall TfmEditorOptionsDialog::KeyListEditing(TObject* Sender, TListItem* Item, bool& AllowEdit)

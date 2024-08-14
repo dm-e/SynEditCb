@@ -25,8 +25,8 @@ namespace Synhighlightercobol
 										31 << 32)
 #define Synhighlightercobol__1 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteStringMayBe << rsApostStringMayBe)
 #define Synhighlightercobol__2 (TSysCharSet() <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 << 'e' << 'E')
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 << 'e' << 'E')
 #define Synhighlightercobol__3 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57 << 'e' << 'E')

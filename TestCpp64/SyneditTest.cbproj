@@ -680,8 +680,8 @@
         </PCHCompile>
         <FormResources Include="main.dfm"/>
         <FormResources Include="..\SourceCppRun64\SynEditKeyCmdEditor.dfm"/>
-        <FormResources Include="..\SourceCppRun64\SynEditKeyCmdsEditor.dfm"/>
         <FormResources Include="..\SourceCppRun64\SynEditOptionsDialog.dfm"/>
+        <FormResources Include="..\SourceCppRun64\SynEditKeyCmdsEditor.dfm"/>
         <FormResources Include="..\SourceCppRun64\SynEditPrintMarginsDialog.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

@@ -19,7 +19,7 @@ using namespace Vcl::Graphics;
 
 namespace Syneditprintpreview
 {
-#define SynEditPrintPreview__0 (TControlStyle() << csNeedsBorderPaint)
+#define Syneditprintpreview__0 (TControlStyle() << csNeedsBorderPaint)
 
 __fastcall TSynEditPrintPreview::TSynEditPrintPreview(HWND ParentWindow) : inherited(ParentWindow) {}
 
@@ -41,7 +41,7 @@ __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
 			FShowScrollHint(false),
 			FWheelAccumulator(0)
 {
-	ControlStyle = ControlStyle + SynEditPrintPreview__0;
+	ControlStyle = ControlStyle + Syneditprintpreview__0;
 	FScaleMode = pscUserScaled;
 	FScalePercent = 100;
 	FPageBG = clWhite;

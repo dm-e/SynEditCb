@@ -15,22 +15,22 @@ using namespace Vcl::Graphics;
 namespace Synhighlighteruri
 {
 #define Synhighlighteruri__0 (TSysCharSet() <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122)
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122)
 #define Synhighlighteruri__1 (TFontStyles() << TFontStyle::fsUnderline)
 #define Synhighlighteruri__2 (TFontStyles() << TFontStyle::fsUnderline)
 
 
 const String Keywords[16/*# range 0..15*/] = {L"", L"http://", L"", L"https://", L"news:", L"gopher://", L"", L"prospero://", L"news://", L"www", L"nntp://", L"ftp://"
-																				, L"wais://", L"", L"telnet://", L"mailto:"};
+                    , L"wais://", L"", L"telnet://", L"mailto:"};
 
 int __fastcall TSynURISyn::HashKey(PWideChar Str)
 {

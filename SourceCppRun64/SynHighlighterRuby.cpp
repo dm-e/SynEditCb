@@ -22,9 +22,9 @@ namespace Synhighlighterruby
 
 const int RubyKeysCount = 43;
 const String RubyKeys[43/*# range 1..RubyKeysCount*/] = {L"alias", L"attr", L"begin", L"break", L"case", L"class", L"def", L"do", L"else", L"elsif", L"end", L"ensure", L"exit"
-																				, L"extend", L"false", L"for", L"gets", L"if", L"in", L"include", L"load", L"loop", L"module", L"next", L"nil", L"not", L"print", L"private"
-																				, L"public", L"puts", L"raise", L"redo", L"require", L"rescue", L"retry", L"return", L"self", L"then", L"true", L"unless", L"when"
-																				, L"while", L"yield"};
+                    , L"extend", L"false", L"for", L"gets", L"if", L"in", L"include", L"load", L"loop", L"module", L"next", L"nil", L"not", L"print", L"private"
+                    , L"public", L"puts", L"raise", L"redo", L"require", L"rescue", L"retry", L"return", L"self", L"then", L"true", L"unless", L"when"
+                    , L"while", L"yield"};
 
 bool __fastcall TSynRubySyn::IsKeyword(const String AKeyword)
 {

@@ -22,19 +22,19 @@ using namespace Vcl::Graphics;
 
 namespace Synedithighlighter
 {
-#define SynEditHighlighter__0 TFontStyles()
-#define SynEditHighlighter__1 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__2 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__3 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__4 TFontStyles()
-#define SynEditHighlighter__5 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__6 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__7 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__8 TFontStyles()
-#define SynEditHighlighter__9 (TFontStyles() << TFontStyle::fsBold)
-#define SynEditHighlighter__10 (TFontStyles() << TFontStyle::fsItalic)
-#define SynEditHighlighter__11 (TFontStyles() << TFontStyle::fsUnderline)
-#define SynEditHighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
+#define Synedithighlighter__0 TFontStyles()
+#define Synedithighlighter__1 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__2 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__3 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__4 TFontStyles()
+#define Synedithighlighter__5 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__6 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__7 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__8 TFontStyles()
+#define Synedithighlighter__9 (TFontStyles() << TFontStyle::fsBold)
+#define Synedithighlighter__10 (TFontStyles() << TFontStyle::fsItalic)
+#define Synedithighlighter__11 (TFontStyles() << TFontStyle::fsUnderline)
+#define Synedithighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
 #define Synedithighlighter__13 (TSynHighlighterCapabilities() << hcRegistry)
 
 __fastcall TSynHighlighterAttributes::TSynHighlighterAttributes() {}
@@ -61,7 +61,6 @@ __fastcall TSynHighlighterList::~TSynHighlighterList()
 	delete hlList;
 	// inherited;
 }
-
 
 int __fastcall TSynHighlighterList::FindByClass(TComponent* Comp)
 {
@@ -255,7 +254,7 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 {
 	bool result = false;
 	const TColor Pal16[16/*# range 0..15*/] = {clBlack, clMaroon, clGreen, clOlive, clNavy, clPurple, clTeal, clLtGray, clDkGray, clRed, clLime, clYellow, clBlue
-																				, clFuchsia, clAqua, clWhite};
+                    , clFuchsia, clAqua, clWhite};
 
 	auto LoadOldStyle = [&](HKEY RootKey, String AttrKey, String AttrName) -> bool 
 	{
@@ -313,13 +312,13 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 									Foreground = clWindowText;
 								else
 									Foreground = Pal16[StrToInt(fgIndex16)];
-								Style = SynEditHighlighter__0;
+								Style = Synedithighlighter__0;
 								if(Pos(L"B", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__1;
+									Style = Style + Synedithighlighter__1;
 								if(Pos(L"I", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__2;
+									Style = Style + Synedithighlighter__2;
 								if(Pos(L"U", fontStyle) > 0)
-									Style = Style + SynEditHighlighter__3;
+									Style = Style + Synedithighlighter__3;
 								result = true;
 							}
 						}
@@ -420,13 +419,13 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 								Foreground = clWindowText;
 							else
 								Foreground = (TColor) FgColor;
-							Style = SynEditHighlighter__4;
+							Style = Synedithighlighter__4;
 							if(IsTrue(FONTBOLD))
-								Style = Style + SynEditHighlighter__5;
+								Style = Style + Synedithighlighter__5;
 							if(IsTrue(FONTITALIC))
-								Style = Style + SynEditHighlighter__6;
+								Style = Style + Synedithighlighter__6;
 							if(IsTrue(fontUnderline))
-								Style = Style + SynEditHighlighter__7;
+								Style = Style + Synedithighlighter__7;
 							result = true;
 						}
 						__finally
@@ -540,11 +539,11 @@ bool __fastcall TSynHighlighterAttributes::LoadFromFile(TCustomIniFile* Ini)
 		Ini->ReadSection(Name, s);
 		if(s->Count > 0)
 		{
-			if(s->IndexOf(L"Background") !=  - 1)
+			if(s->IndexOf(L"Background") != -1)
 				Background = (TColor) Ini->ReadInteger(Name, L"Background", Background);
-			if(s->IndexOf(L"Foreground") !=  - 1)
+			if(s->IndexOf(L"Foreground") != -1)
 				Foreground = (TColor) Ini->ReadInteger(Name, L"Foreground", Foreground);
-			if(s->IndexOf(L"Style") !=  - 1)
+			if(s->IndexOf(L"Style") != -1)
 				IntegerStyle = Ini->ReadInteger(Name, L"Style", IntegerStyle);
 			result = true;
 		}
@@ -587,15 +586,15 @@ int __fastcall TSynHighlighterAttributes::GetStyleFromInt()
 void __fastcall TSynHighlighterAttributes::SetStyleFromInt(int Value)
 {
 	if((Value & 0x1) == 0)
-		Style = SynEditHighlighter__8;
+		Style = Synedithighlighter__8;
 	else
-		Style = SynEditHighlighter__9;
+		Style = Synedithighlighter__9;
 	if((Value & 0x2) != 0)
-		Style = Style + SynEditHighlighter__10;
+		Style = Style + Synedithighlighter__10;
 	if((Value & 0x4) != 0)
-		Style = Style + SynEditHighlighter__11;
+		Style = Style + Synedithighlighter__11;
 	if((Value & 0x8) != 0)
-		Style = Style + SynEditHighlighter__12;
+		Style = Style + Synedithighlighter__12;
 }
 
 /* TSynCustomHighlighter */
@@ -639,7 +638,6 @@ __fastcall TSynCustomHighlighter::~TSynCustomHighlighter()
 	delete fAttrChangeHooks;
 	delete fOptions; // <-- Codehunter patch
 }
-
 
 void __fastcall TSynCustomHighlighter::BeginUpdate()
 {
@@ -1120,18 +1118,18 @@ bool __fastcall TSynCustomHighlighter::IsWordBreakChar(WideChar AChar)
 		break;
 		default:
 		{
-		switch(int(AChar))
-		{
-			case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
-			 case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19:
-			 case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
-			 case 30: case 31: case 32:
-			result = true;
-			break;
-			default:
-			result = false;
-			break;
-		}
+			switch(int(AChar))
+			{
+				case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+				 case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19:
+				 case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29:
+				 case 30: case 31: case 32:
+				result = true;
+				break;
+				default:
+				result = false;
+				break;
+			}
 		}
 		break;
 	}
@@ -1362,5 +1360,5 @@ void SynEditHighlighter_finalization()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace Synedithighlighter
+}  // namespace SynEditHighlighter
 

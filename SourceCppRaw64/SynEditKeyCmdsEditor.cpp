@@ -264,7 +264,7 @@ void __fastcall TSynEditKeystrokesEditorForm::FormResize(TObject* Sender)
 void __fastcall TSynEditKeystrokesEditorForm::WMGetMinMaxInfo(TWMGetMinMaxInfo& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMGetMinMaxInfo" not not accessible;
-	Msg.MINMAXINFO->ptMinTrackSize = Point(300, 225);
+	Msg.MinMaxInfo->ptMinTrackSize = Point(300, 225);
 }            //DDH 10/16/01 Begin (reworked proc)
 
 void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)

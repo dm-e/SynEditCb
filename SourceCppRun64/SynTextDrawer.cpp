@@ -92,21 +92,21 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 	if(Options.Contains(tooClipped))
 		TextOutFlags = TextOutFlags | ETO_CLIPPED;
 	{
-	if(UseLigatures && (Str != nullptr) && ((*Str) != WideNull))
-	{
-		TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
+		if(UseLigatures && (Str != nullptr) && ((*Str) != WideNull))
+		{
+			TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
 			ZeroMemory(&CharPlaceInfo, sizeof(CharPlaceInfo));
-		CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
-		Glyphs.Length = wcslen(Str);
-		CharPlaceInfo.lpGlyphs = &Glyphs[0];
+			CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
+			Glyphs.Length = wcslen(Str);
+			CharPlaceInfo.lpGlyphs = &Glyphs[0];
 			CharPlaceInfo.nGlyphs = (UINT) Glyphs.Length;
 			if(GetCharacterPlacement(DC, Str, wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
 				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), Glyphs.Length, ((int*) ((void*) ETODist)));
+			else
+				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
+		}
 		else
-			result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
-	}
-	else
-	result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
+		result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
 	}
 	return result;
 }

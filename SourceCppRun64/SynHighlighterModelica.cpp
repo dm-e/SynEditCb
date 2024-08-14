@@ -22,12 +22,12 @@ namespace Synhighlightermodelica
 
 
 const String Keywords[48/*# range 0..47*/] = {L"algorithm", L"and", L"annotation", L"assert", L"block", L"Boolean", L"class", L"connect", L"connector", L"constant"
-																				, L"der", L"discrete", L"else", L"elseif", L"end", L"equation", L"extends", L"external", L"false", L"final", L"flow", L"for"
-																				, L"function", L"if", L"in", L"input", L"Integer", L"loop", L"model", L"nondiscrete", L"not", L"or", L"output", L"package", L"parameter"
-																				, L"partial", L"protected", L"public", L"Real", L"record", L"redeclare", L"replaceable", L"terminate", L"then", L"true"
-																				, L"type", L"when", L"while"};
+                    , L"der", L"discrete", L"else", L"elseif", L"end", L"equation", L"extends", L"external", L"false", L"final", L"flow", L"for"
+                    , L"function", L"if", L"in", L"input", L"Integer", L"loop", L"model", L"nondiscrete", L"not", L"or", L"output", L"package", L"parameter"
+                    , L"partial", L"protected", L"public", L"Real", L"record", L"redeclare", L"replaceable", L"terminate", L"then", L"true"
+                    , L"type", L"when", L"while"};
 const int KeyIndices[97/*# range 0..96*/] = {-1, 8, 41, 46, -1, 21, -1, 30, 5, -1, 45, -1, -1, 23, 7, -1, -1, 17, 15, -1, -1, 10, -1, -1, -1, 3, -1, 18, -1, 28, -1, -1, 47, -1, -1, -1, -1, -1, 39, 16, 27, 25, -1, 4
-																				, 22, -1, 43, -1, 37, 40, -1, -1, 31, -1, 42, -1, -1, 26, 14, 24, 44, -1, -1, -1, -1, 11, 33, 0, -1, -1, -1, -1, 36, 19, -1, 38, -1, 32, -1, -1, 29, -1, -1, -1, 6, 35, 12, 1, -1, -1, -1, 20, 34, -1, 13, 9, 2};
+                    , 22, -1, 43, -1, 37, 40, -1, -1, 31, -1, 42, -1, -1, 26, 14, 24, 44, -1, -1, -1, -1, 11, 33, 0, -1, -1, -1, -1, 36, 19, -1, 38, -1, 32, -1, -1, 29, -1, -1, -1, 6, 35, 12, 1, -1, -1, -1, 20, 34, -1, 13, 9, 2};
 
 /*$Q-*/
 

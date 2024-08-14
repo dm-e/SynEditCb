@@ -34,23 +34,23 @@ using namespace Winapi::Wincodec;
 
 namespace Syneditmiscclasses
 {
-#define SynEditMiscClasses__0 TFontStyles()
-#define SynEditMiscClasses__1 TShiftState()
-#define SynEditMiscClasses__2 (TShiftState() << ssShift << ssAlt << ssCtrl)
-#define SynEditMiscClasses__3 (TShiftState() << ssShift)
-#define SynEditMiscClasses__4 (TShiftState() << ssCtrl)
-#define SynEditMiscClasses__5 (TShiftState() << ssAlt)
-#define SynEditMiscClasses__6 (TShiftState() << ssShift << ssCtrl)
-#define SynEditMiscClasses__7 (TShiftState() << ssShift << ssAlt)
-#define SynEditMiscClasses__8 (TShiftState() << ssCtrl << ssAlt)
-#define SynEditMiscClasses__9 (TShiftState() << ssShift << ssCtrl << ssAlt)
-#define SynEditMiscClasses__10 (TControlStyle() << csNeedsBorderPaint)
+#define Syneditmiscclasses__0 TFontStyles()
+#define Syneditmiscclasses__1 TShiftState()
+#define Syneditmiscclasses__2 (TShiftState() << ssShift << ssAlt << ssCtrl)
+#define Syneditmiscclasses__3 (TShiftState() << ssShift)
+#define Syneditmiscclasses__4 (TShiftState() << ssCtrl)
+#define Syneditmiscclasses__5 (TShiftState() << ssAlt)
+#define Syneditmiscclasses__6 (TShiftState() << ssShift << ssCtrl)
+#define Syneditmiscclasses__7 (TShiftState() << ssShift << ssAlt)
+#define Syneditmiscclasses__8 (TShiftState() << ssCtrl << ssAlt)
+#define Syneditmiscclasses__9 (TShiftState() << ssShift << ssCtrl << ssAlt)
+#define Syneditmiscclasses__10 (TControlStyle() << csNeedsBorderPaint)
 #define Syneditmiscclasses__11 (THKInvalidKeys() << hcNone << hcShift)
 #define Syneditmiscclasses__12 (THKModifiers() << hkAlt)
 #define Syneditmiscclasses__13 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
 #define Syneditmiscclasses__14 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
-#define SynEditMiscClasses__15 (TTextFormat() << tfSingleLine << tfVerticalCenter << tfRight)
-#define SynEditMiscClasses__16 (System::Set<int, 0, 255>() <<  \
+#define Syneditmiscclasses__15 (TTextFormat() << tfSingleLine << tfVerticalCenter << tfRight)
+#define Syneditmiscclasses__16 (System::Set<int, 0, 255>() <<  \
 										0 << 1 << 2 << 3 << 4 << 5 <<  \
 										6 << 7 << 8 << 9)
 #define Syneditmiscclasses__17 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
@@ -79,7 +79,7 @@ __fastcall TBetterRegistry::TBetterRegistry() {}
 __fastcall TBetterRegistry::TBetterRegistry(unsigned long AAccess) : inherited(AAccess) {}
 
 
-/*static */const int TSynGutterBand::MarginX = 2;
+/*static */const int TSynGutterBand::MarginX = 2; 
 // ++ DPI-Aware
 
 void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight)
@@ -110,7 +110,7 @@ void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight)
 	{
 		delete Source;
 	}
-} 
+}
 // -- DPI-Aware
  
 
@@ -249,7 +249,7 @@ __fastcall TSynGutter::TSynGutter()
 	FFont = new TFont();
 	FFont->Name = DefaultFontName();
 	FFont->Size = 8;
-	FFont->Style = SynEditMiscClasses__0;
+	FFont->Style = Syneditmiscclasses__0;
 	fUseFontStyle = true;
 	CalcCharWidth();
 	FFont->OnChange = OnFontChange;
@@ -297,7 +297,6 @@ __fastcall TSynGutter::~TSynGutter()
 	delete fInternalImage;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynGutter::EndUpdate()
 {
@@ -762,7 +761,6 @@ __fastcall TSynGlyph::~TSynGlyph()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynGlyph::Assign(TPersistent* ASource)
 {
 	TSynGlyph* vSrc = nullptr;
@@ -889,7 +887,6 @@ __fastcall TSynMethodChain::~TSynMethodChain()
 	// inherited;
 }
 
-
 bool __fastcall TSynMethodChain::DoHandleException(Exception* e)
 {
 	bool result = false;
@@ -994,7 +991,7 @@ class TInternalResource : public TObject
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 	int UsageCount;
 	String Name;
 	TBitmap* BITMAP;
@@ -1025,7 +1022,6 @@ __fastcall TSynInternalImage::~TSynInternalImage()
 	delete FImages;
 	//# inherited::Destroy();
 }
-
 
 void __fastcall TSynInternalImage::Draw(TCanvas* ACanvas, int Number, int X, int Y, int LineHeight)
 {
@@ -1061,7 +1057,7 @@ bool __fastcall KeySameAsShiftState(WORD key, TShiftState Shift)
 TShiftState __fastcall ModifiersToShiftState(THKModifiers Modifiers)
 {
 	TShiftState result;
-	result = SynEditMiscClasses__1;
+	result = Syneditmiscclasses__1;
 	if(Modifiers.Contains(hkShift))
 		result << ssShift;
 	if(Modifiers.Contains(hkCtrl))
@@ -1074,32 +1070,32 @@ TShiftState __fastcall ModifiersToShiftState(THKModifiers Modifiers)
 THKInvalidKey __fastcall ShiftStateToTHKInvalidKey(TShiftState Shift)
 {
 	THKInvalidKey result = hcNone;
-	Shift = Shift * SynEditMiscClasses__2;
-	if(Shift == SynEditMiscClasses__3)
+	Shift = Shift * Syneditmiscclasses__2;
+	if(Shift == Syneditmiscclasses__3)
 		result = hcShift;
 	else
 	{
-		if(Shift == SynEditMiscClasses__4)
+		if(Shift == Syneditmiscclasses__4)
 			result = hcCtrl;
 		else
 		{
-			if(Shift == SynEditMiscClasses__5)
+			if(Shift == Syneditmiscclasses__5)
 				result = hcAlt;
 			else
 			{
-				if(Shift == SynEditMiscClasses__6)
+				if(Shift == Syneditmiscclasses__6)
 					result = hcShiftCtrl;
 				else
 				{
-					if(Shift == SynEditMiscClasses__7)
+					if(Shift == Syneditmiscclasses__7)
 						result = hcShiftAlt;
 					else
 					{
-						if(Shift == SynEditMiscClasses__8)
+						if(Shift == Syneditmiscclasses__8)
 							result = hcCtrlAlt;
 						else
 						{
-							if(Shift == SynEditMiscClasses__9)
+							if(Shift == Syneditmiscclasses__9)
 								result = hcShiftCtrlAlt;
 							else
 								result = hcNone;
@@ -1134,7 +1130,7 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 			FPressedOnlyModifiers(false)
 {
 	BorderStyle = (TBorderStyle) bsSingle;
-	ControlStyle = ControlStyle + SynEditMiscClasses__10;
+	ControlStyle = ControlStyle + Syneditmiscclasses__10;
 	FInvalidKeys = Syneditmiscclasses__11;
 	FModifiers = Syneditmiscclasses__12;
 	SetHotKey((TShortCut) 0x0041); /* Alt+A */
@@ -1670,7 +1666,7 @@ void __fastcall TSynGutterBand::PaintLineNumbers(TCanvas* Canvas, const TRect& c
 			s = Gutter->FormatLineNumber(Line);
 			if(ASSIGNED(SynEdit->OnGutterGetText))
 				SynEdit->OnGutterGetText(this, Line, s);
-			Canvas->TextRect(LineRect, s, SynEditMiscClasses__15);
+			Canvas->TextRect(LineRect, s, Syneditmiscclasses__15);
 		}
 	}
 }
@@ -1729,7 +1725,7 @@ void __fastcall TSynGutterBand::PaintMarks(TCanvas* Canvas, const TRect& cClipR,
 		}
 		else
 		{
-			if(SynEditMiscClasses__16.Contains(aMark->ImageIndex))
+			if(Syneditmiscclasses__16.Contains(aMark->ImageIndex))
 			{
 				if(aGutterOff == 0)
 				{

@@ -24,17 +24,17 @@ namespace Synhighlighterst
 
 
 const String Keywords[75/*# range 0..74*/] = {L"action", L"and", L"any", L"any_num", L"array", L"at", L"bool", L"by", L"byte", L"case", L"configuration", L"constant"
-																				, L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
-																				, L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"
-																				, L"external", L"finally", L"for", L"from", L"function", L"goto", L"if", L"index", L"initial_step", L"initialization", L"int"
-																				, L"label", L"not", L"of", L"on", L"or", L"program", L"real", L"repeat", L"resource", L"retain", L"return", L"sint", L"step", L"string"
-																				, L"struct", L"then", L"time", L"to", L"transition", L"type", L"udint", L"uint", L"until", L"usint", L"var", L"var_external", L"var_global"
-																				, L"var_in_out", L"var_input", L"var_output", L"while", L"word", L"xor"};
+                    , L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
+                    , L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"
+                    , L"external", L"finally", L"for", L"from", L"function", L"goto", L"if", L"index", L"initial_step", L"initialization", L"int"
+                    , L"label", L"not", L"of", L"on", L"or", L"program", L"real", L"repeat", L"resource", L"retain", L"return", L"sint", L"step", L"string"
+                    , L"struct", L"then", L"time", L"to", L"transition", L"type", L"udint", L"uint", L"until", L"usint", L"var", L"var_external", L"var_global"
+                    , L"var_in_out", L"var_input", L"var_output", L"while", L"word", L"xor"};
 const int KeyIndices[211/*# range 0..210*/] = {-1, -1, -1, -1, -1, 55, 39, -1, -1, -1, -1, 51, -1, -1, -1, -1, 57, 49, 4, -1, 17, -1, -1, -1, -1, -1, -1, 24, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 47, -1, -1, -1
-																				, 58, 70, 38, -1, -1, 35, -1, -1, -1, 28, 12, -1, -1, -1, -1, -1, -1, 64, -1, -1, 1, -1, -1, 69, 27, 45, -1, 2, -1, -1, -1, 3, 9, -1, 37, 13, 63, -1, -1, 8, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1
-																				, -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, 25, 20, -1, 53, 14, -1, -1, -1, 0, -1, -1, 26, 41, 42, 62, -1, -1, -1, 66, 21, 36, -1, -1, 30, -1, 73, 22, -1, 16, -1, -1, -1, -1, 74, -1, -1, 23, -1, 29
-																				, 50, -1, -1, -1, -1, -1, 68, -1, -1, 19, -1, 15, 11, -1, 48, -1, 72, -1, 43, -1, -1, -1, -1, 67, 31, -1, 32, -1, -1, 6, -1, -1, 7, 65, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, 5, -1, 40, 52, 34, -1, -1, -1
-																				, -1, -1, -1, -1, 56, -1, -1, 44, 54, -1, 71, 46, 59};
+                    , 58, 70, 38, -1, -1, 35, -1, -1, -1, 28, 12, -1, -1, -1, -1, -1, -1, 64, -1, -1, 1, -1, -1, 69, 27, 45, -1, 2, -1, -1, -1, 3, 9, -1, 37, 13, 63, -1, -1, 8, -1, -1, -1, -1, -1, 60, -1, -1, -1, -1, -1, -1, -1
+                    , -1, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, 18, 25, 20, -1, 53, 14, -1, -1, -1, 0, -1, -1, 26, 41, 42, 62, -1, -1, -1, 66, 21, 36, -1, -1, 30, -1, 73, 22, -1, 16, -1, -1, -1, -1, 74, -1, -1, 23, -1, 29
+                    , 50, -1, -1, -1, -1, -1, 68, -1, -1, 19, -1, 15, 11, -1, 48, -1, 72, -1, 43, -1, -1, -1, -1, 67, 31, -1, 32, -1, -1, 6, -1, -1, 7, 65, -1, -1, 33, -1, -1, -1, -1, -1, -1, -1, 5, -1, 40, 52, 34, -1, -1, -1
+                    , -1, -1, -1, -1, 56, -1, -1, 44, 54, -1, 71, 46, 59};
 
 /*$Q-*/
 

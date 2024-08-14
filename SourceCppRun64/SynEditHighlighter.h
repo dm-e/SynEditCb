@@ -129,7 +129,7 @@ private:
 	int __fastcall GetStyleFromInt();
 	void __fastcall SetStyleFromInt(int Value);
 public:
-	typedef System::Classes::TPersistent inherited;	
+	typedef System::Classes::TPersistent inherited;
 	#include "SynEditHighlighter_friends.inc"
 	virtual void __fastcall Assign(TPersistent* Source);
 	void __fastcall AssignColorAndStyle(TSynHighlighterAttributes* Source);
@@ -220,7 +220,7 @@ protected:
 	String __fastcall GetFriendlyLanguageNameProp();
 	String __fastcall GetLanguageNameProp();
 public:
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynEditHighlighter_friends.inc"
 	__classmethod virtual TSynHighlighterCapabilities __fastcall GetCapabilities();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
@@ -289,7 +289,7 @@ class TSynHighlighterList : public System::Classes::TList
 	#include "SynEditHighlighter_friends.inc"
 	friend void __fastcall RegisterPlaceableHighlighter(TSynCustomHighlighterClass Highlighter);
 public:
-	typedef System::Classes::TList inherited;	
+	typedef System::Classes::TList inherited;
 private:
 	TList* hlList;
 	TSynCustomHighlighterClass __fastcall GetItem(int Index);

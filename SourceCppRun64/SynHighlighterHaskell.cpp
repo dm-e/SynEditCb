@@ -23,7 +23,7 @@ namespace Synhighlighterhaskell
 
 
 const String Keywords[24/*# range 0..23*/] = {L"Bool", L"Char", L"class", L"data", L"deriving", L"Double", L"else", L"False", L"Float", L"if", L"import", L"in"
-																				, L"instance", L"Int", L"Integer", L"IO", L"let", L"module", L"otherwise", L"String", L"then", L"True", L"type", L"where"};
+                    , L"instance", L"Int", L"Integer", L"IO", L"let", L"module", L"otherwise", L"String", L"then", L"True", L"type", L"where"};
 const int KeyIndices[29/*# range 0..28*/] = {2, 23, 10, 16, 7, -1, 22, 8, 14, 17, 5, 4, 11, -1, 1, 9, 12, 0, -1, 6, -1, 3, 15, 18, 20, -1, 13, 19, 21};
 
 /*$Q-*/

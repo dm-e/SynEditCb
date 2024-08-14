@@ -199,7 +199,7 @@ __fastcall TSynEditUndoList::TSynEditUndoList(TSynEditUndo* Owner)
 void __fastcall TSynEditUndoList::EnsureMaxEntries()
 {
 	int KeepCount = 0;
-	System::TArray<TSynUndoItem*> itemArray;
+	System::TArray<TSynUndoItem*> ItemArray;
 	__int64 i = 0;
 	if(FOwner->fMaxUndoActions <= 0)
 		return;
@@ -208,15 +208,15 @@ void __fastcall TSynEditUndoList::EnsureMaxEntries()
 		__int64 stop = 0;
 		fFullUndoImposible = true;
 		KeepCount = ((int)(FOwner->fMaxUndoActions / /*div*/ 4)) * 3;
-		itemArray = ToArray();
+		ItemArray = ToArray();
 		for(stop = KeepCount, i = 1; i <= stop; i++)
 		{
 			Extract();
 		}
 		Clear();  // Destroys remaining items
-		for(stop = itemArray.Length - 1, i = itemArray.Length - KeepCount; i <= stop; i++)
+		for(stop = ItemArray.Length - 1, i = ItemArray.Length - KeepCount; i <= stop; i++)
 		{
-			Push(DynamicArrayPointer(itemArray, i));
+			Push(DynamicArrayPointer(ItemArray, i));
 		}
 	}
 }

@@ -821,7 +821,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 	FFont->Size = 8;
 	ClSelect = clHighlight;
 	ClSelectedText = clHighlightText;
-	clBackground = clWindow;
+	ClBackground = clWindow;
 	ClTitleBackground = clBtnFace;
 	((TStringList*) FItemList)->OnChange = StringListChange;  // Really necessary? It seems to work
 	FTitle = L"";                                             // fine without it
@@ -2131,13 +2131,13 @@ void __fastcall TSynBaseCompletionProposal::DefineProperties(TFiler* Filer)
 TColor __fastcall TSynBaseCompletionProposal::GetClBack()
 {
 	TColor result = (TColor) 0;
-	result = Form->clBackground;
+	result = Form->ClBackground;
 	return result;
 }
 
 void __fastcall TSynBaseCompletionProposal::SetClBack(const TColor Value)
 {
-	Form->clBackground = Value;
+	Form->ClBackground = Value;
 }
 
 TColor __fastcall TSynBaseCompletionProposal::GetClSelectedText()
