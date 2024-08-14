@@ -14,7 +14,7 @@ using namespace System::Classes;
 
 namespace Syndbedit
 {
-#define Syndbedit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << ftWideMemo << ftWideString)
+#define Syndbedit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << (TBlobType) ftWideMemo << (TBlobType) ftWideString)
 
 __fastcall TCustomDBSynEdit::TCustomDBSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
 __fastcall TDBSynEdit::TDBSynEdit(TComponent* AOwner) : inherited(AOwner) {}
