@@ -739,16 +739,16 @@ String __fastcall TCustomSynEdit::GetSelText()
 					TotalLen += Lines->Strings[i].Length();
 				}
 				TotalLen += ColTo - 1;
-				TotalLen += sLinebreak.Length() * (Last - First);
+				TotalLen += Length(sLineBreak) * (Last - First);
           // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				CopyAndForward(Lines->Strings[First], ColFrom, MaxInt, P);
-				CopyAndForward(sLinebreak, 1, MaxInt, P);
+				CopyAndForward(sLineBreak, 1, MaxInt, P);
 				for(stop = Last - 1, i = First + 1; i <= stop; i++)
 				{
 					CopyAndForward(Lines->Strings[i], 1, MaxInt, P);
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
 				CopyAndForward(Lines->Strings[Last], 1, ColTo - 1, P);
 			}
@@ -771,7 +771,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 				if(ColFrom > ColTo)
 					SwapInt(ColFrom, ColTo);
           // step1: pre-allocate string large enough for worst case
-				TotalLen = ((ColTo - ColFrom) + sLinebreak.Length()) * (Last - First + 1);
+				TotalLen = ((ColTo - ColFrom) + Length(sLineBreak)) * (Last - First + 1);
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 
@@ -787,10 +787,10 @@ String __fastcall TCustomSynEdit::GetSelText()
 					vAuxRowCol.Column = ColTo;
 					R = DisplayToBufferPos(vAuxRowCol).Char;
 					vTrimCount = CopyPaddedAndForward(s, l, R - l, P);
-					TotalLen = TotalLen + (R - l) - vTrimCount + sLinebreak.Length();
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					TotalLen = TotalLen + (R - l) - vTrimCount + Length(sLineBreak);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
-				result.SetLength(TotalLen - sLinebreak.Length());
+				result.SetLength(TotalLen - Length(sLineBreak));
 			}
 			break;
           // If block selection includes LastLine,
@@ -801,21 +801,21 @@ String __fastcall TCustomSynEdit::GetSelText()
 				__int64 stop = 0;
 				for(stop = Last, i = First; i <= stop; i++)
 				{
-					TotalLen += Lines->Strings[i].Length() + sLinebreak.Length();
+					TotalLen += Lines->Strings[i].Length() + Length(sLineBreak);
 				}
 				if(Last == Lines->Count)
-					TotalLen -= sLinebreak.Length();
+					TotalLen -= Length(sLineBreak);
           // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				for(stop = Last - 1, i = First; i <= stop; i++)
 				{
 					CopyAndForward(Lines->Strings[i], 1, MaxInt, P);
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
 				CopyAndForward(Lines->Strings[Last], 1, MaxInt, P);
 				if((Last + 1) < Lines->Count)
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 			}
 			break;
 			default:
@@ -4800,9 +4800,9 @@ void __fastcall TCustomSynEdit::ExecCmdCopyOrMoveLine(TSynEditorCommand Command)
 			if((vCaretRow == BlockEnd.Line) && (fBlockBegin.Line != fBlockEnd.Line) && (BlockEnd.Char == 1))
 				break;
 			if((Command == ecCopyLineDown) || (Command == ecMoveLineDown))
-				Text = Text + sLinebreak + Lines->Strings[vCaretRow - 1];
+				Text = Text + sLineBreak + Lines->Strings[vCaretRow - 1];
 			else
-				Text = Text + Lines->Strings[vCaretRow - 1] + sLinebreak;
+				Text = Text + Lines->Strings[vCaretRow - 1] + sLineBreak;
 		}
     // Add the line over which we move
 		if(Command == ecMoveLineDown)

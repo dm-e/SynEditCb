@@ -211,13 +211,6 @@ void Assert( bool expr, const AnsiString& Msg );
 void Initialize(void** V, int Count = -1);
 void Finalize(void** V, int Count = -1);
 
-/*
-const
-	 sLineBreak = {$IFDEF POSIX} _AnsiStr(#10) {$ENDIF}
-			 {$IFDEF MSWINDOWS} _AnsiStr(#13#10) {$ENDIF};
-*/
-extern const AnsiString sLinebreak;
-
 }  // namespace d2c_system
 
 #endif //  lpl_systemH

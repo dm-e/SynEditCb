@@ -760,7 +760,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 				}
 				TotalLen += ColTo - 1;
 				TotalLen += Length(sLineBreak) * (Last - First);
-		  // step2: build up result string
+          // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				CopyAndForward(Lines->Strings[First], ColFrom, MaxInt, P);
@@ -825,7 +825,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 				}
 				if(Last == Lines->Count)
 					TotalLen -= Length(sLineBreak);
-		  // step2: build up result string
+          // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				for(stop = Last - 1, i = First; i <= stop; i++)

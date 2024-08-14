@@ -72240,7 +72240,7 @@ SlideAnimationStyle
 SliderVisible
 SLightYearsDescription
 sLine
-sLinebreak
+sLineBreak
 sLineExpandedAtWideGlyphs
 SLineTooLong
 sLinkageCategoryName

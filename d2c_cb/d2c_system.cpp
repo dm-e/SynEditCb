@@ -40,9 +40,6 @@ using namespace std;
 namespace d2c_system
 {
 
-const AnsiString sLinebreak = "\r\n";
-
-
 void FillChar( void* X, int Count, unsignedchar Value )
 {
 	memset(X, Value, Count);

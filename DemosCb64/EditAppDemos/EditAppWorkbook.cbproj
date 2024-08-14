@@ -373,8 +373,8 @@
         </CppCompile>
         <FormResources Include="dmCommands.dfm"/>
         <FormResources Include="frmEditor.dfm"/>
-        <FormResources Include="frmMain.dfm"/>
         <FormResources Include="..\SearchReplaceDemo\dlgSearchText.dfm"/>
+        <FormResources Include="frmMain.dfm"/>
         <FormResources Include="frmMainWorkbook.dfm"/>
         <FormResources Include="..\SearchReplaceDemo\dlgConfirmReplace.dfm"/>
         <BuildConfiguration Include="Base">
