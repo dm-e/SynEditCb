@@ -187,7 +187,7 @@ class THookedCommandHandlerEntry : public TObject
 {
 	#include "SynEdit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 private:
 	THookedCommandEvent FEvent;
 	void* FData;
@@ -239,8 +239,8 @@ TDisplayCoord __fastcall TCustomSynEdit::PixelsToNearestRowColumn(int AX, int AY
 TDisplayCoord __fastcall TCustomSynEdit::PixelsToRowColumn(int AX, int AY)
 {
 	TDisplayCoord result = {};
-	result.Column = Max(1, LeftChar + ((int)((AX - fGutterWidth - fTextMargin) / fCharWidth)));
-	result.Row = Max(1, TopLine + ((int)(AY / FTextHeight)));
+	result.Column = Max(1, LeftChar + ((int)((AX - fGutterWidth - fTextMargin) / /*div*/ fCharWidth)));
+	result.Row = Max(1, TopLine + ((int)(AY / /*div*/ FTextHeight)));
 	return result;
 }
 
@@ -440,7 +440,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 	fRightEdge = 80;
 	fGutter = new TSynGutter(this);
 	fGutter->OnChange = GutterChanged;
-	fWordWrapGlyph = new TSynGlyph((THandle)HInstance, L"SynEditWrapped");
+	fWordWrapGlyph = new TSynGlyph((THandle) HInstance, L"SynEditWrapped");
 	fWordWrapGlyph->OnChange = WordWrapGlyphChange;
 	ControlStyle = ControlStyle + Synedit__1;
 	ControlStyle = ControlStyle + Synedit__2;
@@ -5344,9 +5344,9 @@ void __fastcall TCustomSynEdit::InitializeCaret()
 		break;
 		default:
 		{
-		cw = 2;
-		ch = FTextHeight - 2;
-		fCaretOffset = Point(-1, 0);
+			cw = 2;
+			ch = FTextHeight - 2;
+			fCaretOffset = Point(-1, 0);
 		}
 		break;
 	}
@@ -9890,15 +9890,20 @@ __fastcall TSynEditPlugin::TSynEditPlugin(TCustomSynEdit* AOwner, TPlugInHandler
 {
 	FHandlers = AHandlers;
 }
-/*
+/*    [ld.lld Error] ld.lld: error: undefined symbol: Synedit::TSynEditPlugin::~TSynEditPlugin()
 __fastcall TSynEditPlugin::~TSynEditPlugin()
 {
 	if(FOwner != nullptr)
 		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
 	//# inherited::Destroy();
 }
-
 */
+__fastcall void TSynEditPlugin::OnSynEditPluginDestruction()
+{
+	if(FOwner != nullptr)
+		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+	//# inherited::Destroy();
+}
 
 void __fastcall TSynEditPlugin::AfterPaint(TCanvas* ACanvas, const TRect& AClip, int FirstLine, int LastLine)
 {

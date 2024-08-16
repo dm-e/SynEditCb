@@ -384,10 +384,13 @@ protected:
 public:
 	__fastcall TSynEditPlugin(TCustomSynEdit* AOwner);
 	__fastcall TSynEditPlugin(TCustomSynEdit* AOwner, TPlugInHandlers AHandlers);
+	__fastcall void OnSynEditPluginDestruction();
 	virtual __fastcall ~TSynEditPlugin()
-{ // inline, because of C++Builder bug
+{
 //	if(FOwner != nullptr)
 //		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+	OnSynEditPluginDestruction();
+	//# inherited::Destroy();
 }
 	__property TPlugInHandlers Handlers = { read = FHandlers };
 	__fastcall TSynEditPlugin();

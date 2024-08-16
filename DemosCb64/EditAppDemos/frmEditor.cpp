@@ -594,8 +594,9 @@ void __fastcall TEditorForm::FormDestroy(TObject* Sender)
 	LEditor = FEditor;
 	Assert(FEditor != nullptr);
 	FEditor->FForm = nullptr;
-	Assert(GI_EditorFactory != nullptr);
-	GI_EditorFactory->RemoveEditor(LEditor);
+//  dirty hack to close application without throwing a exception
+//	Assert(GI_EditorFactory != nullptr);
+//	GI_EditorFactory->RemoveEditor(LEditor);
 }
 
 void __fastcall TEditorForm::SynEditorChange(TObject* Sender)
