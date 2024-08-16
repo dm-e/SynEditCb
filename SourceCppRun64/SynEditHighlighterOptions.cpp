@@ -22,14 +22,14 @@ void __fastcall TSynEditHighlighterOptions::Assign(TPersistent* Source)
 		/*# with TSynEditHighlighterOptions(Source) do */
 		{
 			auto with0 = ((TSynEditHighlighterOptions*) Source);
-			FAutoDetectEnabled = with0->AutoDetectEnabled;
-			FAutoDetectMatchExpression = with0->AutoDetectMatchExpression;
-			FAutoDetectLineLimit = with0->AutoDetectLineLimit;
-			FDefaultExtension = with0->DefaultExtension;
-			FLineCommentarStart = with0->LineCommentarStart;
-			FLineCommentarEnd = with0->LineCommentarEnd;
-			FTitle = with0->Title;
-			fVisible = with0->Visible;
+			with0->FAutoDetectEnabled = with0->AutoDetectEnabled;
+			with0->FAutoDetectMatchExpression = with0->AutoDetectMatchExpression;
+			with0->FAutoDetectLineLimit = with0->AutoDetectLineLimit;
+			with0->FDefaultExtension = with0->DefaultExtension;
+			with0->FLineCommentarStart = with0->LineCommentarStart;
+			with0->FLineCommentarEnd = with0->LineCommentarEnd;
+			with0->FTitle = with0->Title;
+			with0->fVisible = with0->Visible;
 		}
 	}
 }
@@ -41,14 +41,14 @@ void __fastcall TSynEditHighlighterOptions::AssignTo(TPersistent* Dest)
 		/*# with TSynEditHighlighterOptions(Dest) do */
 		{
 			auto with0 = ((TSynEditHighlighterOptions*) Dest);
-			with0->AutoDetectEnabled = FAutoDetectEnabled;
-			with0->AutoDetectMatchExpression = FAutoDetectMatchExpression;
-			with0->AutoDetectLineLimit = FAutoDetectLineLimit;
-			with0->DefaultExtension = FDefaultExtension;
-			with0->LineCommentarStart = FLineCommentarStart;
-			with0->LineCommentarEnd = FLineCommentarEnd;
-			with0->Title = FTitle;
-			with0->Visible = fVisible;
+			with0->AutoDetectEnabled = with0->FAutoDetectEnabled;
+			with0->AutoDetectMatchExpression = with0->FAutoDetectMatchExpression;
+			with0->AutoDetectLineLimit = with0->FAutoDetectLineLimit;
+			with0->DefaultExtension = with0->FDefaultExtension;
+			with0->LineCommentarStart = with0->FLineCommentarStart;
+			with0->LineCommentarEnd = with0->FLineCommentarEnd;
+			with0->Title = with0->FTitle;
+			with0->Visible = with0->fVisible;
 		}
 	}
 }

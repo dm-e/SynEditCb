@@ -45,5 +45,22 @@ System::PAnsiChar astr2pchar(const System::AnsiString& xs, int index = 0);
 System::PWideChar ustr2pwchar(const System::UnicodeString& xs, int index = 0);
 void* ustr2address(const System::UnicodeString& xs, int index = 0);
 
+// provided that the elements of the SourceSet are in the element range of the TagetSet
+template<class TargetSet, class TEnum, TEnum minEl2, TEnum maxEl2>
+TargetSet ConvertSubset(const System::Set<TEnum, minEl2, maxEl2>& SourceSet)
+{
+	TargetSet target;
+
+	for (TEnum value = minEl2; value <= maxEl2; value = static_cast<TEnum>(static_cast<int>(value) + 1))
+	{
+		if (SourceSet.Contains(value))
+		{
+			target << value;
+		}
+	}
+
+	return target;
+}
+
 
 #endif // d2c_convertH
