@@ -91,7 +91,6 @@ __fastcall TSynEditKbdHandler::~TSynEditKbdHandler()
 	//# inherited::Destroy();
 }
 
-
 void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
 {
 	int Idx = 0;
@@ -296,7 +295,6 @@ __fastcall TMethodList::~TMethodList()
 	//# inherited::Destroy();
 }
 
-
 int __fastcall TMethodList::GetCount()
 {
 	int result = 0;
@@ -331,5 +329,5 @@ void __fastcall TMethodList::Remove(const TMethod& caHandler)
 }
 
 
-}  // namespace Syneditkbdhandler
+}  // namespace SynEditKbdHandler
 

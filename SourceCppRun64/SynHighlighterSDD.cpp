@@ -390,23 +390,23 @@ __fastcall TSynSDDSyn::TSynSDDSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clNavy;
+	fCommentAttri->Foreground = (TColor) clNavy;
 	fCommentAttri->Style = Synhighlightersdd__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightersdd__1;
-	fKeyAttri->Foreground = clGreen;
+	fKeyAttri->Foreground = (TColor) clGreen;
 	addAttribute(fKeyAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
 	fDataTypeAttri->Style = Synhighlightersdd__2;
-	fDataTypeAttri->Foreground = clTeal;
+	fDataTypeAttri->Foreground = (TColor) clTeal;
 	addAttribute(fDataTypeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clBlue;
+	fNumberAttri->Foreground = (TColor) clBlue;
 	addAttribute(fNumberAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	addAttribute(fSymbolAttri);

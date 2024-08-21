@@ -253,18 +253,18 @@ __fastcall TSynGutter::TSynGutter()
 	fUseFontStyle = true;
 	CalcCharWidth();
 	FFont->OnChange = OnFontChange;
-	FColor = clBtnFace;
+	FColor = (TColor) clBtnFace;
 	fVisible = true;
 	fDigitCount = 4;
 	fAutoSizeDigitCount = fDigitCount;
 	FAutoSize = true;
-	FBorderColor = clWindow;
+	FBorderColor = (TColor) clWindow;
 	FBorderStyle = gbsMiddle;
 	fLineNumberStart = 1;
 	fZeroStart = false;
 	fGradient = false;
-	FGradientStartColor = clWindow;
-	FGradientEndColor = clBtnFace;
+	FGradientStartColor = (TColor) clWindow;
+	FGradientEndColor = (TColor) clBtnFace;
 	fGradientSteps = 48;
 	AutoSizeDigitCount();
 	FBands = new TSynBandsCollection(this, __classid(TSynGutterBand));
@@ -1135,7 +1135,7 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 	FModifiers = Syneditmiscclasses__12;
 	SetHotKey((TShortCut) 0x0041); /* Alt+A */
 	ParentColor = false;
-	Color = clWindow;
+	Color = (TColor) clWindow;
 	TabStop = true;
 }
 

@@ -122,25 +122,25 @@ __fastcall TSynRubySyn::TSynRubySyn(TComponent* AOwner)
 		}
 	}
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clMaroon;
+	fCommentAttri->Foreground = (TColor) clMaroon;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Foreground = clBlue;
+	fKeyAttri->Foreground = (TColor) clBlue;
 	addAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
 	addAttribute(fSecondKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clGreen;
+	fNumberAttri->Foreground = (TColor) clGreen;
 	addAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = clPurple;
+	fStringAttri->Foreground = (TColor) clPurple;
 	addAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Foreground = clBlue;
+	fSymbolAttri->Foreground = (TColor) clBlue;
 	addAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterRuby;

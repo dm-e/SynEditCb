@@ -1352,7 +1352,7 @@ __fastcall TSynRexxSyn::TSynRexxSyn(TComponent* AOwner)
 	fCommentAttri->Foreground = (TColor) 0x00EFBC89;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	fIdentifierAttri->Foreground = clLime;
+	fIdentifierAttri->Foreground = (TColor) clLime;
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) 0x009797FF;
@@ -1360,10 +1360,10 @@ __fastcall TSynRexxSyn::TSynRexxSyn(TComponent* AOwner)
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fSpecialAttri = new TSynHighlighterAttributes(SYNS_AttrSpecial, SYNS_FriendlyAttrSpecial);
-	fSpecialAttri->Foreground = clAqua;
+	fSpecialAttri->Foreground = (TColor) clAqua;
 	addAttribute(fSpecialAttri);
 	fStdFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrStdFunction, SYNS_FriendlyAttrStdFunction);  /* new token type here */
-	fStdFunctionAttri->Foreground = clAqua;
+	fStdFunctionAttri->Foreground = (TColor) clAqua;
 	addAttribute(fStdFunctionAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) 0x008CD959;

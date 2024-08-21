@@ -321,7 +321,7 @@ __fastcall TSynPerlSyn::TSynPerlSyn(TComponent* AOwner)
 	fPragmaAttri->Style = Synhighlighterperl__2;
 	addAttribute(fPragmaAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	fSpaceAttri->Foreground = clWindow;
+	fSpaceAttri->Foreground = (TColor) clWindow;
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	addAttribute(fStringAttri);

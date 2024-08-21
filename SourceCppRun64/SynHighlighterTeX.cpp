@@ -36,19 +36,19 @@ __fastcall TSynTeXSyn::TSynTeXSyn(TComponent* AOwner)
 			fBracketAttri(nullptr),
 			fBraceAttri(nullptr)
 {
-	fCommentAttri = CreateHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment, clTeal, clNone, Synhighlightertex__0);
+	fCommentAttri = CreateHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment, (TColor) clTeal, (TColor) clNone, Synhighlightertex__0);
 	addAttribute(fCommentAttri);
-	fTextAttri = CreateHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText, clBlack, clNone, Synhighlightertex__1);
+	fTextAttri = CreateHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText, (TColor) clBlack, (TColor) clNone, Synhighlightertex__1);
 	addAttribute(fTextAttri);
-	fMathmodeAttri = CreateHighlighterAttributes(SYNS_AttrMathMode, SYNS_FriendlyAttrMathMode, clOlive, clNone, Synhighlightertex__2);
+	fMathmodeAttri = CreateHighlighterAttributes(SYNS_AttrMathMode, SYNS_FriendlyAttrMathMode, (TColor) clOlive, (TColor) clNone, Synhighlightertex__2);
 	addAttribute(fMathmodeAttri);
-	fSpaceAttri = CreateHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace, clNone, clWhite, Synhighlightertex__3);
+	fSpaceAttri = CreateHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace, (TColor) clNone, (TColor) clWhite, Synhighlightertex__3);
 	addAttribute(fSpaceAttri);
-	fControlSequenceAttri = CreateHighlighterAttributes(SYNS_AttrTeXCommand, SYNS_FriendlyAttrTeXCommand, clBlue, clWhite, Synhighlightertex__4);
+	fControlSequenceAttri = CreateHighlighterAttributes(SYNS_AttrTeXCommand, SYNS_FriendlyAttrTeXCommand, (TColor) clBlue, (TColor) clWhite, Synhighlightertex__4);
 	addAttribute(fControlSequenceAttri);
-	fBracketAttri = CreateHighlighterAttributes(SYNS_AttrSquareBracket, SYNS_FriendlyAttrSquareBracket, clPurple, clNone, Synhighlightertex__5);
+	fBracketAttri = CreateHighlighterAttributes(SYNS_AttrSquareBracket, SYNS_FriendlyAttrSquareBracket, (TColor) clPurple, (TColor) clNone, Synhighlightertex__5);
 	addAttribute(fBracketAttri);
-	fBraceAttri = CreateHighlighterAttributes(SYNS_AttrRoundBracket, SYNS_FriendlyAttrRoundBracket, clRed, clNone, Synhighlightertex__6);
+	fBraceAttri = CreateHighlighterAttributes(SYNS_AttrRoundBracket, SYNS_FriendlyAttrRoundBracket, (TColor) clRed, (TColor) clNone, Synhighlightertex__6);
 	addAttribute(fBraceAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterTeX;

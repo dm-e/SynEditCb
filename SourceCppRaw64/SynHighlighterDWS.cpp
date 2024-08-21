@@ -114,7 +114,7 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 	fAsmAttri->Foreground = (TColor) RGB(128, 0, 0);
 	addAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clGreen;
+	fCommentAttri->Foreground = (TColor) clGreen;
 	fCommentAttri->Style = Synhighlighterdws__0;
 	addAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
@@ -127,24 +127,24 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 	fKeyAttri->Style = Synhighlighterdws__2;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clBlue;
+	fNumberAttri->Foreground = (TColor) clBlue;
 	addAttribute(fNumberAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
-	fFloatAttri->Foreground = clBlue;
+	fFloatAttri->Foreground = (TColor) clBlue;
 	addAttribute(fFloatAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
-	fHexAttri->Foreground = clBlue;
+	fHexAttri->Foreground = (TColor) clBlue;
 	addAttribute(fHexAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = clBlue;
+	fStringAttri->Foreground = (TColor) clBlue;
 	addAttribute(fStringAttri);
 	fCharAttri = new TSynHighlighterAttributes(SYNS_AttrCharacter, SYNS_FriendlyAttrCharacter);
-	fCharAttri->Foreground = clBlue;
+	fCharAttri->Foreground = (TColor) clBlue;
 	addAttribute(fCharAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Foreground = clNavy;
+	fSymbolAttri->Foreground = (TColor) clNavy;
 	addAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fKeywords = new TAnsiStringList();
@@ -526,9 +526,9 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 
   // Delphi colors...
 	int stop = 0;
-	KeyAttri->Foreground = clID;
-	StringAttri->Foreground = clString;
-	CommentAttri->Foreground = clComment;
+	KeyAttri->Foreground = (TColor) clID;
+	StringAttri->Foreground = (TColor) clString;
+	CommentAttri->Foreground = (TColor) clComment;
 
   // These are keywords highlighted in Delphi but not in TSynDWSSyn ..
 	for(stop = 0 /*# High(cKeywordsToAdd) */, i = 0 /*# Low(cKeywordsToAdd) */; i <= stop; i++)

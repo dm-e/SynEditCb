@@ -100,14 +100,14 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fBooleanAttri = new TSynHighlighterAttributes(SYNS_AttrBoolean, SYNS_FriendlyAttrBoolean);
-	fBooleanAttri->Foreground = clNavy;
+	fBooleanAttri->Foreground = (TColor) clNavy;
 	addAttribute(fBooleanAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) 0xB0A060;
 	fCommentAttri->Style = Synhighlighterllvm__0;
 	addAttribute(fCommentAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrConstant, SYNS_FriendlyAttrConstant);
-	fConstantAttri->Foreground = clNavy;
+	fConstantAttri->Foreground = (TColor) clNavy;
 	addAttribute(fConstantAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = (TColor) 0xD560BB;

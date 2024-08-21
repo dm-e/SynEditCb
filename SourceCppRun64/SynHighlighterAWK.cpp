@@ -404,7 +404,7 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 {
 	FCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clBlue;
+	fCommentAttri->Foreground = (TColor) clBlue;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
@@ -421,7 +421,7 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = clTeal;
+	fStringAttri->Foreground = (TColor) clTeal;
 	addAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterawk__10;

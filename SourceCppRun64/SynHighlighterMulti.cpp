@@ -834,7 +834,7 @@ __fastcall TScheme::TScheme(TCollection* Collection)
 	FCaseSensitive = true;
 	fMarkerAttri = new TSynHighlighterAttributes(SYNS_AttrMarker, SYNS_FriendlyAttrMarker);
 	fMarkerAttri->OnChange = MarkerAttriChanged;
-	MarkerAttri->Background = clYellow;
+	MarkerAttri->Background = (TColor) clYellow;
 	MarkerAttri->Style = Synhighlightermulti__5;
 	MarkerAttri->InternalSaveDefaultValues();
 }

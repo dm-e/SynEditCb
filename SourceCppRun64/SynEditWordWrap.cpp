@@ -328,7 +328,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex AIndex)
 	vLine = ((TSynEditStringList*) Editor->Lines)->ExpandedStrings[AIndex];
 	vLine = Editor->ExpandAtWideGlyphs(vLine);
   // Pre-allocate a buffer for rowlengths - at least one row
-	vMaxNewRows = Max(((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1, 1);
+	vMaxNewRows = (unsigned int) Max(((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1, 1);
 	vTempRowLengths = ((PRowLengthArray) AllocMem((unsigned int) (vMaxNewRows * sizeof(TRowLength))));
 	try
 	{

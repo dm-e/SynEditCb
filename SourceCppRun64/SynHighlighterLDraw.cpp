@@ -120,10 +120,10 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 			fTriangleAttri(nullptr)
 {
 	fColorAttri = new TSynHighlighterAttributes(SYNS_AttrColor, SYNS_FriendlyAttrColor);
-	fColorAttri->Foreground = clNavy;
+	fColorAttri->Foreground = (TColor) clNavy;
 	addAttribute(fColorAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clBlue;
+	fCommentAttri->Foreground = (TColor) clBlue;
 	addAttribute(fCommentAttri);
 	fFirstTriAttri = new TSynHighlighterAttributes(SYNS_AttrFirstTri, SYNS_FriendlyAttrFirstTri);
 	fFirstTriAttri->Foreground = (TColor) RGB(206, 111, 73);
@@ -137,13 +137,13 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 	fKeyAttri->Style = Synhighlighterldraw__0;
 	addAttribute(fKeyAttri);
 	fLineAttri = new TSynHighlighterAttributes(SYNS_AttrLine, SYNS_FriendlyAttrLine);
-	fLineAttri->Foreground = clBlack;
+	fLineAttri->Foreground = (TColor) clBlack;
 	addAttribute(fLineAttri);
 	fOpLineAttri = new TSynHighlighterAttributes(SYNS_AttrOpLine, SYNS_FriendlyAttrOpLine);
-	fOpLineAttri->Foreground = clBlack;
+	fOpLineAttri->Foreground = (TColor) clBlack;
 	addAttribute(fOpLineAttri);
 	fQuadAttri = new TSynHighlighterAttributes(SYNS_AttrQuad, SYNS_FriendlyAttrQuad);
-	fQuadAttri->Foreground = clRed;
+	fQuadAttri->Foreground = (TColor) clRed;
 	addAttribute(fQuadAttri);
 	fSecondTriAttri = new TSynHighlighterAttributes(SYNS_AttrSecondTri, SYNS_FriendlyAttrSecondTri);
 	fSecondTriAttri->Foreground = (TColor) RGB(54, 99, 12);
@@ -152,7 +152,7 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 	fThirdTriAttri->Foreground = (TColor) RGB(206, 111, 73);
 	addAttribute(fThirdTriAttri);
 	fTriangleAttri = new TSynHighlighterAttributes(SYNS_AttrTriangle, SYNS_FriendlyAttrTriangle);
-	fTriangleAttri->Foreground = clBlack;
+	fTriangleAttri->Foreground = (TColor) clBlack;
 	addAttribute(fTriangleAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();

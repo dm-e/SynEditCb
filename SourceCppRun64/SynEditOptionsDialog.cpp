@@ -169,12 +169,12 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 	FSynGutter = new TSynGutter();
 	FSynGutter->AssignableBands = false;
 	FSelectedColor = new TSynSelectedColor();
-	FSelectedColor->Foreground = clHighlightText;
-	FSelectedColor->Background = clHighlight;
+	FSelectedColor->Foreground = (TColor) clHighlightText;
+	FSelectedColor->Background = (TColor) clHighlight;
 	FFont = new TFont();
 	FFont->Name = DefaultFontName();
 	FFont->Size = 8;
-	Color = clWindow;
+	Color = (TColor) clWindow;
 	Keystrokes->ResetDefaults();
 	Options = Syneditoptionsdialog__0;
 	ExtraLineSpacing = 0;
@@ -184,7 +184,7 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 	MaxScrollWidth = 1024;
 	MaxUndo = 0;
 	RightEdge = 80;
-	RightEdgeColor = clSilver;
+	RightEdgeColor = (TColor) clSilver;
 	TabWidth = 8;
 	WantTabs = true;
 }
@@ -382,7 +382,7 @@ TColor __fastcall TfmEditorOptionsDialog::GetColor(TMenuItem* Item)
 {
 	TColor result = (TColor) 0;
 	if((Item->Tag == -1) || (Item->Tag > 24))
-		result = clNone;
+		result = (TColor) clNone;
 	else
 		result = ((TColor) (((unsigned char) Item->Tag) | 0x80000000));
 	return result;
@@ -424,7 +424,7 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 			B->Canvas->Brush->Color = C;
 			B->Canvas->Brush->Style = bsSolid;
 			B->Canvas->Pen->Style = psSolid;
-			B->Canvas->Pen->Color = clBlack;
+			B->Canvas->Pen->Color = (TColor) clBlack;
 			B->Canvas->Rectangle(0, 0, 16, 16);
 			ImageList1->Add(B, nullptr);
 			ColorPopup->Items->Items[i]->ImageIndex = ColorPopup->Items->Items[i]->Tag;

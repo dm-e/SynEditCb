@@ -136,7 +136,7 @@ __fastcall TSynJavaSyn::TSynJavaSyn(TComponent* AOwner)
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	addAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	fSpaceAttri->Foreground = clWindow;
+	fSpaceAttri->Foreground = (TColor) clWindow;
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	addAttribute(fStringAttri);

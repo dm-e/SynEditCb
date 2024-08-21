@@ -125,7 +125,7 @@ enum TSynEditStringFlag {sfHasTabs,
 typedef System::Set<TSynEditStringFlag, TSynEditStringFlag::sfHasTabs, TSynEditStringFlag::sfAsSaved> TSynEditStringFlags;
 
   // Managed by Undo
-typedef int /*# guessed*/ /*sfModified..sfAsSaved*/ TSynLineChangeFlag;
+typedef TSynEditStringFlag /*sfModified..sfAsSaved*/ TSynLineChangeFlag;
 typedef System::Set<TSynLineChangeFlag, sfModified, sfAsSaved> TSynLineChangeFlags;
 struct TSynEditStringRec;
 typedef TSynEditStringRec* PSynEditStringRec;

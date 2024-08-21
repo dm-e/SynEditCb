@@ -51,7 +51,7 @@ __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
 
   // Attribute
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
-	fAttributeAttri->Foreground = clNavy;
+	fAttributeAttri->Foreground = (TColor) clNavy;
 	addAttribute(fAttributeAttri);
 
   // reserved words ("true", "false", "null")
@@ -61,7 +61,7 @@ __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
 
   // numbers
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clRed;
+	fNumberAttri->Foreground = (TColor) clRed;
 	addAttribute(fNumberAttri);
 
   // spaces
@@ -70,12 +70,12 @@ __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
 
   // symbols
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Foreground = clGreen;
+	fSymbolAttri->Foreground = (TColor) clGreen;
 	addAttribute(fSymbolAttri);
 
   // Value
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = clBlue;
+	fValueAttri->Foreground = (TColor) clBlue;
 	addAttribute(fValueAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterJSON;

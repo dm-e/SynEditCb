@@ -63,9 +63,9 @@ String __fastcall ColorToTeX(TColor AColor)
 	String GValue;
 	String BValue;
 	RGBColor = ColorToRGB(AColor);
-	RValue = DotDecSepFormat(f, ARRAYOFCONST(((long double) GetRValue(RGBColor) / 255)));
-	GValue = DotDecSepFormat(f, ARRAYOFCONST(((long double)GetGValue(RGBColor) / 255)));
-	BValue = DotDecSepFormat(f, ARRAYOFCONST(((long double)GetBValue(RGBColor) / 255)));
+	RValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetRValue(RGBColor)) / 255)));
+	GValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetGValue(RGBColor)) / 255)));
+	BValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetBValue(RGBColor)) / 255)));
 	result = Format(F2, ARRAYOFCONST((RValue, GValue, BValue)));
 	return result;
 }

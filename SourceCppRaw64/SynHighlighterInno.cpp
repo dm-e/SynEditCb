@@ -186,7 +186,7 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterinno__0;
-	fCommentAttri->Foreground = clGray;
+	fCommentAttri->Foreground = (TColor) clGray;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
@@ -194,19 +194,19 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 	addAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterinno__1;
-	fKeyAttri->Foreground = clNavy;
+	fKeyAttri->Foreground = (TColor) clNavy;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clMaroon;
+	fNumberAttri->Foreground = (TColor) clMaroon;
 	addAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = clBlue;
+	fStringAttri->Foreground = (TColor) clBlue;
 	addAttribute(fStringAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
 	fConstantAttri->Style = Synhighlighterinno__2;
-	fConstantAttri->Foreground = clTeal;
+	fConstantAttri->Foreground = (TColor) clTeal;
 	addAttribute(fConstantAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	addAttribute(fSymbolAttri);
@@ -214,11 +214,11 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
   //Parameters
 	fParamAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fParamAttri->Style = Synhighlighterinno__3;
-	fParamAttri->Foreground = clOlive;
+	fParamAttri->Foreground = (TColor) clOlive;
 	addAttribute(fParamAttri);
 	fSectionAttri = new TSynHighlighterAttributes(SYNS_AttrSection, SYNS_FriendlyAttrSection);
 	fSectionAttri->Style = Synhighlighterinno__4;
-	fSectionAttri->Foreground = clRed;
+	fSectionAttri->Foreground = (TColor) clRed;
 	addAttribute(fSectionAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);

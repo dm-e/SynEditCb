@@ -1728,13 +1728,13 @@ __fastcall TSynCPMSyn::TSynCPMSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clNavy;
+	fCommentAttri->Foreground = (TColor) clNavy;
 	fCommentAttri->Style = Synhighlightercpm__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Foreground = clGreen;
+	fKeyAttri->Foreground = (TColor) clGreen;
 	fKeyAttri->Style = Synhighlightercpm__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
@@ -1742,7 +1742,7 @@ __fastcall TSynCPMSyn::TSynCPMSyn(TComponent* AOwner)
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fSQLKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSQLKey, SYNS_FriendlyAttrSQLKey);
-	fSQLKeyAttri->Foreground = clTeal;
+	fSQLKeyAttri->Foreground = (TColor) clTeal;
 	fSQLKeyAttri->Style = Synhighlightercpm__2;
 	addAttribute(fSQLKeyAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
@@ -1757,7 +1757,7 @@ __fastcall TSynCPMSyn::TSynCPMSyn(TComponent* AOwner)
 	fSystemAttri->Style = Synhighlightercpm__4;
 	addAttribute(fSystemAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	fVariableAttri->Foreground = clMaroon;
+	fVariableAttri->Foreground = (TColor) clMaroon;
 	addAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
