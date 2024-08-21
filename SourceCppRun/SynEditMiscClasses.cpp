@@ -79,7 +79,7 @@ __fastcall TBetterRegistry::TBetterRegistry() {}
 __fastcall TBetterRegistry::TBetterRegistry(unsigned int AAccess) : inherited(AAccess) {}
 
 
-/*static */const int TSynGutterBand::MarginX = 2;
+/*static */const int TSynGutterBand::MarginX = 2; 
 // ++ DPI-Aware
 
 void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight)
@@ -110,7 +110,7 @@ void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight)
 	{
 		delete Source;
 	}
-} 
+}
 // -- DPI-Aware
  
 
@@ -253,18 +253,18 @@ __fastcall TSynGutter::TSynGutter()
 	fUseFontStyle = true;
 	CalcCharWidth();
 	FFont->OnChange = OnFontChange;
-	FColor = clBtnFace;
+	FColor = (TColor) clBtnFace;
 	fVisible = true;
 	fDigitCount = 4;
 	fAutoSizeDigitCount = fDigitCount;
 	FAutoSize = true;
-	FBorderColor = clWindow;
+	FBorderColor = (TColor) clWindow;
 	FBorderStyle = gbsMiddle;
 	fLineNumberStart = 1;
 	fZeroStart = false;
 	fGradient = false;
-	FGradientStartColor = clWindow;
-	FGradientEndColor = clBtnFace;
+	FGradientStartColor = (TColor) clWindow;
+	FGradientEndColor = (TColor) clBtnFace;
 	fGradientSteps = 48;
 	AutoSizeDigitCount();
 	FBands = new TSynBandsCollection(this, __classid(TSynGutterBand));
@@ -991,7 +991,7 @@ class TInternalResource : public TObject
 {
 	#include "SynEditMiscClasses_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 	int UsageCount;
 	String Name;
 	TBitmap* BITMAP;
@@ -1135,7 +1135,7 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 	FModifiers = Syneditmiscclasses__12;
 	SetHotKey((TShortCut) 0x0041); /* Alt+A */
 	ParentColor = false;
-	Color = clWindow;
+	Color = (TColor) clWindow;
 	TabStop = true;
 }
 

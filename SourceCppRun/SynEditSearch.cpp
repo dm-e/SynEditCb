@@ -11,6 +11,7 @@ using namespace d2c_system;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace System;
+using namespace System::Classes;
 using namespace System::Sysutils;
 
 namespace Syneditsearch

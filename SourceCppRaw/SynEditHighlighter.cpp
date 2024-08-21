@@ -183,8 +183,8 @@ __fastcall TSynHighlighterAttributes::TSynHighlighterAttributes(String AName, St
 			fForegroundDefault((TColor) 0)
 {
 	//# inherited::Create();
-	Background = clNone;
-	Foreground = clNone;
+	Background = (TColor) clNone;
+	Foreground = (TColor) clNone;
 	FName = AName;
 	FFriendlyName = AFriendlyName;
 }
@@ -247,8 +247,8 @@ void __fastcall TSynHighlighterAttributes::InternalSaveDefaultValues()
 bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey, String AttrKey, String AttrName, bool OldStyle)
 {
 	bool result = false;
-	const TColor Pal16[16/*# range 0..15*/] = {clBlack, clMaroon, clGreen, clOlive, clNavy, clPurple, clTeal, clLtGray, clDkGray, clRed, clLime, clYellow, clBlue
-                    , clFuchsia, clAqua, clWhite};
+	const TColor Pal16[16/*# range 0..15*/] = {(TColor) clBlack, (TColor) clMaroon, (TColor) clGreen, (TColor) clOlive, (TColor) clNavy, (TColor) clPurple, (TColor) clTeal, (TColor) clLtGray, (TColor) clDkGray, (TColor) clRed, (TColor) clLime, (TColor) clYellow, (TColor) clBlue
+                    , (TColor) clFuchsia, (TColor) clAqua, (TColor) clWhite};
 
 	auto LoadOldStyle = [&](HKEY RootKey, String AttrKey, String AttrName) -> bool 
 	{
@@ -299,11 +299,11 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 								fgIndex16 = Get(descript);
 								bgIndex16 = Get(descript);
 								if(bgDefault == L"1")
-									Background = clWindow;
+									Background = (TColor) clWindow;
 								else
 									Background = Pal16[StrToInt(bgIndex16)];
 								if(fgDefault == L"1")
-									Foreground = clWindowText;
+									Foreground = (TColor) clWindowText;
 								else
 									Foreground = Pal16[StrToInt(fgIndex16)];
 								Style = Synedithighlighter__0;
@@ -406,11 +406,11 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 							else
 								return result;
 							if(IsTrue(bgDefault))
-								Background = clWindow;
+								Background = (TColor) clWindow;
 							else
 								Background = (TColor) BGColor;
 							if(IsTrue(fgDefault))
-								Foreground = clWindowText;
+								Foreground = (TColor) clWindowText;
 							else
 								Foreground = (TColor) FgColor;
 							Style = Synedithighlighter__4;

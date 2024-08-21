@@ -1860,17 +1860,17 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fArrowHeadAttri = new TSynHighlighterAttributes(SYNS_AttrArrowHead, SYNS_FriendlyAttrArrowHead);
-	fArrowHeadAttri->Foreground = clRed;
+	fArrowHeadAttri->Foreground = (TColor) clRed;
 	addAttribute(fArrowHeadAttri);
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
 	addAttribute(fAttributeAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterdot__0;
-	fCommentAttri->Foreground = clNavy;
+	fCommentAttri->Foreground = (TColor) clNavy;
 	addAttribute(fCommentAttri);
 	fDirectionsAttri = new TSynHighlighterAttributes(SYNS_AttrDirections, SYNS_FriendlyAttrDirections);
 	fDirectionsAttri->Style = Synhighlighterdot__1;
-	fDirectionsAttri->Foreground = clYellow;
+	fDirectionsAttri->Foreground = (TColor) clYellow;
 	addAttribute(fDirectionsAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
@@ -1879,7 +1879,7 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 	addAttribute(fKeyAttri);
 	fShapeAttri = new TSynHighlighterAttributes(SYNS_AttrShape, SYNS_FriendlyAttrShape);
 	fShapeAttri->Style = Synhighlighterdot__3;
-	fShapeAttri->Foreground = clRed;
+	fShapeAttri->Foreground = (TColor) clRed;
 	addAttribute(fShapeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
@@ -1887,11 +1887,11 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 	addAttribute(fStringAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
 	fValueAttri->Style = Synhighlighterdot__4;
-	fValueAttri->Foreground = clRed;
+	fValueAttri->Foreground = (TColor) clRed;
 	addAttribute(fValueAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterdot__5;
-	fSymbolAttri->Foreground = clGreen;
+	fSymbolAttri->Foreground = (TColor) clGreen;
 	addAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();

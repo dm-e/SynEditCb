@@ -248,7 +248,7 @@ TSynLineChangeFlags __fastcall TSynEditStringList::GetChangeFlags(int Index)
 {
 	TSynLineChangeFlags result;
 	if((Index >= 0) && (Index < FCount))
-		result = (*FList)[Index].FFlags * Synedittextbuffer__1;
+		result = ConvertSubset<TSynLineChangeFlags>((*FList)[Index].FFlags * Synedittextbuffer__1);
 	else
 		result = Synedittextbuffer__2;
 	return result;
@@ -633,7 +633,7 @@ void __fastcall TSynEditStringList::SetCapacity(int NewCapacity)
 void __fastcall TSynEditStringList::SetChangeFlags(int Index, const TSynLineChangeFlags Value)
 {
 	if((Index >= 0) && (Index < FCount))
-		(*FList)[Index].FFlags = (*FList)[Index].FFlags - Synedittextbuffer__6 + Value;
+		(*FList)[Index].FFlags = (*FList)[Index].FFlags, (*FList)[Index].FFlags - Synedittextbuffer__6 + ConvertSubset<TSynEditStringFlags>(Value);
 }
 
 void __fastcall TSynEditStringList::SetEncoding(TEncoding* const Value)

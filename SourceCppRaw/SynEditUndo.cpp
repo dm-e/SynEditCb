@@ -25,7 +25,7 @@ using namespace Vcl::Controls;
 
 namespace Syneditundo
 {
-#define Syneditundo__0 (TCustomSynEdit() << &phLinePut << &phLinesInserted << &phLinesBeforeDeleted << &phLinesDeleted)
+#define Syneditundo__0 (TPlugInHandlers() << phLinePut << phLinesInserted << phLinesBeforeDeleted << phLinesDeleted)
 #define Syneditundo__1 (TSynLineChangeFlags() << sfModified)
 
 
@@ -741,7 +741,7 @@ void __fastcall TSynLinePutUndoItem::Undo(TCustomSynEdit* Editor)
 /* TSynUndoPlugin */
 
 __fastcall TSynUndoPlugin::TSynUndoPlugin(TSynEditUndo* SynEditUndo, TCustomSynEdit* Editor)
- : inherited(Editor, &Syneditundo__0),
+ : inherited(Editor, Syneditundo__0),
 			FSynEditUndo(SynEditUndo)
 {
 }

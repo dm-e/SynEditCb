@@ -677,7 +677,7 @@ void __fastcall TProposalColumn::DefineProperties(TFiler* Filer)
 }
 
 __fastcall TProposalColumns::TProposalColumns(TPersistent* AOwner, TCollectionItemClass ItemClass)
- : inherited((TPersistent*) ItemClass),
+ : inherited(ItemClass),
 			FOwner(AOwner)
 {
 }

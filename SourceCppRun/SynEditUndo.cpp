@@ -25,8 +25,8 @@ using namespace Vcl::Controls;
 
 namespace Syneditundo
 {
-#define SynEditUndo__0 (TPlugInHandlers() << TPluginHandler::phLinePut << TPluginHandler::phLinesInserted << TPluginHandler::phLinesBeforeDeleted << TPluginHandler::phLinesDeleted)
-#define SynEditUndo__1 (TSynLineChangeFlags() << TSynEditStringFlag::sfModified)
+#define Syneditundo__0 (TPlugInHandlers() << phLinePut << phLinesInserted << phLinesBeforeDeleted << phLinesDeleted)
+#define Syneditundo__1 (TSynLineChangeFlags() << sfModified)
 
 
 class DELPHICLASS TSynEditUndo;
@@ -35,7 +35,7 @@ class TSynLinePutUndoItem : public TSynUndoItem
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TSynUndoItem inherited;	
+	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
 	int fStartPos;
@@ -55,7 +55,7 @@ class TSynLinesInsertedUndoItem : public TSynUndoItem
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TSynUndoItem inherited;	
+	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
 	TArray<String> FLines;
@@ -70,7 +70,7 @@ class TSynLinesDeletedUndoItem : public TSynUndoItem
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TSynUndoItem inherited;	
+	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
 	TArray<String> FLines;
@@ -85,7 +85,7 @@ class TSynCaretAndSelectionUndoItem : public TSynUndoItem
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TSynUndoItem inherited;	
+	typedef TSynUndoItem inherited;
 private:
 	TBufferCoord fBlockBegin;
 	TBufferCoord fBlockEnd;
@@ -100,7 +100,7 @@ class TSynUndoPlugin : public TSynEditPlugin
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TSynEditPlugin inherited;	
+	typedef TSynEditPlugin inherited;
 private:
 	TSynEditUndo* FSynEditUndo;
 	TArray<String> FDeletedLines;
@@ -120,7 +120,7 @@ class TSynEditUndoList : public TObjectStack__1<TSynUndoItem*>
 {
 	#include "SynEditUndo_friends.inc"
 public:
-	typedef TObjectStack__1<TSynUndoItem*> inherited;	
+	typedef TObjectStack__1<TSynUndoItem*> inherited;
 protected:
 	TSynEditUndo* FOwner;
 	int fBlockChangeNumber;
@@ -305,7 +305,6 @@ __fastcall TSynEditUndo::~TSynEditUndo()
 	delete fRedoList;
 	// inherited;
 }
-
 
 void __fastcall TSynEditUndo::EndBlock(TControl* Editor)
 {
@@ -752,9 +751,9 @@ void __fastcall TSynLinePutUndoItem::Undo(TCustomControl* xEditor)
 
 /* TSynUndoPlugin */
 
-__fastcall TSynUndoPlugin::TSynUndoPlugin(TSynEditUndo* Syneditundo, TCustomSynEdit* Editor)
- : inherited(Editor, SynEditUndo__0),
-			FSynEditUndo(Syneditundo)
+__fastcall TSynUndoPlugin::TSynUndoPlugin(TSynEditUndo* SynEditUndo, TCustomSynEdit* Editor)
+ : inherited(Editor, Syneditundo__0),
+			FSynEditUndo(SynEditUndo)
 {
 }
 
@@ -769,7 +768,7 @@ void __fastcall TSynUndoPlugin::LinePut(int AIndex, const String OldLine)
 	{
 		Item = new TSynLinePutUndoItem(Editor, AIndex, OldLine, FSynEditUndo->FCommandProcessed);
 		Item->FChangeFlags = ((TSynEditStringList*) Editor->Lines)->ChangeFlags[AIndex];
-		((TSynEditStringList*) Editor->Lines)->ChangeFlags[AIndex] = (Item->FChangeFlags + SynEditUndo__1);
+		((TSynEditStringList*) Editor->Lines)->ChangeFlags[AIndex] = (Item->FChangeFlags + Syneditundo__1);
 		FSynEditUndo->AddUndoItem(Item);
 	}
 }
@@ -818,5 +817,5 @@ void __fastcall TSynUndoPlugin::LinesInserted(int FirstLine, int Count)
 }
 
 
-}  // namespace Syneditundo
+}  // namespace SynEditUndo
 

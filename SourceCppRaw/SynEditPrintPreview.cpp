@@ -43,11 +43,11 @@ __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
 	ControlStyle = ControlStyle + Syneditprintpreview__0;
 	FScaleMode = pscUserScaled;
 	FScalePercent = 100;
-	FPageBG = clWhite;
+	FPageBG = (TColor) clWhite;
 	Width = 200;
 	Height = 120;
 	ParentColor = false;
-	Color = clAppWorkSpace;
+	Color = (TColor) clAppWorkSpace;
 	Visible = true;
 	FPageNumber = 1;
 	FShowScrollHint = true;
@@ -161,7 +161,7 @@ void __fastcall TSynEditPrintPreview::PaintPaper()
 			return;
 		with0->Brush->Color = this->Color;
 		with0->Brush->Style = bsSolid;
-		with0->Pen->Color = clBlack;
+		with0->Pen->Color = (TColor) clBlack;
 		with0->Pen->Width = 1;
 		with0->Pen->Style = psSolid;
 		if((ComponentState.Contains(csDesigning)) || (!ASSIGNED(FSynEditPrint)))
@@ -187,7 +187,7 @@ void __fastcall TSynEditPrintPreview::PaintPaper()
 		if(NULLREGION != ExtSelectClipRgn(with0->Handle, rgnPaper, RGN_DIFF))
 			with0->FillRect(rcClip);
       // paper shadow
-		with0->Brush->Color = clDkGray;
+		with0->Brush->Color = (TColor) clDkGray;
 		/*# with rcPaper do */
 		{
 			auto& with2 = rcPaper;

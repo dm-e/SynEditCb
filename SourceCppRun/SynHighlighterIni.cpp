@@ -33,7 +33,7 @@ __fastcall TSynIniSyn::TSynIniSyn(TComponent* AOwner)
 {
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterini__0;
-	fCommentAttri->Foreground = clGreen;
+	fCommentAttri->Foreground = (TColor) clGreen;
 	addAttribute(fCommentAttri);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	addAttribute(fTextAttri);

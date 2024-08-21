@@ -147,7 +147,7 @@ void __fastcall TfrmAutoCorrectEditor::FormPaint(TObject* Sender)
 	/*# with lbxItems.Canvas do */
 	{
 		auto with0 = lbxItems->Canvas;
-		with0->Pen->Color = clBlack;
+		with0->Pen->Color = (TColor) clBlack;
 		with0->PenPos = Point((int)(lbxItems->Width / /*div*/ 2) - 8, 0);
 		with0->LineTo((int)(lbxItems->Width / /*div*/ 2) - 8, lbxItems->Height);
 	}

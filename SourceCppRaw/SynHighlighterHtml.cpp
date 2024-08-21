@@ -323,7 +323,7 @@ __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
 	addAttribute(fTextAttri);
 	fUndefKeyAttri = new TSynHighlighterAttributes(SYNS_AttrUnknownWord, SYNS_FriendlyAttrUnknownWord);
 	fUndefKeyAttri->Style = Synhighlighterhtml__3;
-	fUndefKeyAttri->Foreground = clRed;
+	fUndefKeyAttri->Foreground = (TColor) clRed;
 	addAttribute(fUndefKeyAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
 	fValueAttri->Foreground = (TColor) 0x00FF8000;

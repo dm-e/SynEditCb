@@ -49,6 +49,7 @@
 # Temporary Files
 *.local
 *.lnk
+*.stat
 
 # Private
 *_dme.bat
@@ -121,4 +122,5 @@ TestCpp64/__astcache
 TestCpp64/__history
 TestCpp64/__recovery
 TestCpp64/Win64x
+SourceCppReworked
 SourceCppReworked64

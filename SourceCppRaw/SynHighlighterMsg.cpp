@@ -255,7 +255,7 @@ __fastcall TSynMsgSyn::TSynMsgSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightermsg__0;
-	fCommentAttri->Foreground = clNavy;
+	fCommentAttri->Foreground = (TColor) clNavy;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);

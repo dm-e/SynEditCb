@@ -63,7 +63,7 @@ __fastcall TSynCustomExporter::TSynCustomExporter(TComponent* AOwner)
 	FClipboardFormat = (UINT) CF_TEXT;
 	FEncoding = seUTF8;
 	FFont = new TFont();
-	FBackgroundColor = clWindow;
+	FBackgroundColor = (TColor) clWindow;
 	AssignFont(nullptr);
 	Clear();
 	FTitle = SYNS_Untitled;
@@ -105,7 +105,7 @@ void __fastcall TSynCustomExporter::AssignFont(TFont* Value)
 	{
 		FFont->Name = DefaultFontName();
 		FFont->Size = 10;
-		FFont->Color = clWindowText;
+		FFont->Color = (TColor) clWindowText;
 		FFont->Style = Syneditexport__0;
 	}
 }
@@ -116,8 +116,8 @@ void __fastcall TSynCustomExporter::Clear()
   // Size is ReadOnly in Delphi 2
 	FBuffer->SetSize(0);
 	fLastStyle = Syneditexport__1;
-	fLastBG = clWindow;
-	fLastFG = clWindowText;
+	fLastBG = (TColor) clWindow;
+	fLastFG = (TColor) clWindowText;
 }
 
 void __fastcall SetClipboardText(String Text)

@@ -169,7 +169,7 @@ __fastcall TSynM3Syn::TSynM3Syn(TComponent* AOwner)
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	addAttribute(fSymbolAttri);
 	fSyntaxErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
-	fSyntaxErrorAttri->Foreground = clRed;
+	fSyntaxErrorAttri->Foreground = (TColor) clRed;
 	addAttribute(fSyntaxErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);

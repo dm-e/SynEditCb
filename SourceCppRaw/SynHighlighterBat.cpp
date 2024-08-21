@@ -319,7 +319,7 @@ __fastcall TSynBatSyn::TSynBatSyn(TComponent* AOwner)
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterbat__0;
-	fCommentAttri->Foreground = clNavy;
+	fCommentAttri->Foreground = (TColor) clNavy;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	addAttribute(fIdentifierAttri);
@@ -327,12 +327,12 @@ __fastcall TSynBatSyn::TSynBatSyn(TComponent* AOwner)
 	fKeyAttri->Style = Synhighlighterbat__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clBlue;
+	fNumberAttri->Foreground = (TColor) clBlue;
 	addAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	fVariableAttri->Foreground = clGreen;
+	fVariableAttri->Foreground = (TColor) clGreen;
 	addAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();

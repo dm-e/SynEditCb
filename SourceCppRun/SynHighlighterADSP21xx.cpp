@@ -2114,7 +2114,7 @@ __fastcall TSynADSP21xxSyn::TSynADSP21xxSyn(TComponent* AOwner)
 {
 	FCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clTeal;
+	fCommentAttri->Foreground = (TColor) clTeal;
 	fCommentAttri->Style = Synhighlighteradsp21xx__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
@@ -2123,13 +2123,13 @@ __fastcall TSynADSP21xxSyn::TSynADSP21xxSyn(TComponent* AOwner)
 	fKeyAttri->Style = Synhighlighteradsp21xx__1;
 	addAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clOlive;
+	fNumberAttri->Foreground = (TColor) clOlive;
 	addAttribute(fNumberAttri);
 	fRegisterAttri = new TSynHighlighterAttributes(SYNS_AttrRegister, SYNS_FriendlyAttrRegister);
-	fRegisterAttri->Foreground = clBlue;
+	fRegisterAttri->Foreground = (TColor) clBlue;
 	addAttribute(fRegisterAttri);
 	fConditionAttri = new TSynHighlighterAttributes(SYNS_AttrCondition, SYNS_FriendlyAttrCondition);
-	fConditionAttri->Foreground = clFuchsia;
+	fConditionAttri->Foreground = (TColor) clFuchsia;
 	addAttribute(fConditionAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);

@@ -127,11 +127,11 @@ __fastcall TSynURISyn::TSynURISyn(TComponent* AOwner)
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fURIAttri = new TSynHighlighterAttributes(SYNS_AttrURI, SYNS_FriendlyAttrURI);
-	fURIAttri->Foreground = clBlue;
+	fURIAttri->Foreground = (TColor) clBlue;
 	fURIAttri->Style = Synhighlighteruri__1;
 	addAttribute(fURIAttri);
 	fVisitedURIAttri = new TSynHighlighterAttributes(SYNS_AttrVisitedURI, SYNS_FriendlyAttrVisitedURI);
-	fVisitedURIAttri->Foreground = clPurple;
+	fVisitedURIAttri->Foreground = (TColor) clPurple;
 	fVisitedURIAttri->Style = Synhighlighteruri__2;
 	addAttribute(fVisitedURIAttri);
 	SetAttributesOnChange(DefHighlightChange);

@@ -473,7 +473,7 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 	addAttribute(fUndefPropertyAttri);
 	fImportantPropertyAttri = new TSynHighlighterAttributes(L"Important", L"Important Marker");
 	fImportantPropertyAttri->Style = Synhighlightercss__7;
-	fImportantPropertyAttri->Foreground = clRed;
+	fImportantPropertyAttri->Foreground = (TColor) clRed;
 	addAttribute(fImportantPropertyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);

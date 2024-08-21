@@ -187,7 +187,7 @@ class THookedCommandHandlerEntry : public TObject
 {
 	#include "SynEdit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 private:
 	THookedCommandEvent FEvent;
 	void* FData;
@@ -231,7 +231,7 @@ TDisplayCoord __fastcall TCustomSynEdit::PixelsToNearestRowColumn(int AX, int AY
 		if(AY < 0)
 			AY = 0;
 	}
-	result.Column = (int) Max(1, (int)(LeftChar + Round(f)));
+	result.Column = (int) Max((int) 1, (int) (LeftChar + Round(f)));
 	result.Row = Max(1, TopLine + ((int)(AY / /*div*/ FTextHeight)));
 	return result;
 }
@@ -440,7 +440,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 	fRightEdge = 80;
 	fGutter = new TSynGutter(this);
 	fGutter->OnChange = GutterChanged;
-	fWordWrapGlyph = new TSynGlyph((THandle)HInstance, L"SynEditWrapped");
+	fWordWrapGlyph = new TSynGlyph((THandle) HInstance, L"SynEditWrapped");
 	fWordWrapGlyph->OnChange = WordWrapGlyphChange;
 	ControlStyle = ControlStyle + Synedit__1;
 	ControlStyle = ControlStyle + Synedit__2;
@@ -759,16 +759,16 @@ String __fastcall TCustomSynEdit::GetSelText()
 					TotalLen += Lines->Strings[i].Length();
 				}
 				TotalLen += ColTo - 1;
-				TotalLen += sLinebreak.Length() * (Last - First);
+				TotalLen += Length(sLineBreak) * (Last - First);
           // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				CopyAndForward(Lines->Strings[First], ColFrom, MaxInt, P);
-				CopyAndForward(sLinebreak, 1, MaxInt, P);
+				CopyAndForward(sLineBreak, 1, MaxInt, P);
 				for(stop = Last - 1, i = First + 1; i <= stop; i++)
 				{
 					CopyAndForward(Lines->Strings[i], 1, MaxInt, P);
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
 				CopyAndForward(Lines->Strings[Last], 1, ColTo - 1, P);
 			}
@@ -791,7 +791,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 				if(ColFrom > ColTo)
 					SwapInt(ColFrom, ColTo);
           // step1: pre-allocate string large enough for worst case
-				TotalLen = ((ColTo - ColFrom) + sLinebreak.Length()) * (Last - First + 1);
+				TotalLen = ((ColTo - ColFrom) + Length(sLineBreak)) * (Last - First + 1);
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 
@@ -807,10 +807,10 @@ String __fastcall TCustomSynEdit::GetSelText()
 					vAuxRowCol.Column = ColTo;
 					R = DisplayToBufferPos(vAuxRowCol).Char;
 					vTrimCount = CopyPaddedAndForward(s, l, R - l, P);
-					TotalLen = TotalLen + (R - l) - vTrimCount + sLinebreak.Length();
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					TotalLen = TotalLen + (R - l) - vTrimCount + Length(sLineBreak);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
-				result.SetLength(TotalLen - sLinebreak.Length());
+				result.SetLength(TotalLen - Length(sLineBreak));
 			}
 			break;
           // If block selection includes LastLine,
@@ -821,21 +821,21 @@ String __fastcall TCustomSynEdit::GetSelText()
 				__int64 stop = 0;
 				for(stop = Last, i = First; i <= stop; i++)
 				{
-					TotalLen += Lines->Strings[i].Length() + sLinebreak.Length();
+					TotalLen += Lines->Strings[i].Length() + Length(sLineBreak);
 				}
 				if(Last == Lines->Count)
-					TotalLen -= sLinebreak.Length();
+					TotalLen -= Length(sLineBreak);
           // step2: build up result string
 				result.SetLength(TotalLen);
 				P = ustr2pwchar(result);
 				for(stop = Last - 1, i = First; i <= stop; i++)
 				{
 					CopyAndForward(Lines->Strings[i], 1, MaxInt, P);
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 				}
 				CopyAndForward(Lines->Strings[Last], 1, MaxInt, P);
 				if((Last + 1) < Lines->Count)
-					CopyAndForward(sLinebreak, 1, MaxInt, P);
+					CopyAndForward(sLineBreak, 1, MaxInt, P);
 			}
 			break;
 			default:
@@ -909,7 +909,7 @@ void __fastcall TCustomSynEdit::InvalidateGutterLines(int FirstLine, int LastLin
 	TRect rcInval = {};
 	if(Visible && HandleAllocated())
 	{
-		if((FirstLine ==  - 1) && (LastLine ==  - 1))
+		if((FirstLine == -1) && (LastLine == -1))
 		{
 			rcInval = Rect(0, 0, fGutterWidth, ClientHeight);
 			if(fStateFlags.Contains(sfLinesChanging))
@@ -960,7 +960,7 @@ void __fastcall TCustomSynEdit::InvalidateLines(int FirstLine, int LastLine)
 	TRect rcInval = {};
 	if(Visible && HandleAllocated())
 	{
-		if((FirstLine ==  - 1) && (LastLine ==  - 1))
+		if((FirstLine == -1) && (LastLine == -1))
 		{
 			rcInval = ClientRect;
 			rcInval.Left += fGutterWidth;
@@ -1813,7 +1813,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
   // like empty token rect or invalid indices into TokenLen.
   // CharsBefore tells if Token starts at column one or not
 
-	auto PaintToken = [&](String Token, int TokenLen, int CharsBefore, int First, int Last) -> void
+	auto PaintToken = [&](String Token, int TokenLen, int CharsBefore, int First, int Last) -> void 
 	{
 		String Text;
 		int Counter = 0;
@@ -4730,7 +4730,7 @@ void __fastcall TCustomSynEdit::DoMouseSelectWordRange(const TBufferCoord& cNewP
 	if(NewPos > BE)
 	{
 		BE = NewPos;
-		if((BE.Char > 1) && IsIdentChar(Lines->Strings[BE.Line - 1][BE.Char - 1]))
+		if((BE.Char > 1) && IsIdentChar(((String)Lines->Strings[BE.Line - 1])[BE.Char - 1]))
 			BE = WordEndEx(BE);
 	}
 	else
@@ -4739,7 +4739,7 @@ void __fastcall TCustomSynEdit::DoMouseSelectWordRange(const TBufferCoord& cNewP
 		{
 			BB = BE;
 			BE = NewPos;
-			if((BE.Char < Lines->Strings[BE.Line - 1].Length()) && IsIdentChar(Lines->Strings[BE.Line - 1][BE.Char]))
+			if((BE.Char < Lines->Strings[BE.Line - 1].Length()) && IsIdentChar(((String)Lines->Strings[BE.Line - 1])[BE.Char]))
 				BE = WordStartEx(BE);
 		}
 	}
@@ -4824,9 +4824,9 @@ void __fastcall TCustomSynEdit::ExecCmdCopyOrMoveLine(TSynEditorCommand Command)
 			if((vCaretRow == BlockEnd.Line) && (fBlockBegin.Line != fBlockEnd.Line) && (BlockEnd.Char == 1))
 				break;
 			if((Command == ecCopyLineDown) || (Command == ecMoveLineDown))
-				Text = Text + sLinebreak + Lines->Strings[vCaretRow - 1];
+				Text = Text + sLineBreak + Lines->Strings[vCaretRow - 1];
 			else
-				Text = Text + Lines->Strings[vCaretRow - 1] + sLinebreak;
+				Text = Text + Lines->Strings[vCaretRow - 1] + sLineBreak;
 		}
     // Add the line over which we move
 		if(Command == ecMoveLineDown)
@@ -5767,7 +5767,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 												break;
 											--BackCounter;
 										}
-										if((BackCounter ==  - 1) && (SpaceCount2 > SpaceCount1))
+										if((BackCounter == -1) && (SpaceCount2 > SpaceCount1))
 											SpaceCount2 = 0;
 									}
 									if(SpaceCount2 == SpaceCount1)
@@ -5824,7 +5824,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 												break;
 											--BackCounter;
 										}
-										if((BackCounter ==  - 1) && (SpaceCount2 >= SpaceCount1))
+										if((BackCounter == -1) && (SpaceCount2 >= SpaceCount1))
 											SpaceCount2 = 0;
 										Temp.Delete(1, 	LeftSpaces(Temp));
 										Temp2 = GetLeftSpacing(SpaceCount2, true);
@@ -7273,7 +7273,7 @@ void __fastcall TCustomSynEdit::MoveCaretHorz(int DX, bool SelectionCommand)
 	nLineLen = s.Length();
   // only moving or selecting one char can change the line
 	bChangeY = !(fOptions.Contains(eoScrollPastEol));
-	if(bChangeY && (DX ==  - 1) && (pTo.Char == 1) && (pTo.Line > 1))
+	if(bChangeY && (DX == -1) && (pTo.Char == 1) && (pTo.Line > 1))
     // end of previous line
 	{
 		--ptDst.Line;
@@ -7400,7 +7400,7 @@ void __fastcall TCustomSynEdit::SetCaretAndSelection(const TBufferCoord& ptCaret
 void __fastcall TCustomSynEdit::RecalcCharExtent()
 {
 	const TFontStyles iFontStyles[4/*# range 0..3*/] = {System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>(), System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic, System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsBold
-																				, System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic << TFontStyle::fsBold};
+                    , System::Set<TFontStyle, TFontStyle::fsBold, TFontStyle::fsStrikeOut>() << TFontStyle::fsItalic << TFontStyle::fsBold};
 	bool iHasStyle[4/*# range 0..3*/];
 	int cAttr = 0;
 	int cStyle = 0;
@@ -8513,7 +8513,7 @@ void __fastcall TCustomSynEdit::RegisterCommandHandler(const THookedCommandEvent
 	}
 	if(!ASSIGNED(fHookedCommandHandlers))
 		fHookedCommandHandlers = new TObjectList();
-	if(FindHookedCmdEvent(AHandlerProc) ==  - 1)
+	if(FindHookedCmdEvent(AHandlerProc) == -1)
 		fHookedCommandHandlers->Add(new THookedCommandHandlerEntry(AHandlerProc, AHandlerData));
 	else
 		;
@@ -8527,7 +8527,7 @@ void __fastcall TCustomSynEdit::UnregisterCommandHandler(THookedCommandEvent AHa
 		return;
 	}
 	i = FindHookedCmdEvent(AHandlerProc);
-	if(i >  - 1)
+	if(i > -1)
 		fHookedCommandHandlers->Delete(i);
 	else
 		;
@@ -9707,7 +9707,7 @@ TCustomSynEdit* __fastcall TSynEditMark::GetEdit()
 	if(fEdit != nullptr)
 		try
 		{
-			if(fEdit->Marks->IndexOf(this) ==  - 1)
+			if(fEdit->Marks->IndexOf(this) == -1)
 				fEdit = nullptr;
 		}
 		catch(...)
