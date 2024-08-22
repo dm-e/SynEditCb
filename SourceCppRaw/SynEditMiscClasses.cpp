@@ -284,33 +284,9 @@ __fastcall TSynGutter::TSynGutter()
 }
 
 __fastcall TSynGutter::TSynGutter(TPersistent* Owner)
- : FOwner(Owner),
-			FUpdateCount(0),
-			FCurrentPPI(0),
-			FFont(nullptr),
-			fCharWidth(0),
-			FColor((TColor) 0),
-			FBorderColor((TColor) 0),
-			fDigitCount(0),
-			fLeadingZeros(false),
-			fZeroStart(false),
-			FCursor((TCursor) 0),
-			fVisible(false),
-			fShowLineNumbers(false),
-			fUseFontStyle(false),
-			FAutoSize(false),
-			fAutoSizeDigitCount(0),
-			FBorderStyle(gbsNone),
-			fLineNumberStart(0),
-			fGradient(false),
-			FGradientStartColor((TColor) 0),
-			FGradientEndColor((TColor) 0),
-			fGradientSteps(0),
-			fInternalImage(nullptr),
-			FBands(nullptr),
-			AssignableBands(false)
+ : TSynGutter()  //# delegation
 {
-	Create();
+	FOwner = Owner;
 }
 
 __fastcall TSynGutter::~TSynGutter()

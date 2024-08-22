@@ -284,7 +284,7 @@ __fastcall TSynGutter::TSynGutter()
 }
 
 __fastcall TSynGutter::TSynGutter(TPersistent* Owner)
- : TSynGutter()
+ : TSynGutter()  //# delegation
 {
 	FOwner = Owner;
 }
