@@ -292,13 +292,13 @@ TConvertTabsProc __fastcall GetBestConvertTabsProc(int TabWidth)
 {
 	TConvertTabsProc result;
 	if(TabWidth < 2)
-		result = TConvertTabsProc(ConvertTabs1);
+		result = *(TConvertTabsProc*)&ConvertTabs1;
 	else
 	{
 		if(IsPowerOfTwo(TabWidth))
-			result = TConvertTabsProc(ConvertTabs2n);
+			result = *(TConvertTabsProc*)&ConvertTabs2n;
 		else
-			result = TConvertTabsProc(ConvertTabs);
+			result = *(TConvertTabsProc*)&ConvertTabs;
 	}
 	return result;
 }
@@ -497,7 +497,6 @@ PWideChar __fastcall GetEol(PChar P)
 	result = P;
 	if(ASSIGNED(result))
 	{
-//		while(((*result) != L'\x00') && ((*result) != L'\x0a') && ((*result) != L'\x0d'))
 		while((((WORD) (*result)) > 13) || !(Syneditmiscprocs__0.Contains(((WORD) (*result)))))
 			++result;
 	}
@@ -562,7 +561,7 @@ TArray<String> __fastcall StringToLines(const String Value)
 	}
 	return result;
 }
-//#pragma resource "-"
+//#pragma resource "-" 
 
 
 String __fastcall EncodeString(String s)

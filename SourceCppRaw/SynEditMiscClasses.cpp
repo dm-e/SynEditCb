@@ -977,7 +977,7 @@ __fastcall TSynNotifyEventChain::TSynNotifyEventChain(TObject* ASender)
 
 void __fastcall TSynNotifyEventChain::DoFire(const TMethod& AEvent)
 {
-	TNotifyEvent(AEvent)(FSender);
+	(*(TNotifyEvent*)&AEvent)(FSender);
 }
 
 void __fastcall TSynNotifyEventChain::Remove(TNotifyEvent AEvent)

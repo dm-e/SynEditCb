@@ -197,7 +197,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
-	BufferSize = (int) Min((__int64)BytesToCheck, Stream->Size - Stream->Position);
+	BufferSize = (int) Min((__int64) BytesToCheck, Stream->Size - Stream->Position);
 
   // if no special characteristics are found it is not UTF-8
 	result = false;
@@ -478,7 +478,7 @@ bool __fastcall IsWideCharMappableToAnsi(WideChar WC)
 {
 	bool result = false;
 	BOOL UsedDefaultChar = false;
-	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, const_cast<LPWSTR>(&WC), 1, nullptr, 0, nullptr, &UsedDefaultChar);
+	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, (PWideChar)&WC, 1, nullptr, 0, nullptr, &UsedDefaultChar);
 	result = !UsedDefaultChar;
 	return result;
 }

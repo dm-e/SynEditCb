@@ -105,7 +105,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, T
 			int stop = 0;
 			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
 			{
-				TKeyEvent(with0->Items[Idx])(Sender, key, Shift);
+				(*(TKeyEvent*)&with0->Items[Idx])(Sender, key, Shift);
 				if(key == 0)
 				{
 					fInKeyDown = false;
@@ -134,7 +134,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& key, TSh
 			int stop = 0;
 			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
 			{
-				TKeyEvent(with0->Items[Idx])(Sender, key, Shift);
+				(*(TKeyEvent*)&with0->Items[Idx])(Sender, key, Shift);
 				if(key == 0)
 				{
 					fInKeyUp = false;
@@ -163,7 +163,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyPress(TObject* Sender, WideChar& k
 			int stop = 0;
 			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
 			{
-				TKeyPressEvent(with0->Items[Idx])(Sender, key);
+				(*(TKeyPressEvent*)&with0->Items[Idx])(Sender, key);
 				if(key == L'\x00')
 				{
 					fInKeyPress = false;
@@ -189,7 +189,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseDown(TObject* Sender, TMouseButt
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseDownChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMouseEvent(fMouseDownChain->Items[cHandler])(Sender, Button, Shift, X, Y);
+			(*(TMouseEvent*)&fMouseDownChain->Items[cHandler])(Sender, Button, Shift, X, Y);
 		}
 	}
 	__finally
@@ -209,7 +209,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseUp(TObject* Sender, TMouseButton
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseUpChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMouseEvent(fMouseUpChain->Items[cHandler])(Sender, Button, Shift, X, Y);
+			(*(TMouseEvent*)&fMouseUpChain->Items[cHandler])(Sender, Button, Shift, X, Y);
 		}
 	}
 	__finally
@@ -229,7 +229,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseCursor(TObject* Sender, const TB
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseCursorChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMouseCursorEvent(fMouseCursorChain->Items[cHandler])(Sender, aLineCharPos, aCursor);
+			(*(TMouseCursorEvent*)&fMouseCursorChain->Items[cHandler])(Sender, aLineCharPos, aCursor);
 		}
 	}
 	__finally

@@ -474,7 +474,7 @@ bool __fastcall IsWideCharMappableToAnsi(WideChar WC)
 {
 	bool result = false;
 	BOOL UsedDefaultChar = false;
-	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, const_cast<LPWSTR>(&WC), 1, nullptr, 0, nullptr, &UsedDefaultChar);
+	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, (PWideChar)&WC, 1, nullptr, 0, nullptr, &UsedDefaultChar);
 	result = !UsedDefaultChar;
 	return result;
 }

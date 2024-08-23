@@ -292,13 +292,13 @@ TConvertTabsProc __fastcall GetBestConvertTabsProc(int TabWidth)
 {
 	TConvertTabsProc result;
 	if(TabWidth < 2)
-		result = TConvertTabsProc(ConvertTabs1);
+		result = *(TConvertTabsProc*)&ConvertTabs1;
 	else
 	{
 		if(IsPowerOfTwo(TabWidth))
-			result = TConvertTabsProc(ConvertTabs2n);
+			result = *(TConvertTabsProc*)&ConvertTabs2n;
 		else
-			result = TConvertTabsProc(ConvertTabs);
+			result = *(TConvertTabsProc*)&ConvertTabs;
 	}
 	return result;
 }
