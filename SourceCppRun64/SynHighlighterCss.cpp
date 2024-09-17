@@ -1173,7 +1173,7 @@ String __fastcall TSynCssSyn::GetSampleSource()
 	String result;
 	result = L"/* Syntax Highlighting */\x0d\x0a"
 	           L"body { font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 8pt }\x0d\x0a"
-	           L"H1 { font-size: 18pt; color: #000099; made-up-property: 1 }";
+	           L"H1 { font-size: 18pt; color: \u00099; made-up-property: 1 }";
 	return result;
 } /* GetSampleSource */
 

@@ -238,7 +238,7 @@ class EheFontStockException : public System::Sysutils::Exception
 {
 	#include "SynTextDrawer_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall EheFontStockException(const String Msg);
 	__fastcall EheFontStockException(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall EheFontStockException(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -308,7 +308,7 @@ class EheTextDrawerException : public System::Sysutils::Exception
 {
 	#include "SynTextDrawer_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall EheTextDrawerException(const String Msg);
 	__fastcall EheTextDrawerException(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall EheTextDrawerException(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);

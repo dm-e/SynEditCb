@@ -51,10 +51,10 @@ namespace Synhighlighterpython
 										54 << 55 << 56 << 57)
 #define Synhighlighterpython__18 (TSysCharSet() << 'j' << 'J')
 #define Synhighlighterpython__19 (TSysCharSet() <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
 #define Synhighlighterpython__20 (TSysCharSet() << 'l' << 'L')
 #define Synhighlighterpython__21 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
@@ -83,17 +83,17 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
   // List of keywords
 	const int KEYWORDCOUNT = 29;
 	const String Keywords[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
-																				, L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
-																				, L"while", L"yield"};
+                    , L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
+                    , L"while", L"yield"};
 
   // List of non-keyword identifiers
 	const int NONKEYWORDCOUNT = 66;
 	const String NONKEYWORDS[66/*# range 1..NONKEYWORDCOUNT*/] = {L"__future__", L"__import__", L"abs", L"apply", L"as", L"buffer", L"callable", L"chr", L"cmp", L"coerce", L"compile"
-																				, L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
-																				, L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
-																				, L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
-																				, L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
-																				, L"unicode", L"vars", L"xrange", L"zip"};
+                    , L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
+                    , L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
+                    , L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
+                    , L"raw_input", L"reduce", L"reload", L"repr", L"round", L"self", L"setattr", L"slice", L"str", L"True", L"tuple", L"type", L"unichr"
+                    , L"unicode", L"vars", L"xrange", L"zip"};
 	int f = 0;
 	if(!ASSIGNED(GlobalKeywords))
     // Create the string list of keywords - only once
@@ -137,7 +137,7 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
 	}
 	else
 	i = -1;
-	if(i !=  - 1)
+	if(i != -1)
 
   // Check if it is a system identifier (__*__)
 		result = (TtkTokenKind) (NativeInt) fKeywords->Objects[i];
@@ -186,7 +186,7 @@ __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
 //-- CodeFolding
 	FRange = rsUnKnown;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = clGray;
+	fCommentAttri->Foreground = (TColor) clGray;
 	fCommentAttri->Style = Synhighlighterpython__0;
 	addAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
@@ -195,36 +195,36 @@ __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
 	fKeyAttri->Style = Synhighlighterpython__1;
 	addAttribute(fKeyAttri);
 	fNonKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
-	fNonKeyAttri->Foreground = clNavy;
+	fNonKeyAttri->Foreground = (TColor) clNavy;
 	fNonKeyAttri->Style = Synhighlighterpython__2;
 	addAttribute(fNonKeyAttri);
 	fSystemAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
 	fSystemAttri->Style = Synhighlighterpython__3;
 	addAttribute(fSystemAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = clBlue;
+	fNumberAttri->Foreground = (TColor) clBlue;
 	addAttribute(fNumberAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
-	fHexAttri->Foreground = clBlue;
+	fHexAttri->Foreground = (TColor) clBlue;
 	addAttribute(fHexAttri);
 	fOctalAttri = new TSynHighlighterAttributes(SYNS_AttrOctal, SYNS_FriendlyAttrOctal);
-	fOctalAttri->Foreground = clBlue;
+	fOctalAttri->Foreground = (TColor) clBlue;
 	addAttribute(fOctalAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
-	fFloatAttri->Foreground = clBlue;
+	fFloatAttri->Foreground = (TColor) clBlue;
 	addAttribute(fFloatAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	addAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = clBlue;
+	fStringAttri->Foreground = (TColor) clBlue;
 	addAttribute(fStringAttri);
 	fDocStringAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
-	fDocStringAttri->Foreground = clTeal;
+	fDocStringAttri->Foreground = (TColor) clTeal;
 	addAttribute(fDocStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	addAttribute(fSymbolAttri);
 	fErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
-	fErrorAttri->Foreground = clRed;
+	fErrorAttri->Foreground = (TColor) clRed;
 	addAttribute(fErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterPython;

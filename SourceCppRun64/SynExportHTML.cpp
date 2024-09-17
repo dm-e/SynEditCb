@@ -86,7 +86,7 @@ String __fastcall TSynExporterHTML::ColorToHTML(TColor AColor)
 	unsigned char RGBValue = 0;
 	const Char Digits[16/*# range 0..15*/] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 	RGBColor = ColorToRGB(AColor);
-	result = L"#000000";
+	result = L"\u00000";
 	RGBValue = GetRValue((DWORD) RGBColor);
 	if(RGBValue > 0)
 	{

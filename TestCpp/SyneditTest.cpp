@@ -6,8 +6,8 @@
 //---------------------------------------------------------------------------
 USEFORM("main.cpp", SyneditTest_frm);
 USEFORM("..\SourceCppRun\SynEditKeyCmdEditor.cpp", SynEditKeystrokeEditorForm);
-USEFORM("..\SourceCppRun\SynEditOptionsDialog.cpp", fmEditorOptionsDialog);
 USEFORM("..\SourceCppRun\SynEditKeyCmdsEditor.cpp", SynEditKeystrokesEditorForm);
+USEFORM("..\SourceCppRun\SynEditOptionsDialog.cpp", fmEditorOptionsDialog);
 USEFORM("..\SourceCppRun\SynEditPrintMarginsDialog.cpp", SynEditPrintMarginsDlg);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)

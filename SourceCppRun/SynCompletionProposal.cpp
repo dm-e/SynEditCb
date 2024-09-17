@@ -96,7 +96,7 @@ class TFormatChunkList : public TObject
 {
 	#include "SynCompletionProposal_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef TObject inherited;
 private:
 	TList* FChunks;
 	int __fastcall GetCount();
@@ -2805,7 +2805,7 @@ void __fastcall TSynCompletionProposal::AddEditor(TCustomSynEdit* AEditor)
 {
 	int i = 0;
 	i = fEditors->IndexOf(AEditor);
-	if(i ==  - 1)
+	if(i == -1)
 	{
 		AEditor->FreeNotification(this);
 		fEditors->Add(AEditor);
@@ -2837,7 +2837,7 @@ bool __fastcall TSynCompletionProposal::RemoveEditor(TCustomSynEdit* AEditor)
 	bool result = false;
 	int i = 0;
 	i = fEditors->Remove(AEditor);
-	result = i !=  - 1;
+	result = i != -1;
 	if(result)
 	{
 		if(Form->CurrentEditor == AEditor)
@@ -2861,7 +2861,7 @@ void __fastcall TSynCompletionProposal::DoExecute(TCustomSynEdit* AEditor)
 	TPoint P = {};
 	int i = 0;
 	i = fEditors->IndexOf(AEditor);
-	if(i !=  - 1)
+	if(i != -1)
 		/*# with AEditor do */
 		{
 			auto with0 = AEditor;
@@ -3089,7 +3089,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 	try
 	{
 		i = AutoCompleteList->IndexOf(Token);
-		if((Token.Length() > 0) && (i !=  - 1))
+		if((Token.Length() > 0) && (i != -1))
 		{
 			Editor->Lines->BeginUpdate();
 			Editor->BeginUndoBlock();
@@ -3118,13 +3118,13 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 				else
 					Spacing = StringOfChar(L' ', BeginningSpaceCount);
 				++i;
-				if((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] == L'|'))
+				if((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] == L'|'))
 				{
 					++i;
 				}
 				StartOfBlock.Char = -1;
 				StartOfBlock.Line = -1;
-				while((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] == L'='))
+				while((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] == L'='))
 
     /*      for j := 0 to PrevSpace - 1 do
             Editor.CommandProcessor(ecDeleteLastChar, ' ', nil);*/
@@ -3141,7 +3141,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 							StartOfBlock = Editor->CaretXY;
 					}
 					++i;
-					if((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] == L'='))
+					if((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] == L'='))
 					{
 						int stop = 0;
 						Editor->CommandProcessor((TSynEditorCommand) ecLineBreak, L' ', nullptr);
@@ -3154,7 +3154,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 						}
 					}
 				}
-				if((StartOfBlock.Char !=  - 1) && (StartOfBlock.Line !=  - 1))
+				if((StartOfBlock.Char != -1) && (StartOfBlock.Line != -1))
 				{
 					Editor->CaretXY = StartOfBlock;
 					Editor->CommandProcessor((TSynEditorCommand) ecDeleteLastChar, L' ', nullptr);
@@ -3178,9 +3178,9 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 				FInternalCompletion->ClearList();
 				for(stop = AutoCompleteList->Count - 1, i = 0; i <= stop; i++)
 				{
-					if((AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] != L'=') && (AutoCompleteList->Strings[i][1] != L'|'))
+					if((AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] != L'=') && (((String)AutoCompleteList->Strings[i])[1] != L'|'))
 					{
-						if((i + 1 < AutoCompleteList->Count) && (AutoCompleteList->Strings[i + 1].Length() > 0) && (AutoCompleteList->Strings[i + 1][1] == L'|'))
+						if((i + 1 < AutoCompleteList->Count) && (AutoCompleteList->Strings[i + 1].Length() > 0) && (((String)AutoCompleteList->Strings[i + 1])[1] == L'|'))
 						{
 							Temp = AutoCompleteList->Strings[i + 1];
 							Temp.Delete(1, 	1);
@@ -3275,7 +3275,7 @@ String __fastcall TSynAutoComplete::GetTokenList()
 	i = 0;
 	while((i < AutoCompleteList->Count))
 	{
-		if((AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] != L'='))
+		if((AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] != L'='))
 			List->Add(Trim(AutoCompleteList->Strings[i]));
 		++i;
 	}
@@ -3291,11 +3291,11 @@ String __fastcall TSynAutoComplete::GetTokenValue(String Token)
 	TStringList* List = nullptr;
 	result = L"";
 	i = AutoCompleteList->IndexOf(Token);
-	if(i !=  - 1)
+	if(i != -1)
 	{
 		List = new TStringList();
 		++i;
-		while((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (AutoCompleteList->Strings[i][1] == L'='))
+		while((i < AutoCompleteList->Count) && (AutoCompleteList->Strings[i].Length() > 0) && (((String)AutoCompleteList->Strings[i])[1] == L'='))
 		{
 			if(AutoCompleteList->Strings[i].Length() == 1)
 				List->Add(L"");

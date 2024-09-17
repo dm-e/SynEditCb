@@ -131,7 +131,7 @@ class ESynError : public System::Sysutils::Exception
 {
 	#include "SynEditTypes_friends.inc"
 public:
-	typedef System::Sysutils::Exception inherited;	
+	typedef System::Sysutils::Exception inherited;
 	__fastcall ESynError(const String Msg);
 	__fastcall ESynError(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynError(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);

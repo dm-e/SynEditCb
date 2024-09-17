@@ -125,7 +125,7 @@ namespace Syneditprint
 /* with other versions of jedi.inc in the search-path.                          */
 /*------------------------------------------------------------------------------*/
 
- 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 
 /*------------------------------------------------------------------------------*/
 /*  Please change this to suit your needs (to activate an option remove the dot */
@@ -231,7 +231,7 @@ protected:
 	virtual void __fastcall PrintStatus(Syneditprinttypes::TSynPrintStatus Status, int PageNumber, bool& Abort);
 	virtual void __fastcall PrintLine(int LineNumber, int PageNumber);
 public:
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynEditPrint_friends.inc"
 	__fastcall TSynEditPrint(TComponent* AOwner);
 	virtual __fastcall ~TSynEditPrint();

@@ -1336,7 +1336,7 @@ String __fastcall TSynDWSSyn::GetSampleSource()
 	           L"  Number, I, X: Integer;\x0d\x0a"
 	           L"begin\x0d\x0a"
 	           L"  Number := 123456;\x0d\x0a"
-	           L"  Caption := 'The Number is' + #32 + IntToStr(Number);\x0d\x0a"
+			   L"  Caption := 'The Number is' + \" + IntToStr(Number);\x0d\x0a"
 	           L"  for I := 0 to Number do\x0d\x0a"
 	           L"  begin\x0d\x0a"
 	           L"    Inc(X);\x0d\x0a"

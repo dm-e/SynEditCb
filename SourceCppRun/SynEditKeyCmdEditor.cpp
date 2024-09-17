@@ -69,7 +69,7 @@ void __fastcall TSynEditKeystrokeEditorForm::AddEditorCommand(const String s)
 TSynEditorCommand __fastcall TSynEditKeystrokeEditorForm::GetCommand()
 {
 	TSynEditorCommand result = 0;
-	if(cmbCommand->ItemIndex !=  - 1)
+	if(cmbCommand->ItemIndex != -1)
 	{
 		result = ((TSynEditorCommand) (NativeInt) cmbCommand->Items->Objects[cmbCommand->ItemIndex]);
 	}

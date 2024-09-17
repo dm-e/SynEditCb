@@ -31,7 +31,7 @@ namespace Synuriopener
 class TAccessCustomSynEdit : public TCustomSynEdit
 {
 public:
-	typedef TCustomSynEdit inherited;	
+	typedef TCustomSynEdit inherited;
 	#include "SynURIOpener_friends.inc"
 	__fastcall TAccessCustomSynEdit(TComponent* AOwner) : inherited(AOwner) {}
 	__fastcall TAccessCustomSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
@@ -40,7 +40,7 @@ public:
 class TAccessSynURISyn : public TSynURISyn
 {
 public:
-	typedef TSynURISyn inherited;	
+	typedef TSynURISyn inherited;
 	#include "SynURIOpener_friends.inc"
 	__fastcall TAccessSynURISyn(TComponent* AOwner) : inherited(AOwner) {}
 };

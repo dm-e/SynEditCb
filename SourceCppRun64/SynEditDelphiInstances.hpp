@@ -2,10 +2,10 @@
 // Copyright (c) 1995, 2024 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'Syneditdelphiinstances.pas' rev: 36.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'SynEditDelphiInstances.pas' rev: 36.00 (Windows)
 
-#ifndef SyneditdelphiinstancesHPP
-#define SyneditdelphiinstancesHPP
+#ifndef SynEditDelphiInstancesHPP
+#define SynEditDelphiInstancesHPP
 
 #pragma delphiheader begin
 #pragma option push
@@ -15,7 +15,7 @@
 #endif
 #pragma pack(push,8)
 #include <System.hpp>
-#include <Sysinit.hpp>
+#include <SysInit.hpp>
 #include <System.Generics.Collections.hpp>
 #include <System.Generics.Defaults.hpp>
 #include <Vcl.Controls.hpp>
@@ -164,4 +164,4 @@ using namespace Syneditdelphiinstances;
 
 #pragma delphiheader end.
 //-- end unit ----------------------------------------------------------------
-#endif	// SyneditdelphiinstancesHPP
+#endif	// SynEditDelphiInstancesHPP

@@ -576,7 +576,7 @@ struct TWordRec
 class TSynEditEx : public Synedit::TCustomSynEdit
 {
 public:
-	typedef Synedit::TCustomSynEdit inherited;	
+	typedef Synedit::TCustomSynEdit inherited;
 	#include "SynSpellCheck_friends.inc"
 	String __fastcall GetWordAtRowColEx(const TBufferCoord& XY, Synedittypes::TCategoryMethod SpellIsIdentChar, bool OverrideHighlighterChars);
 	TBufferCoord __fastcall SCNextWordPosEx(Synedittypes::TCategoryMethod SpellIsIdentChar, Synedittypes::TCategoryMethod SpellIsWhiteChar);
@@ -593,7 +593,7 @@ class TDrawAutoSpellCheckPlugin : public Synedit::TSynEditPlugin
 {
 	#include "SynSpellCheck_friends.inc"
 public:
-	typedef Synedit::TSynEditPlugin inherited;	
+	typedef Synedit::TSynEditPlugin inherited;
 private:
 	TColor FPenColor;
 	TUnderlineStyle FUnderlineStyle;
@@ -696,7 +696,7 @@ public:
 /*begin moved from private*/                                                      //Fiala
     // Compare table alocation
     // Compare str1 and str2 and Max1 and Max2 are their max lengths
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynSpellCheck_friends.inc"
 	int __fastcall JHCMPDiffCount(const String Str1, const String Str2);
 	int __fastcall JHCMPDiffCount(const String Str1, const String Str2, TJHCMPLongintMatrix& Differences);
@@ -775,7 +775,7 @@ class ENoDictionaryLoaded : public System::Sysutils::EExternal
 {
 	#include "SynSpellCheck_friends.inc"
 public:
-	typedef System::Sysutils::EExternal inherited;	
+	typedef System::Sysutils::EExternal inherited;
 	__fastcall ENoDictionaryLoaded(const String Msg);
 	__fastcall ENoDictionaryLoaded(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ENoDictionaryLoaded(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);

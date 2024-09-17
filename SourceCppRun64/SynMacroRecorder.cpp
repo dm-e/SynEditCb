@@ -767,7 +767,7 @@ void __fastcall TSynStringEvent::InitEventParameters(String AStr)
 	O = Pos(L"\'", AStr);
 	C = LastDelimiter(L"\'", AStr);
 	valStr = AStr.SubString(O + 1, C - O - 1);
-	Value = StringReplace(valStr, L"''", L"\'", Synmacrorecorder__2);
+	Value = StringReplace(valStr, L"'", L"\'", Synmacrorecorder__2);
 	AStr.Delete(1, 	C);
 	RepeatCount = (unsigned char) StrToIntDef(Trim(AStr), 1);
 }

@@ -369,7 +369,7 @@ void __fastcall TDrawAutoSpellCheckPlugin::AfterPaint(TCanvas* ACanvas, const TR
 			{
 				if(Editor->GetHighlighterAttriAtRowCol(CurrentXY, sToken, Attri) == false)
 					Attri = Editor->Highlighter->WhitespaceAttribute;
-				if(ASSIGNED(Attri) && (FSynSpellCheck->FCheckAttribs->IndexOf(Attri->Name) !=  - 1) && (CurrentWord != L""))
+				if(ASSIGNED(Attri) && (FSynSpellCheck->FCheckAttribs->IndexOf(Attri->Name) != -1) && (CurrentWord != L""))
 				{
 					if(FSynSpellCheck->CheckWord(CurrentWord) == false)
 						PaintUnderLine();

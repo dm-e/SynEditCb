@@ -158,7 +158,7 @@ class ESynEditError : public Synedittypes::ESynError
 {
 	#include "SynEdit_friends.inc"
 public:
-	typedef Synedittypes::ESynError inherited;	
+	typedef Synedittypes::ESynError inherited;
 	__fastcall ESynEditError(const String Msg);
 	__fastcall ESynEditError(const String Msg, const TVarRec* Args, int Args_maxidx);
 	__fastcall ESynEditError(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext);
@@ -332,7 +332,7 @@ class TSynEditMarkList : public System::Contnrs::TObjectList
 {
 	#include "SynEdit_friends.inc"
 public:
-	typedef System::Contnrs::TObjectList inherited;	
+	typedef System::Contnrs::TObjectList inherited;
 protected:                                        // as it automatically frees its members
 	TCustomSynEdit* fEdit;
 	TNotifyEvent FOnChange;
@@ -748,7 +748,7 @@ protected:
 	DYNAMIC void __fastcall ChangeScale(int m, int D, bool isDpiChange);
 //-- DPI-Aware
 public:
-	typedef Vcl::Controls::TCustomControl inherited;	
+	typedef Vcl::Controls::TCustomControl inherited;
 	#include "SynEdit_friends.inc"
 	__fastcall TCustomSynEdit(TComponent* AOwner);
 	virtual __fastcall ~TCustomSynEdit();
@@ -1107,7 +1107,7 @@ __published:
 	__property  OnScanForFoldRanges;
 //-- CodeFolding
 public:
-	typedef TCustomSynEdit inherited;	
+	typedef TCustomSynEdit inherited;
 	#include "SynEdit_friends.inc"
 	__fastcall TSynEdit(TComponent* AOwner);
 	__fastcall TSynEdit(HWND ParentWindow);

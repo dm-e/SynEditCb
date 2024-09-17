@@ -43,7 +43,7 @@ __published:
 	void __fastcall SelectAll(TObject* Sender);
 	void __fastcall DeselectAll(TObject* Sender);
 public:
-	typedef TForm inherited;	
+	typedef TForm inherited;
 	#include "SynHighlighterManager_friends.inc"
 	__fastcall TSynHighlighterForm(TComponent* AOwner) : inherited(AOwner) {}
 };

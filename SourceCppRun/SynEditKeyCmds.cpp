@@ -128,21 +128,21 @@ namespace Syneditkeycmds
 #define Syneditkeycmds__107 (TShiftState() << ssCtrl << ssShift)
 #define Syneditkeycmds__108 (TShiftState() << ssCtrl << ssShift)
 #define Syneditkeycmds__109 (TSysCharSet() <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
 #define Syneditkeycmds__110 (TSysCharSet() <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90 <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57)
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90 <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57)
 
 __fastcall ESynKeyError::ESynKeyError(const String Msg) : inherited(Msg) {}
 __fastcall ESynKeyError::ESynKeyError(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
@@ -164,119 +164,119 @@ __fastcall TSynEditKeyStrokes::TSynEditKeyStrokes(TCollectionItemClass ItemClass
 /* Command mapping routines */
 //++ CodeFolding
 const TIdentMapEntry EditorCommandStrs[113/*# range 0..112*/] = {{ecNone, L"ecNone"}
-																				, 																				{ecLeft, L"ecLeft"}
-																				, 																				{ecRight, L"ecRight"}
-																				, 																				{ecUp, L"ecUp"}
-																				, 																				{ecDown, L"ecDown"}
-																				, 																				{ecWordLeft, L"ecWordLeft"}
-																				, 																				{ecWordRight, L"ecWordRight"}
-																				, 																				{ecLineStart, L"ecLineStart"}
-																				, 																				{ecLineEnd, L"ecLineEnd"}
-																				, 																				{ecPageUp, L"ecPageUp"}
-																				, 																				{ecPageDown, L"ecPageDown"}
-																				, 																				{ecPageLeft, L"ecPageLeft"}
-																				, 																				{ecPageRight, L"ecPageRight"}
-																				, 																				{ecPageTop, L"ecPageTop"}
-																				, 																				{ecPageBottom, L"ecPageBottom"}
-																				, 																				{ecEditorTop, L"ecEditorTop"}
-																				, 																				{ecEditorBottom, L"ecEditorBottom"}
-																				, 																				{ecGotoXY, L"ecGotoXY"}
-																				, 																				{ecSelLeft, L"ecSelLeft"}
-																				, 																				{ecSelRight, L"ecSelRight"}
-																				, 																				{ecSelUp, L"ecSelUp"}
-																				, 																				{ecSelDown, L"ecSelDown"}
-																				, 																				{ecSelWordLeft, L"ecSelWordLeft"}
-																				, 																				{ecSelWordRight, L"ecSelWordRight"}
-																				, 																				{ecSelLineStart, L"ecSelLineStart"}
-																				, 																				{ecSelLineEnd, L"ecSelLineEnd"}
-																				, 																				{ecSelPageUp, L"ecSelPageUp"}
-																				, 																				{ecSelPageDown, L"ecSelPageDown"}
-																				, 																				{ecSelPageLeft, L"ecSelPageLeft"}
-																				, 																				{ecSelPageRight, L"ecSelPageRight"}
-																				, 																				{ecSelPageTop, L"ecSelPageTop"}
-																				, 																				{ecSelPageBottom, L"ecSelPageBottom"}
-																				, 																				{ecSelEditorTop, L"ecSelEditorTop"}
-																				, 																				{ecSelEditorBottom, L"ecSelEditorBottom"}
-																				, 																				{ecSelGotoXY, L"ecSelGotoXY"}
-																				, 																				{ecSelWord, L"ecSelWord"}
-																				, 																				{ecSelectAll, L"ecSelectAll"}
-																				, 																				{ecDeleteLastChar, L"ecDeleteLastChar"}
-																				, 																				{ecDeleteChar, L"ecDeleteChar"}
-																				, 																				{ecDeleteWord, L"ecDeleteWord"}
-																				, 																				{ecDeleteLastWord, L"ecDeleteLastWord"}
-																				, 																				{ecDeleteBOL, L"ecDeleteBOL"}
-																				, 																				{ecDeleteEOL, L"ecDeleteEOL"}
-																				, 																				{ecDeleteLine, L"ecDeleteLine"}
-																				, 																				{ecClearAll, L"ecClearAll"}
-																				, 																				{ecLineBreak, L"ecLineBreak"}
-																				, 																				{ecInsertLine, L"ecInsertLine"}
-																				, 																				{ecChar, L"ecChar"}
-																				, 																				{ecImeStr, L"ecImeStr"}
-																				, 																				{ecUndo, L"ecUndo"}
-																				, 																				{ecRedo, L"ecRedo"}
-																				, 																				{ecCut, L"ecCut"}
-																				, 																				{ecCopy, L"ecCopy"}
-																				, 																				{ecPaste, L"ecPaste"}
-																				, 																				{ecScrollUp, L"ecScrollUp"}
-																				, 																				{ecScrollDown, L"ecScrollDown"}
-																				, 																				{ecScrollLeft, L"ecScrollLeft"}
-																				, 																				{ecScrollRight, L"ecScrollRight"}
-																				, 																				{ecInsertMode, L"ecInsertMode"}
-																				, 																				{ecOverwriteMode, L"ecOverwriteMode"}
-																				, 																				{ecToggleMode, L"ecToggleMode"}
-																				, 																				{ecBlockIndent, L"ecBlockIndent"}
-																				, 																				{ecBlockUnindent, L"ecBlockUnindent"}
-																				, 																				{ecTab, L"ecTab"}
-																				, 																				{ecShiftTab, L"ecShiftTab"}
-																				, 																				{ecMatchBracket, L"ecMatchBracket"}
-																				, 																				{ecCommentBlock, L"ecCommentBlock"}
-																				, 																				{ecNormalSelect, L"ecNormalSelect"}
-																				, 																				{ecColumnSelect, L"ecColumnSelect"}
-																				, 																				{ecLineSelect, L"ecLineSelect"}
-																				, 																				{ecAutoCompletion, L"ecAutoCompletion"}
-																				, 																				{ecContextHelp, L"ecContextHelp"}
-																				, 																				{ecGotoMarker0, L"ecGotoMarker0"}
-																				, 																				{ecGotoMarker1, L"ecGotoMarker1"}
-																				, 																				{ecGotoMarker2, L"ecGotoMarker2"}
-																				, 																				{ecGotoMarker3, L"ecGotoMarker3"}
-																				, 																				{ecGotoMarker4, L"ecGotoMarker4"}
-																				, 																				{ecGotoMarker5, L"ecGotoMarker5"}
-																				, 																				{ecGotoMarker6, L"ecGotoMarker6"}
-																				, 																				{ecGotoMarker7, L"ecGotoMarker7"}
-																				, 																				{ecGotoMarker8, L"ecGotoMarker8"}
-																				, 																				{ecGotoMarker9, L"ecGotoMarker9"}
-																				, 																				{ecSetMarker0, L"ecSetMarker0"}
-																				, 																				{ecSetMarker1, L"ecSetMarker1"}
-																				, 																				{ecSetMarker2, L"ecSetMarker2"}
-																				, 																				{ecSetMarker3, L"ecSetMarker3"}
-																				, 																				{ecSetMarker4, L"ecSetMarker4"}
-																				, 																				{ecSetMarker5, L"ecSetMarker5"}
-																				, 																				{ecSetMarker6, L"ecSetMarker6"}
-																				, 																				{ecSetMarker7, L"ecSetMarker7"}
-																				, 																				{ecSetMarker8, L"ecSetMarker8"}
-																				, 																				{ecSetMarker9, L"ecSetMarker9"}
-																				, 																				{ecUpperCase, L"ecUpperCase"}
-																				, 																				{ecLowerCase, L"ecLowerCase"}
-																				, 																				{ecToggleCase, L"ecToggleCase"}
-																				, 																				{ecTitleCase, L"ecTitleCase"}
-																				, 																				{ecCopyLineUp, L"ecCopyLineUp"}
-																				, 																				{ecCopyLineDown, L"ecCopyLineDown"}
-																				, 																				{ecMoveLineUp, L"ecMoveLineUp"}
-																				, 																				{ecMoveLineDown, L"ecMoveLineDown"}
-																				, 																				{ecString, L"ecString"}
+                    ,                     {ecLeft, L"ecLeft"}
+                    ,                     {ecRight, L"ecRight"}
+                    ,                     {ecUp, L"ecUp"}
+                    ,                     {ecDown, L"ecDown"}
+                    ,                     {ecWordLeft, L"ecWordLeft"}
+                    ,                     {ecWordRight, L"ecWordRight"}
+                    ,                     {ecLineStart, L"ecLineStart"}
+                    ,                     {ecLineEnd, L"ecLineEnd"}
+                    ,                     {ecPageUp, L"ecPageUp"}
+                    ,                     {ecPageDown, L"ecPageDown"}
+                    ,                     {ecPageLeft, L"ecPageLeft"}
+                    ,                     {ecPageRight, L"ecPageRight"}
+                    ,                     {ecPageTop, L"ecPageTop"}
+                    ,                     {ecPageBottom, L"ecPageBottom"}
+                    ,                     {ecEditorTop, L"ecEditorTop"}
+                    ,                     {ecEditorBottom, L"ecEditorBottom"}
+                    ,                     {ecGotoXY, L"ecGotoXY"}
+                    ,                     {ecSelLeft, L"ecSelLeft"}
+                    ,                     {ecSelRight, L"ecSelRight"}
+                    ,                     {ecSelUp, L"ecSelUp"}
+                    ,                     {ecSelDown, L"ecSelDown"}
+                    ,                     {ecSelWordLeft, L"ecSelWordLeft"}
+                    ,                     {ecSelWordRight, L"ecSelWordRight"}
+                    ,                     {ecSelLineStart, L"ecSelLineStart"}
+                    ,                     {ecSelLineEnd, L"ecSelLineEnd"}
+                    ,                     {ecSelPageUp, L"ecSelPageUp"}
+                    ,                     {ecSelPageDown, L"ecSelPageDown"}
+                    ,                     {ecSelPageLeft, L"ecSelPageLeft"}
+                    ,                     {ecSelPageRight, L"ecSelPageRight"}
+                    ,                     {ecSelPageTop, L"ecSelPageTop"}
+                    ,                     {ecSelPageBottom, L"ecSelPageBottom"}
+                    ,                     {ecSelEditorTop, L"ecSelEditorTop"}
+                    ,                     {ecSelEditorBottom, L"ecSelEditorBottom"}
+                    ,                     {ecSelGotoXY, L"ecSelGotoXY"}
+                    ,                     {ecSelWord, L"ecSelWord"}
+                    ,                     {ecSelectAll, L"ecSelectAll"}
+                    ,                     {ecDeleteLastChar, L"ecDeleteLastChar"}
+                    ,                     {ecDeleteChar, L"ecDeleteChar"}
+                    ,                     {ecDeleteWord, L"ecDeleteWord"}
+                    ,                     {ecDeleteLastWord, L"ecDeleteLastWord"}
+                    ,                     {ecDeleteBOL, L"ecDeleteBOL"}
+                    ,                     {ecDeleteEOL, L"ecDeleteEOL"}
+                    ,                     {ecDeleteLine, L"ecDeleteLine"}
+                    ,                     {ecClearAll, L"ecClearAll"}
+                    ,                     {ecLineBreak, L"ecLineBreak"}
+                    ,                     {ecInsertLine, L"ecInsertLine"}
+                    ,                     {ecChar, L"ecChar"}
+                    ,                     {ecImeStr, L"ecImeStr"}
+                    ,                     {ecUndo, L"ecUndo"}
+                    ,                     {ecRedo, L"ecRedo"}
+                    ,                     {ecCut, L"ecCut"}
+                    ,                     {ecCopy, L"ecCopy"}
+                    ,                     {ecPaste, L"ecPaste"}
+                    ,                     {ecScrollUp, L"ecScrollUp"}
+                    ,                     {ecScrollDown, L"ecScrollDown"}
+                    ,                     {ecScrollLeft, L"ecScrollLeft"}
+                    ,                     {ecScrollRight, L"ecScrollRight"}
+                    ,                     {ecInsertMode, L"ecInsertMode"}
+                    ,                     {ecOverwriteMode, L"ecOverwriteMode"}
+                    ,                     {ecToggleMode, L"ecToggleMode"}
+                    ,                     {ecBlockIndent, L"ecBlockIndent"}
+                    ,                     {ecBlockUnindent, L"ecBlockUnindent"}
+                    ,                     {ecTab, L"ecTab"}
+                    ,                     {ecShiftTab, L"ecShiftTab"}
+                    ,                     {ecMatchBracket, L"ecMatchBracket"}
+                    ,                     {ecCommentBlock, L"ecCommentBlock"}
+                    ,                     {ecNormalSelect, L"ecNormalSelect"}
+                    ,                     {ecColumnSelect, L"ecColumnSelect"}
+                    ,                     {ecLineSelect, L"ecLineSelect"}
+                    ,                     {ecAutoCompletion, L"ecAutoCompletion"}
+                    ,                     {ecContextHelp, L"ecContextHelp"}
+                    ,                     {ecGotoMarker0, L"ecGotoMarker0"}
+                    ,                     {ecGotoMarker1, L"ecGotoMarker1"}
+                    ,                     {ecGotoMarker2, L"ecGotoMarker2"}
+                    ,                     {ecGotoMarker3, L"ecGotoMarker3"}
+                    ,                     {ecGotoMarker4, L"ecGotoMarker4"}
+                    ,                     {ecGotoMarker5, L"ecGotoMarker5"}
+                    ,                     {ecGotoMarker6, L"ecGotoMarker6"}
+                    ,                     {ecGotoMarker7, L"ecGotoMarker7"}
+                    ,                     {ecGotoMarker8, L"ecGotoMarker8"}
+                    ,                     {ecGotoMarker9, L"ecGotoMarker9"}
+                    ,                     {ecSetMarker0, L"ecSetMarker0"}
+                    ,                     {ecSetMarker1, L"ecSetMarker1"}
+                    ,                     {ecSetMarker2, L"ecSetMarker2"}
+                    ,                     {ecSetMarker3, L"ecSetMarker3"}
+                    ,                     {ecSetMarker4, L"ecSetMarker4"}
+                    ,                     {ecSetMarker5, L"ecSetMarker5"}
+                    ,                     {ecSetMarker6, L"ecSetMarker6"}
+                    ,                     {ecSetMarker7, L"ecSetMarker7"}
+                    ,                     {ecSetMarker8, L"ecSetMarker8"}
+                    ,                     {ecSetMarker9, L"ecSetMarker9"}
+                    ,                     {ecUpperCase, L"ecUpperCase"}
+                    ,                     {ecLowerCase, L"ecLowerCase"}
+                    ,                     {ecToggleCase, L"ecToggleCase"}
+                    ,                     {ecTitleCase, L"ecTitleCase"}
+                    ,                     {ecCopyLineUp, L"ecCopyLineUp"}
+                    ,                     {ecCopyLineDown, L"ecCopyLineDown"}
+                    ,                     {ecMoveLineUp, L"ecMoveLineUp"}
+                    ,                     {ecMoveLineDown, L"ecMoveLineDown"}
+                    ,                     {ecString, L"ecString"}
 //++ CodeFolding
-																				, 																				{ecFoldAll, L"ecFoldAll"}
-																				, 																				{ecUnfoldAll, L"ecUnfoldAll"}
-																				, 																				{ecFoldNearest, L"ecFoldNearest"}
-																				, 																				{ecUnfoldNearest, L"ecUnfoldNearest"}
-																				, 																				{ecFoldLevel1, L"ecFoldLevel1"}
-																				, 																				{ecFoldLevel2, L"ecFoldLevel2"}
-																				, 																				{ecFoldLevel3, L"ecFoldLevel3"}
-																				, 																				{ecUnfoldLevel1, L"ecUnfoldLevel1"}
-																				, 																				{ecUnfoldLevel2, L"ecUnfoldLevel2"}
-																				, 																				{ecUnfoldLevel3, L"ecUnfoldLevel3"}
-																				, 																				{ecFoldRegions, L"ecFoldRanges"}
-																				, 																				{ecUnfoldRegions, L"ecUnfoldRanges"}};
+                    ,                     {ecFoldAll, L"ecFoldAll"}
+                    ,                     {ecUnfoldAll, L"ecUnfoldAll"}
+                    ,                     {ecFoldNearest, L"ecFoldNearest"}
+                    ,                     {ecUnfoldNearest, L"ecUnfoldNearest"}
+                    ,                     {ecFoldLevel1, L"ecFoldLevel1"}
+                    ,                     {ecFoldLevel2, L"ecFoldLevel2"}
+                    ,                     {ecFoldLevel3, L"ecFoldLevel3"}
+                    ,                     {ecUnfoldLevel1, L"ecUnfoldLevel1"}
+                    ,                     {ecUnfoldLevel2, L"ecUnfoldLevel2"}
+                    ,                     {ecUnfoldLevel3, L"ecUnfoldLevel3"}
+                    ,                     {ecFoldRegions, L"ecFoldRanges"}
+                    ,                     {ecUnfoldRegions, L"ecUnfoldRanges"}};
 //-- CodeFolding
 
 // GetEditorCommandValues and GetEditorCommandExtended for editing key assignments
@@ -419,7 +419,7 @@ void __fastcall TSynEditKeyStroke::SetShortCut(const TShortCut Value)
     // Check for duplicate shortcut in the collection and disallow if there is.
 	{
 		Dup = ((TSynEditKeyStrokes*) Collection)->FindShortcut2(Value, ShortCut2);
-		if((Dup !=  - 1) && (Dup != this->Index))
+		if((Dup != -1) && (Dup != this->Index))
 		{
 			throw new ESynKeyError(SYNS_EDuplicateShortcut);
 		}
@@ -454,7 +454,7 @@ void __fastcall TSynEditKeyStroke::SetShortCut2(const TShortCut Value)
     // Check for duplicate shortcut in the collection and disallow if there is.
 	{
 		Dup = ((TSynEditKeyStrokes*) Collection)->FindShortcut2(ShortCut, Value);
-		if((Dup !=  - 1) && (Dup != this->Index))
+		if((Dup != -1) && (Dup != this->Index))
 			throw new ESynKeyError(SYNS_EDuplicateShortcut);
 	}
 	Menus::ShortCutToKey(Value, NewKey, NewShift);

@@ -38,31 +38,31 @@ namespace Synhighlightercpp
 
 
 const String Keywords[130/*# range 0..129*/] = {L"__asm", L"__automated", L"__cdecl", L"__classid", L"__closure", L"__declspec", L"__dispid", L"__except", L"__export"
-																				, L"__fastcall", L"__finally", L"__import", L"__int16", L"__int32", L"__int64", L"__int8", L"__pascal", L"__property", L"__published"
-																				, L"__rtti", L"__stdcall", L"__thread", L"__try", L"_Alignas", L"_Alignof", L"_asm", L"_Atomic", L"_Bool", L"_cdecl"
-																				, L"_Complex", L"_export", L"_fastcall", L"_Generic", L"_Imaginary", L"_import", L"_Noreturn", L"_pascal", L"_Pragma", L"_Static_assert"
-																				, L"_stdcall", L"_Thread_local", L"alignas", L"alignof", L"and", L"and_eq", L"asm", L"auto", L"bitand", L"bitor"
-																				, L"bool", L"break", L"case", L"catch", L"cdecl", L"class", L"compl", L"const", L"const_cast", L"constexpr", L"continue", L"decltype"
-																				, L"default", L"delete", L"do", L"double", L"dynamic_cast", L"else", L"enum", L"explicit", L"extern", L"false", L"final"
-																				, L"float", L"for", L"friend", L"goto", L"char", L"char16_t", L"char32_t", L"if", L"inline", L"int", L"interface", L"long", L"mutable"
-																				, L"namespace", L"new", L"noexcept", L"not", L"not_eq", L"nullptr", L"operator", L"or", L"or_eq", L"override", L"pascal", L"private"
-																				, L"protected", L"public", L"register", L"reinterpret_cast", L"restrict", L"return", L"short", L"signed", L"sizeof", L"static"
-																				, L"static_assert", L"static_cast", L"struct", L"switch", L"template", L"this", L"thread_local", L"throw", L"true", L"try"
-																				, L"typedef", L"typeid", L"typename", L"union", L"unsigned", L"using", L"virtual", L"void", L"volatile", L"while", L"wchar_t", L"xor"
-																				, L"xor_eq"};
+                    , L"__fastcall", L"__finally", L"__import", L"__int16", L"__int32", L"__int64", L"__int8", L"__pascal", L"__property", L"__published"
+                    , L"__rtti", L"__stdcall", L"__thread", L"__try", L"_Alignas", L"_Alignof", L"_asm", L"_Atomic", L"_Bool", L"_cdecl"
+                    , L"_Complex", L"_export", L"_fastcall", L"_Generic", L"_Imaginary", L"_import", L"_Noreturn", L"_pascal", L"_Pragma", L"_Static_assert"
+                    , L"_stdcall", L"_Thread_local", L"alignas", L"alignof", L"and", L"and_eq", L"asm", L"auto", L"bitand", L"bitor"
+                    , L"bool", L"break", L"case", L"catch", L"cdecl", L"class", L"compl", L"const", L"const_cast", L"constexpr", L"continue", L"decltype"
+                    , L"default", L"delete", L"do", L"double", L"dynamic_cast", L"else", L"enum", L"explicit", L"extern", L"false", L"final"
+                    , L"float", L"for", L"friend", L"goto", L"char", L"char16_t", L"char32_t", L"if", L"inline", L"int", L"interface", L"long", L"mutable"
+                    , L"namespace", L"new", L"noexcept", L"not", L"not_eq", L"nullptr", L"operator", L"or", L"or_eq", L"override", L"pascal", L"private"
+                    , L"protected", L"public", L"register", L"reinterpret_cast", L"restrict", L"return", L"short", L"signed", L"sizeof", L"static"
+                    , L"static_assert", L"static_cast", L"struct", L"switch", L"template", L"this", L"thread_local", L"throw", L"true", L"try"
+                    , L"typedef", L"typeid", L"typename", L"union", L"unsigned", L"using", L"virtual", L"void", L"volatile", L"while", L"wchar_t", L"xor"
+                    , L"xor_eq"};
 const int KeyIndices[641/*# range 0..640*/] = {68, -1, -1, -1, -1, -1, -1, -1, -1, 110, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 17, -1, -1, -1, -1, 97, -1, -1, -1, -1, -1, 62, -1, 28
-																				, -1, -1, -1, -1, -1, -1, 64, 21, 90, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, 81, -1, 3, -1, 69, -1, -1, -1, -1, -1, 127, -1, 98, 54, -1, -1, -1, -1, -1, -1, 101, -1
-																				, -1, -1, 65, -1, -1, -1, 58, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, 93, 121, 99, -1, -1, 12, -1, -1, -1, -1, -1, -1, -1, 100, -1, -1, 57, 120, 4, -1, 86, -1
-																				, -1, -1, -1, 44, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, 50, -1, -1, -1, 112, -1, -1, -1, -1, 40, -1, -1, -1, -1, -1, -1, -1, -1, 73, -1, -1, -1, -1, -1, -1, -1, -1, 41
-																				, -1, -1, -1, 55, 109, 89, -1, 9, 114, 128, -1, 123, -1, 8, -1, -1, -1, -1, -1, -1, 36, -1, -1, -1, 34, -1, 103, -1, -1, 22, -1, 20, -1, -1, -1, -1, -1, 94, -1, 83, -1, 51, -1, 33, -1, -1, -1, -1, -1
-																				, 47, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, 116, 91, -1, 6, -1, -1, -1, -1, -1, -1, 53, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 129, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, 92, -1, -1
-																				, -1, 7, -1, 23, -1, -1, -1, -1, -1, -1, 59, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, 67, -1, -1, 60, -1, -1, -1, 38, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 88, -1, -1
-																				, -1, -1, -1, 80, -1, 42, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 95, 26, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 32, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-																				, 122, -1, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, 66, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 72, -1, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 39, -1, -1
-																				, -1, -1, -1, -1, -1, 43, 24, 105, -1, -1, -1, -1, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, 45, 49, -1, -1, -1, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, 82, -1, -1, 125, 70, -1, -1, -1, -1
-																				, -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, 16, -1, -1, -1, 11, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 117, -1
-																				, -1, -1, -1, 30, -1, -1, -1, -1, -1, -1, -1, 27, -1, -1, 84, -1, -1, -1, -1, -1, 106, -1, 126, -1, -1, -1, -1, 13, -1, -1, -1, -1, -1, -1, 52, -1, -1, 107, -1, 37, -1, -1, -1, -1, -1, -1, -1, 115, 87
-																				, -1, -1, 85, -1, -1, -1, -1, -1, -1, -1, 31, 19, 102, 79, -1, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, -1, -1, -1, -1, -1, -1, 63, -1, 96, -1, -1, -1, 76, -1, -1, -1};
+                    , -1, -1, -1, -1, -1, -1, 64, 21, 90, -1, -1, -1, -1, 108, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 15, 81, -1, 3, -1, 69, -1, -1, -1, -1, -1, 127, -1, 98, 54, -1, -1, -1, -1, -1, -1, 101, -1
+                    , -1, -1, 65, -1, -1, -1, 58, -1, -1, -1, -1, -1, -1, -1, -1, -1, 78, -1, -1, -1, -1, -1, -1, -1, -1, 75, -1, -1, 93, 121, 99, -1, -1, 12, -1, -1, -1, -1, -1, -1, -1, 100, -1, -1, 57, 120, 4, -1, 86, -1
+                    , -1, -1, -1, 44, -1, -1, -1, -1, 56, -1, -1, -1, -1, -1, -1, -1, -1, 124, -1, -1, -1, -1, 50, -1, -1, -1, 112, -1, -1, -1, -1, 40, -1, -1, -1, -1, -1, -1, -1, -1, 73, -1, -1, -1, -1, -1, -1, -1, -1, 41
+                    , -1, -1, -1, 55, 109, 89, -1, 9, 114, 128, -1, 123, -1, 8, -1, -1, -1, -1, -1, -1, 36, -1, -1, -1, 34, -1, 103, -1, -1, 22, -1, 20, -1, -1, -1, -1, -1, 94, -1, 83, -1, 51, -1, 33, -1, -1, -1, -1, -1
+                    , 47, -1, -1, -1, -1, 74, -1, -1, -1, -1, -1, -1, -1, -1, 116, 91, -1, 6, -1, -1, -1, -1, -1, -1, 53, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 129, -1, -1, 35, -1, -1, -1, -1, -1, -1, -1, 92, -1, -1
+                    , -1, 7, -1, 23, -1, -1, -1, -1, -1, -1, 59, -1, -1, -1, 48, -1, -1, -1, -1, -1, -1, -1, -1, -1, 119, 67, -1, -1, 60, -1, -1, -1, 38, -1, -1, -1, 111, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 88, -1, -1
+                    , -1, -1, -1, 80, -1, 42, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 95, 26, -1, -1, -1, -1, -1, -1, -1, 61, -1, -1, -1, 32, 46, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+                    , 122, -1, -1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, 66, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 71, 72, -1, -1, -1, -1, -1, -1, -1, 0, -1, -1, -1, -1, -1, -1, 39, -1, -1
+                    , -1, -1, -1, -1, -1, 43, 24, 105, -1, -1, -1, -1, -1, -1, -1, 118, -1, -1, -1, -1, -1, -1, -1, -1, 45, 49, -1, -1, -1, 14, -1, -1, -1, -1, -1, -1, -1, -1, -1, 77, 82, -1, -1, 125, 70, -1, -1, -1, -1
+                    , -1, -1, -1, 29, -1, -1, -1, -1, -1, -1, -1, 113, -1, -1, -1, -1, -1, -1, -1, -1, -1, 16, -1, -1, -1, 11, -1, -1, 104, -1, -1, -1, -1, -1, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, 117, -1
+                    , -1, -1, -1, 30, -1, -1, -1, -1, -1, -1, -1, 27, -1, -1, 84, -1, -1, -1, -1, -1, 106, -1, 126, -1, -1, -1, -1, 13, -1, -1, -1, -1, -1, -1, 52, -1, -1, 107, -1, 37, -1, -1, -1, -1, -1, -1, -1, 115, 87
+                    , -1, -1, 85, -1, -1, -1, -1, -1, -1, -1, 31, 19, 102, 79, -1, -1, -1, 18, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 10, -1, -1, -1, -1, -1, -1, 63, -1, 96, -1, -1, -1, 76, -1, -1, -1};
 
 /*$Q-*/
 
@@ -1855,7 +1855,7 @@ bool __fastcall TSynCppSyn::UseUserSettings(int settingIndex)
 				tmpInvalidAttri->Assign(fInvalidAttri);
 				tmpSpaceAttri->Assign(fSpaceAttri);
 				tmpDirecAttri->Assign(fDirecAttri);
-				if(s->Strings[settingIndex][1] == L'1')
+				if(((String)s->Strings[settingIndex])[1] == L'1')
 					result = ReadCPPBSetting(s->Strings[settingIndex], fAsmAttri, L"Plain text");
 				else
 					result = ReadCPPBSetting(s->Strings[settingIndex], fAsmAttri, L"Assembler");

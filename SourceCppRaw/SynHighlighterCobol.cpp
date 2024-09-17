@@ -846,7 +846,7 @@ String __fastcall TSynCobolSyn::GetSampleSource()
 	           L"004600*    The following types of strings are supported:\x0d\x0a"
 	           L"004700*    1.11.1 Quoted strings.\x0d\x0a"
 	           L"004800         MOVE \"The name of field is \"\"PRODUCT\"\"\" TO WS-ERR-MESS.\x0d\x0a"
-	           L"004900         MOVE 'The name of field is ''PRODUCT''' TO WS-ERR-MESS.\x0d\x0a"
+	           L"004900         MOVE 'The name of field is 'PRODUCT'' TO WS-ERR-MESS.\x0d\x0a"
 	           L"005000*    1.11.2 Pseudo-text.\x0d\x0a"
 	           L"005100         COPY\x0d\x0a"
 	           L"005200             REPLACING ==+00001== BY  +2\x0d\x0a"

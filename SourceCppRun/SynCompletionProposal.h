@@ -72,7 +72,7 @@ namespace Syncompletionproposal
 /* with other versions of jedi.inc in the search-path.                          */
 /*------------------------------------------------------------------------------*/
 
- 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 
 /*------------------------------------------------------------------------------*/
 /*  Please change this to suit your needs (to activate an option remove the dot */
@@ -88,8 +88,6 @@ namespace Syncompletionproposal
 
 // Turn this off if you don't need complex script support, since it is slower
 /*.$DEFINE SYN_UNISCRIBE*/
-
-class TFormatChunkList; // dme for friend function
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 enum SynCompletionType {ctCode,
@@ -132,7 +130,7 @@ class TSynBaseCompletionProposalForm : public TSynForm
 {
 	#include "SynCompletionProposal_friends.inc"
 public:
-	typedef TSynForm inherited;	
+	typedef TSynForm inherited;
 private:
 	String FCurrentString;
 	TSynBaseCompletionProposalPaintItem FOnPaintItem;
@@ -354,7 +352,7 @@ protected:
 	virtual void __fastcall EditorCancelMode(TObject* Sender);
 	virtual void __fastcall HookedEditorCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
 public:
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TSynBaseCompletionProposal(TComponent* AOwner);
 	void __fastcall Execute(String s, int X, int Y);
@@ -443,7 +441,7 @@ protected:
 	virtual void __fastcall EditorCancelMode(TObject* Sender);
 	virtual void __fastcall HookedEditorCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
 public:
-	typedef TSynBaseCompletionProposal inherited;	
+	typedef TSynBaseCompletionProposal inherited;
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TSynCompletionProposal(TComponent* AOwner);
 	virtual __fastcall ~TSynCompletionProposal();
@@ -494,7 +492,7 @@ protected:
 	virtual void __fastcall EditorKeyPress(TObject* Sender, WideChar& key);
 	String __fastcall GetPreviousToken(Synedit::TCustomSynEdit* Editor);
 public:
-	typedef System::Classes::TComponent inherited;	
+	typedef System::Classes::TComponent inherited;
 	#include "SynCompletionProposal_friends.inc"
 	TSynCompletionProposal* __fastcall GetCompletionProposal();
 	__fastcall TSynAutoComplete(TComponent* AOwner);
@@ -525,7 +523,7 @@ private:
 protected:
 	virtual void __fastcall DefineProperties(TFiler* Filer);
 public:
-	typedef System::Classes::TCollectionItem inherited;	
+	typedef System::Classes::TCollectionItem inherited;
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TProposalColumn(TCollection* Collection);
 	virtual __fastcall ~TProposalColumn();
@@ -544,7 +542,7 @@ private:
 protected:
 	DYNAMIC TPersistent* __fastcall GetOwner();
 public:
-	typedef System::Classes::TCollection inherited;	
+	typedef System::Classes::TCollection inherited;
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TProposalColumns(TPersistent* AOwner, TCollectionItemClass ItemClass);
 	TProposalColumn* __fastcall Add();

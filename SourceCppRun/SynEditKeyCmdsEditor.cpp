@@ -22,7 +22,7 @@ using namespace Vcl::Forms;
 #define Syneditkeycmdseditor__1 (TMsgDlgButtons() << TMsgDlgBtn::mbOK << TMsgDlgBtn::mbCancel)
 
 
-#pragma resource "*.dfm" 
+#pragma resource "*.dfm"
 
 
 /* TSynEditKeystrokesEditorForm */
