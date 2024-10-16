@@ -1385,8 +1385,6 @@ bool __fastcall TSynDWSSyn::IsCurrentToken(const String Token)
 {
 	bool result = false;
 	int i = 0;
-	PWideChar Temp = nullptr;
-	Temp = fToIdent;
 	PWideChar temp = nullptr;
 	temp = fToIdent;
 	if(Token.Length() == fStringLen)

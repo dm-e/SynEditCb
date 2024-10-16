@@ -1492,7 +1492,7 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 {
 	String CurLine;
 	__int64 Line = 0;
-	bool OK = false;
+	bool ok = false;
 
 	auto BlockDelimiter = [&](int Line) -> bool 
 	{
