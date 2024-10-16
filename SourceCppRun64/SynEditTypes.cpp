@@ -47,141 +47,141 @@ TBufferCoord __fastcall BufferCoord(int AChar, int ALine)
 
 /* TBufferCoord */
 
-bool __fastcall operator == (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator == (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (A.Char == B.Char) && (A.Line == B.Line);
+	result = (a.Char == b.Char) && (a.Line == b.Line);
 	return result;
 }
 
-bool __fastcall operator > (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator > (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (B.Line < A.Line) || ((B.Line == A.Line) && (B.Char < A.Char));
+	result = (b.Line < a.Line) || ((b.Line == a.Line) && (b.Char < a.Char));
 	return result;
 }
 
-bool __fastcall operator >= (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator >= (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (B.Line < A.Line) || ((B.Line == A.Line) && (B.Char <= A.Char));
+	result = (b.Line < a.Line) || ((b.Line == a.Line) && (b.Char <= a.Char));
 	return result;
 }
 
-bool __fastcall operator < (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator < (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (B.Line > A.Line) || ((B.Line == A.Line) && (B.Char > A.Char));
+	result = (b.Line > a.Line) || ((b.Line == a.Line) && (b.Char > a.Char));
 	return result;
 }
 
-bool __fastcall operator <= (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator <= (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (B.Line > A.Line) || ((B.Line == A.Line) && (B.Char >= A.Char));
+	result = (b.Line > a.Line) || ((b.Line == a.Line) && (b.Char >= a.Char));
 	return result;
 }
 
 
 
-bool __fastcall operator != (const TBufferCoord& cA, const TBufferCoord& cB)
+bool __fastcall operator != (const TBufferCoord& ca, const TBufferCoord& cb)
 {
-	TBufferCoord A = cA;
-	TBufferCoord B = cB;
+	TBufferCoord a = ca;
+	TBufferCoord b = cb;
 	bool result = false;
-	result = (A.Char != B.Char) || (A.Line != B.Line);
+	result = (a.Char != b.Char) || (a.Line != b.Line);
 	return result;
 }
 
 /* TDisplayCoord */
 
-bool __fastcall operator == (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator == (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (A.Row == B.Row) && (A.Column == B.Column);
+	result = (a.Row == b.Row) && (a.Column == b.Column);
 	return result;
 }
 
-bool __fastcall operator > (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator > (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (B.Row < A.Row) || ((B.Row == A.Row) && (B.Column < A.Column));
+	result = (b.Row < a.Row) || ((b.Row == a.Row) && (b.Column < a.Column));
 	return result;
 }
 
-bool __fastcall operator >= (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator >= (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (B.Row < A.Row) || ((B.Row == A.Row) && (B.Column <= A.Column));
+	result = (b.Row < a.Row) || ((b.Row == a.Row) && (b.Column <= a.Column));
 	return result;
 }
 
-bool __fastcall operator < (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator < (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (B.Row > A.Row) || ((B.Row == A.Row) && (B.Column > A.Column));
+	result = (b.Row > a.Row) || ((b.Row == a.Row) && (b.Column > a.Column));
 	return result;
 }
 
-bool __fastcall operator <= (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator <= (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (B.Row > A.Row) || ((B.Row == A.Row) && (B.Column >= A.Column));
+	result = (b.Row > a.Row) || ((b.Row == a.Row) && (b.Column >= a.Column));
 	return result;
 }
 
 /*#static*/
-TDisplayCoord __fastcall TDisplayCoord::Max(const TDisplayCoord& cA, const TDisplayCoord& cB)
+TDisplayCoord __fastcall TDisplayCoord::Max(const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	TDisplayCoord result = {};
-	if((B.Row < A.Row) || ((B.Row == A.Row) && (B.Column < A.Column)))
-		result = A;
+	if((b.Row < a.Row) || ((b.Row == a.Row) && (b.Column < a.Column)))
+		result = a;
 	else
-		result = B;
+		result = b;
 	return result;
 }
 
 /*#static*/
-TDisplayCoord __fastcall TDisplayCoord::Min(const TDisplayCoord& cA, const TDisplayCoord& cB)
+TDisplayCoord __fastcall TDisplayCoord::Min(const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	TDisplayCoord result = {};
-	if((B.Row < A.Row) || ((B.Row == A.Row) && (B.Column < A.Column)))
-		result = B;
+	if((b.Row < a.Row) || ((b.Row == a.Row) && (b.Column < a.Column)))
+		result = b;
 	else
-		result = A;
+		result = a;
 	return result;
 }
 
-bool __fastcall operator != (const TDisplayCoord& cA, const TDisplayCoord& cB)
+bool __fastcall operator != (const TDisplayCoord& ca, const TDisplayCoord& cb)
 {
-	TDisplayCoord A = cA;
-	TDisplayCoord B = cB;
+	TDisplayCoord a = ca;
+	TDisplayCoord b = cb;
 	bool result = false;
-	result = (A.Row != B.Row) || (A.Column != B.Column);
+	result = (a.Row != b.Row) || (a.Column != b.Column);
 	return result;
 }
 

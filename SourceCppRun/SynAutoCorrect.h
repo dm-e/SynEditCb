@@ -170,7 +170,7 @@ private:
 	bool FEnabled;
 	TStrings* FItems;
 	WideChar FItemSepChar;
-	TAsSynAutoCorrectOptions fOptions;
+	TAsSynAutoCorrectOptions FOptions;
 	TAutoCorrectEvent FOnAutoCorrect;
 	TNotifyEvent FOnCorrected;
 
@@ -214,7 +214,7 @@ public:
 	__property Synedit::TCustomSynEdit* Editor = { read = FEditor, write = SetEditor };
 	__property TStrings* Items = { read = GetItems, write = SetItems };
 	__property WideChar ItemSepChar = { read = FItemSepChar, write = FItemSepChar, default = L'\x09' };
-	__property TAsSynAutoCorrectOptions Options = { read = fOptions, write = fOptions, default = /*# ascoIgnoreCase, ascoMaintainCase */ 0 };
+	__property TAsSynAutoCorrectOptions Options = { read = FOptions, write = FOptions, default = /*# ascoIgnoreCase, ascoMaintainCase */ 0 };
 	__property TAutoCorrectEvent OnAutoCorrect = { read = FOnAutoCorrect, write = FOnAutoCorrect };
 	__property TNotifyEvent OnCorrected = { read = FOnCorrected, write = FOnCorrected };
 };

@@ -28,7 +28,7 @@ namespace Synhighlighterdml
 #define Synhighlighterdml__9 (TSysCharSet() << '\x09' << '\x20')
 
 
-const String Keywords[264/*# range 0..263*/] = {L"abs", L"absolute_position", L"account", L"acos", L"actual_break", L"add", L"add_form", L"alternate_form", L"ascii"
+const String KeyWords[264/*# range 0..263*/] = {L"abs", L"absolute_position", L"account", L"acos", L"actual_break", L"add", L"add_form", L"alternate_form", L"ascii"
                     , L"asin", L"atan", L"atan2", L"attributes", L"back", L"base", L"batch", L"begin_block", L"begin_case", L"begin_disable_trigger", L"begin_row"
                     , L"begin_signal_to_status", L"bell", L"binary_to_poly", L"bottom_line", L"break", L"break0", L"call", L"case", L"ceil"
                     , L"check", L"check_domain", L"chr", L"clear_buffer", L"cli", L"close", L"close_text", L"col", L"column_heading_row", L"column_headings"
@@ -124,14 +124,14 @@ unsigned int __fastcall TSynDmlSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynDmlSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynDmlSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkBlock;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 2438 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 2438 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -439,7 +439,7 @@ bool __fastcall TSynDmlSyn::IsSpecial()
 TtkTokenKind __fastcall TSynDmlSyn::FuncAbs(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -449,7 +449,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAbs(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAbsolute_position(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -459,7 +459,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAbsolute_position(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAccount(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -469,7 +469,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAccount(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAcos(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -479,7 +479,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAcos(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncActual_break(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -489,14 +489,14 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncActual_break(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAdd(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsSpecial())
 			result = tkSpecial;
 		else
 		{
 			result = tkKey;
-			FRange = rsAdd;
+			fRange = rsAdd;
 		}
 	}
 	else
@@ -507,7 +507,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAdd(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAdd_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -517,7 +517,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAdd_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAlternate_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -527,7 +527,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAlternate_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAscii(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -537,7 +537,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAscii(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAsin(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -547,7 +547,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAsin(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAtan(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -557,7 +557,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAtan(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAtan2(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -567,7 +567,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAtan2(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncAttributes(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -577,7 +577,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncAttributes(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBack(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -587,7 +587,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBack(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -597,7 +597,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBatch(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -607,7 +607,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBatch(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -617,7 +617,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_case(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -627,7 +627,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_case(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_disable_trigger(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -637,7 +637,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_disable_trigger(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_row(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -647,7 +647,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_row(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_signal_to_status(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -657,7 +657,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBegin_signal_to_status(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBell(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -667,7 +667,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBell(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBinary_to_poly(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -677,7 +677,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBinary_to_poly(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBottom_line(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -687,7 +687,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBottom_line(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBreak(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -697,7 +697,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBreak(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncBreak0(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -707,7 +707,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncBreak0(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCall(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -717,7 +717,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCall(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -727,7 +727,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCeil(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -737,7 +737,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCeil(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCheck(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -747,7 +747,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCheck(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCheck_domain(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -757,7 +757,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCheck_domain(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncChr(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -767,7 +767,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncChr(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncClear_buffer(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -777,7 +777,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncClear_buffer(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCli(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -787,7 +787,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCli(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncClose(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -797,7 +797,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncClose(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncClose_text(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -807,7 +807,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncClose_text(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCol(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -827,7 +827,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCol(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_heading_row(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -837,7 +837,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_heading_row(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_headings(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -847,7 +847,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_headings(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_spacing(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -857,7 +857,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncColumn_spacing(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCommit(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -867,7 +867,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCommit(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCommit_rate(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -877,7 +877,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCommit_rate(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCompile(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -887,7 +887,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCompile(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCompress(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -897,7 +897,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCompress(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCompress_all(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -907,7 +907,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCompress_all(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncConfirm(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -917,7 +917,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncConfirm(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncConnect(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -927,7 +927,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncConnect(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncContinue(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -937,7 +937,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncContinue(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCos(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -947,7 +947,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCos(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCosh(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -957,7 +957,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCosh(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncCross_reference(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -967,7 +967,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncCross_reference(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDate(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -977,7 +977,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDate(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDate_seconds(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -987,7 +987,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDate_seconds(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDay_of_week(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -997,7 +997,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDay_of_week(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDays(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1007,7 +1007,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDays(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDcl(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1017,7 +1017,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDcl(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDefault_tag(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1027,7 +1027,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDefault_tag(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDelete(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1037,7 +1037,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDelete(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDelete_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1047,7 +1047,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDelete_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDescription(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1057,7 +1057,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDescription(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDir(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1067,7 +1067,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDir(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDisconnect(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1077,7 +1077,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDisconnect(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDisplay(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1087,7 +1087,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDisplay(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDisplay_length(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1097,7 +1097,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDisplay_length(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDocumentation(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1107,7 +1107,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDocumentation(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncDomain(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1117,7 +1117,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncDomain(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEdit(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1127,7 +1127,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEdit(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncElse(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1137,7 +1137,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncElse(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncElse_if(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1147,7 +1147,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncElse_if(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -1157,7 +1157,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_case(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1167,7 +1167,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_case(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_disable_trigger(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1177,7 +1177,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_disable_trigger(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_execute(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1187,7 +1187,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_execute(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -1197,11 +1197,11 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_if(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]))
+		if(IsCurrentToken(KeyWords[Index]))
 			result = tkKey;
 		else
 			result = tkIdentifier;
@@ -1212,7 +1212,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_if(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_row(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1222,7 +1222,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_row(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_signal_to_status(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1232,7 +1232,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_signal_to_status(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_while(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1242,7 +1242,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncEnd_while(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncErase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1252,7 +1252,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncErase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncError(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -1267,7 +1267,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncError(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncExecute(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1277,11 +1277,11 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncExecute(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncExit(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]))
+		if(IsCurrentToken(KeyWords[Index]))
 			result = tkKey;
 		else
 			result = tkIdentifier;
@@ -1292,7 +1292,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncExit(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncExit_forward(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1302,7 +1302,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncExit_forward(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncExpand(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1312,7 +1312,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncExpand(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncExternal(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1322,7 +1322,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncExternal(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFacility(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1332,7 +1332,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFacility(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFailure(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -1352,7 +1352,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFailure(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFetch(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1362,7 +1362,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFetch(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFiles(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1372,10 +1372,10 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFiles(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFind(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsFind;
+		fRange = rsFind;
 	}
 	else
 	result = tkIdentifier;
@@ -1385,7 +1385,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFind(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFind_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1395,7 +1395,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFind_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFinish(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1405,7 +1405,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFinish(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFirst(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1415,7 +1415,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFirst(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFloor(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1425,7 +1425,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFloor(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFooting(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1435,7 +1435,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFooting(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncFooting_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1445,7 +1445,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncFooting_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncForm(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsSpecial())
 			result = tkSpecial;
@@ -1460,7 +1460,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncForm(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncGenerate(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1470,7 +1470,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncGenerate(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncGoto(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1480,7 +1480,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncGoto(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncGrouped_by(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1490,7 +1490,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncGrouped_by(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncHeading(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1500,7 +1500,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncHeading(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncHeading_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1510,7 +1510,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncHeading_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncHeight(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1520,7 +1520,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncHeight(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncIdentifier(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1530,7 +1530,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncIdentifier(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1540,10 +1540,10 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncIn(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && (FRange == rsFind))
+	if(IsCurrentToken(KeyWords[Index]) && (fRange == rsFind))
 	{
 		result = tkKey;
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 	}
 	else
 	result = tkIdentifier;
@@ -1553,7 +1553,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncIn(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncInput_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -1563,7 +1563,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncInput_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncInput_mask(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1573,7 +1573,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncInput_mask(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncInput_row_height(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1583,7 +1583,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncInput_row_height(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncInt(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1593,7 +1593,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncInt(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncInvoke(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1603,7 +1603,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncInvoke(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncItem(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1613,7 +1613,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncItem(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncItem_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -1623,7 +1623,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncItem_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncItem_if(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1633,7 +1633,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncItem_if(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncJoined_to(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1643,7 +1643,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncJoined_to(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLeft(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1653,7 +1653,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLeft(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLen(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -1668,7 +1668,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLen(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLfooting(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1678,7 +1678,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLfooting(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLheading(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1688,7 +1688,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLheading(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLine(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1698,11 +1698,11 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLine(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLines_after(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+		if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 			result = tkSpecial;
 		else
 			result = tkIdentifier;
@@ -1713,7 +1713,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLines_after(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLines_before(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1723,7 +1723,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLines_before(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncList(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1733,7 +1733,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncList(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLoad(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1743,7 +1743,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLoad(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLock(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1753,7 +1753,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLock(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLog(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -1768,7 +1768,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLog(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLog10(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1778,7 +1778,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLog10(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1788,7 +1788,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_auto_select(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1798,7 +1798,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_auto_select(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_col(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1808,7 +1808,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_col(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_data(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1818,7 +1818,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_data(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_first(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1828,7 +1828,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_first(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_height(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1838,7 +1838,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_height(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_noheading(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1848,7 +1848,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_noheading(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_nosearch(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1858,7 +1858,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_nosearch(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_reduced_to(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1868,7 +1868,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_reduced_to(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_row(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1878,7 +1878,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_row(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_secondary(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1888,7 +1888,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_secondary(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_selection(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1898,7 +1898,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_selection(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_sorted_by(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1908,7 +1908,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_sorted_by(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_width(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1918,7 +1918,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_width(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLov_with(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -1928,7 +1928,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLov_with(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLowercase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1938,7 +1938,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLowercase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncLtrim(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -1948,7 +1948,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncLtrim(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMail(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1958,7 +1958,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMail(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMenu(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1968,7 +1968,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMenu(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMenu_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -1978,7 +1978,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMenu_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMenu_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -1988,7 +1988,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMenu_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMessage(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1998,7 +1998,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMessage(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMid(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2008,7 +2008,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMid(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncMod(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2018,7 +2018,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncMod(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncModify_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2028,7 +2028,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncModify_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNew(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2038,7 +2038,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNew(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNo_domain(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2048,7 +2048,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNo_domain(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNobell(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2058,7 +2058,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNobell(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNoclear_buffer(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2068,7 +2068,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNoclear_buffer(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNodeadlock_exit(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2078,7 +2078,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNodeadlock_exit(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNoerase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2088,7 +2088,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNoerase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNoerror(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2098,7 +2098,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNoerror(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNoexit_forward(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2108,7 +2108,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNoexit_forward(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNoheading(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2118,7 +2118,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNoheading(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNolov_data(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2128,7 +2128,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNolov_data(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNorepeat(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2138,7 +2138,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNorepeat(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNostatus(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2148,7 +2148,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNostatus(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNototals(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -2158,7 +2158,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNototals(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNounderlines(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -2178,7 +2178,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNounderlines(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncNowait(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2188,7 +2188,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncNowait(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOpen(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2198,7 +2198,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOpen(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOpen_text(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2208,7 +2208,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOpen_text(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOpt(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2218,7 +2218,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOpt(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOptions(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2228,7 +2228,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOptions(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOutput(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2238,7 +2238,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOutput(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOutput_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -2248,7 +2248,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOutput_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncOutput_mask(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2258,7 +2258,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncOutput_mask(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPause(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2268,7 +2268,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPause(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPause_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -2278,7 +2278,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPause_block(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPerform(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2288,7 +2288,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPerform(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPoly_to_binary(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2298,7 +2298,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPoly_to_binary(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPos(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2308,7 +2308,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPos(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPrint(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2318,7 +2318,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPrint(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncProcedure_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -2328,7 +2328,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncProcedure_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncPrompt(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2338,7 +2338,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncPrompt(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncProtect(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2348,7 +2348,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncProtect(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncQuery(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2358,7 +2358,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncQuery(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncQuery_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -2368,7 +2368,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncQuery_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRandom(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2378,7 +2378,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRandom(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRead_line(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2388,7 +2388,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRead_line(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRead_only(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2398,7 +2398,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRead_only(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReceive(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2408,7 +2408,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReceive(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_arguments(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2418,7 +2418,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_arguments(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_data(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2428,7 +2428,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_data(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_table(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2438,7 +2438,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReceive_table(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReduced_to(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2448,7 +2448,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReduced_to(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRelease(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2458,7 +2458,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRelease(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRemain(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2468,7 +2468,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRemain(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRepeat(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -2483,7 +2483,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRepeat(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReport(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2493,7 +2493,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReport(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReport_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -2503,7 +2503,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReport_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncReposition(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2513,7 +2513,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncReposition(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRewind_text(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2523,7 +2523,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRewind_text(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRfooting(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2533,7 +2533,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRfooting(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRheading(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2543,7 +2543,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRheading(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRight(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2553,7 +2553,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRight(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRollback(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2563,7 +2563,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRollback(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRound(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2573,11 +2573,11 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRound(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRow(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+		if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 			result = tkSpecial;
 		else
 			result = tkIdentifier;
@@ -2588,7 +2588,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRow(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncRow_height(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2598,7 +2598,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncRow_height(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSearch(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2608,7 +2608,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSearch(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSecondary(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2618,7 +2618,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSecondary(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSeconds(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2628,7 +2628,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSeconds(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSelection(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2638,7 +2638,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSelection(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSend(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2648,7 +2648,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSend(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSend_data(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2658,7 +2658,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSend_data(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSend_message(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2668,7 +2668,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSend_message(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSend_table(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2678,7 +2678,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSend_table(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSequence(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2688,7 +2688,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSequence(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSeverity(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2698,7 +2698,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSeverity(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSin(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2708,7 +2708,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSin(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSinh(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2718,7 +2718,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSinh(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSorted_by(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2728,7 +2728,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSorted_by(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSource(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2738,7 +2738,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSource(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSource_if(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2748,7 +2748,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSource_if(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSqrt(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2758,7 +2758,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSqrt(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncStart_stream(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2768,7 +2768,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncStart_stream(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncStart_transaction(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2778,7 +2778,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncStart_transaction(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncStatistic(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2788,7 +2788,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncStatistic(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncStatus(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -2808,7 +2808,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncStatus(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncStream_name(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2818,7 +2818,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncStream_name(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncString(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2828,7 +2828,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncString(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSuccess(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -2848,7 +2848,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSuccess(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSwitch(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2858,7 +2858,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSwitch(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSwitch_base(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2868,7 +2868,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSwitch_base(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncSystem(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2878,7 +2878,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncSystem(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTable(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2888,7 +2888,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTable(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTable_form(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkForm;
 	else
 		result = tkIdentifier;
@@ -2898,7 +2898,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTable_form(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTable_search(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -2908,7 +2908,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTable_search(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTag(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2918,7 +2918,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTag(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTag_length(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2928,7 +2928,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTag_length(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTan(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2938,7 +2938,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTan(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTanh(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -2948,7 +2948,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTanh(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTarget(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2958,7 +2958,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTarget(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncText(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsSpecial())
 			result = tkSpecial;
@@ -2973,7 +2973,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncText(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncText_only(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -2983,7 +2983,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncText_only(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTitle(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		if(IsQuali())
 			result = tkQualifier;
@@ -2998,10 +2998,10 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTitle(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTo(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && (FRange == rsAdd))
+	if(IsCurrentToken(KeyWords[Index]) && (fRange == rsAdd))
 	{
 		result = tkKey;
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 	}
 	else
 	result = tkIdentifier;
@@ -3011,7 +3011,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTo(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTop_line(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -3021,7 +3021,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTop_line(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTotal(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3031,7 +3031,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTotal(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTransfer(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3041,7 +3041,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTransfer(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTrigger(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3051,7 +3051,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTrigger(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTrim(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -3061,7 +3061,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTrim(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncTsuppress(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsSpecial())
+	if(IsCurrentToken(KeyWords[Index]) && IsSpecial())
 		result = tkSpecial;
 	else
 		result = tkIdentifier;
@@ -3071,7 +3071,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncTsuppress(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUnload(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3081,7 +3081,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUnload(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUppercase(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkFunction;
 	else
 		result = tkIdentifier;
@@ -3091,7 +3091,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUppercase(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUse_if(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3101,7 +3101,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUse_if(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUser_key(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3111,7 +3111,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUser_key(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUsing(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3121,7 +3121,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUsing(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncUtilities(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3131,7 +3131,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncUtilities(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWait(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3141,7 +3141,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWait(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWhile(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3151,7 +3151,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWhile(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWidth(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3161,7 +3161,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWidth(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWith(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]) && IsQuali())
+	if(IsCurrentToken(KeyWords[Index]) && IsQuali())
 		result = tkQualifier;
 	else
 		result = tkIdentifier;
@@ -3171,7 +3171,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWith(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWrite(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3181,7 +3181,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWrite(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncWrite_line(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -3191,7 +3191,7 @@ TtkTokenKind __fastcall TSynDmlSyn::FuncWrite_line(int Index)
 TtkTokenKind __fastcall TSynDmlSyn::FuncYesno_block(int Index)
 {
 	TtkTokenKind result = tkBlock;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBlock;
 	else
 		result = tkIdentifier;
@@ -3207,7 +3207,7 @@ TtkTokenKind __fastcall TSynDmlSyn::AltFunc(int Index)
 
 __fastcall TSynDmlSyn::TSynDmlSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkBlock),
 			fFormAttri(nullptr),
 			fBlockAttri(nullptr),
@@ -3223,48 +3223,48 @@ __fastcall TSynDmlSyn::TSynDmlSyn(TComponent* AOwner)
 			fIdentifierAttri(nullptr),
 			fSpaceAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fFormAttri = new TSynHighlighterAttributes(SYNS_AttrForm, SYNS_FriendlyAttrForm);
 	fFormAttri->Style = Synhighlighterdml__0;
 	fFormAttri->Foreground = (TColor) clBlue;
-	addAttribute(fFormAttri);
+	AddAttribute(fFormAttri);
 	fBlockAttri = new TSynHighlighterAttributes(SYNS_AttrBlock, SYNS_FriendlyAttrBlock);
 	fBlockAttri->Style = Synhighlighterdml__1;
 	fBlockAttri->Foreground = (TColor) clGreen;
-	addAttribute(fBlockAttri);
+	AddAttribute(fBlockAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	fKeyAttri->Style = Synhighlighterdml__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterdml__3;
 	fCommentAttri->Foreground = (TColor) clRed;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fQualiAttri = new TSynHighlighterAttributes(SYNS_AttrQualifier, SYNS_FriendlyAttrQualifier);
 	fQualiAttri->Style = Synhighlighterdml__4;
 	fQualiAttri->Foreground = (TColor) clGreen;
-	addAttribute(fQualiAttri);
+	AddAttribute(fQualiAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrFunction, SYNS_FriendlyAttrFunction);
 	fFunctionAttri->Style = Synhighlighterdml__5;
 	fFunctionAttri->Foreground = (TColor) clBlack;
-	addAttribute(fFunctionAttri);
+	AddAttribute(fFunctionAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
 	fVariableAttri->Style = Synhighlighterdml__6;
 	fVariableAttri->Foreground = (TColor) clBlack;
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	fSpecialAttri = new TSynHighlighterAttributes(SYNS_AttrSpecialVariable, SYNS_FriendlyAttrSpecialVariable);
 	fSpecialAttri->Style = Synhighlighterdml__7;
 	fSpecialAttri->Foreground = (TColor) clBlack;
-	addAttribute(fSpecialAttri);
+	AddAttribute(fSpecialAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterGembase;
@@ -3392,17 +3392,17 @@ void __fastcall TSynDmlSyn::PointProc()
 
 void __fastcall TSynDmlSyn::RemProc()
 {
-	PWideChar P = nullptr;
-	P = &fLine[Run - 1];
-	while(P >= fLine)
+	PWideChar p = nullptr;
+	p = &fLine[Run - 1];
+	while(p >= fLine)
 	{
-		if(!CharInSet((*P), Synhighlighterdml__9))
+		if(!CharInSet((*p), Synhighlighterdml__9))
 		{
 			++Run;
 			FTokenID = tkSymbol;
 			return;
 		}
-		--P;
+		--p;
 	}
   // it is a comment...
 	FTokenID = tkComment;
@@ -3628,18 +3628,18 @@ int __fastcall TSynDmlSyn::GetTokenKind()
 void* __fastcall TSynDmlSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynDmlSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynDmlSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 bool __fastcall TSynDmlSyn::IsFilterStored()

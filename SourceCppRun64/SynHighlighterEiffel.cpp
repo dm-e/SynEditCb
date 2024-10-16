@@ -36,7 +36,7 @@ namespace Synhighlightereiffel
 #define Synhighlightereiffel__12 (TFontStyles() << TFontStyle::fsItalic)
 
 
-const String Keywords[119/*# range 0..118*/] = {L"-", L"!", L"#", L"$", L"%u", L"&", L"(", L")", L"*", L".", L"/", L"//", L"/=", L":", L":=", L";", L"@", L"[", L"\\\\", L"]"
+const String KeyWords[119/*# range 0..118*/] = {L"-", L"!", L"#", L"$", L"%u", L"&", L"(", L")", L"*", L".", L"/", L"//", L"/=", L":", L":=", L";", L"@", L"[", L"\\\\", L"]"
                     , L"^", L"|", L"+", L"<", L"<>", L"=", L">", L"adapt", L"alias", L"all", L"and", L"array", L"as", L"assertion", L"bit", L"boolean", L"character"
                     , L"check", L"class", L"cluster", L"colon", L"comma", L"creation", L"current", L"debug", L"default", L"deferred", L"do"
                     , L"double", L"else", L"elseif", L"end", L"ensure", L"exclude", L"executable", L"expanded", L"export", L"external", L"false", L"feature"
@@ -74,14 +74,14 @@ unsigned int __fastcall TSynEiffelSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynEiffelSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynEiffelSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkBasicTypes;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 502 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 502 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -227,7 +227,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::OperatorFunc(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkOperatorAndSymbols;
 	else
 		result = tkIdentifier;
@@ -237,7 +237,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::OperatorFunc(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::Func37u(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -247,7 +247,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::Func37u(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAdapt(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -257,7 +257,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAdapt(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAlias(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -267,7 +267,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAlias(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAll(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -277,7 +277,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAll(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAnd(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -287,7 +287,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAnd(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncArray(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -297,7 +297,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncArray(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAs(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -307,7 +307,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAs(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncAssertion(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -317,7 +317,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncAssertion(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncBit(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -327,7 +327,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncBit(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncBoolean(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -337,7 +337,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncBoolean(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncCharacter(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -347,7 +347,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncCharacter(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncCheck(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -357,7 +357,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncCheck(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncClass(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -367,7 +367,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncClass(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncCluster(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -377,7 +377,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncCluster(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncColon(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -387,7 +387,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncColon(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncComma(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -397,7 +397,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncComma(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncCreation(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -407,7 +407,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncCreation(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncCurrent(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -417,7 +417,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncCurrent(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncDebug(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -427,7 +427,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncDebug(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncDefault(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -437,7 +437,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncDefault(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncDeferred(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -447,7 +447,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncDeferred(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncDo(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -457,7 +457,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncDo(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncDouble(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -467,7 +467,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncDouble(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncElse(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -477,7 +477,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncElse(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncElseif(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -487,7 +487,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncElseif(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncEnd(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -497,7 +497,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncEnd(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncEnsure(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -507,7 +507,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncEnsure(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncExclude(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -517,7 +517,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncExclude(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncExecutable(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -527,7 +527,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncExecutable(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncExpanded(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -537,7 +537,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncExpanded(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncExport(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -547,7 +547,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncExport(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncExternal(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -557,7 +557,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncExternal(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncFalse(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -567,7 +567,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncFalse(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncFeature(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -577,7 +577,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncFeature(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncFrom(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -587,7 +587,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncFrom(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncFrozen(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -597,7 +597,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncFrozen(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncGenerate(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -607,7 +607,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncGenerate(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncIdentifier(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -617,7 +617,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncIdentifier(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -627,7 +627,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncIgnore(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -637,7 +637,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncIgnore(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncImplies(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -647,7 +647,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncImplies(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInclude(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -657,7 +657,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInclude(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInclude95path(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -667,7 +667,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInclude95path(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncIndexing(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -677,7 +677,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncIndexing(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInfix(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -687,7 +687,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInfix(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInherit(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -697,7 +697,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInherit(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInspect(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -707,7 +707,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInspect(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInteger(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -717,7 +717,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInteger(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncInvariant(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -727,7 +727,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncInvariant(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncIs(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -737,7 +737,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncIs(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncLike(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -747,7 +747,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncLike(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncLocal(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -757,7 +757,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncLocal(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncLoop(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -767,7 +767,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncLoop(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncMake(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -777,7 +777,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncMake(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncNo(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -787,7 +787,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncNo(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncNot(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -797,7 +797,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncNot(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncObject(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -807,7 +807,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncObject(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncObsolete(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -817,7 +817,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncObsolete(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncOld(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -827,7 +827,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncOld(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncOnce(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -837,7 +837,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncOnce(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncOptimize(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -847,7 +847,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncOptimize(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncOption(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -857,7 +857,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncOption(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncOr(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -867,7 +867,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncOr(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncPointer(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -877,7 +877,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncPointer(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncPrecompiled(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -887,7 +887,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncPrecompiled(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncPrecursor(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -897,7 +897,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncPrecursor(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncPrefix(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -907,7 +907,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncPrefix(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncReal(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -917,7 +917,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncReal(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRedefine(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -927,7 +927,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRedefine(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRename(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -937,7 +937,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRename(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRequire(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -947,7 +947,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRequire(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRescue(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -957,7 +957,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRescue(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncResult(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkResultValue;
 	else
 		result = tkIdentifier;
@@ -967,7 +967,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncResult(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRetry(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -977,7 +977,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRetry(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncRoot(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -987,7 +987,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncRoot(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncSelect(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -997,7 +997,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncSelect(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncSeparate(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1007,7 +1007,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncSeparate(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncString(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBasicTypes;
 	else
 		result = tkIdentifier;
@@ -1017,7 +1017,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncString(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncStrip(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -1027,7 +1027,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncStrip(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncSystem(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -1037,7 +1037,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncSystem(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncThen(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1047,7 +1047,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncThen(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncTrace(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -1057,7 +1057,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncTrace(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncTrue(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -1067,7 +1067,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncTrue(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncUndefine(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1077,7 +1077,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncUndefine(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncUnique(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -1087,7 +1087,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncUnique(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncUntil(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1097,7 +1097,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncUntil(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncUse(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -1107,7 +1107,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncUse(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncVariant(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1117,7 +1117,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncVariant(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncVisible(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -1127,7 +1127,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncVisible(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncVoid(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPredefined;
 	else
 		result = tkIdentifier;
@@ -1137,7 +1137,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncVoid(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncWhen(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1147,7 +1147,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncWhen(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncXor(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1157,7 +1157,7 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncXor(int Index)
 TtkTokenKind __fastcall TSynEiffelSyn::FuncYes(int Index)
 {
 	TtkTokenKind result = tkBasicTypes;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkLace;
 	else
 		result = tkIdentifier;
@@ -1167,20 +1167,20 @@ TtkTokenKind __fastcall TSynEiffelSyn::FuncYes(int Index)
 void __fastcall TSynEiffelSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynEiffelSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynEiffelSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -1188,52 +1188,52 @@ void __fastcall TSynEiffelSyn::CRProc()
 
 void __fastcall TSynEiffelSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynEiffelSyn::OperatorAndSymbolProc()
 {
-	FTokenID = tkIdentifier;
+	fTokenID = tkIdentifier;
 	if(fLine[Run] == L'\x21')
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
 	if(CharInSet(fLine[Run], Synhighlightereiffel__0))
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
 	if(CharInSet(fLine[Run], Synhighlightereiffel__1))
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
 	if(CharInSet(fLine[Run], Synhighlightereiffel__2))
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
 	if(CharInSet(fLine[Run], Synhighlightereiffel__3))
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
 	if(CharInSet(fLine[Run], Synhighlightereiffel__4))
 	{
-		FRange = rsOperatorAndSymbolProc;
-		FTokenID = tkOperatorAndSymbols;
+		fRange = rsOperatorAndSymbolProc;
+		fTokenID = tkOperatorAndSymbols;
 		++Run;
 		return;
 	}
@@ -1244,17 +1244,17 @@ void __fastcall TSynEiffelSyn::EiffelCommentOpenProc()
 	++Run;
 	if((fLine[Run - 1] == L'-') && (fLine[Run] == L'-'))
 	{
-		FRange = rsEiffelComment;
+		fRange = rsEiffelComment;
 		EiffelCommentProc();
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 	}
 	else
-	FTokenID = tkOperatorAndSymbols;
+	fTokenID = tkOperatorAndSymbols;
 }
 
 void __fastcall TSynEiffelSyn::EiffelCommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	do
 	{
 		if(!IsLineEnd(Run))
@@ -1266,20 +1266,20 @@ void __fastcall TSynEiffelSyn::EiffelCommentProc()
 void __fastcall TSynEiffelSyn::StringOpenProc()
 {
 	++Run;
-	FRange = rsString;
+	fRange = rsString;
 	StringProc();
-	FTokenID = tkString;
+	fTokenID = tkString;
 }
 
 void __fastcall TSynEiffelSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	do
 	{
 		if(fLine[Run] == L'\"')
 		{
 			Run += 1;
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			break;
 		}
 		if(!IsLineEnd(Run))
@@ -1290,8 +1290,8 @@ void __fastcall TSynEiffelSyn::StringProc()
 
 __fastcall TSynEiffelSyn::TSynEiffelSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkBasicTypes),
+			fRange(rsUnKnown),
+			fTokenID(tkBasicTypes),
 			fBasicTypesAttri(nullptr),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -1303,44 +1303,44 @@ __fastcall TSynEiffelSyn::TSynEiffelSyn(TComponent* AOwner)
 			fSpaceAttri(nullptr),
 			fStringAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fBasicTypesAttri = new TSynHighlighterAttributes(SYNS_AttrBasicTypes, SYNS_FriendlyAttrBasicTypes);
 	fBasicTypesAttri->Style = Synhighlightereiffel__5;
 	fBasicTypesAttri->Foreground = (TColor) clBlue;
-	addAttribute(fBasicTypesAttri);
+	AddAttribute(fBasicTypesAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightereiffel__6;
 	fCommentAttri->Foreground = (TColor) clTeal;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightereiffel__7;
 	fKeyAttri->Foreground = (TColor) clNavy;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fLaceAttri = new TSynHighlighterAttributes(SYNS_AttrLace, SYNS_FriendlyAttrLace);
 	fLaceAttri->Style = Synhighlightereiffel__8;
 	fLaceAttri->Foreground = (TColor) clNavy;
-	addAttribute(fLaceAttri);
+	AddAttribute(fLaceAttri);
 	fOperatorAndSymbolsAttri = new TSynHighlighterAttributes(SYNS_AttrOperatorAndSymbols, SYNS_FriendlyAttrOperatorAndSymbols);
 	fOperatorAndSymbolsAttri->Style = Synhighlightereiffel__9;
 	fOperatorAndSymbolsAttri->Foreground = (TColor) clOlive;
-	addAttribute(fOperatorAndSymbolsAttri);
+	AddAttribute(fOperatorAndSymbolsAttri);
 	fPredefinedAttri = new TSynHighlighterAttributes(SYNS_AttrPredefined, SYNS_FriendlyAttrPredefined);
 	fPredefinedAttri->Style = Synhighlightereiffel__10;
 	fPredefinedAttri->Foreground = (TColor) clRed;
-	addAttribute(fPredefinedAttri);
+	AddAttribute(fPredefinedAttri);
 	fResultValueAttri = new TSynHighlighterAttributes(SYNS_AttrResultValue, SYNS_FriendlyAttrResultValue);
 	fResultValueAttri->Style = Synhighlightereiffel__11;
 	fResultValueAttri->Foreground = (TColor) clPurple;
-	addAttribute(fResultValueAttri);
+	AddAttribute(fResultValueAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Style = Synhighlightereiffel__12;
 	fStringAttri->Foreground = (TColor) clGray;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterEiffel;
@@ -1348,7 +1348,7 @@ __fastcall TSynEiffelSyn::TSynEiffelSyn(TComponent* AOwner)
 
 void __fastcall TSynEiffelSyn::IdentProc()
 {
-	FTokenID = IdentKind(fLine + Run);
+	fTokenID = IdentKind(fLine + Run);
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -1357,13 +1357,13 @@ void __fastcall TSynEiffelSyn::IdentProc()
 void __fastcall TSynEiffelSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynEiffelSyn::Next()
 {
 	fTokenPos = Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	switch(fLine[Run])
 	{
 		case L'\x21':
@@ -1464,7 +1464,7 @@ String __fastcall TSynEiffelSyn::GetKeyWords(int TokenKind)
 TtkTokenKind __fastcall TSynEiffelSyn::GetTokenID()
 {
 	TtkTokenKind result = tkBasicTypes;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -1516,7 +1516,7 @@ TSynHighlighterAttributes* __fastcall TSynEiffelSyn::GetTokenAttribute()
 int __fastcall TSynEiffelSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -1578,18 +1578,18 @@ String __fastcall TSynEiffelSyn::GetLanguageName()
 
 void __fastcall TSynEiffelSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynEiffelSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynEiffelSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 

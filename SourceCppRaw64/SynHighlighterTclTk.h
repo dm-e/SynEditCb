@@ -153,7 +153,7 @@ enum TtkTokenKind {tkSymbol,
                    tkWidgetKey,
                    tkPath,
                    tkUnknown };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsAnsi,
                   rsPasStyle,
                   rsCStyle };
@@ -161,7 +161,7 @@ enum TRangeState {rsUnKnown,
 class TSynTclTkSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
@@ -174,7 +174,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fOptionsAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fVariableAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fPathAttri;
-	TStrings* fKeywords;
+	TStrings* fKeyWords;
 	TStrings* fSecondKeys;
 	TStrings* fTixWords;
 	Synedithighlighter::TSynHighlighterAttributes* fTixKeyAttri;
@@ -203,7 +203,7 @@ private:
 	void __fastcall SetSecondKeys(TStrings* const Value);
 	bool __fastcall IsKeywordListStored();
 	bool __fastcall IsSecondKeywordListStored();
-	bool __fastcall InternalIsKeyword(const String AKeyword, TStrings* KeywordList, bool ACaseSensitive = false);
+	bool __fastcall InternalIsKeyword(const String AKeyword, TStrings* KeyWordList, bool ACaseSensitive = false);
 protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsFilterStored();
@@ -223,14 +223,14 @@ public:
 	virtual void __fastcall Next();
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
 __published:
 public:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* IdentifierAttri = { read = fIdentifierAttri, write = fIdentifierAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* KeyAttri = { read = fKeyAttri, write = fKeyAttri };
-	__property TStrings* Keywords = { read = fKeywords, write = SetKeyWords, stored = IsKeywordListStored };
+	__property TStrings* KeyWords = { read = fKeyWords, write = SetKeyWords, stored = IsKeywordListStored };
 	__property Synedithighlighter::TSynHighlighterAttributes* SecondKeyAttri = { read = fSecondKeyAttri, write = fSecondKeyAttri };
 	__property TStrings* SecondKeyWords = { read = fSecondKeys, write = SetSecondKeys, stored = IsSecondKeywordListStored };
 	__property Synedithighlighter::TSynHighlighterAttributes* TixKeyAttri = { read = fTixKeyAttri, write = fTixKeyAttri };

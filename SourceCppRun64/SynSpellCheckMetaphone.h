@@ -8,7 +8,7 @@
 namespace Synspellcheckmetaphone
 {
 
-PWideChar __stdcall metaphone(PWideChar A, int lg);
+PWideChar __stdcall metaphone(PWideChar a, int lg);
 
 
 }  // namespace SynSpellCheckMetaphone

@@ -74,7 +74,7 @@ private:
 	WideString FLineCommentarEnd;
 	WideString FLineCommentarStart;
 	WideString FTitle;
-	bool fVisible;
+	bool FVisible;
 public:
 	typedef System::Classes::TPersistent inherited;
 	virtual void __fastcall Assign(TPersistent* Source);
@@ -88,7 +88,7 @@ public:
 	__property WideString LineCommentarEnd = { read = FLineCommentarEnd, write = FLineCommentarEnd };
 	__property WideString LineCommentarStart = { read = FLineCommentarStart, write = FLineCommentarStart };
 	__property WideString Title = { read = FTitle, write = FTitle };
-	__property bool Visible = { read = fVisible, write = fVisible };
+	__property bool Visible = { read = FVisible, write = FVisible };
 public:
 	__fastcall TSynEditHighlighterOptions();
 };

@@ -91,9 +91,9 @@ __fastcall TSynEditKbdHandler::~TSynEditKbdHandler()
 	//# inherited::Destroy();
 }
 
-void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& Key, TShiftState Shift)
 {
-	int Idx = 0;
+	int idx = 0;
 	if(fInKeyDown)
 		return;
 	fInKeyDown = true;
@@ -103,10 +103,10 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, T
 		{
 			auto with0 = fKeyDownChain;
 			int stop = 0;
-			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
+			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				(*(TKeyEvent*)&with0->Items[Idx])(Sender, key, Shift);
-				if(key == 0)
+				(*(TKeyEvent*)&with0->Items[idx])(Sender, Key, Shift);
+				if(Key == 0)
 				{
 					fInKeyDown = false;
 					return;
@@ -120,9 +120,9 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& key, T
 	}
 }
 
-void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& Key, TShiftState Shift)
 {
-	int Idx = 0;
+	int idx = 0;
 	if(fInKeyUp)
 		return;
 	fInKeyUp = true;
@@ -132,10 +132,10 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& key, TSh
 		{
 			auto with0 = fKeyUpChain;
 			int stop = 0;
-			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
+			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				(*(TKeyEvent*)&with0->Items[Idx])(Sender, key, Shift);
-				if(key == 0)
+				(*(TKeyEvent*)&with0->Items[idx])(Sender, Key, Shift);
+				if(Key == 0)
 				{
 					fInKeyUp = false;
 					return;
@@ -149,9 +149,9 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& key, TSh
 	}
 }
 
-void __fastcall TSynEditKbdHandler::ExecuteKeyPress(TObject* Sender, WideChar& key)
+void __fastcall TSynEditKbdHandler::ExecuteKeyPress(TObject* Sender, WideChar& Key)
 {
-	int Idx = 0;
+	int idx = 0;
 	if(fInKeyPress)
 		return;
 	fInKeyPress = true;
@@ -161,10 +161,10 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyPress(TObject* Sender, WideChar& k
 		{
 			auto with0 = fKeyPressChain;
 			int stop = 0;
-			for(stop = 0, Idx = with0->Count - 1; Idx >= stop; Idx--)
+			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				(*(TKeyPressEvent*)&with0->Items[Idx])(Sender, key);
-				if(key == L'\x00')
+				(*(TKeyPressEvent*)&with0->Items[idx])(Sender, Key);
+				if(Key == L'\x00')
 				{
 					fInKeyPress = false;
 					return;
@@ -273,26 +273,26 @@ void __fastcall TSynEditKbdHandler::RemoveMouseCursorHandler(TMouseCursorEvent a
 void __fastcall TMethodList::Add(const TMethod& caHandler)
 {
 	TMethod aHandler = caHandler;
-	FData->Add(aHandler.Data);
-	FData->Add(aHandler.Code);
+	fData->Add(aHandler.Data);
+	fData->Add(aHandler.Code);
 }
 
 __fastcall TMethodList::TMethodList()
- : FData(new TList())
+ : fData(new TList())
 {
 	//# inherited::Create();
 }
 
 __fastcall TMethodList::~TMethodList()
 {
-	delete FData;
+	delete fData;
 	//# inherited::Destroy();
 }
 
 int __fastcall TMethodList::GetCount()
 {
 	int result = 0;
-	result = (NativeInt)(FData->Count / /*div*/ 2);
+	result = (NativeInt)(fData->Count / /*div*/ 2);
 	return result;
 }
 
@@ -300,25 +300,25 @@ TMethod __fastcall TMethodList::GetItem(int Index)
 {
 	TMethod result = {};
 	Index = Index * 2;
-	result.Data = FData->Items[Index];
-	result.Code = FData->Items[Index + 1];
+	result.Data = fData->Items[Index];
+	result.Code = fData->Items[Index + 1];
 	return result;
 }
 
 void __fastcall TMethodList::Remove(const TMethod& caHandler)
 {
 	TMethod aHandler = caHandler;
-	int cpos = 0;
-	cpos = FData->Count - 2;
-	while(cpos >= 0)
+	int cPos = 0;
+	cPos = fData->Count - 2;
+	while(cPos >= 0)
 	{
-		if((FData->List[cpos] == aHandler.Data) && (FData->List[cpos + 1] == aHandler.Code))
+		if((fData->List[cPos] == aHandler.Data) && (fData->List[cPos + 1] == aHandler.Code))
 		{
-			FData->Delete(cpos);
-			FData->Delete(cpos);
+			fData->Delete(cPos);
+			fData->Delete(cPos);
 			return;
 		}
-		cpos -= 2;
+		cPos -= 2;
 	}
 }
 

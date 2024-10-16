@@ -37,7 +37,7 @@ namespace Synhighlightercpp
 #define Synhighlightercpp__14 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
-const String Keywords[130/*# range 0..129*/] = {L"__asm", L"__automated", L"__cdecl", L"__classid", L"__closure", L"__declspec", L"__dispid", L"__except", L"__export"
+const String KeyWords[130/*# range 0..129*/] = {L"__asm", L"__automated", L"__cdecl", L"__classid", L"__closure", L"__declspec", L"__dispid", L"__except", L"__export"
                     , L"__fastcall", L"__finally", L"__import", L"__int16", L"__int32", L"__int64", L"__int8", L"__pascal", L"__property", L"__published"
                     , L"__rtti", L"__stdcall", L"__thread", L"__try", L"_Alignas", L"_Alignof", L"_asm", L"_Atomic", L"_Bool", L"_cdecl"
                     , L"_Complex", L"_export", L"_fastcall", L"_Generic", L"_Imaginary", L"_import", L"_Noreturn", L"_pascal", L"_Pragma", L"_Static_assert"
@@ -81,14 +81,14 @@ unsigned int __fastcall TSynCppSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynCppSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynCppSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkBracket;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 640 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 640 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -123,7 +123,7 @@ TtkTokenKind __fastcall TSynCppSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynCppSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkBracket;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -133,10 +133,10 @@ TtkTokenKind __fastcall TSynCppSyn::KeyWordFunc(int Index)
 TtkTokenKind __fastcall TSynCppSyn::FuncAsm(int Index)
 {
 	TtkTokenKind result = tkBracket;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsAsm;
+		fRange = rsAsm;
 		fAsmStart = true;
 	}
 	else
@@ -147,7 +147,7 @@ TtkTokenKind __fastcall TSynCppSyn::FuncAsm(int Index)
 __fastcall TSynCppSyn::TSynCppSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkBracket),
 			FExtTokenID(xtkAdd),
 			fAsmAttri(nullptr),
@@ -167,43 +167,43 @@ __fastcall TSynCppSyn::TSynCppSyn(TComponent* AOwner)
 			fBracketAttri(nullptr),
 			FNewPreprocesorStyle(false)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	FNewPreprocesorStyle = false;
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
-	addAttribute(fAsmAttri);
+	AddAttribute(fAsmAttri);
 	fBracketAttri = new TSynHighlighterAttributes(SYNS_AttrBrackets, SYNS_AttrBrackets);
-	addAttribute(fBracketAttri);
+	AddAttribute(fBracketAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightercpp__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightercpp__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fCharAttri = new TSynHighlighterAttributes(SYNS_AttrCharacter, SYNS_FriendlyAttrCharacter);
-	addAttribute(fCharAttri);
+	AddAttribute(fCharAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
-	addAttribute(fFloatAttri);
+	AddAttribute(fFloatAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
-	addAttribute(fHexAttri);
+	AddAttribute(fHexAttri);
 	fOctalAttri = new TSynHighlighterAttributes(SYNS_AttrOctal, SYNS_FriendlyAttrOctal);
-	addAttribute(fOctalAttri);
+	AddAttribute(fOctalAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	fDefaultFilter = SYNS_FilterCPP;
 }
 
@@ -238,18 +238,18 @@ void __fastcall TSynCppSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				if(FRange == rsAnsiCAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiCAsm)
+					fRange = rsAsm;
 				else
 				{
-					if(FRange == rsAnsiCAsmBlock)
-						FRange = rsAsmBlock;
+					if(fRange == rsAnsiCAsmBlock)
+						fRange = rsAsmBlock;
 					else
 					{
-						if((FRange == rsDirectiveComment) && !IsLineEnd(Run))
-							FRange = rsMultiLineDirective;
+						if((fRange == rsDirectiveComment) && !IsLineEnd(Run))
+							fRange = rsMultiLineDirective;
 						else
-							FRange = rsUnKnown;
+							fRange = rsUnknown;
 					}
 				}
 				goto label0;
@@ -324,8 +324,8 @@ void __fastcall TSynCppSyn::BraceCloseProc()
 	++Run;
 	FTokenID = tkBracket;
 	FExtTokenID = xtkBraceClose;
-	if(FRange == rsAsmBlock)
-		FRange = rsUnKnown;
+	if(fRange == rsAsmBlock)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynCppSyn::BraceOpenProc()
@@ -333,9 +333,9 @@ void __fastcall TSynCppSyn::BraceOpenProc()
 	++Run;
 	FTokenID = tkBracket;
 	FExtTokenID = xtkBraceOpen;
-	if(FRange == rsAsm)
+	if(fRange == rsAsm)
 	{
-		FRange = rsAsmBlock;
+		fRange = rsAsmBlock;
 		fAsmStart = true;
 	}
 }
@@ -388,7 +388,7 @@ void __fastcall TSynCppSyn::DirectiveProc()
 		}
 		WasWord = false;
 		FTokenID = tkDirective;
-		FRange = rsUnKnown;
+		fRange = rsUnknown;
 		do
 		{
 			if(!WasWord && IsIdentChar(fLine[Run]))
@@ -412,14 +412,14 @@ void __fastcall TSynCppSyn::DirectiveProc()
 			{
 				if(fLine[Run + 1] == L'/') // is end of directive as well
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					return;
 				}
 				else
 				{
 					if(fLine[Run + 1] == L'*') // might be embedded only
 					{
-						FRange = rsDirectiveComment;
+						fRange = rsDirectiveComment;
 						return;
 					}
 				}
@@ -427,7 +427,7 @@ void __fastcall TSynCppSyn::DirectiveProc()
 			if((fLine[Run] == L'\\') && (fLine[Run + 1] == L'\x00')) // a multiline directive
 			{
 				++Run;
-				FRange = rsMultiLineDirective;
+				fRange = rsMultiLineDirective;
 				return;
 			}
 			++Run;
@@ -460,7 +460,7 @@ void __fastcall TSynCppSyn::DirectiveEndProc()
 		  ;
 		break;
 	}
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	do
 	{
 		switch(fLine[Run])
@@ -475,12 +475,12 @@ void __fastcall TSynCppSyn::DirectiveEndProc()
 				{
 					case L'/': // is end of directive as well
 					{
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						return;
 					} // might be embedded only
 					case L'*':
 					{
-						FRange = rsDirectiveComment;
+						fRange = rsDirectiveComment;
 						return;
 					}
 					default:
@@ -494,7 +494,7 @@ void __fastcall TSynCppSyn::DirectiveEndProc()
 				if(fLine[Run + 1] == L'\x00')
 				{
 					++Run;
-					FRange = rsMultiLineDirective;
+					fRange = rsMultiLineDirective;
 					return;
 				}
 			}
@@ -1053,7 +1053,7 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		return result;
 	};
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -1061,7 +1061,7 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(!InsideComment(Line, i))
@@ -1123,17 +1123,17 @@ void __fastcall TSynCppSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 14)) == L"#PRAGMA REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 14)) == L"#PRAGMA REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 17)) == L"#PRAGMA ENDREGION")
+			if(UpperCase(S.SubString(1, 17)) == L"#PRAGMA ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -1179,8 +1179,8 @@ void __fastcall TSynCppSyn::SemiColonProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkSemiColon;
-	if(FRange == rsAsm)
-		FRange = rsUnKnown;
+	if(fRange == rsAsm)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynCppSyn::SlashProc()
@@ -1198,16 +1198,16 @@ void __fastcall TSynCppSyn::SlashProc()
 		case L'*':
 		{
 			FTokenID = tkComment;
-			if(FRange == rsAsm)
-				FRange = rsAnsiCAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiCAsm;
 			else
 			{
-				if(FRange == rsAsmBlock)
-					FRange = rsAnsiCAsmBlock;
+				if(fRange == rsAsmBlock)
+					fRange = rsAnsiCAsmBlock;
 				else
 				{
-					if(FRange != rsDirectiveComment)
-						FRange = rsAnsiC;
+					if(fRange != rsDirectiveComment)
+						fRange = rsAnsiC;
 				}
 			}
 			Run += 2;
@@ -1218,18 +1218,18 @@ void __fastcall TSynCppSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						if(FRange == rsDirectiveComment)
-							FRange = rsMultiLineDirective;
+						if(fRange == rsDirectiveComment)
+							fRange = rsMultiLineDirective;
 						else
 						{
-							if(FRange == rsAnsiCAsm)
-								FRange = rsAsm;
+							if(fRange == rsAnsiCAsm)
+								fRange = rsAsm;
 							else
 							{
-								if(FRange == rsAnsiCAsmBlock)
-									FRange = rsAsmBlock;
+								if(fRange == rsAnsiCAsmBlock)
+									fRange = rsAsmBlock;
 								else
-									FRange = rsUnKnown;
+									fRange = rsUnknown;
 							}
 						}
 						goto label12;
@@ -1240,8 +1240,8 @@ void __fastcall TSynCppSyn::SlashProc()
 					case L'\x0a':
 					case L'\x0d':
 					{
-						if(FRange == rsDirectiveComment)
-							FRange = rsAnsiC;
+						if(fRange == rsDirectiveComment)
+							fRange = rsAnsiC;
 						goto label13;
 					}
 					default:
@@ -1327,7 +1327,7 @@ void __fastcall TSynCppSyn::StringProc()
 				case L'\x00':
 				{
 					++Run;
-					FRange = rsMultiLineString;
+					fRange = rsMultiLineString;
 					return;
 				}
 				default:
@@ -1366,7 +1366,7 @@ void __fastcall TSynCppSyn::StringEndProc()
 		  ;
 		break;
 	}
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	do
 	{
 		switch(fLine[Run])
@@ -1386,7 +1386,7 @@ void __fastcall TSynCppSyn::StringEndProc()
 					case L'\x00':
 					{
 						++Run;
-						FRange = rsMultiLineString;
+						fRange = rsMultiLineString;
 						return;
 					}
 					default:
@@ -1447,7 +1447,7 @@ void __fastcall TSynCppSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsiC:
 		case rsAnsiCAsm:
@@ -1627,7 +1627,7 @@ bool __fastcall TSynCppSyn::GetEol()
 void* __fastcall TSynCppSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1635,7 +1635,7 @@ TtkTokenKind __fastcall TSynCppSyn::GetTokenID()
 {
 	TtkTokenKind result = tkBracket;
 	result = FTokenID;
-	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercpp__13.Contains(FTokenID)))
+	if(((fRange == rsAsm) || (fRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercpp__13.Contains(FTokenID)))
 		result = tkAsm;
 	return result;
 }
@@ -1714,15 +1714,15 @@ int __fastcall TSynCppSyn::GetTokenKind()
 
 void __fastcall TSynCppSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynCppSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
-void __fastcall TSynCppSyn::EnumUserSettings(TStrings* Settings)
+void __fastcall TSynCppSyn::EnumUserSettings(TStrings* settings)
 {
 
   /* returns the user settings that exist in the registry */
@@ -1736,7 +1736,7 @@ void __fastcall TSynCppSyn::EnumUserSettings(TStrings* Settings)
 			{
 				try
 				{
-					with0->GetKeyNames(Settings);
+					with0->GetKeyNames(settings);
 				}
 				__finally
 				{
@@ -1765,38 +1765,38 @@ bool __fastcall TSynCppSyn::UseUserSettings(int settingIndex)
 	{
 		bool result = false;
 
-		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 		{
 			bool result = false;
 
-			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* Attri, String Name) -> bool 
+			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* attri, String name) -> bool 
 			{
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = Name.Length(), i = 1; i <= stop; i++)
+				for(stop = name.Length(), i = 1; i <= stop; i++)
 				{
-					if(Name[i] == L' ')
-						Name[i] = L'_';
+					if(name[i] == L' ')
+						name[i] = L'_';
 				}
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
-	           + L"\\Highlight", Name, true);
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
+	           + L"\\Highlight", name, true);
 				return result;
 			}; /* ReadCPPB1 */
 
-			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadCPPB3OrMore */ /* ReadCPPBSetting */
 			try
 			{
 				if(settingTag[1] == L'1')
-					result = ReadCPPB1(settingTag, Attri, key);
+					result = ReadCPPB1(settingTag, attri, key);
 				else
-					result = ReadCPPB3OrMore(settingTag, Attri, key);
+					result = ReadCPPB3OrMore(settingTag, attri, key);
 			}
 			catch(...)
 			{

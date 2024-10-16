@@ -132,7 +132,7 @@ class TSynSelectedColor : public System::Classes::TPersistent
 private:
 	TColor fBG;
 	TColor fFG;
-	TNotifyEvent FOnChange;
+	TNotifyEvent fOnChange;
 	void __fastcall SetBG(TColor Value);
 	void __fastcall SetFG(TColor Value);
 public:
@@ -142,9 +142,9 @@ public:
 	virtual void __fastcall Assign(TPersistent* Source);
 __published:
 public:
-	__property TColor Background = { read = fBG, write = SetBG, default = clHighlight };
-	__property TColor Foreground = { read = fFG, write = SetFG, default = clHighlightText };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TColor Background = { read = fBG, write = SetBG, default = clHighLight };
+	__property TColor Foreground = { read = fFG, write = SetFG, default = clHighLightText };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 };
 enum TSynGutterBorderStyle {gbsNone,
                             gbsMiddle,
@@ -178,12 +178,12 @@ public:
 	static const int MarginX; //  = 2;
 private:
 	TSynGutterBandKind FKind;
-	bool fVisible;
+	bool FVisible;
 	int FWidth;
 	TSynGutterBandBackground FBackground;
 	TGutterBandPaintEvent FOnPaintLines;
 	TGutterBandClickEvent FOnClick;
-	TGutterMouseCursorEvent fOnMouseCursor;
+	TGutterMouseCursorEvent FOnMouseCursor;
 	TSynGutter* __fastcall GetSynGutter();
 	TPersistent* __fastcall GetEditor();
 	void __fastcall DoPaintLines(TCanvas* Canvas, const TRect& ClipR, int FirstRow, int LastRow);
@@ -223,8 +223,8 @@ public:
 	__property int Width = { read = GetWidth, write = SetWidth, stored = IsWidthStored };
 	__property TSynGutterBandBackground Background = { read = FBackground, write = SetBackground, default = /*# gbbGutter */ 1 };
 	__property TGutterBandPaintEvent OnPaintLines = { read = FOnPaintLines, write = SetOnPaintLines };
-	__property TGutterBandClickEvent OnClick = { read = FOnClick, write = SetOnClick };
-	__property TGutterMouseCursorEvent OnMouseCursor = { read = fOnMouseCursor, write = SetOnMouseCursor };
+	__property TGutterBandClickEvent OnCLick = { read = FOnClick, write = SetOnClick };
+	__property TGutterMouseCursorEvent OnMouseCursor = { read = FOnMouseCursor, write = SetOnMouseCursor };
 };
 
 class TSynBandsCollection : public System::Classes::TOwnedCollection
@@ -248,26 +248,26 @@ private:
 	int FUpdateCount;
 	int FCurrentPPI;
 	TFont* FFont;
-	int fCharWidth;
+	int FCharWidth;
 	TColor FColor;
 	TColor FBorderColor;
-	int fDigitCount;
-	bool fLeadingZeros;
-	bool fZeroStart;
-	TNotifyEvent FOnChange;
+	int FDigitCount;
+	bool FLeadingZeros;
+	bool FZeroStart;
+	TNotifyEvent fOnChange;
 	TCursor FCursor;
-	bool fVisible;
-	bool fShowLineNumbers;
-	bool fUseFontStyle;
+	bool FVisible;
+	bool FShowLineNumbers;
+	bool FUseFontStyle;
 	bool FAutoSize;
-	int fAutoSizeDigitCount;
+	int FAutoSizeDigitCount;
 	TSynGutterBorderStyle FBorderStyle;
-	int fLineNumberStart;
-	bool fGradient;
+	int FLineNumberStart;
+	bool FGradient;
 	TColor FGradientStartColor;
 	TColor FGradientEndColor;
-	int fGradientSteps;
-	TSynInternalImage* fInternalImage;
+	int FGradientSteps;
+	TSynInternalImage* FInternalImage;
 	TSynBandsCollection* FBands;
 	void __fastcall SetAutoSize(bool Value);
 	void __fastcall SetBorderColor(const TColor Value);
@@ -308,7 +308,7 @@ public:
 	int __fastcall RealGutterWidth();
 	TSynGutterBand* __fastcall BandAtX(int X);
     // ++ DPI-Aware
-	virtual void __fastcall ChangeScale(int m, int D);
+	virtual void __fastcall ChangeScale(int M, int D);
     // -- DPI-Aware
 	__property TSynInternalImage* InternalImage = { read = GetInternalImage };
     // Band returns the first band of a given kind
@@ -320,33 +320,33 @@ public:
 	__property TColor Color = { read = FColor, write = SetColor, default = clBtnFace };
 	__property TColor BorderColor = { read = FBorderColor, write = SetBorderColor, default = clWindow };
 	__property TCursor Cursor = { read = FCursor, write = FCursor, default = /*# crDefault */ 0 };
-	__property int DigitCount = { read = fDigitCount, write = SetDigitCount, default = 4 };
+	__property int DigitCount = { read = FDigitCount, write = SetDigitCount, default = 4 };
 	__property TFont* Font = { read = FFont, write = SetFont };
-	__property bool ShowLineNumbers = { read = fShowLineNumbers, write = SetShowLineNumbers, default = false };
-	__property bool LeadingZeros = { read = fLeadingZeros, write = SetLeadingZeros, default = false };
-	__property bool UseFontStyle = { read = fUseFontStyle, write = SetUseFontStyle, default = true };
-	__property bool Visible = { read = fVisible, write = SetVisible, default = true };
-	__property bool ZeroStart = { read = fZeroStart, write = SetZeroStart, default = false };
-	__property int LineNumberStart = { read = fLineNumberStart, write = SetLineNumberStart, default = 1 };
-	__property bool Gradient = { read = fGradient, write = SetGradient, default = false };
+	__property bool ShowLineNumbers = { read = FShowLineNumbers, write = SetShowLineNumbers, default = false };
+	__property bool LeadingZeros = { read = FLeadingZeros, write = SetLeadingZeros, default = false };
+	__property bool UseFontStyle = { read = FUseFontStyle, write = SetUseFontStyle, default = true };
+	__property bool Visible = { read = FVisible, write = SetVisible, default = true };
+	__property bool ZeroStart = { read = FZeroStart, write = SetZeroStart, default = false };
+	__property int LineNumberStart = { read = FLineNumberStart, write = SetLineNumberStart, default = 1 };
+	__property bool Gradient = { read = FGradient, write = SetGradient, default = false };
 	__property TColor GradientStartColor = { read = FGradientStartColor, write = SetGradientStartColor, default = clWindow };
 	__property TColor GradientEndColor = { read = FGradientEndColor, write = SetGradientEndColor, default = clBtnFace };
-	__property int GradientSteps = { read = fGradientSteps, write = SetGradientSteps, default = 48 };
+	__property int GradientSteps = { read = FGradientSteps, write = SetGradientSteps, default = 48 };
 	__property TSynBandsCollection* Bands = { read = FBands, write = SetBands };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 };
 
 class TSynBookMarkOpt : public System::Classes::TPersistent
 {
 private:
-	TCustomImageList* fBookmarkImages;
-	bool fDrawBookmarksFirst;
-	bool fEnableKeys;
-	bool fGlyphsVisible;
-	int fLeftMargin;
+	TCustomImageList* FBookmarkImages;
+	bool FDrawBookmarksFirst;
+	bool FEnableKeys;
+	bool FGlyphsVisible;
+	int FLeftMargin;
 	TComponent* FOwner;
-	int FXOffset;
-	TNotifyEvent FOnChange;
+	int FXoffset;
+	TNotifyEvent fOnChange;
 	void __fastcall SetBookmarkImages(TCustomImageList* const Value);
 	void __fastcall SetDrawBookmarksFirst(bool Value);
 	void __fastcall SetGlyphsVisible(bool Value);
@@ -358,17 +358,17 @@ public:
 	__fastcall TSynBookMarkOpt(TComponent* AOwner);
 	virtual void __fastcall Assign(TPersistent* Source);
     // ++ DPI-Aware
-	virtual void __fastcall ChangeScale(int m, int D);
+	virtual void __fastcall ChangeScale(int M, int D);
     // -- DPI-Aware
 __published:
 public:
-	__property TCustomImageList* BookmarkImages = { read = fBookmarkImages, write = SetBookmarkImages };
-	__property bool DrawBookmarksFirst = { read = fDrawBookmarksFirst, write = SetDrawBookmarksFirst, default = true };
-	__property bool EnableKeys = { read = fEnableKeys, write = fEnableKeys, default = true };
-	__property bool GlyphsVisible = { read = fGlyphsVisible, write = SetGlyphsVisible, default = true };
-	__property int LeftMargin = { read = fLeftMargin, write = SetLeftMargin, default = 2 };
-	__property int XOffset = { read = FXOffset, write = SetXOffset, default = 12 };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TCustomImageList* BookmarkImages = { read = FBookmarkImages, write = SetBookmarkImages };
+	__property bool DrawBookmarksFirst = { read = FDrawBookmarksFirst, write = SetDrawBookmarksFirst, default = true };
+	__property bool EnableKeys = { read = FEnableKeys, write = FEnableKeys, default = true };
+	__property bool GlyphsVisible = { read = FGlyphsVisible, write = SetGlyphsVisible, default = true };
+	__property int LeftMargin = { read = FLeftMargin, write = SetLeftMargin, default = 2 };
+	__property int Xoffset = { read = FXoffset, write = SetXOffset, default = 12 };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 public:
 	__fastcall TSynBookMarkOpt();
 };
@@ -376,10 +376,10 @@ public:
 class TSynGlyph : public System::Classes::TPersistent
 {
 private:
-	bool fVisible;
-	TBitmap* fInternalGlyph;
+	bool FVisible;
+	TBitmap* FInternalGlyph;
 	TBitmap* FGlyph;
-	TNotifyEvent FOnChange;
+	TNotifyEvent fOnChange;
 	void __fastcall SetGlyph(TBitmap* Value);
 	void __fastcall GlyphChange(TObject* Sender);
 	void __fastcall SetVisible(bool Value);
@@ -388,20 +388,20 @@ private:
 public:
 	typedef System::Classes::TPersistent inherited;
 	#include "SynEditMiscClasses_friends.inc"
-	__fastcall TSynGlyph(THandle aModule, const String AName);
+	__fastcall TSynGlyph(THandle aModule, const String aName);
 	virtual __fastcall ~TSynGlyph();
-	virtual void __fastcall Assign(TPersistent* ASource);
-	void __fastcall Draw(TCanvas* ACanvas, int AX, int AY, int aLineHeight);
+	virtual void __fastcall Assign(TPersistent* aSource);
+	void __fastcall Draw(TCanvas* aCanvas, int aX, int aY, int aLineHeight);
 	__property int Width = { read = GetWidth };
 	__property int Height = { read = GetHeight };
     // ++ DPI-Aware
-	virtual void __fastcall ChangeScale(int m, int D);
+	virtual void __fastcall ChangeScale(int M, int D);
     // -- DPI-Aware
 __published:
 public:
 	__property TBitmap* Glyph = { read = FGlyph, write = SetGlyph };
-	__property bool Visible = { read = fVisible, write = SetVisible, default = true };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property bool Visible = { read = FVisible, write = SetVisible, default = true };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 public:
 	__fastcall TSynGlyph();
 };
@@ -438,7 +438,7 @@ private:
 	TSynExceptionEvent FExceptionHandler;
 protected:
 	virtual void __fastcall DoFire(const System::TMethod& AEvent){} // = 0;
-	virtual bool __fastcall DoHandleException(Exception* e);
+	virtual bool __fastcall DoHandleException(Exception* E);
 	__property TSynExceptionEvent ExceptionHandler = { read = FExceptionHandler, write = FExceptionHandler };
 public:
 	__fastcall TSynMethodChain();
@@ -483,9 +483,9 @@ private:
 public:
 	__fastcall TSynInternalImage(THandle aModule, const String Name, int Count);
 	virtual __fastcall ~TSynInternalImage();
-	void __fastcall Draw(TCanvas* ACanvas, int Number, int X, int Y, int LineHeight);
+	void __fastcall Draw(TCanvas* aCanvas, int Number, int X, int Y, int LineHeight);
     // ++ DPI-Aware
-	virtual void __fastcall ChangeScale(int m, int D);
+	virtual void __fastcall ChangeScale(int M, int D);
     // -- DPI-Aware
 	__fastcall TSynInternalImage();
 };
@@ -525,8 +525,8 @@ private:
 protected:
 	virtual void __fastcall CreateParams(TCreateParams& Params);
 	DYNAMIC void __fastcall DoExit();
-	DYNAMIC void __fastcall KeyDown(WORD& key, TShiftState Shift);
-	DYNAMIC void __fastcall KeyUp(WORD& key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyDown(WORD& Key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyUp(WORD& Key, TShiftState Shift);
 	DYNAMIC void __fastcall MouseDown(TMouseButton Button, TShiftState Shift, int X, int Y);
 	virtual void __fastcall Paint();
 public:
@@ -579,13 +579,13 @@ class TBetterRegistry : public System::Win::Registry::TRegistry
 	#include "SynEditMiscClasses_friends.inc"
 public:
 	typedef System::Win::Registry::TRegistry inherited;
-	bool __fastcall OpenKeyReadOnly(const String key);
+	bool __fastcall OpenKeyReadOnly(const String Key);
 	__fastcall TBetterRegistry();
 	__fastcall TBetterRegistry(unsigned long AAccess);
 };
 
   // ++ DPI-Aware
-void __fastcall ResizeBitmap(TBitmap* BITMAP, int NewWidth, int NewHeight);
+void __fastcall ResizeBitmap(TBitmap* Bitmap, int NewWidth, int NewHeight);
 // -- DPI-Aware
 
 

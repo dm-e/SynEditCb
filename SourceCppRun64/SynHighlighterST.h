@@ -152,7 +152,7 @@ class TSynSTSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
 	bool fAsmStart;
-	TRangeState FRange;
+	TRangeState fRange;
 	TIdentFuncTableFunc fIdentFuncTable[211/*# range 0..210*/];
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
@@ -166,7 +166,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AddressOpProc();
 	void __fastcall AsciiCharProc();
@@ -183,7 +183,7 @@ private:
 	void __fastcall NumberProc();
 	void __fastcall PointProc();
 	void __fastcall RoundOpenProc();
-	void __fastcall SemiColonProc();
+	void __fastcall SemicolonProc();
 	void __fastcall SlashProc();
 	void __fastcall SpaceProc();
 	void __fastcall StringProc();

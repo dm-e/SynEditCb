@@ -38,7 +38,7 @@ public:
 	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
-	int fStartPos;
+	int FStartPos;
 	String FOldValue;
 	String FNewValue;
 	TSynLineChangeFlags FChangeFlags;
@@ -87,8 +87,8 @@ class TSynCaretAndSelectionUndoItem : public TSynUndoItem
 public:
 	typedef TSynUndoItem inherited;
 private:
-	TBufferCoord fBlockBegin;
-	TBufferCoord fBlockEnd;
+	TBufferCoord FBlockBegin;
+	TBufferCoord FBlockEnd;
 public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
@@ -108,7 +108,7 @@ protected:
 	virtual void __fastcall LinesInserted(int FirstLine, int Count);
 	virtual void __fastcall LinesBeforeDeleted(int FirstLine, int Count);
 	virtual void __fastcall LinesDeleted(int FirstLine, int Count);
-	virtual void __fastcall LinePut(int AIndex, const String OldLine);
+	virtual void __fastcall LinePut(int aIndex, const String OldLine);
 public:
 	__fastcall TSynUndoPlugin(TSynEditUndo* SynEditUndo, TCustomSynEdit* Editor);
 	__fastcall TSynUndoPlugin(TCustomSynEdit* AOwner) : inherited(AOwner) {}
@@ -123,15 +123,15 @@ public:
 	typedef TObjectStack__1<TSynUndoItem*> inherited;
 protected:
 	TSynEditUndo* FOwner;
-	int fBlockChangeNumber;
-	int fNextChangeNumber;
-	bool fFullUndoImposible;
+	int FBlockChangeNumber;
+	int FNextChangeNumber;
+	bool FFullUndoImposible;
 	void __fastcall EnsureMaxEntries();
 	int __fastcall NextChangeNumber();
 public:
 	__fastcall TSynEditUndoList(TSynEditUndo* Owner);
 	void __fastcall Push(TSynUndoItem* const Value);
-	__property int BlockChangeNumber = { read = fBlockChangeNumber, write = fBlockChangeNumber };
+	__property int BlockChangeNumber = { read = FBlockChangeNumber, write = FBlockChangeNumber };
 	__fastcall TSynEditUndoList() {}
 	__fastcall TSynEditUndoList(bool AOwnsObjects) : inherited(AOwnsObjects) {}
 	__fastcall TSynEditUndoList(TEnumerable__1<TSynUndoItem*>* const Collection, bool AOwnsObjects = true) : inherited(Collection, AOwnsObjects) {}
@@ -146,13 +146,13 @@ public:
 private:
 	TSynUndoPlugin* FPlugin;
 	bool FGroupUndo;
-	int fBlockCount;
+	int FBlockCount;
 	int FLockCount;
-	int fInitialChangeNumber;
-	int fMaxUndoActions;
+	int FInitialChangeNumber;
+	int FMaxUndoActions;
 	bool FBlockStartModified;
-	TSynEditUndoList* fUndoList;
-	TSynEditUndoList* fRedoList;
+	TSynEditUndoList* FUndoList;
+	TSynEditUndoList* FRedoList;
 	TNotifyEvent FOnModifiedChanged;
 	bool FInsideUndoRedo;
 	TSynEditorCommand FCommandProcessed;
@@ -189,34 +189,34 @@ public:
 __fastcall TSynEditUndoList::TSynEditUndoList(TSynEditUndo* Owner)
  : inherited(true),
 			FOwner(Owner),
-			fBlockChangeNumber(0),
-			fNextChangeNumber(0),
-			fFullUndoImposible(false)
+			FBlockChangeNumber(0),
+			FNextChangeNumber(0),
+			FFullUndoImposible(false)
 {
-	fNextChangeNumber = 1;
+	FNextChangeNumber = 1;
 }
 
 void __fastcall TSynEditUndoList::EnsureMaxEntries()
 {
 	int KeepCount = 0;
 	System::TArray<TSynUndoItem*> ItemArray;
-	__int64 i = 0;
-	if(FOwner->fMaxUndoActions <= 0)
+	__int64 I = 0;
+	if(FOwner->FMaxUndoActions <= 0)
 		return;
-	if(Count > FOwner->fMaxUndoActions)
+	if(Count > FOwner->FMaxUndoActions)
 	{
 		__int64 stop = 0;
-		fFullUndoImposible = true;
-		KeepCount = ((int)(FOwner->fMaxUndoActions / /*div*/ 4)) * 3;
+		FFullUndoImposible = true;
+		KeepCount = ((int)(FOwner->FMaxUndoActions / /*div*/ 4)) * 3;
 		ItemArray = ToArray();
-		for(stop = KeepCount, i = 1; i <= stop; i++)
+		for(stop = KeepCount, I = 1; I <= stop; I++)
 		{
 			Extract();
 		}
 		Clear();  // Destroys remaining items
-		for(stop = ItemArray.Length - 1, i = ItemArray.Length - KeepCount; i <= stop; i++)
+		for(stop = ItemArray.Length - 1, I = ItemArray.Length - KeepCount; I <= stop; I++)
 		{
-			Push(DynamicArrayPointer(ItemArray, i));
+			Push(ItemArray[I]);
 		}
 	}
 }
@@ -224,15 +224,15 @@ void __fastcall TSynEditUndoList::EnsureMaxEntries()
 int __fastcall TSynEditUndoList::NextChangeNumber()
 {
 	int result = 0;
-	result = fNextChangeNumber;
-	++fNextChangeNumber;
+	result = FNextChangeNumber;
+	++FNextChangeNumber;
 	return result;
 }
 
 void __fastcall TSynEditUndoList::Push(TSynUndoItem* const Value)
 {
-	if(fBlockChangeNumber != 0)
-		Value->ChangeNumber = fBlockChangeNumber;
+	if(FBlockChangeNumber != 0)
+		Value->ChangeNumber = FBlockChangeNumber;
 	else
 		Value->ChangeNumber = NextChangeNumber();
 	inherited::Push(Value);
@@ -246,86 +246,86 @@ void __fastcall TSynEditUndo::AddUndoItem(TSynUndoItem* Item)
 	bool OldModified = false;
 	Assert(!FInsideUndoRedo);
 	OldModified = GetModified();
-	fUndoList->Push(Item);
-	fRedoList->Clear();
+	FUndoList->Push(Item);
+	FRedoList->Clear();
   // Do not sent unnecessary notifications
-	if((fBlockCount == 0) && (OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
+	if((FBlockCount == 0) && (OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
 		FOnModifiedChanged(this);
 }
 
 void __fastcall TSynEditUndo::AddGroupBreak()
 {
-	if((fUndoList->Count > 0) && (fBlockCount == 0))
-		fUndoList->Peek()->GroupBreak = true;
+	if((FUndoList->Count > 0) && (FBlockCount == 0))
+		FUndoList->Peek()->GroupBreak = true;
 }
 
 void __fastcall TSynEditUndo::BeginBlock(TControl* Editor)
 {
-	++fBlockCount;
-	if(fBlockCount == 1) // it was 0
+	++FBlockCount;
+	if(FBlockCount == 1) // it was 0
 	{
 		FBlockStartModified = GetModified();
-		fUndoList->fBlockChangeNumber = fUndoList->NextChangeNumber();
+		FUndoList->FBlockChangeNumber = FUndoList->NextChangeNumber();
     // So that position is restored after Redo
 		FBlockSelRestoreItem = new TSynCaretAndSelectionUndoItem((TCustomSynEdit*) Editor);
-		fUndoList->Push(FBlockSelRestoreItem);
+		FUndoList->Push(FBlockSelRestoreItem);
 	}
 }
 
 void __fastcall TSynEditUndo::Clear()
 {
-	fUndoList->Clear();
-	fRedoList->Clear();
+	FUndoList->Clear();
+	FRedoList->Clear();
 }
 
 __fastcall TSynEditUndo::TSynEditUndo(TCustomSynEdit* Editor)
  : FPlugin(new TSynUndoPlugin(this, Editor)),
 			FGroupUndo(false),
-			fBlockCount(0),
+			FBlockCount(0),
 			FLockCount(0),
-			fInitialChangeNumber(0),
-			fMaxUndoActions(0),
+			FInitialChangeNumber(0),
+			FMaxUndoActions(0),
 			FBlockStartModified(false),
-			fUndoList(nullptr),
-			fRedoList(nullptr),
+			FUndoList(nullptr),
+			FRedoList(nullptr),
 			FInsideUndoRedo(false),
 			FCommandProcessed(0),
 			FBlockSelRestoreItem(nullptr)
 {
 	//# inherited::Create();
 	FGroupUndo = true;
-	fMaxUndoActions = 0;
-	fUndoList = new TSynEditUndoList(this);
-	fRedoList = new TSynEditUndoList(this);
+	FMaxUndoActions = 0;
+	FUndoList = new TSynEditUndoList(this);
+	FRedoList = new TSynEditUndoList(this);
 }
 
 __fastcall TSynEditUndo::~TSynEditUndo()
 {
-	delete fUndoList;
-	delete fRedoList;
+	delete FUndoList;
+	delete FRedoList;
 	// inherited;
 }
 
 void __fastcall TSynEditUndo::EndBlock(TControl* Editor)
 {
 	TSynCaretAndSelectionUndoItem* Item = nullptr;
-	Assert(fBlockCount > 0);
-	if(fBlockCount > 0)
+	Assert(FBlockCount > 0);
+	if(FBlockCount > 0)
 	{
-		--fBlockCount;
-		if(fBlockCount == 0)
+		--FBlockCount;
+		if(FBlockCount == 0)
 		{
-			if(fUndoList->Peek() == FBlockSelRestoreItem)
+			if(FUndoList->Peek() == FBlockSelRestoreItem)
         // No undo items added from BlockBegin to BlockEnd
-				fUndoList->Pop();
+				FUndoList->Pop();
 			else
 
         // So that position is restored after Redo
 			{
 				Item = new TSynCaretAndSelectionUndoItem((TCustomSynEdit*) Editor);
-				fUndoList->Push(Item);
+				FUndoList->Push(Item);
 			}
-			fUndoList->fBlockChangeNumber = 0;
+			FUndoList->FBlockChangeNumber = 0;
 			AddGroupBreak();
 			if(FBlockStartModified ^ GetModified() && ASSIGNED(FOnModifiedChanged))
 				FOnModifiedChanged(this);
@@ -336,31 +336,31 @@ void __fastcall TSynEditUndo::EndBlock(TControl* Editor)
 bool __fastcall TSynEditUndo::GetCanUndo()
 {
 	bool result = false;
-	result = fUndoList->Count > 0;
+	result = FUndoList->Count > 0;
 	return result;
 }
 
 bool __fastcall TSynEditUndo::GetFullUndoImposible()
 {
 	bool result = false;
-	result = fUndoList->fFullUndoImposible;
+	result = FUndoList->FFullUndoImposible;
 	return result;
 }
 
 int __fastcall TSynEditUndo::GetMaxUndoActions()
 {
 	int result = 0;
-	result = fMaxUndoActions;
+	result = FMaxUndoActions;
 	return result;
 }
 
 bool __fastcall TSynEditUndo::GetModified()
 {
 	bool result = false;
-	if(fUndoList->Count == 0)
-		result = fInitialChangeNumber != 0;
+	if(FUndoList->Count == 0)
+		result = FInitialChangeNumber != 0;
 	else
-		result = fUndoList->Peek()->ChangeNumber != fInitialChangeNumber;
+		result = FUndoList->Peek()->ChangeNumber != FInitialChangeNumber;
 	return result;
 }
 
@@ -381,7 +381,7 @@ bool __fastcall TSynEditUndo::IsLocked()
 bool __fastcall TSynEditUndo::GetCanRedo()
 {
 	bool result = false;
-	result = fRedoList->Count > 0;
+	result = FRedoList->Count > 0;
 	return result;
 }
 
@@ -398,18 +398,18 @@ void __fastcall TSynEditUndo::Redo(TControl* Editor)
 	bool OldModified = false;
 	bool FKeepGoing = false;
 	bool LastItemHasGroupBreak = false;
-	Assert((fBlockCount == 0) && (fRedoList->fBlockChangeNumber == 0) && (fRedoList->fBlockChangeNumber == 0));
-	if(fRedoList->Count > 0)
+	Assert((FBlockCount == 0) && (FRedoList->FBlockChangeNumber == 0) && (FRedoList->FBlockChangeNumber == 0));
+	if(FRedoList->Count > 0)
 	{
-		Item = fRedoList->Peek();
+		Item = FRedoList->Peek();
 		OldModified = GetModified();
 		OldChangeNumber = Item->ChangeNumber;
-		fUndoList->BlockChangeNumber = fUndoList->NextChangeNumber();
+		FUndoList->BlockChangeNumber = FUndoList->NextChangeNumber();
 		try
 		{
 			do
 			{
-				Item = fRedoList->Extract();
+				Item = FRedoList->Extract();
 				LastItemHasGroupBreak = Item->GroupBreak;
 				LastItem = Item;
 				FInsideUndoRedo = true;
@@ -422,11 +422,11 @@ void __fastcall TSynEditUndo::Redo(TControl* Editor)
 					FInsideUndoRedo = false;
 				}
         // Move it to the UndoList
-				fUndoList->Push(Item);
-				if(fRedoList->Count == 0)
+				FUndoList->Push(Item);
+				if(FRedoList->Count == 0)
 					break;
 				else
-					Item = fRedoList->Peek();
+					Item = FRedoList->Peek();
 				if(Item->ChangeNumber == OldChangeNumber)
 					FKeepGoing = true;
 				else
@@ -443,7 +443,7 @@ void __fastcall TSynEditUndo::Redo(TControl* Editor)
 		{
 			if((OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
 				FOnModifiedChanged(this);
-			fUndoList->BlockChangeNumber = 0;
+			FUndoList->BlockChangeNumber = 0;
 		}
 	}
 }
@@ -460,11 +460,11 @@ void __fastcall TSynEditUndo::SetGroupUndo(bool Value)
 
 void __fastcall TSynEditUndo::SetMaxUndoActions(int Value)
 {
-	if(Value != fMaxUndoActions)
+	if(Value != FMaxUndoActions)
 	{
-		fMaxUndoActions = Value;
-		fUndoList->EnsureMaxEntries();
-		fRedoList->EnsureMaxEntries();
+		FMaxUndoActions = Value;
+		FUndoList->EnsureMaxEntries();
+		FRedoList->EnsureMaxEntries();
 	}
 }
 
@@ -472,22 +472,22 @@ void __fastcall TSynEditUndo::SetModified(bool Value)
 {
 	if(!Value)
 	{
-		if(fUndoList->Count == 0)
-			fInitialChangeNumber = 0;
+		if(FUndoList->Count == 0)
+			FInitialChangeNumber = 0;
 		else
-			fInitialChangeNumber = fUndoList->Peek()->ChangeNumber;
+			FInitialChangeNumber = FUndoList->Peek()->ChangeNumber;
 	}
 	else
 	{
-		if(fUndoList->Count == 0)
+		if(FUndoList->Count == 0)
 		{
-			if(fInitialChangeNumber == 0)
-				fInitialChangeNumber = -1;
+			if(FInitialChangeNumber == 0)
+				FInitialChangeNumber = -1;
 		}
 		else
 		{
-			if(fUndoList->Peek()->ChangeNumber == fInitialChangeNumber)
-				fInitialChangeNumber = -1;
+			if(FUndoList->Peek()->ChangeNumber == FInitialChangeNumber)
+				FInitialChangeNumber = -1;
 		}
 	}
 }
@@ -504,18 +504,18 @@ void __fastcall TSynEditUndo::Undo(TControl* Editor)
 	int OldChangeNumber = 0;
 	bool OldModified = false;
 	bool FKeepGoing = false;
-	Assert((fBlockCount == 0) && (fRedoList->fBlockChangeNumber == 0) && (fRedoList->fBlockChangeNumber == 0));
-	if(fUndoList->Count > 0)
+	Assert((FBlockCount == 0) && (FRedoList->FBlockChangeNumber == 0) && (FRedoList->FBlockChangeNumber == 0));
+	if(FUndoList->Count > 0)
 	{
-		Item = fUndoList->Peek();
+		Item = FUndoList->Peek();
 		OldModified = GetModified();
 		OldChangeNumber = Item->ChangeNumber;
-		fRedoList->BlockChangeNumber = fRedoList->NextChangeNumber();
+		FRedoList->BlockChangeNumber = FRedoList->NextChangeNumber();
 		try
 		{
 			do
 			{
-				Item = fUndoList->Extract();
+				Item = FUndoList->Extract();
 				LastItem = Item;
 				FInsideUndoRedo = true;
 				try
@@ -527,11 +527,11 @@ void __fastcall TSynEditUndo::Undo(TControl* Editor)
 					FInsideUndoRedo = false;
 				}
         // Move it to the RedoList
-				fRedoList->Push(Item);
-				if(fUndoList->Count == 0)
+				FRedoList->Push(Item);
+				if(FUndoList->Count == 0)
 					break;
 				else
-					Item = fUndoList->Peek();
+					Item = FUndoList->Peek();
 				if(Item->ChangeNumber == OldChangeNumber)
 					FKeepGoing = true;
 				else
@@ -548,7 +548,7 @@ void __fastcall TSynEditUndo::Undo(TControl* Editor)
 		{
 			if((OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
 				FOnModifiedChanged(this);
-			fRedoList->BlockChangeNumber = 0;
+			FRedoList->BlockChangeNumber = 0;
 		}
 	}
 }
@@ -571,8 +571,8 @@ ISynEditUndo* __fastcall CreateSynEditUndo(TCustomSynEdit* Editor)
 /* TSynCaretAndSelectionUndoItem */
 
 __fastcall TSynCaretAndSelectionUndoItem::TSynCaretAndSelectionUndoItem(TCustomSynEdit* Editor)
- : fBlockBegin(Editor->BlockBegin),
-			fBlockEnd(Editor->BlockEnd)
+ : FBlockBegin(Editor->BlockBegin),
+			FBlockEnd(Editor->BlockEnd)
 {
 	//# inherited::Create();
 	FCaret = Editor->CaretXY;
@@ -582,12 +582,12 @@ void __fastcall TSynCaretAndSelectionUndoItem::Redo(TCustomSynEdit* Editor)
 {
 
   // Same as Undo
-	Editor->SetCaretAndSelection(FCaret, fBlockBegin, fBlockEnd);
+	Editor->SetCaretAndSelection(FCaret, FBlockBegin, FBlockEnd);
 }
 
 void __fastcall TSynCaretAndSelectionUndoItem::Undo(TCustomSynEdit* Editor)
 {
-	Editor->SetCaretAndSelection(FCaret, fBlockBegin, fBlockEnd);
+	Editor->SetCaretAndSelection(FCaret, FBlockBegin, FBlockEnd);
 }
 
 /* TSynLinesDeletedUndoItem */
@@ -616,13 +616,13 @@ void __fastcall TSynLinesDeletedUndoItem::Undo(TCustomSynEdit* Editor)
 __fastcall TSynLinesInsertedUndoItem::TSynLinesInsertedUndoItem(TCustomSynEdit* Editor, int Index, int Count)
  : FIndex(Index)
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
 	//# inherited::Create();
 	FLines.Length = Count;
-	for(stop = Count - 1, i = 0; i <= stop; i++)
+	for(stop = Count - 1, I = 0; I <= stop; I++)
 	{
-		FLines[i] = Editor->Lines->Strings[Index + i];
+		FLines[I] = Editor->Lines->Strings[Index + I];
 	}
 }
 
@@ -643,7 +643,7 @@ void __fastcall TSynLinesInsertedUndoItem::Undo(TCustomSynEdit* Editor)
 bool __fastcall TSynLinePutUndoItem::GroupWith(TSynLinePutUndoItem* Item)
 {
 	bool result = false;
-	if((FNewValue.Length() == Item->FNewValue.Length()) && (FOldValue.Length() == Item->FOldValue.Length()) && (FOldValue.Length() <= 1) && (FNewValue.Length() <= 1) && (Abs(fStartPos - Item->fStartPos) <= 1))
+	if((FNewValue.Length() == Item->FNewValue.Length()) && (FOldValue.Length() == Item->FOldValue.Length()) && (FOldValue.Length() <= 1) && (FNewValue.Length() <= 1) && (Abs(FStartPos - Item->FStartPos) <= 1))
 		result = true;
 	else
 		result = false;
@@ -652,9 +652,9 @@ bool __fastcall TSynLinePutUndoItem::GroupWith(TSynLinePutUndoItem* Item)
 
 __fastcall TSynLinePutUndoItem::TSynLinePutUndoItem(TCustomSynEdit* Editor, int Index, String OldLine, TSynEditorCommand Command)
  : FIndex(Index),
-			fStartPos(1),
-			FOldValue(OldLine.SubString(fStartPos, Len1)),
-			FNewValue(Line.SubString(fStartPos, Len2)),
+			FStartPos(1),
+			FOldValue(OldLine.SubString(FStartPos, Len1)),
+			FNewValue(Line.SubString(FStartPos, Len2)),
 			FCommandProcessed(0)
 {
 	int Len1 = 0;
@@ -665,14 +665,14 @@ __fastcall TSynLinePutUndoItem::TSynLinePutUndoItem(TCustomSynEdit* Editor, int 
 	Len1 = OldLine.Length();
 	Len2 = Line.Length();
   // Compare from start
-	while((Len1 > 0) && (Len2 > 0) && (OldLine[fStartPos] == Line[fStartPos]))
+	while((Len1 > 0) && (Len2 > 0) && (OldLine[FStartPos] == Line[FStartPos]))
 	{
 		--Len1;
 		--Len2;
-		++fStartPos;
+		++FStartPos;
 	}  
   // Compare from end
-	while((Len1 > 0) && (Len2 > 0) && (OldLine[Len1 + fStartPos - 1] == Line[Len2 + fStartPos - 1]))
+	while((Len1 > 0) && (Len2 > 0) && (OldLine[Len1 + FStartPos - 1] == Line[Len2 + FStartPos - 1]))
 	{
 		--Len1;
 		--Len2;
@@ -685,24 +685,24 @@ void __fastcall TSynLinePutUndoItem::Redo(TCustomSynEdit* Editor)
 	int Char = 0;
 	Line = Editor->Lines->Strings[FIndex];
   // Delete New
-	Line.Delete(fStartPos, 	FOldValue.Length());
-	Line.Insert(FNewValue,	fStartPos);
+	Line.Delete(FStartPos, 	FOldValue.Length());
+	Line.Insert(FNewValue,	FStartPos);
 	Editor->Lines->Strings[FIndex] = Line;
 	switch(FCommandProcessed)
 	{
 		case ecChar:
 		if((FOldValue.Length() == 1) && (FNewValue.Length() == 1))  // Typing in Insert Mode
-			Char = fStartPos;
+			Char = FStartPos;
 		else
-			Char = fStartPos + FNewValue.Length();
+			Char = FStartPos + FNewValue.Length();
 		break;
 		case ecDeleteChar:
 		case ecDeleteWord:
 		case ecDeleteEOL:
-		Char = fStartPos;
+		Char = FStartPos;
 		break;
 		default:
-		Char = fStartPos + FNewValue.Length();
+		Char = FStartPos + FNewValue.Length();
 		break;
 	}
 	FCaret = BufferCoord(Char, FIndex + 1);
@@ -714,25 +714,25 @@ void __fastcall TSynLinePutUndoItem::Undo(TCustomSynEdit* Editor)
 	int Char = 0;
 	Line = Editor->Lines->Strings[FIndex];
   // Delete New
-	Line.Delete(fStartPos, 	FNewValue.Length());
-	Line.Insert(FOldValue,	fStartPos);
+	Line.Delete(FStartPos, 	FNewValue.Length());
+	Line.Insert(FOldValue,	FStartPos);
 	Editor->Lines->Strings[FIndex] = Line;
-	((TSynEditStringList*) Editor->Lines)->ChangeFlags[FIndex] = (TSynLineChangeFlag) FChangeFlags;
+	((TSynEditStringList*) Editor->Lines)->ChangeFlags[FIndex] = FChangeFlags;
 	switch(FCommandProcessed)
 	{
 		case ecChar:
 		if((FOldValue.Length() == 1) && (FNewValue.Length() == 1))   // Typing in Insert Mode
-			Char = fStartPos;
+			Char = FStartPos;
 		else
-			Char = fStartPos + FOldValue.Length();
+			Char = FStartPos + FOldValue.Length();
 		break;
 		case ecDeleteChar:
 		case ecDeleteWord:
 		case ecDeleteEOL:
-		Char = fStartPos;
+		Char = FStartPos;
 		break;
 		default:
-		Char = fStartPos + FOldValue.Length();
+		Char = FStartPos + FOldValue.Length();
 		break;
 	}
 	FCaret = BufferCoord(Char, FIndex + 1);
@@ -746,32 +746,32 @@ __fastcall TSynUndoPlugin::TSynUndoPlugin(TSynEditUndo* SynEditUndo, TCustomSynE
 {
 }
 
-void __fastcall TSynUndoPlugin::LinePut(int AIndex, const String OldLine)
+void __fastcall TSynUndoPlugin::LinePut(int aIndex, const String OldLine)
 {
 	String Line;
 	TSynLinePutUndoItem* Item = nullptr;
 	if(Editor->IsChained() || FSynEditUndo->IsLocked() || FSynEditUndo->FInsideUndoRedo)
 		return;
-	Line = Editor->Lines->Strings[AIndex];
+	Line = Editor->Lines->Strings[aIndex];
 	if(Line != OldLine)
 	{
-		Item = new TSynLinePutUndoItem(Editor, AIndex, OldLine, FSynEditUndo->FCommandProcessed);
-		Item->FChangeFlags = ((TSynEditStringList*) Editor->Lines)->ChangeFlags[AIndex];
-		((TSynEditStringList*) Editor->Lines)->ChangeFlags[AIndex] = (TSynLineChangeFlag) (Item->FChangeFlags + Syneditundo__1);
+		Item = new TSynLinePutUndoItem(Editor, aIndex, OldLine, FSynEditUndo->FCommandProcessed);
+		Item->FChangeFlags = ((TSynEditStringList*) Editor->Lines)->ChangeFlags[aIndex];
+		((TSynEditStringList*) Editor->Lines)->ChangeFlags[aIndex] = Item->FChangeFlags + Syneditundo__1;
 		FSynEditUndo->AddUndoItem(Item);
 	}
 }
 
 void __fastcall TSynUndoPlugin::LinesBeforeDeleted(int FirstLine, int Count)
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
 	if(Editor->IsChained() || FSynEditUndo->IsLocked() || FSynEditUndo->FInsideUndoRedo)
 		return;
 	FDeletedLines.Length = Count;
-	for(stop = Count - 1, i = 0; i <= stop; i++)
+	for(stop = Count - 1, I = 0; I <= stop; I++)
 	{
-		FDeletedLines[i] = Editor->Lines->Strings[FirstLine + i];
+		FDeletedLines[I] = Editor->Lines->Strings[FirstLine + I];
 	}
 }
 
@@ -796,7 +796,7 @@ void __fastcall TSynUndoPlugin::LinesInserted(int FirstLine, int Count)
   // Consider a file with one empty line as empty
   // Otherwise when you type in a new file and undo it, CanUndo will still
   // return True because the initial insertion will be on the Undo list
-	if((FSynEditUndo->fUndoList->Count == 0) && (Editor->Lines->Count == 1) && (Editor->Lines->Strings[0] == L""))
+	if((FSynEditUndo->FUndoList->Count == 0) && (Editor->Lines->Count == 1) && (Editor->Lines->Strings[0] == L""))
 		return;
 	if(Count > 0)
 	{

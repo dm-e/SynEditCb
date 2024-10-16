@@ -149,7 +149,7 @@ class TMethodList : public System::TObject
 public:
 	typedef System::TObject inherited;
 private:
-	TList* FData;
+	TList* fData;
 	System::TMethod __fastcall GetItem(int Index);
 	int __fastcall GetCount();
 public:
@@ -183,9 +183,9 @@ private:
 public:
 	__fastcall TSynEditKbdHandler();
 	virtual __fastcall ~TSynEditKbdHandler();
-	void __fastcall ExecuteKeyPress(TObject* Sender, WideChar& key);
-	void __fastcall ExecuteKeyDown(TObject* Sender, WORD& key, TShiftState Shift);
-	void __fastcall ExecuteKeyUp(TObject* Sender, WORD& key, TShiftState Shift);
+	void __fastcall ExecuteKeyPress(TObject* Sender, WideChar& Key);
+	void __fastcall ExecuteKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
+	void __fastcall ExecuteKeyUp(TObject* Sender, WORD& Key, TShiftState Shift);
 	void __fastcall ExecuteMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall ExecuteMouseUp(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall ExecuteMouseCursor(TObject* Sender, const TBufferCoord& aLineCharPos, TCursor& aCursor);

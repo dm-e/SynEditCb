@@ -137,7 +137,7 @@ Known Issues:
 class TSynExporterTeX : public Syneditexport::TSynCustomExporter
 {
 private:
-	int FMargin;
+	int fMargin;
 	Synedithighlighter::TSynHighlighterAttributes* fLastAttri;
 	String __fastcall AttriToCommand(Synedithighlighter::TSynHighlighterAttributes* Attri, String UniqueAttriName);
 	bool __fastcall AttriToCommandCallback(Synedithighlighter::TSynCustomHighlighter* Highlighter, Synedithighlighter::TSynHighlighterAttributes* Attri, String UniqueAttriName, void** Params, int Params_maxidx);
@@ -147,7 +147,7 @@ private:
 	String __fastcall MakeValidName(String Name);
 protected:
 	bool fCreateTeXFragment;
-	int FTabWidth;
+	int fTabWidth;
 	bool fPageStyleEmpty;
     
     // overriding these abstract methods (though they are never called for this
@@ -171,8 +171,8 @@ public:
 	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings();
 __published:
 public:
-	__property int Margin = { read = FMargin, write = FMargin, default = 2 };
-	__property int TabWidth = { read = FTabWidth, write = FTabWidth, default = 2 };
+	__property int Margin = { read = fMargin, write = fMargin, default = 2 };
+	__property int TabWidth = { read = fTabWidth, write = fTabWidth, default = 2 };
 	__property  Color;
 	__property bool CreateTeXFragment = { read = fCreateTeXFragment, write = fCreateTeXFragment, default = false };
 	__property bool PageStyleEmpty = { read = fPageStyleEmpty, write = fPageStyleEmpty, default = false };

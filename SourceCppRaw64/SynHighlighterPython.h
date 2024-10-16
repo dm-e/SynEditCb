@@ -145,7 +145,7 @@ The SynHighlighterPython implements a highlighter for Python for the SynEdit pro
 //++ CodeFolding
 
 //-- CodeFolding
-const TSysCharSet ALPHA_CHARS = TSysCharSet() << L'_' <<  \
+const System::Set<unsigned char, 0, 255> ALPHA_CHARS = System::Set<unsigned char, 0, 255>() << L'_' <<  \
           97 << 98 << 99 << 100 << 101 << 102 <<  \
           103 << 104 << 105 << 106 << 107 << 108 <<  \
           109 << 110 << 111 << 112 << 113 << 114 <<  \
@@ -175,7 +175,7 @@ enum TtkTokenKind {tkComment,
 enum TRangeState {rsANil,
                   rsComment,
                   rsUnKnown,
-                  rsMultiLineString,
+                  rsMultilineString,
                   rsMultilineString2,
                   rsMultilineString3 };
 
@@ -187,9 +187,9 @@ class TSynPythonSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighte
 {
 private:
 	WideChar fStringStarter;  // used only for rsMultilineString3 stuff
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
-	TStringList* fKeywords;
+	TStringList* FKeywords;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fDocStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -207,7 +207,7 @@ private:
 //++ CodeFolding
 	TRegEx BlockOpenerRE;
 //-- CodeFolding
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall SymbolProc();
 	void __fastcall CRProc();
 	void __fastcall CommentProc();
@@ -228,8 +228,8 @@ protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsFilterStored();
 	TStringList* __fastcall GetKeywordIdentifiers();
-	__property TStringList* Keywords = { read = fKeywords };
-	__property TtkTokenKind TokenId = { read = FTokenID };
+	__property TStringList* Keywords = { read = FKeywords };
+	__property TtkTokenKind TokenID = { read = FTokenID };
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;
 	__classmethod virtual String __fastcall GetLanguageName();

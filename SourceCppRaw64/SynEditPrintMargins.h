@@ -238,7 +238,7 @@ private:                      // Distance from left edge of paper to text
 	double FHFInternalMargin;  // Internal margin between top-line and text in header and
                                 // footer AND between bottom-line and text in header and
                                 // footer
-	double fGutter;            // Binding gutter - added to right margin (or left if 2-sided)
+	double FGutter;            // Binding gutter - added to right margin (or left if 2-sided)
 	bool FMirrorMargins;    // Set if margins should be mirrored (i.e. when printing
                                 // 2-sided)
 	Syneditprinttypes::TUnitSystem FUnitSystem;   // The units used to specify sizes in.

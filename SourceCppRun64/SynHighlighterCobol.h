@@ -139,7 +139,7 @@ enum TtkTokenKind {tkComment,
                    tkTagArea,
                    tkDebugLines,
                    tkUnknown };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsQuoteString,
                   rsApostString,
                   rsPseudoText,
@@ -149,8 +149,8 @@ enum TRangeState {rsUnKnown,
 class TSynCobolSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	WideChar fIndicator;
 	int fCodeStartPos;
 	int fCodeMediumPos;
@@ -171,7 +171,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall IdentProc();
 	void __fastcall UnknownProc();
 	void __fastcall NullProc();

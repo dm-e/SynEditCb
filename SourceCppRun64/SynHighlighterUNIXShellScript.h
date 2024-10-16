@@ -148,12 +148,12 @@ enum TtkTokenKind {tkComment,
                    tkSymbol,
                    tkVariable,
                    tkUnknown };
-enum TRangeState {rsUnKnown };
+enum TRangeState {rsUnknown };
 
 class TSynUNIXShellScriptSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;

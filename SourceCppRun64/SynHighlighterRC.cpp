@@ -9,14 +9,13 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 
 namespace Synhighlighterrc
 {
 #define Synhighlighterrc__0 (TFontStyles() << TFontStyle::fsBold)
 
 
-const String Keywords[78/*# range 0..77*/] = {L"ACCELERATORS", L"ALT", L"ASCII", L"AUTO3STATE", L"AUTOCHECKBOX", L"AUTORADIOBUTTON", L"BITMAP", L"BLOCK"
+const String KeyWords[78/*# range 0..77*/] = {L"ACCELERATORS", L"ALT", L"ASCII", L"AUTO3STATE", L"AUTOCHECKBOX", L"AUTORADIOBUTTON", L"BITMAP", L"BLOCK"
                     , L"CAPTION", L"CHARACTERISTICS", L"CHECKBOX", L"CHECKED", L"CLASS", L"COMBOBOX", L"COMMENTS", L"COMPANYNAME", L"CONTROL"
                     , L"CTEXT", L"CURSOR", L"DEFPUSHBUTTON", L"DIALOG", L"DIALOGEX", L"DISCARDABLE", L"EDITTEXT", L"EXSTYLE", L"FILEDESCRIPTION", L"FILEFLAGS"
                     , L"FILEFLAGSMASK", L"FILEOS", L"FILESUBTYPE", L"FILETYPE", L"FILEVERSION", L"FIXED", L"FONT", L"GRAYED", L"GROUPBOX", L"HELP"
@@ -50,14 +49,14 @@ unsigned int __fastcall TSynRCSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynRCSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynRCSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 240 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 240 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -89,17 +88,17 @@ TtkTokenKind __fastcall TSynRCSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynRCSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
 	return result;
 }
 
-__fastcall TSynRCSyn::TSynRCSyn(TComponent* AOwner)
- : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkComment),
+__fastcall TSynRCSyn::TSynRCSyn(TComponent* aOwner)
+ : inherited(aOwner),
+			fRange(rsUnknown),
+			fTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fDirecAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -109,24 +108,24 @@ __fastcall TSynRCSyn::TSynRCSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterrc__0;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterRC;
@@ -139,7 +138,7 @@ __fastcall TSynRCSyn::~TSynRCSyn()
 
 void __fastcall TSynRCSyn::QuoteProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	do
 	{
 		++Run;
@@ -161,7 +160,7 @@ void __fastcall TSynRCSyn::SlashProc()
 		break;
 		case L'/':
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			Run += 2;
 			while(!IsLineEnd(Run))
 				++Run;
@@ -169,8 +168,8 @@ void __fastcall TSynRCSyn::SlashProc()
 		break;
 		case L'*':
 		{
-			FTokenID = tkComment;
-			FRange = rsComment;
+			fTokenID = tkComment;
+			fRange = rsComment;
 			Run += 2;
 			while(fLine[Run] != L'\x00')
 				switch(fLine[Run])
@@ -179,7 +178,7 @@ void __fastcall TSynRCSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						goto label0;
 					}
 					else
@@ -197,7 +196,7 @@ void __fastcall TSynRCSyn::SlashProc()
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		++Run;
 		break;
 	}
@@ -205,7 +204,7 @@ void __fastcall TSynRCSyn::SlashProc()
 
 void __fastcall TSynRCSyn::CommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	switch(fLine[Run])
 	{
 		case L'\x00':
@@ -218,13 +217,13 @@ void __fastcall TSynRCSyn::CommentProc()
 		LFProc();
 		break;
 		default:
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 			{
 				Run += 2;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 			else
@@ -237,21 +236,21 @@ void __fastcall TSynRCSyn::CommentProc()
 
 void __fastcall TSynRCSyn::DirectiveProc()
 {
-	FTokenID = tkDirective;
+	fTokenID = tkDirective;
 	do
 	{
 		if(fLine[Run] == L'/')
 		{
 			if(fLine[Run + 1] == L'/')
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				return;
 			}
 			else
 			{
 				if(fLine[Run + 1] == L'*')
 				{
-					FRange = rsComment;
+					fRange = rsComment;
 					return;
 				}
 			}
@@ -263,7 +262,7 @@ void __fastcall TSynRCSyn::DirectiveProc()
 
 void __fastcall TSynRCSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -271,7 +270,7 @@ void __fastcall TSynRCSyn::IdentProc()
 
 void __fastcall TSynRCSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -280,20 +279,20 @@ void __fastcall TSynRCSyn::CRProc()
 void __fastcall TSynRCSyn::LFProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 }
 
 void __fastcall TSynRCSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynRCSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -326,7 +325,7 @@ void __fastcall TSynRCSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -347,19 +346,19 @@ void __fastcall TSynRCSyn::NumberProc()
 void __fastcall TSynRCSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynRCSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynRCSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsDirective:
 		DirectiveProc();
@@ -422,10 +421,10 @@ void __fastcall TSynRCSyn::Next()
 	inherited::Next();
 }
 
-TSynHighlighterAttributes* __fastcall TSynRCSyn::GetDefaultAttribute(int Index)
+TSynHighlighterAttributes* __fastcall TSynRCSyn::GetDefaultAttribute(int index)
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(Index)
+	switch(index)
 	{
 		case SYN_ATTR_COMMENT:
 		result = fCommentAttri;
@@ -462,21 +461,21 @@ bool __fastcall TSynRCSyn::GetEol()
 void* __fastcall TSynRCSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 TtkTokenKind __fastcall TSynRCSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
 TSynHighlighterAttributes* __fastcall TSynRCSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkComment:
 		result = fCommentAttri;
@@ -521,12 +520,12 @@ int __fastcall TSynRCSyn::GetTokenKind()
 
 void __fastcall TSynRCSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
-void __fastcall TSynRCSyn::SetRange(void* Value)
+void __fastcall TSynRCSyn::SetRange(void* value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)value;
 }
 
 void __fastcall TSynRCSyn::EnumUserSettings(TStrings* Settings)
@@ -535,7 +534,7 @@ void __fastcall TSynRCSyn::EnumUserSettings(TStrings* Settings)
   // ** ??
 }
 
-bool __fastcall TSynRCSyn::UseUserSettings(int settingIndex)
+bool __fastcall TSynRCSyn::UseUserSettings(int SettingIndex)
 {
 	bool result = false;
 	result = false;

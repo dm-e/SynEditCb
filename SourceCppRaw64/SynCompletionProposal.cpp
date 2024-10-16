@@ -25,7 +25,6 @@ using namespace System::Classes;
 using namespace System::Math;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Controls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
 using namespace Vcl::Themes;
@@ -560,13 +559,13 @@ int __fastcall FormattedTextWidth(TCanvas* TargetCanvas, const String Text, int 
 {
 	int result = 0;
 	TFormatChunkList* Chunks = nullptr;
-	TRect tmpRect = {};
+	TRect TmpRect = {};
 	Chunks = new TFormatChunkList();
 	try
 	{
-		tmpRect = Rect(0, 0, MaxInt, MaxInt);
+		TmpRect = Rect(0, 0, MaxInt, MaxInt);
 		ParseFormatChunks(Text, Chunks, Syncompletionproposal__9);
-		result = PaintChunks(TargetCanvas, tmpRect, PPI, Chunks, Columns, Images, true);
+		result = PaintChunks(TargetCanvas, TmpRect, PPI, Chunks, Columns, Images, true);
 	}
 	__finally
 	{
@@ -708,10 +707,10 @@ TProposalColumn* __fastcall TProposalColumns::Add()
 	return result;
 }
 
-TProposalColumn* __fastcall TProposalColumns::FindItemID(int id)
+TProposalColumn* __fastcall TProposalColumns::FindItemID(int ID)
 {
 	TProposalColumn* result = nullptr;
-	result = (TProposalColumn*) inherited::FindItemID(id);
+	result = (TProposalColumn*) inherited::FindItemID(ID);
 	return result;
 }
 
@@ -726,7 +725,7 @@ TProposalColumn* __fastcall TProposalColumns::Insert(int Index)
 
 //============================================================================
 
-String __fastcall FormatParamList(const String s, int CurrentIndex)
+String __fastcall FormatParamList(const String S, int CurrentIndex)
 {
 	String result;
 	int i = 0;
@@ -736,7 +735,7 @@ String __fastcall FormatParamList(const String s, int CurrentIndex)
 	try
 	{
 		int stop = 0;
-		List->CommaText = s;
+		List->CommaText = S;
 		for(stop = List->Count - 1, i = 0; i <= stop; i++)
 		{
 			if(i == CurrentIndex)
@@ -763,7 +762,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 			FInsertList(nullptr),
 			FAssignedList(nullptr),
 			FPosition(0),
-			fLinesInWindow(0),
+			FLinesInWindow(0),
 			FTitleFontHeight(0),
 			FFontHeight(0),
 			FScrollbar(nullptr),
@@ -771,7 +770,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 			fClSelectText((TColor) 0),
 			FClTitleBackground((TColor) 0),
 			fClBackGround((TColor) 0),
-			BITMAP(nullptr),
+			Bitmap(nullptr),
 			TitleBitmap(nullptr),
 			FCurrentEditor(nullptr),
 			FTitleFont(nullptr),
@@ -788,7 +787,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 			FUseInsertList(false),
 			FCompleteWithTab(false),
 			FCompleteWithEnter(false),
-			fMouseWheelAccumulator(0),
+			FMouseWheelAccumulator(0),
 			FDisplayKind(ctCode),
 			FCurrentIndex(0),
 			FCurrentLevel(0),
@@ -797,7 +796,7 @@ __fastcall TSynBaseCompletionProposalForm::TSynBaseCompletionProposalForm(TCompo
 			FHeightBuffer(0),
 			FColumns(nullptr)
 {
-	BITMAP = new TBitmap();
+	Bitmap = new TBitmap();
 	TitleBitmap = new TBitmap();
 	FItemList = new TStringList();
 	FInsertList = new TStringList();
@@ -892,7 +891,7 @@ __fastcall TSynBaseCompletionProposalForm::~TSynBaseCompletionProposalForm()
 	//# inherited::TCustomForm::Destroy();
 	inherited::RemoveFreeNotifications();
 	delete FColumns;
-	delete BITMAP;
+	delete Bitmap;
 	delete TitleBitmap;
 	delete FItemList;
 	delete FInsertList;
@@ -901,30 +900,30 @@ __fastcall TSynBaseCompletionProposalForm::~TSynBaseCompletionProposalForm()
 	delete FFont;
 }
 
-void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState Shift)
+void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& Key, TShiftState Shift)
 {
 	WideChar C = L'\0';
-	TSynEditorCommand cmd = 0;
+	TSynEditorCommand Cmd = 0;
 	int i = 0;
 
 	auto ExecuteCmdAndCancel = [&]() -> void 
 	{
-		if(cmd != ecNone)
+		if(Cmd != ecNone)
 		{
 			if(ASSIGNED(CurrentEditor))
-				((TCustomSynEdit*) CurrentEditor)->CommandProcessor(cmd, L'\x00', nullptr);
+				((TCustomSynEdit*) CurrentEditor)->CommandProcessor(Cmd, L'\x00', nullptr);
 			if(ASSIGNED(OnCancel))
 				OnCancel(this);
 		}
 	};
 	if(DisplayType == ctCode)
 	{
-		i = ((TCustomSynEdit*) CurrentEditor)->Keystrokes->FindKeycode(key, Shift);
+		i = ((TCustomSynEdit*) CurrentEditor)->Keystrokes->FindKeycode(Key, Shift);
 		if(i >= 0)
-			cmd = CurrentEditor->Keystrokes->Items[i]->Command;
+			Cmd = CurrentEditor->Keystrokes->Items[i]->Command;
 		else
-			cmd = (TSynEditorCommand) ecNone;
-		switch(key)
+			Cmd = (TSynEditorCommand) ecNone;
+		switch(Key)
 		{
 			case SYNEDIT_RETURN:
 			if((FCompleteWithEnter) && ASSIGNED(OnValidate))
@@ -990,10 +989,10 @@ void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState S
 			ExecuteCmdAndCancel();
 			break;
 			case SYNEDIT_PRIOR:
-			MoveLine(-fLinesInWindow);
+			MoveLine(-FLinesInWindow);
 			break;
 			case SYNEDIT_NEXT:
-			MoveLine(fLinesInWindow);
+			MoveLine(FLinesInWindow);
 			break;
 			case SYNEDIT_END:
 			Position = FAssignedList->Count - 1;
@@ -1047,13 +1046,13 @@ void __fastcall TSynBaseCompletionProposalForm::KeyDown(WORD& key, TShiftState S
 	}
 }
 
-void __fastcall TSynBaseCompletionProposalForm::KeyPress(Char& key)
+void __fastcall TSynBaseCompletionProposalForm::KeyPress(Char& Key)
 {
-	if(key == L'\x00')
+	if(Key == L'\x00')
 		return;
 	if(DisplayType == ctCode)
 	{
-		switch(key)
+		switch(Key)
 		{
 			case L'\x0d':
 			case L'\x1b':
@@ -1061,28 +1060,28 @@ void __fastcall TSynBaseCompletionProposalForm::KeyPress(Char& key)
 			break; // These keys are already handled by KeyDown
 			case L'\x08':
 			if(ASSIGNED(OnKeyPress))
-				OnKeyPress(this, key);
+				OnKeyPress(this, Key);
 			break;
 			default:
-			if(key >= L'\x20' && key <= High<WideChar>())
+			if(Key >= L'\x20' && Key <= High<WideChar>())
 			{
-				if(IsWordBreakChar(key) && ASSIGNED(OnValidate))
+				if(IsWordBreakChar(Key) && ASSIGNED(OnValidate))
             //if Key = #32 then
             //  OnValidate(Self, [], #0)
             //else
 				{
-					OnValidate(this, Syncompletionproposal__17, key);
+					OnValidate(this, Syncompletionproposal__17, Key);
 				}
-				CurrentString = CurrentString + String(key);
+				CurrentString = CurrentString + String(Key);
 				if(ASSIGNED(OnKeyPress))
-					OnKeyPress(this, key);
+					OnKeyPress(this, Key);
 			}
 			else
 			{
 			/*# with CurrentEditor as TCustomSynEdit do */
 			{
 				auto with0 = (TCustomSynEdit*) CurrentEditor;
-				with0->CommandProcessor((TSynEditorCommand) ecChar, key, nullptr);
+				with0->CommandProcessor((TSynEditorCommand) ecChar, Key, nullptr);
 			}
 			if(ASSIGNED(OnCancel))
 				OnCancel(this);
@@ -1104,7 +1103,7 @@ void __fastcall TSynBaseCompletionProposalForm::Resize()
 {
 	inherited::Resize();
 	if(FEffectiveItemHeight != 0)
-		fLinesInWindow = (int)((ClientHeight - FHeightBuffer) / /*div*/ FEffectiveItemHeight);
+		FLinesInWindow = (int)((ClientHeight - FHeightBuffer) / /*div*/ FEffectiveItemHeight);
 	if(!(ControlState.Contains(csCreating)))
 		AdjustMetrics();
 	AdjustScrollBarPosition();
@@ -1116,16 +1115,16 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 
 	auto ResetCanvas = [&]() -> void 
 	{
-		/*# with BITMAP.Canvas do */
+		/*# with Bitmap.Canvas do */
 		{
-			auto with0 = BITMAP->Canvas;
+			auto with0 = Bitmap->Canvas;
 			with0->Pen->Color = StyleServices()->GetSystemColor(fClBackGround);
 			with0->Brush->Color = StyleServices()->GetSystemColor(fClBackGround);
 			with0->Font->Assign(FFont);
 			with0->Font->Color = StyleServices()->GetSystemColor(clWindowText);
 		}
 	};
-	TRect tmpRect = {};
+	TRect TmpRect = {};
 	int TmpX = 0;
 	bool AlreadyDrawn = false;
 	String TmpString;
@@ -1134,14 +1133,14 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 	ScaledMargin = MulDiv(((TSynBaseCompletionProposal*) Owner)->Margin, CurrentPPI, 96);
 	if(FDisplayKind == ctCode)
 	{
-		/*# with BITMAP do */
+		/*# with Bitmap do */
 		{
-			auto with1 = BITMAP;
+			auto with1 = Bitmap;
 			int stop = 0;
 			ResetCanvas();
 			with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
 			with1->Canvas->Rectangle(0, 0, ClientWidth - FScrollbar->Width, ClientHeight);
-			for(stop = Min(fLinesInWindow - 1, FAssignedList->Count - 1), i = 0; i <= stop; i++)
+			for(stop = Min(FLinesInWindow - 1, FAssignedList->Count - 1), i = 0; i <= stop; i++)
 			{
 				if(i + FScrollbar->Position == Position)
 				{
@@ -1161,7 +1160,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 				{
 					if(FFormattedText)
 					{
-						FormattedTextOut(with1->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)), BITMAP->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
+						FormattedTextOut(with1->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)), Bitmap->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
 					}
 					else
 					{
@@ -1173,23 +1172,23 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 			}
 			if(TStyleManager::IsCustomStyleActive)
 			{
-				tmpRect = ClientRect;
-				DrawStyleEdge(with1->Canvas, tmpRect, Syncompletionproposal__18, Syncompletionproposal__19);
+				TmpRect = ClientRect;
+				DrawStyleEdge(with1->Canvas, TmpRect, Syncompletionproposal__18, Syncompletionproposal__19);
 			}
 		}
-		Canvas->Draw(0, FHeightBuffer, BITMAP);
+		Canvas->Draw(0, FHeightBuffer, Bitmap);
 		if(FTitle != L"")
 		{
 			/*# with TitleBitmap do */
 			{
 				auto with2 = TitleBitmap;
 				with2->Canvas->Brush->Color = StyleServices()->GetSystemColor(FClTitleBackground);
-				tmpRect = Rect(0, 0, ClientWidth + 1, FHeightBuffer);                        //GBN
-				with2->Canvas->FillRect(tmpRect);
+				TmpRect = Rect(0, 0, ClientWidth + 1, FHeightBuffer);                        //GBN
+				with2->Canvas->FillRect(TmpRect);
 				with2->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnShadow);
-				tmpRect.Bottom -= 1;
-				with2->Canvas->PenPos = tmpRect.BottomRight();
-				with2->Canvas->LineTo(tmpRect.Left - 1, tmpRect.Bottom);
+				TmpRect.Bottom -= 1;
+				with2->Canvas->PenPos = TmpRect.BottomRight();
+				with2->Canvas->LineTo(TmpRect.Left - 1, TmpRect.Bottom);
 				with2->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
 				with2->Canvas->Font->Assign(FTitleFont);
 				with2->Canvas->Font->Color = StyleServices()->GetSystemColor(FTitleFont->Color);
@@ -1203,7 +1202,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 				{
 					TmpX = ScaledMargin;
 				}
-				with2->Canvas->TextRect(tmpRect, TmpX, ScaledMargin - 1, FTitle); // -1 because TmpRect.Top is already 1
+				with2->Canvas->TextRect(TmpRect, TmpX, ScaledMargin - 1, FTitle); // -1 because TmpRect.Top is already 1
 			}
 			Canvas->Draw(0, 0, TitleBitmap);
 		}
@@ -1212,15 +1211,15 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 	{
 		if((FDisplayKind == ctHint) || (FDisplayKind == ctParams))
 		{
-			/*# with BITMAP do */
+			/*# with Bitmap do */
 			{
-				auto with3 = BITMAP;
+				auto with3 = Bitmap;
 				int stop = 0;
 				ResetCanvas();
-				tmpRect = Rect(0, 0, ClientWidth, ClientHeight);
-				with3->Canvas->FillRect(tmpRect);
+				TmpRect = Rect(0, 0, ClientWidth, ClientHeight);
+				with3->Canvas->FillRect(TmpRect);
 				if(StyleServices()->IsSystemStyle)
-					Frame3D(with3->Canvas, tmpRect, cl3DLight, cl3DDkShadow, 1);
+					Frame3D(with3->Canvas, TmpRect, cl3DLight, cl3DDkShadow, 1);
 				for(stop = FAssignedList->Count - 1, i = 0; i <= stop; i++)
 				{
 					AlreadyDrawn = false;
@@ -1234,11 +1233,11 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 							TmpString = FormatParamList(FAssignedList->Strings[i], CurrentIndex);
 						else
 							TmpString = FAssignedList->Strings[i];
-						FormattedTextOut(with3->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)) + ScaledMargin, BITMAP->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
+						FormattedTextOut(with3->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)) + ScaledMargin, Bitmap->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
 					}
 				}
 			}
-			Canvas->Draw(0, 0, BITMAP);
+			Canvas->Draw(0, 0, Bitmap);
 		}
 	}
 }
@@ -1249,8 +1248,8 @@ void __fastcall TSynBaseCompletionProposalForm::ScrollbarOnChange(TObject* Sende
 		Position = FScrollbar->Position;
 	else
 	{
-		if(Position > FScrollbar->Position + fLinesInWindow - 1)
-			Position = FScrollbar->Position + fLinesInWindow - 1;
+		if(Position > FScrollbar->Position + FLinesInWindow - 1)
+			Position = FScrollbar->Position + FLinesInWindow - 1;
 		else
 			Invalidate();
 	}
@@ -1419,8 +1418,8 @@ void __fastcall TSynBaseCompletionProposalForm::SetPosition(int Value)
 			FScrollbar->Position = Position;
 		else
 		{
-			if(FScrollbar->Position < (Position - fLinesInWindow + 1))
-				FScrollbar->Position = Position - fLinesInWindow + 1;
+			if(FScrollbar->Position < (Position - FLinesInWindow + 1))
+				FScrollbar->Position = Position - FLinesInWindow + 1;
 		}
 		if(Visible && ASSIGNED(FOnChangePosition) && (DisplayType == ctCode))
 			FOnChangePosition((TSynBaseCompletionProposal*) Owner, LogicalToPhysicalIndex(FPosition));
@@ -1488,12 +1487,12 @@ void __fastcall TSynBaseCompletionProposalForm::WMMouseWheel(::TMessage& Msg)
 	if(GetKeyState(VK_CONTROL) >= 0)
 		nDelta = Mouse->WheelScrollLines;
 	else
-		nDelta = fLinesInWindow;
-	fMouseWheelAccumulator += ((short int) Msg.WParamHi);
-	nWheelClicks = (int)(fMouseWheelAccumulator / /*div*/ WHEEL_DELTA);
-	fMouseWheelAccumulator = fMouseWheelAccumulator % WHEEL_DELTA;
-	if((nDelta == ((int) WHEEL_PAGESCROLL)) || (nDelta > fLinesInWindow))
-		nDelta = fLinesInWindow;
+		nDelta = FLinesInWindow;
+	FMouseWheelAccumulator += ((short int) Msg.WParamHi);
+	nWheelClicks = (int)(FMouseWheelAccumulator / /*div*/ WHEEL_DELTA);
+	FMouseWheelAccumulator = FMouseWheelAccumulator % WHEEL_DELTA;
+	if((nDelta == ((int) WHEEL_PAGESCROLL)) || (nDelta > FLinesInWindow))
+		nDelta = FLinesInWindow;
 	Position = Position - (nDelta * nWheelClicks);
 //  (CurrentEditor as TCustomSynEdit).UpdateCaret;
 }
@@ -1553,27 +1552,27 @@ void __fastcall TSynBaseCompletionProposalForm::WMNCHitTest(TWMNCHitTest& Messag
 TSynForm* __fastcall GetMDIParent(TSynForm* const Form)
 {
 	TSynForm* result = nullptr;
-	int i = 0;
-	int j = 0;
+	int I = 0;
+	int J = 0;
 	result = const_cast<TSynForm*>(Form);
 	if(Form == nullptr)
 		return result;
 	if((ObjectIs(Form, TSynForm*)) && (((TForm*) Form)->FormStyle == fsMDIChild))
 	{
 		int stop = 0;
-		for(stop = Screen->FormCount - 1, i = 0; i <= stop; i++)
+		for(stop = Screen->FormCount - 1, I = 0; I <= stop; I++)
 		{
-			/*# with Screen.Forms[i] do */
+			/*# with Screen.Forms[I] do */
 			{
 				
 				int stop1 = 0;
-				if(Screen->Forms[i]->FormStyle != fsMDIForm)
+				if(Screen->Forms[I]->FormStyle != fsMDIForm)
 					continue;
-				for(stop1 = Screen->Forms[i]->MDIChildCount - 1, j = 0; j <= stop1; j++)
+				for(stop1 = Screen->Forms[I]->MDIChildCount - 1, J = 0; J <= stop1; J++)
 				{
-					if(Screen->Forms[i]->MDIChildren[j] == Form)
+					if(Screen->Forms[I]->MDIChildren[J] == Form)
 					{
-						result = Screen->Forms[i];
+						result = Screen->Forms[I];
 						return result;
 					}
 				}
@@ -1618,7 +1617,7 @@ void __fastcall TSynBaseCompletionProposalForm::DoFormHide(TObject* Sender)
       // Save after removing the PPI scaling
 		{
 			((TSynBaseCompletionProposal*) Owner)->FWidth = MulDiv(ClientWidth, 96, CurrentPPI);
-			((TSynBaseCompletionProposal*) Owner)->FNbLinesInWindow = fLinesInWindow;
+			((TSynBaseCompletionProposal*) Owner)->FNbLinesInWindow = FLinesInWindow;
 		}
 	}
   //GBN 28/08/2002
@@ -1665,14 +1664,14 @@ void __fastcall TSynBaseCompletionProposalForm::AdjustMetrics()
 		else
 			FHeightBuffer = 0;
 		if((ClientWidth >= FScrollbar->Width) && (ClientHeight >= FHeightBuffer))
-			BITMAP->SetSize(ClientWidth - FScrollbar->Width, ClientHeight - FHeightBuffer);
+			Bitmap->SetSize(ClientWidth - FScrollbar->Width, ClientHeight - FHeightBuffer);
 		if((ClientWidth > 0) && (FHeightBuffer > 0))
 			TitleBitmap->SetSize(ClientWidth, FHeightBuffer);
 	}
 	else
 	{
 		if((ClientWidth > 0) && (ClientHeight > 0))
-			BITMAP->SetSize(ClientWidth, ClientHeight);
+			Bitmap->SetSize(ClientWidth, ClientHeight);
 	}
 }
 
@@ -1685,7 +1684,7 @@ void __fastcall TSynBaseCompletionProposalForm::AdjustScrollBarPosition()
 			FScrollbar->Top = FHeightBuffer;
 			FScrollbar->Height = ClientHeight - FHeightBuffer;
 			FScrollbar->Left = ClientWidth - FScrollbar->Width;
-			if(FAssignedList->Count - fLinesInWindow < 0)
+			if(FAssignedList->Count - FLinesInWindow < 0)
 			{
 				FScrollbar->PageSize = 0;
 				FScrollbar->Max = 0;
@@ -1694,10 +1693,10 @@ void __fastcall TSynBaseCompletionProposalForm::AdjustScrollBarPosition()
 			else
 			{
 				FScrollbar->PageSize = 0;
-				FScrollbar->Max = FAssignedList->Count - fLinesInWindow;
+				FScrollbar->Max = FAssignedList->Count - FLinesInWindow;
 				if(FScrollbar->Max != 0)
 				{
-					FScrollbar->LargeChange = (TScrollBarInc) fLinesInWindow;
+					FScrollbar->LargeChange = (TScrollBarInc) FLinesInWindow;
 					FScrollbar->PageSize = 1;
 					FScrollbar->Enabled = true;
 				}
@@ -1785,12 +1784,12 @@ __fastcall TSynBaseCompletionProposal::TSynBaseCompletionProposal(TComponent* AO
 	DefaultType = ctCode;
 }
 
-void __fastcall TSynBaseCompletionProposal::Execute(String s, int X, int Y)
+void __fastcall TSynBaseCompletionProposal::Execute(String s, int x, int y)
 {
-	ExecuteEx(s, X, Y, DefaultType);
+	ExecuteEx(s, x, y, DefaultType);
 }
 
-void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, SynCompletionType Kind/*# = ctCode*/)
+void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int x, int y, SynCompletionType Kind/*# = ctCode*/)
 {
 	TRect WorkArea = {};
 	Vcl::Forms::TMonitor* Monitor = nullptr;
@@ -1809,7 +1808,7 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 		return result;
 	};
 
-	auto GetParamWidth = [&](const String s) -> int 
+	auto GetParamWidth = [&](const String S) -> int 
 	{
 		int result = 0;
 		int i = 0;
@@ -1819,11 +1818,11 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 		try
 		{
 			int stop = 0;
-			List->CommaText = s;
+			List->CommaText = S;
 			result = 0;
 			for(stop = List->Count - 1, i = -1; i <= stop; i++)
 			{
-				NewWidth = FormattedTextWidth(Form->Canvas, FormatParamList(s, i), Form->CurrentPPI, Columns, FForm->Images);
+				NewWidth = FormattedTextWidth(Form->Canvas, FormatParamList(S, i), Form->CurrentPPI, Columns, FForm->Images);
 				if(NewWidth > result)
 					result = NewWidth;
 			}
@@ -1838,11 +1837,11 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 	auto RecalcFormPlacement = [&]() -> void 
 	{
 		int i = 0;
-		int TmpWidth = 0;
+		int tmpWidth = 0;
 		int tmpHeight = 0;
-		int TmpX = 0;
+		int tmpX = 0;
 		int tmpY = 0;
-		String TmpStr;
+		String tmpStr;
 		int NewWidth = 0;
 		int ScaledMargin = 0;
 		int ActivePPI = 0;
@@ -1857,15 +1856,15 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 			Font->Height = MulDiv(Font->Height, ActivePPI, 96);
 			FFontsAreScaled = true;
 		}
-		TmpX = X;
-		tmpY = Y + 2;
-		TmpWidth = 0;
+		tmpX = x;
+		tmpY = y + 2;
+		tmpWidth = 0;
 		tmpHeight = 0;
 		switch(Kind)
 		{
 			case ctCode:
 			{
-				TmpWidth = MulDiv(FWidth, ActivePPI, 96);
+				tmpWidth = MulDiv(FWidth, ActivePPI, 96);
 				tmpHeight = Form->FHeightBuffer + Form->FEffectiveItemHeight * FNbLinesInWindow;
 			}
 			break;
@@ -1876,12 +1875,12 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 				Form->Canvas->Font->Assign(Font);
 				for(stop = ItemList->Count - 1, i = 0; i <= stop; i++)
 				{
-					TmpStr = ItemList->Strings[i];
-					NewWidth = FormattedTextWidth(Form->Canvas, TmpStr, Form->CurrentPPI, nullptr, FForm->Images);
-					if(NewWidth > TmpWidth)
-						TmpWidth = NewWidth;
+					tmpStr = ItemList->Strings[i];
+					NewWidth = FormattedTextWidth(Form->Canvas, tmpStr, Form->CurrentPPI, nullptr, FForm->Images);
+					if(NewWidth > tmpWidth)
+						tmpWidth = NewWidth;
 				}
-				TmpWidth += 2 * ScaledMargin;
+				tmpWidth += 2 * ScaledMargin;
 			}
 			break;
 			case ctParams:
@@ -1894,21 +1893,21 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 					NewWidth = GetParamWidth(StripFormatCommands(ItemList->Strings[i]));
 					if(ASSIGNED(Form->OnMeasureItem))
 						Form->OnMeasureItem(this, i, Form->Canvas, NewWidth);
-					if(NewWidth > TmpWidth)
-						TmpWidth = NewWidth;
+					if(NewWidth > tmpWidth)
+						tmpWidth = NewWidth;
 				}
-				TmpWidth += 2 * ScaledMargin;
+				tmpWidth += 2 * ScaledMargin;
 			}
 			break;
 			default:
 			  ;
 			break;
 		}
-		if(TmpX + TmpWidth > GetWorkAreaWidth())
+		if(tmpX + tmpWidth > GetWorkAreaWidth())
 		{
-			TmpX = GetWorkAreaWidth() - TmpWidth - MulDiv(5, FForm->CurrentPPI, 96);  //small space buffer
-			if(TmpX < 0)
-				TmpX = 0;
+			tmpX = GetWorkAreaWidth() - tmpWidth - MulDiv(5, FForm->CurrentPPI, 96);  //small space buffer
+			if(tmpX < 0)
+				tmpX = 0;
 		}
 		if(tmpY + tmpHeight > GetWorkAreaHeight())
 		{
@@ -1916,17 +1915,17 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 			if(tmpY < 0)
 				tmpY = 0;
 		}
-		Form->ClientWidth = TmpWidth;
+		Form->ClientWidth = tmpWidth;
 		Form->ClientHeight = tmpHeight;
-		Form->SetBounds(TmpX, tmpY, Form->Width, Form->Height);
+		Form->SetBounds(tmpX, tmpY, Form->Width, Form->Height);
 	};
 	int TmpOffset = 0;
-	Monitor = Screen->MonitorFromPoint(Point(X, Y));
+	Monitor = Screen->MonitorFromPoint(Point(x, y));
 	WorkArea = Monitor->WorkareaRect;
 	DisplayType = Kind;
 	FCanExecute = true;
 	if(ASSIGNED(OnExecute))
-		OnExecute(Kind, this, s, X, Y, FCanExecute);
+		OnExecute(Kind, this, s, x, y, FCanExecute);
 	if((!FCanExecute) || (ItemList->Count == 0))
 	{
 		if(Form->Visible && (Kind == ctParams))
@@ -1945,7 +1944,7 @@ void __fastcall TSynBaseCompletionProposal::ExecuteEx(String s, int X, int Y, Sy
 	}
 	else
 	TmpOffset = 0;
-	X = X - TmpOffset;
+	x = x - TmpOffset;
 	ResetAssignedList();
 	switch(Kind)
 	{
@@ -2369,15 +2368,15 @@ String __fastcall TSynBaseCompletionProposal::GetEndOfTokenChar()
 TSynCompletionOptions __fastcall TSynBaseCompletionProposal::GetOptions()
 {
 	TSynCompletionOptions result;
-	result = fOptions;
+	result = FOptions;
 	return result;
 }
 
 void __fastcall TSynBaseCompletionProposal::SetOptions(const TSynCompletionOptions Value)
 {
-	if(fOptions != Value)
+	if(FOptions != Value)
 	{
-		fOptions = Value;
+		FOptions = Value;
 		Form->CenterTitle = Value.Contains(scoTitleIsCentered);
 		Form->CaseSensitive = Value.Contains(scoCaseSensitive);
 		Form->UsePrettyText = Value.Contains(scoUsePrettyText);
@@ -2433,16 +2432,16 @@ void __fastcall TSynBaseCompletionProposal::ResetAssignedList()
 
 void __fastcall TSynCompletionProposal::HandleOnCancel(TObject* Sender)
 {
-	TSynBaseCompletionProposalForm* f = nullptr;
+	TSynBaseCompletionProposalForm* F = nullptr;
 	TCustomSynEdit* CurrentEditor = nullptr;
-	f = (TSynBaseCompletionProposalForm*) Sender;
+	F = (TSynBaseCompletionProposalForm*) Sender;
 	FNoNextKey = false;
-	CurrentEditor = f->CurrentEditor;
+	CurrentEditor = F->CurrentEditor;
 	if(CurrentEditor != nullptr)
 	{
 		if(ASSIGNED(FTimer))
 			FTimer->Enabled = false;
-		f->Hide();
+		F->Hide();
 		if((ObjectIs(((TCustomSynEdit*) CurrentEditor)->Owner, TWinControl*)) && (((TWinControl*) ((TCustomSynEdit*) CurrentEditor)->Owner)->Visible))
 		{
 			((TWinControl*) ((TCustomSynEdit*) CurrentEditor)->Owner)->SetFocus();
@@ -2456,14 +2455,14 @@ void __fastcall TSynCompletionProposal::HandleOnCancel(TObject* Sender)
 
 void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShiftState Shift, WideChar EndToken)
 {
-	TSynBaseCompletionProposalForm* f = nullptr;
+	TSynBaseCompletionProposalForm* F = nullptr;
 	String Value;
 	int Index = 0;
-	f = (TSynBaseCompletionProposalForm*) Sender;
-	if(ASSIGNED(f->CurrentEditor))
-		/*# with f.CurrentEditor as TCustomSynEdit do */
+	F = (TSynBaseCompletionProposalForm*) Sender;
+	if(ASSIGNED(F->CurrentEditor))
+		/*# with F.CurrentEditor as TCustomSynEdit do */
 		{
-			auto with0 = (TCustomSynEdit*) f->CurrentEditor;
+			auto with0 = (TCustomSynEdit*) F->CurrentEditor;
       //Treat entire completion as a single undo operation
 			with0->BeginUpdate();
 			with0->BeginUndoBlock();
@@ -2476,13 +2475,13 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 					with0->BlockEnd = BufferCoord(with0->WordEnd().Char, with0->CaretY);
 				else
 					with0->BlockEnd = BufferCoord(with0->CaretX, with0->CaretY);
-				if(fOptions.Contains(scoUseInsertList))
+				if(FOptions.Contains(scoUseInsertList))
 				{
-					if(fOptions.Contains(scoLimitToMatchedText))
+					if(FOptions.Contains(scoLimitToMatchedText))
 					{
 						if(Form->FAssignedList->Count > Position)
 						{
-							if((InsertList->Count > (NativeInt) Form->FAssignedList->Objects[Position]) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
+							if((InsertList->Count > (NativeInt) Form->FAssignedList->Objects[Position]) && ((FOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
               // Added check to make sure item is only used when no EndChar
 								Value = InsertList->Strings[(NativeInt) Form->FAssignedList->Objects[Position]];
 							else
@@ -2495,7 +2494,7 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 
             // Added check to make sure item is only used when no EndChar
 					{
-						if((InsertList->Count > Position) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
+						if((InsertList->Count > Position) && ((FOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
 							Value = InsertList->Strings[Position];
 						else
 							Value = with0->SelText;
@@ -2505,19 +2504,19 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 
           // Added check to make sure item is only used when no EndChar
 				{
-					if((Form->FAssignedList->Count > Position) && ((fOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
+					if((Form->FAssignedList->Count > Position) && ((FOptions.Contains(scoEndCharCompletion)) || (EndToken == L'\x00')))
 						Value = Form->FAssignedList->Strings[Position];
 					else
 						Value = with0->SelText;
 				}
 				Index = Position; // Need to assign position to temp var since it changes later
 				if(ASSIGNED(FOnCodeCompletion))
-					FOnCodeCompletion(this, Value, Shift, f->LogicalToPhysicalIndex(Index), EndToken); //GBN 15/11/2001
+					FOnCodeCompletion(this, Value, Shift, F->LogicalToPhysicalIndex(Index), EndToken); //GBN 15/11/2001
 				if(with0->SelText != Value)
 					with0->SelText = Value;
-				/*# with (f.CurrentEditor as TCustomSynEdit) do */
+				/*# with (F.CurrentEditor as TCustomSynEdit) do */
 				{
-					auto with1 = ((TCustomSynEdit*) f->CurrentEditor);
+					auto with1 = ((TCustomSynEdit*) F->CurrentEditor);
           //This replaces the previous way of cancelling the completion by
           //sending a WM_MOUSEDOWN message. The problem with the mouse down is
           //that the editor would bounce back to the left margin, very irritating
@@ -2529,7 +2528,7 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 					with1->BlockBegin = with1->CaretXY;
 				}
 				if(ASSIGNED(FOnAfterCodeCompletion))
-					FOnAfterCodeCompletion(this, Value, Shift, f->LogicalToPhysicalIndex(Index), EndToken);
+					FOnAfterCodeCompletion(this, Value, Shift, F->LogicalToPhysicalIndex(Index), EndToken);
 			}
 			__finally
 			{
@@ -2539,20 +2538,20 @@ void __fastcall TSynCompletionProposal::HandleOnValidate(TObject* Sender, TShift
 		}
 }
 
-void __fastcall TSynCompletionProposal::HandleOnKeyPress(TObject* Sender, WideChar& key)
+void __fastcall TSynCompletionProposal::HandleOnKeyPress(TObject* Sender, WideChar& Key)
 {
-	TSynBaseCompletionProposalForm* f = nullptr;
-	f = (TSynBaseCompletionProposalForm*) Sender;
-	if(f->CurrentEditor != nullptr)
+	TSynBaseCompletionProposalForm* F = nullptr;
+	F = (TSynBaseCompletionProposalForm*) Sender;
+	if(F->CurrentEditor != nullptr)
 	{
-		/*# with f.CurrentEditor as TCustomSynEdit do */
+		/*# with F.CurrentEditor as TCustomSynEdit do */
 		{
-			auto with0 = (TCustomSynEdit*) f->CurrentEditor;
-			with0->CommandProcessor((TSynEditorCommand) ecChar, key, nullptr);
+			auto with0 = (TCustomSynEdit*) F->CurrentEditor;
+			with0->CommandProcessor((TSynEditorCommand) ecChar, Key, nullptr);
 		}
     //Daisy chain completions
 		Application->ProcessMessages();
-		if((System::Pos(key, TriggerChars) > 0) && !f->Visible)
+		if((System::Pos(Key, TriggerChars) > 0) && !F->Visible)
 		{
 			if(ObjectIs(Sender, TCustomSynEdit*))
 				DoExecute((TCustomSynEdit*) Sender);
@@ -2620,7 +2619,7 @@ void __fastcall TSynCompletionProposal::SetShortCut(TShortCut Value)
 	FShortCut = Value;
 }
 
-void __fastcall TSynCompletionProposal::EditorKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynCompletionProposal::EditorKeyDown(TObject* Sender, WORD& Key, TShiftState Shift)
 {
 	WORD ShortCutKey = 0;
 	TShiftState ShortCutShift;
@@ -2628,10 +2627,10 @@ void __fastcall TSynCompletionProposal::EditorKeyDown(TObject* Sender, WORD& key
 	/*# with Sender as TCustomSynEdit do */
 	{
 		auto with0 = (TCustomSynEdit*) Sender;
-		if(((DefaultType != ctCode) || !(with0->ReadOnly)) && (Shift == ShortCutShift) && (key == ShortCutKey))
+		if(((DefaultType != ctCode) || !(with0->ReadOnly)) && (Shift == ShortCutShift) && (Key == ShortCutKey))
 		{
 			Form->CurrentEditor = (TCustomSynEdit*) Sender;
-			key = 0;
+			Key = 0;
 			DoExecute((TCustomSynEdit*) Sender);
 		}
 	}
@@ -2684,19 +2683,19 @@ String __fastcall TSynCompletionProposal::GetPreviousToken(TCustomSynEdit* AEdit
 	return result;
 }
 
-void __fastcall TSynCompletionProposal::EditorKeyPress(TObject* Sender, WideChar& key)
+void __fastcall TSynCompletionProposal::EditorKeyPress(TObject* Sender, WideChar& Key)
 {
 	if(FNoNextKey)
 	{
 		FNoNextKey = false;
-		key = L'\x00';
+		Key = L'\x00';
 	}
 	else
 	{
 		if(ASSIGNED(FTimer))
 		{
 			DeactivateTimer();
-			if(Pos(key, TriggerChars) != 0)
+			if(Pos(Key, TriggerChars) != 0)
 				ActivateTimer((TCustomSynEdit*) Sender);
 		}
 	}
@@ -2791,9 +2790,9 @@ void __fastcall TSynCompletionProposal::SetOptions(const TSynCompletionOptions V
 	}
 }
 
-void __fastcall TSynCompletionProposal::ExecuteEx(String s, int X, int Y, SynCompletionType Kind/*# = ctCode*/)
+void __fastcall TSynCompletionProposal::ExecuteEx(String s, int x, int y, SynCompletionType Kind/*# = ctCode*/)
 {
-	inherited::ExecuteEx(s, X, Y, Kind);
+	inherited::ExecuteEx(s, x, y, Kind);
 	if(ASSIGNED(FTimer))
 		FTimer->Enabled = false;
 }
@@ -2855,7 +2854,7 @@ bool __fastcall TSynCompletionProposal::RemoveEditor(TCustomSynEdit* AEditor)
 
 void __fastcall TSynCompletionProposal::DoExecute(TCustomSynEdit* AEditor)
 {
-	TPoint P = {};
+	TPoint p = {};
 	int i = 0;
 	i = fEditors->IndexOf(AEditor);
 	if(i != -1)
@@ -2865,15 +2864,15 @@ void __fastcall TSynCompletionProposal::DoExecute(TCustomSynEdit* AEditor)
 			if((DefaultType != ctCode) || !with0->ReadOnly)
 			{
 				if(DefaultType == ctHint)
-					GetCursorPos(&P);
+					GetCursorPos(&p);
 				else
 				{
-					P = with0->ClientToScreen(with0->RowColumnToPixels(with0->DisplayXY));
-					P.Y += with0->LineHeight;
+					p = with0->ClientToScreen(with0->RowColumnToPixels(with0->DisplayXY));
+					p.Y += with0->LineHeight;
 				}
 				Form->CurrentEditor = AEditor;
 				FPreviousToken = GetPreviousToken((TCustomSynEdit*) Form->CurrentEditor);
-				ExecuteEx(GetCurrentInput(AEditor), P.X, P.Y, DefaultType);
+				ExecuteEx(GetCurrentInput(AEditor), p.X, p.Y, DefaultType);
 				FNoNextKey = (DefaultType == ctCode) && FCanExecute && Form->Visible;
 			}
 		}
@@ -3011,10 +3010,10 @@ void __fastcall TSynCompletionProposal::ActivateCompletion()
 
 __fastcall TSynAutoComplete::TSynAutoComplete(TComponent* AOwner)
  : inherited(AOwner),
-			FShortCut(Vcl::Menus::ShortCut((WORD) int(L' '), Syncompletionproposal__23)),
-			FEditor(nullptr),
+			FShortCut((TShortCut) 0),
+			fEditor(nullptr),
 			fAutoCompleteList(nullptr),
-			FNoNextKey(false),
+			fNoNextKey(false),
 			FInternalCompletion(nullptr),
 			FDoLookup(false)
 {
@@ -3022,7 +3021,8 @@ __fastcall TSynAutoComplete::TSynAutoComplete(TComponent* AOwner)
 	CreateInternalCompletion();
 	FEndOfTokenChr = DefaultEndOfTokenChr;
 	fAutoCompleteList = new TStringList();
-	FNoNextKey = false;
+	fNoNextKey = false;
+	FShortCut = Vcl::Menus::ShortCut((WORD) int(L' '), Syncompletionproposal__23);
 }
 
 void __fastcall TSynAutoComplete::SetShortCut(TShortCut Value)
@@ -3042,25 +3042,25 @@ __fastcall TSynAutoComplete::~TSynAutoComplete()
 	delete fAutoCompleteList;
 }
 
-void __fastcall TSynAutoComplete::EditorKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynAutoComplete::EditorKeyDown(TObject* Sender, WORD& Key, TShiftState Shift)
 {
 	WORD ShortCutKey = 0;
 	TShiftState ShortCutShift;
 	ShortCutToKey(FShortCut, ShortCutKey, ShortCutShift);
-	if(!((TCustomSynEdit*) Sender)->ReadOnly && (Shift == ShortCutShift) && (key == ShortCutKey))
+	if(!((TCustomSynEdit*) Sender)->ReadOnly && (Shift == ShortCutShift) && (Key == ShortCutKey))
 	{
 		Execute(GetPreviousToken((TCustomSynEdit*) Sender), (TCustomSynEdit*) Sender);
-		FNoNextKey = true;
-		key = 0;
+		fNoNextKey = true;
+		Key = 0;
 	}
 }
 
-void __fastcall TSynAutoComplete::EditorKeyPress(TObject* Sender, WideChar& key)
+void __fastcall TSynAutoComplete::EditorKeyPress(TObject* Sender, WideChar& Key)
 {
-	if(FNoNextKey)
+	if(fNoNextKey)
 	{
-		FNoNextKey = false;
-		key = L'\x00';
+		fNoNextKey = false;
+		Key = L'\x00';
 	}
 }
 
@@ -3103,7 +3103,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 					TmpOptions >> eoTrimTrailingSpaces;
 				if(ChangedIndent || ChangedTrailing)
 					Editor->Options = TmpOptions;
-				FNoNextKey = true;
+				fNoNextKey = true;
 				for(stop = Token.Length(), j = 1; j <= stop; j++)
 				{
 					Editor->CommandProcessor((TSynEditorCommand) ecDeleteLastChar, L' ', nullptr);
@@ -3158,7 +3158,7 @@ void __fastcall TSynAutoComplete::ExecuteEx(String Token, TCustomSynEdit* Editor
 				}
 				if(ChangedIndent || ChangedTrailing)
 					Editor->Options = OrigOptions;
-				FNoNextKey = false;
+				fNoNextKey = false;
 			}
 			__finally
 			{
@@ -3250,7 +3250,7 @@ void __fastcall TSynAutoComplete::SetEditor(TCustomSynEdit* const Value)
 			Editor->RemoveKeyPressHandler(EditorKeyPress);
 			RemoveFreeNotification(Editor);
 		}
-		FEditor = const_cast<TCustomSynEdit*>(Value);
+		fEditor = const_cast<TCustomSynEdit*>(Value);
 		if(Editor != nullptr)
 		{
 			Editor->AddKeyDownHandler(EditorKeyDown);
@@ -3335,15 +3335,15 @@ void __fastcall TSynAutoComplete::CreateInternalCompletion()
 TSynCompletionOptions __fastcall TSynAutoComplete::GetOptions()
 {
 	TSynCompletionOptions result;
-	result = fOptions;
+	result = FOptions;
 	return result;
 }
 
 void __fastcall TSynAutoComplete::SetOptions(const TSynCompletionOptions Value)
 {
-	fOptions = Value;
+	FOptions = Value;
 	if(ASSIGNED(FInternalCompletion))
-		FInternalCompletion->Options = fOptions + Syncompletionproposal__26 - Syncompletionproposal__27;
+		FInternalCompletion->Options = FOptions + Syncompletionproposal__26 - Syncompletionproposal__27;
 }
 
 void __fastcall TSynAutoComplete::CancelCompletion()

@@ -187,8 +187,8 @@ void __fastcall TSynEditPrinterInfo::UpdatePrinter()
 		FillDefault();
 		return;
 	}
-	FPhysicalWidth = GetDeviceCaps(Printer()->Handle, PHYSICALWIDTH);
-	FPhysicalHeight = GetDeviceCaps(Printer()->Handle, PHYSICALHEIGHT);
+	FPhysicalWidth = GetDeviceCaps(Printer()->Handle, ::PHYSICALWIDTH);
+	FPhysicalHeight = GetDeviceCaps(Printer()->Handle, ::PHYSICALHEIGHT);
 	FPrintableWidth = Printer()->PageWidth; /*or GetDeviceCaps(Printer.Handle, HorzRes);*/
 	FPrintableHeight = Printer()->PageHeight; /*or GetDeviceCaps(Printer.Handle, VertRes);*/
 	FLeftGutter = GetDeviceCaps(Printer()->Handle, PHYSICALOFFSETX);

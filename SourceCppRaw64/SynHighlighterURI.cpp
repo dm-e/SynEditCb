@@ -29,7 +29,7 @@ namespace Synhighlighteruri
 #define Synhighlighteruri__2 (TFontStyles() << TFontStyle::fsUnderline)
 
 
-const String Keywords[16/*# range 0..15*/] = {L"", L"http://", L"", L"https://", L"news:", L"gopher://", L"", L"prospero://", L"news://", L"www", L"nntp://", L"ftp://"
+const String KeyWords[16/*# range 0..15*/] = {L"", L"http://", L"", L"https://", L"news:", L"gopher://", L"", L"prospero://", L"news://", L"www", L"nntp://", L"ftp://"
                     , L"wais://", L"", L"telnet://", L"mailto:"};
 
 int __fastcall TSynURISyn::HashKey(PWideChar Str)
@@ -85,16 +85,16 @@ void __fastcall TSynURISyn::InitIdent()
 bool __fastcall TSynURISyn::IsCurrentToken(const String Token)
 {
 	bool result = false;
-	int i = 0;
+	int I = 0;
 	PWideChar Temp = nullptr;
 	Temp = fMayBeProtocol;
 	if(Token.Length() == fStringLen)
 	{
 		int stop = 0;
 		result = true;
-		for(stop = fStringLen, i = 1; i <= stop; i++)
+		for(stop = fStringLen, I = 1; I <= stop; I++)
 		{
-			if((*Temp) != Token[i])
+			if((*Temp) != Token[I])
 			{
 				result = false;
 				break;
@@ -107,7 +107,7 @@ bool __fastcall TSynURISyn::IsCurrentToken(const String Token)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::AltFunc(int key)
+TtkTokenKind __fastcall TSynURISyn::AltFunc(int Key)
 {
 	TtkTokenKind result = tkNull;
 	result = tkUnknown;
@@ -117,23 +117,23 @@ TtkTokenKind __fastcall TSynURISyn::AltFunc(int key)
 __fastcall TSynURISyn::TSynURISyn(TComponent* AOwner)
  : inherited(AOwner),
 			fMayBeProtocol(nullptr),
-			FTokenID(tkNull),
+			fTokenID(tkNull),
 			fIdentifierAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fURIAttri(nullptr),
 			fVisitedURIAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fURIAttri = new TSynHighlighterAttributes(SYNS_AttrURI, SYNS_FriendlyAttrURI);
 	fURIAttri->Foreground = (TColor) clBlue;
 	fURIAttri->Style = Synhighlighteruri__1;
-	addAttribute(fURIAttri);
+	AddAttribute(fURIAttri);
 	fVisitedURIAttri = new TSynHighlighterAttributes(SYNS_AttrVisitedURI, SYNS_FriendlyAttrVisitedURI);
 	fVisitedURIAttri->Foreground = (TColor) clPurple;
 	fVisitedURIAttri->Style = Synhighlighteruri__2;
-	addAttribute(fVisitedURIAttri);
+	AddAttribute(fVisitedURIAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterURI;
@@ -149,7 +149,7 @@ __fastcall TSynURISyn::~TSynURISyn()
 
 void __fastcall TSynURISyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -157,7 +157,7 @@ void __fastcall TSynURISyn::CRProc()
 
 void __fastcall TSynURISyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -166,16 +166,16 @@ void __fastcall TSynURISyn::NullProc()
 	if(Run < fLineLen + 1)
 	{
 		++Run;
-		FTokenID = tkNullChar;
+		fTokenID = tkNullChar;
 	}
 	else
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 }
 
 void __fastcall TSynURISyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
@@ -183,7 +183,7 @@ void __fastcall TSynURISyn::SpaceProc()
 void __fastcall TSynURISyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynURISyn::Next()
@@ -296,14 +296,14 @@ TSynHighlighterAttributes* __fastcall TSynURISyn::GetTokenAttribute()
 TtkTokenKind __fastcall TSynURISyn::GetTokenID()
 {
 	TtkTokenKind result = tkNull;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
 int __fastcall TSynURISyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -359,125 +359,125 @@ void __fastcall TSynURISyn::SetVisitedURIAttri(TSynHighlighterAttributes* const 
 
 void __fastcall TSynURISyn::ProtocolProc()
 {
-	int key = 0;
+	int Key = 0;
 	if(IsValidEmailAddress())
-		FTokenID = tkMailtoLink;
+		fTokenID = tkMailtoLink;
 	else
 	{
 		fMayBeProtocol = fLine + Run;
-		key = HashKey(fMayBeProtocol);
+		Key = HashKey(fMayBeProtocol);
 		Run += fStringLen;
-		if(key <= 15)
-			FTokenID = fIdentFuncTable[key](key);
+		if(Key <= 15)
+			fTokenID = fIdentFuncTable[Key](Key);
 		else
-			FTokenID = tkUnknown;
+			fTokenID = tkUnknown;
 	}
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncFtp(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncFtp(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkFtpLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncGopher(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncGopher(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkGopherLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncHttp(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncHttp(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkHttpLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncHttps(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncHttps(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkHttpsLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncMailto(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncMailto(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkMailtoLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncNews(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncNews(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkNewsLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncNntp(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncNntp(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkNntpLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncProspero(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncProspero(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkProsperoLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncTelnet(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncTelnet(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkTelnetLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncWais(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncWais(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidURI())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidURI())
 		result = tkWaisLink;
 	else
 		result = tkUnknown;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynURISyn::FuncWeb(int key)
+TtkTokenKind __fastcall TSynURISyn::FuncWeb(int Key)
 {
 	TtkTokenKind result = tkNull;
-	if(IsCurrentToken(Keywords[key]) && IsValidWebLink())
+	if(IsCurrentToken(KeyWords[Key]) && IsValidWebLink())
 		result = tkWebLink;
 	else
 		result = tkUnknown;

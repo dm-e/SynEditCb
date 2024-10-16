@@ -8,14 +8,9 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synautocorrect;
-using namespace System;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Buttons;
-using namespace Vcl::Controls;
-using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Vcl::Stdctrls;
 
 
 

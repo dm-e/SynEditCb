@@ -2,7 +2,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "SynHighlighterCss.h"
+#include "SynHighlighterCSS.h"
 #include "SynEditStrConst.h"
 #include "d2c_convert.h"
 
@@ -392,12 +392,12 @@ int __fastcall TSynCssSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynCssSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynCssSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -428,10 +428,10 @@ void __fastcall TSynCssSyn::DoAddKeyword(String AKeyword, int AKind)
 
 __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsSelector),
+			fRange(rsSelector),
 			fCommentRange(rsComment),
 			fParameterRange(rsComment),
-			FTokenID(tkComment),
+			fTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fPropertyAttri(nullptr),
 			fAttributeAttri(nullptr),
@@ -448,48 +448,48 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 			fAtRuleAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fPropertyAttri = new TSynHighlighterAttributes(SYNS_AttrProperty, SYNS_FriendlyAttrProperty);
 	fPropertyAttri->Style = Synhighlightercss__2;
-	addAttribute(fPropertyAttri);
+	AddAttribute(fPropertyAttri);
 	fSelectorAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fSelectorAttri->Style = Synhighlightercss__3;
 	fSelectorAttri->Foreground = (TColor) 0x00FF0080;
-	addAttribute(fSelectorAttri);
+	AddAttribute(fSelectorAttri);
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
 	fAttributeAttri->Style = Synhighlightercss__4;
 	fAttributeAttri->Foreground = (TColor) 0x00FF0080;
-	addAttribute(fAttributeAttri);
+	AddAttribute(fAttributeAttri);
 	fAtRuleAttri = new TSynHighlighterAttributes(SYNS_AttrAtRules, SYNS_FriendlyAttrAttribute);
 	fAtRuleAttri->Style = Synhighlightercss__5;
 	fAtRuleAttri->Foreground = (TColor) 0x00808000;
-	addAttribute(fAtRuleAttri);
+	AddAttribute(fAtRuleAttri);
 	fUndefPropertyAttri = new TSynHighlighterAttributes(SYNS_AttrUndefinedProperty, SYNS_FriendlyAttrUndefinedProperty);
 	fUndefPropertyAttri->Style = Synhighlightercss__6;
 	fUndefPropertyAttri->Foreground = (TColor) 0x00FF0080;
-	addAttribute(fUndefPropertyAttri);
+	AddAttribute(fUndefPropertyAttri);
 	fImportantPropertyAttri = new TSynHighlighterAttributes(L"Important", L"Important Marker");
 	fImportantPropertyAttri->Style = Synhighlightercss__7;
 	fImportantPropertyAttri->Foreground = (TColor) clRed;
-	addAttribute(fImportantPropertyAttri);
+	AddAttribute(fImportantPropertyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fColorAttri = new TSynHighlighterAttributes(SYNS_AttrColor, SYNS_FriendlyAttrColor);
-	addAttribute(fColorAttri);
+	AddAttribute(fColorAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
-	addAttribute(fTextAttri);
+	AddAttribute(fTextAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
 	fValueAttri->Foreground = (TColor) 0x00FF8000;
-	addAttribute(fValueAttri);
+	AddAttribute(fValueAttri);
 	SetAttributesOnChange(DefHighlightChange);
 
   // TODO: differentiating tkProperty for CSS1, CSS2 & CSS3 highlighting
@@ -566,37 +566,37 @@ void __fastcall TSynCssSyn::AttributeProc()
 		}
 		return;
 	}
-	FTokenID = tkSelectorAttrib;
+	fTokenID = tkSelectorAttrib;
 	while(!IsStopChar())
 		++Run;
 }
 
 void __fastcall TSynCssSyn::BraceCloseProc()
 {
-	FRange = rsSelector;
-	FTokenID = tkSymbol;
+	fRange = rsSelector;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynCssSyn::BraceOpenProc()
 {
 	++Run;
-	FRange = rsDeclaration;
-	FTokenID = tkSymbol;
+	fRange = rsDeclaration;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::BracketCloseProc()
 {
-	FTokenID = tkSymbol;
-	FRange = rsSelector;
+	fTokenID = tkSymbol;
+	fRange = rsSelector;
 	++Run;
 }
 
 void __fastcall TSynCssSyn::BracketOpenProc()
 {
 	++Run;
-	FRange = rsAttrib;
-	FTokenID = tkSymbol;
+	fRange = rsAttrib;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::CircumflexProc()
@@ -605,7 +605,7 @@ void __fastcall TSynCssSyn::CircumflexProc()
 	if(fLine[Run] == L'=')
 	{
 		++Run;
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 	}
 }
 
@@ -615,12 +615,12 @@ void __fastcall TSynCssSyn::CommentProc()
 		NullProc();
 	else
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 			{
-				FRange = fCommentRange;
+				fRange = fCommentRange;
 				Run += 2;
 				break;
 			}
@@ -632,7 +632,7 @@ void __fastcall TSynCssSyn::CommentProc()
 
 void __fastcall TSynCssSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -640,15 +640,15 @@ void __fastcall TSynCssSyn::CRProc()
 
 void __fastcall TSynCssSyn::SemiProc()
 {
-	FRange = rsUnKnown;
-	FTokenID = tkSymbol;
+	fRange = rsUnknown;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynCssSyn::StartValProc()
 {
-	FRange = rsValue;
-	FTokenID = tkSymbol;
+	fRange = rsValue;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
@@ -659,7 +659,7 @@ void __fastcall TSynCssSyn::NumberProc()
 	else
 	{
 		++Run;
-		FTokenID = tkNumber;
+		fTokenID = tkNumber;
 		while(CharInSet(fLine[Run], Synhighlightercss__9))
 		{
 			switch(fLine[Run])
@@ -680,17 +680,17 @@ void __fastcall TSynCssSyn::NumberProc()
 
 void __fastcall TSynCssSyn::ParenCloseProc()
 {
-	FRange = fParameterRange;
-	FTokenID = tkSymbol;
+	fRange = fParameterRange;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynCssSyn::ParenOpenProc()
 {
 	++Run;
-	fParameterRange = FRange;
-	FRange = rsParameter;
-	FTokenID = tkSymbol;
+	fParameterRange = fRange;
+	fRange = rsParameter;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::PipeProc()
@@ -699,41 +699,41 @@ void __fastcall TSynCssSyn::PipeProc()
 	if(fLine[Run] == L'=')
 	{
 		++Run;
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 	}
 }
 
 void __fastcall TSynCssSyn::PlusProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::IdentProc()
 {
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsProperty:
 		{
-			FRange = rsDeclaration;
-			FTokenID = tkSelector;
+			fRange = rsDeclaration;
+			fTokenID = tkSelector;
 			Run += fStringLen;
 		}
 		break;
 		case rsValue:
 		case rsParameter:
 		{
-			FTokenID = tkValue;
+			fTokenID = tkValue;
 			while(!IsLineEnd(Run) && !CharInSet(fLine[Run], Synhighlightercss__10))
 			{
 				++Run;
 			}
 			if(IsLineEnd(Run) || CharInSet(fLine[Run], Synhighlightercss__11))
-				FRange = rsDeclaration;
+				fRange = rsDeclaration;
 		}
 		break;
 		default:
-		FTokenID = IdentKind((fLine + Run));
+		fTokenID = IdentKind((fLine + Run));
 		do
 		{
 			++Run;
@@ -745,13 +745,13 @@ void __fastcall TSynCssSyn::IdentProc()
 
 void __fastcall TSynCssSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynCssSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -795,7 +795,7 @@ void __fastcall TSynCssSyn::AtRuleProc()
 		}
 		return;
 	}
-	FTokenID = tkAtRule;
+	fTokenID = tkAtRule;
 	while(!IsStopChar())
 		++Run;
 }
@@ -830,7 +830,7 @@ void __fastcall TSynCssSyn::SelectorProc()
 	if(fLine[Run] == L'}')
 	{
 		++Run;
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		return;
 	}
 	if(fLine[Run] == L'@')
@@ -872,7 +872,7 @@ void __fastcall TSynCssSyn::SelectorProc()
 		}
 		return;
 	}
-	FTokenID = tkSelector;
+	fTokenID = tkSelector;
 	while(!IsStopChar())
 		++Run;
 }
@@ -883,21 +883,21 @@ void __fastcall TSynCssSyn::TildeProc()
 	if(fLine[Run] == L'=')
 	{
 		++Run;
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 	}
 }
 
 void __fastcall TSynCssSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynCssSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	++Run;  // first '"'
 	while(!(IsLineEnd(Run) || (fLine[Run] == L'\"')))
 		++Run;
@@ -924,7 +924,7 @@ void __fastcall TSynCssSyn::HashProc()
 		}
 		return result;
 	};
-	FTokenID = tkColor;
+	fTokenID = tkColor;
 	++Run;  // '#'
 	while(IsHexChar())
 		++Run;
@@ -933,14 +933,14 @@ void __fastcall TSynCssSyn::HashProc()
 void __fastcall TSynCssSyn::EqualProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::ExclamProc()
 {
 	if((fLine[Run + 1] == L'i') && (fLine[Run + 2] == L'm') && (fLine[Run + 3] == L'p') && (fLine[Run + 4] == L'o') && (fLine[Run + 5] == L'r') && (fLine[Run + 6] == L't') && (fLine[Run + 7] == L'a') && (fLine[Run + 8] == L'n') && (fLine[Run + 9] == L't'))
 	{
-		FTokenID = tkImportant;
+		fTokenID = tkImportant;
 		Run += 10;
 	}
 	else
@@ -952,21 +952,21 @@ void __fastcall TSynCssSyn::SlashProc()
 	++Run;
 	if(fLine[Run] == L'*')
 	{
-		FTokenID = tkComment;
-		fCommentRange = FRange;
-		FRange = rsComment;
+		fTokenID = tkComment;
+		fCommentRange = fRange;
+		fRange = rsComment;
 		++Run;
 		if(!IsLineEnd(Run))
 			CommentProc();
 	}
 	else
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynCssSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsSelector:
 		SelectorProc();
@@ -1080,14 +1080,14 @@ bool __fastcall TSynCssSyn::GetEol()
 TtkTokenKind __fastcall TSynCssSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
 TSynHighlighterAttributes* __fastcall TSynCssSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkComment:
 		result = fCommentAttri;
@@ -1141,31 +1141,31 @@ TSynHighlighterAttributes* __fastcall TSynCssSyn::GetTokenAttribute()
 int __fastcall TSynCssSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 void __fastcall TSynCssSyn::GreaterProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void* __fastcall TSynCssSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynCssSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynCssSyn::ResetRange()
 {
-	FRange = rsSelector;
+	fRange = rsSelector;
 }
 
 String __fastcall TSynCssSyn::GetSampleSource()
@@ -1222,14 +1222,14 @@ String __fastcall TSynCssSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCSS;
 	return result;
 }
-static bool SynHighlighterCss_Initialized = false;
+static bool SynHighlighterCSS_Initialized = false;
 
-void SynHighlighterCss_initialization()
+void SynHighlighterCSS_initialization()
 {
-	if(SynHighlighterCss_Initialized)
+	if(SynHighlighterCSS_Initialized)
 		return;
 	
-	SynHighlighterCss_Initialized = true;
+	SynHighlighterCSS_Initialized = true;
 	
 	RegisterPlaceableHighlighter(__classid(TSynCssSyn));
 }

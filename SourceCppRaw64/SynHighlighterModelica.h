@@ -130,7 +130,7 @@ enum TtkTokenKind {tkComment,
                    tkString,
                    tkSymbol,
                    tkUnknown };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsString39,
                   rsString34,
                   rsComment };
@@ -140,8 +140,8 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynModelicaSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[97/*# range 0..96*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fDirectiveAttri;
@@ -154,7 +154,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall AsciiCharProc();

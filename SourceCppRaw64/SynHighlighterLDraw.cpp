@@ -20,7 +20,7 @@ namespace Synhighlighterldraw
           54 << 55 << 56 << 57 << '.')
 
 
-const String Keywords[1/*# range 0..0*/] = {L"author"};
+const String KeyWords[1/*# range 0..0*/] = {L"author"};
 const int KeyIndices[2/*# range 0..1*/] = {-1, 0};
 
 /*$Q-*/
@@ -40,14 +40,14 @@ unsigned int __fastcall TSynLDRSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynLDRSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynLDRSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkColor;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 1 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 1 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -75,7 +75,7 @@ TtkTokenKind __fastcall TSynLDRSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynLDRSyn::FuncAuthor(int Index)
 {
 	TtkTokenKind result = tkColor;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -84,13 +84,13 @@ TtkTokenKind __fastcall TSynLDRSyn::FuncAuthor(int Index)
 
 void __fastcall TSynLDRSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynLDRSyn::CRProc()
 {
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -98,14 +98,14 @@ void __fastcall TSynLDRSyn::CRProc()
 
 void __fastcall TSynLDRSyn::LFProc()
 {
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 	++Run;
 }
 
 __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkColor),
+			fRange(rsUnKnown),
+			fTokenID(tkColor),
 			fColorAttri(nullptr),
 			fCommentAttri(nullptr),
 			fFirstTriAttri(nullptr),
@@ -121,39 +121,39 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 {
 	fColorAttri = new TSynHighlighterAttributes(SYNS_AttrColor, SYNS_FriendlyAttrColor);
 	fColorAttri->Foreground = (TColor) clNavy;
-	addAttribute(fColorAttri);
+	AddAttribute(fColorAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clBlue;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fFirstTriAttri = new TSynHighlighterAttributes(SYNS_AttrFirstTri, SYNS_FriendlyAttrFirstTri);
 	fFirstTriAttri->Foreground = (TColor) RGB(206, 111, 73);
-	addAttribute(fFirstTriAttri);
+	AddAttribute(fFirstTriAttri);
 	fFourthTriAttri = new TSynHighlighterAttributes(SYNS_AttrFourthTri, SYNS_FriendlyAttrFourthTri);
 	fFourthTriAttri->Foreground = (TColor) RGB(54, 99, 12);
-	addAttribute(fFourthTriAttri);
+	AddAttribute(fFourthTriAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterldraw__0;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fLineAttri = new TSynHighlighterAttributes(SYNS_AttrLine, SYNS_FriendlyAttrLine);
 	fLineAttri->Foreground = (TColor) clBlack;
-	addAttribute(fLineAttri);
+	AddAttribute(fLineAttri);
 	fOpLineAttri = new TSynHighlighterAttributes(SYNS_AttrOpLine, SYNS_FriendlyAttrOpLine);
 	fOpLineAttri->Foreground = (TColor) clBlack;
-	addAttribute(fOpLineAttri);
+	AddAttribute(fOpLineAttri);
 	fQuadAttri = new TSynHighlighterAttributes(SYNS_AttrQuad, SYNS_FriendlyAttrQuad);
 	fQuadAttri->Foreground = (TColor) clRed;
-	addAttribute(fQuadAttri);
+	AddAttribute(fQuadAttri);
 	fSecondTriAttri = new TSynHighlighterAttributes(SYNS_AttrSecondTri, SYNS_FriendlyAttrSecondTri);
 	fSecondTriAttri->Foreground = (TColor) RGB(54, 99, 12);
-	addAttribute(fSecondTriAttri);
+	AddAttribute(fSecondTriAttri);
 	fThirdTriAttri = new TSynHighlighterAttributes(SYNS_AttrThirdTri, SYNS_FriendlyAttrThirdTri);
 	fThirdTriAttri->Foreground = (TColor) RGB(206, 111, 73);
-	addAttribute(fThirdTriAttri);
+	AddAttribute(fThirdTriAttri);
 	fTriangleAttri = new TSynHighlighterAttributes(SYNS_AttrTriangle, SYNS_FriendlyAttrTriangle);
 	fTriangleAttri->Foreground = (TColor) clBlack;
-	addAttribute(fTriangleAttri);
+	AddAttribute(fTriangleAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterLDraw;
@@ -174,13 +174,13 @@ void __fastcall TSynLDRSyn::IdentProc()
 {
 	if(FirstChar(fLine) == L'0')
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		while((fLine[Run] != L'\x0a') && (fLine[Run] != L'\x0d') && (fLine[Run] != L'\x00'))
 			++Run;
 	}
 	else
 	{
-		FTokenID = IdentKind((fLine + Run));
+		fTokenID = IdentKind((fLine + Run));
 		Run += fStringLen;
 		while(IsIdentChar(fLine[Run]))
 			++Run;
@@ -190,26 +190,26 @@ void __fastcall TSynLDRSyn::IdentProc()
 void __fastcall TSynLDRSyn::Number1Proc()
 {
 
-	auto ArgNumber = [&](PWideChar DatLine) -> unsigned char 
+	auto ArgNumber = [&](PWideChar DatLine) -> Byte 
 	{
-		unsigned char result = 0;
+		Byte result = 0;
 		int i = 0;
-		bool B = false;
+		bool b = false;
 		i = 0;
 		result = 0;
-		B = false;
+		b = false;
 		while(i <= Run)
 		{
 			if(DatLine[i] == L' ')
 			{
 				++i;
-				B = false;
+				b = false;
 			}
 			else
 			{
-				if(!B)
+				if(!b)
 					++result;
-				B = true;
+				b = true;
 				++i;
 			}
 		}
@@ -222,22 +222,22 @@ void __fastcall TSynLDRSyn::Number1Proc()
 			switch(fLine[Run])
 			{
 				case L'0':
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 				break;
 				case L'1':
-				FTokenID = tkIdentifier;
+				fTokenID = tkIdentifier;
 				break;
 				case L'2':
-				FTokenID = tkLine;
+				fTokenID = tkLine;
 				break;
 				case L'3':
-				FTokenID = tkTriangle;
+				fTokenID = tkTriangle;
 				break;
 				case L'4':
-				FTokenID = tkQuad;
+				fTokenID = tkQuad;
 				break;
 				case L'5':
-				FTokenID = tkOpLine;
+				fTokenID = tkOpLine;
 				break;
 				default:
 				  ;
@@ -247,36 +247,36 @@ void __fastcall TSynLDRSyn::Number1Proc()
 		break;
 		case 2:
 		if(FirstChar(fLine) != L'0')
-			FTokenID = tkColor;
+			fTokenID = tkColor;
 		else
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 		break;
 		case 3: case 4: case 5:
 		if(FirstChar(fLine) != L'0')
-			FTokenID = tkFirstTri;
+			fTokenID = tkFirstTri;
 		else
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 		break;
 		case 6: case 7: case 8:
 		if(FirstChar(fLine) != L'0')
-			FTokenID = tkSecondTri;
+			fTokenID = tkSecondTri;
 		else
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 		break;
 		case 9: case 10: case 11:
 		if(FirstChar(fLine) != L'0')
-			FTokenID = tkThirdTri;
+			fTokenID = tkThirdTri;
 		else
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 		break;
 		case 12: case 13: case 14:
 		if(FirstChar(fLine) != L'0')
-			FTokenID = tkFourthTri;
+			fTokenID = tkFourthTri;
 		else
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 		break;
 		default:
-		FTokenID = tkIdentifier;
+		fTokenID = tkIdentifier;
 		break;
 	}
 	while(CharInSet(fLine[Run], Synhighlighterldraw__1))
@@ -286,7 +286,7 @@ void __fastcall TSynLDRSyn::Number1Proc()
 void __fastcall TSynLDRSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynLDRSyn::Next()
@@ -360,7 +360,7 @@ String __fastcall TSynLDRSyn::GetKeyWords(int TokenKind)
 TtkTokenKind __fastcall TSynLDRSyn::GetTokenID()
 {
 	TtkTokenKind result = tkColor;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -418,7 +418,7 @@ TSynHighlighterAttributes* __fastcall TSynLDRSyn::GetTokenAttribute()
 int __fastcall TSynLDRSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -475,18 +475,18 @@ String __fastcall TSynLDRSyn::GetLanguageName()
 
 void __fastcall TSynLDRSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynLDRSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynLDRSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 

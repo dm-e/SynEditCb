@@ -76,12 +76,12 @@ unsigned int __fastcall TSynAsmSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynAsmSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynAsmSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -105,7 +105,7 @@ TtkTokenKind __fastcall TSynAsmSyn::IdentKind(PWideChar Maybe)
 
 __fastcall TSynAsmSyn::TSynAsmSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FTokenID(tkComment),
+			fTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
 			fKeyAttri(nullptr),
@@ -115,24 +115,24 @@ __fastcall TSynAsmSyn::TSynAsmSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterasm__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterasm__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	EnumerateKeywords(int(tkKey), Mnemonics, IsIdentChar, DoAddKeyword);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterX86Assembly;
@@ -146,7 +146,7 @@ __fastcall TSynAsmSyn::~TSynAsmSyn()
 
 void __fastcall TSynAsmSyn::CommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	do
 	{
 		++Run;
@@ -156,7 +156,7 @@ void __fastcall TSynAsmSyn::CommentProc()
 
 void __fastcall TSynAsmSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -165,14 +165,14 @@ void __fastcall TSynAsmSyn::CRProc()
 void __fastcall TSynAsmSyn::GreaterProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(fLine[Run] == L'=')
 		++Run;
 }
 
 void __fastcall TSynAsmSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -180,21 +180,21 @@ void __fastcall TSynAsmSyn::IdentProc()
 
 void __fastcall TSynAsmSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynAsmSyn::LowerProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(CharInSet(fLine[Run], Synhighlighterasm__2))
 		++Run;
 }
 
 void __fastcall TSynAsmSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -221,7 +221,7 @@ void __fastcall TSynAsmSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 		++Run;
 }
@@ -231,7 +231,7 @@ void __fastcall TSynAsmSyn::SlashProc()
 	++Run;
 	if(fLine[Run] == L'/')
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			++Run;
@@ -239,12 +239,12 @@ void __fastcall TSynAsmSyn::SlashProc()
 		while(!IsLineEnd(Run));
 	}
 	else
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynAsmSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	do
 	{
 		++Run;
@@ -254,7 +254,7 @@ void __fastcall TSynAsmSyn::SpaceProc()
 
 void __fastcall TSynAsmSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	if((fLine[Run + 1] == L'\x22') && (fLine[Run + 2] == L'\x22'))
 		Run += 2;
 	do
@@ -279,7 +279,7 @@ void __fastcall TSynAsmSyn::StringProc()
 
 void __fastcall TSynAsmSyn::SingleQuoteStringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	if((fLine[Run + 1] == L'\x27') && (fLine[Run + 2] == L'\x27'))
 		Run += 2;
 	do
@@ -305,13 +305,13 @@ void __fastcall TSynAsmSyn::SingleQuoteStringProc()
 void __fastcall TSynAsmSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynAsmSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkIdentifier;
+	fTokenID = tkIdentifier;
 }
 
 void __fastcall TSynAsmSyn::Next()
@@ -427,7 +427,7 @@ bool __fastcall TSynAsmSyn::GetEol()
 TSynHighlighterAttributes* __fastcall TSynAsmSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkComment:
 		result = fCommentAttri;
@@ -463,14 +463,14 @@ TSynHighlighterAttributes* __fastcall TSynAsmSyn::GetTokenAttribute()
 int __fastcall TSynAsmSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 TtkTokenKind __fastcall TSynAsmSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 

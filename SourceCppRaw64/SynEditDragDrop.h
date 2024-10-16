@@ -68,15 +68,15 @@ private:
 	TOnDragLeaveEvent FOnDragLeave;
 	TOnDragEvent FOnDrop;
 // IDropTarget
-	HRESULT __stdcall DragEnter(IDataObject* const dataObj, int grfKeyState, const TPoint& Pt, int& dwEffect);
-	HRESULT __stdcall DragOver(int grfKeyState, const TPoint& Pt, int& dwEffect);
+	HRESULT __stdcall DragEnter(IDataObject* const DataObj, int grfKeyState, const TPoint& pt, int& dwEffect);
+	HRESULT __stdcall DragOver(int grfKeyState, const TPoint& pt, int& dwEffect);
 	HRESULT __stdcall DragLeave();
-	HRESULT __stdcall Drop(IDataObject* const dataObj, int grfKeyState, const TPoint& Pt, int& dwEffect);
+	HRESULT __stdcall Drop(IDataObject* const DataObj, int grfKeyState, const TPoint& pt, int& dwEffect);
 protected:
-	void __fastcall DragEnter(IDataObject* dataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
-	void __fastcall DragOver(TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
-	void __fastcall DragLeave(HRESULT& result);
-	void __fastcall Drop(IDataObject* dataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& result);
+	void __fastcall DragEnter(IDataObject* DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+	void __fastcall DragOver(TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+	void __fastcall DragLeave(HRESULT& Result);
+	void __fastcall Drop(IDataObject* DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
 public:
 	virtual __fastcall ~TSynDropTarget();
 	__property TOnDragEvent OnDragEnter = { read = FOnDragEnter, write = FOnDragEnter };

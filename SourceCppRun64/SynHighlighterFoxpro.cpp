@@ -23,7 +23,7 @@ namespace Synhighlighterfoxpro
 #define Synhighlighterfoxpro__1 (TRegExOptions() << roIgnoreCase)
 
 
-const String Keywords = L"_curobj, _msysmenu, _pageno, _screen, _vfp, abs, accept, aclass, acopy, acos, "
+const String KeyWords = L"_curobj, _msysmenu, _pageno, _screen, _vfp, abs, accept, aclass, acopy, acos, "
 	           L"acti, activate, adatabases, adbobjects, add, additive, adel, adir, aelement, "
 	           L"aerror, afields, afont, after, again, ains, ainstance, alen, alias, alines, "
 	           L"all, alltrim, alt, alter, alternate, amembers, and, ansi, ansitooem, any, "
@@ -168,12 +168,12 @@ unsigned int __fastcall TSynFoxproSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynFoxproSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynFoxproSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -207,25 +207,25 @@ __fastcall TSynFoxproSyn::TSynFoxproSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterFoxpro;
-	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
+	EnumerateKeywords(int(tkKey), KeyWords, IsIdentChar, DoAddKeyword);
 //++ CodeFolding
 	RE_BlockBegin = TRegEx(L"\\b(function |procedure )\\b", Synhighlighterfoxpro__0);
 	RE_BlockEnd = TRegEx(L"\\b(endproc|endfunc)\\b", Synhighlighterfoxpro__1);
@@ -243,7 +243,7 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 {
 	String CurLine;
 	__int64 Line = 0;
-	bool OK = false;
+	bool ok = false;
 
 	auto BlockDelimiter = [&](int Line) -> bool 
 	{
@@ -251,7 +251,7 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 		int Index = 0;
 		TMatchCollection mcb = {};
 		TMatchCollection mce = {};
-		TMatch Match = {};
+		TMatch match = {};
 		result = false;
 		mcb = RE_BlockBegin.Matches(CurLine);
 		if(mcb.Count > 0)
@@ -260,18 +260,18 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 			Index = mcb.Item[0].Index;
 			if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 			{
-				OK = false;
-        // And ignore lines with both opening and closing chars in them
+				ok = false;
+		// And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
-					if(Match.Index > Index)
+					TMatch match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					if(match.Index > Index)
 					{
-						OK = true;
+						ok = true;
 						break;
 					}
 				}
-				if(!OK)
+				if(!ok)
 				{
 					FoldRanges->StartFoldRange(Line + 1, FT_Standard);
 					result = true;
@@ -297,17 +297,17 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 7)) == L"*REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 7)) == L"*REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 11)) == L"*ENDREGION")
+			if(UpperCase(S.SubString(1, 11)) == L"*ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;

@@ -149,7 +149,7 @@ protected:
 	virtual void __fastcall ScrollHorzTo(int Value);
 	void __fastcall ScrollVertFor(int Value);
 	virtual void __fastcall ScrollVertTo(int Value);
-	virtual void __fastcall UpdateScrollBars();
+	virtual void __fastcall UpdateScrollbars();
 	virtual void __fastcall SizeChanged();
 public:
 	typedef Vcl::Controls::TCustomControl inherited;

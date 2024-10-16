@@ -155,7 +155,7 @@ enum TtkTokenKind {tkComment,
 class TSynInnoSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fConstantAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSectionAttri;
@@ -169,7 +169,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall SymbolProc();
 	void __fastcall CRProc();
 	void __fastcall IdentProc();

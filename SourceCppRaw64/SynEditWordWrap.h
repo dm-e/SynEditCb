@@ -153,32 +153,32 @@ private:
 	int fLineCapacity;
 	int fRowCapacity;
 	int fLineCount;
-	Synedit::TCustomSynEdit* FEditor;
+	Synedit::TCustomSynEdit* fEditor;
 	TRowLength fMinRowLength;
 	TRowLength fMaxRowLength;
 	void __fastcall GrowLines(int aMinSize);
-	void __fastcall MoveLines(TLineIndex AStart, int aMoveBy);
+	void __fastcall MoveLines(TLineIndex aStart, int aMoveBy);
 	void __fastcall GrowRows(int aMinSize);
-	void __fastcall MoveRows(TRowIndex AStart, int aMoveBy);
+	void __fastcall MoveRows(TRowIndex aStart, int aMoveBy);
 	void __fastcall SetEmpty();
 protected:
 	void __fastcall WrapLines();
-	int __fastcall ReWrapLine(TLineIndex AIndex);
+	int __fastcall ReWrapLine(TLineIndex aIndex);
 	void __fastcall TrimArrays();
 	__property PRowIndexArray LineOffsets = { read = fLineOffsets };
 	__property PRowLengthArray RowLengths = { read = fRowLengths };
-	__property Synedit::TCustomSynEdit* Editor = { read = FEditor };
+	__property Synedit::TCustomSynEdit* Editor = { read = fEditor };
 public:
-	__fastcall TSynWordWrapPlugin(Synedit::TCustomSynEdit* AOwner);
+	__fastcall TSynWordWrapPlugin(Synedit::TCustomSynEdit* aOwner);
 	virtual __fastcall ~TSynWordWrapPlugin();
     /* ISynEditBufferPlugin */
-	Synedittypes::TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& APos);
-	TBufferCoord __fastcall DisplayToBufferPos(const Synedittypes::TDisplayCoord& APos);
+	Synedittypes::TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& aPos);
+	TBufferCoord __fastcall DisplayToBufferPos(const Synedittypes::TDisplayCoord& aPos);
 	int __fastcall RowCount();
-	int __fastcall GetRowLength(int ARow);
-	int __fastcall LinesInserted(int AIndex, int ACount);
-	int __fastcall LinesDeleted(int AIndex, int ACount);
-	int __fastcall LinePut(int AIndex, const String OldLine);
+	int __fastcall GetRowLength(int aRow);
+	int __fastcall LinesInserted(int aIndex, int aCount);
+	int __fastcall LinesDeleted(int aIndex, int aCount);
+	int __fastcall LinePut(int aIndex, const String OldLine);
 	void __fastcall Reset();
 	void __fastcall DisplayChanged();
 	__fastcall TSynWordWrapPlugin();

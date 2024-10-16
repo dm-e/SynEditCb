@@ -17,12 +17,8 @@ using namespace System;
 using namespace System::Classes;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Comctrls;
-using namespace Vcl::Controls;
-using namespace Vcl::Extctrls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Vcl::Stdctrls;
 
 #define Syneditkeycmdseditor__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK << TMsgDlgBtn::mbCancel)
 #define Syneditkeycmdseditor__1 (TMsgDlgButtons() << TMsgDlgBtn::mbOK << TMsgDlgBtn::mbCancel)
@@ -45,7 +41,7 @@ __fastcall TSynEditKeystrokesEditorForm::TSynEditKeystrokesEditorForm(TComponent
 			btnCancel(nullptr),
 			pnlCommands(nullptr),
 			KeyCmdList(nullptr),
-			fKeyStrokes(nullptr),
+			FKeystrokes(nullptr),
 			FExtended(false)
 {
 	//----- start initializations from the dfm-file -----------------------------
@@ -187,51 +183,51 @@ __fastcall TSynEditKeystrokesEditorForm::TSynEditKeystrokesEditorForm(TComponent
 	btnCancel->TabOrder = 7;
 	btnCancel->OnClick = btnCancelClick;
 	ComponentState >> csLoading;
-	fKeyStrokes = nullptr;
+	FKeystrokes = nullptr;
 }
 
 __fastcall TSynEditKeystrokesEditorForm::~TSynEditKeystrokesEditorForm()
 {
-	if(ASSIGNED(fKeyStrokes))
-		delete fKeyStrokes;
+	if(ASSIGNED(FKeystrokes))
+		delete FKeystrokes;
 	//# inherited::TForm::Destroy();
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::SetKeystrokes(TSynEditKeyStrokes* const Value)
 {
-	if(fKeyStrokes == nullptr)
-		fKeyStrokes = new TSynEditKeyStrokes(this);
-	fKeyStrokes->Assign((TPersistent*) Value);
+	if(FKeystrokes == nullptr)
+		FKeystrokes = new TSynEditKeyStrokes(this);
+	FKeystrokes->Assign((TPersistent*) Value);
 	UpdateKeystrokesList();
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::UpdateKeystrokesList()
 {
-	int X = 0;
+	int x = 0;
 	KeyCmdList->Items->BeginUpdate();
 	try
 	{
 		int stop = 0;
 		KeyCmdList->Items->Clear();
-		for(stop = fKeyStrokes->Count - 1, X = 0; X <= stop; X++)
+		for(stop = FKeystrokes->Count - 1, x = 0; x <= stop; x++)
 		{
 			/*# with KeyCmdList.Items.Add do */
 			{
 				auto with0 = KeyCmdList->Items->Add();
 				if(FExtended)
-					with0->Caption = ConvertCodeStringToExtended(EditorCommandToCodeString(fKeyStrokes->Items[X]->Command));
+					with0->Caption = ConvertCodeStringToExtended(EditorCommandToCodeString(FKeystrokes->Items[x]->Command));
 				else
-					with0->Caption = EditorCommandToCodeString(fKeyStrokes->Items[X]->Command);
-				if(fKeyStrokes->Items[X]->ShortCut == 0)
+					with0->Caption = EditorCommandToCodeString(FKeystrokes->Items[x]->Command);
+				if(FKeystrokes->Items[x]->ShortCut == 0)
 					with0->SubItems->Add(SYNS_ShortcutNone);
 				else
 				{
-					if(fKeyStrokes->Items[X]->ShortCut2 == 0)
-						with0->SubItems->Add(Menus::ShortCutToText(fKeyStrokes->Items[X]->ShortCut));
+					if(FKeystrokes->Items[x]->ShortCut2 == 0)
+						with0->SubItems->Add(Menus::ShortCutToText(FKeystrokes->Items[x]->ShortCut));
 					else
-						with0->SubItems->Add(Menus::ShortCutToText(fKeyStrokes->Items[X]->ShortCut)
+						with0->SubItems->Add(Menus::ShortCutToText(FKeystrokes->Items[x]->ShortCut)
 	           + L" "
-	           + Menus::ShortCutToText(fKeyStrokes->Items[X]->ShortCut2));
+	           + Menus::ShortCutToText(FKeystrokes->Items[x]->ShortCut2));
 				}
 			}
 		}
@@ -282,7 +278,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 		if(AForm->ShowModal() == mrOk)
 		{
 			result = true;
-			NewStroke = fKeyStrokes->Add();
+			NewStroke = FKeystrokes->Add();
 			NewStroke->Command = AForm->Command;
 			try
 			{
@@ -365,25 +361,25 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 		if(AForm->ShowModal() == mrOk)
 		{
 			result = true;
-			OldShortcut = fKeyStrokes->Items[SelItem->Index]->ShortCut;
-			OldShortcut2 = fKeyStrokes->Items[SelItem->Index]->ShortCut2;
+			OldShortcut = FKeystrokes->Items[SelItem->Index]->ShortCut;
+			OldShortcut2 = FKeystrokes->Items[SelItem->Index]->ShortCut2;
 			try
 			{
-				KeyLoc = ((TSynEditKeyStrokes*) fKeyStrokes->Items[SelItem->Index]->Collection)->FindShortcut2(AForm->Keystroke, AForm->Keystroke2);
-				fKeyStrokes->Items[SelItem->Index]->Command = AForm->Command;
-				fKeyStrokes->Items[SelItem->Index]->ShortCut = AForm->Keystroke;
-				fKeyStrokes->Items[SelItem->Index]->ShortCut2 = AForm->Keystroke2;
+				KeyLoc = ((TSynEditKeyStrokes*) FKeystrokes->Items[SelItem->Index]->Collection)->FindShortcut2(AForm->Keystroke, AForm->Keystroke2);
+				FKeystrokes->Items[SelItem->Index]->Command = AForm->Command;
+				FKeystrokes->Items[SelItem->Index]->ShortCut = AForm->Keystroke;
+				FKeystrokes->Items[SelItem->Index]->ShortCut2 = AForm->Keystroke2;
 			}
 			catch(ESynKeyError*)
 			{
 				{
 					if(FExtended)
-						TmpCommand = ConvertCodeStringToExtended(EditorCommandToCodeString(((TSynEditKeyStrokes*) fKeyStrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command));
+						TmpCommand = ConvertCodeStringToExtended(EditorCommandToCodeString(((TSynEditKeyStrokes*) FKeystrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command));
 					else
-						TmpCommand = EditorCommandToCodeString(((TSynEditKeyStrokes*) fKeyStrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command);
+						TmpCommand = EditorCommandToCodeString(((TSynEditKeyStrokes*) FKeystrokes->Items[SelItem->Index]->Collection)->Items[KeyLoc]->Command);
 					result = MessageDlg(Format(SYNS_DuplicateShortcutMsg, ARRAYOFCONST((Menus::ShortCutToText(AForm->Keystroke), TmpCommand))), TMsgDlgType::mtError, Syneditkeycmdseditor__1, 0) == mrOk;
-					fKeyStrokes->Items[SelItem->Index]->ShortCut = OldShortcut;
-					fKeyStrokes->Items[SelItem->Index]->ShortCut2 = OldShortcut2;
+					FKeystrokes->Items[SelItem->Index]->ShortCut = OldShortcut;
+					FKeystrokes->Items[SelItem->Index]->ShortCut2 = OldShortcut2;
 					if(result)
 						result = result;
 				}
@@ -422,9 +418,9 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 		try
 		{
 			with0->ExtendedString = this->ExtendedString;
-			with0->Command = fKeyStrokes->Items[SelItem->Index]->Command;
-			with0->Keystroke = fKeyStrokes->Items[SelItem->Index]->ShortCut;
-			with0->Keystroke2 = fKeyStrokes->Items[SelItem->Index]->ShortCut2;
+			with0->Command = FKeystrokes->Items[SelItem->Index]->Command;
+			with0->Keystroke = FKeystrokes->Items[SelItem->Index]->ShortCut;
+			with0->Keystroke2 = FKeystrokes->Items[SelItem->Index]->ShortCut2;
 			if(EditKeyStroke())
 			{
 				KeyCmdList->Items->BeginUpdate();
@@ -434,19 +430,19 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 					{
 						auto with1 = SelItem;
 						if(FExtended)
-							with1->Caption = ConvertCodeStringToExtended(EditorCommandToCodeString(fKeyStrokes->Items[with1->Index]->Command));
+							with1->Caption = ConvertCodeStringToExtended(EditorCommandToCodeString(FKeystrokes->Items[with1->Index]->Command));
 						else
-							with1->Caption = EditorCommandToCodeString(fKeyStrokes->Items[with1->Index]->Command);
-						if(fKeyStrokes->Items[with1->Index]->ShortCut == 0)
+							with1->Caption = EditorCommandToCodeString(FKeystrokes->Items[with1->Index]->Command);
+						if(FKeystrokes->Items[with1->Index]->ShortCut == 0)
 							with1->SubItems->Strings[0] = SYNS_ShortcutNone;
 						else
 						{
-							if(fKeyStrokes->Items[with1->Index]->ShortCut2 == 0)
-								with1->SubItems->Strings[0] = Menus::ShortCutToText(fKeyStrokes->Items[with1->Index]->ShortCut);
+							if(FKeystrokes->Items[with1->Index]->ShortCut2 == 0)
+								with1->SubItems->Strings[0] = Menus::ShortCutToText(FKeystrokes->Items[with1->Index]->ShortCut);
 							else
-								with1->SubItems->Strings[0] = Menus::ShortCutToText(fKeyStrokes->Items[with1->Index]->ShortCut)
+								with1->SubItems->Strings[0] = Menus::ShortCutToText(FKeystrokes->Items[with1->Index]->ShortCut)
 	           + L" "
-	           + Menus::ShortCutToText(fKeyStrokes->Items[with1->Index]->ShortCut2);
+	           + Menus::ShortCutToText(FKeystrokes->Items[with1->Index]->ShortCut2);
 						}
 					}
 				}
@@ -472,19 +468,19 @@ void __fastcall TSynEditKeystrokesEditorForm::btnDeleteClick(TObject* Sender)
 		MessageBeep(1);
 		return;
 	}
-	delete fKeyStrokes->Items[SelItem->Index];
+	delete FKeystrokes->Items[SelItem->Index];
 	KeyCmdList->Items->Delete(SelItem->Index);
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::btnClearClick(TObject* Sender)
 {
-	fKeyStrokes->Clear();
+	FKeystrokes->Clear();
 	KeyCmdList->Items->Clear();
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::btnResetClick(TObject* Sender)
 {
-	fKeyStrokes->ResetDefaults();
+	FKeystrokes->ResetDefaults();
 	UpdateKeystrokesList();
 }
 

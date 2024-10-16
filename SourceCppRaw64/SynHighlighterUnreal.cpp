@@ -10,7 +10,6 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
-using namespace System;
 
 namespace Synhighlighterunreal
 {
@@ -20,7 +19,7 @@ namespace Synhighlighterunreal
 #define Synhighlighterunreal__3 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
-const String Keywords[143/*# range 0..142*/] = {L"abstract", L"always", L"array", L"arraycount", L"assert", L"auto", L"automated", L"bool", L"boundingbox", L"boundingvolume"
+const String KeyWords[143/*# range 0..142*/] = {L"abstract", L"always", L"array", L"arraycount", L"assert", L"auto", L"automated", L"bool", L"boundingbox", L"boundingvolume"
                     , L"break", L"button", L"byte", L"cache", L"cacheexempt", L"case", L"catch", L"class", L"coerce", L"collapsecategories", L"color"
                     , L"config", L"const", L"continue", L"coords", L"cpptext", L"cross", L"default", L"defaultproperties", L"delegate", L"delete"
                     , L"dependson", L"deprecated", L"do", L"dontcollapsecategories", L"dot", L"each", L"edfindable", L"editconst", L"editconstarray"
@@ -68,14 +67,14 @@ unsigned int __fastcall TSynUnrealSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynUnrealSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynUnrealSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 732 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 732 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -245,7 +244,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncAbstract(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -255,7 +254,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncAbstract(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncAlways(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -265,7 +264,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncAlways(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncArray(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -275,7 +274,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncArray(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncArraycount(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -285,7 +284,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncArraycount(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncAssert(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -295,7 +294,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncAssert(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncAuto(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -305,7 +304,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncAuto(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncAutomated(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -315,7 +314,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncAutomated(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncBool(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -325,7 +324,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncBool(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncBoundingbox(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -335,7 +334,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncBoundingbox(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncBoundingvolume(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -345,7 +344,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncBoundingvolume(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncBreak(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -355,7 +354,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncBreak(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncButton(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -365,7 +364,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncButton(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncByte(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -375,7 +374,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncByte(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCache(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -385,7 +384,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCache(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCacheexempt(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -395,7 +394,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCacheexempt(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCase(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -405,7 +404,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCase(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCatch(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -415,7 +414,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCatch(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncClass(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -425,7 +424,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncClass(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCoerce(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -435,7 +434,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCoerce(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCollapsecategories(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -445,7 +444,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCollapsecategories(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncColor(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -455,7 +454,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncColor(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncConfig(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -465,7 +464,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncConfig(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncConst(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -475,7 +474,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncConst(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncContinue(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -485,7 +484,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncContinue(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCoords(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -495,7 +494,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCoords(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCpptext(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -505,7 +504,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCpptext(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncCross(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkSymbol;
 	else
 		result = tkIdentifier;
@@ -515,7 +514,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncCross(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDefault(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -525,7 +524,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDefault(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDefaultproperties(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -535,7 +534,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDefaultproperties(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDelegate(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -545,7 +544,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDelegate(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDelete(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -555,7 +554,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDelete(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDependson(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -565,7 +564,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDependson(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDeprecated(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -575,7 +574,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDeprecated(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDo(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -585,7 +584,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDo(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDontcollapsecategories(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -595,7 +594,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDontcollapsecategories(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncDot(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkSymbol;
 	else
 		result = tkIdentifier;
@@ -605,7 +604,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncDot(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEach(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -615,7 +614,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEach(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEdfindable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -625,7 +624,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEdfindable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditconst(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -635,7 +634,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditconst(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditconstarray(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -645,7 +644,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditconstarray(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinline(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -655,7 +654,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinline(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlinenew(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -665,7 +664,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlinenew(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlinenotify(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -675,7 +674,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlinenotify(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlineuse(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -685,7 +684,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEditinlineuse(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncElse(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -695,7 +694,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncElse(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEnum(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -705,7 +704,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEnum(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEnumcount(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -715,7 +714,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEnumcount(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncEvent(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -725,7 +724,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncEvent(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExec(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -735,7 +734,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExec(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExpands(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -745,7 +744,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExpands(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExplicit(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -755,7 +754,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExplicit(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExport(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -765,7 +764,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExport(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExportstructs(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -775,7 +774,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExportstructs(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncExtends(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -785,7 +784,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncExtends(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncFalse(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -795,7 +794,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncFalse(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncFinal(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -805,7 +804,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncFinal(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncFloat(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -815,7 +814,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncFloat(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncFor(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -825,7 +824,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncFor(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncForeach(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -835,7 +834,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncForeach(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncFunction(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -845,7 +844,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncFunction(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncGlobal(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -855,7 +854,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncGlobal(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncGlobalconfig(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -865,7 +864,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncGlobalconfig(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncGoto(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -875,7 +874,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncGoto(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncGuid(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -885,7 +884,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncGuid(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncHidecategories(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -895,7 +894,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncHidecategories(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncHidedropdown(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -905,7 +904,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncHidedropdown(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncHideparent(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -915,7 +914,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncHideparent(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -925,7 +924,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncIgnores(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -935,7 +934,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncIgnores(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncImport(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -945,7 +944,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncImport(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInit(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -955,7 +954,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInit(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInput(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -965,7 +964,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInput(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInsert(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -975,7 +974,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInsert(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInstanced(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -985,7 +984,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInstanced(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInt(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -995,7 +994,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInt(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncIntrinsic(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1005,7 +1004,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncIntrinsic(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncInvariant(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1015,7 +1014,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncInvariant(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncIterator(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1025,7 +1024,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncIterator(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncLatent(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1035,7 +1034,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncLatent(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncLength(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1045,7 +1044,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncLength(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncLocal(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1055,7 +1054,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncLocal(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncLocalized(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1065,7 +1064,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncLocalized(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncLong(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1075,7 +1074,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncLong(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncMesh(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1085,7 +1084,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncMesh(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncModel(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1095,7 +1094,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncModel(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncMutable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1105,7 +1104,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncMutable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncName(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1115,7 +1114,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncName(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNative(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1125,7 +1124,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNative(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNativereplication(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1135,7 +1134,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNativereplication(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNew(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1145,7 +1144,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNew(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNoexport(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1155,7 +1154,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNoexport(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNone(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1165,7 +1164,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNone(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNoteditinlinenew(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1175,7 +1174,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNoteditinlinenew(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNotplaceable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1185,7 +1184,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNotplaceable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncNousercreate(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1195,7 +1194,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncNousercreate(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncOperator(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1205,7 +1204,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncOperator(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncOptional(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1215,7 +1214,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncOptional(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncOut(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1225,7 +1224,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncOut(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncParseconfig(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1235,7 +1234,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncParseconfig(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPerobjectconfig(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1245,7 +1244,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPerobjectconfig(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPlaceable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1255,7 +1254,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPlaceable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPlane(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1265,7 +1264,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPlane(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPointer(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1275,7 +1274,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPointer(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPostoperator(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1285,7 +1284,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPostoperator(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPreoperator(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1295,7 +1294,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPreoperator(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncPrivate(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1305,7 +1304,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncPrivate(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncProtected(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1315,7 +1314,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncProtected(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncRegister(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1325,7 +1324,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncRegister(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncReliable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1335,7 +1334,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncReliable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncRemove(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1345,7 +1344,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncRemove(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncReplication(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1355,7 +1354,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncReplication(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncReturn(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1365,7 +1364,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncReturn(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncRng(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1375,7 +1374,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncRng(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncRot(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1385,7 +1384,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncRot(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncRotator(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1395,7 +1394,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncRotator(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSafereplace(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1405,7 +1404,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSafereplace(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncScale(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1415,7 +1414,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncScale(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncScriptconst(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1425,7 +1424,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncScriptconst(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSelf(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1435,7 +1434,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSelf(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncShowcategories(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1445,7 +1444,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncShowcategories(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSimulated(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1455,7 +1454,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSimulated(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSingular(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1465,7 +1464,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSingular(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSkip(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1475,7 +1474,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSkip(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSound(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1485,7 +1484,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSound(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncState(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1495,7 +1494,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncState(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncStatic(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1505,7 +1504,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncStatic(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncStop(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1515,7 +1514,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncStop(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncString(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1525,7 +1524,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncString(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncStruct(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1535,7 +1534,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncStruct(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSuper(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1545,7 +1544,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSuper(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncSwitch(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1555,7 +1554,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncSwitch(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncTexture(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1565,7 +1564,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncTexture(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncTransient(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1575,7 +1574,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncTransient(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncTravel(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1585,7 +1584,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncTravel(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncTrue(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1595,7 +1594,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncTrue(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncUnreliable(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey2;
 	else
 		result = tkIdentifier;
@@ -1605,7 +1604,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncUnreliable(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncUntil(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1615,7 +1614,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncUntil(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncVar(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1625,7 +1624,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncVar(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncVect(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1635,7 +1634,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncVect(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncVector(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1645,7 +1644,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncVector(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncVoid(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1655,7 +1654,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncVoid(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncWhile(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1665,7 +1664,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncWhile(int Index)
 TtkTokenKind __fastcall TSynUnrealSyn::FuncWithin(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1674,7 +1673,7 @@ TtkTokenKind __fastcall TSynUnrealSyn::FuncWithin(int Index)
 
 __fastcall TSynUnrealSyn::TSynUnrealSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FRoundCount(0),
 			FSquareCount(0),
 			FTokenID(tkComment),
@@ -1691,32 +1690,32 @@ __fastcall TSynUnrealSyn::TSynUnrealSyn(TComponent* AOwner)
 			fString2Attri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterunreal__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterunreal__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fKey2Attri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
 	fKey2Attri->Style = Synhighlighterunreal__2;
-	addAttribute(fKey2Attri);
+	AddAttribute(fKey2Attri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fString2Attri = new TSynHighlighterAttributes(SYNS_AttrSingleString, SYNS_FriendlyAttrSingleString);
-	addAttribute(fString2Attri);
+	AddAttribute(fString2Attri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterCPP;
@@ -1753,10 +1752,10 @@ void __fastcall TSynUnrealSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				if(FRange == rsDirectiveComment)
-					FRange = rsDirective;
+				if(fRange == rsDirectiveComment)
+					fRange = rsDirective;
 				else
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 				goto label0;
 			}
 			else
@@ -1875,7 +1874,7 @@ void __fastcall TSynUnrealSyn::DirectiveProc()
 	if(IsLineEnd(Run))
 	{
 		if(Run <= 0)
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 		NextProcedure();
 	}
 	else
@@ -1892,7 +1891,7 @@ void __fastcall TSynUnrealSyn::DirectiveProc()
 					{
 						if(fLine[Run + 1] == L'*') // might be embedded only
 						{
-							FRange = rsDirectiveComment;
+							fRange = rsDirectiveComment;
 							goto label4;
 						}
 						else
@@ -1904,7 +1903,7 @@ void __fastcall TSynUnrealSyn::DirectiveProc()
 				case L'\x0a':
 				case L'\x0d':
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					goto label5;
 				}
 				default:
@@ -2257,8 +2256,8 @@ void __fastcall TSynUnrealSyn::SlashProc()
 		case L'*':
 		{
 			FTokenID = tkComment;
-			if(FRange != rsDirectiveComment)
-				FRange = rsAnsiC;
+			if(fRange != rsDirectiveComment)
+				fRange = rsAnsiC;
 			Run += 2;
 			while(!IsLineEnd(Run))
 				switch(fLine[Run])
@@ -2267,10 +2266,10 @@ void __fastcall TSynUnrealSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						if(FRange == rsDirectiveComment)
-							FRange = rsDirective;
+						if(fRange == rsDirectiveComment)
+							fRange = rsDirective;
 						else
-							FRange = rsUnKnown;
+							fRange = rsUnKnown;
 						goto label7;
 					}
 					else
@@ -2279,8 +2278,8 @@ void __fastcall TSynUnrealSyn::SlashProc()
 					case L'\x0a':
 					case L'\x0d':
 					{
-						if(FRange == rsDirectiveComment)
-							FRange = rsAnsiC;
+						if(fRange == rsDirectiveComment)
+							fRange = rsAnsiC;
 						goto label8;
 					}
 					default:
@@ -2426,7 +2425,7 @@ void __fastcall TSynUnrealSyn::UnknownProc()
 void __fastcall TSynUnrealSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsiC:
 		case rsDirectiveComment:
@@ -2437,7 +2436,7 @@ void __fastcall TSynUnrealSyn::Next()
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			NextProcedure();
 		}
 		break;
@@ -2608,7 +2607,7 @@ bool __fastcall TSynUnrealSyn::GetEol()
 void* __fastcall TSynUnrealSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -2687,15 +2686,15 @@ int __fastcall TSynUnrealSyn::GetTokenKind()
 
 void __fastcall TSynUnrealSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynUnrealSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
-void __fastcall TSynUnrealSyn::EnumUserSettings(TStrings* Settings)
+void __fastcall TSynUnrealSyn::EnumUserSettings(TStrings* settings)
 {
 
   /* returns the user settings that exist in the registry */
@@ -2709,7 +2708,7 @@ void __fastcall TSynUnrealSyn::EnumUserSettings(TStrings* Settings)
 			{
 				try
 				{
-					with0->GetKeyNames(Settings);
+					with0->GetKeyNames(settings);
 				}
 				__finally
 				{
@@ -2738,38 +2737,38 @@ bool __fastcall TSynUnrealSyn::UseUserSettings(int settingIndex)
 	{
 		bool result = false;
 
-		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 		{
 			bool result = false;
 
-			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* Attri, String Name) -> bool 
+			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* attri, String name) -> bool 
 			{
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = Name.Length(), i = 1; i <= stop; i++)
+				for(stop = name.Length(), i = 1; i <= stop; i++)
 				{
-					if(Name[i] == L' ')
-						Name[i] = L'_';
+					if(name[i] == L' ')
+						name[i] = L'_';
 				}
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
-	           + L"\\Highlight", Name, true);
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
+	           + L"\\Highlight", name, true);
 				return result;
 			}; /* ReadCPPB1 */
 
-			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadCPPB3OrMore */ /* ReadCPPBSetting */
 			try
 			{
 				if(settingTag[1] == L'1')
-					result = ReadCPPB1(settingTag, Attri, key);
+					result = ReadCPPB1(settingTag, attri, key);
 				else
-					result = ReadCPPB3OrMore(settingTag, Attri, key);
+					result = ReadCPPB3OrMore(settingTag, attri, key);
 			}
 			catch(...)
 			{

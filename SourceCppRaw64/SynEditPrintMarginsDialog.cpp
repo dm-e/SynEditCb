@@ -9,12 +9,7 @@ using namespace std;
 using namespace d2c_system;
 using namespace Syneditprintmargins;
 using namespace Syneditprinttypes;
-using namespace System;
 using namespace System::Uitypes;
-using namespace Vcl::Controls;
-using namespace Vcl::Extctrls;
-using namespace Vcl::Forms;
-using namespace Vcl::Stdctrls;
 
 #define Syneditprintmarginsdialog__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
 

@@ -149,7 +149,7 @@ Different SQL dialects can be selected via the Dialect property.
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 enum TtkTokenKind {tkComment,
-                   tkDataType,
+                   tkDatatype,
                    tkDefaultPackage,
                    tkException,
                    tkFunction,
@@ -169,7 +169,7 @@ enum TtkTokenKind {tkComment,
                    tkDelimitedIdentifier,
                    tkProcName,
                    tkConsoleOutput };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsComment,
                   rsString,
                   rsConditionalComment,
@@ -189,8 +189,8 @@ enum TSQLDialect {sqlStandard,
 class TSynSQLSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	TStrings* FProcNames;
 	TStrings* fTableNames;
@@ -217,7 +217,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fProcNameAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fVariableAttri;
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	void __fastcall SetDialect(TSQLDialect Value);
 	void __fastcall SetTableNames(TStrings* const Value);

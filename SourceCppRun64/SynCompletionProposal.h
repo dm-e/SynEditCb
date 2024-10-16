@@ -140,7 +140,7 @@ private:
 	TStrings* FInsertList;
 	TStrings* FAssignedList;
 	int FPosition;
-	int fLinesInWindow;
+	int FLinesInWindow;
 	int FTitleFontHeight;
 	int FFontHeight;
 	TScrollBar* FScrollbar;
@@ -150,7 +150,7 @@ private:
 	TColor fClSelectText;
 	TColor FClTitleBackground;
 	TColor fClBackGround;
-	TBitmap* BITMAP; // used for drawing
+	TBitmap* Bitmap; // used for drawing
 	TBitmap* TitleBitmap; // used for title-drawing
 	Synedit::TCustomSynEdit* FCurrentEditor;
 	String FTitle;
@@ -170,7 +170,7 @@ private:
 	bool FUseInsertList;
 	bool FCompleteWithTab;
 	bool FCompleteWithEnter;
-	int fMouseWheelAccumulator;
+	int FMouseWheelAccumulator;
 	SynCompletionType FDisplayKind;
 	TCompletionParameter FParameterToken;
 	int FCurrentIndex;
@@ -208,8 +208,8 @@ private:
 	bool __fastcall IsWordBreakChar(WideChar AChar);
 	HIDESBASE MESSAGE void __fastcall WMNCHitTest(TWMNCHitTest& Message)/*# WM_NCHITTEST */;
 protected:
-	DYNAMIC void __fastcall KeyDown(WORD& key, TShiftState Shift);
-	DYNAMIC void __fastcall KeyPress(Char& key);
+	DYNAMIC void __fastcall KeyDown(WORD& Key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyPress(Char& Key);
 	DYNAMIC void __fastcall Paint();
 	DYNAMIC void __fastcall Activate();
 	DYNAMIC void __fastcall Deactivate();
@@ -284,7 +284,7 @@ private:
 	int FWidth;
 	String FPreviousToken;
 	int FDotOffset;
-	TSynCompletionOptions fOptions;
+	TSynCompletionOptions FOptions;
 	int FNbLinesInWindow;
 	bool FFontsAreScaled;
 	bool FCanExecute;
@@ -355,8 +355,8 @@ public:
 	typedef System::Classes::TComponent inherited;
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TSynBaseCompletionProposal(TComponent* AOwner);
-	void __fastcall Execute(String s, int X, int Y);
-	virtual void __fastcall ExecuteEx(String s, int X, int Y, SynCompletionType Kind = Syncompletionproposal::ctCode);
+	void __fastcall Execute(String s, int x, int y);
+	virtual void __fastcall ExecuteEx(String s, int x, int y, SynCompletionType Kind = Syncompletionproposal::ctCode);
 	void __fastcall Activate();
 	void __fastcall Deactivate();
 	void __fastcall ClearList();
@@ -423,10 +423,10 @@ private:
 	void __fastcall SetEditor(Synedit::TCustomSynEdit* const Value);
 	void __fastcall HandleOnCancel(TObject* Sender);
 	void __fastcall HandleOnValidate(TObject* Sender, TShiftState Shift, WideChar EndToken);
-	void __fastcall HandleOnKeyPress(TObject* Sender, WideChar& key);
+	void __fastcall HandleOnKeyPress(TObject* Sender, WideChar& Key);
 	void __fastcall HandleDblClick(TObject* Sender);
-	void __fastcall EditorKeyDown(TObject* Sender, WORD& key, TShiftState Shift);
-	void __fastcall EditorKeyPress(TObject* Sender, WideChar& key);
+	void __fastcall EditorKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
+	void __fastcall EditorKeyPress(TObject* Sender, WideChar& Key);
 	void __fastcall TimerExecute(TObject* Sender);
 	String __fastcall GetPreviousToken(Synedit::TCustomSynEdit* AEditor);
 	String __fastcall GetCurrentInput(Synedit::TCustomSynEdit* AEditor);
@@ -449,7 +449,7 @@ public:
 	void __fastcall AddEditor(Synedit::TCustomSynEdit* AEditor);
 	bool __fastcall RemoveEditor(Synedit::TCustomSynEdit* AEditor);
 	int __fastcall EditorsCount();
-	virtual void __fastcall ExecuteEx(String s, int X, int Y, SynCompletionType Kind = Syncompletionproposal::ctCode);
+	virtual void __fastcall ExecuteEx(String s, int x, int y, SynCompletionType Kind = Syncompletionproposal::ctCode);
 	void __fastcall ActivateCompletion();
 	void __fastcall CancelCompletion();
 	void __fastcall ActivateTimer(Synedit::TCustomSynEdit* ACurrentEditor);
@@ -470,15 +470,15 @@ class TSynAutoComplete : public System::Classes::TComponent
 {
 private:
 	TShortCut FShortCut;
-	Synedit::TCustomSynEdit* FEditor;
+	Synedit::TCustomSynEdit* fEditor;
 	TStrings* fAutoCompleteList;
-	bool FNoNextKey;
+	bool fNoNextKey;
 	String FEndOfTokenChr;
 	TNotifyEvent FOnBeforeExecute;
 	TNotifyEvent FOnAfterExecute;
 	TSynCompletionProposal* FInternalCompletion;
 	bool FDoLookup;
-	TSynCompletionOptions fOptions;
+	TSynCompletionOptions FOptions;
 	void __fastcall SetAutoCompleteList(TStrings* List);
 	void __fastcall SetEditor(Synedit::TCustomSynEdit* const Value);
 	void __fastcall SetDoLookup(bool Value);
@@ -490,8 +490,8 @@ private:
 protected:
 	void __fastcall SetShortCut(TShortCut Value);
 	virtual void __fastcall Notification(TComponent* AComponent, TOperation Operation);
-	virtual void __fastcall EditorKeyDown(TObject* Sender, WORD& key, TShiftState Shift);
-	virtual void __fastcall EditorKeyPress(TObject* Sender, WideChar& key);
+	virtual void __fastcall EditorKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
+	virtual void __fastcall EditorKeyPress(TObject* Sender, WideChar& Key);
 	String __fastcall GetPreviousToken(Synedit::TCustomSynEdit* Editor);
 public:
 	typedef System::Classes::TComponent inherited;
@@ -509,7 +509,7 @@ __published:
 public:
 	__property TStrings* AutoCompleteList = { read = fAutoCompleteList, write = SetAutoCompleteList };
 	__property String EndOfTokenChr = { read = FEndOfTokenChr, write = FEndOfTokenChr };
-	__property Synedit::TCustomSynEdit* Editor = { read = FEditor, write = SetEditor };
+	__property Synedit::TCustomSynEdit* Editor = { read = fEditor, write = SetEditor };
 	__property TShortCut ShortCut = { read = FShortCut, write = SetShortCut };
 	__property TNotifyEvent OnBeforeExecute = { read = FOnBeforeExecute, write = FOnBeforeExecute };
 	__property TNotifyEvent OnAfterExecute = { read = FOnAfterExecute, write = FOnAfterExecute };
@@ -550,7 +550,7 @@ public:
 	#include "SynCompletionProposal_friends.inc"
 	__fastcall TProposalColumns(TPersistent* AOwner, TCollectionItemClass ItemClass);
 	TProposalColumn* __fastcall Add();
-	TProposalColumn* __fastcall FindItemID(int id);
+	TProposalColumn* __fastcall FindItemID(int ID);
 	TProposalColumn* __fastcall Insert(int Index);
 	__property TProposalColumn* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
 	__fastcall TProposalColumns(TCollectionItemClass ItemClass);

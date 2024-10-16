@@ -67,24 +67,24 @@ const String SasmNoField = L"LOOP\x0d\x0a" L"RTNSXM\x0d\x0a" L"RTN\x0d\x0a" L"RT
 	           L"A=PC\x0d\x0a" L"C=PC\x0d\x0a" L"APCEX\x0d\x0a" L"CPCEX\x0d\x0a" L"XM=0\x0d\x0a" L"SB=0\x0d\x0a" L"SR=0\x0d\x0a" L"MP=0\x0d\x0a" L"CLRHST\x0d\x0a" L"?XM=0\x0d\x0a" L"?SR=0\x0d\x0a" L"?MP=0\x0d\x0a" L"?SB=0\x0d\x0a" L"RTNYES\x0d\x0a" L"SKIPYES{\x0d\x0a" L"{\x0d\x0a" L"}\x0d\x0a" L"UP\x0d\x0a" L"EXIT\x0d\x0a" L"EXITNC\x0d\x0a" L"EXITC\x0d\x0a" L"UPC\x0d\x0a" L"UPNC"
 	           L"}SKELSE{\x0d\x0a" L"SKC{\x0d\x0a" L"SKNC{\x0d\x0a" L"SKUB{\x0d\x0a" L"SKUBL{\x0d\x0a" L"SKIPC{\x0d\x0a" L"SKIPNC{\x0d\x0a" L"EXIT2\x0d\x0a" L"EXIT3\x0d\x0a" L"UP2\x0d\x0a" L"UP3\x0d\x0a" L"}SKLSE{\x0d\x0a" L"}SKEC{\x0d\x0a" L"}SKENC{\x0d\x0a";
 
-int __fastcall StringCrc(String s)
+int __fastcall StringCrc(String S)
 {
 	int result = 0;
 	int i = 0;
 	int stop = 0;
 	result = 0;
-	for(stop = s.Length(), i = 1; i <= stop; i++)
+	for(stop = S.Length(), i = 1; i <= stop; i++)
 	{
-		result = (result >> 4) ^ (((result ^ int(s[i])) & 0xF) * 0x1081);
-		result = (result >> 4) ^ (((result ^ (int(s[i]) >> 4)) & 0xF) * 0x1081);
+		result = (result >> 4) ^ (((result ^ int(S[i])) & 0xF) * 0x1081);
+		result = (result >> 4) ^ (((result ^ (int(S[i]) >> 4)) & 0xF) * 0x1081);
 	}
 	return result;
 }
 
 /* TSpeedListObject */
 
-__fastcall TSpeedListObject::TSpeedListObject(String Name)
- : FName(Name),
+__fastcall TSpeedListObject::TSpeedListObject(String name)
+ : FName(name),
 			FSpeedList(nullptr),
 			FObject(nullptr)
 {
@@ -149,7 +149,7 @@ void __fastcall TSpeedStringList::Clear()
 	int i = 0;
 	int j = 0;
 	int stop = 0;
-	for(stop = 127 /*# High(Datas) */, i = 0 /*# Low(Datas) */; i <= stop; i++)
+	for(stop = 127 /*# High(datas) */, i = 0 /*# Low(datas) */; i <= stop; i++)
 	{
 		int stop1 = 0;
 		for(stop1 = DatasUsed[i] - 1, j = 0; j <= stop1; j++)
@@ -169,7 +169,7 @@ __fastcall TSpeedStringList::TSpeedStringList()
 	int i = 0;
 	int stop = 0;
 	//# inherited::Create();
-	for(stop = 127 /*# High(Datas) */, i = 0 /*# Low(Datas) */; i <= stop; i++)
+	for(stop = 127 /*# High(datas) */, i = 0 /*# Low(Datas) */; i <= stop; i++)
 	{
 		SumOfUsed[i] = 0;
 		DatasUsed[i] = 0;
@@ -223,7 +223,7 @@ String __fastcall TSpeedStringList::Get(int Index)
 int __fastcall TSpeedStringList::GetCount()
 {
 	int result = 0;
-	result = SumOfUsed[127 /*# High(Datas) */] + DatasUsed[127 /*# High(Datas) */];
+	result = SumOfUsed[127 /*# High(datas) */] + DatasUsed[127 /*# High(Datas) */];
 	return result;
 }
 
@@ -291,16 +291,16 @@ String __fastcall TSpeedStringList::GetText()
 	return result;
 }
 
-void __fastcall TSpeedStringList::NameChange(TSpeedListObject* const Obj, const String NewName)
+void __fastcall TSpeedStringList::NameChange(TSpeedListObject* const obj, const String NewName)
 {
 	int crc = 0;
 	int i = 0;
 	int j = 0;
 	int stop = 0;
-	crc = StringCrc(Obj->Name) % 127 /*# High(Datas) */ + 1;
+	crc = StringCrc(obj->Name) % 127 /*# High(Datas) */ + 1;
 	for(stop = DatasUsed[crc] - 1, i = 0; i <= stop; i++)
 	{
-		if((*Datas[crc])[i] == Obj)
+		if((*Datas[crc])[i] == obj)
 		{
 			int stop1 = 0;
 			for(stop1 = DatasUsed[crc] - 1, j = i + 1; j <= stop1; j++)
@@ -316,22 +316,22 @@ void __fastcall TSpeedStringList::NameChange(TSpeedListObject* const Obj, const 
 				Datas[crc] = (PSpeedListObjects) ReallocMemory(Datas[crc], DatasUsed[crc] * sizeof((*Datas[crc])[0]));
 				LengthDatas[crc] = DatasUsed[crc];
 			}
-			AddObj(Obj);
+			AddObj(obj);
 			return;
 		}
 	}
 }
 
-void __fastcall TSpeedStringList::ObjectDeleted(TSpeedListObject* const Obj)
+void __fastcall TSpeedStringList::ObjectDeleted(TSpeedListObject* const obj)
 {
 	int crc = 0;
 	int i = 0;
 	int j = 0;
 	int stop = 0;
-	crc = StringCrc(Obj->Name) % 127 /*# High(Datas) */ + 1;
+	crc = StringCrc(obj->Name) % 127 /*# High(Datas) */ + 1;
 	for(stop = DatasUsed[crc] - 1, i = 0; i <= stop; i++)
 	{
-		if((*Datas[crc])[i] == Obj)
+		if((*Datas[crc])[i] == obj)
 		{
 			int stop1 = 0;
 			for(stop1 = DatasUsed[crc] - 1, j = i + 1; j <= stop1; j++)
@@ -343,7 +343,7 @@ void __fastcall TSpeedStringList::ObjectDeleted(TSpeedListObject* const Obj)
 			{
 				--SumOfUsed[j];
 			}
-			Obj->FSpeedList = nullptr;
+			obj->FSpeedList = nullptr;
 			return;
 		}
 	}
@@ -394,7 +394,7 @@ void __fastcall TSpeedStringList::SetText(const String Value)
 __fastcall TSynHP48Syn::TSynHP48Syn(TComponent* AOwner)
  : inherited(AOwner),
 			fTockenKind(tkNull),
-			FRange(rsRpl),
+			fRange(rsRpl),
 			FRplKeyWords(nullptr),
 			FAsmKeyWords(nullptr),
 			FSAsmNoField(nullptr),
@@ -430,7 +430,7 @@ __fastcall TSynHP48Syn::TSynHP48Syn(TComponent* AOwner)
 	FSAsmNoField = new TSpeedStringList();
 	FSAsmNoField->Text = SasmNoField;
 	BaseRange = rsRpl;
-	FRange = rsRpl;
+	fRange = rsRpl;
 	fDefaultFilter = SYNS_FilterHP48;
 } /* Create */
 
@@ -448,7 +448,7 @@ __fastcall TSynHP48Syn::~TSynHP48Syn()
 	//# inherited::Destroy();
 } /* Destroy */
 
-TtkTokenKind __fastcall TSynHP48Syn::AsmComProc(WideChar C)
+TtkTokenKind __fastcall TSynHP48Syn::AsmComProc(WideChar c)
 {
 	TtkTokenKind result = tkNull;
 	result = tkAsmComment;
@@ -457,10 +457,10 @@ TtkTokenKind __fastcall TSynHP48Syn::AsmComProc(WideChar C)
 	else
 	{
 		while(Run <= fLineStr.Length())
-			if(((Run == 1) || (fLineStr[Run - 1] <= L' ')) && (fLineStr[Run] == L'*') && ((Run < fLineStr.Length()) && (fLineStr[Run + 1] == C)) && ((Run + 1 == fLineStr.Length()) || (fLineStr[Run + 2] <= L' ')))
+			if(((Run == 1) || (fLineStr[Run - 1] <= L' ')) && (fLineStr[Run] == L'*') && ((Run < fLineStr.Length()) && (fLineStr[Run + 1] == c)) && ((Run + 1 == fLineStr.Length()) || (fLineStr[Run + 2] <= L' ')))
 			{
 				Run += 2;
-				FRange = rsAsm;
+				fRange = rsAsm;
 				break;
 			}
 			else
@@ -481,7 +481,7 @@ TtkTokenKind __fastcall TSynHP48Syn::RplComProc()
 			if(fLineStr[Run] == L')')
 			{
 				++Run;
-				FRange = rsRpl;
+				fRange = rsRpl;
 				break;
 			}
 			else
@@ -493,7 +493,7 @@ TtkTokenKind __fastcall TSynHP48Syn::RplComProc()
 TtkTokenKind __fastcall TSynHP48Syn::SlashProc()
 {
 	TtkTokenKind result = tkNull;
-	if(FRange == rsRpl)
+	if(fRange == rsRpl)
 		result = IdentProc();
 	else
 	{
@@ -501,7 +501,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SlashProc()
 		{
 			Run += 2;
 			result = tkAsmComment;
-			FRange = rsComAsm2;
+			fRange = rsComAsm2;
 		}
 		else
 		{
@@ -528,13 +528,13 @@ TtkTokenKind __fastcall TSynHP48Syn::SlashProc()
 TtkTokenKind __fastcall TSynHP48Syn::ParOpenProc()
 {
 	TtkTokenKind result = tkNull;
-	if(FRange == rsRpl)
+	if(fRange == rsRpl)
 	{
 		if(((Run == 1) && ((fLineStr.Length() == 1) || (fLineStr[Run + 1] <= L' '))) || ((fLineStr[Run - 1] <= L' ') && ((fLineStr.Length() == Run) || (fLineStr[Run + 1] <= L' '))))
 		{
 			++Run;
 			result = tkRplComment;
-			FRange = rsComRpl;
+			fRange = rsComRpl;
 		}
 		else
 		result = IdentProc();
@@ -545,7 +545,7 @@ TtkTokenKind __fastcall TSynHP48Syn::ParOpenProc()
 		{
 			Run += 2;
 			result = tkAsmComment;
-			FRange = rsComAsm1;
+			fRange = rsComAsm1;
 		}
 		else
 		result = IdentProc();
@@ -556,7 +556,7 @@ TtkTokenKind __fastcall TSynHP48Syn::ParOpenProc()
 TtkTokenKind __fastcall TSynHP48Syn::PersentProc()
 {
 	TtkTokenKind result = tkNull;
-	if(FRange == rsAsm)
+	if(fRange == rsAsm)
 	{
 		++Run;
 		result = tkAsmComment;
@@ -583,7 +583,7 @@ TtkTokenKind __fastcall TSynHP48Syn::PersentProc()
 TtkTokenKind __fastcall TSynHP48Syn::StarProc()
 {
 	TtkTokenKind result = tkNull;
-	if(FRange == rsRpl)
+	if(fRange == rsRpl)
 	{
 		++Run;
 		result = tkRplComment;
@@ -615,13 +615,13 @@ TtkTokenKind __fastcall TSynHP48Syn::IdentProc()
 	i = Run;
 	EndOfToken();
 	s = fLineStr.SubString(i, Run - i);
-	if(FRange == rsAsm)
+	if(fRange == rsAsm)
 	{
 		if(FAsmKeyWords->Find(s) != nullptr)
 		{
 			if((s == L"!RPL") || (s == L"ENDCODE"))
 			{
-				FRange = rsRpl;
+				fRange = rsRpl;
 				result = tkAsmKey;
 			}
 			else
@@ -641,14 +641,14 @@ TtkTokenKind __fastcall TSynHP48Syn::IdentProc()
 		{
 			if((s == L"CODEM") || (s == L"ASSEMBLEM"))
 			{
-				FRange = rsAsm;
+				fRange = rsAsm;
 				result = tkAsmKey;
 			}
 			else
 			{
 				if((s == L"CODE") || (s == L"ASSEMBLE"))
 				{
-					FRange = rssasm1;
+					fRange = rssasm1;
 					result = tksAsmKey;
 				}
 				else
@@ -664,7 +664,7 @@ TtkTokenKind __fastcall TSynHP48Syn::IdentProc()
 TtkTokenKind __fastcall TSynHP48Syn::GetTokenFromRange()
 {
 	TtkTokenKind result = tkNull;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAsm:
 		result = tkAsm;
@@ -721,27 +721,27 @@ TtkTokenKind __fastcall TSynHP48Syn::Next1()
 		result = NullProc();
 	else
 	{
-		if(FRange == rsComRpl)
+		if(fRange == rsComRpl)
 			result = RplComProc();
 		else
 		{
-			if(FRange == rsComAsm1)
+			if(fRange == rsComAsm1)
 				result = AsmComProc(L')');
 			else
 			{
-				if(FRange == rsComAsm2)
+				if(fRange == rsComAsm2)
 					result = AsmComProc(L'/');
 				else
 				{
-					if(FRange == rssasm1)
+					if(fRange == rssasm1)
 						result = SasmProc1();
 					else
 					{
-						if(FRange == rssasm2)
+						if(fRange == rssasm2)
 							result = SasmProc2();
 						else
 						{
-							if(FRange == rssasm3)
+							if(fRange == rssasm3)
 								result = SasmProc3();
 							else
 							{
@@ -761,7 +761,7 @@ TtkTokenKind __fastcall TSynHP48Syn::Next1()
 												result = SlashProc();
 											else
 											{
-												if((Run == 1) && (FRange == rsRpl) && (fLineStr[1] == L'*'))
+												if((Run == 1) && (fRange == rsRpl) && (fLineStr[1] == L'*'))
 													result = StarProc();
 												else
 													result = IdentProc();
@@ -800,18 +800,18 @@ bool __fastcall TSynHP48Syn::GetEol()
 void* __fastcall TSynHP48Syn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynHP48Syn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynHP48Syn::ResetRange()
 {
-	FRange = BaseRange;
+	fRange = BaseRange;
 }
 
 TSynHighlighterAttributes* __fastcall TSynHP48Syn::GetAttrib(int Index)
@@ -832,52 +832,52 @@ void __fastcall TSynHP48Syn::EndOfToken()
 		++Run;
 }
 
-bool __fastcall TSynHP48Syn::LoadFromRegistry(HKEY RootKey, String key)
+bool __fastcall TSynHP48Syn::LoadFromRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKeyReadOnly(key))
+		r->RootKey = RootKey;
+		if(r->OpenKeyReadOnly(Key))
 		{
-			if(R->ValueExists(L"AsmKeyWordList"))
-				AsmKeyWords->Text = R->ReadString(L"AsmKeyWordList");
-			if(R->ValueExists(L"RplKeyWordList"))
-				RplKeyWords->Text = R->ReadString(L"RplKeyWordList");
-			result = inherited::LoadFromRegistry(RootKey, key);
+			if(r->ValueExists(L"AsmKeyWordList"))
+				AsmKeyWords->Text = r->ReadString(L"AsmKeyWordList");
+			if(r->ValueExists(L"RplKeyWordList"))
+				RplKeyWords->Text = r->ReadString(L"RplKeyWordList");
+			result = inherited::LoadFromRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
 
-bool __fastcall TSynHP48Syn::SaveToRegistry(HKEY RootKey, String key)
+bool __fastcall TSynHP48Syn::SaveToRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKey(key, true))
+		r->RootKey = RootKey;
+		if(r->OpenKey(Key, true))
 		{
-			R->WriteString(L"AsmKeyWordList", AsmKeyWords->Text);
-			R->WriteString(L"RplKeyWordList", RplKeyWords->Text);
-			result = inherited::SaveToRegistry(RootKey, key);
+			r->WriteString(L"AsmKeyWordList", AsmKeyWords->Text);
+			r->WriteString(L"RplKeyWordList", RplKeyWords->Text);
+			result = inherited::SaveToRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
@@ -908,11 +908,11 @@ int __fastcall TSynHP48Syn::GetAttribCount()
 	return result;
 }
 
-TSynHighlighterAttributes* __fastcall TSynHP48Syn::getAttribute(int Idx)
+TSynHighlighterAttributes* __fastcall TSynHP48Syn::GetAttribute(int idx)
 {
 	TSynHighlighterAttributes* result = nullptr; // sorted by name
-	if(Idx <= int((TtkTokenKind) 9 /*# High(TtkTokenKind) */))
-		result = Attribs[((TtkTokenKind) Idx)];
+	if(idx <= int((TtkTokenKind) 9 /*# High(TtkTokenKind) */))
+		result = Attribs[((TtkTokenKind) idx)];
 	else
 		result = nullptr;
 	return result;
@@ -954,7 +954,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc1()
 		return result;
 	if(fLineStr[Run] == L'*')
 	{
-		FRange = rssasm3;
+		fRange = rssasm3;
 		result = tksAsmComment;
 		return result;
 	}
@@ -966,16 +966,16 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc1()
 		s = fLineStr.SubString(i, Run - i);
 		if((s == L"RPL") || (s == L"ENDCODE"))
 		{
-			FRange = rsRpl;
+			fRange = rsRpl;
 			return result;
 		}
 	}
 	while((Run <= fLineStr.Length()) && (fLineStr[Run] <= L' ') && (fLineStr[Run] != L'\x0a'))
 		++Run;
 	if(Run <= fLineStr.Length())
-		FRange = rssasm2;
+		fRange = rssasm2;
 	else
-		FRange = rssasm1;
+		fRange = rssasm1;
 	return result;
 }
 
@@ -989,7 +989,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc2()
 		++Run;
 	if(Run > 30)
 	{
-		FRange = rssasm3;
+		fRange = rssasm3;
 		return result;
 	}
 	i = Run;
@@ -998,7 +998,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc2()
 	s = fLineStr.SubString(i, Run - i);
 	if((s == L"ENDCODE") || (s == L"RPL"))
 	{
-		FRange = rsRpl;
+		fRange = rsRpl;
 		result = tksAsmKey;
 	}
 	else
@@ -1013,9 +1013,9 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc2()
 				++Run;
 		}
 		if(Run <= fLineStr.Length())
-			FRange = rssasm3;
+			fRange = rssasm3;
 		else
-			FRange = rssasm1;
+			fRange = rssasm1;
 	}
 	return result;
 }
@@ -1028,7 +1028,7 @@ TtkTokenKind __fastcall TSynHP48Syn::SasmProc3()
 		++Run;
 	if(Run <= fLineStr.Length())
 		++Run;
-	FRange = rssasm1;
+	fRange = rssasm1;
 	return result;
 }
 

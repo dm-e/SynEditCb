@@ -10,7 +10,6 @@ using namespace Synedit;
 using namespace Syneditkeycmds;
 using namespace Synedittypes;
 using namespace System;
-using namespace System::Classes;
 
 namespace Syndbedit
 {
@@ -178,9 +177,9 @@ void __fastcall TCustomDBSynEdit::LoadMemo()
 		ClearUndo();
     // Memo too large 
 	}
-	catch(EInvalidOperation* e)
+	catch(EInvalidOperation* E)
 	{
-		Lines->Text = Format(L"(%s)", ARRAYOFCONST((e->Message)));
+		Lines->Text = Format(L"(%s)", ARRAYOFCONST((E->Message)));
 	}
 	EditingChange(this);
 }

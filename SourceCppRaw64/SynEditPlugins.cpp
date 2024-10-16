@@ -30,7 +30,7 @@ namespace Syneditplugins
 
 __fastcall TAbstractSynPlugin::TAbstractSynPlugin(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TAbstractSynHookerPlugin::TAbstractSynHookerPlugin(TComponent* AOwner) : inherited(AOwner) {}
-__fastcall TAbstractSynCompletion::TAbstractSynCompletion(TComponent* AOwner) : inherited(AOwner) {}
+__fastcall TAbstractSynCompletion::TAbstractSynCompletion(TComponent* aOwner) : inherited(aOwner) {}
 
 
 const int ecPluginBase = 64000;
@@ -44,15 +44,15 @@ TSynEditorCommand __fastcall NewPluginCommand()
 	return result;
 }
 
-void __fastcall ReleasePluginCommand(TSynEditorCommand ACmd)
+void __fastcall ReleasePluginCommand(TSynEditorCommand aCmd)
 {
-	if(ACmd == Pred(gCurrentCommand))
-		gCurrentCommand = (int) ACmd;
+	if(aCmd == Pred(gCurrentCommand))
+		gCurrentCommand = (int) aCmd;
 }
 
 /* TAbstractSynPlugin */
 
-int __fastcall TAbstractSynPlugin::AddEditor(TCustomSynEdit* AEditor)
+int __fastcall TAbstractSynPlugin::AddEditor(TCustomSynEdit* aEditor)
 {
 	int result = 0;
 	if(fEditors == nullptr)
@@ -61,15 +61,15 @@ int __fastcall TAbstractSynPlugin::AddEditor(TCustomSynEdit* AEditor)
 	}
 	else
 	{
-		if(fEditors->IndexOf(AEditor) >= 0)
+		if(fEditors->IndexOf(aEditor) >= 0)
 		{
 			result = -1;
 			return result;
 		}
 	}
-	AEditor->FreeNotification(this);
-	result = fEditors->Add(AEditor);
-	DoAddEditor(AEditor);
+	aEditor->FreeNotification(this);
+	result = fEditors->Add(aEditor);
+	DoAddEditor(aEditor);
 	return result;
 }
 
@@ -82,25 +82,25 @@ __fastcall TAbstractSynPlugin::~TAbstractSynPlugin()
 	// inherited;
 }
 
-void __fastcall TAbstractSynPlugin::Notification(TComponent* AComponent, TOperation aOperation)
+void __fastcall TAbstractSynPlugin::Notification(TComponent* aComponent, TOperation aOperation)
 {
-	inherited::Notification(AComponent, aOperation);
+	inherited::Notification(aComponent, aOperation);
 	if(aOperation == opRemove)
 	{
-		if((AComponent == Editor) || (ObjectIs(AComponent, TCustomSynEdit*)))
-			RemoveEditor(((TCustomSynEdit*) AComponent));
+		if((aComponent == Editor) || (ObjectIs(aComponent, TCustomSynEdit*)))
+			RemoveEditor(((TCustomSynEdit*) aComponent));
 	}
 }
 
-void __fastcall TAbstractSynPlugin::DoAddEditor(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynPlugin::DoAddEditor(TCustomSynEdit* aEditor)
 {
 }
 
-void __fastcall TAbstractSynPlugin::DoRemoveEditor(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynPlugin::DoRemoveEditor(TCustomSynEdit* aEditor)
 {
 }
 
-int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* AEditor)
+int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* aEditor)
 {
 	int result = 0;
 	if(fEditors == nullptr)
@@ -108,7 +108,7 @@ int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* AEditor)
 		result = -1;
 		return result;
 	}
-	result = fEditors->Remove(AEditor);
+	result = fEditors->Remove(aEditor);
   //aEditor.RemoveFreeNotification(Self);
 	if(fEditors->Count == 0)
 	{
@@ -116,19 +116,19 @@ int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* AEditor)
 		fEditors = nullptr;
 	}
 	if(result >= 0)
-		DoRemoveEditor(AEditor);
+		DoRemoveEditor(aEditor);
 	return result;
 }
 
 void __fastcall TAbstractSynPlugin::SetEditor(TCustomSynEdit* const Value)
 {
-	TCustomSynEdit* IEditor = nullptr;
-	IEditor = Editor;
-	if(IEditor != Value)
+	TCustomSynEdit* iEditor = nullptr;
+	iEditor = Editor;
+	if(iEditor != Value)
 		try
 		{
-			if((IEditor != nullptr) && (fEditors->Count == 1))
-				RemoveEditor(IEditor);
+			if((iEditor != nullptr) && (fEditors->Count == 1))
+				RemoveEditor(iEditor);
 			if(Value != nullptr)
 				AddEditor(const_cast<TCustomSynEdit*>(Value));
 		}
@@ -141,10 +141,10 @@ void __fastcall TAbstractSynPlugin::SetEditor(TCustomSynEdit* const Value)
 		}
 }
 
-TCustomSynEdit* __fastcall TAbstractSynPlugin::GetEditors(int AIndex)
+TCustomSynEdit* __fastcall TAbstractSynPlugin::GetEditors(int aIndex)
 {
 	TCustomSynEdit* result = nullptr;
-	result = ((TCustomSynEdit*) fEditors->Items[AIndex]);
+	result = ((TCustomSynEdit*) fEditors->Items[aIndex]);
 	return result;
 }
 
@@ -170,15 +170,15 @@ int __fastcall TAbstractSynPlugin::GetEditorCount()
 
 /* TAbstractSynHookerPlugin */
 
-void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* AEditor, TSynEditorCommand aCommandID, TShortCut aOldShortCut, TShortCut aNewShortCut)
+void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* aEditor, TSynEditorCommand aCommandID, TShortCut aOldShortCut, TShortCut aNewShortCut)
 {
-	int IIndex = 0;
+	int iIndex = 0;
 	TSynEditKeyStroke* iKeystroke = nullptr;
 	Assert(aNewShortCut != 0);
   /* shortcurts aren't created while in design-time */
 	if(Syneditplugins__2 * ComponentState == Syneditplugins__3)
 	{
-		if(((TSynEdit*) AEditor)->Keystrokes->FindShortcut(aNewShortCut) >= 0)
+		if(((TSynEdit*) aEditor)->Keystrokes->FindShortcut(aNewShortCut) >= 0)
 			throw new ESynKeyError(SYNS_EDuplicateShortcut);
 		else
 			return;
@@ -186,10 +186,10 @@ void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* AEditor, TS
   /* tries to update old Keystroke */
 	if(aOldShortCut != 0)
 	{
-		IIndex = ((TSynEdit*) AEditor)->Keystrokes->FindShortcut(aOldShortCut);
-		if(IIndex >= 0)
+		iIndex = ((TSynEdit*) aEditor)->Keystrokes->FindShortcut(aOldShortCut);
+		if(iIndex >= 0)
 		{
-			iKeystroke = ((TSynEdit*) AEditor)->Keystrokes->Items[IIndex];
+			iKeystroke = ((TSynEdit*) aEditor)->Keystrokes->Items[iIndex];
 			if(iKeystroke->Command == aCommandID)
 			{
 				iKeystroke->ShortCut = aNewShortCut;
@@ -198,7 +198,7 @@ void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* AEditor, TS
 		}
 	}
   /* new Keystroke */
-	iKeystroke = ((TSynEdit*) AEditor)->Keystrokes->Add();
+	iKeystroke = ((TSynEdit*) aEditor)->Keystrokes->Add();
 	try
 	{
 		iKeystroke->ShortCut = aNewShortCut;
@@ -209,21 +209,21 @@ void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* AEditor, TS
 		throw ;
 	}
 	iKeystroke->Command = aCommandID;
-	AEditor->RegisterCommandHandler(OnCommand, this);
+	aEditor->RegisterCommandHandler(OnCommand, this);
 }
 
-void __fastcall TAbstractSynHookerPlugin::UnHookEditor(TCustomSynEdit* AEditor, TSynEditorCommand aCommandID, TShortCut AShortCut)
+void __fastcall TAbstractSynHookerPlugin::UnHookEditor(TCustomSynEdit* aEditor, TSynEditorCommand aCommandID, TShortCut aShortCut)
 {
-	int IIndex = 0;
-	AEditor->UnregisterCommandHandler(OnCommand);
-	IIndex = ((TSynEdit*) AEditor)->Keystrokes->FindShortcut(AShortCut);
-	if((IIndex >= 0) && (((TSynEdit*) AEditor)->Keystrokes->Items[IIndex]->Command == aCommandID))
-		delete ((TSynEdit*) AEditor)->Keystrokes->Items[IIndex];
+	int iIndex = 0;
+	aEditor->UnregisterCommandHandler(OnCommand);
+	iIndex = ((TSynEdit*) aEditor)->Keystrokes->FindShortcut(aShortCut);
+	if((iIndex >= 0) && (((TSynEdit*) aEditor)->Keystrokes->Items[iIndex]->Command == aCommandID))
+		delete ((TSynEdit*) aEditor)->Keystrokes->Items[iIndex];
 }
 
 /* TAbstractSynHookerPlugin */
 
-void __fastcall TAbstractSynSingleHookPlugin::accept()
+void __fastcall TAbstractSynSingleHookPlugin::Accept()
 {
 	fState = psAccepting;
 	try
@@ -232,7 +232,7 @@ void __fastcall TAbstractSynSingleHookPlugin::accept()
 	}
 	__finally
 	{
-		FCurrentEditor = nullptr;
+		fCurrentEditor = nullptr;
 		fState = psNone;
 	}
 }
@@ -246,19 +246,19 @@ void __fastcall TAbstractSynSingleHookPlugin::Cancel()
 	}
 	__finally
 	{
-		FCurrentEditor = nullptr;
+		fCurrentEditor = nullptr;
 		fState = psNone;
 	}
 }
 
-__fastcall TAbstractSynSingleHookPlugin::TAbstractSynSingleHookPlugin(TComponent* AOwner)
- : inherited(AOwner),
+__fastcall TAbstractSynSingleHookPlugin::TAbstractSynSingleHookPlugin(TComponent* aOwner)
+ : inherited(aOwner),
 			fCommandID(NewPluginCommand()),
 			fState(psNone),
-			FCurrentEditor(nullptr),
-			FShortCut((TShortCut) 0)
+			fCurrentEditor(nullptr),
+			fShortCut((TShortCut) 0)
 {
-	FShortCut = DefaultShortCut();
+	fShortCut = DefaultShortCut();
 }
 
 /*#static*/
@@ -277,18 +277,18 @@ __fastcall TAbstractSynSingleHookPlugin::~TAbstractSynSingleHookPlugin()
 	// inherited;
 }
 
-void __fastcall TAbstractSynSingleHookPlugin::DoAddEditor(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynSingleHookPlugin::DoAddEditor(TCustomSynEdit* aEditor)
 {
 	if(ShortCut != 0)
-		HookEditor(AEditor, CommandID, (TShortCut) 0, ShortCut);
+		HookEditor(aEditor, CommandID, (TShortCut) 0, ShortCut);
 }
 
-void __fastcall TAbstractSynSingleHookPlugin::Execute(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynSingleHookPlugin::Execute(TCustomSynEdit* aEditor)
 {
 	if(Executing())
 		Cancel();
-	Assert(FCurrentEditor == nullptr);
-	FCurrentEditor = AEditor;
+	Assert(fCurrentEditor == nullptr);
+	fCurrentEditor = aEditor;
 	Assert(fState == psNone);
 	fState = psExecuting;
 	try
@@ -312,22 +312,22 @@ bool __fastcall TAbstractSynSingleHookPlugin::Executing()
 bool __fastcall TAbstractSynSingleHookPlugin::IsShortCutStored()
 {
 	bool result = false;
-	result = FShortCut != DefaultShortCut();
+	result = fShortCut != DefaultShortCut();
 	return result;
 }
 
-void __fastcall TAbstractSynSingleHookPlugin::DoRemoveEditor(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynSingleHookPlugin::DoRemoveEditor(TCustomSynEdit* aEditor)
 {
 	if(ShortCut != 0)
-		UnHookEditor(AEditor, CommandID, ShortCut);
-	if(Executing() && (CurrentEditor == AEditor))
+		UnHookEditor(aEditor, CommandID, ShortCut);
+	if(Executing() && (CurrentEditor == aEditor))
 		Cancel();
 }
 
 void __fastcall TAbstractSynSingleHookPlugin::SetShortCut(const TShortCut Value)
 {
 	int cEditor = 0;
-	if(FShortCut != Value)
+	if(fShortCut != Value)
 	{
 		if(ASSIGNED(fEditors))
 		{
@@ -336,7 +336,7 @@ void __fastcall TAbstractSynSingleHookPlugin::SetShortCut(const TShortCut Value)
 				int stop = 0;
 				for(stop = fEditors->Count - 1, cEditor = 0; cEditor <= stop; cEditor++)
 				{
-					HookEditor(Editors[cEditor], CommandID, FShortCut, Value);
+					HookEditor(Editors[cEditor], CommandID, fShortCut, Value);
 				}
 			}
 			else
@@ -344,11 +344,11 @@ void __fastcall TAbstractSynSingleHookPlugin::SetShortCut(const TShortCut Value)
 				int stop = 0;
 				for(stop = fEditors->Count - 1, cEditor = 0; cEditor <= stop; cEditor++)
 				{
-					UnHookEditor(Editors[cEditor], CommandID, FShortCut);
+					UnHookEditor(Editors[cEditor], CommandID, fShortCut);
 				}
 			}
 		}
-		FShortCut = Value;
+		fShortCut = Value;
 	}
 }
 
@@ -357,30 +357,30 @@ void __fastcall TAbstractSynSingleHookPlugin::SetShortCut(const TShortCut Value)
 String __fastcall TAbstractSynCompletion::GetCurrentEditorString()
 {
 	String result;
-	String s;
+	String S;
 	int Col = 0;
-	s = CurrentEditor->LineText;
-	if((CurrentEditor->CaretX > 1) && (CurrentEditor->CaretX - 1 <= s.Length()))
+	S = CurrentEditor->LineText;
+	if((CurrentEditor->CaretX > 1) && (CurrentEditor->CaretX - 1 <= S.Length()))
 	{
 		int stop = 0;
 		for(stop = 1, Col = CurrentEditor->CaretX - 1; Col >= stop; Col--)
 		{
-			if(!CurrentEditor->IsIdentChar(s[Col]))
+			if(!CurrentEditor->IsIdentChar(S[Col]))
 				break;
 		}
-		result = s.SubString(Col + 1, CurrentEditor->CaretX - Col - 1);
+		result = S.SubString(Col + 1, CurrentEditor->CaretX - Col - 1);
 	}
 	return result;
 }
 
 void __fastcall TAbstractSynCompletion::DoAccept()
 {
-	FCurrentString = L"";
+	fCurrentString = L"";
 }
 
 void __fastcall TAbstractSynCompletion::DoCancel()
 {
-	FCurrentString = L"";
+	fCurrentString = L"";
 }
 
 void __fastcall TAbstractSynCompletion::DoExecute()
@@ -390,7 +390,7 @@ void __fastcall TAbstractSynCompletion::DoExecute()
 
 void __fastcall TAbstractSynCompletion::OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData)
 {
-	String s;
+	String S;
 	if(!Executing())
 	{
 		if(Command == CommandID)
@@ -416,13 +416,13 @@ void __fastcall TAbstractSynCompletion::OnCommand(TObject* Sender, bool AfterPro
 					else
 					{
 						if(!(CurrentEditor->IsIdentChar(AChar)))
-							accept();
+							Accept();
                 /*don't handle the char*/
 					}
 					break;
 					case ecLineBreak:
 					{
-						accept();
+						Accept();
 						Handled = true;
 					}
 					break;
@@ -436,7 +436,7 @@ void __fastcall TAbstractSynCompletion::OnCommand(TObject* Sender, bool AfterPro
 						Handled = true;
 					break;
 					case ecTab:
-					accept();
+					Accept();
 					break;
 					case ecDeleteChar:
 					case ecRight:
@@ -467,11 +467,11 @@ void __fastcall TAbstractSynCompletion::OnCommand(TObject* Sender, bool AfterPro
 				case ecRight:
 				case ecSelRight:
 				{
-					s = GetCurrentEditorString();
-					if(s == L"")
+					S = GetCurrentEditorString();
+					if(S == L"")
 						Cancel();
 					else
-						CurrentString = s;
+						CurrentString = S;
 				}
 				break;
 				default:
@@ -485,12 +485,12 @@ void __fastcall TAbstractSynCompletion::OnCommand(TObject* Sender, bool AfterPro
 
 void __fastcall TAbstractSynCompletion::SetCurrentString(const String Value)
 {
-	FCurrentString = Value;
+	fCurrentString = Value;
 }
 
-void __fastcall TAbstractSynCompletion::AddEditor(TCustomSynEdit* AEditor)
+void __fastcall TAbstractSynCompletion::AddEditor(TCustomSynEdit* aEditor)
 {
-	inherited::AddEditor(AEditor);
+	inherited::AddEditor(aEditor);
 }
 
 

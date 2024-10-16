@@ -140,15 +140,15 @@ private:
 	bool FControlDown;
 	bool FCtrlActivatesLinks;
 	Synedit::TCustomSynEdit* FEditor;
-	int fMouseDownX;
-	int fMouseDownY;
+	int FMouseDownX;
+	int FMouseDownY;
 	Synhighlighteruri::TSynURISyn* FURIHighlighter;
 	TStringList* FVisitedURIs;
 	void __fastcall OpenLink(String URI, int LinkType);
 	bool __fastcall MouseInSynEdit();
 protected:
-	void __fastcall NewKeyDown(TObject* Sender, WORD& key, TShiftState Shift);
-	void __fastcall NewKeyUp(TObject* Sender, WORD& key, TShiftState Shift);
+	void __fastcall NewKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
+	void __fastcall NewKeyUp(TObject* Sender, WORD& Key, TShiftState Shift);
 	void __fastcall NewMouseCursor(TObject* Sender, const TBufferCoord& aLineCharPos, TCursor& aCursor);
 	void __fastcall NewMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall NewMouseUp(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);

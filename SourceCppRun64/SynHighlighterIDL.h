@@ -122,7 +122,7 @@ located at http://SynEdit.SourceForge.net
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 enum TtkTokenKind {tkComment,
-                   tkDataType,
+                   tkDatatype,
                    tkIdentifier,
                    tkKey,
                    tkNull,
@@ -142,11 +142,11 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynIdlSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[101/*# range 0..100*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fDataTypeAttri;
+	Synedithighlighter::TSynHighlighterAttributes* fDatatypeAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fKeyAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -207,7 +207,7 @@ private:
 	TtkTokenKind __fastcall FuncWchar(int Index);
 	TtkTokenKind __fastcall FuncWstring(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall NullProc();
 	void __fastcall NumberProc();
@@ -242,7 +242,7 @@ public:
 __published:
 public:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* DataTypeAttri = { read = fDataTypeAttri, write = fDataTypeAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* DatatypeAttri = { read = fDatatypeAttri, write = fDatatypeAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* IdentifierAttri = { read = fIdentifierAttri, write = fIdentifierAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* KeyAttri = { read = fKeyAttri, write = fKeyAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* NumberAttri = { read = fNumberAttri, write = fNumberAttri };

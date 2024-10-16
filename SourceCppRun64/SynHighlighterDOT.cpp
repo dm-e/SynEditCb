@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterdot
@@ -22,7 +21,7 @@ namespace Synhighlighterdot
 #define Synhighlighterdot__5 (TFontStyles() << TFontStyle::fsBold)
 
 
-const String Keywords[146/*# range 0..145*/] = {L"all", L"appendix", L"arrowhead", L"arrowsize", L"arrowtail", L"auto", L"back", L"bgcolor", L"bold", L"both"
+const String KeyWords[146/*# range 0..145*/] = {L"all", L"appendix", L"arrowhead", L"arrowsize", L"arrowtail", L"auto", L"back", L"bgcolor", L"bold", L"both"
                     , L"bottomlabel", L"box", L"center", L"circle", L"clusterrank", L"color", L"comment", L"compound", L"concentrate", L"constraint"
                     , L"decorate", L"diamond", L"digraph", L"dir", L"distortion", L"dot", L"dotted", L"doublecircle", L"doubleoctagon", L"e"
                     , L"edge", L"egg", L"ellipse", L"false", L"fill", L"fillcolor", L"filled", L"fixedsize", L"fontcolor", L"fontname", L"fontpath", L"fontsize"
@@ -71,14 +70,14 @@ unsigned int __fastcall TSynDOTSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynDOTSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynDOTSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkArrowHead;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 786 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 786 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -251,7 +250,7 @@ TtkTokenKind __fastcall TSynDOTSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncAll(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -261,7 +260,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncAll(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncAppendix(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -271,7 +270,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncAppendix(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncArrowhead(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -281,7 +280,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncArrowhead(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncArrowsize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -291,7 +290,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncArrowsize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncArrowtail(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -301,7 +300,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncArrowtail(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncAuto(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -311,7 +310,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncAuto(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBack(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -321,7 +320,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBack(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBgcolor(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -331,7 +330,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBgcolor(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBold(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -341,7 +340,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBold(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBoth(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -351,7 +350,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBoth(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBottomlabel(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -361,7 +360,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBottomlabel(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncBox(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -371,7 +370,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncBox(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncCenter(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -381,7 +380,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncCenter(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncCircle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -391,7 +390,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncCircle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncClusterrank(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -401,7 +400,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncClusterrank(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncColor(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -411,7 +410,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncColor(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncComment(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -421,7 +420,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncComment(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncCompound(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -431,7 +430,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncCompound(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncConcentrate(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -441,7 +440,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncConcentrate(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncConstraint(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -451,7 +450,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncConstraint(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDecorate(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -461,7 +460,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDecorate(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDiamond(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -471,7 +470,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDiamond(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDigraph(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -481,7 +480,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDigraph(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDir(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -491,7 +490,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDir(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDistortion(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -501,7 +500,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDistortion(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDot(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -511,7 +510,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDot(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDotted(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -521,7 +520,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDotted(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDoublecircle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -531,7 +530,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDoublecircle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncDoubleoctagon(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -541,7 +540,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncDoubleoctagon(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncE(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -551,7 +550,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncE(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncEdge(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -561,7 +560,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncEdge(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncEgg(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -571,7 +570,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncEgg(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncEllipse(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -581,7 +580,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncEllipse(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFalse(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -591,7 +590,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFalse(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFill(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -601,7 +600,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFill(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFillcolor(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -611,7 +610,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFillcolor(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFilled(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))  // TODO: ANSI source isn't clear if tkValue or tkAttribute
+	if(IsCurrentToken(KeyWords[Index]))  // TODO: ANSI source isn't clear if tkValue or tkAttribute
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -621,7 +620,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFilled(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFixedsize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -631,7 +630,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFixedsize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFontcolor(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -641,7 +640,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFontcolor(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFontname(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -651,7 +650,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFontname(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFontpath(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -661,7 +660,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFontpath(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncFontsize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -671,7 +670,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncFontsize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncForward(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -681,7 +680,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncForward(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncGlobal(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -691,7 +690,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncGlobal(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncGraph(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -701,7 +700,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncGraph(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncGroup(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -711,7 +710,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncGroup(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHeadlabel(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -721,7 +720,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHeadlabel(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHeadport(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -731,7 +730,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHeadport(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHeadurl(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -741,7 +740,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHeadurl(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHeight(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -751,7 +750,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHeight(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHexagon(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -761,7 +760,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHexagon(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncHouse(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -771,7 +770,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncHouse(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncId(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -781,7 +780,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncId(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInv(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -791,7 +790,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInv(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInvdot(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -801,7 +800,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInvdot(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInvhouse(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -811,7 +810,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInvhouse(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInvodot(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -821,7 +820,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInvodot(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInvtrapezium(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -831,7 +830,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInvtrapezium(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncInvtriangle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -841,7 +840,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncInvtriangle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabel(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -851,7 +850,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabel(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelangle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -861,7 +860,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelangle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabeldistance(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -871,7 +870,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabeldistance(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfloat(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -881,7 +880,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfloat(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontcolor(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -891,7 +890,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontcolor(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontname(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -901,7 +900,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontname(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontsize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -911,7 +910,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelfontsize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabeljust(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -921,7 +920,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabeljust(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLabelloc(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -931,7 +930,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLabelloc(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLayer(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))  // TODO: ANSI source isn't clear if tkAttribute or tkKey
+	if(IsCurrentToken(KeyWords[Index]))  // TODO: ANSI source isn't clear if tkAttribute or tkKey
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -941,7 +940,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLayer(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLayers(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))  // TODO: ANSI source isn't clear if tkAttribute or tkKey
+	if(IsCurrentToken(KeyWords[Index]))  // TODO: ANSI source isn't clear if tkAttribute or tkKey
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -951,7 +950,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLayers(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLhead(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -961,7 +960,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLhead(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncLtail(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -971,7 +970,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncLtail(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMargin(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -981,7 +980,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMargin(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMax(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -991,7 +990,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMax(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMcircle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1001,7 +1000,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMcircle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMclimit(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1011,7 +1010,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMclimit(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMdiamond(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1021,7 +1020,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMdiamond(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMerged(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1031,7 +1030,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMerged(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMin(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1041,7 +1040,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMin(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMinimum(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1051,7 +1050,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMinimum(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMinlen(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1061,7 +1060,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMinlen(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMrecord(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1071,7 +1070,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMrecord(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMsquare(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1081,7 +1080,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMsquare(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncMultiples(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1091,7 +1090,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncMultiples(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncN(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1101,7 +1100,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncN(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNe(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1111,7 +1110,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNe(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNode(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1121,7 +1120,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNode(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNodesep(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1131,11 +1130,11 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNodesep(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNone(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]))
+		if(IsCurrentToken(KeyWords[Index]))
 			result = tkArrowHead;
 		else
 			result = tkIdentifier;
@@ -1146,7 +1145,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNone(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNormal(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -1156,7 +1155,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNormal(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNslimit(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1166,7 +1165,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNslimit(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncNw(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1176,7 +1175,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncNw(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncOctagon(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1186,7 +1185,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncOctagon(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncOdot(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArrowHead;
 	else
 		result = tkIdentifier;
@@ -1196,7 +1195,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncOdot(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncOnto(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1206,7 +1205,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncOnto(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncOrdering(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1216,7 +1215,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncOrdering(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncOrientation(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1226,11 +1225,11 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncOrientation(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPage(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]))
+		if(IsCurrentToken(KeyWords[Index]))
 			result = tkValue;
 		else
 			result = tkIdentifier;
@@ -1241,7 +1240,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPage(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPagedir(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1251,7 +1250,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPagedir(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncParallelogram(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1261,7 +1260,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncParallelogram(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPeripheries(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1271,7 +1270,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPeripheries(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPlaintext(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1281,7 +1280,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPlaintext(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPoint(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1291,7 +1290,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPoint(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncPolygon(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1301,7 +1300,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncPolygon(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncQuantum(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1311,7 +1310,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncQuantum(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRank(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1321,7 +1320,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRank(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRankdir(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1331,7 +1330,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRankdir(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRanksep(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1341,7 +1340,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRanksep(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRatio(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1351,7 +1350,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRatio(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRecord(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1361,7 +1360,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRecord(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRegular(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1371,7 +1370,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRegular(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRemincross(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1381,7 +1380,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRemincross(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncRotate(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1391,7 +1390,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncRotate(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncS(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1401,7 +1400,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncS(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSame(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1411,7 +1410,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSame(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSamehead(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1421,7 +1420,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSamehead(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSametail(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1431,7 +1430,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSametail(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSamplepoints(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1441,7 +1440,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSamplepoints(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSe(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1451,7 +1450,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSe(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSearchsize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1461,7 +1460,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSearchsize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSection(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1471,7 +1470,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSection(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncShape(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1481,7 +1480,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncShape(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncShapefile(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1491,7 +1490,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncShapefile(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSides(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1501,7 +1500,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSides(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSink(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1511,7 +1510,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSink(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSize(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1521,7 +1520,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSize(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSkew(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1531,7 +1530,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSkew(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSource(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1541,7 +1540,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSource(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncStrict(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1551,7 +1550,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncStrict(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncStyle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1561,7 +1560,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncStyle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSubgraph(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1571,7 +1570,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSubgraph(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncSw(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1581,7 +1580,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncSw(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTaillabel(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1591,7 +1590,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTaillabel(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTailport(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1601,7 +1600,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTailport(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTailurl(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1611,7 +1610,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTailurl(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncToplabel(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1621,7 +1620,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncToplabel(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTrapezium(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1631,7 +1630,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTrapezium(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTriangle(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1641,7 +1640,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTriangle(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTripleoctagon(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkShape;
 	else
 		result = tkIdentifier;
@@ -1651,7 +1650,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTripleoctagon(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncTrue(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1661,7 +1660,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncTrue(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncUrl(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1671,7 +1670,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncUrl(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncW(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkValue;
 	else
 		result = tkIdentifier;
@@ -1681,7 +1680,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncW(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncWeight(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1691,11 +1690,11 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncWeight(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncWhen(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 	{
-		if(IsCurrentToken(Keywords[Index]))
+		if(IsCurrentToken(KeyWords[Index]))
 			result = tkAttribute;
 		else
 			result = tkIdentifier;
@@ -1706,7 +1705,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncWhen(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncWidth(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1716,7 +1715,7 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncWidth(int Index)
 TtkTokenKind __fastcall TSynDOTSyn::FuncZ(int Index)
 {
 	TtkTokenKind result = tkArrowHead;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkAttribute;
 	else
 		result = tkIdentifier;
@@ -1726,20 +1725,20 @@ TtkTokenKind __fastcall TSynDOTSyn::FuncZ(int Index)
 void __fastcall TSynDOTSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynDOTSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynDOTSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -1747,7 +1746,7 @@ void __fastcall TSynDOTSyn::CRProc()
 
 void __fastcall TSynDOTSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -1756,11 +1755,11 @@ void __fastcall TSynDOTSyn::DirectionsProc()
 	++Run;
 	if((fLine[Run] == L'>') || (fLine[Run] == L'-'))
 	{
-		FTokenID = tkDirections;
+		fTokenID = tkDirections;
 		++Run;
 	}
 	else
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynDOTSyn::CStyleCommentOpenProc()
@@ -1768,7 +1767,7 @@ void __fastcall TSynDOTSyn::CStyleCommentOpenProc()
 	++Run;
 	if(fLine[Run] == L'/')
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		Run += 2;
 		while(!IsLineEnd(Run))
 			++Run;
@@ -1776,12 +1775,12 @@ void __fastcall TSynDOTSyn::CStyleCommentOpenProc()
 	}
 	if(fLine[Run] == L'*')
 	{
-		FRange = rsCStyleComment;
+		fRange = rsCStyleComment;
 		CStyleCommentProc();
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 	}
 	else
-	FTokenID = tkIdentifier;
+	fTokenID = tkIdentifier;
 }
 
 void __fastcall TSynDOTSyn::CStyleCommentProc()
@@ -1799,13 +1798,13 @@ void __fastcall TSynDOTSyn::CStyleCommentProc()
 		break;
 		default:
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			do
 			{
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 				{
 					Run += 2;
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -1820,20 +1819,20 @@ void __fastcall TSynDOTSyn::CStyleCommentProc()
 void __fastcall TSynDOTSyn::StringOpenProc()
 {
 	++Run;
-	FRange = rsString;
+	fRange = rsString;
 	StringProc();
-	FTokenID = tkString;
+	fTokenID = tkString;
 }
 
 void __fastcall TSynDOTSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	do
 	{
 		if(fLine[Run] == L'\'')
 		{
 			Run += 1;
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			break;
 		}
 		if(!IsLineEnd(Run))
@@ -1844,8 +1843,8 @@ void __fastcall TSynDOTSyn::StringProc()
 
 __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkArrowHead),
+			fRange(rsUnKnown),
+			fTokenID(tkArrowHead),
 			fArrowHeadAttri(nullptr),
 			fAttributeAttri(nullptr),
 			fCommentAttri(nullptr),
@@ -1858,41 +1857,41 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 			fValueAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fArrowHeadAttri = new TSynHighlighterAttributes(SYNS_AttrArrowHead, SYNS_FriendlyAttrArrowHead);
 	fArrowHeadAttri->Foreground = (TColor) clRed;
-	addAttribute(fArrowHeadAttri);
+	AddAttribute(fArrowHeadAttri);
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
-	addAttribute(fAttributeAttri);
+	AddAttribute(fAttributeAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterdot__0;
 	fCommentAttri->Foreground = (TColor) clNavy;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirectionsAttri = new TSynHighlighterAttributes(SYNS_AttrDirections, SYNS_FriendlyAttrDirections);
 	fDirectionsAttri->Style = Synhighlighterdot__1;
 	fDirectionsAttri->Foreground = (TColor) clYellow;
-	addAttribute(fDirectionsAttri);
+	AddAttribute(fDirectionsAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterdot__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fShapeAttri = new TSynHighlighterAttributes(SYNS_AttrShape, SYNS_FriendlyAttrShape);
 	fShapeAttri->Style = Synhighlighterdot__3;
 	fShapeAttri->Foreground = (TColor) clRed;
-	addAttribute(fShapeAttri);
+	AddAttribute(fShapeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
 	fValueAttri->Style = Synhighlighterdot__4;
 	fValueAttri->Foreground = (TColor) clRed;
-	addAttribute(fValueAttri);
+	AddAttribute(fValueAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterdot__5;
 	fSymbolAttri->Foreground = (TColor) clGreen;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterDOT;
@@ -1900,7 +1899,7 @@ __fastcall TSynDOTSyn::TSynDOTSyn(TComponent* AOwner)
 
 void __fastcall TSynDOTSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -1909,26 +1908,26 @@ void __fastcall TSynDOTSyn::IdentProc()
 void __fastcall TSynDOTSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynDOTSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynDOTSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsCStyleComment:
 		CStyleCommentProc();
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			switch(fLine[Run])
 			{
 				case L'\x00':
@@ -2055,7 +2054,7 @@ String __fastcall TSynDOTSyn::GetKeyWords(int TokenKind)
 TtkTokenKind __fastcall TSynDOTSyn::GetTokenID()
 {
 	TtkTokenKind result = tkArrowHead;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -2110,7 +2109,7 @@ TSynHighlighterAttributes* __fastcall TSynDOTSyn::GetTokenAttribute()
 int __fastcall TSynDOTSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -2198,18 +2197,18 @@ String __fastcall TSynDOTSyn::GetLanguageName()
 
 void __fastcall TSynDOTSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynDOTSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynDOTSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 

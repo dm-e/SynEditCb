@@ -152,7 +152,7 @@ protected:
 	virtual void __fastcall SetName(const String Value);
 public:
 	__property String Name = { read = FName, write = SetName };
-	__fastcall TSpeedListObject(String Name);
+	__fastcall TSpeedListObject(String name);
 	virtual __fastcall ~TSpeedListObject();
 	__property TSpeedStringList* SpeedList = { read = FSpeedList, write = FSpeedList };
 	__property TObject* Pointer = { read = FObject, write = FObject };
@@ -184,8 +184,8 @@ protected:
 	TStrings* __fastcall GetStringList();
 	void __fastcall SetStringList(TStrings* const Value);
 public:
-	void __fastcall NameChange(TSpeedListObject* const Obj, const String NewName);
-	void __fastcall ObjectDeleted(TSpeedListObject* const Obj);
+	void __fastcall NameChange(TSpeedListObject* const obj, const String NewName);
+	void __fastcall ObjectDeleted(TSpeedListObject* const obj);
 	virtual __fastcall ~TSpeedStringList();
 	__fastcall TSpeedStringList();
 	int __fastcall AddObj(TSpeedListObject* const Value);
@@ -223,7 +223,7 @@ class TSynHP48Syn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
 	TtkTokenKind fTockenKind;
-	TRangeState FRange;
+	TRangeState fRange;
 	Synedithighlighter::TSynHighlighterAttributes* Attribs[10/*# TtkTokenKind*/];
 	TSpeedStringList* FRplKeyWords;
 	TSpeedStringList* FAsmKeyWords;
@@ -235,7 +235,7 @@ private:
 	TtkTokenKind __fastcall SpaceProc();
 	TtkTokenKind __fastcall ParOpenProc();
 	TtkTokenKind __fastcall RplComProc();
-	TtkTokenKind __fastcall AsmComProc(WideChar C);
+	TtkTokenKind __fastcall AsmComProc(WideChar c);
 	TtkTokenKind __fastcall PersentProc();
 	TtkTokenKind __fastcall IdentProc();
 	TtkTokenKind __fastcall SlashProc();
@@ -250,7 +250,7 @@ private:
 	TtkTokenKind __fastcall StarProc();
 protected:
 	virtual int __fastcall GetAttribCount();
-	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall getAttribute(int Idx);
+	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetAttribute(int idx);
 	virtual bool __fastcall IsFilterStored();
 	virtual bool __fastcall IsLineEnd(int Run);
 public:
@@ -270,8 +270,8 @@ public:
 	virtual void* __fastcall GetRange();
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
 	virtual void __fastcall Assign(TPersistent* Source);
 	__property TSpeedStringList* AsmKeyWords = { read = FAsmKeyWords };
 	__property TSpeedStringList* SAsmFoField = { read = FSAsmNoField };

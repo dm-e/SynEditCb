@@ -25,7 +25,7 @@ namespace Synhighlightervb
 
 
   /*added keywords: catch, try, import*/
-const String Keywords[226/*# range 0..225*/] = {L"abs", L"and", L"appactivate", L"array", L"as", L"asc", L"atn", L"attribute", L"base", L"beep", L"begin", L"boolean"
+const String KeyWords[226/*# range 0..225*/] = {L"abs", L"and", L"appactivate", L"array", L"as", L"asc", L"atn", L"attribute", L"base", L"beep", L"begin", L"boolean"
                     , L"byref", L"byte", L"byval", L"call", L"case", L"catch", L"cbool", L"cbyte", L"ccur", L"cdate", L"cdbl", L"cint", L"circle", L"class"
                     , L"clear", L"clng", L"close", L"command", L"compare", L"const", L"cos", L"createobject", L"csng", L"cstr", L"curdir", L"currency"
                     , L"cvar", L"cverr", L"date", L"dateadd", L"datediff", L"datepart", L"dateserial", L"datevalue", L"ddb", L"deftype", L"dim"
@@ -92,14 +92,14 @@ unsigned int __fastcall TSynVBSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynVBSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynVBSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 1510 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 1510 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -132,7 +132,7 @@ TtkTokenKind __fastcall TSynVBSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynVBSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -142,7 +142,7 @@ TtkTokenKind __fastcall TSynVBSyn::KeyWordFunc(int Index)
 TtkTokenKind __fastcall TSynVBSyn::FuncRem(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		ApostropheProc();
 		fStringLen = 0;
@@ -164,23 +164,23 @@ __fastcall TSynVBSyn::TSynVBSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightervb__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightervb__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterVisualBASIC;
@@ -202,7 +202,7 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 {
 	String CurLine;
 	__int64 Line = 0;
-	bool OK = false;
+	bool ok = false;
 
 	auto BlockDelimiter = [&](int Line) -> bool 
 	{
@@ -210,7 +210,7 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 		int Index = 0;
 		TMatchCollection mcb = {};
 		TMatchCollection mce = {};
-		TMatch Match = {};
+		TMatch match = {};
 		result = false;
 		mcb = RE_BlockBegin.Matches(CurLine);
 		if(mcb.Count > 0)
@@ -219,18 +219,18 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 			Index = mcb.Item[0].Index;
 			if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 			{
-				OK = false;
+				ok = false;
         // And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
-					if(Match.Index > Index)
+					TMatch match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					if(match.Index > Index)
 					{
-						OK = true;
+						ok = true;
 						break;
 					}
 				}
-				if(!OK)
+				if(!ok)
 				{
 					FoldRanges->StartFoldRange(Line + 1, FT_Standard);
 					result = true;
@@ -256,17 +256,17 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 7)) == L"#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 7)) == L"#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 11)) == L"#END REGION")
+			if(UpperCase(S.SubString(1, 11)) == L"#END REGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;

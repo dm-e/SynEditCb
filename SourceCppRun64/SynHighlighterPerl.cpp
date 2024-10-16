@@ -48,7 +48,7 @@ namespace Synhighlighterperl
 
 
   /* expanded keywords list */                                                    //Fiala
-const String Keywords[296/*# range 0..295*/] = {L"$ACCUMULATOR", L"$ARG", L"$ARGV", L"$BASETIME", L"$DEBUGGING", L"$EFFECTIVE_GROUP_ID", L"$EFFECTIVE_USER_ID", L"$EGID"
+const String KeyWords[296/*# range 0..295*/] = {L"$ACCUMULATOR", L"$ARG", L"$ARGV", L"$BASETIME", L"$DEBUGGING", L"$EFFECTIVE_GROUP_ID", L"$EFFECTIVE_USER_ID", L"$EGID"
                     , L"$ENV", L"$ERRNO", L"$EUID", L"$EVAL_ERROR", L"$EXECUTABLE_NAME", L"$FORMAT_FORMFEED", L"$FORMAT_LINE_BREAK_CHARACTERS", L"$FORMAT_LINES_LEFT"
                     , L"$FORMAT_LINES_PER_PAGE", L"$FORMAT_NAME", L"$FORMAT_PAGE_NUMBER", L"$FORMAT_TOP_NAME", L"$GID"
                     , L"$CHILD_ERROR", L"$INPLACE_EDIT", L"$INPUT_LINE_NUMBER", L"$INPUT_RECORD_SEPARATOR", L"$LAST_PAREN_MATCH", L"$LIST_SEPARATOR"
@@ -150,14 +150,14 @@ unsigned int __fastcall TSynPerlSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynPerlSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynPerlSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 2728 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 2728 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -288,7 +288,7 @@ TtkTokenKind __fastcall TSynPerlSyn::AltFunc(int Index)
 
 __fastcall TSynPerlSyn::TSynPerlSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			FRange(rsUnknown),
 			FTokenID(tkSymbol),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -302,37 +302,38 @@ __fastcall TSynPerlSyn::TSynPerlSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fVariableAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterperl__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterperl__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fOperatorAttri = new TSynHighlighterAttributes(SYNS_AttrOperator, SYNS_FriendlyAttrOperator);
-	addAttribute(fOperatorAttri);
+	AddAttribute(fOperatorAttri);
 	fPragmaAttri = new TSynHighlighterAttributes(SYNS_AttrPragma, SYNS_FriendlyAttrPragma);
 	fPragmaAttri->Style = Synhighlighterperl__2;
-	addAttribute(fPragmaAttri);
+	AddAttribute(fPragmaAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fSpaceAttri->Foreground = (TColor) clWindow;
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
 	fVariableAttri->Style = Synhighlighterperl__3;
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterPerl;
+	FRange = rsUnknown;
 } /* Create */
 
 void __fastcall TSynPerlSyn::AndSymbolProc()
@@ -963,14 +964,14 @@ void __fastcall TSynPerlSyn::StringInterpProc()
 {
 	int fBackslashCount = 0;
   /* modification for first quote is backshlashed */
-	if((FRange == rsUnKnown) && (fLine[Run - 1] == L'\\'))                      // Fiala
+	if((FRange == rsUnknown) && (fLine[Run - 1] == L'\\'))                      // Fiala
 	{
 		++Run;
 		FTokenID = tkSymbol;
 		return;
 	}
 	FTokenID = tkString;
-	if(FRange == rsUnKnown)
+	if(FRange == rsUnknown)
 		FRange = rsString;
 	else
 		++Run;
@@ -1007,7 +1008,7 @@ void __fastcall TSynPerlSyn::StringInterpProc()
 	while(!(fLine[Run] == L'\x22'));
 	label5:;
 	if(fLine[Run] == L'\x22')
-		FRange = rsUnKnown;
+		FRange = rsUnknown;
 	if(fLine[Run] != L'\x00')
 		++Run;
 }
@@ -1344,7 +1345,7 @@ void __fastcall TSynPerlSyn::VariableProc()
 TtkTokenKind __fastcall TSynPerlSyn::FuncVar(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkVariable;
 	else
 		result = tkIdentifier;
@@ -1354,7 +1355,7 @@ TtkTokenKind __fastcall TSynPerlSyn::FuncVar(int Index)
 TtkTokenKind __fastcall TSynPerlSyn::FuncKey(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -1364,7 +1365,7 @@ TtkTokenKind __fastcall TSynPerlSyn::FuncKey(int Index)
 TtkTokenKind __fastcall TSynPerlSyn::FuncOperator(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkOperator;
 	else
 		result = tkIdentifier;
@@ -1374,7 +1375,7 @@ TtkTokenKind __fastcall TSynPerlSyn::FuncOperator(int Index)
 TtkTokenKind __fastcall TSynPerlSyn::FuncPragma(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkPragma;
 	else
 		result = tkIdentifier;
@@ -1439,7 +1440,7 @@ void* __fastcall TSynPerlSyn::GetRange()
 
 void __fastcall TSynPerlSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	FRange = rsUnknown;
 }
 
 //++ CodeFolding
@@ -1449,7 +1450,7 @@ void __fastcall TSynPerlSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -1457,7 +1458,7 @@ void __fastcall TSynPerlSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != fCommentAttri)
@@ -1518,17 +1519,17 @@ void __fastcall TSynPerlSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 9)) == L"#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 9)) == L"#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 12)) == L"#ENDREGION")
+			if(UpperCase(S.SubString(1, 12)) == L"#ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -1576,7 +1577,7 @@ void __fastcall TSynPerlSyn::StringEndProc()
 			case L'\x22':
 			{
 				++Run;
-				FRange = rsUnKnown;
+				FRange = rsUnknown;
 				goto label7;
 			}
 			case L'\x00':

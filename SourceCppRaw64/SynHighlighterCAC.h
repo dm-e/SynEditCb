@@ -151,14 +151,14 @@ enum TtkTokenKind {tkComment,
                    tkUnknown };
 enum TRangeState {rsANil,
                   rsCStyle,
-                  rsUnKnown };
+                  rsUnknown };
 typedef TtkTokenKind __fastcall (__closure *TIdentFuncTableFunc) (int);
 typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 
 class TSynCACSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fOperatorAttri;
@@ -172,7 +172,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall StarProc();
 	void __fastcall CRProc();

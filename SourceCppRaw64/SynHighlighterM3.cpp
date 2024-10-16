@@ -103,12 +103,12 @@ int __fastcall TSynM3Syn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynM3Syn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynM3Syn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -138,39 +138,39 @@ __fastcall TSynM3Syn::TSynM3Syn(TComponent* AOwner)
 			fKeyAttri(nullptr),
 			fNumberAttri(nullptr),
 			fPragmaAttri(nullptr),
-			FReservedAttri(nullptr),
+			fReservedAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr),
 			fSyntaxErrorAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterm3__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	fKeyAttri->Style = Synhighlighterm3__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fPragmaAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fPragmaAttri->Style = Synhighlighterm3__2;
-	addAttribute(fPragmaAttri);
-	FReservedAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	addAttribute(FReservedAttri);
+	AddAttribute(fPragmaAttri);
+	fReservedAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
+	AddAttribute(fReservedAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fSyntaxErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
 	fSyntaxErrorAttri->Foreground = (TColor) clRed;
-	addAttribute(fSyntaxErrorAttri);
+	AddAttribute(fSyntaxErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkReserved), ReservedWords, IsIdentChar, DoAddKeyword);
@@ -261,7 +261,7 @@ void __fastcall TSynM3Syn::SymNestedHelperProc(WideChar AOpenChar, WideChar AClo
 				if(fLine[Run] == L'*')
 				{
 					++Run;
-					++FRange.Level;
+					++fRange.Level;
 				}
 			}
 			else
@@ -272,11 +272,11 @@ void __fastcall TSynM3Syn::SymNestedHelperProc(WideChar AOpenChar, WideChar AClo
 					if(fLine[Run] == ACloseChar)
 					{
 						++Run;
-						if(FRange.Level > 0)
-							--FRange.Level;
-						if(FRange.Level == 0)
+						if(fRange.Level > 0)
+							--fRange.Level;
+						if(fRange.Level == 0)
 						{
-							FRange.TokenRange = (WORD) int(trNone);
+							fRange.TokenRange = (WORD) int(trNone);
 							break;
 						}
 					}
@@ -304,23 +304,23 @@ void __fastcall TSynM3Syn::SymNumberProc()
 	auto IsValidDigit = [&](WideChar AChar) -> bool 
 	{
 		bool result = false;
-		int digit = 0;
+		int Digit = 0;
 		switch(AChar)
 		{
 			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
-			digit = int(AChar) - int(L'0');
+			Digit = int(AChar) - int(L'0');
 			break;
 			case 97: case 98: case 99: case 100: case 101: case 102:
-			digit = int(AChar) - int(L'a');
+			Digit = int(AChar) - int(L'a');
 			break;
 			case 65: case 66: case 67: case 68: case 69: case 70:
-			digit = int(AChar) - int(L'A');
+			Digit = int(AChar) - int(L'A');
 			break;
 			default:
-			digit = -1;
+			Digit = -1;
 			break;
 		}
-		result = (digit >= 0) && (digit <= MaxDigit);
+		result = (Digit >= 0) && (Digit <= MaxDigit);
 		return result;
 	};
 
@@ -442,8 +442,8 @@ void __fastcall TSynM3Syn::SymPragmaProc()
 	if(fLine[Run] == L'*')
 	{
 		++Run;
-		FRange.TokenRange = (WORD) int(trPragma);
-		++FRange.Level;
+		fRange.TokenRange = (WORD) int(trPragma);
+		++fRange.Level;
 		if(IsLineEnd(Run))
 			FTokenID = tkPragma;
 		else
@@ -465,8 +465,8 @@ void __fastcall TSynM3Syn::SymRoundOpenProc()
 	if(fLine[Run] == L'*')
 	{
 		++Run;
-		FRange.TokenRange = (WORD) int(trComment);
-		++FRange.Level;
+		fRange.TokenRange = (WORD) int(trComment);
+		++fRange.Level;
 		if(IsLineEnd(Run))
 			FTokenID = tkComment;
 		else
@@ -529,7 +529,7 @@ void __fastcall TSynM3Syn::SymUnknownProc()
 void __fastcall TSynM3Syn::Next()
 {
 	fTokenPos = Run;
-	switch(((TTokenRange) FRange.TokenRange))
+	switch(((TTokenRange) fRange.TokenRange))
 	{
 		case trComment:
 		SymCommentHelpProc();
@@ -657,7 +657,7 @@ String __fastcall TSynM3Syn::GetLanguageName()
 void* __fastcall TSynM3Syn::GetRange()
 {
 	void* result = nullptr;
-	result = FRange.P;
+	result = fRange.p;
 	return result;
 }
 
@@ -682,7 +682,7 @@ TSynHighlighterAttributes* __fastcall TSynM3Syn::GetTokenAttribute()
 		result = fPragmaAttri;
 		break;
 		case tkReserved:
-		result = FReservedAttri;
+		result = fReservedAttri;
 		break;
 		case tkSpace:
 		result = fSpaceAttri;
@@ -722,12 +722,12 @@ int __fastcall TSynM3Syn::GetTokenKind()
 
 void __fastcall TSynM3Syn::ResetRange()
 {
-	FRange.P = nullptr;
+	fRange.p = nullptr;
 }
 
 void __fastcall TSynM3Syn::SetRange(void* Value)
 {
-	FRange.P = Value;
+	fRange.p = Value;
 }
 
 /*#static*/

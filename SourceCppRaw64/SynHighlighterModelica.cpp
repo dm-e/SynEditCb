@@ -21,7 +21,7 @@ namespace Synhighlightermodelica
 #define Synhighlightermodelica__5 (TSysCharSet() << '=' << '+')
 
 
-const String Keywords[48/*# range 0..47*/] = {L"algorithm", L"and", L"annotation", L"assert", L"block", L"Boolean", L"class", L"connect", L"connector", L"constant"
+const String KeyWords[48/*# range 0..47*/] = {L"algorithm", L"and", L"annotation", L"assert", L"block", L"Boolean", L"class", L"connect", L"connector", L"constant"
                     , L"der", L"discrete", L"else", L"elseif", L"end", L"equation", L"extends", L"external", L"false", L"final", L"flow", L"for"
                     , L"function", L"if", L"in", L"input", L"Integer", L"loop", L"model", L"nondiscrete", L"not", L"or", L"output", L"package", L"parameter"
                     , L"partial", L"protected", L"public", L"Real", L"record", L"redeclare", L"replaceable", L"terminate", L"then", L"true"
@@ -46,14 +46,14 @@ unsigned int __fastcall TSynModelicaSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynModelicaSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynModelicaSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 96 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 96 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -85,7 +85,7 @@ TtkTokenKind __fastcall TSynModelicaSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynModelicaSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -94,8 +94,8 @@ TtkTokenKind __fastcall TSynModelicaSyn::KeyWordFunc(int Index)
 
 __fastcall TSynModelicaSyn::TSynModelicaSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkComment),
+			fRange(rsUnknown),
+			fTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fDirectiveAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -105,25 +105,25 @@ __fastcall TSynModelicaSyn::TSynModelicaSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightermodelica__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirectiveAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
-	addAttribute(fDirectiveAttri);
+	AddAttribute(fDirectiveAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightermodelica__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterModelica;
@@ -132,15 +132,15 @@ __fastcall TSynModelicaSyn::TSynModelicaSyn(TComponent* AOwner)
 void __fastcall TSynModelicaSyn::AndSymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(CharInSet(fLine[Run], Synhighlightermodelica__2))
 		++Run;
 }
 
 void __fastcall TSynModelicaSyn::AsciiCharProc()
 {
-	FRange = rsString39;
-	FTokenID = tkString;
+	fRange = rsString39;
+	fTokenID = tkString;
 	do
 	{
 		++Run;
@@ -148,14 +148,14 @@ void __fastcall TSynModelicaSyn::AsciiCharProc()
 	while(!(IsLineEnd(Run) || (fLine[Run] == L'\x27')));
 	if(fLine[Run] == L'\x27')
 	{
-		FRange = rsUnKnown;
+		fRange = rsUnknown;
 		++Run;
 	}
 }
 
 void __fastcall TSynModelicaSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -164,14 +164,14 @@ void __fastcall TSynModelicaSyn::CRProc()
 void __fastcall TSynModelicaSyn::ColonProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(fLine[Run] == L':')
 		++Run;
 }
 
 void __fastcall TSynModelicaSyn::DirectiveProc()
 {
-	FTokenID = tkDirective;
+	fTokenID = tkDirective;
 	do
 	{
 		++Run;
@@ -182,7 +182,7 @@ void __fastcall TSynModelicaSyn::DirectiveProc()
 void __fastcall TSynModelicaSyn::GreaterProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	switch(fLine[Run])
 	{
 		case L'=':
@@ -203,7 +203,7 @@ void __fastcall TSynModelicaSyn::GreaterProc()
 
 void __fastcall TSynModelicaSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -211,14 +211,14 @@ void __fastcall TSynModelicaSyn::IdentProc()
 
 void __fastcall TSynModelicaSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynModelicaSyn::LowerProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	switch(fLine[Run])
 	{
 		case L'=':
@@ -240,14 +240,14 @@ void __fastcall TSynModelicaSyn::LowerProc()
 void __fastcall TSynModelicaSyn::MinusProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(CharInSet(fLine[Run], Synhighlightermodelica__3))
 		++Run;
 }
 
 void __fastcall TSynModelicaSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -280,7 +280,7 @@ void __fastcall TSynModelicaSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -301,7 +301,7 @@ void __fastcall TSynModelicaSyn::NumberProc()
 void __fastcall TSynModelicaSyn::OrSymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(CharInSet(fLine[Run], Synhighlightermodelica__4))
 		++Run;
 }
@@ -309,7 +309,7 @@ void __fastcall TSynModelicaSyn::OrSymbolProc()
 void __fastcall TSynModelicaSyn::PlusProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(CharInSet(fLine[Run], Synhighlightermodelica__5))
 		++Run;
 }
@@ -317,7 +317,7 @@ void __fastcall TSynModelicaSyn::PlusProc()
 void __fastcall TSynModelicaSyn::PointProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if((fLine[Run] == L'.') && (fLine[Run + 1] == L'.'))
 		Run += 2;
 }
@@ -329,7 +329,7 @@ void __fastcall TSynModelicaSyn::SlashProc()
 	{
 		case L'/':
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			do
 			{
 				++Run;
@@ -339,16 +339,16 @@ void __fastcall TSynModelicaSyn::SlashProc()
 		break;
 		case L'*':
 		{
-			FRange = rsComment;
+			fRange = rsComment;
 			++Run;
 			if(IsLineEnd(Run))
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 			else
 				AnsiCProc();
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		if(fLine[Run] == L'=')
 			++Run;
 		break;
@@ -357,7 +357,7 @@ void __fastcall TSynModelicaSyn::SlashProc()
 
 void __fastcall TSynModelicaSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	do
 	{
 		++Run;
@@ -367,10 +367,10 @@ void __fastcall TSynModelicaSyn::SpaceProc()
 
 void __fastcall TSynModelicaSyn::StringProc()
 {
-	FRange = rsString34;
+	fRange = rsString34;
 	++Run;
 	if(IsLineEnd(Run))
-		FTokenID = tkString;
+		fTokenID = tkString;
 	else
 		String34Proc();
 }
@@ -378,13 +378,13 @@ void __fastcall TSynModelicaSyn::StringProc()
 void __fastcall TSynModelicaSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynModelicaSyn::SymbolProcWithEqual()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	if(fLine[Run] == L'=')
 		++Run;
 }
@@ -392,7 +392,7 @@ void __fastcall TSynModelicaSyn::SymbolProcWithEqual()
 void __fastcall TSynModelicaSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynModelicaSyn::AnsiCProc()
@@ -409,13 +409,13 @@ void __fastcall TSynModelicaSyn::AnsiCProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 			{
 				Run += 2;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 			++Run;
@@ -439,13 +439,13 @@ void __fastcall TSynModelicaSyn::String39Proc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkString;
+		fTokenID = tkString;
 		do
 		{
 			if(fLine[Run] == L'\x27')
 			{
 				++Run;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 			++Run;
@@ -469,7 +469,7 @@ void __fastcall TSynModelicaSyn::String34Proc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkString;
+		fTokenID = tkString;
 		do
 		{
 			switch(fLine[Run])
@@ -477,7 +477,7 @@ void __fastcall TSynModelicaSyn::String34Proc()
 				case L'\x22':
 				{
 					++Run;
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					goto label1;
 				}
 				case L'\x5c':
@@ -501,7 +501,7 @@ void __fastcall TSynModelicaSyn::String34Proc()
 void __fastcall TSynModelicaSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		AnsiCProc();
@@ -513,7 +513,7 @@ void __fastcall TSynModelicaSyn::Next()
 		String34Proc();
 		break;
 		default:
-		FRange = rsUnKnown;
+		fRange = rsUnknown;
 		switch(fLine[Run])
 		{
 			case L'&':
@@ -648,14 +648,14 @@ bool __fastcall TSynModelicaSyn::GetEol()
 void* __fastcall TSynModelicaSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 TtkTokenKind __fastcall TSynModelicaSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -701,18 +701,18 @@ TSynHighlighterAttributes* __fastcall TSynModelicaSyn::GetTokenAttribute()
 int __fastcall TSynModelicaSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 void __fastcall TSynModelicaSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynModelicaSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynModelicaSyn::IsFilterStored()

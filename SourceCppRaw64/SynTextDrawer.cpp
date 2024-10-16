@@ -63,13 +63,13 @@ TheFontsInfoManager* __fastcall GetFontsInfoManager()
 	return result;
 }
 
-int __fastcall Min(int X, int Y)
+int __fastcall Min(int x, int y)
 {
 	int result = 0;
-	if(X < Y)
-		result = X;
+	if(x < y)
+		result = x;
 	else
-		result = Y;
+		result = y;
 	return result;
 }
 
@@ -250,7 +250,7 @@ void __fastcall TheFontsInfoManager::ReleaseFontsInfo(PheSharedFontsInfo pFontsI
 
 void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFont, TLogFont& LF)
 {
-	PChar PEnd = nullptr;
+	PChar pEnd = nullptr;
 	GetObject(ABaseFont->Handle, (int) sizeof(TLogFont), &LF);
 	/*# with LF do */
 	{
@@ -258,8 +258,8 @@ void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFo
 		with0.lfItalic = 0;
 		with0.lfUnderline = 0;
 		with0.lfStrikeOut = 0;
-		PEnd = StrEnd(with0.lfFaceName);
-		FillChar((void**)&PEnd[1], &with0.lfFaceName[31 /*# High(lfFaceName) */] - PEnd, 0);
+		pEnd = StrEnd(with0.lfFaceName);
+		FillChar((void**)&pEnd[1], &with0.lfFaceName[31 /*# High(lfFaceName) */] - pEnd, 0);
 	}
 }
 
@@ -346,10 +346,10 @@ int __fastcall TheFontStock::GetCharHeight()
 	return result;
 }
 
-PheFontData __fastcall TheFontStock::GetFontData(int Idx)
+PheFontData __fastcall TheFontStock::GetFontData(int idx)
 {
 	PheFontData result = nullptr;
-	result = &(*FpInfo).FontsData[Idx];
+	result = &(*FpInfo).FontsData[idx];
 	return result;
 }
 
@@ -368,9 +368,9 @@ HFONT __fastcall TheFontStock::InternalCreateFont(TFontStyles Style)
 	{
 		auto& with0 = FBaseLF;
 		with0.lfWeight = Bolds[Style.Contains(TFontStyle::fsBold)];
-		with0.lfItalic = (unsigned char) int(((BOOL) Style.Contains(TFontStyle::fsItalic)));
-		with0.lfUnderline = (unsigned char) int(((BOOL) Style.Contains(TFontStyle::fsUnderline)));
-		with0.lfStrikeOut = (unsigned char) int(((BOOL) Style.Contains(TFontStyle::fsStrikeOut)));
+		with0.lfItalic = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsItalic)));
+		with0.lfUnderline = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsUnderline)));
+		with0.lfStrikeOut = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsStrikeOut)));
 	}
 	result = CreateFontIndirect(FBaseLF);
 	return result;
@@ -450,21 +450,21 @@ void __fastcall TheFontStock::SetBaseFont(TFont* Value)
 
 void __fastcall TheFontStock::SetStyle(TFontStyles Value)
 {
-	int Idx = 0;
+	int idx = 0;
 	HDC DC = 0;
 	HFONT hOldFont = 0;
-	PheFontData P = nullptr;
+	PheFontData p = nullptr;
 	Assert(sizeof(TFontStyles) == 1L);
-	Idx = (int) ToByte(Value);
-	Assert(Idx <= FontStyleCombineCount - 1 /*# High(TheStockFontPatterns) */);
+	idx = (int) ToByte(Value);
+	Assert(idx <= FontStyleCombineCount - 1 /*# High(TheStockFontPatterns) */);
 	UseFontHandles();
-	P = FontData[Idx];
-	if(FpCrntFontData == P)
+	p = FontData[idx];
+	if(FpCrntFontData == p)
 		return;
-	FpCrntFontData = P;
-	/*# with P^ do */
+	FpCrntFontData = p;
+	/*# with p^ do */
 	{
-		auto& with0 = (*P);
+		auto& with0 = (*p);
 		if(with0.Handle != 0)
 		{
 			FCrntFont = with0.Handle;
@@ -684,20 +684,20 @@ void __fastcall TheTextDrawer::FlushCharABCWidthCache()
 	FillChar((void**)&FCharWidthCache, (int) (sizeof(int) * (MAXIDX(FCharWidthCache) + 1)), 0);
 }
 
-bool __fastcall TheTextDrawer::GetCachedABCWidth(unsigned int C, TABC& ABC)
+bool __fastcall TheTextDrawer::GetCachedABCWidth(unsigned int c, TABC& abc)
 {
 	bool result = false;
-	if(C > 127 /*# High(FCharABCWidthCache) */)
+	if(c > 127 /*# High(FCharABCWidthCache) */)
 	{
-		result = GetCharABCWidthsW(FDC, C, C, &ABC);
+		result = GetCharABCWidthsW(FDC, c, c, &abc);
 		return result;
 	}
-	ABC = FCharABCWidthCache[C];
-	if((ABC.abcA | ((int) ABC.abcB) | ABC.abcC) == 0)
+	abc = FCharABCWidthCache[c];
+	if((abc.abcA | ((int) abc.abcB) | abc.abcC) == 0)
 	{
-		result = GetCharABCWidthsW(FDC, C, C, &ABC);
+		result = GetCharABCWidthsW(FDC, c, c, &abc);
 		if(result)
-			FCharABCWidthCache[C] = ABC;
+			FCharABCWidthCache[c] = abc;
 	}
 	else
 	result = true;
@@ -706,9 +706,9 @@ bool __fastcall TheTextDrawer::GetCachedABCWidth(unsigned int C, TABC& ABC)
 
 void __fastcall TheTextDrawer::TextOut(int X, int Y, PWideChar Text, int Length)
 {
-	TRect R = {};
-	R = Rect(X, Y, X, Y);
-	UniversalExtTextOut(FDC, X, Y, Syntextdrawer__1, R, Text, Length, nullptr);
+	TRect r = {};
+	r = Rect(X, Y, X, Y);
+	UniversalExtTextOut(FDC, X, Y, Syntextdrawer__1, r, Text, Length, nullptr);
 }
 
 void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options, const TRect& cARect, PWideChar Text, int Length, bool UseLigatures/*# = false*/)
@@ -737,7 +737,7 @@ void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options,
 		int RealCharWidth = 0;
 		int CharWidth = 0;
 		TABC CharInfo = {};
-		TTextMetricA TM = {};
+		TTextMetricA tm = {};
 		if(Length <= 0)
 			return;
 		LastChar = (unsigned int) int(Text[Length - 1]);
@@ -753,8 +753,8 @@ void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options,
 		{
 			if(LastChar < int(High<AnsiChar>()))
 			{
-				GetTextMetricsA(FDC, &TM);
-				RealCharWidth = TM.tmAveCharWidth + TM.tmOverhang;
+				GetTextMetricsA(FDC, &tm);
+				RealCharWidth = tm.tmAveCharWidth + tm.tmOverhang;
 			}
 		}
 		if(RealCharWidth > CharWidth)
@@ -788,17 +788,17 @@ TSize __fastcall TheTextDrawer::TextExtent(PWideChar Text, int Count)
 int __fastcall TheTextDrawer::TextWidth(const String Text)
 {
 	int result = 0;
-	unsigned int C = 0;
+	unsigned int c = 0;
 	if(Text.Length() == 1)
 	{
-		C = (unsigned int) int(Text[1]);
-		if(C <= 127 /*# High(FCharWidthCache) */)
+		c = (unsigned int) int(Text[1]);
+		if(c <= 127 /*# High(FCharWidthCache) */)
 		{
-			result = FCharWidthCache[C];
+			result = FCharWidthCache[c];
 			if(result == 0)
 			{
 				result = FStockBitmap->Canvas->TextExtent(Text).cx;
-				FCharWidthCache[C] = result;
+				FCharWidthCache[c] = result;
 			}
 			return result;
 		}

@@ -29,7 +29,7 @@ namespace Synhighlighterphp
 
 
 /* expanded keyword list */
-const WideString Keywords[111/*# range 0..110*/] = {L"__autoload", L"__call", L"__callstatic", L"__class__", L"__clone", L"__construct", L"__debuginfo", L"__destruct"
+const WideString KeyWords[111/*# range 0..110*/] = {L"__autoload", L"__call", L"__callstatic", L"__class__", L"__clone", L"__construct", L"__debuginfo", L"__destruct"
                     , L"__dir__", L"__file__", L"__function__", L"__get", L"__halt_compiler", L"__invoke", L"__isset", L"__line__", L"__method__"
                     , L"__namespace__", L"__set", L"__set_state", L"__sleep", L"__tostring", L"__trait__", L"__unset", L"__wakeup", L"abstract"
                     , L"and", L"array", L"as", L"binary", L"bool", L"boolean", L"break", L"callable", L"case", L"catch", L"cfunction", L"class"
@@ -67,14 +67,14 @@ unsigned int __fastcall TSynPHPSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynPHPSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynPHPSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 438 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 438 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -106,7 +106,7 @@ TtkTokenKind __fastcall TSynPHPSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynPHPSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -115,7 +115,7 @@ TtkTokenKind __fastcall TSynPHPSyn::KeyWordFunc(int Index)
 
 __fastcall TSynPHPSyn::TSynPHPSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkSymbol),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -127,28 +127,28 @@ __fastcall TSynPHPSyn::TSynPHPSyn(TComponent* AOwner)
 			fVariableAttri(nullptr),
 			fDocumentAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterphp__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDocumentAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
 	fDocumentAttri->Style = Synhighlighterphp__1;
-	addAttribute(fDocumentAttri);
+	AddAttribute(fDocumentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterphp__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterPHP;
@@ -437,7 +437,7 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -445,7 +445,7 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != fCommentAttri)
@@ -506,17 +506,17 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 9)) == L"//#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 9)) == L"//#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 12)) == L"//#ENDREGION")
+			if(UpperCase(S.SubString(1, 12)) == L"//#ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -580,14 +580,14 @@ void __fastcall TSynPHPSyn::SlashProc()
 		{
 			if((fLine[Run + 2] == L'*') && (fLine[Run + 3] != L'/'))     /*documentation comment*/
 			{
-				FRange = rsDocument;
+				fRange = rsDocument;
 				FTokenID = tkDocument;
 				++Run;
 			}
 			else
                            /*c style comment*/
 			{
-				FRange = rsComment;
+				fRange = rsComment;
 				FTokenID = tkComment;
 				++Run;
 			}
@@ -597,7 +597,7 @@ void __fastcall TSynPHPSyn::SlashProc()
 				{
 					if(fLine[Run + 1] == L'/')
 					{
-						FRange = rsUnKnown;
+						fRange = rsUnKnown;
 						Run += 2;
 						break;
 					}
@@ -651,7 +651,7 @@ void __fastcall TSynPHPSyn::StringProc()
 		return;
 	}
 	FTokenID = tkString;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsString39:
 		iCloseChar = L'\x27';
@@ -677,7 +677,7 @@ void __fastcall TSynPHPSyn::StringProc()
 			if(!IsEscaped())
         /* break the token to process the variable */
 			{
-				FRange = rsVarExpansion;
+				fRange = rsVarExpansion;
 				return;
 			}
 			else
@@ -689,7 +689,7 @@ void __fastcall TSynPHPSyn::StringProc()
 		++Run;
 	}
 	if(fLine[Run] == iCloseChar)
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 	if(!IsLineEnd(Run))
 		++Run;
 }
@@ -703,7 +703,7 @@ void __fastcall TSynPHPSyn::VarExpansionProc()
 	int iOpenBraces = 0;
 	int iOpenBrackets = 0;
 	int iTempRun = 0;
-	FRange = rsString34; /* var expansion only occurs in double quoted strings */
+	fRange = rsString34; /* var expansion only occurs in double quoted strings */
 	FTokenID = tkVariable;
 	if(fLine[Run] == L'{')
 	{
@@ -852,7 +852,7 @@ void __fastcall TSynPHPSyn::UnknownProc()
 
 void __fastcall TSynPHPSyn::AnsiCProc()
 {
-	if(FRange == rsComment)
+	if(fRange == rsComment)
 		FTokenID = tkComment;
 	else
 		FTokenID = tkDocument;
@@ -883,7 +883,7 @@ void __fastcall TSynPHPSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 				break;
 			}
 			else
@@ -895,14 +895,14 @@ void __fastcall TSynPHPSyn::AnsiCProc()
 
 void __fastcall TSynPHPSyn::String39Proc()
 {
-	FRange = rsString39;
+	fRange = rsString39;
 	++Run;
 	StringProc();
 }
 
 void __fastcall TSynPHPSyn::String34Proc()
 {
-	FRange = rsString34;
+	fRange = rsString34;
 	++Run;
 	StringProc();
 }
@@ -910,7 +910,7 @@ void __fastcall TSynPHPSyn::String34Proc()
 void __fastcall TSynPHPSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		case rsDocument:
@@ -925,7 +925,7 @@ void __fastcall TSynPHPSyn::Next()
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			NextProcedure();
 		}
 		break;
@@ -1082,7 +1082,7 @@ bool __fastcall TSynPHPSyn::GetEol()
 void* __fastcall TSynPHPSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1144,12 +1144,12 @@ int __fastcall TSynPHPSyn::GetTokenKind()
 
 void __fastcall TSynPHPSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynPHPSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynPHPSyn::IsFilterStored()
@@ -1251,7 +1251,7 @@ bool __fastcall TSynPHPSyn::IsWordBreakChar(WideChar AChar)
 
 void __fastcall TSynPHPSyn::String96Proc()
 {
-	FRange = rsString96;
+	fRange = rsString96;
 	++Run;
 	StringProc();
 }

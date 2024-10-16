@@ -36,7 +36,7 @@ __fastcall TCustomSynAutoCorrect::TCustomSynAutoCorrect(TComponent* AOwner)
 	FEnabled = true;
 	FItems = new TStringList();
 	FItemSepChar = L'\x09';
-	fOptions = Synautocorrect__0;
+	FOptions = Synautocorrect__0;
 	FPrevLine = -1;
 //  FEditor := nil; initialized by Delphi
 }
@@ -70,14 +70,14 @@ void __fastcall TCustomSynAutoCorrect::LoadFromINI(String AFileName, String ASec
 	int i = 0;
 	String Original;
 	String Correction;
-	TMemIniFile* reg = nullptr;
-	reg = new TMemIniFile(AFileName);
+	TMemIniFile* Reg = nullptr;
+	Reg = new TMemIniFile(AFileName);
 	try
 	{
 		FItems->Clear();
-		/*# with reg do */
+		/*# with Reg do */
 		{
-			auto with0 = reg;
+			auto with0 = Reg;
 			int stop = 0;
 			for(stop = Pred(with0->ReadInteger(ASection, L"Count", 0)), i = 0; i <= stop; i++)
 			{
@@ -90,20 +90,20 @@ void __fastcall TCustomSynAutoCorrect::LoadFromINI(String AFileName, String ASec
 	}
 	__finally
 	{
-		delete reg;
+		delete Reg;
 	}
 }
 
 void __fastcall TCustomSynAutoCorrect::SaveToINI(String AFileName, String ASection)
 {
 	int i = 0;
-	TMemIniFile* reg = nullptr;
-	reg = new TMemIniFile(AFileName);
+	TMemIniFile* Reg = nullptr;
+	Reg = new TMemIniFile(AFileName);
 	try
 	{
-		/*# with reg do */
+		/*# with Reg do */
 		{
-			auto with0 = reg;
+			auto with0 = Reg;
 			int stop = 0;
 			with0->WriteInteger(ASection, L"Count", FItems->Count);
 			for(stop = Pred(FItems->Count), i = 0; i <= stop; i++)
@@ -115,8 +115,8 @@ void __fastcall TCustomSynAutoCorrect::SaveToINI(String AFileName, String ASecti
 	}
 	__finally
 	{
-		reg->UpdateFile();
-		delete reg;
+		Reg->UpdateFile();
+		delete Reg;
 	}
 }
 
@@ -142,16 +142,16 @@ void __fastcall TCustomSynAutoCorrect::LoadFromRegistry(DWORD ARoot, String AKey
 	int i = 0;
 	String Original;
 	String Correction;
-	TRegIniFile* reg = nullptr;
-	reg = new TRegIniFile(L"");
+	TRegIniFile* Reg = nullptr;
+	Reg = new TRegIniFile(L"");
 	try
 	{
-		/*# with reg do */
+		/*# with Reg do */
 		{
-			auto with0 = reg;
+			auto with0 = Reg;
 			int stop = 0;
 			with0->RootKey = (HKEY) ARoot;
-			((TBetterRegistry*) reg)->OpenKeyReadOnly(AKey);
+			((TBetterRegistry*) Reg)->OpenKeyReadOnly(AKey);
 			FItems->Clear();
 			for(stop = Pred(with0->ReadInteger(L"", L"Count", 0)), i = 0; i <= stop; i++)
 			{
@@ -164,20 +164,20 @@ void __fastcall TCustomSynAutoCorrect::LoadFromRegistry(DWORD ARoot, String AKey
 	}
 	__finally
 	{
-		delete reg;
+		delete Reg;
 	}
 }
 
 void __fastcall TCustomSynAutoCorrect::SaveToRegistry(DWORD ARoot, String AKey)
 {
 	int i = 0;
-	TRegIniFile* reg = nullptr;
-	reg = new TRegIniFile(L"");
+	TRegIniFile* Reg = nullptr;
+	Reg = new TRegIniFile(L"");
 	try
 	{
-		/*# with reg do */
+		/*# with Reg do */
 		{
-			auto with0 = reg;
+			auto with0 = Reg;
 			int stop = 0;
 			with0->RootKey = (HKEY) ARoot;
 			with0->OpenKey(AKey, true);
@@ -191,7 +191,7 @@ void __fastcall TCustomSynAutoCorrect::SaveToRegistry(DWORD ARoot, String AKey)
 	}
 	__finally
 	{
-		delete reg;
+		delete Reg;
 	}
 }
 
@@ -231,7 +231,7 @@ int __fastcall TCustomSynAutoCorrect::CorrectItemStart(String EditLine, String S
 {
 	int result = 0;
 	int SearchCount = 0;
-	int i = 0;
+	int I = 0;
 	PWideChar CurBuf = nullptr;
 	PWideChar Buf = nullptr;
 	int BufLen = 0;
@@ -274,13 +274,13 @@ int __fastcall TCustomSynAutoCorrect::CorrectItemStart(String EditLine, String S
 				if(!FindNextWordStart(BufPtr))
 					break;
 			}
-			i = 0;
-			while((BufPtr[i] == SearchString[i + 1]))
+			I = 0;
+			while((BufPtr[I] == SearchString[I + 1]))
 			{
-				++i;
-				if(i >= SearchString.Length())
+				++I;
+				if(I >= SearchString.Length())
 				{
-					if(!WholeWord || (SearchCount == 0) || Editor->IsWordBreakChar(BufPtr[i]))
+					if(!WholeWord || (SearchCount == 0) || Editor->IsWordBreakChar(BufPtr[I]))
 					{
 						result = true;
 						return result;
@@ -339,7 +339,7 @@ void __fastcall TCustomSynAutoCorrect::Edit(int AIndex, String ANewOriginal, Str
 
 void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool AfterProcessing, bool& Handled, TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData)
 {
-	bool B = false;
+	bool b = false;
 	int i = 0;
 	int cx = 0;
 	String s;
@@ -357,7 +357,7 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 			{
 				if((Command == ecChar) && !Editor->IsWordBreakChar(AChar))
 					return;
-				B = false;
+				b = false;
 				s = PreviousToken();
 				if(s != L"")
 				{
@@ -368,7 +368,7 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 						CurrText = FItems->Strings[i];
 						Original = HalfString(CurrText, true);
 						Correction = HalfString(CurrText, false);
-						B = B || FindAndCorrect(s, Original, Correction, cx);
+						b = b || FindAndCorrect(s, Original, Correction, cx);
 					}
 					if(ASSIGNED(OnCorrected))
 						OnCorrected(this);
@@ -385,19 +385,19 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
 {
 	TAutoCorrectAction Action = aaCorrect;
-	bool B = false;
+	bool b = false;
 	int i = 0;
 	int cx = 0;
 	String s;
 	String Original;
 	String Correction;
 	String CurrText;
-	if(fOptions.Contains(ascoCorrectOnMouseDown))
+	if(FOptions.Contains(ascoCorrectOnMouseDown))
 	{
 		if(ASSIGNED(Editor) && Enabled && (FPrevLine != -1))
 		{
 			int stop = 0;
-			B = false;
+			b = false;
 			s = Editor->Lines->Strings[Pred(FPrevLine)];
 			cx = -1;
 			for(stop = Pred(FItems->Count), i = 0; i <= stop; i++)
@@ -405,9 +405,9 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 				CurrText = FItems->Strings[i];
 				Original = HalfString(CurrText, true);
 				Correction = HalfString(CurrText, false);
-				B = B || FindAndCorrect(s, Original, Correction, cx);
+				b = b || FindAndCorrect(s, Original, Correction, cx);
 			}
-			if(B)
+			if(b)
 			{
 				if(ASSIGNED(FOnAutoCorrect))
 				{
@@ -431,7 +431,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 	int EndPos = 0;
 	String FoundText;
 	String ReplaceDefText;
-	TBufferCoord P = {};
+	TBufferCoord p = {};
 	TAutoCorrectAction Action = aaCorrect;
 
 	auto FirstCapCase = [&](String s) -> String 
@@ -451,10 +451,10 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 	EndPos = Original.Length();
 	if((Editor != nullptr) && !(Editor->ReadOnly))
 	{
-		StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(ascoIgnoreCase)), true);
+		StartPos = CorrectItemStart(EditLine, Original, StartPos, !(FOptions.Contains(ascoIgnoreCase)), true);
 		while(StartPos > -1)
 		{
-			if(fOptions.Contains(ascoMaintainCase))
+			if(FOptions.Contains(ascoMaintainCase))
 			{
 				Correction = ReplaceDefText;
 				FoundText = EditLine.SubString(StartPos + 1, EndPos);
@@ -473,23 +473,23 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 			}
 			if(CurrentX > -1)
 			{
-				P = Editor->CaretXY;
+				p = Editor->CaretXY;
 				if(ASSIGNED(FOnAutoCorrect))
 				{
 					Action = aaCorrect;
-					FOnAutoCorrect(this, Original, Correction, P.Line, P.Char, Action);
+					FOnAutoCorrect(this, Original, Correction, p.Line, p.Char, Action);
 					if(Action == aaAbort)
 						break;
 				}
 				Editor->BeginUpdate();
 				try
 				{
-					if(P.Char == 0)
-						Editor->BlockBegin = BufferCoord(P.Char - 1 - EndPos, P.Line);
+					if(p.Char == 0)
+						Editor->BlockBegin = BufferCoord(p.Char - 1 - EndPos, p.Line);
 					else
-						Editor->BlockBegin = BufferCoord(P.Char - EndPos, P.Line);
-					Editor->BlockEnd = P;
-					P = Editor->BlockBegin;
+						Editor->BlockBegin = BufferCoord(p.Char - EndPos, p.Line);
+					Editor->BlockEnd = p;
+					p = Editor->BlockBegin;
 					Editor->SelText = Correction;
 					result = true;
 				}
@@ -504,7 +504,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 				result = true;
 				EditLine = EditLine.SubString(1, StartPos) + Correction + EditLine.SubString(StartPos + EndPos + 1, MaxInt);
 				StartPos += EndPos;
-				StartPos = CorrectItemStart(EditLine, Original, StartPos, !(fOptions.Contains(ascoIgnoreCase)), true);
+				StartPos = CorrectItemStart(EditLine, Original, StartPos, !(FOptions.Contains(ascoIgnoreCase)), true);
 			}
 		}
 	}

@@ -21,16 +21,16 @@ namespace Synhighlighterjava
 #define Synhighlighterjava__3 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define Synhighlighterjava__4 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
-#define Synhighlighterjava__5 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
-#define Synhighlighterjava__6 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsComment << rsDocument)
+#define Synhighlighterjava__4 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsComment << rsDocument)
+#define Synhighlighterjava__5 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsComment << rsDocument)
+#define Synhighlighterjava__6 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsComment << rsDocument)
 #define Synhighlighterjava__7 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
 #define Synhighlighterjava__8 (TSysCharSet() << '_' << '$')
 
 
-const String Keywords[52/*# range 0..51*/] = {L"abstract", L"assert", L"boolean", L"break", L"byte", L"case", L"catch", L"char", L"class", L"const", L"continue"
+const String KeyWords[52/*# range 0..51*/] = {L"abstract", L"assert", L"boolean", L"break", L"byte", L"case", L"catch", L"char", L"class", L"const", L"continue"
                     , L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
                     , L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"
                     , L"public", L"return", L"short", L"static", L"strictfp", L"super", L"switch", L"synchronized", L"this", L"throw", L"throws"
@@ -56,14 +56,14 @@ unsigned int __fastcall TSynJavaSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynJavaSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynJavaSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 112 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 112 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -95,7 +95,7 @@ TtkTokenKind __fastcall TSynJavaSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynJavaSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -104,7 +104,7 @@ TtkTokenKind __fastcall TSynJavaSyn::KeyWordFunc(int Index)
 
 __fastcall TSynJavaSyn::TSynJavaSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FRoundCount(0),
 			FSquareCount(0),
 			FTokenID(tkSymbol),
@@ -119,29 +119,29 @@ __fastcall TSynJavaSyn::TSynJavaSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterjava__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDocumentAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
 	fDocumentAttri->Style = Synhighlighterjava__1;
-	addAttribute(fDocumentAttri);
+	AddAttribute(fDocumentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrInvalidSymbol, SYNS_FriendlyAttrInvalidSymbol);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterjava__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fSpaceAttri->Foreground = (TColor) clWindow;
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterJava;
@@ -149,7 +149,7 @@ __fastcall TSynJavaSyn::TSynJavaSyn(TComponent* AOwner)
 
 void __fastcall TSynJavaSyn::CommentProc()
 {
-	if(FRange == rsComment)
+	if(fRange == rsComment)
 		FTokenID = tkComment;
 	else
 		FTokenID = tkDocument;
@@ -181,7 +181,7 @@ void __fastcall TSynJavaSyn::CommentProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				goto label0;
 			}
 			else
@@ -656,7 +656,7 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -664,7 +664,7 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != fCommentAttri)
@@ -725,17 +725,17 @@ void __fastcall TSynJavaSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 9)) == L"//#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 9)) == L"//#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 12)) == L"//#ENDREGION")
+			if(UpperCase(S.SubString(1, 12)) == L"//#ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -808,14 +808,14 @@ void __fastcall TSynJavaSyn::SlashProc()
 		{
 			if((fLine[Run + 2] == L'*') && (fLine[Run + 3] != L'/'))     /*documentation comment*/
 			{
-				FRange = rsDocument;
+				fRange = rsDocument;
 				FTokenID = tkDocument;
 				++Run;
 			}
 			else
                            /*c style comment*/
 			{
-				FRange = rsComment;
+				fRange = rsComment;
 				FTokenID = tkComment;
 			}
 			Run += 2;
@@ -826,7 +826,7 @@ void __fastcall TSynJavaSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						goto label2;
 					}
 					else
@@ -943,7 +943,7 @@ void __fastcall TSynJavaSyn::UnknownProc()
 void __fastcall TSynJavaSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		CommentProc();
@@ -956,7 +956,7 @@ void __fastcall TSynJavaSyn::Next()
 			IdentProc();
 		else
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 			switch(fLine[Run])
 			{
 				case L'&':
@@ -1116,18 +1116,18 @@ bool __fastcall TSynJavaSyn::GetEol()
 void* __fastcall TSynJavaSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynJavaSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynJavaSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 TtkTokenKind __fastcall TSynJavaSyn::GetTokenID()

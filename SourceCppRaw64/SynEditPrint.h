@@ -169,20 +169,20 @@ private:
 	Syneditprinterinfo::TSynEditPrinterInfo* FPrinterInfo;
 	TList* FPages;
 	TCanvas* FCanvas;
-	int fCharWidth;
+	int FCharWidth;
 	int FMaxLeftChar;
 	bool FWrap;
 	Syneditprinttypes::TPrintLineEvent FOnPrintLine;
 	Syneditprinttypes::TPrintStatusEvent FOnPrintStatus;
 	int FYPos;
 	int FLineHeight;
-	bool fHighlight;
+	bool FHighlight;
 	bool FColors;
-	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
+	Synedithighlighter::TSynCustomHighlighter* FHighlighter;
 	TFont* FOldFont;
 	bool FSynOK;
 	bool FLineNumbers;
-	int fLineNumber;
+	int FLineNumber;
 	int FLineOffset;
 	bool FAbort;
 	bool FPrinting;
@@ -194,13 +194,13 @@ private:
 	bool FPagesCounted;
 	bool FLineNumbersInMargin;
 	int FTabWidth;
-	TColor FFontColor;
+	TColor fFontColor;
 	bool fSelectedOnly;
 	bool fSelAvail;
 	Synedittypes::TSynSelectionMode fSelMode;
 	TBufferCoord fBlockBegin;
 	TBufferCoord fBlockEnd;
-	Syneditmiscprocs::pIntArray FETODist;
+	Syneditmiscprocs::PIntArray FETODist;
 	void __fastcall CalcPages();
 	void __fastcall SetLines(TStrings* const Value);
 	void __fastcall SetFont(TFont* const Value);
@@ -222,12 +222,12 @@ private:
 	void __fastcall SetFooter(Syneditprintheaderfooter::TFooter* const Value);
 	void __fastcall SetHeader(Syneditprintheaderfooter::THeader* const Value);
 	void __fastcall SetMargins(Syneditprintmargins::TSynEditPrintMargins* const Value);
-	String __fastcall ClipLineToRect(String s, const TRect& R);
-	String __fastcall ExpandAtWideGlyphs(const String s);
+	String __fastcall ClipLineToRect(String S, const TRect& R);
+	String __fastcall ExpandAtWideGlyphs(const String S);
 protected:
 	virtual void __fastcall DefineProperties(TFiler* Filer);
 	__property int MaxLeftChar = { read = FMaxLeftChar, write = SetMaxLeftChar };
-	__property int CharWidth = { read = fCharWidth, write = SetCharWidth };
+	__property int CharWidth = { read = FCharWidth, write = SetCharWidth };
 	virtual void __fastcall PrintStatus(Syneditprinttypes::TSynPrintStatus Status, int PageNumber, bool& Abort);
 	virtual void __fastcall PrintLine(int LineNumber, int PageNumber);
 public:
@@ -255,7 +255,7 @@ public:
 	__property String Title = { read = FTitle, write = FTitle };
 	__property String DocTitle = { read = FDocTitle, write = FDocTitle };
 	__property bool Wrap = { read = FWrap, write = FWrap, default = true };
-	__property bool Highlight = { read = fHighlight, write = fHighlight, default = true };
+	__property bool Highlight = { read = FHighlight, write = FHighlight, default = true };
 	__property bool SelectedOnly = { read = fSelectedOnly, write = fSelectedOnly, default = false };
 	__property bool Colors = { read = FColors, write = FColors, default = false };
 	__property bool LineNumbers = { read = FLineNumbers, write = FLineNumbers, default = false };
@@ -263,7 +263,7 @@ public:
 	__property int PageOffset = { read = FPageOffset, write = FPageOffset, default = 0 };
 	__property Syneditprinttypes::TPrintLineEvent OnPrintLine = { read = FOnPrintLine, write = FOnPrintLine };
 	__property Syneditprinttypes::TPrintStatusEvent OnPrintStatus = { read = FOnPrintStatus, write = FOnPrintStatus };
-	__property Synedithighlighter::TSynCustomHighlighter* Highlighter = { read = fHighlighter, write = SetHighlighter };
+	__property Synedithighlighter::TSynCustomHighlighter* Highlighter = { read = FHighlighter, write = SetHighlighter };
 	__property bool LineNumbersInMargin = { read = FLineNumbersInMargin, write = FLineNumbersInMargin, default = false };
 	__property int TabWidth = { read = FTabWidth, write = FTabWidth };
 	__property TColor Color = { read = FDefaultBG, write = FDefaultBG };

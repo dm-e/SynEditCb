@@ -261,7 +261,7 @@
 #include <System.SysUtils.hpp>
 #include "SynEdit.h"
 #include "SynEditTypes.h"
-#include <Vcl.ComCtrls.hpp>
+#include <Vcl.comctrls.hpp>
 #include "d2c_systypes.h"
 #include "SynEditDelphiInstances.hpp"
 
@@ -553,7 +553,7 @@ namespace Synspellcheck
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 class DELPHICLASS TSynSpellCheck;
 typedef int /*1..16*/ THashLength;
-typedef int /*1..8*/ TSoundexLength;
+typedef int /*1..8*/ TSoundExLength;
 typedef DynamicArray<int> TJHCMPLongintArray;
 typedef DynamicArray<TJHCMPLongintArray> TJHCMPLongintMatrix;
 
@@ -660,8 +660,8 @@ private:
 	THashLength FHashLength;
 	TOnAddWord FOnAddWord;
 	TLanguageRec FLanguage;
-	TList* fEditors;
-	TList* fPlugins;
+	TList* FEditors;
+	TList* FPlugins;
 	TList* FWordList;
 	TNotifyEvent FOnAbort;
 	TNotifyEvent FOnDictClose;
@@ -673,7 +673,7 @@ private:
 	TOnSkipWord FOnSkipWord;
 	TStringList* FCheckAttribs;
 	TStringList* FSkipList;
-	TSynSpellCheckOptions fOptions;
+	TSynSpellCheckOptions FOptions;
 	TUnderlineStyle FUnderlineStyle;
 	TEncoding* FIntEnc;                                                         //Fiala
 	    /* Functions */
@@ -711,7 +711,7 @@ public:
 	bool __fastcall SpellIsIdentChar(WideChar AChar);
 	bool __fastcall SpellIsWhiteChar(WideChar AChar);
 	int __fastcall AddEditor(Synedit::TCustomSynEdit* AEditor);
-	String __fastcall Ansi2Ascii(const String SString);       //*
+	String __fastcall Ansi2Ascii(const String sString);       //*
 	bool __fastcall CheckWord(String Word);
 	bool __fastcall DictionaryExists(String Language, String Path = L"");
 	String __fastcall GetNewestDictionary(String Language);
@@ -754,7 +754,7 @@ public:
 	__property TLanguageRec Language = { read = FLanguage };
 	__property bool Modified = { read = FModified, write = FModified, default = false };
 	__property bool OpenDictionary = { read = FOpenDictionary };
-	__property TSynSpellCheckOptions Options = { read = fOptions, write = fOptions };
+	__property TSynSpellCheckOptions Options = { read = FOptions, write = FOptions };
 	__property TColor PenColor = { read = FPenColor, write = SetPenColor, default = clRed };
 	__property TStringList* SkipList = { read = FSkipList, write = SetSkipList };
 	__property TUnderlineStyle UnderlineStyle = { read = FUnderlineStyle, write = SetUnderlineStyle, default = /*# usMicrosoftWord */ 1 };

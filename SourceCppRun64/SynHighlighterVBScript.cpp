@@ -125,12 +125,12 @@ void __fastcall TSynVBScriptSyn::DoAddKeyword(String AKeyword, int AKind)
 	fKeywords->Items[HashValue] = new TSynHashEntry(AKeyword, AKind);
 }
 
-TtkTokenKind __fastcall TSynVBScriptSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynVBScriptSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -166,29 +166,29 @@ __fastcall TSynVBScriptSyn::TSynVBScriptSyn(TComponent* AOwner)
 			fCOnstAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightervbscript__2;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fCOnstAttri = new TSynHighlighterAttributes(SYNS_AttrConst, SYNS_AttrConst);
 	fCOnstAttri->Style = Synhighlightervbscript__3;
-	addAttribute(fCOnstAttri);
+	AddAttribute(fCOnstAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
-	addAttribute(fFunctionAttri);
+	AddAttribute(fFunctionAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightervbscript__4;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterVBScript;
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
@@ -218,7 +218,7 @@ void __fastcall TSynVBScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, T
 {
 	String CurLine;
 	__int64 Line = 0;
-	bool OK = false;
+	bool ok = false;
 
 	auto BlockDelimiter = [&](int Line) -> bool 
 	{
@@ -226,7 +226,7 @@ void __fastcall TSynVBScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, T
 		int Index = 0;
 		TMatchCollection mcb = {};
 		TMatchCollection mce = {};
-		TMatch Match = {};
+		TMatch match = {};
 		result = false;
 		mcb = RE_BlockBegin.Matches(CurLine);
 		if(mcb.Count > 0)
@@ -235,18 +235,18 @@ void __fastcall TSynVBScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, T
 			Index = mcb.Item[0].Index;
 			if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 			{
-				OK = false;
+				ok = false;
         // And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
-					if(Match.Index > Index)
+					TMatch match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					if(match.Index > Index)
 					{
-						OK = true;
+						ok = true;
 						break;
 					}
 				}
-				if(!OK)
+				if(!ok)
 				{
 					FoldRanges->StartFoldRange(Line + 1, FT_Standard);
 					result = true;
@@ -272,17 +272,17 @@ void __fastcall TSynVBScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, T
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 7)) == L"'REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 7)) == L"'REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 10)) == L"'ENDREGION")
+			if(UpperCase(S.SubString(1, 10)) == L"'ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -572,7 +572,7 @@ void __fastcall TSynVBScriptSyn::Next()
 		break;
 		case L'R':
 		case L'r':
-		RemProc();
+		REMProc();
 		break;
 		case L'\x0a':
 		LFProc();
@@ -750,7 +750,7 @@ String __fastcall TSynVBScriptSyn::GetFriendlyLanguageName()
 	return result;
 }
 
-void __fastcall TSynVBScriptSyn::RemProc()
+void __fastcall TSynVBScriptSyn::REMProc()
 {
 	if(CharInSet(fLine[Run + 1], Synhighlightervbscript__8) && CharInSet(fLine[Run + 2], Synhighlightervbscript__9) && (fLine[Run + 3] <= L'\x20'))
 		ApostropheProc();

@@ -147,7 +147,7 @@ void __fastcall TSynAWKSyn::NumberProc()
 void __fastcall TSynAWKSyn::IdentProc()
 {
 	int i = 0;
-	int Idx = 0;
+	int idx = 0;
 	String s;
 	i = Run;
 	while(CharInSet(fLine[i], Synhighlighterawk__1))
@@ -155,9 +155,9 @@ void __fastcall TSynAWKSyn::IdentProc()
 	s.SetLength(i - Run);
 	StrLCopy(ustr2pwchar(s), fLine + Run, (unsigned int) (i - Run));
 	Run = i;
-	if(AWKSyntaxList->Find(s, Idx) && (AWKSyntaxList->Strings[Idx] == s))
+	if(AWKSyntaxList->Find(s, idx) && (AWKSyntaxList->Strings[idx] == s))
 	{
-		FTokenID = (TtkTokenKind) (NativeInt) AWKSyntaxList->Objects[Idx];
+		FTokenID = (TtkTokenKind) (NativeInt) AWKSyntaxList->Objects[idx];
 		if(FTokenID == tkUnknown)
 		{
 			FTokenID = tkKey;
@@ -402,34 +402,34 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fSysVarAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clBlue;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInterFuncAttri = new TSynHighlighterAttributes(SYNS_AttrInternalFunction, SYNS_FriendlyAttrInternalFunction);
 	fInterFuncAttri->Foreground = (TColor) 0x00408080;
 	fInterFuncAttri->Style = Synhighlighterawk__8;
-	addAttribute(fInterFuncAttri);
+	AddAttribute(fInterFuncAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) 0x00FF0080;
 	fKeyAttri->Style = Synhighlighterawk__9;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clTeal;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterawk__10;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fSysVarAttri = new TSynHighlighterAttributes(SYNS_AttrSystemValue, SYNS_FriendlyAttrSystemValue);
 	fSysVarAttri->Foreground = (TColor) 0x000080FF;
 	fSysVarAttri->Style = Synhighlighterawk__11;
-	addAttribute(fSysVarAttri);
+	AddAttribute(fSysVarAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	MakeSyntaxList();
 	fDefaultFilter = SYNS_FilterAWK;

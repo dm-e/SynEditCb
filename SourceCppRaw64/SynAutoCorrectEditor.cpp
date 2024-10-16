@@ -8,14 +8,9 @@
 using namespace std;
 using namespace d2c_system;
 using namespace Synautocorrect;
-using namespace System;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Buttons;
-using namespace Vcl::Controls;
-using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Vcl::Stdctrls;
 
 
 
@@ -117,7 +112,7 @@ void __fastcall TfrmAutoCorrectEditor::btnDoneClick(TObject* Sender)
 
 void __fastcall TfrmAutoCorrectEditor::btnClearClick(TObject* Sender)
 {
-	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != System::Uitypes::IDYES)
+	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != System::Uitypes::idYes)
 		return;
 	SynAutoCorrect->Items->Clear();
 	lbxItems->Items->Clear();

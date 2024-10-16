@@ -23,12 +23,12 @@ __fastcall TSynHashEntryList::TSynHashEntryList() {}
 void __fastcall EnumerateKeywords(int AKind, String KeywordList, TCategoryMethod IsIdentChar, TEnumerateKeywordEvent AKeywordProc)
 {
 	PWideChar pStart = nullptr;
-	PWideChar PEnd = nullptr;
+	PWideChar pEnd = nullptr;
 	String Keyword;
 	if(ASSIGNED(AKeywordProc) && (KeywordList != L""))
 	{
-		PEnd = ustr2pwchar(KeywordList);
-		pStart = PEnd;
+		pEnd = ustr2pwchar(KeywordList);
+		pStart = pEnd;
 		do
 
       // skip over chars that are not in Identifiers
@@ -38,36 +38,36 @@ void __fastcall EnumerateKeywords(int AKind, String KeywordList, TCategoryMethod
 			if((*pStart) == L'\x00')
 				break;
       // find the last char that is in Identifiers
-			PEnd = pStart + 1;
-			while(((*PEnd) != L'\x00') && IsIdentChar((*PEnd)))
-				++PEnd;
+			pEnd = pStart + 1;
+			while(((*pEnd) != L'\x00') && IsIdentChar((*pEnd)))
+				++pEnd;
       // call the AKeywordProc with the keyword
-			SetString(Keyword, pStart, PEnd - pStart);
+			SetString(Keyword, pStart, pEnd - pStart);
 			AKeywordProc(Keyword, AKind);
 			Keyword = L"";
       // pEnd points to a char not in Identifiers, restart after that
-			pStart = PEnd + 1;
+			pStart = pEnd + 1;
 		}
-		while(!(((*pStart) == L'\x00') || ((*PEnd) == L'\x00')));
+		while(!(((*pStart) == L'\x00') || ((*pEnd) == L'\x00')));
 	}
 }
 
 /* TSynHashEntry */
 
 __fastcall TSynHashEntry::TSynHashEntry(const String AKey, int AKind)
- : FNext(nullptr),
+ : fNext(nullptr),
 			fKeyLen(0),
-			FKind(0)
+			fKind(0)
 {
 	//# inherited::Create();
 	fKeyLen = AKey.Length();
 	fKeyword = AKey;
-	FKind = AKind;
+	fKind = AKind;
 }
 
 __fastcall TSynHashEntry::~TSynHashEntry()
 {
-	delete FNext;
+	delete fNext;
 	//# inherited::Destroy();
 }
 
@@ -81,15 +81,15 @@ TSynHashEntry* __fastcall TSynHashEntry::AddEntry(TSynHashEntry* NewEntry)
 			throw new Exception(L"Keyword \"%s\" already in list", ARRAYOFCONST((fKeyword)));
 		if(NewEntry->fKeyLen < fKeyLen)
 		{
-			NewEntry->FNext = this;
+			NewEntry->fNext = this;
 			result = NewEntry;
 		}
 		else
 		{
-			if(ASSIGNED(FNext))
-				FNext = FNext->AddEntry(NewEntry);
+			if(ASSIGNED(fNext))
+				fNext = fNext->AddEntry(NewEntry);
 			else
-				FNext = NewEntry;
+				fNext = NewEntry;
 		}
 	}
 	return result;

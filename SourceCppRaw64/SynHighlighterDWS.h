@@ -163,7 +163,7 @@ enum TRangeState {rsANil,
                   rsHereDocSingle,
                   rsHereDocDouble,
                   rsType,
-                  rsUnKnown };
+                  rsUnknown };
 typedef TtkTokenKind __fastcall (__closure *TIdentFuncTableFunc) ();
 typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 
@@ -189,13 +189,13 @@ class TSynDWSSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
 	bool fAsmStart;
-	TRangeState FRange;
+	TRangeState fRange;
 	Char fCommentClose;
 	TIdentFuncTableFunc fIdentFuncTable[389/*# range 0..388*/];
-	TAnsiStringList* fKeywords;
+	TAnsiStringList* fKeyWords;
 	TAnsiStringList* FKeywordsPropertyScoped;
 	TAnsiStringList* FKeywordsTypeScoped;
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fCharAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -222,7 +222,7 @@ private:
 	TtkTokenKind __fastcall FuncTypeScoped();
 	TtkTokenKind __fastcall FuncType();
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AddressOpProc();
 	void __fastcall AsciiCharProc();
@@ -239,7 +239,7 @@ private:
 	void __fastcall NumberProc();
 	void __fastcall PointProc();
 	void __fastcall RoundOpenProc();
-	void __fastcall SemiColonProc();
+	void __fastcall SemicolonProc();
 	void __fastcall SlashProc();
 	void __fastcall SpaceProc();
 	void __fastcall StringAposProc();

@@ -29,7 +29,7 @@ __fastcall TSynEditPrintMargins::TSynEditPrintMargins()
 			FLeftHFTextIndent((double) DefLeftHFTextIndent),
 			FRightHFTextIndent((double) DefRightHFTextIndent),
 			FHFInternalMargin(DefHFInternalMargin),
-			fGutter((double) DefGutter),
+			FGutter((double) DefGutter),
 			FMirrorMargins(false),
 			FUnitSystem(usMM),
 			PLeft(0),
@@ -108,7 +108,7 @@ double __fastcall TSynEditPrintMargins::GetFooter()
 double __fastcall TSynEditPrintMargins::GetGutter()
 {
 	double result = 0.0;
-	result = ConvertFrom(fGutter);
+	result = ConvertFrom(FGutter);
 	return result;
 }
 
@@ -173,7 +173,7 @@ void __fastcall TSynEditPrintMargins::SetFooter(double Value)
 
 void __fastcall TSynEditPrintMargins::SetGutter(double Value)
 {
-	fGutter = ConvertTo(Value);
+	FGutter = ConvertTo(Value);
 }
 
 void __fastcall TSynEditPrintMargins::SetHeader(double Value)
@@ -221,11 +221,11 @@ void __fastcall TSynEditPrintMargins::InitPage(TCanvas* ACanvas, int PageNum, TS
 	if(FMirrorMargins && ((PageNum % 2) == 0))
 	{
 		PLeft = PrinterInfo->PixFromLeft(FRight);
-		PRight = PrinterInfo->PrintableWidth - PrinterInfo->PixFromRight(FLeft + fGutter);
+		PRight = PrinterInfo->PrintableWidth - PrinterInfo->PixFromRight(FLeft + FGutter);
 	}
 	else
 	{
-		PLeft = PrinterInfo->PixFromLeft(FLeft + fGutter);
+		PLeft = PrinterInfo->PixFromLeft(FLeft + FGutter);
 		PRight = PrinterInfo->PrintableWidth - PrinterInfo->PixFromRight(FRight);
 	}
 	if(LineNumbers && (!LineNumbersInMargin))
@@ -235,7 +235,7 @@ void __fastcall TSynEditPrintMargins::InitPage(TCanvas* ACanvas, int PageNum, TS
 	PHeader = PrinterInfo->PixFromTop(FHeader);
 	PFooter = PrinterInfo->PrintableHeight - PrinterInfo->PixFromBottom(FFooter);
 	PHFInternalMargin = (int) Round(PrinterInfo->YPixPrmm * FHFInternalMargin);
-	PGutter = (int) Round(PrinterInfo->XPixPrmm * fGutter);
+	PGutter = (int) Round(PrinterInfo->XPixPrmm * FGutter);
 	PRightHFTextIndent = (int) (PRight - Round(PrinterInfo->XPixPrmm * FRightHFTextIndent));
 	PLeftHFTextIndent = (int) (PLeft + Round(PrinterInfo->XPixPrmm * FLeftHFTextIndent));
 }
@@ -258,7 +258,7 @@ void __fastcall TSynEditPrintMargins::Assign(TPersistent* Source)
 		FLeftHFTextIndent = Src->FLeftHFTextIndent;
 		FRightHFTextIndent = Src->FRightHFTextIndent;
 		FHFInternalMargin = Src->FHFInternalMargin;
-		fGutter = Src->fGutter;
+		FGutter = Src->FGutter;
 		FMirrorMargins = Src->FMirrorMargins;
 		FUnitSystem = Src->FUnitSystem;
 	}
@@ -283,7 +283,7 @@ void __fastcall TSynEditPrintMargins::LoadFromStream(TStream* AStream)
 		with0->Read((void**)&FLeftHFTextIndent, (NativeInt) sizeof(FLeftHFTextIndent));
 		with0->Read((void**)&FRightHFTextIndent, (NativeInt) sizeof(FRightHFTextIndent));
 		with0->Read((void**)&FHFInternalMargin, (NativeInt) sizeof(FHFInternalMargin));
-		with0->Read((void**)&fGutter, (NativeInt) sizeof(fGutter));
+		with0->Read((void**)&FGutter, (NativeInt) sizeof(FGutter));
 		with0->Read((void**)&FMirrorMargins, (NativeInt) sizeof(FMirrorMargins));
 	}
 }
@@ -305,7 +305,7 @@ void __fastcall TSynEditPrintMargins::SaveToStream(TStream* AStream)
 		with0->Write(&FLeftHFTextIndent, (NativeInt) sizeof(FLeftHFTextIndent));
 		with0->Write(&FRightHFTextIndent, (NativeInt) sizeof(FRightHFTextIndent));
 		with0->Write(&FHFInternalMargin, (NativeInt) sizeof(FHFInternalMargin));
-		with0->Write(&fGutter, (NativeInt) sizeof(fGutter));
+		with0->Write(&FGutter, (NativeInt) sizeof(FGutter));
 		with0->Write(&FMirrorMargins, (NativeInt) sizeof(FMirrorMargins));
 	}
 }

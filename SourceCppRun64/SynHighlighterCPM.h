@@ -138,9 +138,9 @@ enum TRangeState {rsBraceComment,
 class TSynCPMSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	int fCommentLevel;
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[797/*# range 0..796*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
@@ -301,7 +301,7 @@ private:
 	TtkTokenKind __fastcall FuncWhile(int Index);
 	TtkTokenKind __fastcall FuncZerorlenstr(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall LFProc();

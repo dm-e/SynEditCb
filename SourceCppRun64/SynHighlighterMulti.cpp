@@ -35,11 +35,11 @@ __fastcall TMarker::TMarker() {}
 
 
 
-void __fastcall CheckExpression(const String expr)
+void __fastcall CheckExpression(const String Expr)
 {
 	TRegEx Parser = {};
   // will raise an exception if the expression is incorrect
-	Parser = TRegEx(expr, Synhighlightermulti__0);
+	Parser = TRegEx(Expr, Synhighlightermulti__0);
 }
 
 /* TMarker */
@@ -112,11 +112,11 @@ int __fastcall TSynMultiSyn::GetAttribCount()
 	return result;
 }
 
-TSynHighlighterAttributes* __fastcall TSynMultiSyn::getAttribute(int Index)
+TSynHighlighterAttributes* __fastcall TSynMultiSyn::GetAttribute(int Index)
 {
 	TSynHighlighterAttributes* result = nullptr;
 	int i = 0;
-	TSynCustomHighlighter* hl = nullptr;
+	TSynCustomHighlighter* HL = nullptr;
 	if(Index < Schemes->Count)
 		result = Schemes->Items[Index]->MarkerAttri;
 	else
@@ -135,16 +135,16 @@ TSynHighlighterAttributes* __fastcall TSynMultiSyn::getAttribute(int Index)
 		}
 		for(stop = Schemes->Count - 1, i = 0; i <= stop; i++)
 		{
-			hl = Schemes->Items[i]->Highlighter;
-			if(hl != nullptr)
+			HL = Schemes->Items[i]->Highlighter;
+			if(HL != nullptr)
 			{
-				if(Index < hl->AttrCount)
+				if(Index < HL->AttrCount)
 				{
-					result = hl->Attribute[Index];
+					result = HL->Attribute[Index];
 					return result;
 				}
 				else
-				Index -= hl->AttrCount;
+				Index -= HL->AttrCount;
 			}
 		}
 		result = nullptr;
@@ -155,16 +155,16 @@ TSynHighlighterAttributes* __fastcall TSynMultiSyn::getAttribute(int Index)
 TSynHighlighterAttributes* __fastcall TSynMultiSyn::GetDefaultAttribute(int Index)
 {
 	TSynHighlighterAttributes* result = nullptr;
-	TSynCustomHighlighter* hl = nullptr;
+	TSynCustomHighlighter* HL = nullptr;
 	if((CurrScheme >= 0) && (Schemes->Items[CurrScheme]->Highlighter != nullptr))
-		hl = Schemes->Items[CurrScheme]->Highlighter;
+		HL = Schemes->Items[CurrScheme]->Highlighter;
 	else
-		hl = DefaultHighlighter;
+		HL = DefaultHighlighter;
   /* the typecast to TSynMultiSyn is only necessary because the
   GetDefaultAttribute method is protected.
   And don't worry: this really works */
-	if(hl != nullptr)
-		result = ((TSynMultiSyn*) hl)->GetDefaultAttribute(Index);
+	if(HL != nullptr)
+		result = ((TSynMultiSyn*) HL)->GetDefaultAttribute(Index);
 	else
 		result = nullptr;
 	return result;
@@ -500,27 +500,27 @@ void __fastcall TSynMultiSyn::SetSampleSource(String Value)
 	fSampleSource = Value;
 }
 
-bool __fastcall TSynMultiSyn::LoadFromRegistry(HKEY RootKey, String key)
+bool __fastcall TSynMultiSyn::LoadFromRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
+	TBetterRegistry* r = nullptr;
 	int i = 0;
 	if(DefaultHighlighter != nullptr)
-		result = DefaultHighlighter->LoadFromRegistry(RootKey, key + L"\\DefaultHighlighter");
+		result = DefaultHighlighter->LoadFromRegistry(RootKey, Key + L"\\DefaultHighlighter");
 	else
 		result = false;
-	R = new TBetterRegistry();
+	r = new TBetterRegistry();
 	try
 	{
 		int stop = 0;
-		R->RootKey = RootKey;
+		r->RootKey = RootKey;
 		for(stop = Schemes->Count - 1, i = 0; i <= stop; i++)
 		{
-			if((Schemes->Items[i]->SchemeName != L"") && R->OpenKeyReadOnly(key + L"\\" + Schemes->Items[i]->SchemeName))
+			if((Schemes->Items[i]->SchemeName != L"") && r->OpenKeyReadOnly(Key + L"\\" + Schemes->Items[i]->SchemeName))
 			{
-				result = Schemes->Items[i]->MarkerAttri->LoadFromRegistry(R) && result;
-				R->CloseKey();
-				result = (Schemes->Items[i]->Highlighter != nullptr) && Schemes->Items[i]->Highlighter->LoadFromRegistry(RootKey, key + L"\\" + Schemes->Items[i]->SchemeName) && result;
+				result = Schemes->Items[i]->MarkerAttri->LoadFromRegistry(r) && result;
+				r->CloseKey();
+				result = (Schemes->Items[i]->Highlighter != nullptr) && Schemes->Items[i]->Highlighter->LoadFromRegistry(RootKey, Key + L"\\" + Schemes->Items[i]->SchemeName) && result;
 			}
 			else
 			result = false;
@@ -528,32 +528,32 @@ bool __fastcall TSynMultiSyn::LoadFromRegistry(HKEY RootKey, String key)
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
 
-bool __fastcall TSynMultiSyn::SaveToRegistry(HKEY RootKey, String key)
+bool __fastcall TSynMultiSyn::SaveToRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
+	TBetterRegistry* r = nullptr;
 	int i = 0;
 	if(DefaultHighlighter != nullptr)
-		result = DefaultHighlighter->SaveToRegistry(RootKey, key + L"\\DefaultHighlighter");
+		result = DefaultHighlighter->SaveToRegistry(RootKey, Key + L"\\DefaultHighlighter");
 	else
 		result = false;
-	R = new TBetterRegistry();
+	r = new TBetterRegistry();
 	try
 	{
 		int stop = 0;
-		R->RootKey = RootKey;
+		r->RootKey = RootKey;
 		for(stop = Schemes->Count - 1, i = 0; i <= stop; i++)
 		{
-			if((Schemes->Items[i]->SchemeName != L"") && R->OpenKey(key + L"\\" + Schemes->Items[i]->SchemeName, true))
+			if((Schemes->Items[i]->SchemeName != L"") && r->OpenKey(Key + L"\\" + Schemes->Items[i]->SchemeName, true))
 			{
-				result = Schemes->Items[i]->MarkerAttri->SaveToRegistry(R) && result;
-				R->CloseKey();
-				result = (Schemes->Items[i]->Highlighter != nullptr) && Schemes->Items[i]->Highlighter->SaveToRegistry(RootKey, key + L"\\" + Schemes->Items[i]->SchemeName) && result;
+				result = Schemes->Items[i]->MarkerAttri->SaveToRegistry(r) && result;
+				r->CloseKey();
+				result = (Schemes->Items[i]->Highlighter != nullptr) && Schemes->Items[i]->Highlighter->SaveToRegistry(RootKey, Key + L"\\" + Schemes->Items[i]->SchemeName) && result;
 			}
 			else
 			result = false;
@@ -561,7 +561,7 @@ bool __fastcall TSynMultiSyn::SaveToRegistry(HKEY RootKey, String key)
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
@@ -779,9 +779,9 @@ String __fastcall TSynMultiSyn::GetExpandedToken()
 
 /* TSchemes */
 
-__fastcall TSchemes::TSchemes(TSynMultiSyn* AOwner)
+__fastcall TSchemes::TSchemes(TSynMultiSyn* aOwner)
  : inherited(__classid(TScheme)),
-			FOwner(AOwner)
+			fOwner(aOwner)
 {
 }
 
@@ -795,7 +795,7 @@ TScheme* __fastcall TSchemes::GetItems(int Index)
 TPersistent* __fastcall TSchemes::GetOwner()
 {
 	TPersistent* result = nullptr;
-	result = FOwner;
+	result = fOwner;
 	return result;
 }
 
@@ -807,10 +807,10 @@ void __fastcall TSchemes::SetItems(int Index, TScheme* const Value)
 void __fastcall TSchemes::Update(TCollectionItem* Item)
 {
 	if(Item != nullptr)
-		FOwner->DefHighlightChange(Item);
+		fOwner->DefHighlightChange(Item);
 	else
  // pass the MultiSyn as the Sender so Editors reparse their text
-		FOwner->DefHighlightChange(FOwner);
+		fOwner->DefHighlightChange(fOwner);
 }
 
 /* TScheme */
@@ -829,9 +829,9 @@ __fastcall TScheme::TScheme(TCollection* Collection)
  : inherited(Collection),
 			fHighlighter(nullptr),
 			fMarkerAttri(nullptr),
-			FCaseSensitive(false)
+			fCaseSensitive(false)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fMarkerAttri = new TSynHighlighterAttributes(SYNS_AttrMarker, SYNS_FriendlyAttrMarker);
 	fMarkerAttri->OnChange = MarkerAttriChanged;
 	MarkerAttri->Background = (TColor) clYellow;
@@ -870,9 +870,9 @@ void __fastcall TScheme::MarkerAttriChanged(TObject* Sender)
 
 void __fastcall TScheme::SetCaseSensitive(bool Value)
 {
-	if(FCaseSensitive != Value)
+	if(fCaseSensitive != Value)
 	{
-		FCaseSensitive = Value;
+		fCaseSensitive = Value;
 		Changed(true);
 	}
 }
@@ -902,7 +902,7 @@ void __fastcall TScheme::SetHighlighter(TSynCustomHighlighter* const Value)
 	bool iAlreadyRepainted = false;
 	if(Highlighter != Value)
 	{
-		iOwner = ((TSchemes*) Collection)->FOwner;
+		iOwner = ((TSchemes*) Collection)->fOwner;
 		if((Highlighter != nullptr) && (Highlighter != iOwner))
 			iOwner->UnhookHighlighter(Highlighter);
 		fHighlighter = const_cast<TSynCustomHighlighter*>(Value);

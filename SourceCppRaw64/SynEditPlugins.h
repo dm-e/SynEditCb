@@ -92,21 +92,21 @@ class TAbstractSynPlugin : public System::Classes::TComponent
 {
 private:
 	void __fastcall SetEditor(Synedit::TCustomSynEdit* const Value);
-	Synedit::TCustomSynEdit* __fastcall GetEditors(int AIndex);
+	Synedit::TCustomSynEdit* __fastcall GetEditors(int aIndex);
 	Synedit::TCustomSynEdit* __fastcall GetEditor();
 	int __fastcall GetEditorCount();
 protected:
 	TList* fEditors;
-	virtual void __fastcall Notification(TComponent* AComponent, TOperation aOperation);
-	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* AEditor);
-	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* AEditor);
-	int __fastcall AddEditor(Synedit::TCustomSynEdit* AEditor);
-	int __fastcall RemoveEditor(Synedit::TCustomSynEdit* AEditor);
+	virtual void __fastcall Notification(TComponent* aComponent, TOperation aOperation);
+	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* aEditor);
+	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* aEditor);
+	int __fastcall AddEditor(Synedit::TCustomSynEdit* aEditor);
+	int __fastcall RemoveEditor(Synedit::TCustomSynEdit* aEditor);
 public:
 	typedef System::Classes::TComponent inherited;
 	#include "SynEditPlugins_friends.inc"
 	virtual __fastcall ~TAbstractSynPlugin();
-	__property Synedit::TCustomSynEdit* Editors[int AIndex] = { read = GetEditors };
+	__property Synedit::TCustomSynEdit* Editors[int aIndex] = { read = GetEditors };
 	__property int EditorCount = { read = GetEditorCount };
 __published:
 public:
@@ -118,8 +118,8 @@ public:
 class TAbstractSynHookerPlugin : public TAbstractSynPlugin
 {
 protected:
-	void __fastcall HookEditor(Synedit::TCustomSynEdit* AEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut aOldShortCut, TShortCut aNewShortCut);
-	void __fastcall UnHookEditor(Synedit::TCustomSynEdit* AEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut AShortCut);
+	void __fastcall HookEditor(Synedit::TCustomSynEdit* aEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut aOldShortCut, TShortCut aNewShortCut);
+	void __fastcall UnHookEditor(Synedit::TCustomSynEdit* aEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut aShortCut);
 	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData){} // = 0;
 public:
 	typedef TAbstractSynPlugin inherited;
@@ -139,11 +139,11 @@ private:
 	void __fastcall SetShortCut(const TShortCut Value);
 protected:
 	TPluginState fState;
-	Synedit::TCustomSynEdit* FCurrentEditor;
-	TShortCut FShortCut;
+	Synedit::TCustomSynEdit* fCurrentEditor;
+	TShortCut fShortCut;
 	__classmethod virtual TShortCut __fastcall DefaultShortCut();
-	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* AEditor);
-	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* AEditor);
+	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* aEditor);
+	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* aEditor);
     /**/
 	virtual void __fastcall DoExecute(){} // = 0;
 	virtual void __fastcall DoAccept(){} // = 0;
@@ -151,17 +151,17 @@ protected:
 public:
 	typedef TAbstractSynHookerPlugin inherited;
 	#include "SynEditPlugins_friends.inc"
-	__fastcall TAbstractSynSingleHookPlugin(TComponent* AOwner);
+	__fastcall TAbstractSynSingleHookPlugin(TComponent* aOwner);
 	virtual __fastcall ~TAbstractSynSingleHookPlugin();
 	__property Synedittypes::TSynEditorCommand CommandID = { read = fCommandID };
-	__property Synedit::TCustomSynEdit* CurrentEditor = { read = FCurrentEditor };
+	__property Synedit::TCustomSynEdit* CurrentEditor = { read = fCurrentEditor };
 	bool __fastcall Executing();
-	void __fastcall Execute(Synedit::TCustomSynEdit* AEditor);
-	void __fastcall accept();
+	void __fastcall Execute(Synedit::TCustomSynEdit* aEditor);
+	void __fastcall Accept();
 	void __fastcall Cancel();
 __published:
 public:
-	__property TShortCut ShortCut = { read = FShortCut, write = SetShortCut, stored = IsShortCutStored };
+	__property TShortCut ShortCut = { read = fShortCut, write = SetShortCut, stored = IsShortCutStored };
 };
 
   /* use TAbstractSynCompletion for non-visual completion */
@@ -169,7 +169,7 @@ public:
 class TAbstractSynCompletion : public TAbstractSynSingleHookPlugin
 {
 protected:
-	String FCurrentString;
+	String fCurrentString;
 	virtual void __fastcall SetCurrentString(const String Value);
 	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
 	virtual void __fastcall DoExecute();
@@ -179,12 +179,12 @@ protected:
 public:
 	typedef TAbstractSynSingleHookPlugin inherited;
 	#include "SynEditPlugins_friends.inc"
-	void __fastcall AddEditor(Synedit::TCustomSynEdit* AEditor);
-	__property String CurrentString = { read = FCurrentString, write = SetCurrentString };
-	__fastcall TAbstractSynCompletion(TComponent* AOwner);
+	void __fastcall AddEditor(Synedit::TCustomSynEdit* aEditor);
+	__property String CurrentString = { read = fCurrentString, write = SetCurrentString };
+	__fastcall TAbstractSynCompletion(TComponent* aOwner);
 };
 Synedittypes::TSynEditorCommand __fastcall NewPluginCommand();
-void __fastcall ReleasePluginCommand(Synedittypes::TSynEditorCommand ACmd);
+void __fastcall ReleasePluginCommand(Synedittypes::TSynEditorCommand aCmd);
 
 
 }  // namespace SynEditPlugins

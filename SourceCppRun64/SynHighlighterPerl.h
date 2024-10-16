@@ -162,7 +162,7 @@ enum TtkTokenKind {tkSymbol,
                    tkString,
                    tkUnknown,
                    tkVariable };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsString,
                   rsQuotedString };
 
@@ -196,7 +196,7 @@ private:
 	TtkTokenKind __fastcall FuncOperator(int Index);
 	TtkTokenKind __fastcall FuncPragma(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall CRProc();

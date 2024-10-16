@@ -203,7 +203,7 @@ enum TxtkTokenKind {xtkAdd,
 enum TRangeState {rsANil,
                   rsComment,
                   rsDocument,
-                  rsUnKnown };
+                  rsUnknown };
 
 
 //  TSynJavaSyn = class(TSynCustomHighlighter)
@@ -215,7 +215,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynJavaSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	int FRoundCount;
 	int FSquareCount;
 	TtkTokenKind FTokenID;
@@ -233,7 +233,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CommentProc();
 	void __fastcall AndSymbolProc();

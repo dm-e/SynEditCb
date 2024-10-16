@@ -114,12 +114,12 @@ int __fastcall TSynInnoSyn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynInnoSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynInnoSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -144,16 +144,16 @@ TtkTokenKind __fastcall TSynInnoSyn::IdentKind(PWideChar Maybe)
 bool __fastcall TSynInnoSyn::IsCurrentToken(const String Token)
 {
 	bool result = false;
-	int i = 0;
+	int I = 0;
 	PWideChar Temp = nullptr;
 	Temp = fToIdent;
 	if(Token.Length() == fStringLen)
 	{
 		int stop = 0;
 		result = true;
-		for(stop = fStringLen, i = 1; i <= stop; i++)
+		for(stop = fStringLen, I = 1; I <= stop; I++)
 		{
-			if(Sysutils::AnsiLowerCase(String((*Temp)))[1] != Sysutils::AnsiLowerCase(String(Token[i]))[1])
+			if(Sysutils::AnsiLowerCase(String((*Temp)))[1] != Sysutils::AnsiLowerCase(String(Token[I]))[1])
 			{
 				result = false;
 				break;
@@ -168,7 +168,7 @@ bool __fastcall TSynInnoSyn::IsCurrentToken(const String Token)
 
 __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FTokenID(tkComment),
+			fTokenID(tkComment),
 			fConstantAttri(nullptr),
 			fCommentAttri(nullptr),
 			fSectionAttri(nullptr),
@@ -182,44 +182,44 @@ __fastcall TSynInnoSyn::TSynInnoSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterinno__0;
 	fCommentAttri->Foreground = (TColor) clGray;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterinno__1;
 	fKeyAttri->Foreground = (TColor) clNavy;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
 	fConstantAttri->Style = Synhighlighterinno__2;
 	fConstantAttri->Foreground = (TColor) clTeal;
-	addAttribute(fConstantAttri);
+	AddAttribute(fConstantAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 
   //Parameters
 	fParamAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fParamAttri->Style = Synhighlighterinno__3;
 	fParamAttri->Foreground = (TColor) clOlive;
-	addAttribute(fParamAttri);
+	AddAttribute(fParamAttri);
 	fSectionAttri = new TSynHighlighterAttributes(SYNS_AttrSection, SYNS_FriendlyAttrSection);
 	fSectionAttri->Style = Synhighlighterinno__4;
 	fSectionAttri->Foreground = (TColor) clRed;
-	addAttribute(fSectionAttri);
+	AddAttribute(fSectionAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkParameter), Parameters, IsIdentChar, DoAddKeyword);
@@ -235,13 +235,13 @@ __fastcall TSynInnoSyn::~TSynInnoSyn()
 
 void __fastcall TSynInnoSyn::SymbolProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynInnoSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -253,7 +253,7 @@ void __fastcall TSynInnoSyn::EqualProc()
 // If any word has equal (=) symbol,
 // then the immediately followed text is treated as string
 // (though it does not have quotes)
-	FTokenID = tkString;
+	fTokenID = tkString;
 	do
 	{
 		++Run;
@@ -269,17 +269,17 @@ void __fastcall TSynInnoSyn::EqualProc()
 void __fastcall TSynInnoSyn::IdentProc()
 {
 	int LookAhead = 0;
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
-	if(FTokenID == tkKeyOrParameter)
+	if(fTokenID == tkKeyOrParameter)
 	{
 		LookAhead = Run;
 		while(CharInSet(fLine[LookAhead], Synhighlighterinno__5))
 			++LookAhead;
 		if(fLine[LookAhead] == L':')
-			FTokenID = tkKey;
+			fTokenID = tkKey;
 		else
-			FTokenID = tkParameter;
+			fTokenID = tkParameter;
 	}
 }
 
@@ -289,13 +289,13 @@ void __fastcall TSynInnoSyn::SectionProc()
   // if it is not column 0 mark as tkParameter and get out of here
 	if(Run > 0)
 	{
-		FTokenID = tkUnknown;
+		fTokenID = tkUnknown;
 		++Run;
 		return;
 	}
 
   // this is column 0 ok it is a Section
-	FTokenID = tkSection;
+	fTokenID = tkSection;
 	do
 	{
 		++Run;
@@ -310,19 +310,19 @@ void __fastcall TSynInnoSyn::SectionProc()
 
 void __fastcall TSynInnoSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynInnoSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynInnoSyn::NumberProc()
 {
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	do
 	{
 		++Run;
@@ -339,11 +339,11 @@ void __fastcall TSynInnoSyn::ConstantProc()
 	if(fLine[Run + 1] == L'{')
     /* '{{' is not a constant */
 	{
-		FTokenID = tkUnknown;
+		fTokenID = tkUnknown;
 		Run += 2;
 		return;
 	}
-	FTokenID = tkConstant;
+	fTokenID = tkConstant;
 	BraceLevel = 1;
 	LastOpenBrace = Low<int>();
 	do
@@ -385,7 +385,7 @@ void __fastcall TSynInnoSyn::ConstantProc()
 
 void __fastcall TSynInnoSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	do
 	{
 		++Run;
@@ -395,20 +395,20 @@ void __fastcall TSynInnoSyn::SpaceProc()
 
 void __fastcall TSynInnoSyn::SemiColonProc()
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
-	for(stop = 0, i = Run - 1; i >= stop; i--)
+	for(stop = 0, I = Run - 1; I >= stop; I--)
 	{
-		if(fLine[i] > L' ')
+		if(fLine[I] > L' ')
       // If the semicolon is not the first non-whitespace character on the
       // line, then it isn't the start of a comment.
 		{
-			FTokenID = tkUnknown;
+			fTokenID = tkUnknown;
 			++Run;
 			return;
 		}
 	}
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	do
 	{
 		++Run;
@@ -418,7 +418,7 @@ void __fastcall TSynInnoSyn::SemiColonProc()
 
 void __fastcall TSynInnoSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	do
 	{
 		++Run;
@@ -435,7 +435,7 @@ void __fastcall TSynInnoSyn::StringProc()
 void __fastcall TSynInnoSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynInnoSyn::Next()
@@ -540,7 +540,7 @@ bool __fastcall TSynInnoSyn::GetEol()
 TSynHighlighterAttributes* __fastcall TSynInnoSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkComment:
 		result = fCommentAttri;
@@ -585,14 +585,14 @@ TSynHighlighterAttributes* __fastcall TSynInnoSyn::GetTokenAttribute()
 int __fastcall TSynInnoSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 TtkTokenKind __fastcall TSynInnoSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 

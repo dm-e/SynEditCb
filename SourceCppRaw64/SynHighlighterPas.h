@@ -202,9 +202,9 @@ class TSynPasSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
 	bool fAsmStart;
-	TRangeState FRange;
+	TRangeState fRange;
 	TIdentFuncTableFunc fIdentFuncTable[641/*# range 0..640*/];
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fCharAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -263,7 +263,7 @@ private:
 	TtkTokenKind __fastcall FuncWriteonly(int Index);
 	TtkTokenKind __fastcall FuncType(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AddressOpProc();
 	void __fastcall AsciiCharProc();
@@ -280,7 +280,7 @@ private:
 	void __fastcall NumberProc();
 	void __fastcall PointProc();
 	void __fastcall RoundOpenProc();
-	void __fastcall SemiColonProc();
+	void __fastcall SemicolonProc();
 	void __fastcall SlashProc();
 	void __fastcall SpaceProc();
 	void __fastcall StringProc();

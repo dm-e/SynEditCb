@@ -281,12 +281,12 @@ protected:
 	virtual HFONT __fastcall InternalCreateFont(TFontStyles Style);
 	virtual int __fastcall GetCharAdvance();
 	virtual int __fastcall GetCharHeight();
-	virtual PheFontData __fastcall GetFontData(int Idx);
+	virtual PheFontData __fastcall GetFontData(int idx);
 	void __fastcall UseFontHandles();
 	void __fastcall ReleaseFontsInfo();
 	virtual void __fastcall SetBaseFont(TFont* Value);
 	virtual void __fastcall SetStyle(TFontStyles Value);
-	__property PheFontData FontData[int Idx] = { read = GetFontData };
+	__property PheFontData FontData[int idx] = { read = GetFontData };
 	__property PheSharedFontsInfo FontsInfo = { read = FpInfo };
 public:
 	__classmethod virtual int __fastcall CalcFontAdvance(HDC DC, PInteger pCharHeight);
@@ -359,7 +359,7 @@ protected:
 	virtual void __fastcall AfterStyleSet();
 	virtual void __fastcall DoSetCharExtra(int Value);
 	void __fastcall FlushCharABCWidthCache();
-	bool __fastcall GetCachedABCWidth(unsigned int C, TABC& ABC);
+	bool __fastcall GetCachedABCWidth(unsigned int c, TABC& abc);
 	__property HDC StockDC = { read = FDC };
 	__property int DrawingCount = { read = FDrawingCount };
 	__property TheFontStock* FontStock = { read = FFontStock };

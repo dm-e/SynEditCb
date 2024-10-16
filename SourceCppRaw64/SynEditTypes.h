@@ -173,14 +173,14 @@ struct TDisplayCoord
 {
 	int Column;
 	int Row;
-	friend bool __fastcall operator == (const TDisplayCoord& A, const TDisplayCoord& B);
-	friend bool __fastcall operator != (const TDisplayCoord& A, const TDisplayCoord& B);
-	friend bool __fastcall operator < (const TDisplayCoord& A, const TDisplayCoord& B);
-	friend bool __fastcall operator <= (const TDisplayCoord& A, const TDisplayCoord& B);
-	friend bool __fastcall operator > (const TDisplayCoord& A, const TDisplayCoord& B);
-	friend bool __fastcall operator >= (const TDisplayCoord& A, const TDisplayCoord& B);
-	static TDisplayCoord __fastcall Min(const TDisplayCoord& A, const TDisplayCoord& B);
-	static TDisplayCoord __fastcall Max(const TDisplayCoord& A, const TDisplayCoord& B);
+	friend bool __fastcall operator == (const TDisplayCoord& a, const TDisplayCoord& b);
+	friend bool __fastcall operator != (const TDisplayCoord& a, const TDisplayCoord& b);
+	friend bool __fastcall operator < (const TDisplayCoord& a, const TDisplayCoord& b);
+	friend bool __fastcall operator <= (const TDisplayCoord& a, const TDisplayCoord& b);
+	friend bool __fastcall operator > (const TDisplayCoord& a, const TDisplayCoord& b);
+	friend bool __fastcall operator >= (const TDisplayCoord& a, const TDisplayCoord& b);
+	static TDisplayCoord __fastcall Min(const TDisplayCoord& a, const TDisplayCoord& b);
+	static TDisplayCoord __fastcall Max(const TDisplayCoord& a, const TDisplayCoord& b);
 };
 
   /*  Helper methods for TControl - for backwward compatibility */
@@ -195,14 +195,14 @@ String __fastcall LineBreakFromFileFormat(TSynEditFileFormat FileFormat);
     // conversion methods
 __interface ISynEditBufferPlugin
 {
-	virtual TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& APos) = 0;
-	virtual TBufferCoord __fastcall DisplayToBufferPos(const TDisplayCoord& APos) = 0;
+	virtual TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& aPos) = 0;
+	virtual TBufferCoord __fastcall DisplayToBufferPos(const TDisplayCoord& aPos) = 0;
 	virtual int __fastcall RowCount() = 0;
-	virtual int __fastcall GetRowLength(int ARow) = 0;
+	virtual int __fastcall GetRowLength(int aRow) = 0;
     // plugin notifications
-	virtual int __fastcall LinesInserted(int AIndex, int ACount) = 0;
-	virtual int __fastcall LinesDeleted(int AIndex, int ACount) = 0;
-	virtual int __fastcall LinePut(int AIndex, const String OldLine) = 0;
+	virtual int __fastcall LinesInserted(int aIndex, int aCount) = 0;
+	virtual int __fastcall LinesDeleted(int aIndex, int aCount) = 0;
+	virtual int __fastcall LinePut(int aIndex, const String OldLine) = 0;
     // font or size change
 	virtual void __fastcall DisplayChanged() = 0;
     // pretty clear, heh?

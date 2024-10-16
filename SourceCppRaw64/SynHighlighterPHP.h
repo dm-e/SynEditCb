@@ -172,7 +172,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynPHPSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[439/*# range 0..438*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
@@ -187,7 +187,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall CRProc();

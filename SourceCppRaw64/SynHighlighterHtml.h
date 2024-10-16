@@ -411,10 +411,10 @@ class TSynHTMLSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
 	int fAndCode;
-	TRangeState FRange;
+	TRangeState fRange;
 //    fIdentFuncTable: array[0..1542] of TIdentFuncTableFunc;
 	TIdentFuncTableFunc fIdentFuncTable[2179/*# range 0..2178*/];
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fAndAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
@@ -427,7 +427,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall TextProc();
 	void __fastcall CommentProc();

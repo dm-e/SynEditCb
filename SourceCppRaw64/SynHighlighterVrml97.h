@@ -225,7 +225,7 @@ enum TRangeState {rsNormalText,
 class TSynVrml97Syn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	bool isDoctype;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
@@ -258,7 +258,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall AndSymbolProc();
 	void __fastcall CommentProc();
 	void __fastcall DiesisCommentProc();

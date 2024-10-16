@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace Synunicode;
-using namespace System;
 using namespace System::Regularexpressions;
 using namespace System::Regularexpressionsapi;
 using namespace System::Regularexpressionscore;
@@ -112,7 +111,7 @@ int __fastcall TSynEditRegexSearch::GetLength(int Index)
 String __fastcall TSynEditRegexSearch::GetPattern()
 {
 	String result;
-	result = FPattern;
+	result = fPattern;
 	return result;
 }
 
@@ -136,14 +135,14 @@ void __fastcall TSynEditRegexSearch::SetOptions(const TSynSearchOptions Value)
 		fOptions = Syneditregexsearch__3;
 	else
 		fOptions = Syneditregexsearch__4;
-	RegEx = TRegEx(FPattern, fOptions);
+	RegEx = TRegEx(fPattern, fOptions);
 	TRegExHelper(RegEx).SetAdditionalPCREOptions(PCRE_UCP);
 }
 
 void __fastcall TSynEditRegexSearch::SetPattern(const String Value)
 {
-	FPattern = Value;
-	RegEx = TRegEx(FPattern, fOptions);
+	fPattern = Value;
+	RegEx = TRegEx(fPattern, fOptions);
 	TRegExHelper(RegEx).SetAdditionalPCREOptions(PCRE_UCP);
 }
 

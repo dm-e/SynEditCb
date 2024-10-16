@@ -22,7 +22,7 @@ namespace Synhighlighterhaskell
 #define Synhighlighterhaskell__4 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
-const String Keywords[24/*# range 0..23*/] = {L"Bool", L"Char", L"class", L"data", L"deriving", L"Double", L"else", L"False", L"Float", L"if", L"import", L"in"
+const String KeyWords[24/*# range 0..23*/] = {L"Bool", L"Char", L"class", L"data", L"deriving", L"Double", L"else", L"False", L"Float", L"if", L"import", L"in"
                     , L"instance", L"Int", L"Integer", L"IO", L"let", L"module", L"otherwise", L"String", L"then", L"True", L"type", L"where"};
 const int KeyIndices[29/*# range 0..28*/] = {2, 23, 10, 16, 7, -1, 22, 8, 14, 17, 5, 4, 11, -1, 1, 9, 12, 0, -1, 6, -1, 3, 15, 18, 20, -1, 13, 19, 21};
 
@@ -43,14 +43,14 @@ unsigned int __fastcall TSynHaskellSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynHaskellSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynHaskellSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 28 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 28 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -82,7 +82,7 @@ TtkTokenKind __fastcall TSynHaskellSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynHaskellSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -92,7 +92,7 @@ TtkTokenKind __fastcall TSynHaskellSyn::KeyWordFunc(int Index)
 __fastcall TSynHaskellSyn::TSynHaskellSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkComment),
 			FExtTokenID(xtkAdd),
 			fCommentAttri(nullptr),
@@ -103,26 +103,26 @@ __fastcall TSynHaskellSyn::TSynHaskellSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterhaskell__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterhaskell__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	fDefaultFilter = SYNS_FilterHaskell;
 } /* Create */
 
@@ -157,18 +157,18 @@ void __fastcall TSynHaskellSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				if(FRange == rsAnsiCAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiCAsm)
+					fRange = rsAsm;
 				else
 				{
-					if(FRange == rsAnsiCAsmBlock)
-						FRange = rsAsmBlock;
+					if(fRange == rsAnsiCAsmBlock)
+						fRange = rsAsmBlock;
 					else
 					{
-						if(FRange == rsDirectiveComment)
-							FRange = rsDirective;
+						if(fRange == rsDirectiveComment)
+							fRange = rsDirective;
 						else
-							FRange = rsUnKnown;
+							fRange = rsUnknown;
 					}
 				}
 				goto label0;
@@ -243,8 +243,8 @@ void __fastcall TSynHaskellSyn::BraceCloseProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkBraceClose;
-	if(FRange == rsAsmBlock)
-		FRange = rsUnKnown;
+	if(fRange == rsAsmBlock)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynHaskellSyn::BraceOpenProc()
@@ -252,9 +252,9 @@ void __fastcall TSynHaskellSyn::BraceOpenProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkBraceOpen;
-	if(FRange == rsAsm)
+	if(fRange == rsAsm)
 	{
-		FRange = rsAsmBlock;
+		fRange = rsAsmBlock;
 		fAsmStart = true;
 	}
 }
@@ -617,8 +617,8 @@ void __fastcall TSynHaskellSyn::SemiColonProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkSemiColon;
-	if(FRange == rsAsm)
-		FRange = rsUnKnown;
+	if(fRange == rsAsm)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynHaskellSyn::SlashProc()
@@ -738,7 +738,7 @@ void __fastcall TSynHaskellSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsiC:
 		case rsAnsiCAsm:
@@ -747,7 +747,7 @@ void __fastcall TSynHaskellSyn::Next()
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 			switch(fLine[Run])
 			{
 				case L'&':
@@ -906,7 +906,7 @@ bool __fastcall TSynHaskellSyn::GetEol()
 void* __fastcall TSynHaskellSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -966,15 +966,15 @@ int __fastcall TSynHaskellSyn::GetTokenKind()
 
 void __fastcall TSynHaskellSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynHaskellSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
-void __fastcall TSynHaskellSyn::EnumUserSettings(TStrings* Settings)
+void __fastcall TSynHaskellSyn::EnumUserSettings(TStrings* settings)
 {
 
   /* returns the user settings that exist in the registry */
@@ -988,7 +988,7 @@ void __fastcall TSynHaskellSyn::EnumUserSettings(TStrings* Settings)
 			{
 				try
 				{
-					with0->GetKeyNames(Settings);
+					with0->GetKeyNames(settings);
 				}
 				__finally
 				{

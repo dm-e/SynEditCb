@@ -81,9 +81,9 @@ int __fastcall LoadDFMFile2Strings(const String AFile, TStrings* AStrings, bool&
 			delete Src;
 		}
 	}
-	catch(EInOutError* e)
+	catch(EInOutError* E)
 	{
-		result = -e->ErrorCode;
+		result = -E->ErrorCode;
 	}
 	catch(...)
 	{
@@ -120,9 +120,9 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile)
 			delete Src;
 		}
 	}
-	catch(EInOutError* e)
+	catch(EInOutError* E)
 	{
-		result = -e->ErrorCode;
+		result = -E->ErrorCode;
 	}
 	catch(...)
 	{
@@ -135,7 +135,7 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile)
 
 __fastcall TSynDfmSyn::TSynDfmSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -145,23 +145,23 @@ __fastcall TSynDfmSyn::TSynDfmSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterdfm__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	fKeyAttri->Style = Synhighlighterdfm__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterDFM;
 }
@@ -189,13 +189,13 @@ void __fastcall TSynDfmSyn::AsciiCharProc()
 void __fastcall TSynDfmSyn::BraceCloseProc()
 {
 	++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	FTokenID = tkIdentifier;
 }
 
 void __fastcall TSynDfmSyn::BraceOpenProc()
 {
-	FRange = rsComment;
+	fRange = rsComment;
 	CommentProc();
 }
 
@@ -208,7 +208,7 @@ void __fastcall TSynDfmSyn::CommentProc()
 		if(fLine[Run] == L'}')
 		{
 			++Run;
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			break;
 		}
 	}
@@ -377,7 +377,7 @@ void __fastcall TSynDfmSyn::UnknownProc()
 void __fastcall TSynDfmSyn::Next()
 {
 	fTokenPos = Run;
-	if(FRange == rsComment)
+	if(fRange == rsComment)
 	{
 		if(fLine[Run] == L'\x00')
 			NullProc();
@@ -502,7 +502,7 @@ bool __fastcall TSynDfmSyn::GetEol()
 void* __fastcall TSynDfmSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -558,12 +558,12 @@ int __fastcall TSynDfmSyn::GetTokenKind()
 
 void __fastcall TSynDfmSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynDfmSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynDfmSyn::IsFilterStored()

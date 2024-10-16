@@ -18,7 +18,7 @@ namespace Synhighlightergws
 #define Synhighlightergws__2 (TSysCharSet() << '\x27' << '\\')
 
 
-const String Keywords[13/*# range 0..12*/] = {L"bool", L"break", L"char", L"do", L"else", L"false", L"for", L"if", L"int", L"return", L"string", L"true", L"while"};
+const String KeyWords[13/*# range 0..12*/] = {L"bool", L"break", L"char", L"do", L"else", L"false", L"for", L"if", L"int", L"return", L"string", L"true", L"while"};
 const int KeyIndices[13/*# range 0..12*/] = {8, 5, 11, 12, 1, 10, 0, 2, 9, 4, 6, 3, 7};
 
 /*$Q-*/
@@ -72,7 +72,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncBool(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -82,7 +82,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncBool(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncBreak(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -92,7 +92,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncBreak(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncChar(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -102,7 +102,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncChar(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncDo(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -112,7 +112,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncDo(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncElse(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -122,7 +122,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncElse(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncFalse(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -132,7 +132,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncFalse(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncFor(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -142,7 +142,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncFor(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -152,7 +152,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncInt(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -162,7 +162,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncInt(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncReturn(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -172,7 +172,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncReturn(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncString(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -182,7 +182,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncString(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncTrue(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -192,21 +192,21 @@ TtkTokenKind __fastcall TSynGWScriptSyn::FuncTrue(int Index)
 TtkTokenKind __fastcall TSynGWScriptSyn::FuncWhile(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
 	return result;
 }
 
-TtkTokenKind __fastcall TSynGWScriptSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynGWScriptSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 12 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 12 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -214,7 +214,7 @@ TtkTokenKind __fastcall TSynGWScriptSyn::IdentKind(PWideChar Maybe)
 
 __fastcall TSynGWScriptSyn::TSynGWScriptSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkComment),
 			FExtTokenID(xtkAdd),
 			fCommentAttri(nullptr),
@@ -226,7 +226,7 @@ __fastcall TSynGWScriptSyn::TSynGWScriptSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightergws__0;
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
@@ -237,14 +237,14 @@ __fastcall TSynGWScriptSyn::TSynGWScriptSyn(TComponent* AOwner)
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fCommentAttri);
-	addAttribute(fIdentifierAttri);
-	addAttribute(fInvalidAttri);
-	addAttribute(fKeyAttri);
-	addAttribute(fNumberAttri);
-	addAttribute(fSpaceAttri);
-	addAttribute(fStringAttri);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fCommentAttri);
+	AddAttribute(fIdentifierAttri);
+	AddAttribute(fInvalidAttri);
+	AddAttribute(fKeyAttri);
+	AddAttribute(fNumberAttri);
+	AddAttribute(fSpaceAttri);
+	AddAttribute(fStringAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterGWS;
@@ -281,7 +281,7 @@ void __fastcall TSynGWScriptSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 				goto label0;
 			}
 			else
@@ -354,7 +354,7 @@ void __fastcall TSynGWScriptSyn::BraceCloseProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkBraceClose;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynGWScriptSyn::BraceOpenProc()
@@ -720,7 +720,7 @@ void __fastcall TSynGWScriptSyn::SemiColonProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkSemiColon;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynGWScriptSyn::SlashProc()
@@ -738,7 +738,7 @@ void __fastcall TSynGWScriptSyn::SlashProc()
 		case L'*':
 		{
 			FTokenID = tkComment;
-			FRange = rsAnsiC;
+			fRange = rsAnsiC;
 			Run += 2;
 			while(fLine[Run] != L'\x00')
 				switch(fLine[Run])
@@ -747,7 +747,7 @@ void __fastcall TSynGWScriptSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						FRange = rsUnKnown;
+						fRange = rsUnKnown;
 						goto label4;
 					}
 					else
@@ -900,14 +900,14 @@ void __fastcall TSynGWScriptSyn::UnknownProc()
 void __fastcall TSynGWScriptSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsiC:
 		AnsiCProc();
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			switch(fLine[Run])
 			{
 				case L'&':
@@ -1039,7 +1039,7 @@ bool __fastcall TSynGWScriptSyn::GetEol()
 void* __fastcall TSynGWScriptSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1102,12 +1102,12 @@ int __fastcall TSynGWScriptSyn::GetTokenKind()
 
 void __fastcall TSynGWScriptSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynGWScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynGWScriptSyn::IsFilterStored()

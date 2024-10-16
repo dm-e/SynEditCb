@@ -214,8 +214,8 @@ enum TRangeState {rsAposAttrValue,
 class TSynXMLSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fElementAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fTextAttri;

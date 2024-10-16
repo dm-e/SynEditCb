@@ -82,7 +82,7 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
 
   // List of keywords
 	const int KEYWORDCOUNT = 29;
-	const String Keywords[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
+	const String KEYWORDS[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
                     , L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
                     , L"while", L"yield"};
 
@@ -102,7 +102,7 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
 		GlobalKeywords = new TStringList();
 		for(stop = KEYWORDCOUNT, f = 1; f <= stop; f++)
 		{
-			GlobalKeywords->AddObject(Keywords[f - 1], ((TObject*) ((void*) int(tkKey))));
+			GlobalKeywords->AddObject(KEYWORDS[f - 1], ((TObject*) ((void*) int(tkKey))));
 		}
 		for(stop = NONKEYWORDCOUNT, f = 1; f <= stop; f++)
 		{
@@ -113,26 +113,26 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
 	return result;
 }
 
-TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	int i = 0;
-	PWideChar Temp = nullptr;
+	PWideChar temp = nullptr;
 	String s;
   // Extract the identifier out - it is assumed to terminate in a
   //   non-alphanumeric character
-	fToIdent = Maybe;
-	Temp = Maybe;
-	while(IsIdentChar((*Temp)))
-		++Temp;
-	fStringLen = Temp - fToIdent;
+	fToIdent = MayBe;
+	temp = MayBe;
+	while(IsIdentChar((*temp)))
+		++temp;
+	fStringLen = temp - fToIdent;
 
   // Check to see if it is a keyword
 	SetString(s, fToIdent, fStringLen);
-	if(fKeywords->Find(s, i))
+	if(FKeywords->Find(s, i))
     // TStringList is not case sensitive!
 	{
-		if(s != fKeywords->Strings[i])
+		if(s != FKeywords->Strings[i])
 			i = -1;
 	}
 	else
@@ -140,10 +140,10 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
 	if(i != -1)
 
   // Check if it is a system identifier (__*__)
-		result = (TtkTokenKind) (NativeInt) fKeywords->Objects[i];
+		result = (TtkTokenKind) (NativeInt) FKeywords->Objects[i];
 	else
 	{
-		if((fStringLen >= 5) && (Maybe[0] == L'_') && (Maybe[1] == L'_') && (Maybe[2] != L'_') && (Maybe[fStringLen - 1] == L'_') && (Maybe[fStringLen - 2] == L'_') && (Maybe[fStringLen - 3] != L'_'))
+		if((fStringLen >= 5) && (MayBe[0] == L'_') && (MayBe[1] == L'_') && (MayBe[2] != L'_') && (MayBe[fStringLen - 1] == L'_') && (MayBe[fStringLen - 2] == L'_') && (MayBe[fStringLen - 3] != L'_'))
 
   // Else, hey, it is an ordinary run-of-the-mill identifier!
 			result = tkSystemDefined;
@@ -156,9 +156,9 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar Maybe)
 __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fStringStarter(L'\0'),
-			FRange(rsANil),
+			fRange(rsANil),
 			FTokenID(tkComment),
-			fKeywords(nullptr),
+			FKeywords(nullptr),
 			fStringAttri(nullptr),
 			fDocStringAttri(nullptr),
 			fNumberAttri(nullptr),
@@ -174,65 +174,65 @@ __fastcall TSynPythonSyn::TSynPythonSyn(TComponent* AOwner)
 			fSpaceAttri(nullptr),
 			fErrorAttri(nullptr)
 {
-	FCaseSensitive = true;
-	fKeywords = new TStringList();
-	fKeywords->Sorted = true;
-	fKeywords->Duplicates = System::Types::dupError;
-	fKeywords->Assign(GetKeywordIdentifiers());
+	fCaseSensitive = true;
+	FKeywords = new TStringList();
+	FKeywords->Sorted = true;
+	FKeywords->Duplicates = System::Types::dupError;
+	FKeywords->Assign(GetKeywordIdentifiers());
 
 //++ CodeFolding
 	BlockOpenerRE = TRegEx(L"^(def|class|while|for|if|else|elif|try|except|with"
 	           L"|(async[ \\t]+def)|(async[ \\t]+with)|(async[ \\t]+for))\\b");
 //-- CodeFolding
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clGray;
 	fCommentAttri->Style = Synhighlighterpython__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterpython__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNonKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
 	fNonKeyAttri->Foreground = (TColor) clNavy;
 	fNonKeyAttri->Style = Synhighlighterpython__2;
-	addAttribute(fNonKeyAttri);
+	AddAttribute(fNonKeyAttri);
 	fSystemAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
 	fSystemAttri->Style = Synhighlighterpython__3;
-	addAttribute(fSystemAttri);
+	AddAttribute(fSystemAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
 	fHexAttri->Foreground = (TColor) clBlue;
-	addAttribute(fHexAttri);
+	AddAttribute(fHexAttri);
 	fOctalAttri = new TSynHighlighterAttributes(SYNS_AttrOctal, SYNS_FriendlyAttrOctal);
 	fOctalAttri->Foreground = (TColor) clBlue;
-	addAttribute(fOctalAttri);
+	AddAttribute(fOctalAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
 	fFloatAttri->Foreground = (TColor) clBlue;
-	addAttribute(fFloatAttri);
+	AddAttribute(fFloatAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fDocStringAttri = new TSynHighlighterAttributes(SYNS_AttrDocumentation, SYNS_FriendlyAttrDocumentation);
 	fDocStringAttri->Foreground = (TColor) clTeal;
-	addAttribute(fDocStringAttri);
+	AddAttribute(fDocStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
 	fErrorAttri->Foreground = (TColor) clRed;
-	addAttribute(fErrorAttri);
+	AddAttribute(fErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterPython;
 } /* Create */
 
 __fastcall TSynPythonSyn::~TSynPythonSyn()
 {
-	delete fKeywords;
+	delete FKeywords;
 	// inherited;
 }
 
@@ -334,13 +334,13 @@ void __fastcall TSynPythonSyn::NumberProc()
                    nsHex,
                    nsOct,
                    nsExpFound };
-	WideChar Temp = L'\0';
+	WideChar temp = L'\0';
 	TNumberState State = nsStart;
 
 	auto CheckSpecialCases = [&]() -> bool 
 	{
 		bool result = false;
-		switch(Temp)
+		switch(temp)
 		{
 			case L'.':
       // Look for dot (.)
@@ -371,9 +371,9 @@ void __fastcall TSynPythonSyn::NumberProc()
       // Look for zero (0)
 			case L'0':
 			{
-				Temp = fLine[Run];
+				temp = fLine[Run];
         // 0x123ABC
-				if(CharInSet(Temp, Synhighlighterpython__5))
+				if(CharInSet(temp, Synhighlighterpython__5))
 				{
 					++Run;
 					FTokenID = tkHex;
@@ -382,7 +382,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(Temp == L'.')
+					if(temp == L'.')
 					{
 						++Run;
 						State = nsDotFound;
@@ -390,11 +390,11 @@ void __fastcall TSynPythonSyn::NumberProc()
 					}
 					else
 					{
-						if(CharInSet(Temp, Synhighlighterpython__6))
+						if(CharInSet(temp, Synhighlighterpython__6))
 						{
 							++Run;
           // 0123 or 0123.45
-							if(CharInSet(Temp, Synhighlighterpython__7))
+							if(CharInSet(temp, Synhighlighterpython__7))
 							{
 								FTokenID = tkOct;
 								State = nsOct;
@@ -465,21 +465,21 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1234
-		if(CharInSet(Temp, Synhighlighterpython__10))
+		if(CharInSet(temp, Synhighlighterpython__10))
 		{
 			result = true;
     //123e4
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__11))
+			if(CharInSet(temp, Synhighlighterpython__11))
 			{
 				result = HandleExponent();
     // 123.45j
 			}
 			else
 			{
-				if(CharInSet(Temp, Synhighlighterpython__12))
+				if(CharInSet(temp, Synhighlighterpython__12))
 				{
 					++Run;
 					FTokenID = tkFloat;
@@ -488,14 +488,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(Temp == L'.')
+					if(temp == L'.')
 					{
 						result = HandleDot();
     // Error!
 					}
 					else
 					{
-						if(IsIdentChar(Temp))
+						if(IsIdentChar(temp))
 						{
 							result = HandleBadNumber();
     // End of number
@@ -515,21 +515,21 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1.0e4
-		if(CharInSet(Temp, Synhighlighterpython__13))
+		if(CharInSet(temp, Synhighlighterpython__13))
 		{
 			result = HandleExponent();
     // 123.45
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__14))
+			if(CharInSet(temp, Synhighlighterpython__14))
 			{
 				result = true;
     // 123.45j
 			}
 			else
 			{
-				if(CharInSet(Temp, Synhighlighterpython__15))
+				if(CharInSet(temp, Synhighlighterpython__15))
 				{
 					++Run;
 					result = false;
@@ -537,7 +537,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(Temp == L'.')
+					if(temp == L'.')
 					{
 						result = false;
 						if(HandleDot())
@@ -546,7 +546,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 					}
 					else
 					{
-						if(IsIdentChar(Temp))
+						if(IsIdentChar(temp))
 						{
 							result = HandleBadNumber();
     // End of number
@@ -566,28 +566,28 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 091.0e4
-		if(CharInSet(Temp, Synhighlighterpython__16))
+		if(CharInSet(temp, Synhighlighterpython__16))
 		{
 			result = HandleExponent();
     // 0912345
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__17))
+			if(CharInSet(temp, Synhighlighterpython__17))
 			{
 				result = true;
     // 09123.45
 			}
 			else
 			{
-				if(Temp == L'.')
+				if(temp == L'.')
 				{
 					result = HandleDot() || HandleBadNumber(); // Bad octal
     // 09123.45j
 				}
 				else
 				{
-					if(CharInSet(Temp, Synhighlighterpython__18))
+					if(CharInSet(temp, Synhighlighterpython__18))
 					{
 						++Run;
 						result = false;
@@ -607,14 +607,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 0x123ABC
-		if(CharInSet(Temp, Synhighlighterpython__19))
+		if(CharInSet(temp, Synhighlighterpython__19))
 		{
 			result = true;
     // 0x123ABCL
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__20))
+			if(CharInSet(temp, Synhighlighterpython__20))
 			{
 				++Run;
 				result = false;
@@ -622,7 +622,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 			}
 			else
 			{
-				if(Temp == L'.')
+				if(temp == L'.')
 				{
 					result = false;
 					if(HandleDot())
@@ -631,7 +631,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(IsIdentChar(Temp))
+					if(IsIdentChar(temp))
 					{
 						result = HandleBadNumber();
     // End of number
@@ -650,9 +650,9 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 012345
-		if(CharInSet(Temp, Synhighlighterpython__21))
+		if(CharInSet(temp, Synhighlighterpython__21))
 		{
-			if(!CharInSet(Temp, Synhighlighterpython__22))
+			if(!CharInSet(temp, Synhighlighterpython__22))
 			{
 				State = nsFloatNeeded;
 				FTokenID = tkFloat;
@@ -662,7 +662,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__23))
+			if(CharInSet(temp, Synhighlighterpython__23))
 			{
 				++Run;
 				result = false;
@@ -670,14 +670,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 			}
 			else
 			{
-				if(CharInSet(Temp, Synhighlighterpython__24))
+				if(CharInSet(temp, Synhighlighterpython__24))
 				{
 					result = HandleExponent();
     // 0123j
 				}
 				else
 				{
-					if(CharInSet(Temp, Synhighlighterpython__25))
+					if(CharInSet(temp, Synhighlighterpython__25))
 					{
 						++Run;
 						FTokenID = tkFloat;
@@ -686,14 +686,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 					}
 					else
 					{
-						if(Temp == L'.')
+						if(temp == L'.')
 						{
 							result = HandleDot();
     // Error!
 						}
 						else
 						{
-							if(IsIdentChar(Temp))
+							if(IsIdentChar(temp))
 							{
 								result = HandleBadNumber();
     // End of number
@@ -714,14 +714,14 @@ void __fastcall TSynPythonSyn::NumberProc()
 	{
 		bool result = false;
     // 1e+123
-		if(CharInSet(Temp, Synhighlighterpython__26))
+		if(CharInSet(temp, Synhighlighterpython__26))
 		{
 			result = true;
     // 1e+123j
 		}
 		else
 		{
-			if(CharInSet(Temp, Synhighlighterpython__27))
+			if(CharInSet(temp, Synhighlighterpython__27))
 			{
 				++Run;
 				result = false;
@@ -729,7 +729,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 			}
 			else
 			{
-				if(Temp == L'.')
+				if(temp == L'.')
 				{
 					result = false;
 					if(HandleDot())
@@ -738,7 +738,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 				}
 				else
 				{
-					if(IsIdentChar(Temp))
+					if(IsIdentChar(temp))
 					{
 						result = HandleBadNumber();
     // End of number
@@ -754,7 +754,7 @@ void __fastcall TSynPythonSyn::NumberProc()
 	}; // CheckExpFound
 	State = nsStart;
 	FTokenID = tkNumber;
-	Temp = fLine[Run];
+	temp = fLine[Run];
 	++Run;
 
   // Special cases
@@ -764,7 +764,7 @@ void __fastcall TSynPythonSyn::NumberProc()
   // Use a state machine to parse numbers
 	while(true)
 	{
-		Temp = fLine[Run];
+		temp = fLine[Run];
 		switch(State)
 		{
 			case nsStart:
@@ -815,7 +815,7 @@ void __fastcall TSynPythonSyn::String2Proc()
 	{
 		FTokenID = tkTrippleQuotedString;
 		Run += 3;
-		FRange = rsMultilineString2;
+		fRange = rsMultilineString2;
 		while(fLine[Run] != L'\x00')
 		{
 			switch(fLine[Run])
@@ -840,7 +840,7 @@ void __fastcall TSynPythonSyn::String2Proc()
 				case L'\"':
 				if((fLine[Run + 1] == L'\"') && (fLine[Run + 2] == L'\"'))
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					Run += 3;
 					return;
 				}
@@ -871,7 +871,7 @@ void __fastcall TSynPythonSyn::String2Proc()
 					if(fLine[Run - 1] == L'\\')
 					{
 						fStringStarter = L'\"';
-						FRange = rsMultilineString3;
+						fRange = rsMultilineString3;
 					}
 					goto label0;
 				}
@@ -903,18 +903,18 @@ void __fastcall TSynPythonSyn::String2Proc()
 
 void __fastcall TSynPythonSyn::PreStringProc()
 {
-	WideChar Temp = L'\0';
+	WideChar temp = L'\0';
   // Handle python raw strings
   // r""
-	Temp = fLine[Run + 1];
-	if(Temp == L'\'')
+	temp = fLine[Run + 1];
+	if(temp == L'\'')
 	{
 		++Run;
 		StringProc();
 	}
 	else
 	{
-		if(Temp == L'\"')
+		if(temp == L'\"')
 		{
 			++Run;
 			String2Proc();
@@ -950,7 +950,7 @@ void __fastcall TSynPythonSyn::StringProc()
 	{
 		FTokenID = tkTrippleQuotedString;
 		Run += 3;
-		FRange = rsMultiLineString;
+		fRange = rsMultilineString;
 		while(fLine[Run] != L'\x00')
 		{
 			switch(fLine[Run])
@@ -975,7 +975,7 @@ void __fastcall TSynPythonSyn::StringProc()
 				case L'\x27':
 				if((fLine[Run + 1] == L'\x27') && (fLine[Run + 2] == L'\x27'))
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					Run += 3;
 					return;
 				}
@@ -1006,7 +1006,7 @@ void __fastcall TSynPythonSyn::StringProc()
 					if(fLine[Run - 1] == L'\\')
 					{
 						fStringStarter = L'\x27';
-						FRange = rsMultilineString3;
+						fRange = rsMultilineString3;
 					}
 					goto label1;
 				}
@@ -1040,7 +1040,7 @@ void __fastcall TSynPythonSyn::StringProc()
 void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 {
 	int fBackslashCount = 0;
-	if(FRange == rsMultilineString3)
+	if(fRange == rsMultilineString3)
 		FTokenID = tkString;
 	else
 		FTokenID = tkTrippleQuotedString;
@@ -1065,14 +1065,14 @@ void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 		  ;
 		break;
 	}
-	if(FRange == rsMultilineString3)
+	if(fRange == rsMultilineString3)
 	{
 		do
 		{
 			if(fLine[Run] == fStringStarter)
 			{
 				++Run;
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 				return;
 			}
 			else
@@ -1095,7 +1095,7 @@ void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 		while(!IsLineEnd(Run));
 		if(fLine[Run - 1] != L'\\')
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnKnown;
 			return;
 		}
 	}
@@ -1117,7 +1117,7 @@ void __fastcall TSynPythonSyn::StringEndProc(WideChar EndChar)
 			if((fLine[Run] == EndChar) && (fLine[Run + 1] == EndChar) && (fLine[Run + 2] == EndChar))
 			{
 				Run += 3;
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 				return;
 			}
 			++Run;
@@ -1135,9 +1135,9 @@ void __fastcall TSynPythonSyn::UnknownProc()
 void __fastcall TSynPythonSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
-		case rsMultiLineString:
+		case rsMultilineString:
 		StringEndProc(L'\x27');
 		break;
 		case rsMultilineString2:
@@ -1272,7 +1272,7 @@ bool __fastcall TSynPythonSyn::GetEol()
 void* __fastcall TSynPythonSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1346,7 +1346,7 @@ int __fastcall TSynPythonSyn::GetTokenKind()
 
 void __fastcall TSynPythonSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 //++ CodeFolding
@@ -1415,18 +1415,18 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 	auto LeftSpaces = [&]() -> int 
 	{
 		int result = 0;
-		PWideChar P = nullptr;
-		P = ustr2pwchar(CurLine);
-		if(ASSIGNED(P))
+		PWideChar p = nullptr;
+		p = ustr2pwchar(CurLine);
+		if(ASSIGNED(p))
 		{
 			result = 0;
-			while(((*P) >= L'\x01') && ((*P) <= L'\x20'))
+			while(((*p) >= L'\x01') && ((*p) <= L'\x20'))
 			{
-				if((*P) == L'\x09')
+				if((*p) == L'\x09')
 					result += TabW;
 				else
 					++result;
-				++P;
+				++p;
 			}
 		}
 		else
@@ -1437,7 +1437,7 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 	__int64 stop = 0;
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
-		if(IsMultiLineString((int) Line, rsMultiLineString, true) || IsMultiLineString((int) Line, rsMultilineString2, true) || IsMultiLineString((int) Line, rsMultilineString3, false))
+		if(IsMultiLineString((int) Line, rsMultilineString, true) || IsMultiLineString((int) Line, rsMultilineString2, true) || IsMultiLineString((int) Line, rsMultilineString3, false))
 			continue;
 
     // Find Fold regions
@@ -1483,7 +1483,7 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 
 void __fastcall TSynPythonSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynPythonSyn::IsFilterStored()

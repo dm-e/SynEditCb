@@ -87,7 +87,7 @@ namespace Syneditwildcardsearch
 class TSynEditWildcardSearch : public Syneditregexsearch::TSynEditRegexSearch
 {
 private:
-	UnicodeString FPattern;
+	UnicodeString fPattern;
 protected:
 	virtual UnicodeString __fastcall GetPattern();
 	virtual void __fastcall SetPattern(const UnicodeString Value);

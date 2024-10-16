@@ -50,8 +50,8 @@ The SynHighlighterEnhCSS unit provides SynEdit with an improved CSS highlighter.
 http://www.ashleybrown.co.uk/
 ashley@ashleybrown.co.uk
 */
-#ifndef SynHighlighterCssH
-#define SynHighlighterCssH
+#ifndef SynHighlighterCSSH
+#define SynHighlighterCSSH
 
 #include <System.hpp>
 #include "d2c_system.h"
@@ -172,7 +172,7 @@ enum TtkTokenKind {tkComment,
 enum TRangeState {rsComment,
                   rsSelector,
                   rsDeclaration,
-                  rsUnKnown,
+                  rsUnknown,
                   rsProperty,
                   rsValue,
                   rsAttrib,
@@ -181,10 +181,10 @@ enum TRangeState {rsComment,
 class TSynCssSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TRangeState fCommentRange;
 	TRangeState fParameterRange;
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fPropertyAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fAttributeAttri;
@@ -202,7 +202,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall AtRuleProc();
 	void __fastcall SelectorProc();
 	void __fastcall AttributeProc();
@@ -269,7 +269,7 @@ public:
 	__property Synedithighlighter::TSynHighlighterAttributes* ImportantPropertyAttri = { read = fImportantPropertyAttri, write = fImportantPropertyAttri };
 };
 
-void SynHighlighterCss_initialization();
+void SynHighlighterCSS_initialization();
 
 
 }  // namespace SynHighlighterCss
@@ -279,5 +279,5 @@ using namespace Synhighlightercss;
 #endif
 
 
-#endif // SynHighlighterCssH
+#endif // SynHighlighterCSSH
 

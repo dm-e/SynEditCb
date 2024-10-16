@@ -155,7 +155,7 @@ struct TRangeState
 		/*# false*/
 		struct 
 		{
-			void* P;
+			void* p;
 		};		
 		/*# true*/
 		struct 
@@ -171,14 +171,14 @@ struct TRangeState
 class TSynM3Syn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fKeyAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fPragmaAttri;
-	Synedithighlighter::TSynHighlighterAttributes* FReservedAttri;
+	Synedithighlighter::TSynHighlighterAttributes* fReservedAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
@@ -186,7 +186,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall SymAsciiCharProc();
 	void __fastcall SymCommentHelpProc();
 	void __fastcall SymCRProc();
@@ -227,7 +227,7 @@ public:
 	__property Synedithighlighter::TSynHighlighterAttributes* KeyAttri = { read = fKeyAttri, write = fKeyAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* NumberAttri = { read = fNumberAttri, write = fNumberAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* PragmaAttri = { read = fPragmaAttri, write = fPragmaAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* ReservedAttri = { read = FReservedAttri, write = FReservedAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* ReservedAttri = { read = fReservedAttri, write = fReservedAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* SpaceAttri = { read = fSpaceAttri, write = fSpaceAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* StringAttri = { read = fStringAttri, write = fStringAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* SymbolAttri = { read = fSymbolAttri, write = fSymbolAttri };

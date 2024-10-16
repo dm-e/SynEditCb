@@ -154,7 +154,7 @@ enum TRangeState {rsUnKnown,
 class TSynGalaxySyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fMessageAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
@@ -162,7 +162,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
-	TStrings* fKeywords;
+	TStrings* fKeyWords;
 	void __fastcall PointCommaProc();
 	void __fastcall CRProc();
 	void __fastcall IdentProc();
@@ -192,14 +192,14 @@ public:
 	virtual void __fastcall Next();
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
 __published:
 public:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* IdentifierAttri = { read = fIdentifierAttri, write = fIdentifierAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* KeyAttri = { read = fKeyAttri, write = fKeyAttri };
-	__property TStrings* Keywords = { read = fKeywords, write = SetKeyWords };
+	__property TStrings* KeyWords = { read = fKeyWords, write = SetKeyWords };
 	__property Synedithighlighter::TSynHighlighterAttributes* SpaceAttri = { read = fSpaceAttri, write = fSpaceAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* MessageAttri = { read = fMessageAttri, write = fMessageAttri };
 };

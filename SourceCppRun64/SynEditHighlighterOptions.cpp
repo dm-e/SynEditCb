@@ -5,7 +5,6 @@
 
 using namespace std;
 using namespace d2c_system;
-using namespace System;
 using namespace System::Classes;
 
 namespace Synedithighlighteroptions
@@ -29,7 +28,7 @@ void __fastcall TSynEditHighlighterOptions::Assign(TPersistent* Source)
 			with0->FLineCommentarStart = with0->LineCommentarStart;
 			with0->FLineCommentarEnd = with0->LineCommentarEnd;
 			with0->FTitle = with0->Title;
-			with0->fVisible = with0->Visible;
+			with0->FVisible = with0->Visible;
 		}
 	}
 }
@@ -48,7 +47,7 @@ void __fastcall TSynEditHighlighterOptions::AssignTo(TPersistent* Dest)
 			with0->LineCommentarStart = with0->FLineCommentarStart;
 			with0->LineCommentarEnd = with0->FLineCommentarEnd;
 			with0->Title = with0->FTitle;
-			with0->Visible = with0->fVisible;
+			with0->Visible = with0->FVisible;
 		}
 	}
 }

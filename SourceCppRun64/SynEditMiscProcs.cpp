@@ -25,25 +25,25 @@ namespace Syneditmiscprocs
 
 
 
-int __fastcall MinMax(int X, int mi, int ma)
+int __fastcall MinMax(int x, int mi, int ma)
 {
 	int result = 0;
-	X = Min(X, ma);
-	result = Max(X, mi);
+	x = Min(x, ma);
+	result = Max(x, mi);
 	return result;
 }
 
-void __fastcall SwapInt(int& l, int& R)
+void __fastcall SwapInt(int& l, int& r)
 {
-	int Tmp = 0;
-	Tmp = R;
-	R = l;
-	l = Tmp;
+	int tmp = 0;
+	tmp = r;
+	r = l;
+	l = tmp;
 }
 
-void __fastcall InternalFillRect(HDC DC, const TRect& rcPaint)
+void __fastcall InternalFillRect(HDC dc, const TRect& rcPaint)
 {
-	ExtTextOut(DC, 0, 0, ETO_OPAQUE, const_cast<PRect>(&rcPaint), nullptr, 0, nullptr);
+	ExtTextOut(dc, 0, 0, ETO_OPAQUE, const_cast<PRect>(&rcPaint), nullptr, 0, nullptr);
 }
 
 // Please don't change this function; no stack frame and efficient register use.
@@ -71,22 +71,22 @@ bool __fastcall GetHasTabs(PWideChar pLine, int& CharsBefore)
 String __fastcall ConvertTabs1Ex(const String Line, int TabWidth, bool& HasTabs)
 {
 	String result;
-	PWideChar PDest = nullptr;
+	PWideChar pDest = nullptr;
 	int nBeforeTab = 0;
 	result = Line; // increment reference count only
 	if(GetHasTabs(ustr2pwchar(Line), nBeforeTab))
 	{
 		HasTabs = true;
-		PDest = ustr2pwchar(result, nBeforeTab + 1 - 1); // this will make a copy of Line
+		pDest = ustr2pwchar(result, nBeforeTab + 1 - 1); // this will make a copy of Line
     // We have at least one tab in the string, and the tab width is 1.
     // pDest points to the first tab char. We overwrite all tabs with spaces.
 		do
 		{
-			if((*PDest) == L'\x09')
-				(*PDest) = L' ';
-			++PDest;
+			if((*pDest) == L'\x09')
+				(*pDest) = L' ';
+			++pDest;
 		}
-		while(!((*PDest) == L'\x00'));
+		while(!((*pDest) == L'\x00'));
 	}
 	else
 	HasTabs = false;
@@ -108,13 +108,13 @@ String __fastcall ConvertTabs2nEx(const String Line, int TabWidth, bool& HasTabs
 	int DestLen = 0;
 	int TabCount = 0;
 	int TabMask = 0;
-	PWideChar PSrc = nullptr;
-	PWideChar PDest = nullptr;
+	PWideChar pSrc = nullptr;
+	PWideChar pDest = nullptr;
 	result = Line; // increment reference count only
 	if(GetHasTabs(ustr2pwchar(Line), DestLen))
 	{
 		HasTabs = true;
-		PSrc = ustr2pwchar(Line, 1 + DestLen - 1);
+		pSrc = ustr2pwchar(Line, 1 + DestLen - 1);
     // We have at least one tab in the string, and the tab width equals 2^n.
     // pSrc points to the first tab char in Line. We get the number of tabs
     // and the length of the expanded string now.
@@ -122,34 +122,34 @@ String __fastcall ConvertTabs2nEx(const String Line, int TabWidth, bool& HasTabs
 		TabMask = (TabWidth - 1) ^ 0x7FFFFFFF;
 		do
 		{
-			if((*PSrc) == L'\x09')
+			if((*pSrc) == L'\x09')
 			{
 				DestLen = (DestLen + TabWidth) & TabMask;
 				++TabCount;
 			}
 			else
 			++DestLen;
-			++PSrc;
+			++pSrc;
 		}
-		while(!((*PSrc) == L'\x00'));
+		while(!((*pSrc) == L'\x00'));
     // Set the length of the expanded string.
 		result.SetLength(DestLen);
 		DestLen = 0;
-		PSrc = ustr2pwchar(Line);
-		PDest = ustr2pwchar(result);
+		pSrc = ustr2pwchar(Line);
+		pDest = ustr2pwchar(result);
     // We use another TabMask here to get the difference to 2^n.
 		TabMask = TabWidth - 1;
 		do
 		{
-			if((*PSrc) == L'\x09')
+			if((*pSrc) == L'\x09')
 			{
 				i = TabWidth - (DestLen & TabMask);
 				DestLen += i;
         // This is used for both drawing and other stuff and is meant to be #9 and not #32
 				do
 				{
-					(*PDest) = L'\x09';
-					++PDest;
+					(*pDest) = L'\x09';
+					++pDest;
 					--i;
 				}
 				while(!(i == 0));
@@ -158,23 +158,23 @@ String __fastcall ConvertTabs2nEx(const String Line, int TabWidth, bool& HasTabs
 				{
 					do
 					{
-						++PSrc;
-						(*PDest) = (*PSrc);
-						++PDest;
+						++pSrc;
+						(*pDest) = (*pSrc);
+						++pDest;
 					}
-					while(!((*PSrc) == L'\x00'));
+					while(!((*pSrc) == L'\x00'));
 					return result;
 				}
 			}
 			else
 			{
-				(*PDest) = (*PSrc);
-				++PDest;
+				(*pDest) = (*pSrc);
+				++pDest;
 				++DestLen;
 			}
-			++PSrc;
+			++pSrc;
 		}
-		while(!((*PSrc) == L'\x00'));
+		while(!((*pSrc) == L'\x00'));
 	}
 	else
 	HasTabs = false;
@@ -195,44 +195,44 @@ String __fastcall ConvertTabsEx(const String Line, int TabWidth, bool& HasTabs)
 	int i = 0;
 	int DestLen = 0;
 	int TabCount = 0;
-	PWideChar PSrc = nullptr;
-	PWideChar PDest = nullptr;
+	PWideChar pSrc = nullptr;
+	PWideChar pDest = nullptr;
 	result = Line; // increment reference count only
 	if(GetHasTabs(ustr2pwchar(Line), DestLen))
 	{
 		HasTabs = true;
-		PSrc = ustr2pwchar(Line, 1 + DestLen - 1);
+		pSrc = ustr2pwchar(Line, 1 + DestLen - 1);
     // We have at least one tab in the string, and the tab width is greater
     // than 1. pSrc points to the first tab char in Line. We get the number
     // of tabs and the length of the expanded string now.
 		TabCount = 0;
 		do
 		{
-			if((*PSrc) == L'\x09')
+			if((*pSrc) == L'\x09')
 			{
 				DestLen = DestLen + TabWidth - DestLen % TabWidth;
 				++TabCount;
 			}
 			else
 			++DestLen;
-			++PSrc;
+			++pSrc;
 		}
-		while(!((*PSrc) == L'\x00'));
+		while(!((*pSrc) == L'\x00'));
     // Set the length of the expanded string.
 		result.SetLength(DestLen);
 		DestLen = 0;
-		PSrc = ustr2pwchar(Line);
-		PDest = ustr2pwchar(result);
+		pSrc = ustr2pwchar(Line);
+		pDest = ustr2pwchar(result);
 		do
 		{
-			if((*PSrc) == L'\x09')
+			if((*pSrc) == L'\x09')
 			{
 				i = TabWidth - (DestLen % TabWidth);
 				DestLen += i;
 				do
 				{
-					(*PDest) = L'\x09';
-					++PDest;
+					(*pDest) = L'\x09';
+					++pDest;
 					--i;
 				}
 				while(!(i == 0));
@@ -241,23 +241,23 @@ String __fastcall ConvertTabsEx(const String Line, int TabWidth, bool& HasTabs)
 				{
 					do
 					{
-						++PSrc;
-						(*PDest) = (*PSrc);
-						++PDest;
+						++pSrc;
+						(*pDest) = (*pSrc);
+						++pDest;
 					}
-					while(!((*PSrc) == L'\x00'));
+					while(!((*pSrc) == L'\x00'));
 					return result;
 				}
 			}
 			else
 			{
-				(*PDest) = (*PSrc);
-				++PDest;
+				(*pDest) = (*pSrc);
+				++pDest;
 				++DestLen;
 			}
-			++PSrc;
+			++pSrc;
 		}
-		while(!((*PSrc) == L'\x00'));
+		while(!((*pSrc) == L'\x00'));
 	}
 	else
 	HasTabs = false;
@@ -318,12 +318,12 @@ TConvertTabsProcEx __fastcall GetBestConvertTabsProcEx(int TabWidth)
 	return result;
 }
 
-int __fastcall GetExpandedLength(const String AStr, int aTabWidth)
+int __fastcall GetExpandedLength(const String aStr, int aTabWidth)
 {
 	int result = 0;
 	PWideChar iRun = nullptr;
 	result = 0;
-	iRun = ustr2pwchar(AStr);
+	iRun = ustr2pwchar(aStr);
 	while((*iRun) != L'\x00')
 	{
 		if((*iRun) == L'\x09')
@@ -451,21 +451,21 @@ int __fastcall CaretPos2CharIndex(int Position, int TabWidth, const String Line,
 int __fastcall StrScanForCharInCategory(const String Line, int Start, TCategoryMethod IsOfCategory)
 {
 	int result = 0;
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	if((Start > 0) && (Start <= Line.Length()))
 	{
-		P = ustr2pwchar(Line, Start - 1);
+		p = ustr2pwchar(Line, Start - 1);
 		do
 		{
-			if(IsOfCategory((*P)))
+			if(IsOfCategory((*p)))
 			{
 				result = Start;
 				return result;
 			}
-			++P;
+			++p;
 			++Start;
 		}
-		while(!((*P) == L'\x00'));
+		while(!((*p) == L'\x00'));
 	}
 	result = 0;
 	return result;
@@ -491,7 +491,7 @@ int __fastcall StrRScanForCharInCategory(const String Line, int Start, TCategory
 	return result;
 }
 
-PWideChar __fastcall GetEol(PChar P)
+PWideChar __fastcall GetEOL(PChar P)
 {
 	PWideChar result = nullptr;
 	result = P;
@@ -503,14 +503,14 @@ PWideChar __fastcall GetEol(PChar P)
 	return result;
 }
 
-int __fastcall CountLines(const String s)
+int __fastcall CountLines(const String S)
 {
 	int result = 0;
 	PChar P = nullptr;
 	PChar PEnd = nullptr;
 	result = 0;
-	P = ustr2pwchar(s);
-	PEnd = P + s.Length();
+	P = ustr2pwchar(S);
+	PEnd = P + S.Length();
 	while(P < PEnd)
 
     //  We do it that way instead of checking for $0 as well
@@ -525,7 +525,7 @@ int __fastcall CountLines(const String s)
 			++P;
 	}
   // Include Empty line at the end?
-	if((s != L"") && (Syneditmiscprocs__2.Contains(((WORD) s[s.Length()]))))
+	if((S != L"") && (Syneditmiscprocs__2.Contains(((WORD) S[S.Length()]))))
 		++result;
 	return result;
 }
@@ -536,9 +536,9 @@ TArray<String> __fastcall StringToLines(const String Value)
 	TArray<String> result;
 	int Count = 0;
 	PChar P = nullptr;
-	PChar pStart = nullptr;
+	PChar PStart = nullptr;
 	PChar PEnd = nullptr;
-	String s;
+	String S;
 	P = ustr2pwchar(Value);
 	Count = CountLines(Value);
 	result.Length = Count;
@@ -546,13 +546,13 @@ TArray<String> __fastcall StringToLines(const String Value)
 	PEnd = P + Value.Length();
 	while(P < PEnd)
 	{
-		pStart = P;
+		PStart = P;
     //  We do it that way instead of checking for $0 as well
     //  so the we properly deal with strings containing #0  (who knows)
 		while((P < PEnd) && ((((WORD) (*P)) > 13) || !(Syneditmiscprocs__3.Contains(((WORD) (*P))))))
 			++P;
-		SetString(s, pStart, P - pStart);
-		result[Count] = s;
+		SetString(S, PStart, P - PStart);
+		result[Count] = S;
 		++Count;
 		if((*P) == L'\x0d')
 			++P;
@@ -739,9 +739,9 @@ bool __fastcall EnumHighlighterAttris(TSynCustomHighlighter* Highlighter, bool S
 
 void __fastcall SynDrawGradient(TCanvas* const ACanvas, const TColor AStartColor, const TColor AEndColor, int ASteps, const TRect& ARect, bool AHorizontal)
 {
-	unsigned char StartColorR = 0;
-	unsigned char StartColorG = 0;
-	unsigned char StartColorB = 0;
+	Byte StartColorR = 0;
+	Byte StartColorG = 0;
+	Byte StartColorB = 0;
 	int DiffColorR = 0;
 	int DiffColorG = 0;
 	int DiffColorB = 0;

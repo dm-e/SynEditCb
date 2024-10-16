@@ -149,7 +149,7 @@ protected:
 	virtual void __fastcall ScrollHorzTo(int Value);
 	void __fastcall ScrollVertFor(int Value);
 	virtual void __fastcall ScrollVertTo(int Value);
-	virtual void __fastcall UpdateScrollBars();
+	virtual void __fastcall UpdateScrollbars();
 	virtual void __fastcall SizeChanged();
 public:
 	typedef Vcl::Controls::TCustomControl inherited;
@@ -168,7 +168,7 @@ __published:
 public:
 	__property  Align = { default = /*# alClient */ 5 };
 	__property TBorderStyle BorderStyle = { read = FBorderStyle, write = SetBorderStyle, default = /*# bsSingle */ 1 };
-	__property  Color = { default = clAppWorkSpace };
+	__property  Color = { default = clAppWorkspace };
 	__property  Cursor;
 	__property TColor PageBGColor = { read = FPageBG, write = SetPageBG, default = clWhite };
 	__property  PopupMenu;                                                         // JD 2002-01-9

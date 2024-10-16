@@ -38,7 +38,7 @@ namespace Synhighlighterpas
 
 
   // if the language is case-insensitive keywords *must* be in lowercase
-const String Keywords[132/*# range 0..131*/] = {L"absolute", L"abstract", L"and", L"ansistring", L"array", L"as", L"asm", L"assembler", L"automated", L"begin"
+const String KeyWords[132/*# range 0..131*/] = {L"absolute", L"abstract", L"and", L"ansistring", L"array", L"as", L"asm", L"assembler", L"automated", L"begin"
                     , L"boolean", L"byte", L"bytebool", L"cardinal", L"case", L"cdecl", L"class", L"const", L"constructor", L"contains", L"currency"
                     , L"default", L"deprecated", L"destructor", L"dispid", L"dispinterface", L"div", L"do", L"double", L"downto", L"dynamic"
                     , L"else", L"end", L"except", L"export", L"exports", L"extended", L"external", L"far", L"file", L"final", L"finalization", L"finally"
@@ -81,14 +81,14 @@ unsigned int __fastcall TSynPasSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynPasSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynPasSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 640 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 640 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -176,7 +176,7 @@ TtkTokenKind __fastcall TSynPasSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynPasSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -186,10 +186,10 @@ TtkTokenKind __fastcall TSynPasSyn::KeyWordFunc(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncAsm(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsAsm;
+		fRange = rsAsm;
 		fAsmStart = true;
 	}
 	else
@@ -200,7 +200,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncAsm(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncAutomated(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -210,7 +210,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncAutomated(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncCdecl(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -220,7 +220,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncCdecl(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncContains(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(PackageSource && IsCurrentToken(Keywords[Index]))
+	if(PackageSource && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -230,7 +230,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncContains(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncDeprecated(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi6) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi6) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -240,7 +240,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncDeprecated(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncDispid(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -250,7 +250,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncDispid(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncDispinterface(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -260,10 +260,10 @@ TtkTokenKind __fastcall TSynPasSyn::FuncDispinterface(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncEnd(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 	}
 	else
 	result = tkIdentifier;
@@ -273,10 +273,10 @@ TtkTokenKind __fastcall TSynPasSyn::FuncEnd(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncExports(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsExports;
+		fRange = rsExports;
 	}
 	else
 	result = tkIdentifier;
@@ -286,7 +286,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncExports(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncFinal(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -296,7 +296,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncFinal(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncFinalization(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -306,7 +306,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncFinalization(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncHelper(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -316,7 +316,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncHelper(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncImplements(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsProperty) && (DelphiVersion >= dvDelphi4) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsProperty) && (DelphiVersion >= dvDelphi4) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -326,7 +326,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncImplements(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncIndex(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((Synhighlighterpas__0.Contains(FRange)) && IsCurrentToken(Keywords[Index]))
+	if((Synhighlighterpas__0.Contains(fRange)) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -336,7 +336,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncIndex(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncName(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsExports) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsExports) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -346,7 +346,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncName(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncNodefault(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -356,7 +356,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncNodefault(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncOperator(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -366,7 +366,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncOperator(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncOverload(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi4) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi4) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -376,7 +376,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncOverload(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncPackage(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(PackageSource && IsCurrentToken(Keywords[Index]))
+	if(PackageSource && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -386,7 +386,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncPackage(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncPlatform(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi6) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi6) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -396,10 +396,10 @@ TtkTokenKind __fastcall TSynPasSyn::FuncPlatform(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncProperty(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkKey;
-		FRange = rsProperty;
+		fRange = rsProperty;
 	}
 	else
 	result = tkIdentifier;
@@ -409,7 +409,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncProperty(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncRead(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -419,7 +419,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncRead(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncReadonly(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && (FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && (fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -429,7 +429,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncReadonly(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncReintroduce(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi4) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi4) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -439,7 +439,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncReintroduce(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncRequires(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(PackageSource && IsCurrentToken(Keywords[Index]))
+	if(PackageSource && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -449,7 +449,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncRequires(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncResourcestring(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -459,7 +459,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncResourcestring(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncSafecall(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -469,7 +469,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncSafecall(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncSealed(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi8) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -479,7 +479,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncSealed(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncStdcall(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi2) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -489,7 +489,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncStdcall(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncStored(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -499,7 +499,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncStored(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncStringresource(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -509,7 +509,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncStringresource(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncThreadvar(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -519,7 +519,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncThreadvar(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncWrite(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -529,7 +529,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncWrite(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncWriteonly(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if((DelphiVersion >= dvDelphi3) && (FRange == rsProperty) && IsCurrentToken(Keywords[Index]))
+	if((DelphiVersion >= dvDelphi3) && (fRange == rsProperty) && IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -539,7 +539,7 @@ TtkTokenKind __fastcall TSynPasSyn::FuncWriteonly(int Index)
 TtkTokenKind __fastcall TSynPasSyn::FuncType(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkType;
 	else
 		result = tkIdentifier;
@@ -549,8 +549,8 @@ TtkTokenKind __fastcall TSynPasSyn::FuncType(int Index)
 __fastcall TSynPasSyn::TSynPasSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsANil),
-			FTokenID(tkSymbol),
+			fRange(rsANil),
+			fTokenID(tkSymbol),
 			fStringAttri(nullptr),
 			fCharAttri(nullptr),
 			fNumberAttri(nullptr),
@@ -567,41 +567,41 @@ __fastcall TSynPasSyn::TSynPasSyn(TComponent* AOwner)
 			fPackageSource(false),
 			fTypeAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fDelphiVersion = LastDelphiVersion;
 	fPackageSource = true;
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
-	addAttribute(fAsmAttri);
+	AddAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterpas__1;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fDirecAttri->Style = Synhighlighterpas__2;
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterpas__3;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
-	addAttribute(fFloatAttri);
+	AddAttribute(fFloatAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
-	addAttribute(fHexAttri);
+	AddAttribute(fHexAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fCharAttri = new TSynHighlighterAttributes(SYNS_AttrCharacter, SYNS_FriendlyAttrCharacter);
-	addAttribute(fCharAttri);
+	AddAttribute(fCharAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	addAttribute(fTypeAttri);
+	AddAttribute(fTypeAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	fDefaultFilter = SYNS_FilterPascal;
 
 //++ CodeFolding
@@ -613,7 +613,7 @@ __fastcall TSynPasSyn::TSynPasSyn(TComponent* AOwner)
 
 void __fastcall TSynPasSyn::AddressOpProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(fLine[Run] == L'@')
 		++Run;
@@ -639,7 +639,7 @@ void __fastcall TSynPasSyn::AsciiCharProc()
 		}
 		return result;
 	};
-	FTokenID = tkChar;
+	fTokenID = tkChar;
 	++Run;
 	while(IsAsciiChar())
 		++Run;
@@ -660,19 +660,19 @@ void __fastcall TSynPasSyn::BorProc()
 		break;
 		default:
 		{
-			if(Synhighlighterpas__7.Contains(FRange))
-				FTokenID = tkDirec;
+			if(Synhighlighterpas__7.Contains(fRange))
+				fTokenID = tkDirec;
 			else
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 			do
 			{
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					if(Synhighlighterpas__8.Contains(FRange))
-						FRange = rsAsm;
+					if(Synhighlighterpas__8.Contains(fRange))
+						fRange = rsAsm;
 					else
-						FRange = rsUnKnown;
+						fRange = rsUnKnown;
 					break;
 				}
 				++Run;
@@ -687,24 +687,24 @@ void __fastcall TSynPasSyn::BraceOpenProc()
 {
 	if(fLine[Run + 1] == L'$')
 	{
-		if(FRange == rsAsm)
-			FRange = rsDirectiveAsm;
+		if(fRange == rsAsm)
+			fRange = rsDirectiveAsm;
 		else
-			FRange = rsDirective;
+			fRange = rsDirective;
 	}
 	else
 	{
-		if(FRange == rsAsm)
-			FRange = rsBorAsm;
+		if(fRange == rsAsm)
+			fRange = rsBorAsm;
 		else
-			FRange = rsBor;
+			fRange = rsBor;
 	}
 	BorProc();
 }
 
 void __fastcall TSynPasSyn::ColonOrGreaterProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(fLine[Run] == L'=')
 		++Run;
@@ -712,7 +712,7 @@ void __fastcall TSynPasSyn::ColonOrGreaterProc()
 
 void __fastcall TSynPasSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -720,7 +720,7 @@ void __fastcall TSynPasSyn::CRProc()
 
 void __fastcall TSynPasSyn::IdentProc()
 {
-	FTokenID = IdentKind(fLine + Run);
+	fTokenID = IdentKind(fLine + Run);
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -746,20 +746,20 @@ void __fastcall TSynPasSyn::IntegerProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkHex;
+	fTokenID = tkHex;
 	while(IsIntegerChar())
 		++Run;
 }
 
 void __fastcall TSynPasSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynPasSyn::LowerProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if((fLine[Run] == L'=') || (fLine[Run] == L'>'))
 		++Run;
@@ -767,7 +767,7 @@ void __fastcall TSynPasSyn::LowerProc()
 
 void __fastcall TSynPasSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -794,7 +794,7 @@ void __fastcall TSynPasSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -803,16 +803,16 @@ void __fastcall TSynPasSyn::NumberProc()
 			if(fLine[Run + 1] == L'.')
 				goto label0;
 			else
-				FTokenID = tkFloat;
+				fTokenID = tkFloat;
 			break;
 			case L'e':
 			case L'E':
-			FTokenID = tkFloat;
+			fTokenID = tkFloat;
 			break;
 			case L'-':
 			case L'+':
 			{
-				if(FTokenID != tkFloat)
+				if(fTokenID != tkFloat)
 					goto label1;
 				if((fLine[Run - 1] != L'e') && (fLine[Run - 1] != L'E'))
 					goto label2; //float, but it ends here
@@ -831,7 +831,7 @@ void __fastcall TSynPasSyn::NumberProc()
 
 void __fastcall TSynPasSyn::PointProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if((fLine[Run] == L'.') || (fLine[Run - 1] == L')'))
 		++Run;
@@ -851,16 +851,16 @@ void __fastcall TSynPasSyn::AnsiProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L')'))
 			{
 				Run += 2;
-				if(FRange == rsAnsiAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiAsm)
+					fRange = rsAsm;
 				else
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 				break;
 			}
 			++Run;
@@ -878,11 +878,11 @@ void __fastcall TSynPasSyn::RoundOpenProc()
 		case L'*':
 		{
 			++Run;
-			if(FRange == rsAsm)
-				FRange = rsAnsiAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiAsm;
 			else
-				FRange = rsAnsi;
-			FTokenID = tkComment;
+				fRange = rsAnsi;
+			fTokenID = tkComment;
 			if(!IsLineEnd(Run))
 				AnsiProc();
 		}
@@ -890,21 +890,21 @@ void __fastcall TSynPasSyn::RoundOpenProc()
 		case L'.':
 		{
 			++Run;
-			FTokenID = tkSymbol;
+			fTokenID = tkSymbol;
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		break;
 	}
 }
 
-void __fastcall TSynPasSyn::SemiColonProc()
+void __fastcall TSynPasSyn::SemicolonProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
-	if(Synhighlighterpas__9.Contains(FRange))
-		FRange = rsUnKnown;
+	fTokenID = tkSymbol;
+	if(Synhighlighterpas__9.Contains(fRange))
+		fRange = rsUnKnown;
 }
 
 void __fastcall TSynPasSyn::SlashProc()
@@ -912,7 +912,7 @@ void __fastcall TSynPasSyn::SlashProc()
 	++Run;
 	if((fLine[Run] == L'/') && (fDelphiVersion > dvDelphi1))
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			++Run;
@@ -920,20 +920,20 @@ void __fastcall TSynPasSyn::SlashProc()
 		while(!IsLineEnd(Run));
 	}
 	else
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynPasSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynPasSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	++Run;
 	while(!IsLineEnd(Run))
 	{
@@ -950,20 +950,20 @@ void __fastcall TSynPasSyn::StringProc()
 void __fastcall TSynPasSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynPasSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynPasSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsi:
 		case rsAnsiAsm:
@@ -1038,7 +1038,7 @@ void __fastcall TSynPasSyn::Next()
 					PointProc();
 					break;
 					case L';':
-					SemiColonProc();
+					SemicolonProc();
 					break;
 					case L'/':
 					SlashProc();
@@ -1108,10 +1108,10 @@ bool __fastcall TSynPasSyn::GetEol()
 TtkTokenKind __fastcall TSynPasSyn::GetTokenID()
 {
 	TtkTokenKind result = tkSymbol;
-	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterpas__10.Contains(FTokenID)))
+	if(!fAsmStart && (fRange == rsAsm) && !(Synhighlighterpas__10.Contains(fTokenID)))
 		result = tkAsm;
 	else
-		result = FTokenID;
+		result = fTokenID;
 	return result;
 }
 
@@ -1179,24 +1179,24 @@ int __fastcall TSynPasSyn::GetTokenKind()
 void* __fastcall TSynPasSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynPasSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynPasSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynPasSyn::EnumUserSettings(TStrings* DelphiVersions)
 {
 
-	auto LoadKeyVersions = [&](const String key, const String Prefix) -> void 
+	auto LoadKeyVersions = [&](const String Key, const String Prefix) -> void 
 	{
 		TStringList* Versions = nullptr;
 		int i = 0;
@@ -1206,7 +1206,7 @@ void __fastcall TSynPasSyn::EnumUserSettings(TStrings* DelphiVersions)
 			try
 			{
 				with0->RootKey = HKEY_LOCAL_MACHINE;
-				if(with0->OpenKeyReadOnly(key))
+				if(with0->OpenKeyReadOnly(Key))
 				{
 					try
 					{
@@ -1258,47 +1258,47 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 	{
 		bool result = false;
 
-		auto ReadDelphiSetting = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+		auto ReadDelphiSetting = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 		{
 			bool result = false;
 			Currency Version = 0.0;
 			String VersionStr;
 
-			auto ReadDelphi2Or3 = [&](String settingTag, TSynHighlighterAttributes* Attri, String Name) -> bool 
+			auto ReadDelphi2Or3 = [&](String settingTag, TSynHighlighterAttributes* attri, String name) -> bool 
 			{
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = Name.Length(), i = 1; i <= stop; i++)
+				for(stop = name.Length(), i = 1; i <= stop; i++)
 				{
-					if(Name[i] == L' ')
-						Name[i] = L'_';
+					if(name[i] == L' ')
+						name[i] = L'_';
 				}
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\Delphi\\") + settingTag
-	           + L"\\Highlight", Name, true);
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\Delphi\\") + settingTag
+	           + L"\\Highlight", name, true);
 				return result;
 			}; /* ReadDelphi2Or3 */
 
-			auto ReadDelphi4OrMore = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadDelphi4OrMore = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\Delphi\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\Delphi\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadDelphi4OrMore */
 
-			auto ReadDelphi8To2007 = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadDelphi8To2007 = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\BDS\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\BDS\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadDelphi8OrMore */
 
-			auto ReadDelphi2009OrMore = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadDelphi2009OrMore = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\CodeGear\\BDS\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\CodeGear\\BDS\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadDelphi2009OrMore */ /* ReadDelphiSetting */
@@ -1314,17 +1314,17 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 						return result;
 					}
 					if(Version >= 6)
-						result = ReadDelphi2009OrMore(VersionStr, Attri, key);
+						result = ReadDelphi2009OrMore(VersionStr, attri, key);
 					else
-						result = ReadDelphi8To2007(VersionStr, Attri, key);
+						result = ReadDelphi8To2007(VersionStr, attri, key);
 				}
 				else
  // Borland Delphi 7 or earlier
 				{
 					if((settingTag[1] == L'2') || (settingTag[1] == L'3'))
-						result = ReadDelphi2Or3(settingTag, Attri, key);
+						result = ReadDelphi2Or3(settingTag, attri, key);
 					else
-						result = ReadDelphi4OrMore(settingTag, Attri, key);
+						result = ReadDelphi4OrMore(settingTag, attri, key);
 				}
 			}
 			catch(...)
@@ -1500,7 +1500,7 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 		int Index = 0;
 		TMatchCollection mcb = {};
 		TMatchCollection mce = {};
-		TMatch Match = {};
+		TMatch match = {};
 		result = false;
 		mcb = RE_BlockBegin.Matches(CurLine);
 		if(mcb.Count > 0)
@@ -1509,18 +1509,18 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 			Index = mcb.Item[0].Index;
 			if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 			{
-				OK = false;
-        // And ignore lines with both opening and closing chars in them
+				ok = false;
+		// And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
-					TMatch Match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
-					if(Match.Index > Index)
+					TMatch match = RE_BlockEnd.Matches(CurLine).Item[iFor0];
+					if(match.Index > Index)
 					{
-						OK = true;
+						ok = true;
 						break;
 					}
 				}
-				if(!OK)
+				if(!ok)
 				{
 					FoldRanges->StartFoldRange(Line + 1, FT_Standard);
 					result = true;
@@ -1546,17 +1546,17 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 8)) == L"{$REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 8)) == L"{$REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 11)) == L"{$ENDREGION")
+			if(UpperCase(S.SubString(1, 11)) == L"{$ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -1568,17 +1568,17 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto ConditionalDirective = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 7)) == L"{$IFDEF")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 7)) == L"{$IFDEF")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FT_ConditionalDirective);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 7)) == L"{$ENDIF")
+			if(UpperCase(S.SubString(1, 7)) == L"{$ENDIF")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FT_ConditionalDirective);
 				result = true;

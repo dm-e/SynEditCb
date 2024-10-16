@@ -197,7 +197,7 @@ class TSynURISyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
 	PWideChar fMayBeProtocol;
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[16/*# range 0..15*/];
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
@@ -212,18 +212,18 @@ private:
 	void __fastcall ProtocolProc();
 	void __fastcall SpaceProc();
 	void __fastcall UnknownProc();
-	TtkTokenKind __fastcall AltFunc(int key);
-	TtkTokenKind __fastcall FuncFtp(int key);
-	TtkTokenKind __fastcall FuncGopher(int key);
-	TtkTokenKind __fastcall FuncHttp(int key);
-	TtkTokenKind __fastcall FuncHttps(int key);
-	TtkTokenKind __fastcall FuncMailto(int key);
-	TtkTokenKind __fastcall FuncNews(int key);
-	TtkTokenKind __fastcall FuncNntp(int key);
-	TtkTokenKind __fastcall FuncProspero(int key);
-	TtkTokenKind __fastcall FuncTelnet(int key);
-	TtkTokenKind __fastcall FuncWais(int key);
-	TtkTokenKind __fastcall FuncWeb(int key);
+	TtkTokenKind __fastcall AltFunc(int Key);
+	TtkTokenKind __fastcall FuncFtp(int Key);
+	TtkTokenKind __fastcall FuncGopher(int Key);
+	TtkTokenKind __fastcall FuncHttp(int Key);
+	TtkTokenKind __fastcall FuncHttps(int Key);
+	TtkTokenKind __fastcall FuncMailto(int Key);
+	TtkTokenKind __fastcall FuncNews(int Key);
+	TtkTokenKind __fastcall FuncNntp(int Key);
+	TtkTokenKind __fastcall FuncProspero(int Key);
+	TtkTokenKind __fastcall FuncTelnet(int Key);
+	TtkTokenKind __fastcall FuncWais(int Key);
+	TtkTokenKind __fastcall FuncWeb(int Key);
 	bool __fastcall IsAlphaNum(WideChar AChar);
 	bool __fastcall IsMark(WideChar AChar);
 	bool __fastcall IsReserved(WideChar AChar);

@@ -98,10 +98,10 @@ protected:
 	TStrings* fCompletions;
 	TStrings* fCompletionComments;
 	TStrings* fCompletionValues;
-	Synedit::TCustomSynEdit* FEditor;
+	Synedit::TCustomSynEdit* fEditor;
 	TList* fEditors;
 	String fEOTokenChars;
-	bool FCaseSensitive;
+	bool fCaseSensitive;
 	bool fParsed;
 	void __fastcall CompletionListChanged(TObject* Sender);
 	virtual void __fastcall DefineProperties(TFiler* Filer);
@@ -126,11 +126,11 @@ public:
 	virtual void __fastcall ExecuteCompletion(const String AToken, Synedit::TCustomSynEdit* AEditor);
 	virtual void __fastcall ParseCompletionList();
 	__property TStrings* AutoCompleteList = { read = fAutoCompleteList, write = SetAutoCompleteList };
-	__property bool CaseSensitive = { read = FCaseSensitive, write = FCaseSensitive };
+	__property bool CaseSensitive = { read = fCaseSensitive, write = fCaseSensitive };
 	__property TStrings* Completions = { read = GetCompletions };
 	__property TStrings* CompletionComments = { read = GetCompletionComments };
 	__property TStrings* CompletionValues = { read = GetCompletionValues };
-	__property Synedit::TCustomSynEdit* Editor = { read = FEditor, write = SetEditor };
+	__property Synedit::TCustomSynEdit* Editor = { read = fEditor, write = SetEditor };
 	__property int EditorCount = { read = GetEditorCount };
 	__property Synedit::TCustomSynEdit* Editors[int Index] = { read = GetNthEditor };
 	__property String EndOfTokenChr = { read = fEOTokenChars, write = fEOTokenChars };

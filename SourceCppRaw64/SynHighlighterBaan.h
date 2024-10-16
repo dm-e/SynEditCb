@@ -176,7 +176,7 @@ private:
 	TtkTokenKind __fastcall FuncBrp46open(int Index);
 	TtkTokenKind __fastcall FuncDate46num(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall AsciiCharProc();

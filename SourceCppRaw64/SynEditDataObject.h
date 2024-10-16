@@ -69,19 +69,19 @@ class TSynEditDataObject : public System::TCppInterfacedObject<Winapi::Activex::
 public:
 	typedef System::TCppInterfacedObject<Winapi::Activex::IDataObject> inherited;
 private:
-	String FText;
+	String fText;
 	TList__1<TClipFormat>* FFormatEtc;
 	TMemoryStream* MemoryStream;
 	TMemoryStream* HtmlStream;
 	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
 	HRESULT __stdcall GetData(const Winapi::Activex::TFormatEtc& formatetcIn, Winapi::Activex::TStgMedium& medium);
-	HRESULT __stdcall GetDataHere(const Winapi::Activex::TFormatEtc& FORMATETC, Winapi::Activex::TStgMedium& medium);
-	HRESULT __stdcall QueryGetData(const Winapi::Activex::TFormatEtc& FORMATETC);
-	HRESULT __stdcall GetCanonicalFormatEtc(const Winapi::Activex::TFormatEtc& FORMATETC, Winapi::Activex::TFormatEtc& formatetcOut);
-	HRESULT __stdcall SetData(const Winapi::Activex::TFormatEtc& FORMATETC, Winapi::Activex::TStgMedium& medium, BOOL fRelease);
-	HRESULT __stdcall EnumFormatEtc(int dwDirection, IEnumFORMATETC*& EnumFormatEtc);
-	HRESULT __stdcall DAdvise(const Winapi::Activex::TFormatEtc& FORMATETC, int advf, IAdviseSink* const advSink, int& dwConnection);
+	HRESULT __stdcall GetDataHere(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TStgMedium& medium);
+	HRESULT __stdcall QueryGetData(const Winapi::Activex::TFormatEtc& formatetc);
+	HRESULT __stdcall GetCanonicalFormatEtc(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TFormatEtc& formatetcOut);
+	HRESULT __stdcall SetData(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TStgMedium& medium, BOOL fRelease);
+	HRESULT __stdcall EnumFormatEtc(int dwDirection, IEnumFORMATETC*& enumFormatEtc);
+	HRESULT __stdcall DAdvise(const Winapi::Activex::TFormatEtc& formatetc, int advf, IAdviseSink* const advSink, int& dwConnection);
 	HRESULT __stdcall DUnadvise(int dwConnection);
 	HRESULT __stdcall EnumDAdvise(IEnumSTATDATA*& enumAdvise);
 public:
@@ -90,9 +90,9 @@ public:
 	__fastcall TSynEditDataObject();
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
-HGLOBAL __fastcall MakeGlobal(const String s);
+HGLOBAL __fastcall MakeGlobal(const String S);
 HGLOBAL __fastcall MakeGlobal(void** P, int Size);
-bool __fastcall HasFormat(IDataObject* dataObject, TClipFormat Format);
+bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format);
 extern UINT SynEditClipboardFormat;
 extern UINT HTMLClipboardFormat;
 

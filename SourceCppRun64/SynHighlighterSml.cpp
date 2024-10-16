@@ -19,7 +19,7 @@ namespace Synhighlightersml
 #define Synhighlightersml__2 (TFontStyles() << TFontStyle::fsBold)
 
 
-const String Keywords[41/*# range 0..40*/] = {L"abstype", L"and", L"andalso", L"as", L"case", L"datatype", L"do", L"else", L"end", L"eqtype", L"exception", L"fn"
+const String KeyWords[41/*# range 0..40*/] = {L"abstype", L"and", L"andalso", L"as", L"case", L"datatype", L"do", L"else", L"end", L"eqtype", L"exception", L"fn"
                     , L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
                     , L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"
                     , L"withtype"};
@@ -43,14 +43,14 @@ unsigned int __fastcall TSynSMLSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynSMLSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynSMLSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkCharacter;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 70 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 70 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -136,7 +136,7 @@ TtkTokenKind __fastcall TSynSMLSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynSMLSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkCharacter;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -146,7 +146,7 @@ TtkTokenKind __fastcall TSynSMLSyn::KeyWordFunc(int Index)
 __fastcall TSynSMLSyn::TSynSMLSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fBasis(false),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkCharacter),
 			fCharacterAttri(nullptr),
 			fCommentAttri(nullptr),
@@ -159,37 +159,37 @@ __fastcall TSynSMLSyn::TSynSMLSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fSyntaxErrorAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCharacterAttri = new TSynHighlighterAttributes(SYNS_AttrCharacter, SYNS_FriendlyAttrCharacter);
 	fCharacterAttri->Foreground = (TColor) clBlue;
-	addAttribute(fCharacterAttri);
+	AddAttribute(fCharacterAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightersml__0;
 	fCommentAttri->Foreground = (TColor) clNavy;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightersml__1;
 	fKeyAttri->Foreground = (TColor) clGreen;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clRed;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fOperatorAttri = new TSynHighlighterAttributes(SYNS_AttrOperator, SYNS_FriendlyAttrOperator);
 	fOperatorAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fOperatorAttri);
+	AddAttribute(fOperatorAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fSyntaxErrorAttri = new TSynHighlighterAttributes(SYNS_AttrSyntaxError, SYNS_FriendlyAttrSyntaxError);
 	fSyntaxErrorAttri->Foreground = (TColor) clRed;
 	fSyntaxErrorAttri->Style = Synhighlightersml__2;
-	addAttribute(fSyntaxErrorAttri);
+	AddAttribute(fSyntaxErrorAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterSML;
@@ -319,7 +319,7 @@ void __fastcall TSynSMLSyn::StringProc()
 				case L'\x00':
 				{
 					++Run;
-					FRange = rsMultiLineString;
+					fRange = rsMultilineString;
 					return;
 				}
 				default:
@@ -358,7 +358,7 @@ void __fastcall TSynSMLSyn::StringEndProc()
 		  ;
 		break;
 	}
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	do
 	{
 		switch(fLine[Run])
@@ -378,7 +378,7 @@ void __fastcall TSynSMLSyn::StringEndProc()
 					case L'\x00':
 					{
 						++Run;
-						FRange = rsMultiLineString;
+						fRange = rsMultilineString;
 						return;
 					}
 					default:
@@ -470,7 +470,7 @@ void __fastcall TSynSMLSyn::RoundBracketOpenProc()
 	++Run;
 	if(fLine[Run] == L'*')
 	{
-		FRange = rsComment;
+		fRange = rsComment;
 		CommentProc();
 		FTokenID = tkComment;
 	}
@@ -499,7 +499,7 @@ void __fastcall TSynSMLSyn::CommentProc()
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L')'))
 				{
 					Run += 2;
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -514,17 +514,17 @@ void __fastcall TSynSMLSyn::CommentProc()
 void __fastcall TSynSMLSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		CommentProc();
 		break;
-		case rsMultiLineString:
+		case rsMultilineString:
 		StringEndProc();
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 			switch(fLine[Run])
 			{
 				case L'\x0d':
@@ -748,18 +748,18 @@ String __fastcall TSynSMLSyn::GetSampleSource()
 
 void __fastcall TSynSMLSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynSMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynSMLSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 

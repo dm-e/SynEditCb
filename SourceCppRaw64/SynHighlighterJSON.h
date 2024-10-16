@@ -86,7 +86,7 @@ enum TtkTokenKind {tkString,
                    tkSpace,
                    tkSymbol,
                    tkUnknown };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsAttribute,
                   rsObjectValue,
                   rsArrayValue };
@@ -101,11 +101,11 @@ private:
 	TRangeState FRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* FReservedAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fAttributeAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fValueAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
-	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
+	Synedithighlighter::TSynHighlighterAttributes* FAttributeAttri;
+	Synedithighlighter::TSynHighlighterAttributes* FValueAttri;
+	Synedithighlighter::TSynHighlighterAttributes* FNumberAttri;
+	Synedithighlighter::TSynHighlighterAttributes* FSpaceAttri;
+	Synedithighlighter::TSynHighlighterAttributes* FSymbolAttri;
 	void __fastcall CloseArrayProc();
 	void __fastcall CloseObjectProc();
 	void __fastcall ColonProc();
@@ -143,12 +143,12 @@ public:
 //-- CodeFolding
 __published:
 public:
-	__property Synedithighlighter::TSynHighlighterAttributes* AttributeAttri = { read = fAttributeAttri, write = fAttributeAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* AttributeAttri = { read = FAttributeAttri, write = FAttributeAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* ReservedAttri = { read = FReservedAttri, write = FReservedAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* NumberAttri = { read = fNumberAttri, write = fNumberAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* SpaceAttri = { read = fSpaceAttri, write = fSpaceAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* SymbolAttri = { read = fSymbolAttri, write = fSymbolAttri };
-	__property Synedithighlighter::TSynHighlighterAttributes* ValueAttri = { read = fValueAttri, write = fValueAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* NumberAttri = { read = FNumberAttri, write = FNumberAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* SpaceAttri = { read = FSpaceAttri, write = FSpaceAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* SymbolAttri = { read = FSymbolAttri, write = FSymbolAttri };
+	__property Synedithighlighter::TSynHighlighterAttributes* ValueAttri = { read = FValueAttri, write = FValueAttri };
 };
 
 void SynHighlighterJSON_initialization();

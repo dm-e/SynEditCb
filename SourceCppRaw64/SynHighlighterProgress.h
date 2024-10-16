@@ -196,7 +196,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynProgressSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	int fCommentLevel;
 	int fIncludeLevel;
 	int fPreProcessorLevel;
@@ -216,7 +216,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fHashList;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall AsciiCharProc();
 	void __fastcall CommentRangeProc();
 	void __fastcall IncludeRangeProc();

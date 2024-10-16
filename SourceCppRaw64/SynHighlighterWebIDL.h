@@ -105,7 +105,7 @@ enum TstkSymbolTokenKind {stkBraceOpen,
                           stkColon,
                           stkGreater,
                           stkLess };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsSingleComment,
                   rsCStyleComment,
                   rsString,
@@ -117,8 +117,8 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynWebIDLSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	TstkSymbolTokenKind fSymbolTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[59/*# range 0..58*/];
 	Synedithighlighter::TSynHighlighterAttributes* fArgumentsAttri;
@@ -174,7 +174,7 @@ private:
 	void __fastcall UnknownProc();
 	TtkTokenKind __fastcall AltFunc(int Index);
 	void __fastcall InitIdent();
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall BraceCloseProc();
 	void __fastcall BraceOpenProc();
 	void __fastcall ColonProc();
