@@ -142,8 +142,8 @@ public:
 	virtual void __fastcall Assign(TPersistent* Source);
 __published:
 public:
-	__property TColor Background = { read = fBG, write = SetBG, default = clHighLight };
-	__property TColor Foreground = { read = fFG, write = SetFG, default = clHighLightText };
+	__property TColor Background = { read = fBG, write = SetBG, default = clHighlight };
+	__property TColor Foreground = { read = fFG, write = SetFG, default = clHighlightText };
 	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 };
 enum TSynGutterBorderStyle {gbsNone,

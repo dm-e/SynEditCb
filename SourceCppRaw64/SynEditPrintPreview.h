@@ -168,7 +168,7 @@ __published:
 public:
 	__property  Align = { default = /*# alClient */ 5 };
 	__property TBorderStyle BorderStyle = { read = FBorderStyle, write = SetBorderStyle, default = /*# bsSingle */ 1 };
-	__property  Color = { default = clAppWorkspace };
+	__property  Color = { default = clAppWorkSpace };
 	__property  Cursor;
 	__property TColor PageBGColor = { read = FPageBG, write = SetPageBG, default = clWhite };
 	__property  PopupMenu;                                                         // JD 2002-01-9

@@ -9892,8 +9892,8 @@ __fastcall TSynEditPlugin::TSynEditPlugin(TCustomSynEdit* AOwner, TPlugInHandler
 /*    [ld.lld Error] ld.lld: error: undefined symbol: Synedit::TSynEditPlugin::~TSynEditPlugin()
 __fastcall TSynEditPlugin::~TSynEditPlugin()
 {
-	if(FOwner != nullptr)
-		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+	if(fOwner != nullptr)
+		fOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
 	//# inherited::Destroy();
 }
 */

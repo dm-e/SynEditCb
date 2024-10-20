@@ -1510,7 +1510,7 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 			if(GetHighlighterAttriAtRowCol(LinesToScan, Line, Index) != fCommentAttri)
 			{
 				ok = false;
-		// And ignore lines with both opening and closing chars in them
+        // And ignore lines with both opening and closing chars in them
 				for(int iFor0 = 0; iFor0 < RE_BlockEnd.Matches(CurLine).Count; iFor0++)
 				{
 					TMatch match = RE_BlockEnd.Matches(CurLine).Item[iFor0];

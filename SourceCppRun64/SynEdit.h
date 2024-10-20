@@ -387,8 +387,8 @@ public:
 	__fastcall void OnSynEditPluginDestruction();
 	virtual __fastcall ~TSynEditPlugin()
 {
-//	if(FOwner != nullptr)
-//		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+//	if(fOwner != nullptr)
+//		fOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
 	OnSynEditPluginDestruction();
 	//# inherited::Destroy();
 }

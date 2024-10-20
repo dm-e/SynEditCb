@@ -148,7 +148,7 @@ public:
 };
 enum TSynGutterBorderStyle {gbsNone,
                             gbsMiddle,
-							gbsRight };
+                            gbsRight };
 typedef void __fastcall (__closure *TGutterBandPaintEvent) (TCanvas*, const TRect&, int, int, bool&);
 typedef void __fastcall (__closure *TGutterBandClickEvent) (TObject*, TMouseButton, int, int, int, int);
 typedef void __fastcall (__closure *TGutterMouseCursorEvent) (TObject*, int, int, int, int, TCursor&);

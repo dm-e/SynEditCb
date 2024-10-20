@@ -180,7 +180,7 @@ void __fastcall TSynCustomExporter::CopyToClipboard()
 			break;
 			case TSynEncoding::seUTF8:
 // linker error			s = UTF8ToUnicodeString(((const System::PAnsiChar) FBuffer->Memory));
-			S = UnicodeString((char*)fBuffer->Memory /*# check length*/);    // todo dme
+			S = UnicodeString((char*)fBuffer->Memory, CP_UTF8);    // todo dme
 			break;
 			case seAnsi:
 			S = UnicodeString((char*)fBuffer->Memory /*# check length*/);
