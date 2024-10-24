@@ -150,8 +150,8 @@ public:
 	void __fastcall SynEditorReplaceText(TObject* Sender, const UnicodeString ASearch, const UnicodeString AReplace, int Line, int Column, TSynReplaceAction& Action);
 	void __fastcall SynEditorStatusChange(TObject* Sender, TSynStatusChanges Changes);
 private:
-	TEditor* FEditor;
-	TEditorKind FKind;
+	TEditor* fEditor;
+	TEditorKind fKind;
 	bool fSearchFromCaret;
 	bool __fastcall DoAskSaveChanges();
 	void __fastcall DoAssignInterfacePointer(bool AActive);
@@ -224,12 +224,12 @@ private:
 	void __fastcall ExecClose(){} // dme else abstract
 	bool __fastcall CanFindPrev() {return false;} // dme abstract
   
-	String FFileName;
-	TEditorForm* FForm;
+	String fFileName;
+	TEditorForm* fForm;
 	bool fHasSelection;
-	bool FIsEmpty;
+	bool fIsEmpty;
 	bool fIsReadOnly;
-	bool FModified;
+	bool fModified;
 	int fUntitledNumber;
 	__fastcall TEditor(TEditorForm* AForm);
 	void __fastcall DoSetFileName(String AFileName);

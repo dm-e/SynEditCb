@@ -33,8 +33,8 @@ located at http://SynEdit.SourceForge.net
 
 Known Issues:
 -------------------------------------------------------------------------------*/
-#ifndef FrmMainH
-#define FrmMainH
+#ifndef frmMainH
+#define frmMainH
 
 #include <System.hpp>
 #include "d2c_system.h"
@@ -201,5 +201,5 @@ protected:
 		//# {inherited::CreateParams(Params); Params.ExStyle = Params.ExStyle | WS_EX_APPWINDOW;}
 };
 
-#endif // FrmMainH
+#endif // frmMainH
 

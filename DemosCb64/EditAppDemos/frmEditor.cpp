@@ -45,30 +45,30 @@ const System::Char SAskSaveChanges[] = L"The text in the \"%s\" file has changed
 /* TEditor */
 
 __fastcall TEditor::TEditor(TEditorForm* AForm)
- : FForm(nullptr),
+ : fForm(nullptr),
 			fHasSelection(false),
-			FIsEmpty(false),
+			fIsEmpty(false),
 			fIsReadOnly(false),
-			FModified(false),
+			fModified(false),
 			fUntitledNumber(0)
 {
 	Assert(AForm != nullptr);
 	//# inherited::Create();
-	FForm = AForm;
+	fForm = AForm;
 	fUntitledNumber = -1;
 }
 
 void __fastcall TEditor::Activate()
 {
-	if(FForm != nullptr)
-		FForm->DoActivate();
+	if(fForm != nullptr)
+		fForm->DoActivate();
 }
 
 bool __fastcall TEditor::AskSaveChanges()
 {
 	bool result = false;
-	if(FForm != nullptr)
-		result = FForm->DoAskSaveChanges();
+	if(fForm != nullptr)
+		result = fForm->DoAskSaveChanges();
 	else
 		result = true;
 	return result;
@@ -77,25 +77,25 @@ bool __fastcall TEditor::AskSaveChanges()
 bool __fastcall TEditor::CanClose()
 {
 	bool result = false;
-	result = FForm != nullptr;
+	result = fForm != nullptr;
 	return result;
 }
 
 void __fastcall TEditor::Close()
 {
-	if((FFileName != L"") && (CommandsDataModule != nullptr))
-		CommandsDataModule->AddMRUEntry(FFileName);
+	if((fFileName != L"") && (CommandsDataModule != nullptr))
+		CommandsDataModule->AddMRUEntry(fFileName);
 	if(fUntitledNumber != -1)
 		CommandsDataModule->ReleaseUntitledNumber(fUntitledNumber);
-	if(FForm != nullptr)
-		FForm->Close();
+	if(fForm != nullptr)
+		fForm->Close();
 }
 
 void __fastcall TEditor::DoSetFileName(String AFileName)
 {
-	if(AFileName != FFileName)
+	if(AFileName != fFileName)
 	{
-		FFileName = AFileName;
+		fFileName = AFileName;
 		if(fUntitledNumber != -1)
 		{
 			CommandsDataModule->ReleaseUntitledNumber(fUntitledNumber);
@@ -107,9 +107,9 @@ void __fastcall TEditor::DoSetFileName(String AFileName)
 TPoint __fastcall TEditor::GetCaretPos()
 {
 	TPoint result = {};
-	if(FForm != nullptr)
-    //result = FForm->SynEditor->CaretXY;
-    d2c_memcpy(&result, FForm->SynEditor->CaretXY, sizeof(result));
+	if(fForm != nullptr)
+	//result = *(TPoint*)&fForm->SynEditor->CaretXY;
+		d2c_memcpy(&result, fForm->SynEditor->CaretXY, sizeof(result));
 	else
 		result = Point(-1, -1);
 	return result;
@@ -118,13 +118,13 @@ TPoint __fastcall TEditor::GetCaretPos()
 String __fastcall TEditor::GetEditorState()
 {
 	String result;
-	if(FForm != nullptr)
+	if(fForm != nullptr)
 	{
-		if(FForm->SynEditor->ReadOnly)
+		if(fForm->SynEditor->ReadOnly)
 			result = SReadOnly;
 		else
 		{
-			if(FForm->SynEditor->InsertMode)
+			if(fForm->SynEditor->InsertMode)
 				result = SInsert;
 			else
 				result = SOverwrite;
@@ -138,15 +138,15 @@ String __fastcall TEditor::GetEditorState()
 String __fastcall TEditor::GetFileName()
 {
 	String result;
-	result = FFileName;
+	result = fFileName;
 	return result;
 }
 
 String __fastcall TEditor::GetFileTitle()
 {
 	String result;
-	if(FFileName != L"")
-		result = ExtractFileName(FFileName);
+	if(fFileName != L"")
+		result = ExtractFileName(fFileName);
 	else
 	{
 		if(fUntitledNumber == -1)
@@ -159,8 +159,8 @@ String __fastcall TEditor::GetFileTitle()
 bool __fastcall TEditor::GetModified()
 {
 	bool result = false;
-	if(FForm != nullptr)
-		result = FForm->SynEditor->Modified;
+	if(fForm != nullptr)
+		result = fForm->SynEditor->Modified;
 	else
 		result = false;
 	return result;
@@ -168,15 +168,15 @@ bool __fastcall TEditor::GetModified()
 
 void __fastcall TEditor::OpenFile(String AFileName)
 {
-	FFileName = AFileName;
-	if(FForm != nullptr)
+	fFileName = AFileName;
+	if(fForm != nullptr)
 	{
 		if((AFileName != L"") && FileExists(AFileName))
-			FForm->SynEditor->Lines->LoadFromFile(AFileName);
+			fForm->SynEditor->Lines->LoadFromFile(AFileName);
 		else
-			FForm->SynEditor->Lines->Clear();
-		FForm->DoUpdateCaption();
-		FForm->DoUpdateHighlighter();
+			fForm->SynEditor->Lines->Clear();
+		fForm->DoUpdateCaption();
+		fForm->DoUpdateHighlighter();
 	}
 }
 // IEditCommands implementation
@@ -184,85 +184,85 @@ void __fastcall TEditor::OpenFile(String AFileName)
 bool __fastcall TEditor::CanCopy()
 {
 	bool result = false;
-	result = (FForm != nullptr) && fHasSelection;
+	result = (fForm != nullptr) && fHasSelection;
 	return result;
 }
 
 bool __fastcall TEditor::CanCut()
 {
 	bool result = false;
-	result = (FForm != nullptr) && fHasSelection && !fIsReadOnly;
+	result = (fForm != nullptr) && fHasSelection && !fIsReadOnly;
 	return result;
 }
 
 bool __fastcall TEditor::CanPaste()
 {
 	bool result = false;
-	result = (FForm != nullptr) && FForm->SynEditor->CanPaste;
+	result = (fForm != nullptr) && fForm->SynEditor->CanPaste;
 	return result;
 }
 
 bool __fastcall TEditor::CanRedo()
 {
 	bool result = false;
-	result = (FForm != nullptr) && FForm->SynEditor->CanRedo;
+	result = (fForm != nullptr) && fForm->SynEditor->CanRedo;
 	return result;
 }
 
 bool __fastcall TEditor::CanSelectAll()
 {
 	bool result = false;
-	result = FForm != nullptr;
+	result = fForm != nullptr;
 	return result;
 }
 
 bool __fastcall TEditor::CanUndo()
 {
 	bool result = false;
-	result = (FForm != nullptr) && FForm->SynEditor->CanUndo;
+	result = (fForm != nullptr) && fForm->SynEditor->CanUndo;
 	return result;
 }
 
 void __fastcall TEditor::ExecCopy()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->CopyToClipboard();
+	if(fForm != nullptr)
+		fForm->SynEditor->CopyToClipboard();
 }
 
 void __fastcall TEditor::ExecCut()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->CutToClipboard();
+	if(fForm != nullptr)
+		fForm->SynEditor->CutToClipboard();
 }
 
 void __fastcall TEditor::ExecDelete()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->SelText = L"";
+	if(fForm != nullptr)
+		fForm->SynEditor->SelText = L"";
 }
 
 void __fastcall TEditor::ExecPaste()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->PasteFromClipboard();
+	if(fForm != nullptr)
+		fForm->SynEditor->PasteFromClipboard();
 }
 
 void __fastcall TEditor::ExecRedo()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->Redo();
+	if(fForm != nullptr)
+		fForm->SynEditor->Redo();
 }
 
 void __fastcall TEditor::ExecSelectAll()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->SelectAll();
+	if(fForm != nullptr)
+		fForm->SynEditor->SelectAll();
 }
 
 void __fastcall TEditor::ExecUndo()
 {
-	if(FForm != nullptr)
-		FForm->SynEditor->Undo();
+	if(fForm != nullptr)
+		fForm->SynEditor->Undo();
 }
 // IFileCommands implementation
 
@@ -276,85 +276,85 @@ bool __fastcall TEditor::CanPrint()
 bool __fastcall TEditor::CanSave()
 {
 	bool result = false;
-	result = (FForm != nullptr) && (FModified || (FFileName == L""));
+	result = (fForm != nullptr) && (fModified || (fFileName == L""));
 	return result;
 }
 
 bool __fastcall TEditor::CanSaveAs()
 {
 	bool result = false;
-	result = FForm != nullptr;
+	result = fForm != nullptr;
 	return result;
 }
 
 void __fastcall TEditor::ExecPrint()
 {
-	if(FForm != nullptr)
+	if(fForm != nullptr)
 // TODO
 		;
 }
 
 void __fastcall TEditor::ExecSave()
 {
-	if(FForm != nullptr)
+	if(fForm != nullptr)
 	{
-		if(FFileName != L"")
-			FForm->DoSave();
+		if(fFileName != L"")
+			fForm->DoSave();
 		else
-			FForm->DoSaveAs();
+			fForm->DoSaveAs();
 	}
 }
 
 void __fastcall TEditor::ExecSaveAs()
 {
-	if(FForm != nullptr)
-		FForm->DoSaveAs();
+	if(fForm != nullptr)
+		fForm->DoSaveAs();
 }
 // ISearchCommands implementation
 
 bool __fastcall TEditor::CanFind()
 {
 	bool result = false;
-	result = (FForm != nullptr) && !FIsEmpty;
+	result = (fForm != nullptr) && !fIsEmpty;
 	return result;
 }
 
 bool __fastcall TEditor::CanFindNext()
 {
 	bool result = false;
-	result = (FForm != nullptr) && !FIsEmpty && (gsSearchText != L"");
+	result = (fForm != nullptr) && !fIsEmpty && (gsSearchText != L"");
 	return result;
 }
 
 bool __fastcall TEditor::CanReplace()
 {
 	bool result = false;
-	result = (FForm != nullptr) && !fIsReadOnly && !FIsEmpty;
+	result = (fForm != nullptr) && !fIsReadOnly && !fIsEmpty;
 	return result;
 }
 
 void __fastcall TEditor::ExecFind()
 {
-	if(FForm != nullptr)
-		FForm->ShowSearchReplaceDialog(false);
+	if(fForm != nullptr)
+		fForm->ShowSearchReplaceDialog(false);
 }
 
 void __fastcall TEditor::ExecFindNext()
 {
-	if(FForm != nullptr)
-		FForm->DoSearchReplaceText(false, false);
+	if(fForm != nullptr)
+		fForm->DoSearchReplaceText(false, false);
 }
 
 void __fastcall TEditor::ExecFindPrev()
 {
-	if(FForm != nullptr)
-		FForm->DoSearchReplaceText(false, true);
+	if(fForm != nullptr)
+		fForm->DoSearchReplaceText(false, true);
 }
 
 void __fastcall TEditor::ExecReplace()
 {
-	if(FForm != nullptr)
-		FForm->ShowSearchReplaceDialog(true);
+	if(fForm != nullptr)
+		fForm->ShowSearchReplaceDialog(true);
 }
 /* TEditorTabSheet */
 
@@ -422,8 +422,7 @@ bool __fastcall TEditorFactory::CanCloseAll()
 	i = fEditors.size() - 1;
 	while(i >= 0)
 	{
-//		LEditor = ((IEditor*) fEditors->Items[i]);
-//		fEditors->Items[i]->QueryInterface<IEditor>(&LEditor);   // ?
+	//LEditor = ((IEditor*) fEditors->Items[i]);
     	LEditor = fEditors[i];
 		if(!LEditor->AskSaveChanges())
 		{
@@ -456,9 +455,9 @@ IEditor* __fastcall TEditorFactory::CreateBorderless(TForm* AOwner)
 	/*# with LForm do */
 	{
 		TEditorForm* with0 = LForm;
-		with0->FEditor = new TEditor(LForm);
-		result = with0->FEditor;
-		with0->FKind = ekBorderless;
+		with0->fEditor = new TEditor(LForm);
+		result = with0->fEditor;
+		with0->fKind = ekBorderless;
 		with0->BorderStyle = bsNone;
 		with0->Parent = AOwner;
 		with0->Align = alClient;
@@ -478,9 +477,9 @@ IEditor* __fastcall TEditorFactory::CreateMDIChild(TForm* AOwner)
 	/*# with LForm do */
 	{
 		auto with0 = LForm;
-		with0->FEditor = new TEditor(LForm);
-		result = with0->FEditor;
-		with0->FKind = ekMDIChild;
+		with0->fEditor = new TEditor(LForm);
+		result = with0->fEditor;
+		with0->fKind = ekMDIChild;
 		with0->FormStyle = fsMDIChild;
 	}
 	if(result != nullptr)
@@ -502,9 +501,9 @@ IEditor* __fastcall TEditorFactory::CreateTabSheet(TPageControl* AOwner)
 		/*# with LForm do */
 		{
 			auto with0 = LForm;
-			with0->FEditor = new TEditor(LForm);
-			result = with0->FEditor;
-			with0->FKind = ekInTabsheet;
+			with0->fEditor = new TEditor(LForm);
+			result = with0->fEditor;
+			with0->fKind = ekInTabsheet;
 			with0->BorderStyle = bsNone;
 			with0->Parent = Sheet;
 			with0->Align = alClient;
@@ -571,7 +570,7 @@ void __fastcall TEditorForm::FormShow(TObject* Sender)
 
 void __fastcall TEditorForm::FormClose(TObject* Sender, TCloseAction& Action)
 {
-	if(FKind == ekInTabsheet)
+	if(fKind == ekInTabsheet)
 	{
 		PostMessage(Parent->Handle, (UINT) WM_DELETETHIS, 0, 0);
 		Action = TCloseAction::caNone;
@@ -591,12 +590,11 @@ void __fastcall TEditorForm::FormCloseQuery(TObject* Sender, bool& CanClose)
 void __fastcall TEditorForm::FormDestroy(TObject* Sender)
 {
 	IEditor* LEditor = nullptr;
-	LEditor = FEditor;
-	Assert(FEditor != nullptr);
-	FEditor->FForm = nullptr;
-//  dirty hack to close application without throwing a exception
-//	Assert(GI_EditorFactory != nullptr);
-//	GI_EditorFactory->RemoveEditor(LEditor);
+	LEditor = fEditor;
+	Assert(fEditor != nullptr);
+	fEditor->fForm = nullptr;
+	Assert(GI_EditorFactory != nullptr);
+	GI_EditorFactory->RemoveEditor(LEditor);
 }
 
 void __fastcall TEditorForm::SynEditorChange(TObject* Sender)
@@ -604,7 +602,7 @@ void __fastcall TEditorForm::SynEditorChange(TObject* Sender)
 	bool Empty = false;
 	int i = 0;
 	int stop = 0;
-	Assert(FEditor != nullptr);
+	Assert(fEditor != nullptr);
 	Empty = true;
 	for(stop = 0, i = SynEditor->Lines->Count - 1; i >= stop; i--)
 	{
@@ -614,7 +612,7 @@ void __fastcall TEditorForm::SynEditorChange(TObject* Sender)
 			break;
 		}
 	}
-	FEditor->FIsEmpty = Empty;
+	fEditor->fIsEmpty = Empty;
 }
 
 void __fastcall TEditorForm::SynEditorEnter(TObject* Sender)
@@ -662,13 +660,13 @@ void __fastcall TEditorForm::SynEditorReplaceText(TObject* Sender, const String 
 
 void __fastcall TEditorForm::SynEditorStatusChange(TObject* Sender, TSynStatusChanges Changes)
 {
-	Assert(FEditor != nullptr);
+	Assert(fEditor != nullptr);
 	if(Changes * Frmeditor__0 != Frmeditor__1)
-		FEditor->fHasSelection = SynEditor->SelAvail;
+		fEditor->fHasSelection = SynEditor->SelAvail;
 	if(Changes * Frmeditor__2 != Frmeditor__3)
-		FEditor->fIsReadOnly = SynEditor->ReadOnly;
+		fEditor->fIsReadOnly = SynEditor->ReadOnly;
 	if(Changes * Frmeditor__4 != Frmeditor__5)
-		FEditor->FModified = SynEditor->Modified;
+		fEditor->fModified = SynEditor->Modified;
 }
 
 void __fastcall TEditorForm::DoActivate()
@@ -699,8 +697,8 @@ bool __fastcall TEditorForm::DoAskSaveChanges()
 	{
 		DoActivate();
 		MessageBeep((UINT) MB_ICONQUESTION);
-		Assert(FEditor != nullptr);
-		s = Format(SAskSaveChanges, ARRAYOFCONST((ExtractFileName(FEditor->GetFileTitle()))));
+		Assert(fEditor != nullptr);
+		s = Format(SAskSaveChanges, ARRAYOFCONST((ExtractFileName(fEditor->GetFileTitle()))));
 		switch(Application->MessageBox(ustr2pwchar(s), ustr2pwchar(Application->Title), MBType))
 		{
 			case IDYES:
@@ -723,20 +721,20 @@ void __fastcall TEditorForm::DoAssignInterfacePointer(bool AActive)
 {
 	if(AActive)
 	{
-		GI_ActiveEditor = FEditor;
-		GI_EditCmds = FEditor;
-		GI_FileCmds = FEditor;
-		GI_SearchCmds = FEditor;
+		GI_ActiveEditor = fEditor;
+		GI_EditCmds = fEditor;
+		GI_FileCmds = fEditor;
+		GI_SearchCmds = fEditor;
 	}
 	else
 	{
-		if(GI_ActiveEditor == ((IEditor*) FEditor))
+		if(GI_ActiveEditor == ((IEditor*) fEditor))
 			GI_ActiveEditor = nullptr;
-		if(GI_EditCmds == ((IEditCommands*) FEditor))
+		if(GI_EditCmds == ((IEditCommands*) fEditor))
 			GI_EditCmds = nullptr;
-		if(GI_FileCmds == ((IFileCommands*) FEditor))
+		if(GI_FileCmds == ((IFileCommands*) fEditor))
 			GI_FileCmds = nullptr;
-		if(GI_SearchCmds == ((ISearchCommands*) FEditor))
+		if(GI_SearchCmds == ((ISearchCommands*) fEditor))
 			GI_SearchCmds = nullptr;
 	}
 }
@@ -744,8 +742,8 @@ void __fastcall TEditorForm::DoAssignInterfacePointer(bool AActive)
 bool __fastcall TEditorForm::DoSave()
 {
 	bool result = false;
-	Assert(FEditor != nullptr);
-	if(FEditor->FFileName != L"")
+	Assert(fEditor != nullptr);
+	if(fEditor->fFileName != L"")
 		result = DoSaveFile();
 	else
 		result = DoSaveAs();
@@ -755,10 +753,10 @@ bool __fastcall TEditorForm::DoSave()
 bool __fastcall TEditorForm::DoSaveFile()
 {
 	bool result = false;
-	Assert(FEditor != nullptr);
+	Assert(fEditor != nullptr);
 	try
 	{
-		SynEditor->Lines->SaveToFile(FEditor->FFileName);
+		SynEditor->Lines->SaveToFile(fEditor->fFileName);
 		SynEditor->Modified = false;
 		result = true;
 	}
@@ -774,11 +772,11 @@ bool __fastcall TEditorForm::DoSaveAs()
 {
 	bool result = false;
 	String NewName;
-	Assert(FEditor != nullptr);
-	NewName = FEditor->FFileName;
+	Assert(fEditor != nullptr);
+	NewName = fEditor->fFileName;
 	if(CommandsDataModule->GetSaveFileName(NewName, SynEditor->Highlighter))
 	{
-		FEditor->DoSetFileName(NewName);
+		fEditor->DoSetFileName(NewName);
 		DoUpdateCaption();
 		DoUpdateHighlighter();
 		result = DoSaveFile();
@@ -820,14 +818,14 @@ void __fastcall TEditorForm::DoSearchReplaceText(bool AReplace, bool ABackwards)
 
 void __fastcall TEditorForm::DoUpdateCaption()
 {
-	Assert(FEditor != nullptr);
-	switch(FKind)
+	Assert(fEditor != nullptr);
+	switch(fKind)
 	{
 		case ekInTabsheet:
-		((TTabSheet*) Parent)->Caption = FEditor->GetFileTitle();
+		((TTabSheet*) Parent)->Caption = fEditor->GetFileTitle();
 		break;
 		case ekMDIChild:
-		Caption = FEditor->GetFileTitle() + L" - " + SEditorCaption;
+		Caption = fEditor->GetFileTitle() + L" - " + SEditorCaption;
 		break;
 		default:
 		  ;
@@ -837,10 +835,10 @@ void __fastcall TEditorForm::DoUpdateCaption()
 
 void __fastcall TEditorForm::DoUpdateHighlighter()
 {
-	Assert(FEditor != nullptr);
-	if(FEditor->FFileName != L"")
+	Assert(fEditor != nullptr);
+	if(fEditor->fFileName != L"")
 	{
-		SynEditor->Highlighter = CommandsDataModule->GetHighlighterForFile(FEditor->FFileName);
+		SynEditor->Highlighter = CommandsDataModule->GetHighlighterForFile(fEditor->fFileName);
 	}
 	else
 	SynEditor->Highlighter = nullptr;
@@ -848,14 +846,14 @@ void __fastcall TEditorForm::DoUpdateHighlighter()
 
 void __fastcall TEditorForm::ShowSearchReplaceDialog(bool AReplace)
 {
-	TTextSearchDialog* Dlg = nullptr;
+	TTextSearchDialog* dlg = nullptr;
 	if(AReplace)
-		Dlg = new TTextReplaceDialog(this, 0);
+		dlg = new TTextReplaceDialog(this, 0);
 	else
-		Dlg = new TTextSearchDialog(this, 0);
-	/*# with Dlg do */
+		dlg = new TTextSearchDialog(this, 0);
+	/*# with dlg do */
 	{
-		auto with0 = Dlg;
+		auto with0 = dlg;
 		try
 
     // assign search options
@@ -876,9 +874,9 @@ void __fastcall TEditorForm::ShowSearchReplaceDialog(bool AReplace)
 			}
 			with0->SearchTextHistory = gsSearchTextHistory;
 			if(AReplace)
-				/*# with Dlg as TTextReplaceDialog do */
+				/*# with dlg as TTextReplaceDialog do */
 				{
-					auto with1 = (TTextReplaceDialog*) Dlg;
+					auto with1 = (TTextReplaceDialog*) dlg;
 					with1->ReplaceText = gsReplaceText;
 					with1->ReplaceTextHistory = gsReplaceTextHistory;
 				}
@@ -893,9 +891,9 @@ void __fastcall TEditorForm::ShowSearchReplaceDialog(bool AReplace)
 				gsSearchText = with0->SearchText;
 				gsSearchTextHistory = with0->SearchTextHistory;
 				if(AReplace)
-					/*# with Dlg as TTextReplaceDialog do */
+					/*# with dlg as TTextReplaceDialog do */
 					{
-						auto with2 = (TTextReplaceDialog*) Dlg;
+						auto with2 = (TTextReplaceDialog*) dlg;
 						gsReplaceText = with2->ReplaceText;
 						gsReplaceTextHistory = with2->ReplaceTextHistory;
 					}
@@ -909,7 +907,7 @@ void __fastcall TEditorForm::ShowSearchReplaceDialog(bool AReplace)
 		}
 		__finally
 		{
-			delete Dlg;
+			delete dlg;
 		}
 	}
 }

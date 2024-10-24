@@ -33,14 +33,13 @@ System.Generics
 
 
 ==========[SUBSTITUTIONS]
-IDENT_FILE =DemoIds.txt
+IDENT_FILE =SynEditIdents.txt
 
 [PREREPLACEMENTS]
 
 [IDREPLACEMENTS]
 [ELEMENTIDREPLACEMENTS]
 [HELPERREPLACEMENTS]
-SysutilsEnum__0->System_Sysutils__85
 
 [REFACTORING]
 IComparer,IComparer__1,interface,,,0,0,,,true,false

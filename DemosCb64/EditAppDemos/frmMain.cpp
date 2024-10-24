@@ -1,7 +1,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "FrmMain.h"
+#include "frmMain.h"
 #include <System.IniFiles.hpp>
 #include "dmCommands.h"
 #include "d2c_dfm.h"
@@ -45,14 +45,14 @@ bool __fastcall TMainForm::CmdLineOpenFiles(bool AMultipleFiles)
 {
 	bool result = false;
 	__int64 i = 0;
-	int cnt = 0;
-	cnt = ParamCount();
-	if(cnt > 0)
+	int Cnt = 0;
+	Cnt = ParamCount();
+	if(Cnt > 0)
 	{
 		__int64 stop = 0;
-		if(!AMultipleFiles && (cnt > 1))
-			cnt = 1;
-		for(stop = cnt, i = 1; i <= stop; i++)
+		if(!AMultipleFiles && (Cnt > 1))
+			Cnt = 1;
+		for(stop = Cnt, i = 1; i <= stop; i++)
 		{
 			DoOpenFile(ParamStr((int) i));
 		}
@@ -99,76 +99,76 @@ void __fastcall TMainForm::DoOpenFile(String AFileName)
 
 void __fastcall TMainForm::ReadIniSettings()
 {
-	TIniFile* IniFile = nullptr;
-	int X = 0;
-	int Y = 0;
-	int W = 0;
+	TIniFile* iniFile = nullptr;
+	int x = 0;
+	int y = 0;
+	int w = 0;
 	int h = 0;
 	int i = 0;
 	String s;
-	IniFile = new TIniFile(ChangeFileExt(Application->ExeName, L".ini"));
+	iniFile = new TIniFile(ChangeFileExt(Application->ExeName, L".ini"));
 	try
 	{
 		int stop = 0;
-		X = IniFile->ReadInteger(L"Main", L"Left", 0);
-		Y = IniFile->ReadInteger(L"Main", L"Top", 0);
-		W = IniFile->ReadInteger(L"Main", L"Width", 0);
-		h = IniFile->ReadInteger(L"Main", L"Height", 0);
-		if((W > 0) && (h > 0))
-			SetBounds(X, Y, W, h);
-		if(IniFile->ReadInteger(L"Main", L"Maximized", 0) != 0)
+		x = iniFile->ReadInteger(L"Main", L"Left", 0);
+		y = iniFile->ReadInteger(L"Main", L"Top", 0);
+		w = iniFile->ReadInteger(L"Main", L"Width", 0);
+		h = iniFile->ReadInteger(L"Main", L"Height", 0);
+		if((w > 0) && (h > 0))
+			SetBounds(x, y, w, h);
+		if(iniFile->ReadInteger(L"Main", L"Maximized", 0) != 0)
 			WindowState = TWindowState::wsMaximized;
-		StatusBar->Visible = IniFile->ReadInteger(L"Main", L"ShowStatusbar", 1) != 0;
+		StatusBar->Visible = iniFile->ReadInteger(L"Main", L"ShowStatusbar", 1) != 0;
     // MRU files
 		for(stop = 1, i = 5; i >= stop; i--)
 		{
-			s = IniFile->ReadString(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))), L"");
+			s = iniFile->ReadString(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))), L"");
 			if(s != L"")
 				CommandsDataModule->AddMRUEntry(s);
 		}
 	}
 	__finally
 	{
-		delete IniFile;
+		delete iniFile;
 	}
 }
 
 void __fastcall TMainForm::WriteIniSettings()
 {
-	TIniFile* IniFile = nullptr;
+	TIniFile* iniFile = nullptr;
 	TWindowPlacement wp = {};
 	int i = 0;
 	String s;
-	IniFile = new TIniFile(ChangeFileExt(Application->ExeName, L".ini"));
+	iniFile = new TIniFile(ChangeFileExt(Application->ExeName, L".ini"));
 	try
 	{
 		int stop = 0;
-	wp.length = (UINT) sizeof(TWindowPlacement);
+		wp.length = (UINT) sizeof(TWindowPlacement);
 		GetWindowPlacement(Handle, &wp);
     // form properties
 		/*# with wp.rcNormalPosition do */
 		{
-		  RECT& with0 = wp.rcNormalPosition;
-		  IniFile->WriteInteger(L"Main", L"Left", with0.left);
-		  IniFile->WriteInteger(L"Main", L"Top", with0.top);
-		  IniFile->WriteInteger(L"Main", L"Width", with0.right - with0.left);
-		  IniFile->WriteInteger(L"Main", L"Height", with0.bottom - with0.top);
+			auto& with0 = wp.rcNormalPosition;
+			iniFile->WriteInteger(L"Main", L"Left", with0.left);
+			iniFile->WriteInteger(L"Main", L"Top", with0.top);
+			iniFile->WriteInteger(L"Main", L"Width", with0.right - with0.left);
+			iniFile->WriteInteger(L"Main", L"Height", with0.bottom - with0.top);
 		}
-		IniFile->WriteInteger(L"Main", L"Maximized", int(WindowState == TWindowState::wsMaximized));
-		IniFile->WriteInteger(L"Main", L"ShowStatusbar", int(StatusBar->Visible));
+		iniFile->WriteInteger(L"Main", L"Maximized", int(WindowState == TWindowState::wsMaximized));
+		iniFile->WriteInteger(L"Main", L"ShowStatusbar", int(StatusBar->Visible));
     // MRU files
 		for(stop = 5, i = 1; i <= stop; i++)
 		{
 			s = CommandsDataModule->GetMRUEntry(i - 1);
 			if(s != L"")
-				IniFile->WriteString(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))), s);
+				iniFile->WriteString(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))), s);
 			else
-				IniFile->DeleteKey(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))));
+				iniFile->DeleteKey(L"MRUFiles", Format(L"MRUFile%d", ARRAYOFCONST((i))));
 		}
 	}
 	__finally
 	{
-		delete IniFile;
+		delete iniFile;
 	}
 }
 
