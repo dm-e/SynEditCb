@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterbat
@@ -23,7 +22,7 @@ namespace Synhighlighterbat
 #define Synhighlighterbat__4 (TSysCharSet() << 'M' << 'm')
 
 
-const String Keywords[21/*# range 0..20*/] = {L"call", L"cd", L"cls", L"copy", L"del", L"do", L"echo", L"errorlevel", L"exist", L"for", L"goto", L"if", L"in"
+const String KeyWords[21/*# range 0..20*/] = {L"call", L"cd", L"cls", L"copy", L"del", L"do", L"echo", L"errorlevel", L"exist", L"for", L"goto", L"if", L"in"
                     , L"not", L"off", L"on", L"pause", L"set", L"shift", L"start", L"title"};
 const int KeyIndices[25/*# range 0..24*/] = {14, 4, -1, 6, 17, 12, 8, 18, 19, 15, -1, -1, 10, 3, 13, 0, 1, 11, 20, 7, 2, 5, -1, 16, 9};
 
@@ -44,14 +43,14 @@ unsigned int __fastcall TSynBatSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynBatSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynBatSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 24 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 24 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -99,7 +98,7 @@ TtkTokenKind __fastcall TSynBatSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncCall(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -109,7 +108,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncCall(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncCd(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -119,7 +118,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncCd(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncCls(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -129,7 +128,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncCls(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncCopy(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -139,7 +138,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncCopy(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncDel(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -149,7 +148,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncDel(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncDo(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -159,7 +158,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncDo(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncEcho(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -169,7 +168,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncEcho(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncErrorlevel(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -179,7 +178,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncErrorlevel(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncExist(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -189,7 +188,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncExist(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncFor(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -199,7 +198,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncFor(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncGoto(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -209,7 +208,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncGoto(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -219,7 +218,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncIn(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -229,7 +228,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncIn(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncNot(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -239,7 +238,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncNot(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncOff(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -249,7 +248,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncOff(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncOn(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -259,7 +258,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncOn(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncPause(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -269,7 +268,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncPause(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncSet(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -279,7 +278,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncSet(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncShift(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -289,7 +288,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncShift(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncStart(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -299,7 +298,7 @@ TtkTokenKind __fastcall TSynBatSyn::FuncStart(int Index)
 TtkTokenKind __fastcall TSynBatSyn::FuncTitle(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -316,24 +315,24 @@ __fastcall TSynBatSyn::TSynBatSyn(TComponent* AOwner)
 			fSpaceAttri(nullptr),
 			fVariableAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterbat__0;
 	fCommentAttri->Foreground = (TColor) clNavy;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	fKeyAttri->Style = Synhighlighterbat__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
 	fVariableAttri->Foreground = (TColor) clGreen;
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterBatch;

@@ -184,7 +184,7 @@ private:
 	TtkTokenKind __fastcall FuncStart(int Index);
 	TtkTokenKind __fastcall FuncTitle(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall VariableProc();
 	void __fastcall CRProc();

@@ -210,7 +210,7 @@ public:
 	bool __fastcall FoldHidesLine(int Line);
 	bool __fastcall FoldHidesLine(int Line, int& Index);
 	System::TArray<int> __fastcall FoldsAtLevel(int Level);
-	System::TArray<int> __fastcall FoldsOfType(int AType);
+	System::TArray<int> __fastcall FoldsOfType(int aType);
 
     /*Scanning support*/
 	void __fastcall StoreCollapsedState();
@@ -229,9 +229,9 @@ public:
     // plugin notifications and support routines
 	int __fastcall FoldLineToRow(int Line);
 	int __fastcall FoldRowToLine(int Row);
-	int __fastcall LinesInserted(int AIndex, int ACount);
-	int __fastcall LinesDeleted(int AIndex, int ACount);
-	int __fastcall LinePut(int AIndex, const String OldLine);
+	int __fastcall LinesInserted(int aIndex, int aCount);
+	int __fastcall LinesDeleted(int aIndex, int aCount);
+	int __fastcall LinePut(int aIndex, const String OldLine);
 	void __fastcall Reset();
 
     /*Access to the internal FoldRange list routines*/
@@ -255,7 +255,7 @@ private:
 	bool fShowCollapsedLine;
 	bool fShowHintMark;
 	int fGutterShapeSize;
-	TSynCodeFoldingChangeEvent FOnChange;
+	TSynCodeFoldingChangeEvent fOnChange;
 	void __fastcall SetIndentGuides(bool Value);
 	void __fastcall SetCollapsedLineColor(const TColor Value);
 	void __fastcall SetFolderBarLinesColor(const TColor Value);
@@ -269,7 +269,7 @@ public:
 	__fastcall TSynCodeFolding();
 	virtual void __fastcall Assign(TPersistent* Source);
 	int __fastcall ScaledGutterShapeSize(int PPI);
-	__property TSynCodeFoldingChangeEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TSynCodeFoldingChangeEvent OnChange = { read = fOnChange, write = fOnChange };
 __published:
     // Size of the gutter shapes in pixels at 96 PPI
 	__property int GutterShapeSize = { read = fGutterShapeSize, write = SetGutterShapeSize, default = 11 };

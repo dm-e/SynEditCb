@@ -36,7 +36,7 @@ namespace Synhighlightersql
 #define Synhighlightersql__18 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
 #define Synhighlightersql__19 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMySQL << sqlOracle)
 #define Synhighlightersql__20 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlIngres)
-#define Synhighlightersql__21 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkDataType << tkException << tkFunction << tkKey << tkPLSQL << tkDefaultPackage)
+#define Synhighlightersql__21 (System::Set<TtkTokenKind, TtkTokenKind::tkComment, TtkTokenKind::tkConsoleOutput>() << tkDatatype << tkException << tkFunction << tkKey << tkPLSQL << tkDefaultPackage)
 #define Synhighlightersql__22 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlOracle << sqlNexus)
 #define Synhighlightersql__23 (System::Set<TSQLDialect, TSQLDialect::sqlStandard, TSQLDialect::sqlInformix>() << sqlMSSQL7 << sqlMSSQL2K)
 
@@ -1168,12 +1168,12 @@ int __fastcall TSynSQLSyn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynSQLSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynSQLSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -1200,8 +1200,8 @@ TtkTokenKind __fastcall TSynSQLSyn::IdentKind(PWideChar Maybe)
 
 __fastcall TSynSQLSyn::TSynSQLSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkComment),
+			fRange(rsUnknown),
+			fTokenID(tkComment),
 			fKeywords(nullptr),
 			FProcNames(nullptr),
 			fTableNames(nullptr),
@@ -1228,7 +1228,7 @@ __fastcall TSynSQLSyn::TSynSQLSyn(TComponent* AOwner)
 			fProcNameAttri(nullptr),
 			fVariableAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	FProcNames = new TStringList();
 	((TStringList*) FProcNames)->OnChange = ProcNamesChanged;
@@ -1239,52 +1239,52 @@ __fastcall TSynSQLSyn::TSynSQLSyn(TComponent* AOwner)
 	((TStringList*) fFunctionNames)->OnChange = FunctionNamesChanged;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightersql__1;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fConditionalCommentAttri = new TSynHighlighterAttributes(SYNS_AttrConditionalComment, SYNS_FriendlyAttrConditionalComment);
 	fConditionalCommentAttri->Style = Synhighlightersql__2;
-	addAttribute(fConditionalCommentAttri);
+	AddAttribute(fConditionalCommentAttri);
 	fConsoleOutputAttri = new TSynHighlighterAttributes(SYNS_AttrConsoleOutput, SYNS_FriendlyAttrConsoleOutput);
 	fConsoleOutputAttri->Style = Synhighlightersql__3;
-	addAttribute(fConsoleOutputAttri);
+	AddAttribute(fConsoleOutputAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
 	fDataTypeAttri->Style = Synhighlightersql__4;
-	addAttribute(fDataTypeAttri);
+	AddAttribute(fDataTypeAttri);
 	fDefaultPackageAttri = new TSynHighlighterAttributes(SYNS_AttrDefaultPackage, SYNS_FriendlyAttrDefaultPackage);
 	fDefaultPackageAttri->Style = Synhighlightersql__5;
-	addAttribute(fDefaultPackageAttri);
+	AddAttribute(fDefaultPackageAttri);
 	fDelimitedIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrDelimitedIdentifier, SYNS_FriendlyAttrDelimitedIdentifier);
-	addAttribute(fDelimitedIdentifierAttri);
+	AddAttribute(fDelimitedIdentifierAttri);
 	fExceptionAttri = new TSynHighlighterAttributes(SYNS_AttrException, SYNS_FriendlyAttrException);
 	fExceptionAttri->Style = Synhighlightersql__6;
-	addAttribute(fExceptionAttri);
+	AddAttribute(fExceptionAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrFunction, SYNS_FriendlyAttrFunction);
 	fFunctionAttri->Style = Synhighlightersql__7;
-	addAttribute(fFunctionAttri);
+	AddAttribute(fFunctionAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrKey, SYNS_FriendlyAttrKey);
 	fKeyAttri->Style = Synhighlightersql__8;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fPLSQLAttri = new TSynHighlighterAttributes(SYNS_AttrPLSQL, SYNS_FriendlyAttrPLSQL);
 	fPLSQLAttri->Style = Synhighlightersql__9;
-	addAttribute(fPLSQLAttri);
+	AddAttribute(fPLSQLAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fSQLPlusAttri = new TSynHighlighterAttributes(SYNS_AttrSQLPlus, SYNS_FriendlyAttrSQLPlus);
 	fSQLPlusAttri->Style = Synhighlightersql__10;
-	addAttribute(fSQLPlusAttri);
+	AddAttribute(fSQLPlusAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fProcNameAttri = new TSynHighlighterAttributes(SYNS_AttrProcName, SYNS_FriendlyAttrProcName);
-	addAttribute(fProcNameAttri);
+	AddAttribute(fProcNameAttri);
 	fTableNameAttri = new TSynHighlighterAttributes(SYNS_AttrTableName, SYNS_FriendlyAttrTableName);
-	addAttribute(fTableNameAttri);
+	AddAttribute(fTableNameAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterSQL;
 	fDialect = sqlStandard;
@@ -1310,7 +1310,7 @@ void __fastcall TSynSQLSyn::Assign(TPersistent* Source)
 
 void __fastcall TSynSQLSyn::AndSymbolProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(CharInSet(fLine[Run], Synhighlightersql__11))
 		++Run;
@@ -1324,13 +1324,13 @@ void __fastcall TSynSQLSyn::AsciiCharProc()
 		NullProc();
 	else
 	{
-		FTokenID = tkString;
+		fTokenID = tkString;
     // else it's end of multiline string
 		if(SQLDialect != sqlMySQL)
 		{
-			if((Run > 0) || (FRange != rsString) || (fLine[Run] != L'\x27'))
+			if((Run > 0) || (fRange != rsString) || (fLine[Run] != L'\x27'))
 			{
-				FRange = rsString;
+				fRange = rsString;
 				do
 				{
 					++Run;
@@ -1340,15 +1340,15 @@ void __fastcall TSynSQLSyn::AsciiCharProc()
 			if(fLine[Run] == L'\x27')
 			{
 				++Run;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 			}
 		}
 		else
 		{
 			IsEsc = false;
-			if((Run > 0) || (FRange != rsString) || ((fLine[Run] != L'\x27') && (fLine[Run - 1] != L'\\')))
+			if((Run > 0) || (fRange != rsString) || ((fLine[Run] != L'\x27') && (fLine[Run - 1] != L'\\')))
 			{
-				FRange = rsString;
+				fRange = rsString;
 				do
 				{
 					if(fLine[Run] == L'\\')
@@ -1367,7 +1367,7 @@ void __fastcall TSynSQLSyn::AsciiCharProc()
 			if((fLine[Run] == L'\x27') && (!IsEsc))
 			{
 				++Run;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 			}
 		}
 	}
@@ -1375,7 +1375,7 @@ void __fastcall TSynSQLSyn::AsciiCharProc()
 
 void __fastcall TSynSQLSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -1383,7 +1383,7 @@ void __fastcall TSynSQLSyn::CRProc()
 
 void __fastcall TSynSQLSyn::EqualProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(CharInSet(fLine[Run], Synhighlightersql__12))
 		++Run;
@@ -1391,7 +1391,7 @@ void __fastcall TSynSQLSyn::EqualProc()
 
 void __fastcall TSynSQLSyn::GreaterProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(CharInSet(fLine[Run], Synhighlightersql__13))
 		++Run;
@@ -1400,9 +1400,9 @@ void __fastcall TSynSQLSyn::GreaterProc()
 void __fastcall TSynSQLSyn::IdentProc()
 {
 	bool FoundDoubleMinus = false;
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
-	if(Synhighlightersql__14.Contains(FTokenID))
+	if(Synhighlightersql__14.Contains(fTokenID))
 	{
 		while(!IsLineEnd(Run))
 			++Run;
@@ -1421,13 +1421,13 @@ void __fastcall TSynSQLSyn::IdentProc()
 
 void __fastcall TSynSQLSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynSQLSyn::LowerProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	switch(fLine[Run])
 	{
@@ -1452,7 +1452,7 @@ void __fastcall TSynSQLSyn::MinusProc()
 	++Run;
 	if((fLine[Run] == L'-') && ((fDialect != sqlMySQL) || (fLine[Run + 1] == L' ')))
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			++Run;
@@ -1460,14 +1460,14 @@ void __fastcall TSynSQLSyn::MinusProc()
 		while(!IsLineEnd(Run));
 	}
 	else
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynSQLSyn::HashProc()
 {
 	if(SQLDialect == sqlMySQL)
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			++Run;
@@ -1477,13 +1477,13 @@ void __fastcall TSynSQLSyn::HashProc()
 	else
 	{
 		++Run;
-		FTokenID = tkUnknown;
+		fTokenID = tkUnknown;
 	}
 }
 
 void __fastcall TSynSQLSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -1507,7 +1507,7 @@ void __fastcall TSynSQLSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -1527,7 +1527,7 @@ void __fastcall TSynSQLSyn::NumberProc()
 
 void __fastcall TSynSQLSyn::OrSymbolProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(CharInSet(fLine[Run], Synhighlightersql__15))
 		++Run;
@@ -1535,7 +1535,7 @@ void __fastcall TSynSQLSyn::OrSymbolProc()
 
 void __fastcall TSynSQLSyn::PlusProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(CharInSet(fLine[Run], Synhighlightersql__16))
 		++Run;
@@ -1560,20 +1560,20 @@ void __fastcall TSynSQLSyn::SlashProc()
 		{
 			if((SQLDialect == sqlMySQL) && (fLine[Run + 1] == L'!'))
 			{
-				FRange = rsConditionalComment;
-				FTokenID = tkConditionalComment;
+				fRange = rsConditionalComment;
+				fTokenID = tkConditionalComment;
 			}
 			else
 			{
-				FRange = rsComment;
-				FTokenID = tkComment;
+				fRange = rsComment;
+				fTokenID = tkComment;
 			}
 			do
 			{
 				++Run;
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					Run += 2;
 					break;
 				}
@@ -1584,14 +1584,14 @@ void __fastcall TSynSQLSyn::SlashProc()
 		case L'=':
 		{
 			++Run;
-			FTokenID = tkSymbol;
+			fTokenID = tkSymbol;
 		}
 		break;
 		case L'/':
 		{
 			if(SQLDialect == sqlNexus)
 			{
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 				do
 				{
 					++Run;
@@ -1601,7 +1601,7 @@ void __fastcall TSynSQLSyn::SlashProc()
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		break;
 	}
 }
@@ -1609,14 +1609,14 @@ void __fastcall TSynSQLSyn::SlashProc()
 void __fastcall TSynSQLSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynSQLSyn::QuoteProc()
 {
-	FTokenID = tkDelimitedIdentifier;
+	fTokenID = tkDelimitedIdentifier;
 	++Run;
 	while(!IsLineEnd(Run))
 	{
@@ -1634,7 +1634,7 @@ void __fastcall TSynSQLSyn::BacktickProc()
 {
 	if(SQLDialect == sqlMySQL)
 	{
-		FTokenID = tkDelimitedIdentifier;
+		fTokenID = tkDelimitedIdentifier;
 		++Run;
 		while(!IsLineEnd(Run))
 		{
@@ -1650,7 +1650,7 @@ void __fastcall TSynSQLSyn::BacktickProc()
 	else
 	{
 		++Run;
-		FTokenID = tkUnknown;
+		fTokenID = tkUnknown;
 	}
 }
 
@@ -1658,7 +1658,7 @@ void __fastcall TSynSQLSyn::BracketProc()
 {
 	if(Synhighlightersql__17.Contains(SQLDialect))
 	{
-		FTokenID = tkDelimitedIdentifier;
+		fTokenID = tkDelimitedIdentifier;
 		++Run;
 		while(!IsLineEnd(Run))
 		{
@@ -1674,19 +1674,19 @@ void __fastcall TSynSQLSyn::BracketProc()
 	else
 	{
 		++Run;
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 	}
 }
 
 void __fastcall TSynSQLSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynSQLSyn::SymbolAssignProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(fLine[Run] == L'=')
 		++Run;
@@ -1711,7 +1711,7 @@ void __fastcall TSynSQLSyn::VariableProc()
 				SymbolProc();
 			else
 			{
-				FTokenID = tkVariable;
+				fTokenID = tkVariable;
 				i = Run;
 				do
 				{
@@ -1730,7 +1730,7 @@ void __fastcall TSynSQLSyn::VariableProc()
 void __fastcall TSynSQLSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynSQLSyn::AnsiCProc()
@@ -1748,15 +1748,15 @@ void __fastcall TSynSQLSyn::AnsiCProc()
 		break;
 		default:
 		{
-			if(FRange == rsConditionalComment)
-				FTokenID = tkConditionalComment;
+			if(fRange == rsConditionalComment)
+				fTokenID = tkConditionalComment;
 			else
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 			do
 			{
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					Run += 2;
 					break;
 				}
@@ -1780,7 +1780,7 @@ bool __fastcall TSynSQLSyn::IsKeyword(const String AKeyword)
 void __fastcall TSynSQLSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		case rsConditionalComment:
@@ -1936,14 +1936,14 @@ bool __fastcall TSynSQLSyn::GetEol()
 void* __fastcall TSynSQLSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 TtkTokenKind __fastcall TSynSQLSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -1961,7 +1961,7 @@ TSynHighlighterAttributes* __fastcall TSynSQLSyn::GetTokenAttribute()
 		case tkConsoleOutput:
 		result = fConsoleOutputAttri;
 		break;
-		case tkDataType:
+		case tkDatatype:
 		result = fDataTypeAttri;
 		break;
 		case tkDefaultPackage:
@@ -2022,18 +2022,18 @@ TSynHighlighterAttributes* __fastcall TSynSQLSyn::GetTokenAttribute()
 int __fastcall TSynSQLSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 void __fastcall TSynSQLSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynSQLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynSQLSyn::IsFilterStored()
@@ -2170,14 +2170,14 @@ void __fastcall TSynSQLSyn::PutProcNamesInKeywordList()
 
 void __fastcall TSynSQLSyn::InitializeKeywordLists()
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
 	fKeywords->Clear();
 	FTableDict->Clear();
 	fToIdent = nullptr;
-	for(stop = int((TtkTokenKind) 20 /*# High(TtkTokenKind) */), i = 0; i <= stop; i++)
+	for(stop = int((TtkTokenKind) 20 /*# High(TtkTokenKind) */), I = 0; I <= stop; I++)
 	{
-		EnumerateKeywords(i, GetKeyWords(i), IsIdentChar, DoAddKeyword);
+		EnumerateKeywords(I, GetKeyWords(I), IsIdentChar, DoAddKeyword);
 	}
 	PutProcNamesInKeywordList();
 	PutTableNamesInKeywordList();
@@ -2367,7 +2367,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 		{
 			switch(((TtkTokenKind) TokenKind))
 			{
-				case tkDataType:
+				case tkDatatype:
 				result = PostgresTypes;
 				break;
 				case tkKey:
@@ -2388,7 +2388,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 		case sqlIngres:
 		switch(((TtkTokenKind) TokenKind))
 		{
-			case tkDataType:
+			case tkDatatype:
 			result = IngresTypes;
 			break;
 			case tkKey:
@@ -2405,7 +2405,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 		case sqlInterbase6:
 		switch(((TtkTokenKind) TokenKind))
 		{
-			case tkDataType:
+			case tkDatatype:
 			result = Interbase6Types;
 			break;
 			case tkFunction:
@@ -2425,7 +2425,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = MSSQL7KW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = MSSQL7Types;
 			break;
 			case tkFunction:
@@ -2442,7 +2442,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = MSSQL2000KW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = MSSQL2000Types;
 			break;
 			case tkFunction:
@@ -2459,7 +2459,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = MySqlKW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = MySQLTypes;
 			break;
 			case tkFunction:
@@ -2479,7 +2479,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = OracleKW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = OracleTypes;
 			break;
 			case tkException:
@@ -2522,7 +2522,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = NexusKW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = NexusTypes;
 			break;
 			case tkFunction:
@@ -2539,7 +2539,7 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 			case tkKey:
 			result = InformixKW;
 			break;
-			case tkDataType:
+			case tkDatatype:
 			result = InformixTypes;
 			break;
 			case tkFunction:

@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
@@ -27,7 +26,7 @@ namespace Synhighlightertex
 
 __fastcall TSynTeXSyn::TSynTeXSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FTokenID(tkBrace),
+			fTokenID(tkBrace),
 			fTextAttri(nullptr),
 			fControlSequenceAttri(nullptr),
 			fMathmodeAttri(nullptr),
@@ -37,26 +36,26 @@ __fastcall TSynTeXSyn::TSynTeXSyn(TComponent* AOwner)
 			fBraceAttri(nullptr)
 {
 	fCommentAttri = CreateHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment, (TColor) clTeal, (TColor) clNone, Synhighlightertex__0);
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fTextAttri = CreateHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText, (TColor) clBlack, (TColor) clNone, Synhighlightertex__1);
-	addAttribute(fTextAttri);
+	AddAttribute(fTextAttri);
 	fMathmodeAttri = CreateHighlighterAttributes(SYNS_AttrMathMode, SYNS_FriendlyAttrMathMode, (TColor) clOlive, (TColor) clNone, Synhighlightertex__2);
-	addAttribute(fMathmodeAttri);
+	AddAttribute(fMathmodeAttri);
 	fSpaceAttri = CreateHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace, (TColor) clNone, (TColor) clWhite, Synhighlightertex__3);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fControlSequenceAttri = CreateHighlighterAttributes(SYNS_AttrTeXCommand, SYNS_FriendlyAttrTeXCommand, (TColor) clBlue, (TColor) clWhite, Synhighlightertex__4);
-	addAttribute(fControlSequenceAttri);
+	AddAttribute(fControlSequenceAttri);
 	fBracketAttri = CreateHighlighterAttributes(SYNS_AttrSquareBracket, SYNS_FriendlyAttrSquareBracket, (TColor) clPurple, (TColor) clNone, Synhighlightertex__5);
-	addAttribute(fBracketAttri);
+	AddAttribute(fBracketAttri);
 	fBraceAttri = CreateHighlighterAttributes(SYNS_AttrRoundBracket, SYNS_FriendlyAttrRoundBracket, (TColor) clRed, (TColor) clNone, Synhighlightertex__6);
-	addAttribute(fBraceAttri);
+	AddAttribute(fBraceAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterTeX;
 }  /* Create */
 
 void __fastcall TSynTeXSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	switch(fLine[Run + 1])
 	{
 		case L'\x0a':
@@ -70,7 +69,7 @@ void __fastcall TSynTeXSyn::CRProc()
 
 void __fastcall TSynTeXSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
@@ -78,49 +77,49 @@ void __fastcall TSynTeXSyn::SpaceProc()
 
 void __fastcall TSynTeXSyn::TextProc()
 {
-	FTokenID = tkText;
+	fTokenID = tkText;
 	++Run;
 }  /* TextProc */
 
 void __fastcall TSynTeXSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }  /* SpaceProc */
 
 void __fastcall TSynTeXSyn::BraceOpenProc()
 {
-	FTokenID = tkBrace;
+	fTokenID = tkBrace;
 	++Run;
 }  /* BraceOpen */
 
 void __fastcall TSynTeXSyn::BraceCloseProc()
 {
-	FTokenID = tkBrace;
+	fTokenID = tkBrace;
 	++Run;
 }  /* BraceClose */
 
 void __fastcall TSynTeXSyn::BracketOpenProc()
 {
-	FTokenID = tkBracket;
+	fTokenID = tkBracket;
 	++Run;
 }  /* BracketOpen */
 
 void __fastcall TSynTeXSyn::BracketCloseProc()
 {
-	FTokenID = tkBracket;
+	fTokenID = tkBracket;
 	++Run;
 }  /* BracketClose */
 
 void __fastcall TSynTeXSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }  /* NullProc */
 
 void __fastcall TSynTeXSyn::CommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	do
 	{
 		switch(fLine[Run])
@@ -141,13 +140,13 @@ void __fastcall TSynTeXSyn::CommentProc()
 
 void __fastcall TSynTeXSyn::MathmodeProc()
 {
-	FTokenID = tkMathMode;
+	fTokenID = tkMathMode;
 	++Run;
 }  /* MathModeProc */
 
 void __fastcall TSynTeXSyn::ControlSequenceProc()
 {
-	FTokenID = tkControlSequence;
+	fTokenID = tkControlSequence;
 	do
 	{
 		switch(fLine[Run])
@@ -265,14 +264,14 @@ bool __fastcall TSynTeXSyn::GetEol()
 TtkTokenKind __fastcall TSynTeXSyn::GetTokenID()
 {
 	TtkTokenKind result = tkBrace;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }  /* GetTokenID */
 
 TSynHighlighterAttributes* __fastcall TSynTeXSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkComment:
 		result = fCommentAttri;
@@ -305,7 +304,7 @@ TSynHighlighterAttributes* __fastcall TSynTeXSyn::GetTokenAttribute()
 int __fastcall TSynTeXSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }  /* GetTokenKind */
 

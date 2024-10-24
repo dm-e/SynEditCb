@@ -105,16 +105,16 @@ class TSynEditPythonBehaviour : public System::Classes::TComponent
 {
 private:
 	Synedit::TSynEdit* FEditor;
-	int FIndent;
+	int fIndent;
 protected:
 	virtual void __fastcall SetEditor(Synedit::TSynEdit* Value);
 	virtual void __fastcall doProcessUserCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
 public:
 	typedef System::Classes::TComponent inherited;
-	__fastcall TSynEditPythonBehaviour(TComponent* AOwner);
+	__fastcall TSynEditPythonBehaviour(TComponent* aOwner);
 __published:
 	__property Synedit::TSynEdit* Editor = { read = FEditor, write = SetEditor };
-	__property int Indent = { read = FIndent, write = FIndent, default = 4 };
+	__property int Indent = { read = fIndent, write = fIndent, default = 4 };
 };
 
 

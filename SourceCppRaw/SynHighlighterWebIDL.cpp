@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterwebidl
@@ -29,7 +28,7 @@ const System::Char SYNS_FriendlyAttrArguments[] = L"Arguments";
 const System::Char SYNS_AttrExtended[] = L"Extended";
 const System::Char SYNS_FriendlyAttrExtended[] = L"Extended";
   // as this language is case-insensitive keywords *must* be in lowercase
-const UnicodeString Keywords[38/*# range 0..37*/] = {L"any", L"attribute", L"boolean", L"byte", L"bytestring", L"callback", L"const", L"creator", L"date", L"deleter"
+const UnicodeString KeyWords[38/*# range 0..37*/] = {L"any", L"attribute", L"boolean", L"byte", L"bytestring", L"callback", L"const", L"creator", L"date", L"deleter"
                     , L"dictionary", L"domstring", L"double", L"enum", L"exception", L"float", L"getter", L"implements", L"inherit", L"interface"
                     , L"legacycaller", L"long", L"object", L"octet", L"optional", L"partial", L"readonly", L"regexp", L"sequence", L"setter"
                     , L"short", L"static", L"stringifier", L"typedef", L"unresticted", L"unrestricted", L"unsigned", L"void"};
@@ -38,8 +37,8 @@ const int KeyIndices[59/*# range 0..58*/] = {14, 28, 4, 37, 21, -1, -1, 12, 17, 
 
 __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkArguments),
+			fRange(rsUnknown),
+			fTokenID(tkArguments),
 			fSymbolTokenID(stkBraceOpen),
 			fArgumentsAttri(nullptr),
 			fExtendedAttri(nullptr),
@@ -52,40 +51,40 @@ __fastcall TSynWebIDLSyn::TSynWebIDLSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fTypesAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fArgumentsAttri = new TSynHighlighterAttributes(SYNS_AttrArguments, SYNS_FriendlyAttrArguments);
 	fArgumentsAttri->Style = Synhighlighterwebidl__0;
 	fArgumentsAttri->Foreground = (TColor) clNavy;
-	addAttribute(fArgumentsAttri);
+	AddAttribute(fArgumentsAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterwebidl__1;
 	fCommentAttri->Foreground = (TColor) clGreen;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fExtendedAttri = new TSynHighlighterAttributes(SYNS_AttrExtended, SYNS_FriendlyAttrExtended);
 	fExtendedAttri->Style = Synhighlighterwebidl__2;
 	fExtendedAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fExtendedAttri);
+	AddAttribute(fExtendedAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterwebidl__3;
 	fKeyAttri->Foreground = (TColor) clNavy;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clPurple;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterwebidl__4;
 	fSymbolAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fTypesAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
 	fTypesAttri->Foreground = (TColor) clNavy;
-	addAttribute(fTypesAttri);
+	AddAttribute(fTypesAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterWebIDL;
@@ -143,7 +142,7 @@ void __fastcall TSynWebIDLSyn::InitIdent()
 void __fastcall TSynWebIDLSyn::ColonProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkColon;
 }
 
@@ -167,7 +166,7 @@ unsigned int __fastcall TSynWebIDLSyn::HashKey(PWideChar Str)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncAny(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -177,7 +176,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncAny(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncAttribute(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -187,7 +186,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncAttribute(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncBoolean(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -197,7 +196,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncBoolean(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncByte(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -207,7 +206,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncByte(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncBytestring(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -217,7 +216,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncBytestring(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncCallback(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -227,7 +226,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncCallback(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncConst(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -237,7 +236,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncConst(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncCreator(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -247,7 +246,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncCreator(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncDate(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -257,7 +256,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncDate(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncDeleter(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -267,7 +266,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncDeleter(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncDictionary(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -277,7 +276,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncDictionary(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncDomstring(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -287,7 +286,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncDomstring(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncDouble(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -297,7 +296,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncDouble(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncEnum(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -307,7 +306,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncEnum(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncException(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -317,7 +316,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncException(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncFloat(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -327,7 +326,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncFloat(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncGetter(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -337,7 +336,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncGetter(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncImplements(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -347,7 +346,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncImplements(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncInherit(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -357,7 +356,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncInherit(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncInterface(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -367,7 +366,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncInterface(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncLegacycaller(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -377,7 +376,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncLegacycaller(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncLong(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -387,7 +386,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncLong(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncObject(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -397,7 +396,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncObject(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncOctet(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -407,7 +406,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncOctet(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncOptional(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -417,7 +416,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncOptional(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncPartial(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -427,7 +426,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncPartial(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncReadonly(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -437,7 +436,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncReadonly(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncRegexp(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -447,7 +446,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncRegexp(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncSequence(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -457,7 +456,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncSequence(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncSetter(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -467,7 +466,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncSetter(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncShort(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -477,7 +476,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncShort(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncStatic(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -487,7 +486,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncStatic(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncStringifier(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -497,7 +496,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncStringifier(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncTypedef(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -507,7 +506,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncTypedef(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnresticted(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -517,7 +516,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnresticted(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnrestricted(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkArguments;
 	else
 		result = tkIdentifier;
@@ -527,7 +526,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnrestricted(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnsigned(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -537,7 +536,7 @@ TtkTokenKind __fastcall TSynWebIDLSyn::FuncUnsigned(int Index)
 TtkTokenKind __fastcall TSynWebIDLSyn::FuncVoid(int Index)
 {
 	TtkTokenKind result = tkArguments;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkTypes;
 	else
 		result = tkIdentifier;
@@ -551,14 +550,14 @@ TtkTokenKind __fastcall TSynWebIDLSyn::AltFunc(int Index)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynWebIDLSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynWebIDLSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkArguments;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 58 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 58 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -567,14 +566,14 @@ TtkTokenKind __fastcall TSynWebIDLSyn::IdentKind(PWideChar Maybe)
 void __fastcall TSynWebIDLSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynWebIDLSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -618,9 +617,9 @@ void __fastcall TSynWebIDLSyn::NumberProc()
 		return result;
 	};
 	int idx1 = 0; // token[1]
-	bool IsHex = false;
-	FTokenID = tkNumber;
-	IsHex = false;
+	bool isHex = false;
+	fTokenID = tkNumber;
+	isHex = false;
 	idx1 = Run;
 	++Run;
 	while(IsNumberChar())
@@ -633,7 +632,7 @@ void __fastcall TSynWebIDLSyn::NumberProc()
 			break;
 			case 97: case 98: case 99: case 100: case 101: case 102:
 			case 65: case 66: case 67: case 68: case 69: case 70:
-			if(!IsHex)
+			if(!isHex)
 				goto label1;
 			break;
 			case L'x':
@@ -643,7 +642,7 @@ void __fastcall TSynWebIDLSyn::NumberProc()
 					goto label2;
 				if(!IsHexChar(Succ(Run)))
 					goto label3;
-				IsHex = true;
+				isHex = true;
 			}
 			break;
 			default:
@@ -661,13 +660,13 @@ void __fastcall TSynWebIDLSyn::NumberProc()
 void __fastcall TSynWebIDLSyn::QuestionMarkProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkQuestionMark;
 }
 
 void __fastcall TSynWebIDLSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -676,20 +675,20 @@ void __fastcall TSynWebIDLSyn::CRProc()
 void __fastcall TSynWebIDLSyn::GreaterProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkGreater;
 }
 
 void __fastcall TSynWebIDLSyn::LessProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkLess;
 }
 
 void __fastcall TSynWebIDLSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -705,19 +704,19 @@ void __fastcall TSynWebIDLSyn::SlashProc()
 				++Run;
 			}
 			while(!IsLineEnd(Run));
-			FRange = rsSingleComment;
-			FTokenID = tkComment;
+			fRange = rsSingleComment;
+			fTokenID = tkComment;
 		}
 		break;
 		case L'*':
 		{
 			Run += 1;
-			FRange = rsCStyleComment;
-			FTokenID = tkComment;
+			fRange = rsCStyleComment;
+			fTokenID = tkComment;
 		}
 		break;
 		default:
-		FTokenID = tkIdentifier;
+		fTokenID = tkIdentifier;
 		break;
 	}
 }
@@ -737,13 +736,13 @@ void __fastcall TSynWebIDLSyn::CStyleCommentProc()
 		break;
 		default:
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			do
 			{
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 				{
 					Run += 2;
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -758,8 +757,8 @@ void __fastcall TSynWebIDLSyn::CStyleCommentProc()
 void __fastcall TSynWebIDLSyn::StringOpenProc()
 {
 	++Run;
-	FRange = rsString;
-	FTokenID = tkString;
+	fRange = rsString;
+	fTokenID = tkString;
 }
 
 void __fastcall TSynWebIDLSyn::StringProc()
@@ -777,13 +776,13 @@ void __fastcall TSynWebIDLSyn::StringProc()
 		break;
 		default:
 		{
-			FTokenID = tkString;
+			fTokenID = tkString;
 			do
 			{
 				if(fLine[Run] == L'\"')
 				{
 					Run += 1;
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -797,7 +796,7 @@ void __fastcall TSynWebIDLSyn::StringProc()
 
 void __fastcall TSynWebIDLSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -806,43 +805,43 @@ void __fastcall TSynWebIDLSyn::IdentProc()
 void __fastcall TSynWebIDLSyn::BraceOpenProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkBraceOpen;
 }
 
 void __fastcall TSynWebIDLSyn::BraceCloseProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkBraceClose;
 }
 
 void __fastcall TSynWebIDLSyn::SquareOpenProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkSquareOpen;
-	FRange = rsExtendedAttributes;
+	fRange = rsExtendedAttributes;
 }
 
 void __fastcall TSynWebIDLSyn::SquareCloseProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	fSymbolTokenID = stkSquareClose;
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynWebIDLSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynWebIDLSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsCStyleComment:
 		CStyleCommentProc();
@@ -971,8 +970,8 @@ UnicodeString __fastcall TSynWebIDLSyn::GetKeyWords(int TokenKind)
 TtkTokenKind __fastcall TSynWebIDLSyn::GetTokenID()
 {
 	TtkTokenKind result = tkArguments;
-	result = FTokenID;
-	if((FRange == rsExtendedAttributes) && !((FTokenID == tkSymbol) && (fSymbolTokenID == stkSquareOpen)))
+	result = fTokenID;
+	if((fRange == rsExtendedAttributes) && !((fTokenID == tkSymbol) && (fSymbolTokenID == stkSquareOpen)))
 		result = tkExtendedAttributes;
 	return result;
 }
@@ -1025,7 +1024,7 @@ TSynHighlighterAttributes* __fastcall TSynWebIDLSyn::GetTokenAttribute()
 int __fastcall TSynWebIDLSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -1094,18 +1093,18 @@ String __fastcall TSynWebIDLSyn::GetLanguageName()
 
 void __fastcall TSynWebIDLSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynWebIDLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynWebIDLSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 static bool SynHighlighterWebIDL_Initialized = false;

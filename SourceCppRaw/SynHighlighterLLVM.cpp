@@ -28,7 +28,7 @@ namespace Synhighlighterllvm
 
 
   // as this language is case-insensitive keywords *must* be in lowercase
-const UnicodeString Keywords[217/*# range 0..216*/] = {L"acq_rel", L"acquire", L"add", L"addrspace", L"alias", L"align", L"alignstack", L"alloca", L"alwaysinline", L"and"
+const UnicodeString KeyWords[217/*# range 0..216*/] = {L"acq_rel", L"acquire", L"add", L"addrspace", L"alias", L"align", L"alignstack", L"alloca", L"alwaysinline", L"and"
                     , L"appending", L"arcp", L"arm_aapcs_vfpcc", L"arm_aapcscc", L"arm_apcscc", L"ashr", L"asm", L"atomic", L"atomicrmw", L"available_externally"
                     , L"bitcast", L"blockaddress", L"br", L"byval", L"c", L"call", L"catch", L"cc", L"ccc", L"cleanup", L"cmpxchg"
                     , L"coldcc", L"common", L"constant", L"datalayout", L"declare", L"default", L"define", L"deplibs", L"dllexport", L"dllimport"
@@ -84,8 +84,8 @@ const int KeyIndices[1553/*# range 0..1552*/] = {-1, -1, -1, -1, -1, -1, -1, -1,
 
 __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkBoolean),
+			fRange(rsUnKnown),
+			fTokenID(tkBoolean),
 			fBooleanAttri(nullptr),
 			fCommentAttri(nullptr),
 			fConstantAttri(nullptr),
@@ -98,44 +98,44 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 			fNumberAttri(nullptr),
 			fTypesAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fBooleanAttri = new TSynHighlighterAttributes(SYNS_AttrBoolean, SYNS_FriendlyAttrBoolean);
 	fBooleanAttri->Foreground = (TColor) clNavy;
-	addAttribute(fBooleanAttri);
+	AddAttribute(fBooleanAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) 0xB0A060;
 	fCommentAttri->Style = Synhighlighterllvm__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrConstant, SYNS_FriendlyAttrConstant);
 	fConstantAttri->Foreground = (TColor) clNavy;
-	addAttribute(fConstantAttri);
+	AddAttribute(fConstantAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = (TColor) 0xD560BB;
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInstructionAttri = new TSynHighlighterAttributes(SYNS_AttrInstructions, SYNS_FriendlyAttrInstructions);
 	fInstructionAttri->Foreground = (TColor) 0x207000;
 	fInstructionAttri->Style = Synhighlighterllvm__1;
-	addAttribute(fInstructionAttri);
+	AddAttribute(fInstructionAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) 0x207000;
 	fKeyAttri->Style = Synhighlighterllvm__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fLabelAttri = new TSynHighlighterAttributes(SYNS_AttrLabel, SYNS_FriendlyAttrLabel);
 	fLabelAttri->Foreground = (TColor) 0x702000;
 	fLabelAttri->Style = Synhighlighterllvm__3;
-	addAttribute(fLabelAttri);
+	AddAttribute(fLabelAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) 0x70A040;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) 0xA07040;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fTypesAttri = new TSynHighlighterAttributes(SYNS_AttrBasicTypes, SYNS_FriendlyAttrBasicTypes);
 	fTypesAttri->Foreground = (TColor) 0x002090;
 	fTypesAttri->Style = Synhighlighterllvm__4;
-	addAttribute(fTypesAttri);
+	AddAttribute(fTypesAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterLLVMIR;
@@ -389,7 +389,7 @@ unsigned int __fastcall TSynLLVMIRSyn::HashKey(PWideChar Str)
 TtkTokenKind __fastcall TSynLLVMIRSyn::FuncBoolean(int Index)
 {
 	TtkTokenKind result = tkBoolean;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkBoolean;
 	else
 		result = tkIdentifier;
@@ -399,7 +399,7 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::FuncBoolean(int Index)
 TtkTokenKind __fastcall TSynLLVMIRSyn::FuncConstant(int Index)
 {
 	TtkTokenKind result = tkBoolean;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkConstant;
 	else
 		result = tkIdentifier;
@@ -409,7 +409,7 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::FuncConstant(int Index)
 TtkTokenKind __fastcall TSynLLVMIRSyn::FuncInstruction(int Index)
 {
 	TtkTokenKind result = tkBoolean;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkInstruction;
 	else
 		result = tkIdentifier;
@@ -419,7 +419,7 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::FuncInstruction(int Index)
 TtkTokenKind __fastcall TSynLLVMIRSyn::FuncKey(int Index)
 {
 	TtkTokenKind result = tkBoolean;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -429,7 +429,7 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::FuncKey(int Index)
 TtkTokenKind __fastcall TSynLLVMIRSyn::FuncType(int Index)
 {
 	TtkTokenKind result = tkBoolean;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkType;
 	else
 		result = tkIdentifier;
@@ -443,14 +443,14 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::AltFunc(int Index)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynLLVMIRSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynLLVMIRSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkBoolean;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 1552 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 1552 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -459,20 +459,20 @@ TtkTokenKind __fastcall TSynLLVMIRSyn::IdentKind(PWideChar Maybe)
 void __fastcall TSynLLVMIRSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynLLVMIRSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynLLVMIRSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -480,7 +480,7 @@ void __fastcall TSynLLVMIRSyn::CRProc()
 
 void __fastcall TSynLLVMIRSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -490,7 +490,7 @@ void __fastcall TSynLLVMIRSyn::IntegerTypeProc()
 	{
 		case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
 		{
-			FTokenID = tkType;
+			fTokenID = tkType;
 			do
 			{
 				++Run;
@@ -517,14 +517,14 @@ void __fastcall TSynLLVMIRSyn::AtTypeProc()
 {
 
   // @ = global identifiers
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 	++Run;
 	if(IsLineEnd(Run))
 		return;
 	switch(fLine[Run])
 	{
 		case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
-		FTokenID = tkUnnamedIdentifier;
+		fTokenID = tkUnnamedIdentifier;
 		break;
 		case L'-':
 		case L'_':
@@ -534,13 +534,13 @@ void __fastcall TSynLLVMIRSyn::AtTypeProc()
 		case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
 		 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
 		 case 117: case 118: case 119: case 120: case 121: case 122:
-		FTokenID = tkIdentifier;
+		fTokenID = tkIdentifier;
 		break;
 		case L'\"':
 		{
 			++Run;
 			StringProc();
-			FTokenID = tkIdentifier;
+			fTokenID = tkIdentifier;
 			return;
 		}
 		default:
@@ -576,14 +576,14 @@ void __fastcall TSynLLVMIRSyn::PercentTypeProc()
 {
 
   // % = local identifiers
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 	++Run;
 	if(IsLineEnd(Run))
 		return;
 	switch(fLine[Run])
 	{
 		case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
-		FTokenID = tkUnnamedIdentifier;
+		fTokenID = tkUnnamedIdentifier;
 		break;
 		case L'-':
 		case L'_':
@@ -594,13 +594,13 @@ void __fastcall TSynLLVMIRSyn::PercentTypeProc()
 		case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
 		 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
 		 case 117: case 118: case 119: case 120: case 121: case 122:
-		FTokenID = tkIdentifier;
+		fTokenID = tkIdentifier;
 		break;
 		case L'\"':
 		{
 			++Run;
 			StringProc();
-			FTokenID = tkIdentifier;
+			fTokenID = tkIdentifier;
 			return;
 		}
 		default:
@@ -635,14 +635,14 @@ void __fastcall TSynLLVMIRSyn::PercentTypeProc()
 void __fastcall TSynLLVMIRSyn::SingleCommentOpenProc()
 {
 	++Run;
-	FRange = rsSingleComment;
+	fRange = rsSingleComment;
 	SingleCommentProc();
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 }
 
 void __fastcall TSynLLVMIRSyn::SingleCommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	while(!IsLineEnd(Run))
 		++Run;
 }
@@ -650,9 +650,9 @@ void __fastcall TSynLLVMIRSyn::SingleCommentProc()
 void __fastcall TSynLLVMIRSyn::StringOpenProc()
 {
 	++Run;
-	FRange = rsString;
+	fRange = rsString;
 	StringProc();
-	FTokenID = tkString;
+	fTokenID = tkString;
 }
 
 void __fastcall TSynLLVMIRSyn::StringProc()
@@ -670,13 +670,13 @@ void __fastcall TSynLLVMIRSyn::StringProc()
 		break;
 		default:
 		{
-			FTokenID = tkString;
+			fTokenID = tkString;
 			do
 			{
 				if(fLine[Run] == L'\"')
 				{
 					Run += 1;
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -771,7 +771,7 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 	int i = 0;
 	idx1 = Run;
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar(Run))
 	{
 		switch(fLine[Run])
@@ -781,12 +781,12 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 				goto label0;
 			else
 			{
-				if(FTokenID != tkHex)
-					FTokenID = tkFloat;
+				if(fTokenID != tkHex)
+					fTokenID = tkFloat;
 				else
  // invalid
 				{
-					FTokenID = tkUnknown;
+					fTokenID = tkUnknown;
 					return;
 				}
 			}
@@ -794,14 +794,14 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			case L'-':
 			case L'+':
 			{
-				if(FTokenID != tkFloat) // number <> float. an arithmetic operator
+				if(fTokenID != tkFloat) // number <> float. an arithmetic operator
 					return;
 				if(!CharInSet(fLine[Pred(Run)], Synhighlighterllvm__5))
 					return; // number = float, but no exponent. an arithmetic operator
 				if(!IsDigitPlusMinusChar(Succ(Run))) // invalid
 				{
 					++Run;
-					FTokenID = tkUnknown;
+					fTokenID = tkUnknown;
 					return;
 				}
 			}
@@ -813,12 +813,12 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			case L'f':
 			case 65: case 66: case 67: case 68:
 			case L'F':
-			if(FTokenID != tkHex)
+			if(fTokenID != tkHex)
 				goto label1;
 			break;
 			case L'e':
 			case L'E':
-			if(FTokenID != tkHex)
+			if(fTokenID != tkHex)
 			{
 				if(CharInSet(fLine[Pred(Run)], Synhighlighterllvm__6)) // exponent
 				{
@@ -827,14 +827,14 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 					{
 						if(CharInSet(fLine[i], Synhighlighterllvm__7)) // too many exponents
 						{
-							FTokenID = tkUnknown;
+							fTokenID = tkUnknown;
 							return;
 						}
 					}
 					if(!IsDigitPlusMinusChar(Succ(Run)))
 						goto label2;
 					else
-						FTokenID = tkFloat;
+						fTokenID = tkFloat;
 				}
 				else
 				goto label3;
@@ -845,14 +845,14 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 			if((Run == Succ(idx1)) && (fLine[idx1] == L'0') && IsHexDigit(Succ(Run)))   // 0x... 'x' must be second char
   // 0x...
  // 0x... must be continued with a number
-				FTokenID = tkHex;
+				fTokenID = tkHex;
 			else
  // invalid char
 			{
 				if(!IsIdentChar(fLine[Succ(Run)]) && CharInSet(fLine[Succ(idx1)], Synhighlighterllvm__8))
 				{
 					++Run; // highlight 'x' too
-					FTokenID = tkUnknown;
+					fTokenID = tkUnknown;
 				}
 				goto label4;
 			}
@@ -869,18 +869,18 @@ void __fastcall TSynLLVMIRSyn::NumberProc()
 	label3:;
 	label4:;
 	if(IsAlphaUncerscore(Run))
-		FTokenID = tkUnknown;
+		fTokenID = tkUnknown;
 }
 
 void __fastcall TSynLLVMIRSyn::IdentProc()
 {
-	FTokenID = IdentKind(fLine + Run);
+	fTokenID = IdentKind(fLine + Run);
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
 	if(fLine[Run] == L':')
 	{
-		FTokenID = tkLabel;
+		fTokenID = tkLabel;
 		++Run;
 	}
 }
@@ -888,13 +888,13 @@ void __fastcall TSynLLVMIRSyn::IdentProc()
 void __fastcall TSynLLVMIRSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynLLVMIRSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsString:
 		StringProc();
@@ -1022,7 +1022,7 @@ UnicodeString __fastcall TSynLLVMIRSyn::GetKeyWords(int TokenKind)
 TtkTokenKind __fastcall TSynLLVMIRSyn::GetTokenID()
 {
 	TtkTokenKind result = tkBoolean;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -1080,7 +1080,7 @@ TSynHighlighterAttributes* __fastcall TSynLLVMIRSyn::GetTokenAttribute()
 int __fastcall TSynLLVMIRSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -1174,18 +1174,18 @@ String __fastcall TSynLLVMIRSyn::GetLanguageName()
 
 void __fastcall TSynLLVMIRSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynLLVMIRSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynLLVMIRSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 static bool SynHighlighterLLVM_Initialized = false;

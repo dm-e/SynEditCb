@@ -180,7 +180,7 @@ private:
 //-- CodeFolding
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall AndSymbolProc();
 	void __fastcall AsciiCharProc();
 	void __fastcall AtSymbolProc();

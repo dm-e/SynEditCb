@@ -169,7 +169,7 @@ class TSynCacheSyn : public Synedithighlighter::TSynCustomHighlighter
 private:
 	int fBrace;
 	bool fFirstBrace;
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[1997/*# range 0..1996*/];
 	Synedithighlighter::TSynHighlighterAttributes* fClassAttri;
@@ -194,7 +194,7 @@ private:
 	TtkTokenKind __fastcall Func38html(int Index);
 	TtkTokenKind __fastcall Func38sql(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall CommentProc();

@@ -34,12 +34,12 @@ __fastcall TLineInfo::TLineInfo() {}
 String __fastcall GetFirstEl(String& Value, WideChar Delim)
 {
 	String result;
-	int P = 0;
-	P = Pos(Delim, Value);
-	if(P == 0)
-		P = Value.Length() + 1;
-	result = Value.SubString(1, P - 1);
-	Value.Delete(1, 	P);
+	int p = 0;
+	p = Pos(Delim, Value);
+	if(p == 0)
+		p = Value.Length() + 1;
+	result = Value.SubString(1, p - 1);
+	Value.Delete(1, 	p);
 	return result;
 }
 
@@ -48,7 +48,7 @@ String __fastcall GetFirstEl(String& Value, WideChar Delim)
 
 __fastcall THeaderFooterItem::THeaderFooterItem()
  : FFont(nullptr),
-			fLineNumber(0),
+			FLineNumber(0),
 			FAlignment(taLeftJustify),
 			FIndex(0)
 {
@@ -86,7 +86,7 @@ String __fastcall THeaderFooterItem::GetAsString()
 	           + L"/"
 	           + IntToStr((int) ToByte(FFont->Style))
 	           + L"/"
-	           + IntToStr(fLineNumber)
+	           + IntToStr(FLineNumber)
 	           + L"/"
 	           + IntToStr(int(FAlignment));
 	return result;
@@ -96,7 +96,7 @@ String __fastcall THeaderFooterItem::GetAsString()
 /* This is basically copied from original SynEditPrint.pas. Returns the
   header/footer text with macros expanded */
 
-String __fastcall THeaderFooterItem::GetText(int NumPages, int PageNum, bool Roman, String Title, String atime, String ADate)
+String __fastcall THeaderFooterItem::GetText(int NumPages, int PageNum, bool Roman, String Title, String ATime, String ADate)
 {
 	String result;
 	int Len = 0;
@@ -152,17 +152,17 @@ String __fastcall THeaderFooterItem::GetText(int NumPages, int PageNum, bool Rom
 		}
 		if(Macro == L"$TIME$")
 		{
-			DoAppend(atime);
+			DoAppend(ATime);
 			return result;
 		}
 		if(Macro == L"$DATETIME$")
 		{
-			DoAppend(ADate + L" " + atime);
+			DoAppend(ADate + L" " + ATime);
 			return result;
 		}
 		if(Macro == L"$TIMEDATE$")
 		{
-			DoAppend(atime + L" " + ADate);
+			DoAppend(ATime + L" " + ADate);
 			return result;
 		}
 		result = false;
@@ -221,13 +221,13 @@ String __fastcall THeaderFooterItem::GetText(int NumPages, int PageNum, bool Rom
 
 void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 {
-	System::Uitypes::TFontCharset ACharSet = (System::Uitypes::TFontCharset) 0;
-	TColor AColor = (TColor) 0;
-	int AHeight = 0;
-	TFontName AName;
-	TFontPitch APitch = TFontPitch::fpDefault;
-	int ASize = 0;
-	TFontStyles AStyle;
+	System::Uitypes::TFontCharset aCharset = (System::Uitypes::TFontCharset) 0;
+	TColor aColor = (TColor) 0;
+	int aHeight = 0;
+	TFontName aName;
+	TFontPitch aPitch = TFontPitch::fpDefault;
+	int aSize = 0;
+	TFontStyles aStyle;
 	int Len = 0;
 	int BufferSize = 0;
 	void* Buffer = nullptr;
@@ -247,71 +247,71 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&fLineNumber, sizeof(fLineNumber));
+		with0->Read((void**)&FLineNumber, sizeof(FLineNumber));
     // font
-		with0->Read((void**)&ACharSet, sizeof(ACharSet));
-		with0->Read((void**)&AColor, sizeof(AColor));
-		with0->Read((void**)&AHeight, sizeof(AHeight));
+		with0->Read((void**)&aCharset, sizeof(aCharset));
+		with0->Read((void**)&aColor, sizeof(aColor));
+		with0->Read((void**)&aHeight, sizeof(aHeight));
 		with0->Read((void**)&BufferSize, sizeof(BufferSize));
 		Buffer = (void*) GetMemory(BufferSize + 1);
 		try
 		{
 			with0->Read((void**) Buffer, BufferSize);
 			((PAnsiChar) Buffer)[(int)(BufferSize / /*div*/ sizeof(AnsiChar))] = '\x00';
-			AName = UnicodeString((char*)Buffer /*# check length*/);
+			aName = UnicodeString((char*)Buffer /*# check length*/);
 		}
 		__finally
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&APitch, sizeof(APitch));
-		with0->Read((void**)&ASize, sizeof(ASize));
-		with0->Read((void**)&AStyle, sizeof(AStyle));
-		FFont->Charset = ACharSet;
-		FFont->Color = AColor;
-		FFont->Height = AHeight;
-		FFont->Name = AName;
-		FFont->Pitch = APitch;
-		FFont->Size = ASize;
-		FFont->Style = AStyle;
+		with0->Read((void**)&aPitch, sizeof(aPitch));
+		with0->Read((void**)&aSize, sizeof(aSize));
+		with0->Read((void**)&aStyle, sizeof(aStyle));
+		FFont->Charset = aCharset;
+		FFont->Color = aColor;
+		FFont->Height = aHeight;
+		FFont->Name = aName;
+		FFont->Pitch = aPitch;
+		FFont->Size = aSize;
+		FFont->Style = aStyle;
 		with0->Read((void**)&FAlignment, sizeof(FAlignment));
 	}
 }
 
 void __fastcall THeaderFooterItem::SaveToStream(TStream* AStream)
 {
-	System::Uitypes::TFontCharset ACharSet = (System::Uitypes::TFontCharset) 0;
-	TColor AColor = (TColor) 0;
-	int AHeight = 0;
-	TFontName AName;
-	TFontPitch APitch = TFontPitch::fpDefault;
-	int ASize = 0;
-	TFontStyles AStyle;
-	int ALen = 0;
+	System::Uitypes::TFontCharset aCharset = (System::Uitypes::TFontCharset) 0;
+	TColor aColor = (TColor) 0;
+	int aHeight = 0;
+	TFontName aName;
+	TFontPitch aPitch = TFontPitch::fpDefault;
+	int aSize = 0;
+	TFontStyles aStyle;
+	int aLen = 0;
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		ALen = FText.Length();
-		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(FText.c_str(), ALen * sizeof(WideChar));
-		with0->Write(&fLineNumber, sizeof(fLineNumber));
+		aLen = FText.Length();
+		with0->Write(&aLen, sizeof(aLen));
+		with0->Write(FText.c_str(), aLen * sizeof(WideChar));
+		with0->Write(&FLineNumber, sizeof(FLineNumber));
     // font
-		ACharSet = FFont->Charset;
-		AColor = FFont->Color;
-		AHeight = FFont->Height;
-		AName = FFont->Name;
-		APitch = FFont->Pitch;
-		ASize = FFont->Size;
-		AStyle = FFont->Style;
-		with0->Write(&ACharSet, sizeof(ACharSet));
-		with0->Write(&AColor, sizeof(AColor));
-		with0->Write(&AHeight, sizeof(AHeight));
-		ALen = AName.Length();
-		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(AnsiString(AName).c_str(), ALen);
-		with0->Write(&APitch, sizeof(APitch));
-		with0->Write(&ASize, sizeof(ASize));
-		with0->Write(&AStyle, sizeof(AStyle));
+		aCharset = FFont->Charset;
+		aColor = FFont->Color;
+		aHeight = FFont->Height;
+		aName = FFont->Name;
+		aPitch = FFont->Pitch;
+		aSize = FFont->Size;
+		aStyle = FFont->Style;
+		with0->Write(&aCharset, sizeof(aCharset));
+		with0->Write(&aColor, sizeof(aColor));
+		with0->Write(&aHeight, sizeof(aHeight));
+		aLen = aName.Length();
+		with0->Write(&aLen, sizeof(aLen));
+		with0->Write(AnsiString(aName).c_str(), aLen);
+		with0->Write(&aPitch, sizeof(aPitch));
+		with0->Write(&aSize, sizeof(aSize));
+		with0->Write(&aStyle, sizeof(aStyle));
 		with0->Write(&FAlignment, sizeof(FAlignment));
 	}
 }
@@ -329,9 +329,9 @@ void __fastcall THeaderFooterItem::SetAsString(const String Value)
 	FFont->Pitch = ((TFontPitch) StrToIntDef(GetFirstEl(s, L'/'), 0));
 	FFont->PixelsPerInch = StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FFont->Size = StrToIntDef(GetFirstEl(s, L'/'), 0);
-	CastAssign<unsigned char>(&sty, StrToIntDef(GetFirstEl(s, L'/'), 0));
+	CastAssign<Byte>(&sty, StrToIntDef(GetFirstEl(s, L'/'), 0));
 	FFont->Style = sty;
-	fLineNumber = StrToIntDef(GetFirstEl(s, L'/'), 0);
+	FLineNumber = StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FAlignment = ((TAlignment) StrToIntDef(GetFirstEl(s, L'/'), 0));
 }
 
@@ -343,7 +343,7 @@ void __fastcall THeaderFooterItem::SetFont(TFont* const Value)
 /* THeaderFooter */
 
 __fastcall THeaderFooter::THeaderFooter()
- : fType(hftHeader),
+ : FType(hftHeader),
 			FShadedColor((TColor) 0),
 			FLineColor((TColor) 0),
 			FItems(nullptr),
@@ -356,7 +356,7 @@ __fastcall THeaderFooter::THeaderFooter()
 			FOldFont(nullptr),
 			FRomanNumbers(false),
 			FLineInfo(nullptr),
-			fLineCount(0),
+			FLineCount(0),
 			FMirrorPosition(false)
 {
 	// inherited;
@@ -460,17 +460,17 @@ void __fastcall THeaderFooter::FixLines()
 	}
 	FLineInfo->Clear();
 	CurLine = 0;
-	fLineCount = 0;
+	FLineCount = 0;
 	for(stop = FItems->Count - 1, i = 0; i <= stop; i++)
 	{
 		if(((THeaderFooterItem*) FItems->Items[i])->LineNumber != CurLine)
 		{
 			CurLine = ((THeaderFooterItem*) FItems->Items[i])->LineNumber;
-			fLineCount = fLineCount + 1;
+			FLineCount = FLineCount + 1;
 			LineInfo = new TLineInfo();
 			FLineInfo->Add(LineInfo);
 		}
-		((THeaderFooterItem*) FItems->Items[i])->LineNumber = fLineCount;
+		((THeaderFooterItem*) FItems->Items[i])->LineNumber = FLineCount;
 	}
 }
 
@@ -483,7 +483,7 @@ void __fastcall THeaderFooter::CalcHeight(TCanvas* ACanvas)
 	int CurLine = 0;
 	THeaderFooterItem* AItem = nullptr;
 	int FOrgHeight = 0;
-	TTextMetric TEXTMETRIC = {};
+	TTextMetric TextMetric = {};
 	int stop = 0;
 	FFrameHeight = -1;
 	if(FItems->Count <= 0)
@@ -500,11 +500,11 @@ void __fastcall THeaderFooter::CalcHeight(TCanvas* ACanvas)
 			FOrgHeight = FFrameHeight;
 		}
 		ACanvas->Font->Assign(AItem->Font);
-		GetTextMetrics(ACanvas->Handle, &TEXTMETRIC);
-		/*# with TLineInfo(FLineInfo[CurLine-1]), TEXTMETRIC do */
+		GetTextMetrics(ACanvas->Handle, &TextMetric);
+		/*# with TLineInfo(FLineInfo[CurLine-1]), TextMetric do */
 		{
 			auto with0 = ((TLineInfo*) FLineInfo->Items[CurLine - 1]);
-			auto& with1 = TEXTMETRIC;
+			auto& with1 = TextMetric;
 			with0->LineHeight = Max(with0->LineHeight, ACanvas->TextHeight(L"W"));
 			with0->MaxBaseDist = Max(with0->MaxBaseDist, with1.tmHeight - with1.tmDescent);
 		}
@@ -587,7 +587,7 @@ void __fastcall THeaderFooter::DrawFrame(TCanvas* ACanvas)
 			with0->Pen->Style = psClear;
 		if(FrameTypes * Syneditprintheaderfooter__2 != Syneditprintheaderfooter__3)
 		{
-			if(fType == hftHeader)
+			if(FType == hftHeader)
 				with0->Rectangle(with1->PLeft, with1->PHeader - FFrameHeight, with1->PRight, with1->PHeader);
 			else
 				with0->Rectangle(with1->PLeft, with1->PFooter, with1->PRight, with1->PFooter + FFrameHeight);
@@ -595,7 +595,7 @@ void __fastcall THeaderFooter::DrawFrame(TCanvas* ACanvas)
 		if(FrameTypes.Contains(ftLine))
 		{
 			with0->Pen->Style = psSolid;
-			if(fType == hftHeader)
+			if(FType == hftHeader)
 			{
 				with0->MoveTo(with1->PLeft, with1->PHeader);
 				with0->LineTo(with1->PRight, with1->PHeader);
@@ -625,7 +625,7 @@ void __fastcall THeaderFooter::Print(TCanvas* ACanvas, int PageNum)
 	SaveFontPenBrush(ACanvas);
 	DrawFrame(ACanvas);
 	ACanvas->Brush->Style = bsClear;
-	if(fType == hftHeader)
+	if(FType == hftHeader)
 		Y = FMargins->PHeader - FFrameHeight;
 	else
 		Y = FMargins->PFooter;
@@ -693,7 +693,7 @@ void __fastcall THeaderFooter::Assign(TPersistent* Source)
 		int stop = 0;
 		Src = ((THeaderFooter*) Source);
 		Clear();
-		fType = Src->fType;
+		FType = Src->FType;
 		FFrameTypes = Src->FFrameTypes;
 		FShadedColor = Src->FShadedColor;
 		FLineColor = Src->FLineColor;
@@ -745,22 +745,22 @@ String __fastcall THeaderFooter::GetAsString()
 
 void __fastcall THeaderFooter::SetAsString(const String Value)
 {
-	THeaderFooterItem* Item = nullptr;
+	THeaderFooterItem* item = nullptr;
 	String s;
 	Clear();
-	Item = new THeaderFooterItem();
+	item = new THeaderFooterItem();
 	try
 	{
 		s = Value;
 		while(s != L"")
 		{
-			Item->AsString = DecodeString(GetFirstEl(s, L'/'));
-			Add(Item->Text, Item->Font, Item->Alignment, Item->LineNumber);
+			item->AsString = DecodeString(GetFirstEl(s, L'/'));
+			Add(item->Text, item->Font, item->Alignment, item->LineNumber);
 		}
 	}
 	__finally
 	{
-		delete Item;
+		delete item;
 	}
 }
 
@@ -768,15 +768,15 @@ void __fastcall THeaderFooter::LoadFromStream(TStream* AStream)
 {
 	int Num = 0;
 	int i = 0;
-	System::Uitypes::TFontCharset ACharSet = (System::Uitypes::TFontCharset) 0;
-	TColor AColor = (TColor) 0;
-	int AHeight = 0;
-	TFontName AName;
-	TFontPitch APitch = TFontPitch::fpDefault;
-	int ASize = 0;
-	TFontStyles AStyle;
-	int BufSize = 0;
-	PAnsiChar Buffer = nullptr;
+	System::Uitypes::TFontCharset aCharset = (System::Uitypes::TFontCharset) 0;
+	TColor aColor = (TColor) 0;
+	int aHeight = 0;
+	TFontName aName;
+	TFontPitch aPitch = TFontPitch::fpDefault;
+	int aSize = 0;
+	TFontStyles aStyle;
+	int bufSize = 0;
+	PAnsiChar buffer = nullptr;
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
@@ -787,31 +787,31 @@ void __fastcall THeaderFooter::LoadFromStream(TStream* AStream)
 		with0->Read((void**)&FRomanNumbers, sizeof(FRomanNumbers));
 		with0->Read((void**)&FMirrorPosition, sizeof(FMirrorPosition));
     // font
-		with0->Read((void**)&ACharSet, sizeof(ACharSet));
-		with0->Read((void**)&AColor, sizeof(AColor));
-		with0->Read((void**)&AHeight, sizeof(AHeight));
-		with0->Read((void**)&BufSize, sizeof(BufSize));
-		Buffer = (PAnsiChar) GetMemory(BufSize + 1);
+		with0->Read((void**)&aCharset, sizeof(aCharset));
+		with0->Read((void**)&aColor, sizeof(aColor));
+		with0->Read((void**)&aHeight, sizeof(aHeight));
+		with0->Read((void**)&bufSize, sizeof(bufSize));
+		buffer = (PAnsiChar) GetMemory(bufSize + 1);
 		try
 		{
-			with0->Read((void**)Buffer, BufSize);
-			Buffer[BufSize] = '\x00';
-			AName = UnicodeString(Buffer);
+			with0->Read((void**)buffer, bufSize);
+			buffer[bufSize] = '\x00';
+			aName = UnicodeString(buffer);
 		}
 		__finally
 		{
-			FreeMemory(Buffer);
+			FreeMemory(buffer);
 		}
-		with0->Read((void**)&APitch, sizeof(APitch));
-		with0->Read((void**)&ASize, sizeof(ASize));
-		with0->Read((void**)&AStyle, sizeof(AStyle));
-		FDefaultFont->Charset = ACharSet;
-		FDefaultFont->Color = AColor;
-		FDefaultFont->Height = AHeight;
-		FDefaultFont->Name = AName;
-		FDefaultFont->Pitch = APitch;
-		FDefaultFont->Size = ASize;
-		FDefaultFont->Style = AStyle;
+		with0->Read((void**)&aPitch, sizeof(aPitch));
+		with0->Read((void**)&aSize, sizeof(aSize));
+		with0->Read((void**)&aStyle, sizeof(aStyle));
+		FDefaultFont->Charset = aCharset;
+		FDefaultFont->Color = aColor;
+		FDefaultFont->Height = aHeight;
+		FDefaultFont->Name = aName;
+		FDefaultFont->Pitch = aPitch;
+		FDefaultFont->Size = aSize;
+		FDefaultFont->Style = aStyle;
     // now read in the items
 		with0->Read((void**)&Num, sizeof(Num));
 		while(Num > 0)
@@ -829,14 +829,14 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 {
 	int i = 0;
 	int Num = 0;
-	System::Uitypes::TFontCharset ACharSet = (System::Uitypes::TFontCharset) 0;
-	TColor AColor = (TColor) 0;
-	int AHeight = 0;
-	TFontName AName;
-	TFontPitch APitch = TFontPitch::fpDefault;
-	int ASize = 0;
-	TFontStyles AStyle;
-	int ALen = 0;
+	System::Uitypes::TFontCharset aCharset = (System::Uitypes::TFontCharset) 0;
+	TColor aColor = (TColor) 0;
+	int aHeight = 0;
+	TFontName aName;
+	TFontPitch aPitch = TFontPitch::fpDefault;
+	int aSize = 0;
+	TFontStyles aStyle;
+	int aLen = 0;
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
@@ -848,22 +848,22 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 		with0->Write(&FRomanNumbers, sizeof(FRomanNumbers));
 		with0->Write(&FMirrorPosition, sizeof(FMirrorPosition));
     // font
-		ACharSet = FDefaultFont->Charset;
-		AColor = FDefaultFont->Color;
-		AHeight = FDefaultFont->Height;
-		AName = FDefaultFont->Name;
-		APitch = FDefaultFont->Pitch;
-		ASize = FDefaultFont->Size;
-		AStyle = FDefaultFont->Style;
-		with0->Write(&ACharSet, sizeof(ACharSet));
-		with0->Write(&AColor, sizeof(AColor));
-		with0->Write(&AHeight, sizeof(AHeight));
-		ALen = AName.Length();
-		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(AnsiString(AName).c_str(), AName.Length());
-		with0->Write(&APitch, sizeof(APitch));
-		with0->Write(&ASize, sizeof(ASize));
-		with0->Write(&AStyle, sizeof(AStyle));
+		aCharset = FDefaultFont->Charset;
+		aColor = FDefaultFont->Color;
+		aHeight = FDefaultFont->Height;
+		aName = FDefaultFont->Name;
+		aPitch = FDefaultFont->Pitch;
+		aSize = FDefaultFont->Size;
+		aStyle = FDefaultFont->Style;
+		with0->Write(&aCharset, sizeof(aCharset));
+		with0->Write(&aColor, sizeof(aColor));
+		with0->Write(&aHeight, sizeof(aHeight));
+		aLen = aName.Length();
+		with0->Write(&aLen, sizeof(aLen));
+		with0->Write(AnsiString(aName).c_str(), aName.Length());
+		with0->Write(&aPitch, sizeof(aPitch));
+		with0->Write(&aSize, sizeof(aSize));
+		with0->Write(&aStyle, sizeof(aStyle));
 
     // now write the items
 		Num = Count();
@@ -880,7 +880,7 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 __fastcall THeader::THeader()
 {
 	// inherited;
-	fType = hftHeader;
+	FType = hftHeader;
 }
 
 /* TFooter */
@@ -888,7 +888,7 @@ __fastcall THeader::THeader()
 __fastcall TFooter::TFooter()
 {
 	// inherited;
-	fType = hftFooter;
+	FType = hftFooter;
 }
 
 

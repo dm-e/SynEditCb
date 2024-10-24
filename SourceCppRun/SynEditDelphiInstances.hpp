@@ -157,6 +157,7 @@ public:
 extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TSynFoldRange>* __fastcall CreateFoldRangeList();
 extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TLineFoldInfo>* __fastcall CreateFoldInfoList();
 extern DELPHI_PACKAGE void __fastcall AddToFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, const TSynFoldRange &ARange);
+extern DELPHI_PACKAGE void __fastcall InsertIntoFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, int AIndex, const TSynFoldRange &ARange);
 extern DELPHI_PACKAGE bool __fastcall BinarySearchInFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, const TSynFoldRange &ARange, int &AIndex);
 extern DELPHI_PACKAGE void __fastcall InsertIntoLineFoldList(System::Generics::Collections::TList__1<TLineFoldInfo>* AList, int AIndex, const TLineFoldInfo &AInfo);
 extern DELPHI_PACKAGE bool __fastcall BinarySearchInLineFoldList(System::Generics::Collections::TList__1<TLineFoldInfo>* AList, const TLineFoldInfo &AInfo, int &AIndex);

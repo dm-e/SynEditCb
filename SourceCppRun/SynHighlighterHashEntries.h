@@ -149,13 +149,13 @@ public:
 	typedef System::TObject inherited;
 protected:
     /* Points to the next keyword entry with the same hashvalue. */
-	TSynHashEntry* FNext;
+	TSynHashEntry* fNext;
     /* Length of the keyword. */
 	int fKeyLen;
     /* The keyword itself. */
 	String fKeyword;
     /* Keyword token kind, has to be typecasted to the real token kind type. */
-	int FKind;
+	int fKind;
 public:
     /* Adds a keyword entry with the same hashvalue. Depending on the length of
       the two keywords it might return Self and store NewEntry in the Next
@@ -171,9 +171,9 @@ public:
     /* Length of the keyword. */
 	__property int KeywordLen = { read = fKeyLen };
     /* Keyword token kind, has to be typecasted to the real token kind type. */
-	__property int Kind = { read = FKind };
+	__property int Kind = { read = fKind };
     /* Points to the next keyword entry with the same hashvalue. */
-	__property TSynHashEntry* Next = { read = FNext };
+	__property TSynHashEntry* Next = { read = fNext };
 	__fastcall TSynHashEntry();
 };
 

@@ -5,6 +5,7 @@
 #include <Winapi.Windows.hpp>
 #include <System.Math.hpp>
 #include "SynEditTextBuffer.h"
+#include "SynEditDelphiInstances.hpp"
 
 using namespace std;
 using namespace d2c_system;
@@ -74,7 +75,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldStartAtLine(int Line, int& Index)
 }
 
 __fastcall TSynFoldRanges::TSynFoldRanges()
- : fCodeFoldingMode(cfmStandard),
+ : fCodeFoldingMode(TSynCodeFoldingMode::cfmStandard),
 			fRangesNeedFixing(false),
 			fRanges(nullptr),
 			fCollapsedState(nullptr),
@@ -325,7 +326,7 @@ System::TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
    Returns an array of indices of folds with FoldType = aType
 */
 
-System::TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int AType)
+System::TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int aType)
 {
 	System::TArray<int> result;
 	int i = 0;
@@ -336,7 +337,7 @@ System::TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int AType)
 		int stop = 0;
 		for(stop = fRanges->Count - 1, i = 0; i <= stop; i++)
 		{
-			if(fRanges->List[i].FoldType == AType)
+			if(fRanges->List[i].FoldType == aType)
 				ResultList->Add(i);
 		}
 		result = ResultList->ToArray();
@@ -382,13 +383,15 @@ void __fastcall TSynFoldRanges::AddByParts(int AFoldType, int AFromLine, int ATo
 	if(FoldStartAtLine(AFromLine, Index))
 		fRanges->List[Index] = FR;
 	else
-		fRanges->Insert(Index, FR);
+		//fRanges->Insert(Index, FR);   // produces linker error Unresolved external with modern compiler
+		InsertIntoFoldRangeList(fRanges, Index, FR);
 }
 
 void __fastcall TSynFoldRanges::AddFoldRange(const TSynFoldRange& cFoldRange)
 {
 	TSynFoldRange FoldRange = cFoldRange;
-	fRanges->Add(FoldRange);
+	//fRanges->Add(FoldRange);
+	AddToFoldRangeList(fRanges, FoldRange);
 }
 
 void __fastcall TSynFoldRanges::AddLineInfo(int ALine, int AFoldType, TFoldOpenClose AFoldOpenClose, int AIndent)
@@ -462,13 +465,13 @@ int __fastcall TSynFoldRanges::GetIndentLevel(int Line)
   If needed recreate fRanges
 */
 
-int __fastcall TSynFoldRanges::LinesDeleted(int AIndex, int ACount)
+int __fastcall TSynFoldRanges::LinesDeleted(int aIndex, int aCount)
 {
 	int result = 0;
 	int i = 0;
 	int stop = 0;
 	fRangesNeedFixing = false;
-	result = ACount;
+	result = aCount;
   // Adjust fFoldInfoList
   // aIndex is 0-based fFoldInfoList is 1-based
 	for(stop = 0, i = fFoldInfoList->Count - 1; i >= stop; i--)
@@ -476,11 +479,11 @@ int __fastcall TSynFoldRanges::LinesDeleted(int AIndex, int ACount)
 		/*# with fFoldInfoList.List[i] do */
 		{
 			
-			if(fFoldInfoList->List[i].Line > AIndex + ACount)
-				fFoldInfoList->List[i].Line -= ACount;
+			if(fFoldInfoList->List[i].Line > aIndex + aCount)
+				fFoldInfoList->List[i].Line -= aCount;
 			else
 			{
-				if(fFoldInfoList->List[i].Line > AIndex)
+				if(fFoldInfoList->List[i].Line > aIndex)
 				{
 					fRangesNeedFixing = true;
 					fFoldInfoList->Delete(i);
@@ -495,24 +498,24 @@ int __fastcall TSynFoldRanges::LinesDeleted(int AIndex, int ACount)
 		/*# with fRanges.List[i] do */
 		{
 			
-			if(fRanges->List[i].FromLine > AIndex + ACount)
+			if(fRanges->List[i].FromLine > aIndex + aCount)
         // Move after affected area
-				Ranges->List[i].Move(-ACount);
+				Ranges->List[i].Move(-aCount);
 			else
 			{
-				if(fRanges->List[i].FromLine > AIndex)
+				if(fRanges->List[i].FromLine > aIndex)
 				{
 					fRangesNeedFixing = true;
 					fRanges->Delete(i);
 				}
 				else
 				{
-					if(fRanges->List[i].ToLine > AIndex + ACount)
-						fRanges->List[i].ToLine -= ACount;
+					if(fRanges->List[i].ToLine > aIndex + aCount)
+						fRanges->List[i].ToLine -= aCount;
 					else
 					{
-						if(fRanges->List[i].ToLine > AIndex)
-							fRanges->List[i].ToLine -= fRanges->List[i].ToLine - AIndex;
+						if(fRanges->List[i].ToLine > aIndex)
+							fRanges->List[i].ToLine -= fRanges->List[i].ToLine - aIndex;
 					}
 				}
 			}
@@ -525,19 +528,19 @@ int __fastcall TSynFoldRanges::LinesDeleted(int AIndex, int ACount)
   aIndex is 0-based fFoldInfoList and fRanges are 1-based
 */
 
-int __fastcall TSynFoldRanges::LinesInserted(int AIndex, int ACount)
+int __fastcall TSynFoldRanges::LinesInserted(int aIndex, int aCount)
 {
 	int result = 0;
 	int i = 0;
 	int stop = 0;
-	result = ACount;
+	result = aCount;
 	for(stop = 0, i = fFoldInfoList->Count - 1; i >= stop; i--)
 	{
 		/*# with fFoldInfoList.List[i] do */
 		{
 			
-			if(fFoldInfoList->List[i].Line > AIndex)
-				fFoldInfoList->List[i].Line += ACount;
+			if(fFoldInfoList->List[i].Line > aIndex)
+				fFoldInfoList->List[i].Line += aCount;
 			else
 				break;
 		}
@@ -547,19 +550,19 @@ int __fastcall TSynFoldRanges::LinesInserted(int AIndex, int ACount)
 		/*# with fRanges.List[i] do */
 		{
 			
-			if(fRanges->List[i].FromLine > AIndex) // insertion of count lines above FromLine
-				fRanges->List[i].Move(ACount);
+			if(fRanges->List[i].FromLine > aIndex) // insertion of count lines above FromLine
+				fRanges->List[i].Move(aCount);
 			else
 			{
-				if(fRanges->List[i].ToLine > AIndex)
-					fRanges->List[i].ToLine += ACount;
+				if(fRanges->List[i].ToLine > aIndex)
+					fRanges->List[i].ToLine += aCount;
 			}
 		}
 	}
 	return result;
 }
 
-int __fastcall TSynFoldRanges::LinePut(int AIndex, const String OldLine)
+int __fastcall TSynFoldRanges::LinePut(int aIndex, const String OldLine)
 {
 	int result = 0;
 	result = 1;
@@ -601,7 +604,7 @@ void __fastcall TSynFoldRanges::RecreateFoldRanges(TStrings* Lines)
 					int stop1 = 0;
 					for(stop1 = 0, i = OpenFoldStack->Count - 1; i >= stop1; i--)
 					{
-			// Close all Fold Ranges with less Indent
+            // Close all Fold Ranges with less Indent
 						PFoldRange = &fRanges->List[OpenFoldStack->List[i]];
 						if((*PFoldRange).Indent >= LFI.Indent)
 						{
@@ -908,8 +911,8 @@ void __fastcall TSynCodeFolding::SetCollapsedLineColor(const TColor Value)
 	if(fCollapsedLineColor != Value)
 	{
 		fCollapsedLineColor = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -918,8 +921,8 @@ void __fastcall TSynCodeFolding::SetFolderBarLinesColor(const TColor Value)
 	if(fFolderBarLinesColor != Value)
 	{
 		fFolderBarLinesColor = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -930,8 +933,8 @@ void __fastcall TSynCodeFolding::SetGutterShapeSize(int Value)
 	if(fGutterShapeSize != NewValue)
 	{
 		fGutterShapeSize = NewValue;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -940,8 +943,8 @@ void __fastcall TSynCodeFolding::SetIndentGuides(bool Value)
 	if(fIndentGuides != Value)
 	{
 		fIndentGuides = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -950,8 +953,8 @@ void __fastcall TSynCodeFolding::SetIndentGuidesColor(const TColor Value)
 	if(fIndentGuidesColor != Value)
 	{
 		fIndentGuidesColor = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -960,8 +963,8 @@ void __fastcall TSynCodeFolding::SetShowHintMark(bool Value)
 	if(fShowHintMark != Value)
 	{
 		fShowHintMark = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 
@@ -970,8 +973,8 @@ void __fastcall TSynCodeFolding::SetShowCollapsedLine(bool Value)
 	if(fShowCollapsedLine != Value)
 	{
 		fShowCollapsedLine = Value;
-		if(ASSIGNED(FOnChange))
-			FOnChange(this);
+		if(ASSIGNED(fOnChange))
+			fOnChange(this);
 	}
 }
 

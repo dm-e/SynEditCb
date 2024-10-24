@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 
 namespace Synhighlighterfortran
 {
@@ -20,7 +19,7 @@ namespace Synhighlighterfortran
 #define Synhighlighterfortran__4 (TSysCharSet() << 'E' << 'T')
 
 
-const String Keywords[70/*# range 0..69*/] = {L"allocatable", L"allocate", L"allocated", L"associated", L"call", L"case", L"character", L"close", L"common"
+const String KeyWords[70/*# range 0..69*/] = {L"allocatable", L"allocate", L"allocated", L"associated", L"call", L"case", L"character", L"close", L"common"
                     , L"complex", L"contains", L"continue", L"cycle", L"data", L"deallocate", L"default", L"define", L"dimension", L"do", L"else"
                     , L"elseif", L"elsewhere", L"end", L"enddo", L"endif", L"entry", L"equivalence", L"exit", L"external", L"forall", L"format", L"function"
                     , L"if", L"implicit", L"include", L"integer", L"interface", L"logical", L"map", L"module", L"namelist", L"nullify", L"open"
@@ -49,14 +48,14 @@ unsigned int __fastcall TSynFortranSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynFortranSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynFortranSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 192 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 192 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -88,7 +87,7 @@ TtkTokenKind __fastcall TSynFortranSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynFortranSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -106,23 +105,23 @@ __fastcall TSynFortranSyn::TSynFortranSyn(TComponent* AOwner)
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterfortran__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterfortran__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterFortran;

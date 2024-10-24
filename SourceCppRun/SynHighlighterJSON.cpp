@@ -30,7 +30,7 @@ namespace Synhighlighterjson
           65 << 66 << 67 << 68 << 69 << 70 <<  \
           97 << 98 << 99 << 100 << 101 << 102)
 #define Synhighlighterjson__6 (TSysCharSet() << '\x20' << '\"')
-#define Synhighlighterjson__7 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsArrayValue>() << rsObjectValue << rsArrayValue)
+#define Synhighlighterjson__7 (System::Set<TRangeState, TRangeState::rsUnknown, TRangeState::rsArrayValue>() << rsObjectValue << rsArrayValue)
 
 
 
@@ -38,45 +38,45 @@ namespace Synhighlighterjson
 
 __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			FRange(rsUnknown),
 			FTokenID(tkString),
 			FReservedAttri(nullptr),
-			fAttributeAttri(nullptr),
-			fValueAttri(nullptr),
-			fNumberAttri(nullptr),
-			fSpaceAttri(nullptr),
-			fSymbolAttri(nullptr)
+			FAttributeAttri(nullptr),
+			FValueAttri(nullptr),
+			FNumberAttri(nullptr),
+			FSpaceAttri(nullptr),
+			FSymbolAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 
   // Attribute
-	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
-	fAttributeAttri->Foreground = (TColor) clNavy;
-	addAttribute(fAttributeAttri);
+	FAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
+	FAttributeAttri->Foreground = (TColor) clNavy;
+	AddAttribute(FAttributeAttri);
 
   // reserved words ("true", "false", "null")
 	FReservedAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	FReservedAttri->Style = Synhighlighterjson__0;
-	addAttribute(FReservedAttri);
+	AddAttribute(FReservedAttri);
 
   // numbers
-	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = (TColor) clRed;
-	addAttribute(fNumberAttri);
+	FNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
+	FNumberAttri->Foreground = (TColor) clRed;
+	AddAttribute(FNumberAttri);
 
   // spaces
-	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	FSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
+	AddAttribute(FSpaceAttri);
 
   // symbols
-	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	fSymbolAttri->Foreground = (TColor) clGreen;
-	addAttribute(fSymbolAttri);
+	FSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
+	FSymbolAttri->Foreground = (TColor) clGreen;
+	AddAttribute(FSymbolAttri);
 
   // Value
-	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = (TColor) clBlue;
-	addAttribute(fValueAttri);
+	FValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
+	FValueAttri->Foreground = (TColor) clBlue;
+	AddAttribute(FValueAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterJSON;
 }
@@ -84,13 +84,13 @@ __fastcall TSynJSONSyn::TSynJSONSyn(TComponent* AOwner)
 void __fastcall TSynJSONSyn::CloseArrayProc()
 {
 	SymbolProc();
-	FRange = rsUnKnown;
+	FRange = rsUnknown;
 }
 
 void __fastcall TSynJSONSyn::CloseObjectProc()
 {
 	SymbolProc();
-	FRange = rsUnKnown;
+	FRange = rsUnknown;
 }
 
 void __fastcall TSynJSONSyn::ColonProc()
@@ -265,10 +265,10 @@ void __fastcall TSynJSONSyn::SpaceProc()
 void __fastcall TSynJSONSyn::StringProc()
 {
 
-	auto IsHex = [&](Char digit) -> bool 
+	auto IsHex = [&](Char Digit) -> bool 
 	{
 		bool result = false;
-		result = CharInSet(digit, Synhighlighterjson__5);
+		result = CharInSet(Digit, Synhighlighterjson__5);
 		return result;
 	};
 	FTokenID = tkString;
@@ -402,16 +402,16 @@ TSynHighlighterAttributes* __fastcall TSynJSONSyn::GetDefaultAttribute(int Index
 		result = FReservedAttri;
 		break;
 		case SYN_ATTR_IDENTIFIER:
-		result = fAttributeAttri;
+		result = FAttributeAttri;
 		break;
 		case SYN_ATTR_WHITESPACE:
-		result = fSpaceAttri;
+		result = FSpaceAttri;
 		break;
 		case SYN_ATTR_SYMBOL:
-		result = fSymbolAttri;
+		result = FSymbolAttri;
 		break;
 		case SYN_ATTR_STRING:
-		result = fValueAttri;
+		result = FValueAttri;
 		break;
 		default:
 		result = nullptr;
@@ -448,24 +448,24 @@ TSynHighlighterAttributes* __fastcall TSynJSONSyn::GetTokenAttribute()
 	{
 		case tkString:
 		if(Synhighlighterjson__7.Contains(FRange))
-			result = fValueAttri;
+			result = FValueAttri;
 		else
-			result = fAttributeAttri;
+			result = FAttributeAttri;
 		break;
 		case tkReserved:
 		result = FReservedAttri;
 		break;
 		case tkNumber:
-		result = fNumberAttri;
+		result = FNumberAttri;
 		break;
 		case tkSpace:
-		result = fSpaceAttri;
+		result = FSpaceAttri;
 		break;
 		case tkSymbol:
-		result = fSymbolAttri;
+		result = FSymbolAttri;
 		break;
 		case tkUnknown:
-		result = fAttributeAttri;
+		result = FAttributeAttri;
 		break;
 		default:
 		result = nullptr;
@@ -483,7 +483,7 @@ int __fastcall TSynJSONSyn::GetTokenKind()
 
 void __fastcall TSynJSONSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	FRange = rsUnknown;
 }
 
 //++ CodeFolding
@@ -493,7 +493,7 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -501,7 +501,7 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != CommentAttribute)

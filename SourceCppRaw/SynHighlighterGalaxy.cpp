@@ -10,7 +10,6 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace System::Types;
 
 namespace Synhighlightergalaxy
@@ -48,17 +47,17 @@ bool __fastcall TSynGalaxySyn::IsKeyword(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
-	Last = fKeywords->Count - 1;
+	Last = fKeyWords->Count - 1;
 	result = false;
 	Token = Sysutils::AnsiUpperCase(AKeyword);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(fKeywords->Strings[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(fKeyWords->Strings[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -67,9 +66,9 @@ bool __fastcall TSynGalaxySyn::IsKeyword(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -77,7 +76,7 @@ bool __fastcall TSynGalaxySyn::IsKeyword(const String AKeyword)
 
 __fastcall TSynGalaxySyn::TSynGalaxySyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkComment),
 			fMessageAttri(nullptr),
 			fSymbolAttri(nullptr),
@@ -85,38 +84,38 @@ __fastcall TSynGalaxySyn::TSynGalaxySyn(TComponent* AOwner)
 			fCommentAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fIdentifierAttri(nullptr),
-			fKeywords(nullptr)
+			fKeyWords(nullptr)
 {
-	FCaseSensitive = false;
-	fKeywords = new TStringList();
-	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
-	((TStringList*) fKeywords)->CommaText = L"#end,#galaxy,a,anonymous,autounload,b,battleprotocol,c,cap,cargo,col,"
+	fCaseSensitive = false;
+	fKeyWords = new TStringList();
+	((TStringList*) fKeyWords)->Sorted = true;
+	((TStringList*) fKeyWords)->Duplicates = System::Types::dupIgnore;
+	((TStringList*) fKeyWords)->CommaText = L"#end,#galaxy,a,anonymous,autounload,b,battleprotocol,c,cap,cargo,col,"
 	           L"compress,d,drive,e,emp,f,fleet,fleettables,g,galaxytv,gplus,groupforecast,"
 	           L"h,i,j,l,m,machinereport,mat,n,namecase,no,o,options,p,planetforecast,"
 	           L"prodtable,produce,q,r,routesforecast,s,send,shields,shiptypeforecast,"
 	           L"sortgroups,t,twocol,u,underscores,v,w,war,weapons,x,y,z";
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightergalaxy__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightergalaxy__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fMessageAttri = new TSynHighlighterAttributes(SYNS_AttrMessage, SYNS_FriendlyAttrMessage);
-	addAttribute(fMessageAttri);
+	AddAttribute(fMessageAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterGalaxy;
 } /* Create */
 
 __fastcall TSynGalaxySyn::~TSynGalaxySyn()
 {
-	delete fKeywords;
+	delete fKeyWords;
 	//# inherited::Destroy();
 } /* Destroy */
 
@@ -146,7 +145,7 @@ void __fastcall TSynGalaxySyn::MessageStyleProc()
 	}
 	if((Run == 0) && (fLine[Run] == L'@'))
 	{
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 		++Run;
 	}
 	else
@@ -159,7 +158,7 @@ void __fastcall TSynGalaxySyn::MessageStyleProc()
 void __fastcall TSynGalaxySyn::PointCommaProc()
 {
 	FTokenID = tkComment;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	do
 	{
 		++Run;
@@ -210,7 +209,7 @@ void __fastcall TSynGalaxySyn::StringProc()
 	if((Run == 0) && (FTokenID != tkMessage))
 	{
 		FTokenID = tkMessage;
-		FRange = rsMessageStyle;
+		fRange = rsMessageStyle;
 	}
 	++Run;
 }
@@ -224,7 +223,7 @@ void __fastcall TSynGalaxySyn::UnknownProc()
 void __fastcall TSynGalaxySyn::Next()
 {
 	fTokenPos = Run;
-	if(FRange == rsMessageStyle)
+	if(fRange == rsMessageStyle)
 		MessageStyleProc();
 	else
 		switch(fLine[Run])
@@ -305,7 +304,7 @@ bool __fastcall TSynGalaxySyn::GetEol()
 void* __fastcall TSynGalaxySyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -355,12 +354,12 @@ int __fastcall TSynGalaxySyn::GetTokenKind()
 
 void __fastcall TSynGalaxySyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynGalaxySyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynGalaxySyn::SetKeyWords(TStrings* const Value)
@@ -376,7 +375,7 @@ void __fastcall TSynGalaxySyn::SetKeyWords(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fKeywords->Assign((TPersistent*) Value);
+	fKeyWords->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -395,49 +394,49 @@ String __fastcall TSynGalaxySyn::GetLanguageName()
 	return result;
 }
 
-bool __fastcall TSynGalaxySyn::LoadFromRegistry(HKEY RootKey, String key)
+bool __fastcall TSynGalaxySyn::LoadFromRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKeyReadOnly(key))
+		r->RootKey = RootKey;
+		if(r->OpenKeyReadOnly(Key))
 		{
-			if(R->ValueExists(L"KeyWords"))
-				Keywords->Text = R->ReadString(L"KeyWords");
-			result = inherited::LoadFromRegistry(RootKey, key);
+			if(r->ValueExists(L"KeyWords"))
+				KeyWords->Text = r->ReadString(L"KeyWords");
+			result = inherited::LoadFromRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
 
-bool __fastcall TSynGalaxySyn::SaveToRegistry(HKEY RootKey, String key)
+bool __fastcall TSynGalaxySyn::SaveToRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKey(key, true))
+		r->RootKey = RootKey;
+		if(r->OpenKey(Key, true))
 		{
-			R->WriteString(L"KeyWords", Keywords->Text);
-			result = inherited::SaveToRegistry(RootKey, key);
+			r->WriteString(L"KeyWords", KeyWords->Text);
+			result = inherited::SaveToRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }

@@ -35,7 +35,7 @@ namespace Synhighlighterhc11
     Also the SampleSource uses EQU_ and EQU, so it isn't clear what is
     the correct syntax: with other without the underscores.
   */
-const String Keywords = (String(String(String(String(String(String(String(String(String(String(String(String(L"ABA,ABX,ABY,ADCA_,ADCB_,ADDA_,ADDB_,ADDD_,ANDA_,ANDB_,ASLA,ASLB,") + L"ASL_,ASLD,ASRA,ASRB,ASR_,BCC_,BCLR_,BCS_,BEQ_,BGE_,BGT_,BHI_,BHS") + L"_,BITA_,BITB_,BLE_,BLO_,BLS_,BLT_,BMI_,BNE_,BPL_,BRA_,BRCLR_,BRN") + L"_,BRSET_,BSET_,BSR_,BVC_,BVS_,CBA,CLC,CLI,CLRA,CLRB,CLR_,CLV,CMP") + L"A_,CMPB_,COMA,COMB,COM_,CPD_,CPX_,CPY_,DAA,DECA,DECB,DEC_,DES,DE") + L"X,DEY,EORA_,EORB_,FDIV,IDIV,INCA,INCB,INC_,INS,INX,INY,JMP_,JSR_") + L",LDAA_,LDAB_,LDD_,LDS_,LDX_,LDY_,LSLA,LSLB,LSL_,LSLD,LSRA,LSRB,L") + L"SR_,LSRD,MUL,NEGA,NEGB,NEG_,NOP,ORAA_,ORAB_,PSHA,PSHB,PSHX,PSHY,") + L"PULA,PULB,PULX,PULY,ROLA,ROLB,ROL_,RORA,RORB,ROR_,RTI,RTS,SBA,SB") + L"CA_,SBCB_,SEC,SEI,SEV,STAA_,STAB_,STD_,STOP,STS_,STX_,STY_,SUBA_") + L",SUBB_,SUBD_,SWI,TAB,TAP,TBA,TEST,") + L"TPA,TSTA,TSTB,TST_,TSX,TSY,TXS,TYS,WAI,XGDX,XGDY,") + L"FCC_,FCB_,BSZ_,FDB_");
+const String KeyWords = (String(String(String(String(String(String(String(String(String(String(String(String(L"ABA,ABX,ABY,ADCA_,ADCB_,ADDA_,ADDB_,ADDD_,ANDA_,ANDB_,ASLA,ASLB,") + L"ASL_,ASLD,ASRA,ASRB,ASR_,BCC_,BCLR_,BCS_,BEQ_,BGE_,BGT_,BHI_,BHS") + L"_,BITA_,BITB_,BLE_,BLO_,BLS_,BLT_,BMI_,BNE_,BPL_,BRA_,BRCLR_,BRN") + L"_,BRSET_,BSET_,BSR_,BVC_,BVS_,CBA,CLC,CLI,CLRA,CLRB,CLR_,CLV,CMP") + L"A_,CMPB_,COMA,COMB,COM_,CPD_,CPX_,CPY_,DAA,DECA,DECB,DEC_,DES,DE") + L"X,DEY,EORA_,EORB_,FDIV,IDIV,INCA,INCB,INC_,INS,INX,INY,JMP_,JSR_") + L",LDAA_,LDAB_,LDD_,LDS_,LDX_,LDY_,LSLA,LSLB,LSL_,LSLD,LSRA,LSRB,L") + L"SR_,LSRD,MUL,NEGA,NEGB,NEG_,NOP,ORAA_,ORAB_,PSHA,PSHB,PSHX,PSHY,") + L"PULA,PULB,PULX,PULY,ROLA,ROLB,ROL_,RORA,RORB,ROR_,RTI,RTS,SBA,SB") + L"CA_,SBCB_,SEC,SEI,SEV,STAA_,STAB_,STD_,STOP,STS_,STX_,STY_,SUBA_") + L",SUBB_,SUBD_,SWI,TAB,TAP,TBA,TEST,") + L"TPA,TSTA,TSTB,TST_,TSX,TSY,TXS,TYS,WAI,XGDX,XGDY,") + L"FCC_,FCB_,BSZ_,FDB_");
 const String Directives = (L"EQU_,OPT_,PAGE,ORG_,RMB_,END");
 
 void __fastcall TSynHC11Syn::DoAddKeyword(String AKeyword, int AKind)
@@ -87,12 +87,12 @@ int __fastcall TSynHC11Syn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynHC11Syn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynHC11Syn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -129,30 +129,30 @@ __fastcall TSynHC11Syn::TSynHC11Syn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterhc11__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterhc11__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	SetAttributesOnChange(DefHighlightChange);
-	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
+	EnumerateKeywords(int(tkKey), KeyWords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkDirective), Directives, IsIdentChar, DoAddKeyword);
 	fDefaultFilter = SYNS_FilterAsm68HC11;
 } /* Create */

@@ -42,7 +42,7 @@ __fastcall TSynExporterHTML::TSynExporterHTML(TComponent* AOwner)
 			fCreateHTMLFragment(false)
 {
 	const WideChar CF_HTML[] = L"HTML Format";
-	FClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
+	fClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
 	fDefaultFilter = SYNS_FilterHTML;
 	FEncoding = seUTF8;
 }
@@ -83,7 +83,7 @@ String __fastcall TSynExporterHTML::ColorToHTML(TColor AColor)
 {
 	String result;
 	int RGBColor = 0;
-	unsigned char RGBValue = 0;
+	Byte RGBValue = 0;
 	const Char Digits[16/*# range 0..15*/] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 	RGBColor = ColorToRGB(AColor);
 	result = L"\u00000";
@@ -194,14 +194,14 @@ String __fastcall TSynExporterHTML::GetHeader()
 	           + L"<title>"
 	           + Title
 	           + L"</title>\x0d\x0a"
-	           + Format(HTMLAsTextHeader2, ARRAYOFCONST((EncodingStr, ColorToHTML(FFont->Color), ColorToHTML(FBackgroundColor), Styles)));
+	           + Format(HTMLAsTextHeader2, ARRAYOFCONST((EncodingStr, ColorToHTML(fFont->Color), ColorToHTML(fBackgroundColor), Styles)));
 	result = L"";
 	if(fExportAsText)
 	{
 		if(!fCreateHTMLFragment)
 			result = Header;
 		result = result
-	           + Format(L"<pre>\x0d\x0a" L"<code><span style=\"font: %dpt %s;\">", ARRAYOFCONST((FFont->Size, FFont->Name)));
+	           + Format(L"<pre>\x0d\x0a" L"<code><span style=\"font: %dpt %s;\">", ARRAYOFCONST((fFont->Size, fFont->Name)));
 	}
 	else
 

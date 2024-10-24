@@ -50,18 +50,18 @@ __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)
 			FPrinterInfo(nullptr),
 			FPages(nullptr),
 			FCanvas(nullptr),
-			fCharWidth(0),
+			FCharWidth(0),
 			FMaxLeftChar(0),
 			FWrap(false),
 			FYPos(0),
 			FLineHeight(0),
-			fHighlight(false),
+			FHighlight(false),
 			FColors(false),
-			fHighlighter(nullptr),
+			FHighlighter(nullptr),
 			FOldFont(nullptr),
 			FSynOK(false),
 			FLineNumbers(false),
-			fLineNumber(0),
+			FLineNumber(0),
 			FLineOffset(0),
 			FAbort(false),
 			FPrinting(false),
@@ -73,7 +73,7 @@ __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)
 			FPagesCounted(false),
 			FLineNumbersInMargin(false),
 			FTabWidth(0),
-			FFontColor((TColor) 0),
+			fFontColor((TColor) 0),
 			fSelectedOnly(false),
 			fSelAvail(false),
 			fSelMode(smNormal),
@@ -84,7 +84,7 @@ __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)
 	FOldFont = new TFont();
 	MaxLeftChar = 1024;
 	FWrap = true;
-	fHighlight = true;
+	FHighlight = true;
 	FColors = false;
 	FLineNumbers = false;
 	FLineOffset = 0;
@@ -164,7 +164,7 @@ void __fastcall TSynEditPrint::SetFont(TFont* const Value)
 
 void __fastcall TSynEditPrint::SetCharWidth(int Value)
 {
-	fCharWidth = Value;
+	FCharWidth = Value;
 }
 
 void __fastcall TSynEditPrint::SetMaxLeftChar(int Value)
@@ -174,7 +174,7 @@ void __fastcall TSynEditPrint::SetMaxLeftChar(int Value)
 
 void __fastcall TSynEditPrint::SetHighlighter(TSynCustomHighlighter* const Value)
 {
-	fHighlighter = const_cast<TSynCustomHighlighter*>(Value);
+	FHighlighter = const_cast<TSynCustomHighlighter*>(Value);
 	FRangesOK = false;
 	FPagesCounted = false;
 }
@@ -185,7 +185,7 @@ void __fastcall TSynEditPrint::SetHighlighter(TSynCustomHighlighter* const Value
 // This is only to simplify paint-operations and has nothing to do with
 // multi-byte chars.
 
-String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String s)
+String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String S)
 {
 	String result;
 	int i = 0;
@@ -194,12 +194,12 @@ String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String s)
 	int stop = 0;
 	FCanvas->Font = Font;
 	j = 0;
-	result.SetLength(s.Length() * 2); // speed improvement
-	for(stop = s.Length(), i = 1; i <= stop; i++)
+	result.SetLength(S.Length() * 2); // speed improvement
+	for(stop = S.Length(), i = 1; i <= stop; i++)
 	{
 		++j;
     // Introduce a small tolerance Issue 54
-		CountOfAvgGlyphs = Ceil(double(FCanvas->TextWidth(String(s[i]))) / fCharWidth - 0.04);
+		CountOfAvgGlyphs = Ceil(double(FCanvas->TextWidth(String(S[i]))) / FCharWidth - 0.04);
 		if(j + CountOfAvgGlyphs > result.Length())
 			result.SetLength(result.Length() + 128);
 
@@ -210,7 +210,7 @@ String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String s)
 			++j;
 			--CountOfAvgGlyphs;
 		}
-		result[j] = s[i];
+		result[j] = S[i];
 	}
 	result.SetLength(j);
 	return result;
@@ -223,7 +223,7 @@ void __fastcall TSynEditPrint::InitPrint()
 	int TmpSize = 0;
 	TTextMetric TmpTextMetrics = {};
 //  FDefaultBG := FCanvas.Brush.Color;                                          
-	FFontColor = FFont->Color;
+	fFontColor = FFont->Color;
 	FCanvas->Font->Assign(FFont);
 	if(!FPrinting)
 	{
@@ -243,7 +243,7 @@ void __fastcall TSynEditPrint::InitPrint()
 	CalcPages();
 	FHeader->InitPrint(FCanvas, FPageCount, FTitle, FMargins);
 	FFooter->InitPrint(FCanvas, FPageCount, FTitle, FMargins);
-	FSynOK = Highlight && ASSIGNED(fHighlighter) && (FLines->Count > 0);
+	FSynOK = Highlight && ASSIGNED(FHighlighter) && (FLines->Count > 0);
 }
 
 void __fastcall TSynEditPrint::SetPixelsPrInch()
@@ -261,16 +261,16 @@ void __fastcall TSynEditPrint::SetPixelsPrInch()
 void __fastcall TSynEditPrint::InitRanges()
 {
 	int i = 0;
-	if(!FRangesOK && ASSIGNED(fHighlighter) && (Lines->Count > 0))
+	if(!FRangesOK && ASSIGNED(FHighlighter) && (Lines->Count > 0))
 	{
-		fHighlighter->ResetRange();
-		FLines->Objects[0] = ((TObject*) fHighlighter->GetRange());
+		FHighlighter->ResetRange();
+		FLines->Objects[0] = ((TObject*) FHighlighter->GetRange());
 		i = 1;
 		while(i < Lines->Count)
 		{
-			fHighlighter->SetLine(FLines->Strings[i - 1], i - 1);
-			fHighlighter->NextToEol();
-			FLines->Objects[i] = ((TObject*) fHighlighter->GetRange());
+			FHighlighter->SetLine(FLines->Strings[i - 1], i - 1);
+			FHighlighter->NextToEol();
+			FLines->Objects[i] = ((TObject*) FHighlighter->GetRange());
 			++i;
 		}
 		FRangesOK = true;
@@ -416,7 +416,7 @@ void __fastcall TSynEditPrint::WriteLineNumber()
 {
 	String AStr;
 	SaveCurrentFont();
-	AStr = IntToStr(fLineNumber + FLineOffset) + L": ";
+	AStr = IntToStr(FLineNumber + FLineOffset) + L": ";
 	FCanvas->Brush->Color = FDefaultBG;
 	FCanvas->Font->Style = Syneditprint__3;
 	FCanvas->Font->Color = clBlack;
@@ -485,13 +485,13 @@ void __fastcall TSynEditPrint::RestoreCurrentFont()
 	FCanvas->Font->Assign(FOldFont);
 }
 
-String __fastcall TSynEditPrint::ClipLineToRect(String s, const TRect& cR)
+String __fastcall TSynEditPrint::ClipLineToRect(String S, const TRect& cR)
 {
 	TRect R = cR;
 	String result;
-	while(FCanvas->TextWidth(s) > FMaxWidth)
-		s.SetLength(s.Length() - 1);
-	result = s;
+	while(FCanvas->TextWidth(S) > FMaxWidth)
+		S.SetLength(S.Length() - 1);
+	result = S;
 	return result;
 }
 
@@ -506,7 +506,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 	int TokenStart = 0;
 	int LCount = 0;
 	bool Handled = false;
-	String AStr;
+	String aStr;
 	int i = 0;
 	int WrapPos = 0;
 	int OldWrapPos = 0;
@@ -521,7 +521,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 		TSize Size = {};
 		int i = 0;
 		int stop = 0;
-		FETODist = (pIntArray) ReallocMemory(FETODist, Text.Length() * sizeof(int));
+		FETODist = (PIntArray) ReallocMemory(FETODist, Text.Length() * sizeof(int));
 		for(stop = Text.Length() - 1, i = 0; i <= stop; i++)
 		{
 			Size = GetTextSize(FCanvas->Handle, ustr2pwchar(Text, i + 1 - 1), 1);
@@ -533,7 +533,7 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 	auto ClippedTextOut = [&](int X, int Y, String Text) -> void 
 	{
 		Text = ClipLineToRect(Text, ClipRect);
-		InitETODist(fCharWidth, Text);
+		InitETODist(FCharWidth, Text);
 		::ExtTextOutW(FCanvas->Handle, X, Y, 0, nullptr, ustr2pwchar(Text), Text.Length(), ((PInteger) FETODist));
 	};
 
@@ -550,15 +550,15 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 		{
 			AStr = Text.SubString(Last + 1, ((TWrapPos*) AList->Items[LCount])->Index - Last);
 			Last = ((TWrapPos*) AList->Items[LCount])->Index;
-			ExpandedPos = fHighlighter->PosToExpandedPos(FirstPos);
-			ClippedTextOut(FMargins->PLeft + ExpandedPos * fCharWidth, FYPos, AStr);
+			ExpandedPos = FHighlighter->PosToExpandedPos(FirstPos);
+			ClippedTextOut(FMargins->PLeft + ExpandedPos * FCharWidth, FYPos, AStr);
 			FirstPos = 0;
 			LCount = LCount + 1;
 			FYPos = FYPos + FLineHeight;
 		}
 		AStr = Text.SubString(Last + 1, TokenEnd - Last);
-		ExpandedPos = fHighlighter->PosToExpandedPos(FirstPos);
-		ClippedTextOut(FMargins->PLeft + ExpandedPos * fCharWidth, FYPos, AStr);
+		ExpandedPos = FHighlighter->PosToExpandedPos(FirstPos);
+		ClippedTextOut(FMargins->PLeft + ExpandedPos * FCharWidth, FYPos, AStr);
     //Ready for next token:
 		TokenStart = TokenPos + Token.Length() - AStr.Length();
 	};
@@ -570,18 +570,18 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 	if(FSynOK)
 	{
 		SaveCurrentFont();
-		fHighlighter->SetRange(FLines->Objects[fLineNumber - 1]);
+		FHighlighter->SetRange(FLines->Objects[FLineNumber - 1]);
 		sLine = Text;
 		sLineExpandedAtWideGlyphs = ExpandAtWideGlyphs(sLine);
-		fHighlighter->SetLineExpandedAtWideGlyphs(sLine, sLineExpandedAtWideGlyphs, fLineNumber);
+		FHighlighter->SetLineExpandedAtWideGlyphs(sLine, sLineExpandedAtWideGlyphs, FLineNumber);
 		Token = L"";
 		TokenStart = 0;
 		LCount = 0;
-		while(!fHighlighter->GetEol())
+		while(!FHighlighter->GetEol())
 		{
-			Token = fHighlighter->GetToken();
-			TokenPos = fHighlighter->GetTokenPos();
-			Attr = fHighlighter->GetTokenAttribute();
+			Token = FHighlighter->GetToken();
+			TokenPos = FHighlighter->GetTokenPos();
+			Attr = FHighlighter->GetTokenAttribute();
 			if(ASSIGNED(Attr))
 			{
 				FCanvas->Font->Style = Attr->Style;
@@ -598,13 +598,13 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 				}
 				else
 				{
-					FCanvas->Font->Color = FFontColor;
+					FCanvas->Font->Color = fFontColor;
 					FCanvas->Brush->Color = FDefaultBG;
 				}
 			}
 			else
 			{
-				FCanvas->Font->Color = FFontColor;
+				FCanvas->Font->Color = fFontColor;
 				FCanvas->Brush->Color = FDefaultBG;
 			}
 			Handled = false;
@@ -633,10 +633,10 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 			}
 			if(!Handled)
 			{
-				ExpandedPos = fHighlighter->PosToExpandedPos(TokenPos - TokenStart);
-				ClippedTextOut(FMargins->PLeft + ExpandedPos * fCharWidth, FYPos, Token);
+				ExpandedPos = FHighlighter->PosToExpandedPos(TokenPos - TokenStart);
+				ClippedTextOut(FMargins->PLeft + ExpandedPos * FCharWidth, FYPos, Token);
 			}
-			fHighlighter->Next();
+			FHighlighter->Next();
 		}
 		RestoreCurrentFont();
 	}
@@ -654,10 +654,10 @@ void __fastcall TSynEditPrint::TextOut(const String Text, TList* AList)
 				{
 					WrapPos = ((TWrapPos*) AList->Items[i])->Index;
 					if(i == 0)
-						AStr = Text.SubString(1, WrapPos);
+						aStr = Text.SubString(1, WrapPos);
 					else
-						AStr = Text.SubString(OldWrapPos + 1, WrapPos - OldWrapPos);
-					Lines->Add(AStr);
+						aStr = Text.SubString(OldWrapPos + 1, WrapPos - OldWrapPos);
+					Lines->Add(aStr);
 					OldWrapPos = WrapPos;
 				}
 			}
@@ -698,7 +698,7 @@ void __fastcall TSynEditPrint::WriteLine(const String Text)
 void __fastcall TSynEditPrint::PrintPage(int Num)
 {
 	__int64 i = 0;
-	int IEND = 0;
+	int iEnd = 0;
 	int iSelStart = 0;
 	int iSelLen = 0;
 	PrintStatus(psNewPage, Num, FAbort);
@@ -717,12 +717,12 @@ void __fastcall TSynEditPrint::PrintPage(int Num)
 			__int64 stop = 0;
 			FYPos = FMargins->PTop;
 			if(Num == FPageCount)
-				IEND = FLines->Count - 1;
+				iEnd = FLines->Count - 1;
 			else
-				IEND = ((TPageLine*) FPages->Items[Num])->FirstLine - 1;
-			for(stop = IEND, i = ((TPageLine*) FPages->Items[Num - 1])->FirstLine; i <= stop; i++)
+				iEnd = ((TPageLine*) FPages->Items[Num])->FirstLine - 1;
+			for(stop = iEnd, i = ((TPageLine*) FPages->Items[Num - 1])->FirstLine; i <= stop; i++)
 			{
-				fLineNumber = (int) (i + 1);
+				FLineNumber = (int) (i + 1);
 				if(!fSelectedOnly || ((i >= fBlockBegin.Line - 1) && (i <= fBlockEnd.Line - 1)))
 				{
 					if(!fSelectedOnly || (fSelMode == smLine))
@@ -773,7 +773,7 @@ void __fastcall TSynEditPrint::Print()
 void __fastcall TSynEditPrint::PrintRange(int StartPage, int EndPage)
 {
 	int i = 0;
-	int II = 0;
+	int ii = 0;
 	int stop = 0;
 	if(fSelectedOnly && !fSelAvail)
 		return;
@@ -787,7 +787,7 @@ void __fastcall TSynEditPrint::PrintRange(int StartPage, int EndPage)
 	Printer()->BeginDoc();
 	PrintStatus(psBegin, StartPage, FAbort);
 	UpdatePages(Printer()->Canvas);
-	for(stop = Copies, II = 1; II <= stop; II++)
+	for(stop = Copies, ii = 1; ii <= stop; ii++)
 	{
 		i = StartPage;
 		if(EndPage < 0)
@@ -795,7 +795,7 @@ void __fastcall TSynEditPrint::PrintRange(int StartPage, int EndPage)
 		while((i <= EndPage) && (!FAbort))
 		{
 			PrintPage(i);
-			if(((i < EndPage) || (II < Copies)) && !FAbort)
+			if(((i < EndPage) || (ii < Copies)) && !FAbort)
 				Printer()->NewPage();
 			i = i + 1;
 		}
@@ -918,7 +918,7 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 			FreeMemory(Buffer);
 		}
 		with0->Read((void**)&FWrap, sizeof(FWrap));
-		with0->Read((void**)&fHighlight, sizeof(fHighlight));
+		with0->Read((void**)&FHighlight, sizeof(FHighlight));
 		with0->Read((void**)&FColors, sizeof(FColors));
 		with0->Read((void**)&FLineNumbers, sizeof(FLineNumbers));
 		with0->Read((void**)&FLineOffset, sizeof(FLineOffset));
@@ -928,21 +928,21 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 
 void __fastcall TSynEditPrint::SaveToStream(TStream* AStream)
 {
-	int ALen = 0;
+	int aLen = 0;
 	FHeader->SaveToStream(AStream);
 	FFooter->SaveToStream(AStream);
 	FMargins->SaveToStream(AStream);
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		ALen = FTitle.Length();
-		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(FTitle.c_str(), ALen * sizeof(WideChar));
-		ALen = FDocTitle.Length();
-		with0->Write(&ALen, sizeof(ALen));
-		with0->Write(FDocTitle.c_str(), ALen * sizeof(WideChar));
+		aLen = FTitle.Length();
+		with0->Write(&aLen, sizeof(aLen));
+		with0->Write(FTitle.c_str(), aLen * sizeof(WideChar));
+		aLen = FDocTitle.Length();
+		with0->Write(&aLen, sizeof(aLen));
+		with0->Write(FDocTitle.c_str(), aLen * sizeof(WideChar));
 		with0->Write(&FWrap, sizeof(FWrap));
-		with0->Write(&fHighlight, sizeof(fHighlight));
+		with0->Write(&FHighlight, sizeof(FHighlight));
 		with0->Write(&FColors, sizeof(FColors));
 		with0->Write(&FLineNumbers, sizeof(FLineNumbers));
 		with0->Write(&FLineOffset, sizeof(FLineOffset));

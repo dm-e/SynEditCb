@@ -66,9 +66,9 @@ __fastcall TCustomSynAutoComplete::TCustomSynAutoComplete(TComponent* AOwner)
 			fCompletions(new TStringList()),
 			fCompletionComments(new TStringList()),
 			fCompletionValues(new TStringList()),
-			FEditor(nullptr),
+			fEditor(nullptr),
 			fEditors(nullptr),
-			FCaseSensitive(false),
+			fCaseSensitive(false),
 			fParsed(false)
 {
 	((TStringList*) fAutoCompleteList)->OnChange = CompletionListChanged;
@@ -126,7 +126,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 	String s;
 	int IdxMaybe = 0;
 	int NumMaybe = 0;
-	TBufferCoord P = {};
+	TBufferCoord p = {};
 	bool NewCaretPos = false;
 	TStringList* Temp = nullptr;
 	if(!fParsed)
@@ -138,7 +138,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 		i = fCompletions->Count - 1;
 		IdxMaybe = -1;
 		NumMaybe = 0;
-		if(FCaseSensitive)
+		if(fCaseSensitive)
 		{
 			while(i > -1)
 			{
@@ -179,15 +179,15 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 		if(i > -1)
       // select token in editor
 		{
-			P = AEditor->CaretXY;
+			p = AEditor->CaretXY;
 			AEditor->BeginUpdate();
 			try
 			{
-				AEditor->BlockBegin = BufferCoord(P.Char - Len, P.Line);
-				AEditor->BlockEnd = P;
+				AEditor->BlockBegin = BufferCoord(p.Char - Len, p.Line);
+				AEditor->BlockEnd = p;
         // indent the completion string if necessary, determine the caret pos
-				IndentLen = P.Char - Len - 1;
-				P = AEditor->BlockBegin;
+				IndentLen = p.Char - Len - 1;
+				p = AEditor->BlockBegin;
 				NewCaretPos = false;
 				Temp = new TStringList();
 				try
@@ -216,12 +216,12 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
 //              if j > 1 then
 //                Dec(j);
 							NewCaretPos = true;
-							P.Line += i;
+							p.Line += i;
 							if(i == 0)
 //                Inc(p.x, j)
-								P.Char += j - 1;
+								p.Char += j - 1;
 							else
-								P.Char = j;
+								p.Char = j;
 							break;
 						}
 					}
@@ -238,7 +238,7 @@ void __fastcall TCustomSynAutoComplete::ExecuteCompletion(const String AToken, T
         // replace the selected text and position the caret
 				AEditor->SelText = s;
 				if(NewCaretPos)
-					AEditor->CaretXY = P;
+					AEditor->CaretXY = p;
 			}
 			__finally
 			{
@@ -411,8 +411,8 @@ bool __fastcall TCustomSynAutoComplete::RemoveEditor(TCustomSynEdit* AEditor)
 		i = fEditors->IndexOf(AEditor);
 		if(i > -1)
 		{
-			if(FEditor == AEditor)
-				FEditor = nullptr;
+			if(fEditor == AEditor)
+				fEditor = nullptr;
 			fEditors->Delete(i);
 			AEditor->UnregisterCommandHandler(SynEditCommandHandler);
 			RemoveFreeNotification(AEditor);
@@ -430,11 +430,11 @@ void __fastcall TCustomSynAutoComplete::SetAutoCompleteList(TStrings* Value)
 
 void __fastcall TCustomSynAutoComplete::SetEditor(TCustomSynEdit* Value)
 {
-	if(Value != FEditor)
+	if(Value != fEditor)
 	{
-		if(FEditor != nullptr)
-			RemoveEditor(FEditor);
-		FEditor = Value;
+		if(fEditor != nullptr)
+			RemoveEditor(fEditor);
+		fEditor = Value;
 		if(Value != nullptr)
 			AddEditor(Value);
 	}

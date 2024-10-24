@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Sysutils;
 
 namespace Syneditsearch
@@ -19,17 +18,17 @@ namespace Syneditsearch
 
 
 
-__fastcall TSynEditSearch::TSynEditSearch(TComponent* AOwner)
- : inherited(AOwner),
+__fastcall TSynEditSearch::TSynEditSearch(TComponent* aOwner)
+ : inherited(aOwner),
 			Run(nullptr),
 			Origin(nullptr),
 			TheEnd(nullptr),
-			FCount(0),
+			fCount(0),
 			fTextLen(0),
 			Look_At(0),
 			PatLen(0),
 			PatLenSucc(0),
-			FCaseSensitive(false),
+			fCaseSensitive(false),
 			fWhole(false),
 			fResults(nullptr),
 			fShiftInitialized(false)
@@ -60,17 +59,17 @@ int __fastcall TSynEditSearch::GetResultCount()
 	return result;
 }
 
-void __fastcall TSynEditSearch::FixResults(int First, int delta)
+void __fastcall TSynEditSearch::FixResults(int First, int Delta)
 {
 	int i = 0;
-	if((delta != 0) && (fResults->Count > 0))
+	if((Delta != 0) && (fResults->Count > 0))
 	{
 		i = Pred(fResults->Count);
 		while(i >= 0)
 		{
 			if((NativeInt)fResults->Items[i] <= First)
 				break;
-			fResults->Items[i] = ((void*) ((NativeInt)fResults->Items[i] - delta));
+			fResults->Items[i] = ((void*) ((NativeInt)fResults->Items[i] - Delta));
 			--i;
 		}
 	}
@@ -79,7 +78,7 @@ void __fastcall TSynEditSearch::FixResults(int First, int delta)
 void __fastcall TSynEditSearch::InitShiftTable()
 {
 	int C = 0;
-	int i = 0;
+	int I = 0;
 	int stop = 0;
 	PatLen = Pat.Length();
 	if(PatLen == 0)
@@ -90,9 +89,9 @@ void __fastcall TSynEditSearch::InitShiftTable()
 	{
 		Shift[C] = PatLenSucc;
 	}
-	for(stop = PatLen, i = 1; i <= stop; i++)
+	for(stop = PatLen, I = 1; I <= stop; I++)
 	{
-		Shift[Pat[i]] = PatLenSucc - i;
+		Shift[Pat[I]] = PatLenSucc - I;
 	}
 	while(Look_At < PatLen)
 	{
@@ -169,8 +168,8 @@ bool __fastcall TSynEditSearch::TestWholeWord()
 int __fastcall TSynEditSearch::Next()
 {
 	int result = 0;
-	int i = 0;
-	PWideChar j = nullptr;
+	int I = 0;
+	PWideChar J = nullptr;
 	result = 0;
 	Run += PatLen;
 	while(Run < TheEnd)
@@ -179,20 +178,20 @@ int __fastcall TSynEditSearch::Next()
 			Run += Shift[(*(Run + 1))];
 		else
 		{
-			j = Run - PatLen + 1;
-			i = 1;
-			while(Pat[i] == (*j))
+			J = Run - PatLen + 1;
+			I = 1;
+			while(Pat[I] == (*J))
 			{
-				if(i == PatLen)
+				if(I == PatLen)
 				{
 					if(fWhole && !TestWholeWord())
 						break;
-					++FCount;
+					++fCount;
 					result = Run - Origin - PatLen + 2;
 					return result;
 				}
-				++i;
-				++j;
+				++I;
+				++J;
 			}
 			Run += Look_At;
 			if(Run >= TheEnd)
@@ -220,15 +219,15 @@ void __fastcall TSynEditSearch::SetPattern(const String Value)
 			Pat = Sysutils::AnsiLowerCase(CasedPat);
 		fShiftInitialized = false;
 	}
-	FCount = 0;
+	fCount = 0;
 }
 
 void __fastcall TSynEditSearch::SetCaseSensitive(bool Value)
 {
-	if(FCaseSensitive != Value)
+	if(fCaseSensitive != Value)
 	{
-		FCaseSensitive = Value;
-		if(FCaseSensitive)
+		fCaseSensitive = Value;
+		if(fCaseSensitive)
 			Pat = CasedPat;
 		else
 			Pat = Sysutils::AnsiLowerCase(CasedPat);

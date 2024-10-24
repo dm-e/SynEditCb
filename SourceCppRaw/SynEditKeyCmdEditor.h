@@ -108,7 +108,7 @@ private:
 	bool FExtended;
 	void __fastcall SetCommand(Synedittypes::TSynEditorCommand Value);
 	void __fastcall SetKeystroke(const TShortCut Value);
-	void __fastcall AddEditorCommand(const String s);
+	void __fastcall AddEditorCommand(const String S);
 	Synedittypes::TSynEditorCommand __fastcall GetCommand();
 	TShortCut __fastcall GetKeystroke();
 	TShortCut __fastcall GetKeystroke2();

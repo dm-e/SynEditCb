@@ -6,7 +6,8 @@
 #include <Winapi.Windows.hpp>
 #include "SynEditKeyConst.h"
 #include "SynEditStrConst.h"
-//#include "d2c_sysrtti.h"
+#include "d2c_openarray.h"
+#include "d2c_sysrtti.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -327,21 +328,21 @@ void __fastcall GetEditorCommandExtended(TGetStrProc Proc)
 	}
 }
 
-bool __fastcall IdentToEditorCommand(const String Ident, int& cmd)
+bool __fastcall IdentToEditorCommand(const String Ident, int& Cmd)
 {
 	bool result = false;
-	result = IdentToInt(Ident, cmd, EditorCommandStrs, 112);
+	result = IdentToInt(Ident, Cmd, EditorCommandStrs, 112);
 	return result;
 }
 
-bool __fastcall EditorCommandToIdent(int cmd, String& Ident)
+bool __fastcall EditorCommandToIdent(int Cmd, String& Ident)
 {
 	bool result = false;
-	result = IntToIdent(cmd, Ident, EditorCommandStrs, 112);
+	result = IntToIdent(Cmd, Ident, EditorCommandStrs, 112);
 	return result;
 }
 
-String __fastcall EditorCommandToDescrString(TSynEditorCommand cmd)
+String __fastcall EditorCommandToDescrString(TSynEditorCommand Cmd)
 {
 	String result;
   // Doesn't do anything yet.
@@ -349,11 +350,11 @@ String __fastcall EditorCommandToDescrString(TSynEditorCommand cmd)
 	return result;
 }
 
-String __fastcall EditorCommandToCodeString(TSynEditorCommand cmd)
+String __fastcall EditorCommandToCodeString(TSynEditorCommand Cmd)
 {
 	String result;
-	if(!EditorCommandToIdent((int) cmd, result))
-		result = IntToStr((int) cmd);
+	if(!EditorCommandToIdent((int) Cmd, result))
+		result = IntToStr((int) Cmd);
 	return result;
 }
 
@@ -364,7 +365,7 @@ void __fastcall TSynEditKeyStroke::Assign(TPersistent* Source)
 	if(ObjectIs(Source, TSynEditKeyStroke*))
 	{
 		Command = ((TSynEditKeyStroke*) Source)->Command;
-		key = ((TSynEditKeyStroke*) Source)->key;
+		Key = ((TSynEditKeyStroke*) Source)->Key;
 		Key2 = ((TSynEditKeyStroke*) Source)->Key2;
 		Shift = ((TSynEditKeyStroke*) Source)->Shift;
 		Shift2 = ((TSynEditKeyStroke*) Source)->Shift2;
@@ -387,7 +388,7 @@ String __fastcall TSynEditKeyStroke::GetDisplayName()
 TShortCut __fastcall TSynEditKeyStroke::GetShortCut()
 {
 	TShortCut result = (TShortCut) 0;
-	result = Menus::ShortCut(key, Shift);
+	result = Menus::ShortCut(Key, Shift);
 	return result;
 }
 
@@ -425,9 +426,9 @@ void __fastcall TSynEditKeyStroke::SetShortCut(const TShortCut Value)
 		}
 	}
 	Menus::ShortCutToKey(Value, NewKey, NewShift);
-	if((NewKey != key) || (NewShift != Shift))
+	if((NewKey != Key) || (NewShift != Shift))
 	{
-		key = NewKey;
+		Key = NewKey;
 		Shift = NewShift;
 	}
 }
@@ -516,7 +517,7 @@ void __fastcall TSynEditKeyStrokes::AddKey(TSynEditorCommand ACmd, WORD AKey, co
 	NewKeystroke = Add();
 	try
 	{
-		NewKeystroke->key = AKey;
+		NewKeystroke->Key = AKey;
 		NewKeystroke->Shift = AShift;
 		NewKeystroke->Key2 = AKey2;
 		NewKeystroke->Shift2 = AShift2;
@@ -532,17 +533,17 @@ void __fastcall TSynEditKeyStrokes::AddKey(TSynEditorCommand ACmd, WORD AKey, co
 
 void __fastcall TSynEditKeyStrokes::Assign(TPersistent* Source)
 {
-	int X = 0;
+	int x = 0;
 	if(ObjectIs(Source, TSynEditKeyStrokes*))
 	{
 		int stop = 0;
 		Clear();
-		for(stop = ((TSynEditKeyStrokes*) Source)->Count - 1, X = 0; X <= stop; X++)
+		for(stop = ((TSynEditKeyStrokes*) Source)->Count - 1, x = 0; x <= stop; x++)
 		{
 			/*# with Add do */
 			{
 				auto with0 = Add();
-				with0->Assign(((TSynEditKeyStrokes*) Source)->Items[X]);
+				with0->Assign(((TSynEditKeyStrokes*) Source)->Items[x]);
 			}
 		}
 	}
@@ -556,34 +557,34 @@ __fastcall TSynEditKeyStrokes::TSynEditKeyStrokes(TPersistent* AOwner)
 {
 }
 
-int __fastcall TSynEditKeyStrokes::FindCommand(TSynEditorCommand cmd)
+int __fastcall TSynEditKeyStrokes::FindCommand(TSynEditorCommand Cmd)
 {
 	int result = 0;
-	int X = 0;
+	int x = 0;
 	int stop = 0;
 	result = -1;
-	for(stop = Count - 1, X = 0; X <= stop; X++)
+	for(stop = Count - 1, x = 0; x <= stop; x++)
 	{
-		if(Items[X]->Command == cmd)
+		if(Items[x]->Command == Cmd)
 		{
-			result = X;
+			result = x;
 			break;
 		}
 	}
 	return result;
 }
 
-int __fastcall TSynEditKeyStrokes::FindKeycode(WORD Code, TShiftState Ss)
+int __fastcall TSynEditKeyStrokes::FindKeycode(WORD Code, TShiftState SS)
 {
 	int result = 0;
-	int X = 0;
+	int x = 0;
 	int stop = 0;
 	result = -1;
-	for(stop = Count - 1, X = 0; X <= stop; X++)
+	for(stop = Count - 1, x = 0; x <= stop; x++)
 	{
-		if((Items[X]->key == Code) && (Items[X]->Shift == Ss) && (Items[X]->Key2 == 0))
+		if((Items[x]->Key == Code) && (Items[x]->Shift == SS) && (Items[x]->Key2 == 0))
 		{
-			result = X;
+			result = x;
 			break;
 		}
 	}
@@ -593,14 +594,14 @@ int __fastcall TSynEditKeyStrokes::FindKeycode(WORD Code, TShiftState Ss)
 int __fastcall TSynEditKeyStrokes::FindKeycode2(WORD Code1, TShiftState SS1, WORD Code2, TShiftState SS2)
 {
 	int result = 0;
-	int X = 0;
+	int x = 0;
 	int stop = 0;
 	result = -1;
-	for(stop = Count - 1, X = 0; X <= stop; X++)
+	for(stop = Count - 1, x = 0; x <= stop; x++)
 	{
-		if((Items[X]->key == Code1) && (Items[X]->Shift == SS1) && (Items[X]->Key2 == Code2) && (Items[X]->Shift2 == SS2))
+		if((Items[x]->Key == Code1) && (Items[x]->Shift == SS1) && (Items[x]->Key2 == Code2) && (Items[x]->Shift2 == SS2))
 		{
-			result = X;
+			result = x;
 			break;
 		}
 	}
@@ -610,14 +611,14 @@ int __fastcall TSynEditKeyStrokes::FindKeycode2(WORD Code1, TShiftState SS1, WOR
 int __fastcall TSynEditKeyStrokes::FindShortcut(TShortCut SC)
 {
 	int result = 0;
-	int X = 0;
+	int x = 0;
 	int stop = 0;
 	result = -1;
-	for(stop = Count - 1, X = 0; X <= stop; X++)
+	for(stop = Count - 1, x = 0; x <= stop; x++)
 	{
-		if(Items[X]->ShortCut == SC)
+		if(Items[x]->ShortCut == SC)
 		{
-			result = X;
+			result = x;
 			break;
 		}
 	}
@@ -627,14 +628,14 @@ int __fastcall TSynEditKeyStrokes::FindShortcut(TShortCut SC)
 int __fastcall TSynEditKeyStrokes::FindShortcut2(TShortCut SC, TShortCut SC2)
 {
 	int result = 0;
-	int X = 0;
+	int x = 0;
 	int stop = 0;
 	result = -1;
-	for(stop = Count - 1, X = 0; X <= stop; X++)
+	for(stop = Count - 1, x = 0; x <= stop; x++)
 	{
-		if((Items[X]->ShortCut == SC) && (Items[X]->ShortCut2 == SC2))
+		if((Items[x]->ShortCut == SC) && (Items[x]->ShortCut2 == SC2))
 		{
-			result = X;
+			result = x;
 			break;
 		}
 	}
@@ -892,15 +893,15 @@ TSynEditorCommand __fastcall ConvertExtendedToCommand(String AString)
 TSynEditorCommand __fastcall ConvertCodeStringToCommand(String AString)
 {
 	TSynEditorCommand result = 0;
-	int i = 0;
+	int I = 0;
 	int stop = 0;
 	result = (TSynEditorCommand) ecNone;
 	AString = UpperCase(AString);
-	for(stop = 112 /*# High(EditorCommandStrs) */, i = 0 /*# Low(EditorCommandStrs) */; i <= stop; i++)
+	for(stop = 112 /*# High(EditorCommandStrs) */, I = 0 /*# Low(EditorCommandStrs) */; I <= stop; I++)
 	{
-		if(UpperCase(EditorCommandStrs[i].Name) == AString)
+		if(UpperCase(EditorCommandStrs[I].Name) == AString)
 		{
-			result = (TSynEditorCommand) EditorCommandStrs[i].Value;
+			result = (TSynEditorCommand) EditorCommandStrs[I].Value;
 			break;
 		}
 	}

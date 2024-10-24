@@ -272,8 +272,6 @@ protected:
 	  VCL_MESSAGE_HANDLER(WM_MOUSEWHEEL, TMessage, WMMouseWheel)
 	  VCL_MESSAGE_HANDLER(WM_NCHITTEST, TWMNCHitTest, WMNCHitTest)
 	END_MESSAGE_MAP(Vcl::Forms::TCustomForm)
-public:
-	__fastcall TSynBaseCompletionProposalForm(TComponent* AOwner);
 };
 
 class TSynBaseCompletionProposal : public System::Classes::TComponent

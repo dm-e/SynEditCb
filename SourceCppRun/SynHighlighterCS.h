@@ -214,7 +214,7 @@ enum TxtkTokenKind {xtkAdd,
                     xtkSubtractAssign,
                     xtkXor,
                     xtkXorAssign };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsAnsiC,
                   rsAnsiCAsm,
                   rsAnsiCAsmBlock,
@@ -237,7 +237,7 @@ class TSynCSSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
 	bool fAsmStart;
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	TxtkTokenKind FExtTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[211/*# range 0..210*/];
@@ -318,7 +318,7 @@ private:
 	TtkTokenKind __fastcall FuncVolatile(int Index);
 	TtkTokenKind __fastcall FuncWhile(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AnsiCProc();
 	void __fastcall AndSymbolProc();
@@ -378,7 +378,7 @@ public:
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
 	virtual bool __fastcall UseUserSettings(int settingIndex);
-	virtual void __fastcall EnumUserSettings(TStrings* Settings);
+	virtual void __fastcall EnumUserSettings(TStrings* settings);
 	__property TxtkTokenKind ExtTokenID = { read = GetExtTokenID };
 //++ CodeFolding
 	virtual void __fastcall ScanForFoldRanges(Syneditcodefolding::TSynFoldRanges* FoldRanges, TStrings* LinesToScan, int FromLine, int ToLine);

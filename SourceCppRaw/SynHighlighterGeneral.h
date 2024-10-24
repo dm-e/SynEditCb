@@ -172,8 +172,8 @@ class TSynGeneralSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
 	String fIdentChars;
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fKeyAttri;
@@ -182,7 +182,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
-	TStrings* fKeywords;
+	TStrings* fKeyWords;
 	TCommentStyles fComments;
 	TStringDelim fStringDelim;
 	bool fDetectPreprocessor;
@@ -217,15 +217,15 @@ public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
-	bool __fastcall IsStringDelim(WideChar AChar);
+	bool __fastcall IsStringDelim(WideChar aChar);
 	__fastcall TSynGeneralSyn(TComponent* AOwner);
 	virtual __fastcall ~TSynGeneralSyn();
 	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index);
 	virtual bool __fastcall GetEol();
 	virtual void* __fastcall GetRange();
 	TtkTokenKind __fastcall GetTokenID();
-	WideChar __fastcall GetCharBeforeToken(int Offset = -1);
-	WideChar __fastcall GetCharAfterToken(int Offset = 1);
+	WideChar __fastcall GetCharBeforeToken(int offset = -1);
+	WideChar __fastcall GetCharAfterToken(int offset = 1);
 	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetTokenAttribute();
 	virtual int __fastcall GetTokenKind();
 	virtual bool __fastcall IsIdentChar(WideChar AChar);
@@ -234,8 +234,8 @@ public:
 	virtual void __fastcall Next();
 	virtual void __fastcall ResetRange();
 	virtual void __fastcall SetRange(void* Value);
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
 	__property TGetTokenAttributeEvent OnGetTokenAttribute = { read = fOnGetTokenAttribute, write = fOnGetTokenAttribute };
 	__property bool StringMultiLine = { read = FStringMultiLine, write = FStringMultiLine };
 __published:
@@ -245,7 +245,7 @@ __published:
 	__property Synedithighlighter::TSynHighlighterAttributes* IdentifierAttri = { read = fIdentifierAttri, write = fIdentifierAttri };
 	__property String IdentifierChars = { read = GetIdentifierChars, write = SetIdentifierChars, stored = StoreIdentChars };
 	__property Synedithighlighter::TSynHighlighterAttributes* KeyAttri = { read = fKeyAttri, write = fKeyAttri };
-	__property TStrings* Keywords = { read = fKeywords, write = SetKeyWords };
+	__property TStrings* KeyWords = { read = fKeyWords, write = SetKeyWords };
 	__property Synedithighlighter::TSynHighlighterAttributes* NumberAttri = { read = fNumberAttri, write = fNumberAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* PreprocessorAttri = { read = fPreprocessorAttri, write = fPreprocessorAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* SpaceAttri = { read = fSpaceAttri, write = fSpaceAttri };

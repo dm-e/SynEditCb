@@ -8,7 +8,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Syneditregexsearch;
 using namespace Synedittypes;
-using namespace System;
 using namespace Vcl::Consts;
 
 namespace Syneditwildcardsearch
@@ -20,7 +19,7 @@ namespace Syneditwildcardsearch
 
 __fastcall TSynEditWildcardSearch::TSynEditWildcardSearch(TComponent* AOwner)
  : inherited(AOwner),
-			FPattern(L"")
+			fPattern(L"")
 {
 }
 
@@ -53,7 +52,7 @@ int __fastcall TSynEditWildcardSearch::GetLength(int Index)
 UnicodeString __fastcall TSynEditWildcardSearch::GetPattern()
 {
 	UnicodeString result;
-	result = FPattern;
+	result = fPattern;
 	return result;
 }
 
@@ -78,7 +77,7 @@ void __fastcall TSynEditWildcardSearch::SetOptions(const TSynSearchOptions Value
 
 void __fastcall TSynEditWildcardSearch::SetPattern(const UnicodeString Value)
 {
-	FPattern = Value;
+	fPattern = Value;
   // Convert into a real regular expression and assign it
 	inherited::SetPattern(WildCardToRegExpr(Value));
 }

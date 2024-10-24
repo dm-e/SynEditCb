@@ -1,0 +1,10 @@
+Char
+String
+Break
+Continue
+Result
+SLICE
+Round
+clAppWorkSpace
+clHighlight
+clHighlightText

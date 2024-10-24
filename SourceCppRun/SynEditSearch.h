@@ -130,13 +130,13 @@ private:
 	PWideChar TheEnd;
 	String Pat;
 	String CasedPat;
-	int FCount;
+	int fCount;
 	int fTextLen;
 	int Look_At;
 	int PatLen;
 	int PatLenSucc;
 	int Shift[65536/*# WideChar*/];
-	bool FCaseSensitive;
+	bool fCaseSensitive;
 	bool fWhole;
 	TList* fResults;
 	bool fShiftInitialized;
@@ -155,17 +155,17 @@ protected:
 public:
 	typedef Syneditmiscclasses::TSynEditSearchCustom inherited;
 	#include "SynEditSearch_friends.inc"
-	__fastcall TSynEditSearch(TComponent* AOwner);
+	__fastcall TSynEditSearch(TComponent* aOwner);
 	virtual __fastcall ~TSynEditSearch();
 	virtual int __fastcall FindAll(const String NewText);
 	virtual String __fastcall Replace(const String aOccurrence, const String aReplacement);
 	int __fastcall FindFirst(const String NewText);
-	void __fastcall FixResults(int First, int delta);
+	void __fastcall FixResults(int First, int Delta);
 	int __fastcall Next();
-	__property int Count = { read = FCount, write = FCount };
+	__property int Count = { read = fCount, write = fCount };
 	__property bool Finished = { read = GetFinished };
 	__property  Pattern = { read = CasedPat };
-	__property bool CaseSensitive = { read = FCaseSensitive, write = SetCaseSensitive };
+	__property bool CaseSensitive = { read = fCaseSensitive, write = SetCaseSensitive };
 	__property bool Whole = { read = fWhole, write = fWhole };
 };
 

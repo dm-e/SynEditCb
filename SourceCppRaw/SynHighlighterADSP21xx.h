@@ -160,7 +160,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynADSP21xxSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TIdentFuncTableFunc fIdentFuncTable[821/*# range 0..820*/];
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -355,7 +355,7 @@ private:
 	TtkTokenKind __fastcall FuncVar(int Index);
 	TtkTokenKind __fastcall FuncXor(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall PascalCommentProc();
 	void __fastcall BraceCloseProc();
@@ -393,7 +393,7 @@ public:
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
 	virtual bool __fastcall UseUserSettings(int settingIndex);
-	virtual void __fastcall EnumUserSettings(TStrings* Settings);
+	virtual void __fastcall EnumUserSettings(TStrings* settings);
 __published:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* ConditionAttri = { read = fConditionAttri, write = fConditionAttri };

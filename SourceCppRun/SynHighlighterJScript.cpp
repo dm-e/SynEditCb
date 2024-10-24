@@ -54,7 +54,7 @@ const String NonReserwedKeyWords[318/*# range 0..317*/] = {L"All", L"Anchor", L"
                     , L"toLocaleString", L"toLowerCase", L"toSource", L"toString", L"toUTCString", L"toUpperCase", L"toolbar", L"top"
                     , L"type", L"undefined", L"unescape", L"untaint", L"unwatch", L"userAgent", L"value", L"valueOf", L"visibility", L"vlinkColor", L"vspace"
                     , L"watch", L"width", L"window", L"write", L"writeln", L"zIndex"};
-const String Keywords[62/*# range 0..61*/] = {L"abstract", L"boolean", L"break", L"byte", L"callee", L"case", L"catch", L"char", L"const", L"constructor", L"continue"
+const String KeyWords[62/*# range 0..61*/] = {L"abstract", L"boolean", L"break", L"byte", L"callee", L"case", L"catch", L"char", L"const", L"constructor", L"continue"
                     , L"debugger", L"default", L"delete", L"do", L"double", L"else", L"enum", L"export", L"extends", L"false", L"final", L"finally"
                     , L"float", L"for", L"function", L"goto", L"if", L"implements", L"import", L"in", L"instanceof", L"int", L"interface", L"long"
                     , L"NaN", L"native", L"new", L"null", L"package", L"private", L"protected", L"prototype", L"public", L"return", L"short", L"start"
@@ -69,15 +69,15 @@ bool __fastcall TSynJScriptSyn::IsKeyword(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	First = 0;
 	Last = 61 /*# High(Keywords) */;
 	result = false;
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(Keywords[i], AKeyword);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(KeyWords[I], AKeyword);
 		if(Compare == 0)
 		{
 			result = true;
@@ -86,9 +86,9 @@ bool __fastcall TSynJScriptSyn::IsKeyword(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -99,15 +99,15 @@ bool __fastcall TSynJScriptSyn::IsEvent(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	First = 0;
 	Last = 19 /*# High(Events) */;
 	result = false;
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(Events[i], AKeyword);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(Events[I], AKeyword);
 		if(Compare == 0)
 		{
 			result = true;
@@ -116,9 +116,9 @@ bool __fastcall TSynJScriptSyn::IsEvent(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -129,15 +129,15 @@ bool __fastcall TSynJScriptSyn::IsNonReserwedKeyWord(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	First = 0;
 	Last = 317 /*# High(NonReserwedKeyWords) */;
 	result = false;
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(NonReserwedKeyWords[i], AKeyword);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(NonReserwedKeyWords[I], AKeyword);
 		if(Compare == 0)
 		{
 			result = true;
@@ -146,9 +146,9 @@ bool __fastcall TSynJScriptSyn::IsNonReserwedKeyWord(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -156,7 +156,7 @@ bool __fastcall TSynJScriptSyn::IsNonReserwedKeyWord(const String AKeyword)
 
 __fastcall TSynJScriptSyn::TSynJScriptSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			fLiteralLevel(0),
 			FTokenID(tkSymbol),
 			fCommentAttri(nullptr),
@@ -172,31 +172,31 @@ __fastcall TSynJScriptSyn::TSynJScriptSyn(TComponent* AOwner)
 			fTemplateAttri(nullptr)
 {
 	fLiteralLevel = 0;
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterjscript__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fSpecVarAttri = new TSynHighlighterAttributes(SYNS_AttrSpecialVariable, SYNS_FriendlyAttrSpecialVariable);
-	addAttribute(fSpecVarAttri);
+	AddAttribute(fSpecVarAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterjscript__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNonReservedKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
-	addAttribute(fNonReservedKeyAttri);
+	AddAttribute(fNonReservedKeyAttri);
 	fEventAttri = new TSynHighlighterAttributes(SYNS_AttrEvent, SYNS_FriendlyAttrEvent);
-	addAttribute(fEventAttri);
+	AddAttribute(fEventAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fTemplateAttri = new TSynHighlighterAttributes(SYNS_AttrTemplate, SYNS_FriendlyAttrTemplate);
-	addAttribute(fTemplateAttri);
+	AddAttribute(fTemplateAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterJScript;
 }
@@ -220,7 +220,7 @@ void __fastcall TSynJScriptSyn::CommentProc()
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				Run += 2;
 				break;
 			}
@@ -271,7 +271,7 @@ void __fastcall TSynJScriptSyn::LFProc()
 void __fastcall TSynJScriptSyn::LiteralsProc()
 {
 	FTokenID = tkString;
-	FRange = rsLiteral;
+	fRange = rsLiteral;
 	++Run;
 	if(!IsLineEnd(Run))
 		LiteralsRangeProc();
@@ -301,13 +301,13 @@ void __fastcall TSynJScriptSyn::LiteralsRangeProc()
 			if(myLit)
 			{
 				++fLiteralLevel;
-				FRange = rsLiteralTemplate;
+				fRange = rsLiteralTemplate;
 				break;
 			}
 			if(OK)
 			{
 				++Run;
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 			++Run;
@@ -343,7 +343,7 @@ void __fastcall TSynJScriptSyn::LiteralsTemplateRangeProc()
 			{
 				--fLiteralLevel;
 				++Run;
-				FRange = rsLiteral;
+				fRange = rsLiteral;
 				break;
 			}
 			++Run;
@@ -415,9 +415,9 @@ void __fastcall TSynJScriptSyn::NumberProc()
 		return result;
 	};
 	int idx1 = 0; // token[1]
-	bool IsHex = false;
+	bool isHex = false;
 	FTokenID = tkNumber;
-	IsHex = false;
+	isHex = false;
 	idx1 = Run;
 	++Run;
 	while(IsNumberChar())
@@ -430,7 +430,7 @@ void __fastcall TSynJScriptSyn::NumberProc()
 			break;
 			case 97: case 98: case 99: case 100: case 101: case 102:
 			case 65: case 66: case 67: case 68: case 69: case 70:
-			if(!IsHex)
+			if(!isHex)
 				goto label1;
 			break;
 			case L'x':
@@ -440,7 +440,7 @@ void __fastcall TSynJScriptSyn::NumberProc()
 					goto label2;
 				if(!IsHexChar(Succ(Run)))
 					goto label3;
-				IsHex = true;
+				isHex = true;
 			}
 			break;
 			default:
@@ -499,13 +499,13 @@ void __fastcall TSynJScriptSyn::SlashProc()
 			case L'*':
 			{
 				FTokenID = tkComment;
-				FRange = rsAnsi;
+				fRange = rsANSI;
 				do
 				{
 					++Run;
 					if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 					{
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						Run += 2;
 						break;
 					}
@@ -540,7 +540,7 @@ void __fastcall TSynJScriptSyn::StarProc()
 	if(fLine[Run] == L'=')
 		++Run;
 }
-#ifdef orig
+
 void __fastcall TSynJScriptSyn::StringProc()
 {
 	WideChar l_strChar = L'\0';
@@ -573,34 +573,6 @@ void __fastcall TSynJScriptSyn::StringProc()
 	if(!IsLineEnd(Run))
 		++Run;
 }
-#endif
-
-// from 104
-void __fastcall TSynJScriptSyn::StringProc()
-{
-	String l_strChar;
-	FTokenID = tkString;
-	l_strChar = fLine[Run];   // We could have '"' or #39
-	String s1 = fLine[Run + 1];
-	String s2 = fLine[Run + 2];
-
-	//if((fLine[Run + 1] == l_strChar) && (fLine[Run + 2] == l_strChar))
-	if((s1 == l_strChar) && (s2 == l_strChar))
-		Run += 2;
-	do
-	{
-		if(IsLineEnd(Run))
-			break;
-		++Run;
-		s1 = fLine[Run];
-		s2 = fLine[Pred(Run)];
-	}
-	//while(!((fLine[Run] == l_strChar) && (fLine[Pred(Run)] != L'\\')));
-	while(!((s1 == l_strChar) && (s2 != L'\\')));
-	if(!IsLineEnd(Run))
-		++Run;
-}
-
 
 void __fastcall TSynJScriptSyn::SymbolProc()
 {
@@ -617,15 +589,15 @@ void __fastcall TSynJScriptSyn::UnknownProc()
 void __fastcall TSynJScriptSyn::Next()
 {
 	fTokenPos = Run;
-	if(FRange == rsAnsi)
+	if(fRange == rsANSI)
 		CommentProc();
 	else
 	{
-		if(FRange == rsLiteralTemplate)
+		if(fRange == rsLiteralTemplate)
 			LiteralsTemplateRangeProc();
 		else
 		{
-			if(FRange == rsLiteral)
+			if(fRange == rsLiteral)
 				LiteralsRangeProc();
 			else
 				switch(fLine[Run])
@@ -757,7 +729,7 @@ bool __fastcall TSynJScriptSyn::GetEol()
 void* __fastcall TSynJScriptSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -825,12 +797,12 @@ int __fastcall TSynJScriptSyn::GetTokenKind()
 
 void __fastcall TSynJScriptSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynJScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynJScriptSyn::IsFilterStored()
@@ -895,7 +867,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -903,7 +875,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != fCommentAttri)
@@ -964,17 +936,17 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 9)) == L"//#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 9)) == L"//#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 12)) == L"//#ENDREGION")
+			if(UpperCase(S.SubString(1, 12)) == L"//#ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -986,9 +958,9 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsAnsi)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsANSI)
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsi)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsANSI)
 				FoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				FoldRanges->NoFoldInfo((int) (Line + 1));
@@ -996,7 +968,7 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 		}
 		else
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsi)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsANSI)
 			{
 				FoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;

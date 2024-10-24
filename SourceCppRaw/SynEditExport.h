@@ -166,7 +166,7 @@ public:
 class TSynCustomExporter : public System::Classes::TComponent
 {
 private:
-	TMemoryStream* FBuffer;
+	TMemoryStream* fBuffer;
 	int FCharSize;
 	bool fFirstAttribute;
 	bool FStreaming;
@@ -180,17 +180,17 @@ private:
 	int __fastcall StringSize(const String AText);
 	void __fastcall WriteString(const String AText);
 protected:
-	TColor FBackgroundColor;
-	UINT FClipboardFormat;
+	TColor fBackgroundColor;
+	UINT fClipboardFormat;
 	String fDefaultFilter;
 	Synunicode::TSynEncoding FEncoding;
 	bool fExportAsText;
-	TFont* FFont;
+	TFont* fFont;
 	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
 	TColor fLastBG;
 	TColor fLastFG;
 	TFontStyles fLastStyle;
-	String FTitle;
+	String fTitle;
 	bool fUseBackground;
     /* Adds a string to the output buffer. */
 	void __fastcall AddData(const String AText);
@@ -239,7 +239,7 @@ protected:
     /* Inserts a data block at the given position into the output buffer.  Is
       used to insert the format header after the exporting, since some header
       data may be known only after the conversion is done. */
-	void __fastcall insertData(int APos, const String AText);
+	void __fastcall InsertData(int APos, const String AText);
 	virtual String __fastcall ReplaceReservedChar(WideChar AChar){return String();} // = 0;
     /* Returns a string that has all the invalid chars of the output format
       replaced with the entries in the replacement array. */
@@ -273,7 +273,7 @@ public:
 	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings(){return Synunicode::TSynEncodings();} // = 0;
     /* Default background color for text that has no token attribute assigned or
       for token attributes that have the background set to default. */
-	__property TColor Color = { read = FBackgroundColor, write = FBackgroundColor };
+	__property TColor Color = { read = fBackgroundColor, write = fBackgroundColor };
     /* Filter string for the output format for SaveAs file dialogs. */
 	__property String DefaultFilter = { read = fDefaultFilter, write = fDefaultFilter };
 	__property Synunicode::TSynEncoding Encoding = { read = FEncoding, write = SetEncoding, default = /*# seUTF8 */ 0 };
@@ -281,13 +281,13 @@ public:
     /* The font to be used for the output format. The font color is used for text
       that has no token attribute assigned or for token attributes that have
       the background set to default. */
-	__property TFont* Font = { read = FFont, write = SetFont };
+	__property TFont* Font = { read = fFont, write = SetFont };
     /* The output format of the exporter. */
 	__property String FormatName = { read = GetFormatName };
     /* The highlighter to use for exporting. */
 	__property Synedithighlighter::TSynCustomHighlighter* Highlighter = { read = fHighlighter, write = SetHighlighter };
     /* The title to embedd into the output header. */
-	__property String Title = { read = FTitle, write = SetTitle };
+	__property String Title = { read = fTitle, write = SetTitle };
     /* Use the token attribute background for the exporting. */
 	__property bool UseBackground = { read = fUseBackground, write = SetUseBackground };
 };

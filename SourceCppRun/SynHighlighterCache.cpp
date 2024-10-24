@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 
 namespace Synhighlightercache
 {
@@ -22,7 +21,7 @@ namespace Synhighlightercache
 #define Synhighlightercache__4 (TSysCharSet() << '\x20' << '#')
 
 
-const String Keywords[275/*# range 0..274*/] = {L"$a", L"$ascii", L"$c", L"$char", L"$d", L"$data", L"$device", L"$e", L"$ec", L"$ecode", L"$es", L"$estack", L"$et"
+const String KeyWords[275/*# range 0..274*/] = {L"$a", L"$ascii", L"$c", L"$char", L"$d", L"$data", L"$device", L"$e", L"$ec", L"$ecode", L"$es", L"$estack", L"$et"
                     , L"$etrap", L"$extract", L"$f", L"$find", L"$fn", L"$fnumber", L"$g", L"$get", L"$h", L"$horolog", L"$i", L"$in", L"$increment", L"$inumber"
                     , L"$io", L"$j", L"$job", L"$justify", L"$k", L"$key", L"$l", L"$lb", L"$ld", L"$length", L"$lf", L"$lg", L"$li", L"$list", L"$listbuild"
                     , L"$listdata", L"$listfind", L"$listget", L"$listlength", L"$ll", L"$n", L"$na", L"$name", L"$next", L"$o", L"$order", L"$p"
@@ -103,14 +102,14 @@ unsigned int __fastcall TSynCacheSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynCacheSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynCacheSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkClass;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 1996 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 1996 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -144,7 +143,7 @@ TtkTokenKind __fastcall TSynCacheSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynCacheSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkClass;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -154,10 +153,10 @@ TtkTokenKind __fastcall TSynCacheSyn::KeyWordFunc(int Index)
 TtkTokenKind __fastcall TSynCacheSyn::Func38html(int Index)
 {
 	TtkTokenKind result = tkClass;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkEmbedSQL;
-		FRange = rsHTML;
+		fRange = rsHTML;
 	}
 	else
 	result = tkIdentifier;
@@ -167,10 +166,10 @@ TtkTokenKind __fastcall TSynCacheSyn::Func38html(int Index)
 TtkTokenKind __fastcall TSynCacheSyn::Func38sql(int Index)
 {
 	TtkTokenKind result = tkClass;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 	{
 		result = tkEmbedSQL;
-		FRange = rsSQL;
+		fRange = rsSQL;
 	}
 	else
 	result = tkIdentifier;
@@ -181,7 +180,7 @@ __fastcall TSynCacheSyn::TSynCacheSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fBrace(0),
 			fFirstBrace(false),
-			FRange(rsUnKnown),
+			fRange(rsUnKnown),
 			FTokenID(tkClass),
 			fClassAttri(nullptr),
 			fCommentAttri(nullptr),
@@ -201,45 +200,45 @@ __fastcall TSynCacheSyn::TSynCacheSyn(TComponent* AOwner)
 			fEmbedTextAttri(nullptr),
 			FCanKey(false)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fClassAttri = new TSynHighlighterAttributes(SYNS_AttrClass, SYNS_FriendlyAttrClass);
-	addAttribute(fClassAttri);
+	AddAttribute(fClassAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightercache__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrFunction, SYNS_FriendlyAttrFunction);
-	addAttribute(fFunctionAttri);
+	AddAttribute(fFunctionAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightercache__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fDirectiveAttri = new TSynHighlighterAttributes(SYNS_AttrDir, SYNS_FriendlyAttrDir);
-	addAttribute(fDirectiveAttri);
+	AddAttribute(fDirectiveAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fIndirectAttri = new TSynHighlighterAttributes(SYNS_AttrIndirect, SYNS_FriendlyAttrIndirect);
-	addAttribute(fIndirectAttri);
+	AddAttribute(fIndirectAttri);
 	fLabelAttri = new TSynHighlighterAttributes(SYNS_AttrLabel, SYNS_FriendlyAttrLabel);
-	addAttribute(fLabelAttri);
+	AddAttribute(fLabelAttri);
 	fMacroAttri = new TSynHighlighterAttributes(SYNS_AttrMacro, SYNS_FriendlyAttrMacro);
-	addAttribute(fMacroAttri);
+	AddAttribute(fMacroAttri);
 	fUserFunctionAttri = new TSynHighlighterAttributes(SYNS_AttrUserFunction, SYNS_FriendlyAttrUserFunction);
-	addAttribute(fUserFunctionAttri);
+	AddAttribute(fUserFunctionAttri);
 	fEmbedSQLAttri = new TSynHighlighterAttributes(SYNS_AttrEmbedSQL, SYNS_FriendlyAttrEmbedSQL);
-	addAttribute(fEmbedSQLAttri);
+	AddAttribute(fEmbedSQLAttri);
 	fEmbedTextAttri = new TSynHighlighterAttributes(SYNS_AttrEmbedText, SYNS_FriendlyAttrEmbedText);
-	addAttribute(fEmbedTextAttri);
+	AddAttribute(fEmbedTextAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterCache;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynCacheSyn::CRProc()
@@ -248,7 +247,7 @@ void __fastcall TSynCacheSyn::CRProc()
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynCacheSyn::CommentProc()
@@ -286,7 +285,7 @@ void __fastcall TSynCacheSyn::IdentProc()
 		fir = fLine[Run];
 		if(fir == L'^')
 			FCanKey = true;
-		FRange = rsUnKnown;
+		fRange = rsUnKnown;
 		if(FCanKey)
 			FTokenID = IdentKind(fLine + Run);
 		else
@@ -296,7 +295,7 @@ void __fastcall TSynCacheSyn::IdentProc()
 				++Run;
 			return;
 		}
-		FRange = rsCommand;
+		fRange = rsCommand;
 		Run += fStringLen;
 		if(!(IsLineEnd(Run) || CharInSet(fLine[Run], Synhighlightercache__2)) && (fir != L'^'))
 		{
@@ -365,20 +364,20 @@ void __fastcall TSynCacheSyn::NumberProc()
 		++Run;
 	}
 	label1:;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynCacheSyn::SpaceProc()
 {
-	int X = 0;
-	X = Run;
+	int x = 0;
+	x = Run;
 	++Run;
 	FTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 	FCanKey = true;
-	if(FRange == rsCommand)
-		FCanKey = (Run - X > 1);
+	if(fRange == rsCommand)
+		FCanKey = (Run - x > 1);
 }
 
 void __fastcall TSynCacheSyn::StringProc()
@@ -404,7 +403,7 @@ void __fastcall TSynCacheSyn::StringProc()
 	label2:;
 	if(fLine[Run] != L'\x00')
 		++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynCacheSyn::UnknownProc()
@@ -419,7 +418,7 @@ void __fastcall TSynCacheSyn::Next()
 	if(fLine[Run] == L'\x00')
 		NullProc();
 	else
-		switch(FRange)
+		switch(fRange)
 		{
 			case rsSQL:
 			case rsHTML:
@@ -539,7 +538,7 @@ bool __fastcall TSynCacheSyn::GetEol()
 void* __fastcall TSynCacheSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -622,12 +621,12 @@ int __fastcall TSynCacheSyn::GetTokenKind()
 
 void __fastcall TSynCacheSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 void __fastcall TSynCacheSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynCacheSyn::IsFilterStored()
@@ -680,7 +679,7 @@ void __fastcall TSynCacheSyn::IndirectProc()
 	++Run;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 //------------------------------------------------------------------------------
@@ -691,7 +690,7 @@ void __fastcall TSynCacheSyn::SymbolProc()
 {
 	FTokenID = tkSymbol;
 	++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 //------------------------------------------------------------------------------
@@ -734,7 +733,7 @@ void __fastcall TSynCacheSyn::FuncProc()
 	}
 	while(IsIdentChar(fLine[Run]))
 		++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 //------------------------------------------------------------------------------
@@ -765,7 +764,7 @@ void __fastcall TSynCacheSyn::DirectiveProc()
 	++Run;
 	while(IsIdentChar(fLine[Run]) || (fLine[Run] == L'#'))
 		++Run;
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 //------------------------------------------------------------------------------
@@ -776,7 +775,7 @@ void __fastcall TSynCacheSyn::DirectiveProc()
 
 void __fastcall TSynCacheSyn::EmbeddedProc()
 {
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsUnKnown:
 		case rsCommand:
@@ -818,7 +817,7 @@ void __fastcall TSynCacheSyn::EmbeddedProc()
 				++Run;
 			}
 			if(fBrace == 0)
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 		}
 		break;
 		case rsHTML:
@@ -844,7 +843,7 @@ void __fastcall TSynCacheSyn::EmbeddedProc()
 				++Run;
 			}
 			if(fBrace == 0)
-				FRange = rsUnKnown;
+				fRange = rsUnKnown;
 		}
 		break;
 		default:

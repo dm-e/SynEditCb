@@ -8,7 +8,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Syneditprintmargins;
 using namespace Syneditprinttypes;
-using namespace System;
 using namespace System::Uitypes;
 
 #define Syneditprintmarginsdialog__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)

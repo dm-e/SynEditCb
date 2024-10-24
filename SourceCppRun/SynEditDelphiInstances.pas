@@ -78,6 +78,7 @@ function CreateFoldRangeList: System.Generics.Collections.TList<TSynFoldRange>;
 function CreateFoldInfoList: System.Generics.Collections.TList<TLineFoldInfo>;
 
 procedure AddToFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; ARange: TSynFoldRange);
+procedure InsertIntoFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; AIndex : Integer; ARange: TSynFoldRange);
 function BinarySearchInFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; ARange: TSynFoldRange; var AIndex: Integer): Boolean;
 
 // for SynEditCodeFolding
@@ -147,6 +148,11 @@ end;
 procedure AddToFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; ARange: TSynFoldRange);
 begin
   AList.Add(ARange);
+end;
+
+procedure InsertIntoFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; AIndex : Integer; ARange: TSynFoldRange);
+begin
+  AList.Insert(AIndex, ARange);
 end;
 
 function BinarySearchInFoldRangeList(AList: System.Generics.Collections.TList<TSynFoldRange>; ARange: TSynFoldRange; var AIndex: Integer): Boolean;

@@ -206,7 +206,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynUnrealSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	int FRoundCount;
 	int FSquareCount;
 	TtkTokenKind FTokenID;
@@ -368,7 +368,7 @@ private:
 	TtkTokenKind __fastcall FuncWhile(int Index);
 	TtkTokenKind __fastcall FuncWithin(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AnsiCProc();
 	void __fastcall AndSymbolProc();
@@ -427,7 +427,7 @@ public:
 	virtual void __fastcall SetRange(void* Value);
 	virtual void __fastcall ResetRange();
 	virtual bool __fastcall UseUserSettings(int settingIndex);
-	virtual void __fastcall EnumUserSettings(TStrings* Settings);
+	virtual void __fastcall EnumUserSettings(TStrings* settings);
 	__property TxtkTokenKind ExtTokenID = { read = GetExtTokenID };
 __published:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };

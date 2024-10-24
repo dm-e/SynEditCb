@@ -52,8 +52,8 @@ __fastcall TSynURIOpener::TSynURIOpener(TComponent* AOwner)
 			FControlDown(false),
 			FCtrlActivatesLinks(false),
 			FEditor(nullptr),
-			fMouseDownX(0),
-			fMouseDownY(0),
+			FMouseDownX(0),
+			FMouseDownY(0),
 			FURIHighlighter(nullptr),
 			FVisitedURIs(nullptr)
 {
@@ -71,24 +71,24 @@ __fastcall TSynURIOpener::~TSynURIOpener()
 bool __fastcall TSynURIOpener::MouseInSynEdit()
 {
 	bool result = false;
-	TPoint Pt = {};
-	Pt = Mouse->CursorPos;
-	result = PtInRect(FEditor->ClientRect, FEditor->ScreenToClient(Pt));
+	TPoint pt = {};
+	pt = Mouse->CursorPos;
+	result = PtInRect(FEditor->ClientRect, FEditor->ScreenToClient(pt));
 	return result;
 }
 
-void __fastcall TSynURIOpener::NewKeyDown(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynURIOpener::NewKeyDown(TObject* Sender, WORD& Key, TShiftState Shift)
 {
-	if((key == SYNEDIT_CONTROL) && !FControlDown && MouseInSynEdit())
+	if((Key == SYNEDIT_CONTROL) && !FControlDown && MouseInSynEdit())
 	{
 		FControlDown = true;
 		((TAccessCustomSynEdit*) FEditor)->UpdateMouseCursor();
 	}
 }
 
-void __fastcall TSynURIOpener::NewKeyUp(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TSynURIOpener::NewKeyUp(TObject* Sender, WORD& Key, TShiftState Shift)
 {
-	if((key == SYNEDIT_CONTROL) && FControlDown)
+	if((Key == SYNEDIT_CONTROL) && FControlDown)
 	{
 		FControlDown = false;
 		((TAccessCustomSynEdit*) FEditor)->UpdateMouseCursor();
@@ -123,8 +123,8 @@ void __fastcall TSynURIOpener::NewMouseDown(TObject* Sender, TMouseButton Button
 {
 	if((Button == System::Uitypes::TMouseButton::mbLeft) && !(FCtrlActivatesLinks) || FControlDown)
 	{
-		fMouseDownX = X;
-		fMouseDownY = Y;
+		FMouseDownX = X;
+		FMouseDownY = Y;
 	}
 }
 
@@ -135,7 +135,7 @@ void __fastcall TSynURIOpener::NewMouseUp(TObject* Sender, TMouseButton Button, 
 	int Start = 0;
 	String Token;
 	TSynHighlighterAttributes* Attri = nullptr;
-	if((Button != System::Uitypes::TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(fMouseDownX - X) > 4) || (Abs(fMouseDownY - Y) > 4))
+	if((Button != System::Uitypes::TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(FMouseDownX - X) > 4) || (Abs(FMouseDownY - Y) > 4))
 		return;
 	/*# with TAccessCustomSynEdit(FEditor) do */
 	{

@@ -126,10 +126,10 @@ namespace Syneditmiscprocs
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int MaxIntArraySize = (int)(System::MaxInt / /*div*/ 16);
 typedef int TIntArray[134217727/*# range 0..MaxIntArraySize-1*/];
-typedef TIntArray* pIntArray;
-int __fastcall MinMax(int X, int mi, int ma);
-void __fastcall SwapInt(int& l, int& R);
-void __fastcall InternalFillRect(HDC DC, const TRect& rcPaint);
+typedef TIntArray* PIntArray;
+int __fastcall MinMax(int x, int mi, int ma);
+void __fastcall SwapInt(int& l, int& r);
+void __fastcall InternalFillRect(HDC dc, const TRect& rcPaint);
 
 // Converting tabs to spaces: To use the function several times it's better
 // to use a function pointer that is set to the fastest conversion function.
@@ -141,7 +141,7 @@ typedef String __fastcall (*TConvertTabsProcEx) (const String, int, bool&);
 TConvertTabsProcEx __fastcall GetBestConvertTabsProcEx(int TabWidth);
 // This is the slowest conversion function which can handle TabWidth <> 2^n.
 String __fastcall ConvertTabsEx(const String Line, int TabWidth, bool& HasTabs);
-int __fastcall GetExpandedLength(const String AStr, int aTabWidth);
+int __fastcall GetExpandedLength(const String aStr, int aTabWidth);
 int __fastcall CharIndex2CaretPos(int Index, int TabWidth, const String Line);
 int __fastcall CaretPos2CharIndex(int Position, int TabWidth, const String Line, bool& InsideTabChar);
 
@@ -149,8 +149,8 @@ int __fastcall CaretPos2CharIndex(int Position, int TabWidth, const String Line,
 int __fastcall StrScanForCharInCategory(const String Line, int Start, Synedittypes::TCategoryMethod IsOfCategory);
 // the same, but searching backwards
 int __fastcall StrRScanForCharInCategory(const String Line, int Start, Synedittypes::TCategoryMethod IsOfCategory);
-PWideChar __fastcall GetEol(PChar P);
-int __fastcall CountLines(const String s);
+PWideChar __fastcall GetEOL(PChar P);
+int __fastcall CountLines(const String S);
 System::TArray<String> __fastcall StringToLines(const String Value);
 
 // Remove all '/' characters from string by changing them into '\.'.

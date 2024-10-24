@@ -119,7 +119,7 @@ __published:
 	void __fastcall btnCancelClick(TObject* Sender);
 	void __fastcall KeyCmdListClick(TObject* Sender);
 private:
-	Syneditkeycmds::TSynEditKeyStrokes* fKeyStrokes;
+	Syneditkeycmds::TSynEditKeyStrokes* FKeystrokes;
 	bool FExtended;
 	void __fastcall SetKeystrokes(Syneditkeycmds::TSynEditKeyStrokes* const Value);
 	void __fastcall UpdateKeystrokesList();
@@ -128,7 +128,7 @@ public:
 	typedef TForm inherited;
 	__fastcall TSynEditKeystrokesEditorForm(TComponent* AOwner);
 	virtual __fastcall ~TSynEditKeystrokesEditorForm();
-	__property Syneditkeycmds::TSynEditKeyStrokes* Keystrokes = { read = fKeyStrokes, write = SetKeystrokes };
+	__property Syneditkeycmds::TSynEditKeyStrokes* Keystrokes = { read = FKeystrokes, write = SetKeystrokes };
 	__property bool ExtendedString = { read = FExtended, write = FExtended };
 protected:
 	BEGIN_MESSAGE_MAP

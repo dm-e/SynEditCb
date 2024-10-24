@@ -119,7 +119,7 @@ class TfmEditorOptionsDialog : public TForm
 {
 __published:
 	TPageControl* PageControl1;
-	TButton* btnOK;
+	TButton* btnOk;
 	TButton* btnCancel;
 	TTabSheet* Display;
 	TColorDialog* ColorDialog;
@@ -132,7 +132,7 @@ __published:
 	TMenuItem* Menu1;
 	TMenuItem* Window1;
 	TMenuItem* WindowFrame1;
-	TMenuItem* Menu2;
+	TMenuItem* MEnu2;
 	TMenuItem* WindowText1;
 	TMenuItem* CaptionText1;
 	TMenuItem* ActiveBorder1;
@@ -238,12 +238,12 @@ __published:
 	void __fastcall btnRemKeyClick(TObject* Sender);
 	void __fastcall FormShow(TObject* Sender);
 	void __fastcall KeyListEditing(TObject* Sender, TListItem* Item, bool& AllowEdit);
-	void __fastcall btnOKClick(TObject* Sender);
+	void __fastcall btnOkClick(TObject* Sender);
 	void __fastcall btnGutterFontClick(TObject* Sender);
 	void __fastcall cbGutterFontClick(TObject* Sender);
 	void __fastcall btnRightEdgeMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall btnGutterColorMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
-	void __fastcall cKeyCommandKeyUp(TObject* Sender, WORD& key, TShiftState Shift);
+	void __fastcall cKeyCommandKeyUp(TObject* Sender, WORD& Key, TShiftState Shift);
 	void __fastcall KeyListChanging(TObject* Sender, TListItem* Item, TItemChange Change, bool& AllowChange);
 private:
 	TSynEditorOptionsContainer* FSynEdit;
@@ -256,7 +256,7 @@ private:
 	TColor __fastcall GetColor(TMenuItem* Item);
 	void __fastcall GetData();
 	void __fastcall PutData();
-	void __fastcall EditStrCallback(const String s);
+	void __fastcall EditStrCallback(const String S);
 	void __fastcall FillInKeystrokeInfo(Syneditkeycmds::TSynEditKeyStroke* AKey, TListItem* AItem);
 public:
 	Syneditmiscclasses::TSynHotKey* eKeyShort2;
@@ -301,18 +301,18 @@ private:
 	bool FHideSelection;
 	bool FWantTabs;
 	int FMaxUndo;
-	int fExtraLineSpacing;
+	int FExtraLineSpacing;
 	int FTabWidth;
 	int FMaxScrollWidth;
-	int fRightEdge;
+	int FRightEdge;
 	Syneditmiscclasses::TSynSelectedColor* FSelectedColor;
-	TColor fRightEdgeColor;
+	TColor FRightEdgeColor;
 	TFont* FFont;
-	Syneditmiscclasses::TSynBookMarkOpt* fBookMarks;
-	Synedit::TSynEditCaretType fOverwriteCaret;
-	Synedit::TSynEditCaretType fInsertCaret;
-	Syneditkeycmds::TSynEditKeyStrokes* fKeyStrokes;
-	Synedit::TSynEditorOptions fOptions;
+	Syneditmiscclasses::TSynBookMarkOpt* FBookmarks;
+	Synedit::TSynEditCaretType FOverwriteCaret;
+	Synedit::TSynEditCaretType FInsertCaret;
+	Syneditkeycmds::TSynEditKeyStrokes* FKeystrokes;
+	Synedit::TSynEditorOptions FOptions;
 	Syneditmiscclasses::TSynGutter* FSynGutter;
 	TColor FColor;
 	void __fastcall SetBookMarks(Syneditmiscclasses::TSynBookMarkOpt* const Value);
@@ -328,23 +328,23 @@ public:
 	virtual void __fastcall Assign(TPersistent* Source);
 	virtual void __fastcall AssignTo(TPersistent* Dest);
 __published:
-	__property Synedit::TSynEditorOptions Options = { read = fOptions, write = SetOptions };
-	__property Syneditmiscclasses::TSynBookMarkOpt* BookMarkOptions = { read = fBookMarks, write = SetBookMarks };
+	__property Synedit::TSynEditorOptions Options = { read = FOptions, write = SetOptions };
+	__property Syneditmiscclasses::TSynBookMarkOpt* BookMarkOptions = { read = FBookmarks, write = SetBookMarks };
 	__property TColor Color = { read = FColor, write = FColor };
 	__property TFont* Font = { read = FFont, write = SetFont };
-	__property int ExtraLineSpacing = { read = fExtraLineSpacing, write = fExtraLineSpacing };
+	__property int ExtraLineSpacing = { read = FExtraLineSpacing, write = FExtraLineSpacing };
 	__property Syneditmiscclasses::TSynGutter* Gutter = { read = FSynGutter, write = SetSynGutter };
-	__property int RightEdge = { read = fRightEdge, write = fRightEdge };
-	__property TColor RightEdgeColor = { read = fRightEdgeColor, write = fRightEdgeColor };
+	__property int RightEdge = { read = FRightEdge, write = FRightEdge };
+	__property TColor RightEdgeColor = { read = FRightEdgeColor, write = FRightEdgeColor };
 	__property bool WantTabs = { read = FWantTabs, write = FWantTabs };
-	__property Synedit::TSynEditCaretType InsertCaret = { read = fInsertCaret, write = fInsertCaret };
-	__property Synedit::TSynEditCaretType OverwriteCaret = { read = fOverwriteCaret, write = fOverwriteCaret };
+	__property Synedit::TSynEditCaretType InsertCaret = { read = FInsertCaret, write = FInsertCaret };
+	__property Synedit::TSynEditCaretType OverwriteCaret = { read = FOverwriteCaret, write = FOverwriteCaret };
 	__property bool HideSelection = { read = FHideSelection, write = FHideSelection };
 	__property int MaxScrollWidth = { read = FMaxScrollWidth, write = FMaxScrollWidth };
 	__property int MaxUndo = { read = FMaxUndo, write = FMaxUndo };
 	__property Syneditmiscclasses::TSynSelectedColor* SelectedColor = { read = FSelectedColor, write = FSelectedColor };
 	__property int TabWidth = { read = FTabWidth, write = FTabWidth };
-	__property Syneditkeycmds::TSynEditKeyStrokes* Keystrokes = { read = fKeyStrokes, write = SetKeystrokes };
+	__property Syneditkeycmds::TSynEditKeyStrokes* Keystrokes = { read = FKeystrokes, write = SetKeystrokes };
 };
 #endif // SynEditOptionsDialogH
 

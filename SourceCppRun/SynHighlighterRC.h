@@ -127,7 +127,7 @@ enum TtkTokenKind {tkComment,
                    tkString,
                    tkSymbol,
                    tkUnknown };
-enum TRangeState {rsUnKnown,
+enum TRangeState {rsUnknown,
                   rsDirective,
                   rsComment };
 typedef TtkTokenKind __fastcall (__closure *TIdentFuncTableFunc) (int);
@@ -136,8 +136,8 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynRCSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[241/*# range 0..240*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fDirecAttri;
@@ -150,7 +150,7 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CommentProc();
 	void __fastcall CRProc();
@@ -172,18 +172,18 @@ public:
 	__classmethod virtual Synedithighlighter::TSynHighlighterCapabilities __fastcall GetCapabilities();
 	__classmethod virtual String __fastcall GetLanguageName();
 	__classmethod virtual String __fastcall GetFriendlyLanguageName();
-	__fastcall TSynRCSyn(TComponent* AOwner);
+	__fastcall TSynRCSyn(TComponent* aOwner);
 	virtual __fastcall ~TSynRCSyn();
-	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index);
+	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int index);
 	virtual bool __fastcall GetEol();
 	virtual void* __fastcall GetRange();
 	TtkTokenKind __fastcall GetTokenID();
 	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetTokenAttribute();
 	virtual int __fastcall GetTokenKind();
 	virtual void __fastcall Next();
-	virtual void __fastcall SetRange(void* Value);
+	virtual void __fastcall SetRange(void* value);
 	virtual void __fastcall ResetRange();
-	virtual bool __fastcall UseUserSettings(int settingIndex);
+	virtual bool __fastcall UseUserSettings(int SettingIndex);
 	virtual void __fastcall EnumUserSettings(TStrings* Settings);
 __published:
 	__property Synedithighlighter::TSynHighlighterAttributes* CommentAttri = { read = fCommentAttri, write = fCommentAttri };

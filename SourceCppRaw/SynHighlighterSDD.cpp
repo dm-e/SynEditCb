@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightersdd
@@ -26,7 +25,7 @@ namespace Synhighlightersdd
 										31 << 32)
 
 
-const String Keywords[27/*# range 0..26*/] = {L"array", L"binarydata", L"block", L"byte", L"database", L"date", L"end", L"endblock", L"integer", L"keys"
+const String KeyWords[27/*# range 0..26*/] = {L"array", L"binarydata", L"block", L"byte", L"database", L"date", L"end", L"endblock", L"integer", L"keys"
                     , L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
                     , L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
 const int KeyIndices[37/*# range 0..36*/] = {8, 3, 18, 0, 25, 14, 16, 22, 5, 19, 10, 20, -1, -1, 2, 26, -1, 21, -1, 12, 1, 17, 15, -1, 9, -1, 11, 7, -1, 4, 6, -1, 13, -1, -1, 24, 23};
@@ -48,14 +47,14 @@ unsigned int __fastcall TSynSDDSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynSDDSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynSDDSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 36 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 36 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -109,8 +108,8 @@ TtkTokenKind __fastcall TSynSDDSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncArray(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -119,8 +118,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncArray(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncBinarydata(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -129,7 +128,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncBinarydata(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncBlock(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -139,8 +138,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncBlock(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncByte(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -149,7 +148,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncByte(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncDatabase(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -159,8 +158,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncDatabase(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncDate(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -169,7 +168,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncDate(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncEnd(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -179,7 +178,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncEnd(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncEndblock(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -189,8 +188,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncEndblock(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncInteger(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -199,7 +198,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncInteger(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncKeys(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -209,8 +208,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncKeys(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncLongint(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -219,8 +218,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncLongint(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncMemotext(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -229,7 +228,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncMemotext(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncObject(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -239,7 +238,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncObject(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncObjects(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -249,7 +248,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncObjects(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncOf(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -259,7 +258,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncOf(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncOwner(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -269,7 +268,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncOwner(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncPartition(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -279,7 +278,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncPartition(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncPartitions(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -289,7 +288,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncPartitions(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncPrimary(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -299,8 +298,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncPrimary(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncReal(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -309,7 +308,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncReal(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncSecondary(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -319,7 +318,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncSecondary(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncSpec(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -329,8 +328,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncSpec(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncString(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -339,7 +338,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncString(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncSuperblock(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -349,7 +348,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncSuperblock(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncSuperspec(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -359,8 +358,8 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncSuperspec(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncTime(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
-		result = tkDataType;
+	if(IsCurrentToken(KeyWords[Index]))
+		result = tkDatatype;
 	else
 		result = tkIdentifier;
 	return result;
@@ -369,7 +368,7 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncTime(int Index)
 TtkTokenKind __fastcall TSynSDDSyn::FuncVar(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -378,38 +377,38 @@ TtkTokenKind __fastcall TSynSDDSyn::FuncVar(int Index)
 
 __fastcall TSynSDDSyn::TSynSDDSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkComment),
+			fRange(rsUnKnown),
+			fTokenID(tkComment),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
 			fKeyAttri(nullptr),
-			fDataTypeAttri(nullptr),
+			fDatatypeAttri(nullptr),
 			fNumberAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fSymbolAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clNavy;
 	fCommentAttri->Style = Synhighlightersdd__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightersdd__1;
 	fKeyAttri->Foreground = (TColor) clGreen;
-	addAttribute(fKeyAttri);
-	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	fDataTypeAttri->Style = Synhighlightersdd__2;
-	fDataTypeAttri->Foreground = (TColor) clTeal;
-	addAttribute(fDataTypeAttri);
+	AddAttribute(fKeyAttri);
+	fDatatypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
+	fDatatypeAttri->Style = Synhighlightersdd__2;
+	fDatatypeAttri->Foreground = (TColor) clTeal;
+	AddAttribute(fDatatypeAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterSDD;
@@ -417,14 +416,14 @@ __fastcall TSynSDDSyn::TSynSDDSyn(TComponent* AOwner)
 
 void __fastcall TSynSDDSyn::BraceOpenProc()
 {
-	FRange = rsComment;
+	fRange = rsComment;
 	BraceCommentProc();
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 } /* BraceOpenProc */
 
 void __fastcall TSynSDDSyn::IdentProc()
 {
-	FTokenID = IdentKind((fLine + Run));
+	fTokenID = IdentKind((fLine + Run));
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -432,13 +431,13 @@ void __fastcall TSynSDDSyn::IdentProc()
 
 void __fastcall TSynSDDSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 } /* NullProc */
 
 void __fastcall TSynSDDSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	do
 	{
 		++Run;
@@ -461,13 +460,13 @@ void __fastcall TSynSDDSyn::BraceCommentProc()
 		break;
 		default:
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			do
 			{
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 					break;
 				}
 				++Run;
@@ -481,13 +480,13 @@ void __fastcall TSynSDDSyn::BraceCommentProc()
 void __fastcall TSynSDDSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 } /* UnknownProc */
 
 void __fastcall TSynSDDSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		BraceCommentProc();
@@ -541,7 +540,7 @@ void __fastcall TSynSDDSyn::Next()
 
 void __fastcall TSynSDDSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -549,7 +548,7 @@ void __fastcall TSynSDDSyn::CRProc()
 
 void __fastcall TSynSDDSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 } /* LFProc */
 
@@ -608,7 +607,7 @@ bool __fastcall TSynSDDSyn::GetEol()
 TtkTokenKind __fastcall TSynSDDSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 } /* GetTokenId */
 
@@ -626,8 +625,8 @@ TSynHighlighterAttributes* __fastcall TSynSDDSyn::GetTokenAttribute()
 		case tkKey:
 		result = fKeyAttri;
 		break;
-		case tkDataType:
-		result = fDataTypeAttri;
+		case tkDatatype:
+		result = fDatatypeAttri;
 		break;
 		case tkSpace:
 		result = fSpaceAttri;
@@ -651,26 +650,26 @@ TSynHighlighterAttributes* __fastcall TSynSDDSyn::GetTokenAttribute()
 int __fastcall TSynSDDSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 } /* GetTokenKind */
 
 void __fastcall TSynSDDSyn::ResetRange()
 {
 	inherited::ResetRange();
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 } /* ResetRange */
 
 void __fastcall TSynSDDSyn::SetRange(void* Value)
 {
 	inherited::SetRange(Value);
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 } /* SetRange */
 
 void* __fastcall TSynSDDSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 } /* GetRange */
 
@@ -703,7 +702,7 @@ void __fastcall TSynSDDSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -731,7 +730,7 @@ bool __fastcall TSynSDDSyn::IsFilterStored()
 void __fastcall TSynSDDSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 /*#static*/

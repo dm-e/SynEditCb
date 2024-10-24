@@ -57,7 +57,7 @@ String __fastcall ColorToTeX(TColor AColor)
 {
 	String result;
 	const WideChar f[] = L"%1.2g";
-	const WideChar F2[] = L"%s,%s,%s";
+	const WideChar f2[] = L"%s,%s,%s";
 	unsigned int RGBColor = 0;
 	String RValue;
 	String GValue;
@@ -66,7 +66,7 @@ String __fastcall ColorToTeX(TColor AColor)
 	RValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetRValue(RGBColor)) / 255)));
 	GValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetGValue(RGBColor)) / 255)));
 	BValue = DotDecSepFormat(f, ARRAYOFCONST((double(GetBValue(RGBColor)) / 255)));
-	result = Format(F2, ARRAYOFCONST((RValue, GValue, BValue)));
+	result = Format(f2, ARRAYOFCONST((RValue, GValue, BValue)));
 	return result;
 }
 
@@ -74,13 +74,13 @@ String __fastcall ColorToTeX(TColor AColor)
 
 __fastcall TSynExporterTeX::TSynExporterTeX(TComponent* AOwner)
  : inherited(AOwner),
-			FMargin(2),
+			fMargin(2),
 			fLastAttri(nullptr),
 			fCreateTeXFragment(false),
-			FTabWidth(0),
+			fTabWidth(0),
 			fPageStyleEmpty(false)
 {
-	FTabWidth = 2;
+	fTabWidth = 2;
 	fPageStyleEmpty = false;
 	fDefaultFilter = SYNS_FilterTeX;
 	FEncoding = seAnsi;
@@ -103,7 +103,7 @@ String __fastcall TSynExporterTeX::AttriToCommand(TSynHighlighterAttributes* Att
 	const WideChar SBold[] = L"\\textbf{";
 	const WideChar SItalic[] = L"\\textit{";
 	const WideChar SUnderline[] = L"\\uln{";
-	const WideChar sColor[] = L"\\textcolor[rgb]{%s}{";
+	const WideChar SColor[] = L"\\textcolor[rgb]{%s}{";
 	const WideChar SBackColor[] = L"\\colorbox[rgb]{%s}{";
 	String Formatting;
 	int BracketCount = 0;
@@ -128,7 +128,7 @@ String __fastcall TSynExporterTeX::AttriToCommand(TSynHighlighterAttributes* Att
 		}
 		if((with0->Foreground != clBlack) && (with0->Foreground != clNone))
 		{
-			Formatting = Formatting + Format(sColor, ARRAYOFCONST((ColorToTeX(with0->Foreground))));
+			Formatting = Formatting + Format(SColor, ARRAYOFCONST((ColorToTeX(with0->Foreground))));
 			++BracketCount;
 		}
 		if(fUseBackground && (with0->Background != clNone))
@@ -262,7 +262,7 @@ String __fastcall TSynExporterTeX::GetHeader()
 	           + L"%s"
 	           + sLineBreak
 	           + sLineBreak
-	           + sLineBreak, ARRAYOFCONST((Font->Size, FMargin, GetNewCommands())));
+	           + sLineBreak, ARRAYOFCONST((Font->Size, fMargin, GetNewCommands())));
 		result = result + L"\\title{" + Title + L"}" + sLineBreak + TeXHeader2 + sLineBreak + PageStyle;
 	}
 	result = result + TeXDocument;
@@ -294,7 +294,7 @@ String __fastcall TSynExporterTeX::GetNewCommands()
 	const WideChar f[] = L"%1.1g";
 	String tw;
 	String Commands;
-	tw = DotDecSepFormat(f, ARRAYOFCONST(((long double)FTabWidth * 0.6)));
+	tw = DotDecSepFormat(f, ARRAYOFCONST(((long double)fTabWidth * 0.6)));
 	result = Format(FixedCommands, ARRAYOFCONST((tw)));
 	EnumHighlighterAttris(Highlighter, true, AttriToCommandCallback, OPENARRAY(void*, (&Commands)));
 	result = result + Commands;

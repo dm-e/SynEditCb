@@ -147,7 +147,7 @@ private:
 	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
 	Synedithighlighter::TSynHighlighterAttributes* fMarkerAttri;
 	TComponentName fSchemeName;
-	bool FCaseSensitive;
+	bool fCaseSensitive;
 	TOnCheckMarker fOnCheckStartMarker;
 	TOnCheckMarker fOnCheckEndMarker;
 	String __fastcall ConvertExpression(const String Value);
@@ -167,7 +167,7 @@ public:
 	__fastcall TScheme(TCollection* Collection);
 	virtual __fastcall ~TScheme();
 __published:
-	__property bool CaseSensitive = { read = FCaseSensitive, write = SetCaseSensitive, default = true };
+	__property bool CaseSensitive = { read = fCaseSensitive, write = SetCaseSensitive, default = true };
 	__property String StartExpr = { read = fStartExpr, write = SetStartExpr };
 	__property String EndExpr = { read = fEndExpr, write = SetEndExpr };
 	__property Synedithighlighter::TSynCustomHighlighter* Highlighter = { read = fHighlighter, write = SetHighlighter };
@@ -182,7 +182,7 @@ typedef System::TMetaClass* TgmSchemeClass;
 class TSchemes : public System::Classes::TCollection
 {
 private:
-	TSynMultiSyn* FOwner;
+	TSynMultiSyn* fOwner;
 	TScheme* __fastcall GetItems(int Index);
 	void __fastcall SetItems(int Index, TScheme* const Value);
 protected:
@@ -191,8 +191,8 @@ protected:
 public:
 	typedef System::Classes::TCollection inherited;
 	#include "SynHighlighterMulti_friends.inc"
-	__fastcall TSchemes(TSynMultiSyn* AOwner);
-	__property TScheme* Items[int AIndex] = { read = GetItems, write = SetItems/*# default */ };
+	__fastcall TSchemes(TSynMultiSyn* aOwner);
+	__property TScheme* Items[int aIndex] = { read = GetItems, write = SetItems/*# default */ };
 	__fastcall TSchemes(TCollectionItemClass ItemClass);
 };
 
@@ -276,7 +276,7 @@ protected:
 	void __fastcall ClearMarkers();
 	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index);
 	virtual int __fastcall GetAttribCount();
-	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall getAttribute(int Index);
+	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetAttribute(int Index);
 	void __fastcall HookHighlighter(Synedithighlighter::TSynCustomHighlighter* aHL);
 	void __fastcall UnhookHighlighter(Synedithighlighter::TSynCustomHighlighter* aHL);
 	virtual void __fastcall Notification(TComponent* aComp, TOperation aOp);
@@ -306,8 +306,8 @@ public:
 	bool __fastcall UpdateRangeProcs();
 	__property int CurrScheme = { read = fCurrScheme, write = fCurrScheme };
 	__property String CurrLine = { read = fLineStr };
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
 	virtual bool __fastcall IsIdentChar(WideChar AChar);
 __published:
 	__property TSchemes* Schemes = { read = fSchemes, write = SetSchemes };

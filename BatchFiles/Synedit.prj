@@ -1,4 +1,4 @@
-D2Cpp VERSION = 2.3.1
+D2Cpp VERSION = 2.4.0
 
 ==========[INPUT]
 SYSTEM_PAS =System.pas
@@ -36,7 +36,7 @@ System.Generics
 
 
 ==========[SUBSTITUTIONS]
-IDENT_FILE =Identifiers.txt
+IDENT_FILE =SynEditIdents.txt
 
 [PREREPLACEMENTS]
 

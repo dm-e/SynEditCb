@@ -186,13 +186,13 @@ private:
 //-- CodeFolding
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall ApostropheProc();
 	void __fastcall CRProc();
 	void __fastcall DateProc();
 	void __fastcall GreaterProc();
 	void __fastcall IdentProc();
-	void __fastcall RemProc();
+	void __fastcall REMProc();
 	void __fastcall LFProc();
 	void __fastcall LowerProc();
 	void __fastcall NullProc();

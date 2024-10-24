@@ -155,7 +155,7 @@ enum TRangeState {rsANil,
 class TSynDfmSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;

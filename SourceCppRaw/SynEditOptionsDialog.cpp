@@ -14,11 +14,9 @@ using namespace Syneditkeyconst;
 using namespace Syneditmiscclasses;
 using namespace Syneditmiscprocs;
 using namespace Synedittypes;
-using namespace System;
 using namespace System::Classes;
 using namespace System::Types;
 using namespace System::Uitypes;
-using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
 
 #define Syneditoptionsdialog__0 (TSynEditorOptions() << eoAutoIndent << eoDragDropEditing << eoDropFiles << eoScrollPastEol << eoShowScrollHint << eoSmartTabs << eoAltSetsColumnMode << eoTabsToSpaces << eoTrimTrailingSpaces << eoKeepCaretX)
@@ -147,22 +145,22 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 			FHideSelection(false),
 			FWantTabs(false),
 			FMaxUndo(0),
-			fExtraLineSpacing(0),
+			FExtraLineSpacing(0),
 			FTabWidth(0),
 			FMaxScrollWidth(0),
-			fRightEdge(0),
+			FRightEdge(0),
 			FSelectedColor(nullptr),
-			fRightEdgeColor((TColor) 0),
+			FRightEdgeColor((TColor) 0),
 			FFont(nullptr),
-			fBookMarks(nullptr),
-			fOverwriteCaret(ctVerticalLine),
-			fInsertCaret(ctVerticalLine),
-			fKeyStrokes(nullptr),
+			FBookmarks(nullptr),
+			FOverwriteCaret(ctVerticalLine),
+			FInsertCaret(ctVerticalLine),
+			FKeystrokes(nullptr),
 			FSynGutter(nullptr),
 			FColor((TColor) 0)
 {
-	fBookMarks = new TSynBookMarkOpt(this);
-	fKeyStrokes = new TSynEditKeyStrokes(this);
+	FBookmarks = new TSynBookMarkOpt(this);
+	FKeystrokes = new TSynEditKeyStrokes(this);
 	FSynGutter = new TSynGutter();
 	FSynGutter->AssignableBands = false;
 	FSelectedColor = new TSynSelectedColor();
@@ -188,8 +186,8 @@ __fastcall TSynEditorOptionsContainer::TSynEditorOptionsContainer(TComponent* AO
 
 __fastcall TSynEditorOptionsContainer::~TSynEditorOptionsContainer()
 {
-	delete fBookMarks;
-	delete fKeyStrokes;
+	delete FBookmarks;
+	delete FKeystrokes;
 	delete FSynGutter;
 	delete FSelectedColor;
 	delete FFont;
@@ -198,7 +196,7 @@ __fastcall TSynEditorOptionsContainer::~TSynEditorOptionsContainer()
 
 void __fastcall TSynEditorOptionsContainer::SetBookMarks(TSynBookMarkOpt* const Value)
 {
-	fBookMarks->Assign((TPersistent*) Value);
+	FBookmarks->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditorOptionsContainer::SetFont(TFont* const Value)
@@ -208,12 +206,12 @@ void __fastcall TSynEditorOptionsContainer::SetFont(TFont* const Value)
 
 void __fastcall TSynEditorOptionsContainer::SetKeystrokes(TSynEditKeyStrokes* const Value)
 {
-	fKeyStrokes->Assign((TPersistent*) Value);
+	FKeystrokes->Assign((TPersistent*) Value);
 }
 
 void __fastcall TSynEditorOptionsContainer::SetOptions(const TSynEditorOptions Value)
 {
-	fOptions = Value;
+	FOptions = Value;
 }
 
 void __fastcall TSynEditorOptionsContainer::SetSynGutter(TSynGutter* const Value)
@@ -245,7 +243,7 @@ bool __fastcall TfmEditorOptionsDialog::Execute(TSynEditorOptionsContainer* Edit
 
 void __fastcall TfmEditorOptionsDialog::GetData()
 {
-	int i = 0;
+	int I = 0;
 	TListItem* Item = nullptr;
   //Gutter
 	ckGutterVisible->Checked = FSynEdit->Gutter->Visible;
@@ -300,11 +298,11 @@ void __fastcall TfmEditorOptionsDialog::GetData()
 	{
 		int stop = 0;
 		KeyList->Items->Clear();
-		for(stop = FSynEdit->Keystrokes->Count - 1, i = 0; i <= stop; i++)
+		for(stop = FSynEdit->Keystrokes->Count - 1, I = 0; I <= stop; I++)
 		{
 			Item = KeyList->Items->Add();
-			FillInKeystrokeInfo(FSynEdit->Keystrokes->Items[i], Item);
-			Item->Data = FSynEdit->Keystrokes->Items[i];
+			FillInKeystrokeInfo(FSynEdit->Keystrokes->Items[I], Item);
+			Item->Data = FSynEdit->Keystrokes->Items[I];
 		}
 		if(KeyList->Items->Count > 0)
 			KeyList->Items->Item[0]->Selected = true;
@@ -319,9 +317,9 @@ void __fastcall TfmEditorOptionsDialog::PutData()
 {
 	TSynEditorOptions vOptions;
 
-	auto SetFlag = [&](TSynEditorOption aOption, bool AValue) -> void 
+	auto SetFlag = [&](TSynEditorOption aOption, bool aValue) -> void 
 	{
-		if(AValue)
+		if(aValue)
 			vOptions << aOption;
 		else
 			vOptions >> aOption;
@@ -381,7 +379,7 @@ TColor __fastcall TfmEditorOptionsDialog::GetColor(TMenuItem* Item)
 	if((Item->Tag == -1) || (Item->Tag > 24))
 		result = (TColor) clNone;
 	else
-		result = ((TColor) (((unsigned char) Item->Tag) | 0x80000000));
+		result = ((TColor) (((Byte) Item->Tag) | 0x80000000));
 	return result;
 }
 
@@ -401,7 +399,7 @@ void __fastcall TfmEditorOptionsDialog::PopupMenuClick(TObject* Sender)
 
 void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 {
-	int i = 0;
+	int I = 0;
 	TColor C = (TColor) 0;
 	TBitmap* B = nullptr;
 	KeyList->OnSelectItem = KeyListSelectItem;
@@ -413,18 +411,18 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		B->Width = 16;
 		B->Height = 16;
     //Loop through and create colored images
-		for(stop = ColorPopup->Items->Count - 1, i = 0; i <= stop; i++)
+		for(stop = ColorPopup->Items->Count - 1, I = 0; I <= stop; I++)
 		{
-			if(ColorPopup->Items->Items[i]->Tag == -1)
+			if(ColorPopup->Items->Items[I]->Tag == -1)
 				continue;
-			C = GetColor(ColorPopup->Items->Items[i]);
+			C = GetColor(ColorPopup->Items->Items[I]);
 			B->Canvas->Brush->Color = C;
 			B->Canvas->Brush->Style = bsSolid;
 			B->Canvas->Pen->Style = psSolid;
 			B->Canvas->Pen->Color = (TColor) clBlack;
 			B->Canvas->Rectangle(0, 0, 16, 16);
 			ImageList1->Add(B, nullptr);
-			ColorPopup->Items->Items[i]->ImageIndex = ColorPopup->Items->Items[i]->Tag;
+			ColorPopup->Items->Items[I]->ImageIndex = ColorPopup->Items->Items[I]->Tag;
 		}
 	}
 	__finally
@@ -503,7 +501,7 @@ void __fastcall TfmEditorOptionsDialog::KeyListSelectItem(TObject* Sender, TList
 
 void __fastcall TfmEditorOptionsDialog::btnUpdateKeyClick(TObject* Sender)
 {
-	int cmd = 0;
+	int Cmd = 0;
 /*    KeyLoc       : Integer;
     TmpCommand   : string;
     OldShortcut  : TShortcut;
@@ -518,8 +516,8 @@ void __fastcall TfmEditorOptionsDialog::btnUpdateKeyClick(TObject* Sender)
 		return;
 	if(cKeyCommand->ItemIndex < 0)
 		return;
-	cmd = (NativeInt) cKeyCommand->Items->Objects[cKeyCommand->ItemIndex];
-	((TSynEditKeyStroke*) OldSelected->Data)->Command = (TSynEditorCommand) cmd;
+	Cmd = (NativeInt) cKeyCommand->Items->Objects[cKeyCommand->ItemIndex];
+	((TSynEditKeyStroke*) OldSelected->Data)->Command = (TSynEditorCommand) Cmd;
 	if(eKeyShort1->HotKey != 0)
 		((TSynEditKeyStroke*) OldSelected->Data)->ShortCut = eKeyShort1->HotKey;
 	if(eKeyShort2->HotKey != 0)
@@ -546,14 +544,14 @@ void __fastcall TfmEditorOptionsDialog::btnRemKeyClick(TObject* Sender)
 	KeyList->Selected->Delete();
 }
 
-void __fastcall TfmEditorOptionsDialog::EditStrCallback(const String s)
+void __fastcall TfmEditorOptionsDialog::EditStrCallback(const String S)
 {
 
   //Add the Item
 	if(FExtended)
-		cKeyCommand->Items->AddObject(s, ((TObject*) ConvertExtendedToCommand(s)));
+		cKeyCommand->Items->AddObject(S, ((TObject*) ConvertExtendedToCommand(S)));
 	else
-		cKeyCommand->Items->AddObject(s, ((TObject*) ConvertCodeStringToCommand(s)));
+		cKeyCommand->Items->AddObject(S, ((TObject*) ConvertCodeStringToCommand(S)));
 }
 
 void __fastcall TfmEditorOptionsDialog::FormShow(TObject* Sender)
@@ -595,7 +593,7 @@ void __fastcall TfmEditorOptionsDialog::KeyListEditing(TObject* Sender, TListIte
 	AllowEdit = false;
 }
 
-void __fastcall TfmEditorOptionsDialog::btnOKClick(TObject* Sender)
+void __fastcall TfmEditorOptionsDialog::btnOkClick(TObject* Sender)
 {
 	btnUpdateKey->Click();
 	ModalResult = (TModalResult) System::Uitypes::mrOk;
@@ -667,9 +665,9 @@ void __fastcall TfmEditorOptionsDialog::FillInKeystrokeInfo(TSynEditKeyStroke* A
 	}
 }
 
-void __fastcall TfmEditorOptionsDialog::cKeyCommandKeyUp(TObject* Sender, WORD& key, TShiftState Shift)
+void __fastcall TfmEditorOptionsDialog::cKeyCommandKeyUp(TObject* Sender, WORD& Key, TShiftState Shift)
 {
-	if(key == SYNEDIT_RETURN)
+	if(Key == SYNEDIT_RETURN)
 		btnUpdateKey->Click();
 }
 

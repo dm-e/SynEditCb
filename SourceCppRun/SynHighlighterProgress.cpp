@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
-using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterprogress
@@ -67,12 +66,12 @@ int __fastcall TSynProgressSyn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynProgressSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynProgressSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fHashList->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fHashList->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -103,7 +102,7 @@ void __fastcall TSynProgressSyn::DoAddKeyword(String AKeyword, int AKind)
 
 __fastcall TSynProgressSyn::TSynProgressSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsNone),
+			fRange(rsNone),
 			fCommentLevel(0),
 			fIncludeLevel(0),
 			fPreProcessorLevel(0),
@@ -122,42 +121,42 @@ __fastcall TSynProgressSyn::TSynProgressSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fHashList(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fHashList = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clRed;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fEventAttri = new TSynHighlighterAttributes(SYNS_AttrEvent, SYNS_FriendlyAttrEvent);
 	fEventAttri->Foreground = (TColor) clOlive;
-	addAttribute(fEventAttri);
+	AddAttribute(fEventAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = (TColor) clNavy;
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fIncludeAttri = new TSynHighlighterAttributes(SYNS_AttrInclude, SYNS_FriendlyAttrInclude);
 	fIncludeAttri->Foreground = (TColor) clPurple;
-	addAttribute(fIncludeAttri);
+	AddAttribute(fIncludeAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNonReservedKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
 	fNonReservedKeyAttri->Foreground = (TColor) clTeal;
-	addAttribute(fNonReservedKeyAttri);
+	AddAttribute(fNonReservedKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fPreprocessorAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fPreprocessorAttri->Foreground = (TColor) clPurple;
-	addAttribute(fPreprocessorAttri);
+	AddAttribute(fPreprocessorAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fDataTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
 	fDataTypeAttri->Foreground = (TColor) clSilver;
-	addAttribute(fDataTypeAttri);
+	AddAttribute(fDataTypeAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fDefaultFilter = SYNS_FilterProgress;
 	EnumerateKeywords(int(tkKey), DefaultKeywords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkNonReserved), DefaultNonReservedKeywords, IsIdentChar, DoAddKeyword);
@@ -186,37 +185,37 @@ void __fastcall TSynProgressSyn::NullProc()
 
 void __fastcall TSynProgressSyn::NumberProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkNumber;
-	P = &fLine[Run];
+	p = &fLine[Run];
 	do
 	{
-		++P;
+		++p;
 	}
-	while(!!CharInSet((*P), Synhighlighterprogress__0));
-	Run = P - fLine;
+	while(!!CharInSet((*p), Synhighlighterprogress__0));
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::PreprocessorDefinitionProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkPreprocessor;
-	P = &fLine[Run];
-	while((*P) != L'\x00')
+	p = &fLine[Run];
+	while((*p) != L'\x00')
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'~':
-			if((*(P + 1)) == L'\x00')
-				FRange = rsPreprocessorDef;
+			if((*(p + 1)) == L'\x00')
+				fRange = rsPreprocessorDef;
 			break;
 			default:
 			  ;
 			break;
 		}
-		++P;
+		++p;
 	}
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::SpaceProc()
@@ -229,17 +228,17 @@ void __fastcall TSynProgressSyn::SpaceProc()
 
 void __fastcall TSynProgressSyn::StringProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkString;
-	P = &fLine[Run];
+	p = &fLine[Run];
 	do
 	{
-		++P;
+		++p;
 	}
-	while(!(((*P) == L'\x00') || ((*P) == L'\"')));
-	if((*P) == L'\"')
-		++P;
-	Run = P - fLine;
+	while(!(((*p) == L'\x00') || ((*p) == L'\"')));
+	if((*p) == L'\"')
+		++p;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::SymbolProc()
@@ -256,60 +255,60 @@ void __fastcall TSynProgressSyn::UnknownProc()
 
 void __fastcall TSynProgressSyn::AsciiCharProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkString;
-	P = &fLine[Run];
+	p = &fLine[Run];
 	do
 	{
-		++P;
+		++p;
 	}
-	while(!(((*P) == L'\x00') || ((*P) == L'\'')));
-	if((*P) == L'\'')
-		++P;
-	Run = P - fLine;
+	while(!(((*p) == L'\x00') || ((*p) == L'\'')));
+	if((*p) == L'\'')
+		++p;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::SlashProc()
 {
-	PWideChar P = nullptr;
-	P = &fLine[Run];
-	++P;
-	switch((*P))
+	PWideChar p = nullptr;
+	p = &fLine[Run];
+	++p;
+	switch((*p))
 	{
 		case L'*':  /*c style comments*/
 		{
 			FTokenID = tkComment;
-			FRange = rsComment;
+			fRange = rsComment;
 			fCommentLevel = 1;
-			++P;
-			while(((*P) != L'\x00') && (FRange == rsComment))
+			++p;
+			while(((*p) != L'\x00') && (fRange == rsComment))
 			{
-				switch((*P))
+				switch((*p))
 				{
 					case L'*':
 					{
-						++P;
-						if((*P) == L'/')
+						++p;
+						if((*p) == L'/')
 						{
-							++P;
+							++p;
 							--fCommentLevel;
 							if(fCommentLevel == 0)
-								FRange = rsNone;
+								fRange = rsNone;
 						}
 					}
 					break;
 					case L'/':
 					{
-						++P;
-						if((*P) == L'*')
+						++p;
+						if((*p) == L'*')
 						{
-							++P;
+							++p;
 							++fCommentLevel; // Max 65535 commentlevels.
 						}
 					}
 					break;
 					default:
-					++P;
+					++p;
 					break;
 				}
 			}
@@ -319,101 +318,101 @@ void __fastcall TSynProgressSyn::SlashProc()
 		FTokenID = tkSymbol;
 		break;
 	}
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::CommentRangeProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkComment;
-	P = &fLine[Run];
-	if((*P) == L'\x00')
+	p = &fLine[Run];
+	if((*p) == L'\x00')
 	{
 		NullProc();
 		return;
 	}
-	while(((*P) != L'\x00') && (FRange == rsComment))
+	while(((*p) != L'\x00') && (fRange == rsComment))
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'*':
 			{
-				++P;
-				if((*P) == L'/')
+				++p;
+				if((*p) == L'/')
 				{
-					++P;
+					++p;
 					--fCommentLevel;
 					if(fCommentLevel == 0)
-						FRange = rsNone;
+						fRange = rsNone;
 				}
 			}
 			break;
 			case L'/':
 			{
-				++P;
-				if((*P) == L'*')
+				++p;
+				if((*p) == L'*')
 				{
-					++P;
+					++p;
 					++fCommentLevel;
 				}
 			}
 			break;
 			default:
-			++P;
+			++p;
 			break;
 		}
 	}
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::IncludeRangeProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkInclude;
-	P = &fLine[Run];
-	if((*P) == L'\x00')
+	p = &fLine[Run];
+	if((*p) == L'\x00')
 	{
 		NullProc();
 		return;
 	}
-	while((*P) != L'\x00')
+	while((*p) != L'\x00')
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'}':
 			{
 				--fIncludeLevel;
 				if(fIncludeLevel == 0)
 				{
-					FRange = rsNone;
+					fRange = rsNone;
 					goto label0;
 				}
 				else
-				++P;
+				++p;
 			}
 			break;
 			default:
-			++P;
+			++p;
 			break;
 		}
 	}
 	label0:;
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::PreprocessorRangeProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkPreprocessor;
-	P = &fLine[Run];
-	if((*P) == L'\x00')
+	p = &fLine[Run];
+	if((*p) == L'\x00')
 	{
 		NullProc();
 		return;
 	}
-	while(((*P) != L'\x00') && (FRange == rsPreprocessor))
+	while(((*p) != L'\x00') && (fRange == rsPreprocessor))
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'{':
 			++fPreProcessorLevel;
@@ -422,50 +421,50 @@ void __fastcall TSynProgressSyn::PreprocessorRangeProc()
 			{
 				--fPreProcessorLevel;
 				if(fPreProcessorLevel == 0)
-					FRange = rsNone;
+					fRange = rsNone;
 			}
 			break;
 			default:
 			  ;
 			break;
 		}
-		++P;
+		++p;
 	}
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::PreprocessorDefinitionRangeProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 	FTokenID = tkPreprocessor;
-	P = &fLine[Run];
+	p = &fLine[Run];
 	if(Run == 0)
-		FRange = rsNone;
-	if((*P) == L'\x00')
+		fRange = rsNone;
+	if((*p) == L'\x00')
 	{
 		NullProc();
 		return;
 	}
-	while((*P) != L'\x00')
+	while((*p) != L'\x00')
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'~':
-			if((*(P + 1)) == L'\x00')
-				FRange = rsPreprocessorDef;
+			if((*(p + 1)) == L'\x00')
+				fRange = rsPreprocessorDef;
 			break;
 			default:
 			  ;
 			break;
 		}
-		++P;
+		++p;
 	}
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::BraceOpenProc()
 {
-	PWideChar P = nullptr;
+	PWideChar p = nullptr;
 
 	auto LevelCount = [&]() -> int 
 	{
@@ -476,9 +475,9 @@ void __fastcall TSynProgressSyn::BraceOpenProc()
 			result = fPreProcessorLevel;
 		return result;
 	};
-	P = &fLine[Run];
-	++P;
-	switch((*P))
+	p = &fLine[Run];
+	++p;
+	switch((*p))
 	{
 		case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
 		 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
@@ -510,14 +509,14 @@ void __fastcall TSynProgressSyn::BraceOpenProc()
 	}
 	while(LevelCount() > 0)
 	{
-		switch((*P))
+		switch((*p))
 		{
 			case L'\x00':
 			{
 				if(FTokenID == tkInclude)
-					FRange = rsInclude;
+					fRange = rsInclude;
 				else
-					FRange = rsPreprocessor;
+					fRange = rsPreprocessor;
 				goto label1;
 			}
 			case L'}':
@@ -552,16 +551,16 @@ void __fastcall TSynProgressSyn::BraceOpenProc()
 			  ;
 			break;
 		}
-		++P;
+		++p;
 	}
 	label1:;
-	Run = P - fLine;
+	Run = p - fLine;
 }
 
 void __fastcall TSynProgressSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsInclude:
 		IncludeRangeProc();
@@ -658,9 +657,9 @@ void* __fastcall TSynProgressSyn::GetRange()
 {
 	void* result = nullptr;
 	TRangeInfo rng = {};
-	rng.Range = (WORD) int(FRange);
+	rng.Range = (WORD) int(fRange);
 	rng.Level = 0;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		rng.Level = (WORD) fCommentLevel;
@@ -746,7 +745,7 @@ int __fastcall TSynProgressSyn::GetTokenKind()
 
 void __fastcall TSynProgressSyn::ResetRange()
 {
-	FRange = rsNone;
+	fRange = rsNone;
 	fCommentLevel = 0;
 	fIncludeLevel = 0;
 	fPreProcessorLevel = 0;
@@ -756,11 +755,11 @@ void __fastcall TSynProgressSyn::SetRange(void* Value)
 {
 	TRangeInfo rng = {};
 	rng = *((TRangeInfo*) Value);
-	FRange = ((TRangeState) rng.Range);
+	fRange = ((TRangeState) rng.Range);
 	fCommentLevel = 0;
 	fIncludeLevel = 0;
 	fPreProcessorLevel = 0;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsComment:
 		fCommentLevel = (int) rng.Level;

@@ -118,16 +118,16 @@ const String WidgetKeys[33/*# range 0..32*/] = {L"ArrowButton", L"Button", L"But
                     , L"PanedWindow", L"PasswdDlg", L"ProgressBar", L"ProgressDlg", L"ScrollableFrame", L"ScrollableWindow", L"ScrolledWindow"
                     , L"ScrollView", L"SelectColor", L"SelectFont", L"Separator", L"SpinBox", L"TitleFrame", L"Tree", L"Widget"};
 
-bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings* KeywordList, bool ACaseSensitive/*# = false*/)
+bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings* KeyWordList, bool ACaseSensitive/*# = false*/)
 {
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
-	Last = KeywordList->Count - 1;
+	Last = KeyWordList->Count - 1;
 	result = false;
 	if(ACaseSensitive)
 		Token = AKeyword;
@@ -135,8 +135,8 @@ bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings*
 		Token = Sysutils::AnsiLowerCase(AKeyword);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(KeywordList->Strings[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(KeyWordList->Strings[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -145,9 +145,9 @@ bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings*
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -156,13 +156,13 @@ bool __fastcall TSynTclTkSyn::InternalIsKeyword(const String AKeyword, TStrings*
 bool __fastcall TSynTclTkSyn::IsKeyword(const String AKeyword)
 {
 	bool result = false;
-	result = InternalIsKeyword(AKeyword, fWidgetWords, true) || InternalIsKeyword(AKeyword, fTixWords) || InternalIsKeyword(AKeyword, fKeywords) || InternalIsKeyword(AKeyword, fSecondKeys);
+	result = InternalIsKeyword(AKeyword, fWidgetWords, true) || InternalIsKeyword(AKeyword, fTixWords) || InternalIsKeyword(AKeyword, fKeyWords) || InternalIsKeyword(AKeyword, fSecondKeys);
 	return result;
 }
 
 __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkSymbol),
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr),
@@ -175,7 +175,7 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 			fOptionsAttri(nullptr),
 			fVariableAttri(nullptr),
 			fPathAttri(nullptr),
-			fKeywords(nullptr),
+			fKeyWords(nullptr),
 			fSecondKeys(nullptr),
 			fTixWords(nullptr),
 			fTixKeyAttri(nullptr),
@@ -184,10 +184,10 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 {
 	int i = 0;
 	int stop = 0;
-	FCaseSensitive = false;
-	fKeywords = new TStringList();
-	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
+	fCaseSensitive = false;
+	fKeyWords = new TStringList();
+	((TStringList*) fKeyWords)->Sorted = true;
+	((TStringList*) fKeyWords)->Duplicates = System::Types::dupIgnore;
 	fSecondKeys = new TStringList();
 	((TStringList*) fSecondKeys)->Sorted = true;
 	((TStringList*) fSecondKeys)->Duplicates = System::Types::dupIgnore;
@@ -197,12 +197,12 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	fWidgetWords = new TStringList();
 	((TStringList*) fWidgetWords)->Sorted = true;
 	((TStringList*) fWidgetWords)->Duplicates = System::Types::dupIgnore;
-	fKeywords->BeginUpdate();
+	fKeyWords->BeginUpdate();
 	for(stop = 128 /*# High(TclTkKeys) */, i = 0 /*# Low(TclTkKeys) */; i <= stop; i++)
 	{
-		fKeywords->Add(TclTkKeys[i]);
+		fKeyWords->Add(TclTkKeys[i]);
 	}
-	fKeywords->EndUpdate();
+	fKeyWords->EndUpdate();
 	fSecondKeys->BeginUpdate();
 	for(stop = 91 /*# High(SecondTclTkKeys) */, i = 0 /*# Low(SecondTclTkKeys) */; i <= stop; i++)
 	{
@@ -223,36 +223,36 @@ __fastcall TSynTclTkSyn::TSynTclTkSyn(TComponent* AOwner)
 	fWidgetWords->EndUpdate();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightertcltk__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightertcltk__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
 	fSecondKeyAttri->Style = Synhighlightertcltk__2;
-	addAttribute(fSecondKeyAttri);
+	AddAttribute(fSecondKeyAttri);
 	fTixKeyAttri = new TSynHighlighterAttributes(SYNS_AttrTixKeyWords, SYNS_FriendlyAttrTixKeyWords);
 	fTixKeyAttri->Style = Synhighlightertcltk__3;
-	addAttribute(fTixKeyAttri);
+	AddAttribute(fTixKeyAttri);
 	fWidgetKeyAttri = new TSynHighlighterAttributes(SYNS_AttrWidgetWords, SYNS_FriendlyAttrWidgetWords);
 	fWidgetKeyAttri->Style = Synhighlightertcltk__4;
-	addAttribute(fWidgetKeyAttri);
+	AddAttribute(fWidgetKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fOptionsAttri = new TSynHighlighterAttributes(SYNS_AttrOptions, SYNS_FriendlyAttrOptions);
-	addAttribute(fOptionsAttri);
+	AddAttribute(fOptionsAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	fPathAttri = new TSynHighlighterAttributes(SYNS_AttrPath, SYNS_FriendlyAttrPath);
-	addAttribute(fPathAttri);
+	AddAttribute(fPathAttri);
 	fDefaultFilter = SYNS_FilterTclTk;
 }
 
@@ -261,7 +261,7 @@ __fastcall TSynTclTkSyn::~TSynTclTkSyn()
 	delete fWidgetWords;
 	delete fTixWords;
 	delete fSecondKeys;
-	delete fKeywords;
+	delete fKeyWords;
 	//# inherited::Destroy();
 }
 
@@ -294,7 +294,7 @@ void __fastcall TSynTclTkSyn::AnsiProc()
 		{
 			if(fLine[Run + 1] == L')')
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				Run += 2;
 				break;
 			}
@@ -332,7 +332,7 @@ void __fastcall TSynTclTkSyn::PasStyleProc()
 	while(!IsLineEnd(Run))
 		if(fLine[Run] == L'}')
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 			++Run;
 			break;
 		}
@@ -369,7 +369,7 @@ void __fastcall TSynTclTkSyn::CStyleProc()
 		{
 			if(fLine[Run + 1] == L'/')
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				Run += 2;
 				break;
 			}
@@ -418,7 +418,7 @@ void __fastcall TSynTclTkSyn::IdentProc()
 			FTokenID = tkTixKey;
 		else
 		{
-			if(InternalIsKeyword(GetToken(), fKeywords))
+			if(InternalIsKeyword(GetToken(), fKeyWords))
 				FTokenID = tkKey;
 			else
 			{
@@ -536,7 +536,7 @@ void __fastcall TSynTclTkSyn::UnknownProc()
 void __fastcall TSynTclTkSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsi:
 		AnsiProc();
@@ -660,7 +660,7 @@ bool __fastcall TSynTclTkSyn::GetEol()
 void* __fastcall TSynTclTkSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -734,12 +734,12 @@ int __fastcall TSynTclTkSyn::GetTokenKind()
 
 void __fastcall TSynTclTkSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynTclTkSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
@@ -755,7 +755,7 @@ void __fastcall TSynTclTkSyn::SetKeyWords(TStrings* const Value)
 		}
 		Value->EndUpdate();
 	}
-	fKeywords->Assign((TPersistent*) Value);
+	fKeyWords->Assign((TPersistent*) Value);
 	DefHighlightChange(nullptr);
 }
 
@@ -791,49 +791,49 @@ String __fastcall TSynTclTkSyn::GetLanguageName()
 	return result;
 }
 
-bool __fastcall TSynTclTkSyn::LoadFromRegistry(HKEY RootKey, String key)
+bool __fastcall TSynTclTkSyn::LoadFromRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKeyReadOnly(key))
+		r->RootKey = RootKey;
+		if(r->OpenKeyReadOnly(Key))
 		{
-			if(R->ValueExists(L"KeyWords"))
-				Keywords->Text = R->ReadString(L"KeyWords");
-			result = inherited::LoadFromRegistry(RootKey, key);
+			if(r->ValueExists(L"KeyWords"))
+				KeyWords->Text = r->ReadString(L"KeyWords");
+			result = inherited::LoadFromRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
 
-bool __fastcall TSynTclTkSyn::SaveToRegistry(HKEY RootKey, String key)
+bool __fastcall TSynTclTkSyn::SaveToRegistry(HKEY RootKey, String Key)
 {
 	bool result = false;
-	TBetterRegistry* R = nullptr;
-	R = new TBetterRegistry();
+	TBetterRegistry* r = nullptr;
+	r = new TBetterRegistry();
 	try
 	{
-		R->RootKey = RootKey;
-		if(R->OpenKey(key, true))
+		r->RootKey = RootKey;
+		if(r->OpenKey(Key, true))
 		{
-			R->WriteString(L"KeyWords", Keywords->Text);
-			result = inherited::SaveToRegistry(RootKey, key);
+			r->WriteString(L"KeyWords", KeyWords->Text);
+			result = inherited::SaveToRegistry(RootKey, Key);
 		}
 		else
 		result = false;
 	}
 	__finally
 	{
-		delete R;
+		delete r;
 	}
 	return result;
 }
@@ -848,7 +848,7 @@ bool __fastcall TSynTclTkSyn::IsKeywordListStored()
 	try
 	{
 		int stop = 0;
-		Keys->Assign(Keywords);
+		Keys->Assign(KeyWords);
 		Index = 0;
 		for(stop = 128 /*# High(TclTkKeys) */, DefKey = 0 /*# Low(TclTkKeys) */; DefKey <= stop; DefKey++)
 		{
@@ -889,6 +889,7 @@ String __fastcall TSynTclTkSyn::GetFriendlyLanguageName()
 
 void __fastcall TSynTclTkSyn::MinusProc()
 {
+	//const System::Set<unsigned char, 0, 255> EmptyChars = System::Set<unsigned char, 0, 255>() << L' ' << L'\x09' << L'\x00' << L'\x0a' << L'\x0d';
 	const TSysCharSet EmptyChars = TSysCharSet() << L' ' << L'\x09' << L'\x00' << L'\x0a' << L'\x0d';
 	bool OK = false;
 	OK = false;

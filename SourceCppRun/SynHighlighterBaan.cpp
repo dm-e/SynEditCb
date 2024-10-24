@@ -9,7 +9,6 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 
 namespace Synhighlighterbaan
 {
@@ -17,7 +16,7 @@ namespace Synhighlighterbaan
 #define Synhighlighterbaan__1 (TFontStyles() << TFontStyle::fsBold)
 
 
-const String Keywords[113/*# range 0..112*/] = {L"__based", L"__cdecl", L"__declspe", L"__except", L"__export", L"__far", L"__fastcal", L"__fortran", L"__import"
+const String KeyWords[113/*# range 0..112*/] = {L"__based", L"__cdecl", L"__declspe", L"__except", L"__export", L"__far", L"__fastcal", L"__fortran", L"__import"
                     , L"__int16", L"__int32", L"__int64", L"__int8", L"__interrup", L"__loadds", L"__near", L"__pascal", L"__rtti", L"__segment"
                     , L"__segname", L"__self", L"__stdcall", L"__thread", L"__try", L"_cdecl", L"_export", L"_fastcall", L"_import", L"_pascal"
                     , L"_stdcall", L"auto", L"bool", L"break", L"brp.open", L"case", L"catch", L"cdecl", L"char", L"class", L"const", L"continue", L"date.num"
@@ -55,14 +54,14 @@ unsigned int __fastcall TSynBaanSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynBaanSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynBaanSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 460 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 460 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -96,7 +95,7 @@ TtkTokenKind __fastcall TSynBaanSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynBaanSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -106,7 +105,7 @@ TtkTokenKind __fastcall TSynBaanSyn::KeyWordFunc(int Index)
 TtkTokenKind __fastcall TSynBaanSyn::FuncBrp46open(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkVariable;
 	else
 		result = tkIdentifier;
@@ -116,7 +115,7 @@ TtkTokenKind __fastcall TSynBaanSyn::FuncBrp46open(int Index)
 TtkTokenKind __fastcall TSynBaanSyn::FuncDate46num(int Index)
 {
 	TtkTokenKind result = tkComment;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkVariable;
 	else
 		result = tkIdentifier;
@@ -136,27 +135,27 @@ __fastcall TSynBaanSyn::TSynBaanSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fVariableAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterbaan__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirectiveAttri = new TSynHighlighterAttributes(SYNS_AttrDirective, SYNS_FriendlyAttrDirective);
-	addAttribute(fDirectiveAttri);
+	AddAttribute(fDirectiveAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterbaan__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
-	addAttribute(fVariableAttri);
+	AddAttribute(fVariableAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
 	fDefaultFilter = SYNS_FilterBaan;

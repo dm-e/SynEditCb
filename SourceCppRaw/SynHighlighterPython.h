@@ -175,7 +175,7 @@ enum TtkTokenKind {tkComment,
 enum TRangeState {rsANil,
                   rsComment,
                   rsUnKnown,
-                  rsMultiLineString,
+                  rsMultilineString,
                   rsMultilineString2,
                   rsMultilineString3 };
 
@@ -187,9 +187,9 @@ class TSynPythonSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighte
 {
 private:
 	WideChar fStringStarter;  // used only for rsMultilineString3 stuff
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
-	TStringList* fKeywords;
+	TStringList* FKeywords;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fDocStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
@@ -207,7 +207,7 @@ private:
 //++ CodeFolding
 	TRegEx BlockOpenerRE;
 //-- CodeFolding
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall SymbolProc();
 	void __fastcall CRProc();
 	void __fastcall CommentProc();
@@ -228,8 +228,8 @@ protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsFilterStored();
 	TStringList* __fastcall GetKeywordIdentifiers();
-	__property TStringList* Keywords = { read = fKeywords };
-	__property TtkTokenKind TokenId = { read = FTokenID };
+	__property TStringList* Keywords = { read = FKeywords };
+	__property TtkTokenKind TokenID = { read = FTokenID };
 public:
 	typedef Syneditcodefolding::TSynCustomCodeFoldingHighlighter inherited;
 	__classmethod virtual String __fastcall GetLanguageName();

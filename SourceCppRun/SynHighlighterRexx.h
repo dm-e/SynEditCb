@@ -71,8 +71,8 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynRexxSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
-	TtkTokenKind FTokenID;
+	TRangeState fRange;
+	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[349/*# range 0..348*/];
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
@@ -185,7 +185,7 @@ private:
 	void __fastcall UnknownProc();
 	TtkTokenKind __fastcall AltFunc(int Index);
 	void __fastcall InitIdent();
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall NullProc();
 	void __fastcall SpaceProc();
 	void __fastcall CRProc();

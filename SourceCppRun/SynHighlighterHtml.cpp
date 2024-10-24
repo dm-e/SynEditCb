@@ -151,7 +151,7 @@ namespace Synhighlighterhtml
 //    158, -1, -1, -1, -1, -1, -1, -1, 32, -1, -1, -1, -1, -1, -1, -1, -1, -1, 91,
 //    -1, -1, 156, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 //  );
-const String Keywords[257/*# range 0..256*/] = {L"!doctype", L"/!doctype", L"/a", L"/abbr", L"/acronym", L"/address", L"/applet", L"/area", L"/article", L"/aside"
+const String KeyWords[257/*# range 0..256*/] = {L"!doctype", L"/!doctype", L"/a", L"/abbr", L"/acronym", L"/address", L"/applet", L"/area", L"/article", L"/aside"
                     , L"/audio", L"/b", L"/base", L"/basefont", L"/bb", L"/bdo", L"/big", L"/blockquote", L"/body", L"/button", L"/canvas", L"/caption"
                     , L"/center", L"/cite", L"/code", L"/col", L"/colgroup", L"/command", L"/datalist", L"/dd", L"/del", L"/details", L"/dfn"
                     , L"/dialog", L"/dir", L"/div", L"/dl", L"/dt", L"/em", L"/embed", L"/fieldset", L"/figcaption", L"/figure", L"/font", L"/footer"
@@ -243,14 +243,14 @@ unsigned int __fastcall TSynHTMLSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynHTMLSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynHTMLSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkAmpersand;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 2178 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 2178 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -282,7 +282,7 @@ TtkTokenKind __fastcall TSynHTMLSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynHTMLSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkAmpersand;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkUndefKey;
@@ -292,8 +292,8 @@ TtkTokenKind __fastcall TSynHTMLSyn::KeyWordFunc(int Index)
 __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAndCode(-1),
-			FRange(rsAmpersand),
-			FTokenID(tkAmpersand),
+			fRange(rsAmpersand),
+			fTokenID(tkAmpersand),
 			fAndAttri(nullptr),
 			fCommentAttri(nullptr),
 			fIdentifierAttri(nullptr),
@@ -304,50 +304,50 @@ __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
 			fUndefKeyAttri(nullptr),
 			fValueAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Style = Synhighlighterhtml__0;
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterhtml__1;
 	fKeyAttri->Foreground = (TColor) 0x00FF0080;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlighterhtml__2;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
-	addAttribute(fTextAttri);
+	AddAttribute(fTextAttri);
 	fUndefKeyAttri = new TSynHighlighterAttributes(SYNS_AttrUnknownWord, SYNS_FriendlyAttrUnknownWord);
 	fUndefKeyAttri->Style = Synhighlighterhtml__3;
 	fUndefKeyAttri->Foreground = (TColor) clRed;
-	addAttribute(fUndefKeyAttri);
+	AddAttribute(fUndefKeyAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
 	fValueAttri->Foreground = (TColor) 0x00FF8000;
-	addAttribute(fValueAttri);
+	AddAttribute(fValueAttri);
 	fAndAttri = new TSynHighlighterAttributes(SYNS_AttrEscapeAmpersand, SYNS_FriendlyAttrEscapeAmpersand);
 	fAndAttri->Style = Synhighlighterhtml__4;
 	fAndAttri->Foreground = (TColor) 0x0000FF00;
-	addAttribute(fAndAttri);
+	AddAttribute(fAndAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsText;
+	fRange = rsText;
 	fDefaultFilter = SYNS_FilterHTML;
 }
 
 void __fastcall TSynHTMLSyn::BraceCloseProc()
 {
-	FRange = rsText;
-	FTokenID = tkSymbol;
+	fRange = rsText;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynHTMLSyn::CommentProc()
 {
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	if(IsLineEnd(Run))
 	{
 		NextProcedure();
@@ -357,7 +357,7 @@ void __fastcall TSynHTMLSyn::CommentProc()
 	{
 		if((fLine[Run] == L'>') && (fLine[Run - 1] == L'-') && (fLine[Run - 2] == L'-'))
 		{
-			FRange = rsText;
+			fRange = rsText;
 			++Run;
 			break;
 		}
@@ -370,20 +370,20 @@ void __fastcall TSynHTMLSyn::BraceOpenProc()
 	++Run;
 	if((fLine[Run] == L'!') && (fLine[Run + 1] == L'-') && (fLine[Run + 2] == L'-'))
 	{
-		FRange = rsComment;
-		FTokenID = tkComment;
+		fRange = rsComment;
+		fTokenID = tkComment;
 		Run += 3;
 	}
 	else
 	{
-		FRange = rsKey;
-		FTokenID = tkSymbol;
+		fRange = rsKey;
+		fTokenID = tkSymbol;
 	}
 }
 
 void __fastcall TSynHTMLSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -391,26 +391,26 @@ void __fastcall TSynHTMLSyn::CRProc()
 
 void __fastcall TSynHTMLSyn::EqualProc()
 {
-	FRange = rsValue;
-	FTokenID = tkSymbol;
+	fRange = rsValue;
+	fTokenID = tkSymbol;
 	++Run;
 }
 
 void __fastcall TSynHTMLSyn::IdentProc()
 {
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsKey:
 		{
-			FRange = rsParam;
-			FTokenID = IdentKind((fLine + Run));
+			fRange = rsParam;
+			fTokenID = IdentKind((fLine + Run));
 			Run += fStringLen;
 		}
 		break;
 		case rsValue:
 		{
-			FRange = rsParam;
-			FTokenID = tkValue;
+			fRange = rsParam;
+			fTokenID = tkValue;
 			do
 			{
 				++Run;
@@ -419,7 +419,7 @@ void __fastcall TSynHTMLSyn::IdentProc()
 		}
 		break;
 		default:
-		FTokenID = tkIdentifier;
+		fTokenID = tkIdentifier;
 		do
 		{
 			++Run;
@@ -431,13 +431,13 @@ void __fastcall TSynHTMLSyn::IdentProc()
 
 void __fastcall TSynHTMLSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynHTMLSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -486,7 +486,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 		NextProcedure();
 		return;
 	}
-	FTokenID = tkText;
+	fTokenID = tkText;
 	while(true)
 	{
 		while(!IsStopChar())
@@ -513,7 +513,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 				{
 					++Run;
 					Run = i;
-					FRange = rsAmpersand;
+					fRange = rsAmpersand;
 				}
 				break;
 			}
@@ -525,7 +525,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 					if(AnsiStrLComp((fLine + Run), const_cast<PWideChar>(EscapeAmps[i]), (unsigned int) String(EscapeAmps[i]).Length()) == 0)
 					{
 						fAndCode = i;
-						FRange = rsAmpersand;
+						fRange = rsAmpersand;
 						return;
 					}
 				}
@@ -556,13 +556,13 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 		}
 		return result;
 	};
-	if(FRange != rsAmpersand)
+	if(fRange != rsAmpersand)
 	{
-		if(FRange == rsKey)
+		if(fRange == rsKey)
 		{
 			++Run;
-			FRange = rsText;
-			FTokenID = tkText;
+			fRange = rsText;
+			fTokenID = tkText;
 		}
 		else
 		IdentProc();
@@ -572,7 +572,7 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 	{
 		case 0:
 		{
-			FTokenID = tkAmpersand;
+			fTokenID = tkAmpersand;
 			Run += String(EscapeAmps[fAndCode]).Length();
 		}
 		break;
@@ -596,22 +596,22 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 				if(fLine[Run] == L';')
 				{
 					++Run;
-					FTokenID = tkAmpersand;
+					fTokenID = tkAmpersand;
 				}
 				else
-				FTokenID = tkText;
+				fTokenID = tkText;
 			}
 		}
 		break;
 	}
 	fAndCode = -1;
-	FRange = rsText;
+	fRange = rsText;
 }
 
 void __fastcall TSynHTMLSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while(fLine[Run] <= L'\x20')
 	{
 		if(CharInSet(fLine[Run], Synhighlighterhtml__10))
@@ -623,30 +623,30 @@ void __fastcall TSynHTMLSyn::SpaceProc()
 void __fastcall TSynHTMLSyn::StringProc()
 {
 	WideChar iOpenChar = L'\0';
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsQuoteValue:
 		{
 			iOpenChar = L'\x27';
-			FTokenID = tkValue;
+			fTokenID = tkValue;
 		}
 		break;
 		case rsDoubleQuoteValue:
 		{
 			iOpenChar = L'\"';
-			FTokenID = tkValue;
+			fTokenID = tkValue;
 		}
 		break;
 		default:
 		{
 			iOpenChar = fLine[Run];
-			if(FRange == rsValue)
+			if(fRange == rsValue)
 			{
 				if(iOpenChar == L'\"')
-					FRange = rsDoubleQuoteValue;
+					fRange = rsDoubleQuoteValue;
 				else
-					FRange = rsQuoteValue;
-				FTokenID = tkValue;
+					fRange = rsQuoteValue;
+				fTokenID = tkValue;
 			}
 			else
 			{
@@ -662,10 +662,10 @@ void __fastcall TSynHTMLSyn::StringProc()
 		if(fLine[Run] == iOpenChar)
 		{
 			++Run;  /* jumps over the closing char */
-			if(Synhighlighterhtml__11.Contains(FRange))
-				FRange = rsParam;
+			if(Synhighlighterhtml__11.Contains(fRange))
+				fRange = rsParam;
 			else
-				FRange = rsText;
+				fRange = rsText;
 			break;
 		}
 		++Run;
@@ -698,7 +698,7 @@ bool __fastcall TSynHTMLSyn::IsIdentChar(WideChar AChar)
 void __fastcall TSynHTMLSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsText:
 		TextProc();
@@ -803,14 +803,14 @@ bool __fastcall TSynHTMLSyn::GetEol()
 TtkTokenKind __fastcall TSynHTMLSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAmpersand;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
 TSynHighlighterAttributes* __fastcall TSynHTMLSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkAmpersand:
 		result = fAndAttri;
@@ -849,25 +849,25 @@ TSynHighlighterAttributes* __fastcall TSynHTMLSyn::GetTokenAttribute()
 int __fastcall TSynHTMLSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 void* __fastcall TSynHTMLSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynHTMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynHTMLSyn::ResetRange()
 {
-	FRange = rsText;
+	fRange = rsText;
 }
 
 bool __fastcall TSynHTMLSyn::IsFilterStored()

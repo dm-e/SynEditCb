@@ -146,19 +146,19 @@ class TSynMacroEvent : public System::TObject
 public:
 	typedef System::TObject inherited;
 protected:
-	unsigned char fRepeatCount;
+	System::Byte fRepeatCount;
 	virtual String __fastcall GetAsString(){return String();} // = 0;
-	virtual void __fastcall InitEventParameters(String AStr){} // = 0;
+	virtual void __fastcall InitEventParameters(String aStr){} // = 0;
 public:
 	__fastcall TSynMacroEvent();
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData){} // = 0;
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData){} // = 0;
     /* the CommandID must not be read inside LoadFromStream/SaveToStream. It's read by the
     MacroRecorder component to decide which MacroEvent class to instanciate */
-	virtual void __fastcall LoadFromStream(TStream* AStream){} // = 0;
-	virtual void __fastcall SaveToStream(TStream* AStream){} // = 0;
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor){} // = 0;
+	virtual void __fastcall LoadFromStream(TStream* aStream){} // = 0;
+	virtual void __fastcall SaveToStream(TStream* aStream){} // = 0;
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor){} // = 0;
 	__property String AsString = { read = GetAsString };
-	__property unsigned char RepeatCount = { read = fRepeatCount, write = fRepeatCount };
+	__property System::Byte RepeatCount = { read = fRepeatCount, write = fRepeatCount };
 };
 
 class TSynBasicEvent : public TSynMacroEvent
@@ -167,15 +167,15 @@ class TSynBasicEvent : public TSynMacroEvent
 public:
 	typedef TSynMacroEvent inherited;
 protected:
-	Synedittypes::TSynEditorCommand FCommand;
+	Synedittypes::TSynEditorCommand fCommand;
 	virtual String __fastcall GetAsString();
-	virtual void __fastcall InitEventParameters(String AStr);
+	virtual void __fastcall InitEventParameters(String aStr);
 public:
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	virtual void __fastcall LoadFromStream(TStream* AStream);
-	virtual void __fastcall SaveToStream(TStream* AStream);
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor);
-	__property Synedittypes::TSynEditorCommand Command = { read = FCommand, write = FCommand };
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	virtual void __fastcall LoadFromStream(TStream* aStream);
+	virtual void __fastcall SaveToStream(TStream* aStream);
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor);
+	__property Synedittypes::TSynEditorCommand Command = { read = fCommand, write = fCommand };
 	__fastcall TSynBasicEvent();
 };
 
@@ -185,15 +185,15 @@ class TSynCharEvent : public TSynMacroEvent
 public:
 	typedef TSynMacroEvent inherited;
 protected:
-	WideChar FKey;
+	WideChar fKey;
 	virtual String __fastcall GetAsString();
-	virtual void __fastcall InitEventParameters(String AStr);
+	virtual void __fastcall InitEventParameters(String aStr);
 public:
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	virtual void __fastcall LoadFromStream(TStream* AStream);
-	virtual void __fastcall SaveToStream(TStream* AStream);
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor);
-	__property WideChar key = { read = FKey, write = FKey };
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	virtual void __fastcall LoadFromStream(TStream* aStream);
+	virtual void __fastcall SaveToStream(TStream* aStream);
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor);
+	__property WideChar Key = { read = fKey, write = fKey };
 	__fastcall TSynCharEvent();
 };
 
@@ -203,15 +203,15 @@ class TSynStringEvent : public TSynMacroEvent
 public:
 	typedef TSynMacroEvent inherited;
 protected:
-	String FString;
+	String fString;
 	virtual String __fastcall GetAsString();
-	virtual void __fastcall InitEventParameters(String AStr);
+	virtual void __fastcall InitEventParameters(String aStr);
 public:
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	virtual void __fastcall LoadFromStream(TStream* AStream);
-	virtual void __fastcall SaveToStream(TStream* AStream);
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor);
-	__property String Value = { read = FString, write = FString };
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	virtual void __fastcall LoadFromStream(TStream* aStream);
+	virtual void __fastcall SaveToStream(TStream* aStream);
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor);
+	__property String Value = { read = fString, write = fString };
 	__fastcall TSynStringEvent();
 };
 
@@ -221,15 +221,15 @@ class TSynPositionEvent : public TSynBasicEvent
 public:
 	typedef TSynBasicEvent inherited;
 protected:
-	TBufferCoord FPosition;
+	TBufferCoord fPosition;
 	virtual String __fastcall GetAsString();
-	virtual void __fastcall InitEventParameters(String AStr);
+	virtual void __fastcall InitEventParameters(String aStr);
 public:
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	virtual void __fastcall LoadFromStream(TStream* AStream);
-	virtual void __fastcall SaveToStream(TStream* AStream);
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor);
-	__property TBufferCoord Position = { read = FPosition, write = FPosition };
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	virtual void __fastcall LoadFromStream(TStream* aStream);
+	virtual void __fastcall SaveToStream(TStream* aStream);
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor);
+	__property TBufferCoord Position = { read = fPosition, write = fPosition };
 	__fastcall TSynPositionEvent();
 };
 
@@ -239,12 +239,12 @@ class TSynDataEvent : public TSynBasicEvent
 public:
 	typedef TSynBasicEvent inherited;
 protected:
-	void* FData;
+	void* fData;
 public:
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	virtual void __fastcall LoadFromStream(TStream* AStream);
-	virtual void __fastcall SaveToStream(TStream* AStream);
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* AEditor);
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	virtual void __fastcall LoadFromStream(TStream* aStream);
+	virtual void __fastcall SaveToStream(TStream* aStream);
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor);
 	__fastcall TSynDataEvent();
 };
 
@@ -261,11 +261,11 @@ class TCustomSynMacroRecorder : public Syneditplugins::TAbstractSynHookerPlugin
 {
 private:
 	TShortCut fShortCuts[2/*# TSynMacroCommand*/];
-	TNotifyEvent FOnStateChange;
+	TNotifyEvent fOnStateChange;
 	TSynUserCommandEvent fOnUserCommand;
 	String fMacroName;
 	bool fSaveMarkerPos;
-	TSynMacroEvent* __fastcall GetEvent(int AIndex);
+	TSynMacroEvent* __fastcall GetEvent(int aIndex);
 	int __fastcall GetEventCount();
 	String __fastcall GetAsString();
 	Synedittypes::TSynEditorCommand __fastcall GetPlaybackCommandID();
@@ -274,53 +274,53 @@ private:
 	TShortCut __fastcall GetRecordShortCut(int Index);
 	void __fastcall SetAsString(const String Value);
 protected:
-	Synedit::TCustomSynEdit* FCurrentEditor;
+	Synedit::TCustomSynEdit* fCurrentEditor;
 	TSynMacroState fState;
-	TList* FEvents;
+	TList* fEvents;
 	Synedittypes::TSynEditorCommand fCommandIDs[2/*# TSynMacroCommand*/];
 	void __fastcall SetShortCut(int Index, const TShortCut Value);
 	bool __fastcall GetIsEmpty();
 	void __fastcall StateChanged();
-	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* AEditor);
-	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* AEditor);
-	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData);
-	TSynMacroEvent* __fastcall CreateMacroEvent(Synedittypes::TSynEditorCommand ACmd);
+	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* aEditor);
+	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* aEditor);
+	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& aChar, void* Data, void* HandlerData);
+	TSynMacroEvent* __fastcall CreateMacroEvent(Synedittypes::TSynEditorCommand aCmd);
 	__property Synedittypes::TSynEditorCommand RecordCommandID = { read = GetRecordCommandID };
 	__property Synedittypes::TSynEditorCommand PlaybackCommandID = { read = GetPlaybackCommandID };
 public:
 	typedef Syneditplugins::TAbstractSynHookerPlugin inherited;
 	#include "SynMacroRecorder_friends.inc"
-	__fastcall TCustomSynMacroRecorder(TComponent* AOwner);
+	__fastcall TCustomSynMacroRecorder(TComponent* aOwner);
 	virtual __fastcall ~TCustomSynMacroRecorder();
 	void __fastcall Error(const String aMsg);
-	void __fastcall AddEditor(Synedit::TCustomSynEdit* AEditor);
-	void __fastcall RemoveEditor(Synedit::TCustomSynEdit* AEditor);
-	void __fastcall RecordMacro(Synedit::TCustomSynEdit* AEditor);
-	void __fastcall PlaybackMacro(Synedit::TCustomSynEdit* AEditor);
+	void __fastcall AddEditor(Synedit::TCustomSynEdit* aEditor);
+	void __fastcall RemoveEditor(Synedit::TCustomSynEdit* aEditor);
+	void __fastcall RecordMacro(Synedit::TCustomSynEdit* aEditor);
+	void __fastcall PlaybackMacro(Synedit::TCustomSynEdit* aEditor);
 	void __fastcall Stop();
-	void __fastcall pause();
+	void __fastcall Pause();
 	void __fastcall Resume();
 	__property bool IsEmpty = { read = GetIsEmpty };
 	__property TSynMacroState State = { read = fState };
 	void __fastcall Clear();
-	void __fastcall AddEvent(Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	void __fastcall InsertEvent(int AIndex, Synedittypes::TSynEditorCommand ACmd, WideChar AChar, void* AData);
-	void __fastcall AddCustomEvent(TSynMacroEvent* AEvent);
-	void __fastcall InsertCustomEvent(int AIndex, TSynMacroEvent* AEvent);
-	void __fastcall DeleteEvent(int AIndex);
+	void __fastcall AddEvent(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	void __fastcall InsertEvent(int aIndex, Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData);
+	void __fastcall AddCustomEvent(TSynMacroEvent* aEvent);
+	void __fastcall InsertCustomEvent(int aIndex, TSynMacroEvent* aEvent);
+	void __fastcall DeleteEvent(int aIndex);
 	void __fastcall LoadFromStream(TStream* aSrc);
 	void __fastcall LoadFromStreamEx(TStream* aSrc, bool aClear);
-	void __fastcall SaveToStream(TStream* ADest);
-	void __fastcall LoadFromFile(String AFileName);
-	void __fastcall SaveToFile(String AFileName);
+	void __fastcall SaveToStream(TStream* aDest);
+	void __fastcall LoadFromFile(String aFilename);
+	void __fastcall SaveToFile(String aFilename);
 	__property int EventCount = { read = GetEventCount };
-	__property TSynMacroEvent* Events[int AIndex] = { read = GetEvent };
+	__property TSynMacroEvent* Events[int aIndex] = { read = GetEvent };
 	__property TShortCut RecordShortCut = { index = int(Synmacrorecorder::mcRecord), read = GetRecordShortCut, write = SetShortCut };
 	__property TShortCut PlaybackShortCut = { index = int(Synmacrorecorder::mcPlayback), read = GetPlaybackShortCut, write = SetShortCut };
 	__property bool SaveMarkerPos = { read = fSaveMarkerPos, write = fSaveMarkerPos, default = false };
 	__property String AsString = { read = GetAsString, write = SetAsString };
 	__property String MacroName = { read = fMacroName, write = fMacroName };
-	__property TNotifyEvent OnStateChange = { read = FOnStateChange, write = FOnStateChange };
+	__property TNotifyEvent OnStateChange = { read = fOnStateChange, write = fOnStateChange };
 	__property TSynUserCommandEvent OnUserCommand = { read = fOnUserCommand, write = fOnUserCommand };
 };
 
@@ -335,7 +335,7 @@ __published:
 public:
 	typedef TCustomSynMacroRecorder inherited;
 	#include "SynMacroRecorder_friends.inc"
-	__fastcall TSynMacroRecorder(TComponent* AOwner);
+	__fastcall TSynMacroRecorder(TComponent* aOwner);
 };
 
 

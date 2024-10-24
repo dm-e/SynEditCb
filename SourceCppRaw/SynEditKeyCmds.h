@@ -316,7 +316,7 @@ public:
 	void __fastcall LoadFromStream(TStream* AStream);
 	void __fastcall SaveToStream(TStream* AStream);
     // No duplicate checking is done if assignment made via these properties!
-	__property WORD key = { read = FKey, write = SetKey };
+	__property WORD Key = { read = FKey, write = SetKey };
 	__property WORD Key2 = { read = FKey2, write = SetKey2 };
 	__property TShiftState Shift = { read = FShift, write = SetShift };
 	__property TShiftState Shift2 = { read = FShift2, write = SetShift2 };
@@ -345,8 +345,8 @@ public:
 	void __fastcall AddKey(Synedittypes::TSynEditorCommand ACmd, WORD AKey, const TShiftState AShift, WORD AKey2 = 0, const TShiftState AShift2 = Syneditkeycmds__0);
 //-- CodeFolding
 	virtual void __fastcall Assign(TPersistent* Source);
-	int __fastcall FindCommand(Synedittypes::TSynEditorCommand cmd);
-	int __fastcall FindKeycode(WORD Code, TShiftState Ss);
+	int __fastcall FindCommand(Synedittypes::TSynEditorCommand Cmd);
+	int __fastcall FindKeycode(WORD Code, TShiftState SS);
 	int __fastcall FindKeycode2(WORD Code1, TShiftState SS1, WORD Code2, TShiftState SS2);
 	int __fastcall FindShortcut(TShortCut SC);
 	int __fastcall FindShortcut2(TShortCut SC, TShortCut SC2);
@@ -359,12 +359,12 @@ public:
 
 // These are mainly for the TSynEditorCommand property editor, but could be
 // useful elsewhere.
-String __fastcall EditorCommandToDescrString(Synedittypes::TSynEditorCommand cmd);
-String __fastcall EditorCommandToCodeString(Synedittypes::TSynEditorCommand cmd);
+String __fastcall EditorCommandToDescrString(Synedittypes::TSynEditorCommand Cmd);
+String __fastcall EditorCommandToCodeString(Synedittypes::TSynEditorCommand Cmd);
 void __fastcall GetEditorCommandValues(TGetStrProc Proc);
 void __fastcall GetEditorCommandExtended(TGetStrProc Proc);
-bool __fastcall IdentToEditorCommand(const String Ident, int& cmd);
-bool __fastcall EditorCommandToIdent(int cmd, String& Ident);
+bool __fastcall IdentToEditorCommand(const String Ident, int& Cmd);
+bool __fastcall EditorCommandToIdent(int Cmd, String& Ident);
 String __fastcall ConvertCodeStringToExtended(String AString);
 String __fastcall ConvertExtendedToCodeString(String AString);
 Synedittypes::TSynEditorCommand __fastcall ConvertExtendedToCommand(String AString);

@@ -33,14 +33,14 @@ int __fastcall StandardEffect(TShiftState Keys)
 
 /* TDropTarget */
 
-HRESULT __fastcall TSynDropTarget::DragEnter(IDataObject* const dataObj, int grfKeyState, const TPoint& cPt, int& dwEffect)
+HRESULT __fastcall TSynDropTarget::DragEnter(IDataObject* const DataObj, int grfKeyState, const TPoint& cpt, int& dwEffect)
 {
-	TPoint Pt = cPt;
+	TPoint pt = cpt;
 	HRESULT result = 0;
 	result = S_OK;
 	try
 	{
-		DragEnter(const_cast<IDataObject*>(dataObj), KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		DragEnter(const_cast<IDataObject*>(DataObj), KeysToShiftState((WORD) grfKeyState), pt, dwEffect, result);
 	}
 	catch(...)
 	{
@@ -64,14 +64,14 @@ HRESULT __stdcall TSynDropTarget::DragLeave()
 	return result;
 }
 
-HRESULT __fastcall TSynDropTarget::DragOver(int grfKeyState, const TPoint& cPt, int& dwEffect)
+HRESULT __fastcall TSynDropTarget::DragOver(int grfKeyState, const TPoint& cpt, int& dwEffect)
 {
-	TPoint Pt = cPt;
+	TPoint pt = cpt;
 	HRESULT result = 0;
 	result = S_OK;
 	try
 	{
-		DragOver(KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		DragOver(KeysToShiftState((WORD) grfKeyState), pt, dwEffect, result);
 	}
 	catch(...)
 	{
@@ -80,14 +80,14 @@ HRESULT __fastcall TSynDropTarget::DragOver(int grfKeyState, const TPoint& cPt, 
 	return result;
 }
 
-HRESULT __fastcall TSynDropTarget::Drop(IDataObject* const dataObj, int grfKeyState, const TPoint& cPt, int& dwEffect)
+HRESULT __fastcall TSynDropTarget::Drop(IDataObject* const DataObj, int grfKeyState, const TPoint& cpt, int& dwEffect)
 {
-	TPoint Pt = cPt;
+	TPoint pt = cpt;
 	HRESULT result = 0;
 	result = S_OK;
 	try
 	{
-		Drop(const_cast<IDataObject*>(dataObj), KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		Drop(const_cast<IDataObject*>(DataObj), KeysToShiftState((WORD) grfKeyState), pt, dwEffect, result);
 	}
 	catch(...)
 	{
@@ -96,25 +96,25 @@ HRESULT __fastcall TSynDropTarget::Drop(IDataObject* const dataObj, int grfKeySt
 	return result;
 }
 
-void __fastcall TSynDropTarget::DragEnter(IDataObject* dataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& result)
+void __fastcall TSynDropTarget::DragEnter(IDataObject* DataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
 	TPoint Pt = cPt;
 	Effect = StandardEffect(State);
 	if(ASSIGNED(FOnDragEnter))
-		FOnDragEnter(this, dataObject, State, Pt, Effect, result);
+		FOnDragEnter(this, DataObject, State, Pt, Effect, Result);
 	if(Effect == deNone)
 		FDataObject = nullptr;
 	else
-		FDataObject = dataObject;
+		FDataObject = DataObject;
 }
 
-void __fastcall TSynDropTarget::DragLeave(HRESULT& result)
+void __fastcall TSynDropTarget::DragLeave(HRESULT& Result)
 {
 	if(ASSIGNED(FDataObject))
 		try
 		{
 			if(ASSIGNED(FOnDragLeave))
-				FOnDragLeave(this, result);
+				FOnDragLeave(this, Result);
 		}
 		__finally
 		{
@@ -122,7 +122,7 @@ void __fastcall TSynDropTarget::DragLeave(HRESULT& result)
 		}
 }
 
-void __fastcall TSynDropTarget::DragOver(TShiftState State, const TPoint& cPt, int& Effect, HRESULT& result)
+void __fastcall TSynDropTarget::DragOver(TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
 	TPoint Pt = cPt;
 	if(FDataObject == nullptr)
@@ -132,10 +132,10 @@ void __fastcall TSynDropTarget::DragOver(TShiftState State, const TPoint& cPt, i
 	}
 	Effect = StandardEffect(State);
 	if(ASSIGNED(FOnDragOver))
-		FOnDragOver(this, FDataObject, State, Pt, Effect, result);
+		FOnDragOver(this, FDataObject, State, Pt, Effect, Result);
 }
 
-void __fastcall TSynDropTarget::Drop(IDataObject* dataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& result)
+void __fastcall TSynDropTarget::Drop(IDataObject* DataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
 	TPoint Pt = cPt;
 	if(FDataObject == nullptr)
@@ -147,7 +147,7 @@ void __fastcall TSynDropTarget::Drop(IDataObject* dataObject, TShiftState State,
 	try
 	{
 		if(ASSIGNED(FOnDrop))
-			FOnDrop(this, dataObject, State, Pt, Effect, result);
+			FOnDrop(this, DataObject, State, Pt, Effect, Result);
 	}
 	__finally
 	{

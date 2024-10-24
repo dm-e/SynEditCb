@@ -9,10 +9,8 @@ using namespace d2c_system;
 using namespace Syneditkeycmds;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
-using namespace System;
 using namespace System::Classes;
 using namespace System::Uitypes;
-using namespace Vcl::Forms;
 
 #define Syneditkeycmdeditor__0 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
 #define Syneditkeycmdeditor__1 (TMsgDlgButtons() << TMsgDlgBtn::mbOK)
@@ -61,9 +59,9 @@ void __fastcall TSynEditKeystrokeEditorForm::FormShow(TObject* Sender)
 		cmbCommand->Sorted = true;
 }
 
-void __fastcall TSynEditKeystrokeEditorForm::AddEditorCommand(const String s)
+void __fastcall TSynEditKeystrokeEditorForm::AddEditorCommand(const String S)
 {
-	cmbCommand->Items->Add(s);
+	cmbCommand->Items->Add(S);
 }
 
 TSynEditorCommand __fastcall TSynEditKeystrokeEditorForm::GetCommand()

@@ -31,7 +31,6 @@ using namespace Syneditprint;
 using namespace Syneditprintmargins;
 using namespace Synedittypes;
 using namespace Synmacrorecorder;
-using namespace System;
 using namespace System::Sysutils;
 using namespace System::Uitypes;
 using namespace Vcleditors;

@@ -158,8 +158,8 @@ enum TtkTokenKind {tkSymbol,
                    tkEvent,
                    tkSpecVar,
                    tkTemplate };
-enum TRangeState {rsUnKnown,
-                  rsAnsi,
+enum TRangeState {rsUnknown,
+                  rsANSI,
                   rsLiteral,
                   rsLiteralTemplate };
 typedef TtkTokenKind __fastcall (__closure *TIdentFuncTableFunc) (int);
@@ -172,7 +172,7 @@ typedef TIdentFuncTableFunc* PIdentFuncTableFunc;
 class TSynJScriptSyn : public Syneditcodefolding::TSynCustomCodeFoldingHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	int fLiteralLevel;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;

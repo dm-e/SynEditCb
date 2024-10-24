@@ -69,19 +69,19 @@ class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 public:
 	typedef System::TCppInterfacedObject<IDataObject> inherited;
 private:
-	String FText;
+	String fText;
 	TList__1<TClipFormat>* FFormatEtc;
 	TMemoryStream* MemoryStream;
 	TMemoryStream* HtmlStream;
 	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
 	HRESULT __stdcall GetData(const TFormatEtc& formatetcIn, TStgMedium& medium);
-	HRESULT __stdcall GetDataHere(const TFormatEtc& FORMATETC, TStgMedium& medium);
-	HRESULT __stdcall QueryGetData(const TFormatEtc& FORMATETC);
-	HRESULT __stdcall GetCanonicalFormatEtc(const TFormatEtc& FORMATETC, TFormatEtc& formatetcOut);
-	HRESULT __stdcall SetData(const TFormatEtc& FORMATETC, TStgMedium& medium, BOOL fRelease);
-	HRESULT __stdcall EnumFormatEtc(int dwDirection, IEnumFORMATETC*& EnumFormatEtc);
-	HRESULT __stdcall DAdvise(const TFormatEtc& FORMATETC, int advf, IAdviseSink* const advSink, int& dwConnection);
+	HRESULT __stdcall GetDataHere(const TFormatEtc& formatetc, TStgMedium& medium);
+	HRESULT __stdcall QueryGetData(const TFormatEtc& formatetc);
+	HRESULT __stdcall GetCanonicalFormatEtc(const TFormatEtc& formatetc, TFormatEtc& formatetcOut);
+	HRESULT __stdcall SetData(const TFormatEtc& formatetc, TStgMedium& medium, BOOL fRelease);
+	HRESULT __stdcall EnumFormatEtc(int dwDirection, IEnumFORMATETC*& enumFormatEtc);
+	HRESULT __stdcall DAdvise(const TFormatEtc& formatetc, int advf, IAdviseSink* const advSink, int& dwConnection);
 	HRESULT __stdcall DUnadvise(int dwConnection);
 	HRESULT __stdcall EnumDAdvise(IEnumSTATDATA*& enumAdvise);
 public:
@@ -90,9 +90,9 @@ public:
 	__fastcall TSynEditDataObject();
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
-HGLOBAL __fastcall MakeGlobal(const String s);
+HGLOBAL __fastcall MakeGlobal(const String S);
 HGLOBAL __fastcall MakeGlobal(void** P, int Size);
-bool __fastcall HasFormat(IDataObject* dataObject, TClipFormat Format);
+bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format);
 extern UINT SynEditClipboardFormat;
 extern UINT HTMLClipboardFormat;
 

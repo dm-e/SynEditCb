@@ -126,7 +126,7 @@ private:
 	TRegEx RegEx;
 	TMatchCollection fMatchCollection;
 	TRegExOptions fOptions;
-	String FPattern;
+	String fPattern;
 protected:
 	virtual String __fastcall GetPattern();
 	virtual void __fastcall SetPattern(const String Value);

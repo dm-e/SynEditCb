@@ -58,7 +58,7 @@ const String Events = L"onAbort, onBlur, onChange, onClick, onDblClick, onError,
 	           L"onKeyDown, onKeyPress, onKeyUp, onLoad, onMouseDown, onMouseMove, "
 	           L"onMouseOut, onMouseOver, onMouseUp, onReset, onSelect, onSubmit, "
 	           L"onUnload";
-const String Keywords = L"abstract, boolean, break, byte, callee, case, catch, char, class, "
+const String KeyWords = L"abstract, boolean, break, byte, callee, case, catch, char, class, "
 	           L"const, constructor, continue, debugger, default, delete, do, DOCTYPE, "
 	           L"double, else, enum, export, extends, false, final, finally, float, for, "
 	           L"function, goto, head, if, implements, import, in, instanceof, int, "
@@ -241,12 +241,12 @@ int __fastcall TSynVrml97Syn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynVrml97Syn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynVrml97Syn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -270,7 +270,7 @@ TtkTokenKind __fastcall TSynVrml97Syn::IdentKind(PWideChar Maybe)
 
 __fastcall TSynVrml97Syn::TSynVrml97Syn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsNormalText),
+			fRange(rsNormalText),
 			isDoctype(false),
 			FTokenID(tkComment),
 			fCommentAttri(nullptr),
@@ -302,147 +302,147 @@ __fastcall TSynVrml97Syn::TSynVrml97Syn(TComponent* AOwner)
 			fX3DHeaderAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fKeywords = new TSynHashEntryList();
 	isDoctype = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightervrml97__0;
 	fCommentAttri->Foreground = (TColor) clNavy;
 	fCommentAttri->Background = (TColor) clGray;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Style = Synhighlightervrml97__1;
 	fIdentifierAttri->Foreground = (TColor) clNavy;
 	fIdentifierAttri->Background = (TColor) clWhite;
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightervrml97__2;
 	fKeyAttri->Foreground = (TColor) clRed;
 	fKeyAttri->Background = (TColor) clWhite;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNonReservedKeyAttri = new TSynHighlighterAttributes(SYNS_AttrNonReservedKeyword, SYNS_FriendlyAttrNonReservedKeyword);
 	fNonReservedKeyAttri->Style = Synhighlightervrml97__3;
 	fNonReservedKeyAttri->Foreground = (TColor) clBlack;
 	fNonReservedKeyAttri->Background = (TColor) clWhite;
-	addAttribute(fNonReservedKeyAttri);
+	AddAttribute(fNonReservedKeyAttri);
 	fEventAttri = new TSynHighlighterAttributes(SYNS_AttrEvent, SYNS_FriendlyAttrEvent);
 	fEventAttri->Style = Synhighlightervrml97__4;
 	fEventAttri->Foreground = (TColor) clNavy;
 	fEventAttri->Background = (TColor) clWhite;
-	addAttribute(fEventAttri);
+	AddAttribute(fEventAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fEventAttri->Style = Synhighlightervrml97__5;
 	fEventAttri->Foreground = (TColor) clNavy;
 	fEventAttri->Background = (TColor) clWhite;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	fSpaceAttri->Style = Synhighlightervrml97__6;
 	fSpaceAttri->Foreground = (TColor) clNavy;
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Style = Synhighlightervrml97__7;
 	fStringAttri->Foreground = (TColor) clNavy;
 	fStringAttri->Background = (TColor) clWhite;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Style = Synhighlightervrml97__8;
 	fSymbolAttri->Foreground = (TColor) clNavy;
 	fSymbolAttri->Background = (TColor) clWhite;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
   //-- vrml
 	fVrmlAppearanceAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlAppearance, SYNS_FriendlyAttrVrmlAppearance);
 	fVrmlAppearanceAttri->Style = Synhighlightervrml97__9;
 	fVrmlAppearanceAttri->Foreground = (TColor) clNavy;
 	fVrmlAppearanceAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlAppearanceAttri);
+	AddAttribute(fVrmlAppearanceAttri);
 	fVrmlAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlAttribute, SYNS_FriendlyAttrVrmlAttribute);
 	fVrmlAttributeAttri->Style = Synhighlightervrml97__10;
 	fVrmlAttributeAttri->Foreground = (TColor) clNavy;
 	fVrmlAttributeAttri->Background = (TColor) clGray;
-	addAttribute(fVrmlAttributeAttri);
+	AddAttribute(fVrmlAttributeAttri);
 	fVrmlDefinitionAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlDefinition, SYNS_FriendlyAttrVrmlDefinition);
 	fVrmlDefinitionAttri->Style = Synhighlightervrml97__11;
 	fVrmlDefinitionAttri->Foreground = (TColor) clNavy;
 	fVrmlDefinitionAttri->Background = (TColor) clRed;
-	addAttribute(fVrmlDefinitionAttri);
+	AddAttribute(fVrmlDefinitionAttri);
 	fVrmlEventAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlEvent, SYNS_FriendlyAttrVrmlEvent);
 	fVrmlEventAttri->Style = Synhighlightervrml97__12;
 	fVrmlEventAttri->Foreground = (TColor) clRed;
 	fVrmlEventAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlEventAttri);
+	AddAttribute(fVrmlEventAttri);
 	fVrmlGroupingAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlGrouping, SYNS_FriendlyAttrVrmlGrouping);
 	fVrmlGroupingAttri->Style = Synhighlightervrml97__13;
 	fVrmlGroupingAttri->Foreground = (TColor) clNavy;
 	fVrmlGroupingAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlGroupingAttri);
+	AddAttribute(fVrmlGroupingAttri);
 	fVrmlInterpolatorAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlInterpolator, SYNS_FriendlyAttrVrmlInterpolator);
 	fVrmlInterpolatorAttri->Style = Synhighlightervrml97__14;
 	fVrmlInterpolatorAttri->Foreground = (TColor) clLime;
 	fVrmlInterpolatorAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlInterpolatorAttri);
+	AddAttribute(fVrmlInterpolatorAttri);
 	fVrmlLightAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlLight, SYNS_FriendlyAttrVrmlLight);
 	fVrmlLightAttri->Style = Synhighlightervrml97__15;
 	fVrmlLightAttri->Foreground = (TColor) clTeal;
 	fVrmlLightAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlLightAttri);
+	AddAttribute(fVrmlLightAttri);
 	fVrmlNodeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlNode, SYNS_FriendlyAttrVrmlNode);
 	fVrmlNodeAttri->Style = Synhighlightervrml97__16;
 	fVrmlNodeAttri->Foreground = (TColor) clGreen;
 	fVrmlNodeAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlNodeAttri);
+	AddAttribute(fVrmlNodeAttri);
 	fVrmlParameterAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlParameter, SYNS_FriendlyAttrVrmlParameter);
 	fVrmlParameterAttri->Style = Synhighlightervrml97__17;
 	fVrmlParameterAttri->Foreground = (TColor) 0xF0CAA6; //clSkyBlue
 	fVrmlParameterAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlParameterAttri);
+	AddAttribute(fVrmlParameterAttri);
 	fVrmlprotoAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlProto, SYNS_FriendlyAttrVrmlProto);
 	fVrmlprotoAttri->Style = Synhighlightervrml97__18;
 	fVrmlprotoAttri->Foreground = (TColor) clRed;
 	fVrmlprotoAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlprotoAttri);
+	AddAttribute(fVrmlprotoAttri);
 	fVrmlSensorAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlSensor, SYNS_FriendlyAttrVrmlSensor);
 	fVrmlSensorAttri->Style = Synhighlightervrml97__19;
 	fVrmlSensorAttri->Foreground = (TColor) clOlive;
 	fVrmlSensorAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlSensorAttri);
+	AddAttribute(fVrmlSensorAttri);
 	fVrmlShapeAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlShape, SYNS_FriendlyAttrVrmlShape);
 	fVrmlShapeAttri->Style = Synhighlightervrml97__20;
 	fVrmlShapeAttri->Foreground = (TColor) clPurple;
 	fVrmlShapeAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlShapeAttri);
+	AddAttribute(fVrmlShapeAttri);
 	fVrmlShape_HintAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlShape_Hint, SYNS_FriendlyAttrVrmlShape_Hint);
 	fVrmlShape_HintAttri->Style = Synhighlightervrml97__21;
 	fVrmlShape_HintAttri->Foreground = (TColor) clPurple;
 	fVrmlShape_HintAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlShape_HintAttri);
+	AddAttribute(fVrmlShape_HintAttri);
 	fVrmlTime_dependentAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlTime_dependent, SYNS_FriendlyAttrVrmlTime_dependent);
 	fVrmlTime_dependentAttri->Style = Synhighlightervrml97__22;
 	fVrmlTime_dependentAttri->Foreground = (TColor) clOlive;
 	fVrmlTime_dependentAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlTime_dependentAttri);
+	AddAttribute(fVrmlTime_dependentAttri);
 	fVrmlViewpointAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlViewpoint, SYNS_FriendlyAttrVrmlViewpoint);
 	fVrmlViewpointAttri->Style = Synhighlightervrml97__23;
 	fVrmlViewpointAttri->Foreground = (TColor) clGreen;
 	fVrmlViewpointAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlViewpointAttri);
+	AddAttribute(fVrmlViewpointAttri);
 	fVrmlWorldInfoAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlWorldInfo, SYNS_FriendlyAttrVrmlWorldInfo);
 	fVrmlWorldInfoAttri->Style = Synhighlightervrml97__24;
 	fVrmlWorldInfoAttri->Foreground = (TColor) clMaroon;
 	fVrmlWorldInfoAttri->Background = (TColor) clWhite;
-	addAttribute(fVrmlWorldInfoAttri);
+	AddAttribute(fVrmlWorldInfoAttri);
 	fX3DDocTypeAttri = new TSynHighlighterAttributes(SYNS_AttrX3DDocType, SYNS_FriendlyAttrX3DDocType);
 	fX3DDocTypeAttri->Style = Synhighlightervrml97__25;
 	fX3DDocTypeAttri->Foreground = (TColor) clMaroon;
 	fX3DDocTypeAttri->Background = (TColor) clWhite;
-	addAttribute(fX3DDocTypeAttri);
+	AddAttribute(fX3DDocTypeAttri);
 	fX3DHeaderAttri = new TSynHighlighterAttributes(SYNS_AttrX3DHeader, SYNS_FriendlyAttrX3DHeader);
 	fX3DHeaderAttri->Style = Synhighlightervrml97__26;
 	fX3DHeaderAttri->Foreground = (TColor) clMaroon;
 	fX3DHeaderAttri->Background = (TColor) clWhite;
-	addAttribute(fX3DHeaderAttri);
+	AddAttribute(fX3DHeaderAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	EnumerateKeywords(int(tkEvent), Events, IsIdentChar, DoAddKeyword);
-	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
+	EnumerateKeywords(int(tkKey), KeyWords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkNonReservedKey), NonReservedKeys, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkVrmlAppearance), VrmlAppearances, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkVrmlAttribute), VrmlAttributes, IsIdentChar, DoAddKeyword);
@@ -480,14 +480,14 @@ void __fastcall TSynVrml97Syn::AndSymbolProc()
 bool __fastcall TSynVrml97Syn::NextTokenIs(String T)
 {
 	bool result = false;
-	__int64 i = 0;
+	__int64 I = 0;
 	int Len = 0;
 	__int64 stop = 0;
 	result = true;
 	Len = T.Length();
-	for(stop = Len, i = 1; i <= stop; i++)
+	for(stop = Len, I = 1; I <= stop; I++)
 	{
-		if(fLine[Run + i] != T[i])
+		if(fLine[Run + I] != T[I])
 		{
 			result = false;
 			break;
@@ -502,14 +502,14 @@ void __fastcall TSynVrml97Syn::InCommentProc()
 	{
 		++Run;
 		FTokenID = tkComment;
-		FRange = rsComment;
+		fRange = rsComment;
 		Run += 2;
 		do
 		{
 			++Run;
 			if((fLine[Run] == L'-') && (fLine[Run + 1] == L'-'))
 			{
-				FRange = rsNormalText;
+				fRange = rsNormalText;
 				Run += 2;
 				break;
 			}
@@ -537,7 +537,7 @@ void __fastcall TSynVrml97Syn::DiesisCommentProc()
 void __fastcall TSynVrml97Syn::X3DHeaderOpenProc()
 {
 	++Run;
-	FRange = rsX3DHeader;
+	fRange = rsX3DHeader;
 	X3DHeaderProc();
 	FTokenID = tkX3DHeader;
 }
@@ -563,7 +563,7 @@ void __fastcall TSynVrml97Syn::X3DHeaderProc()
 				if(fLine[Run] == L'?')
 				{
 					Run += 1;
-					FRange = rsNormalText;
+					fRange = rsNormalText;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -579,7 +579,7 @@ void __fastcall TSynVrml97Syn::X3DDocTypeOpenProc()
 {
 	if(NextTokenIs(L"DOCTYPE"))
 	{
-		FRange = rsX3DDocType;
+		fRange = rsX3DDocType;
 		X3DDocTypeProc();
 		FTokenID = tkX3DDocType;
 	}
@@ -587,7 +587,7 @@ void __fastcall TSynVrml97Syn::X3DDocTypeOpenProc()
 	{
 		if(NextTokenIs(L"--"))
 		{
-			FRange = rsComment;
+			fRange = rsComment;
 			InCommentProc();
 			FTokenID = tkComment;
 		}
@@ -620,7 +620,7 @@ void __fastcall TSynVrml97Syn::X3DDocTypeProc()
 				if(fLine[Run + 1] == L'>')
 				{
 					Run += 1;
-					FRange = rsNormalText;
+					fRange = rsNormalText;
 					break;
 				}
 				if(!IsLineEnd(Run))
@@ -643,7 +643,7 @@ void __fastcall TSynVrml97Syn::CommentProc()
 		{
 			if(((fLine[Run] == L'*') && (fLine[Run + 1] == L'/')) || ((fLine[Run] == L'-') && (fLine[Run + 1] == L'-')))
 			{
-				FRange = rsNormalText;
+				fRange = rsNormalText;
 				Run += 2;
 				break;
 			}
@@ -720,9 +720,9 @@ void __fastcall TSynVrml97Syn::NumberProc()
 		return result;
 	};
 	int idx1 = 0; // token[1]
-	bool IsHex = false;
+	bool isHex = false;
 	FTokenID = tkNumber;
-	IsHex = false;
+	isHex = false;
 	idx1 = Run;
 	++Run;
 	while(IsNumberChar())
@@ -735,7 +735,7 @@ void __fastcall TSynVrml97Syn::NumberProc()
 			break;
 			case 97: case 98: case 99: case 100: case 101: case 102:
 			case 65: case 66: case 67: case 68: case 69: case 70:
-			if(!IsHex)
+			if(!isHex)
 				goto label1;
 			break;
 			case L'x':
@@ -747,7 +747,7 @@ void __fastcall TSynVrml97Syn::NumberProc()
 				{
 					goto label3;
 				}
-				IsHex = true;
+				isHex = true;
 			}
 			break;
 			default:
@@ -804,13 +804,13 @@ void __fastcall TSynVrml97Syn::SlashProc()
 		case L'*':
 		{
 			FTokenID = tkComment;
-			FRange = rsComment;
+			fRange = rsComment;
 			do
 			{
 				++Run;
 				if((fLine[Run] == L'*') && (fLine[Run + 1] == L'/'))
 				{
-					FRange = rsNormalText;
+					fRange = rsNormalText;
 					Run += 2;
 					break;
 				}
@@ -879,7 +879,7 @@ void __fastcall TSynVrml97Syn::UnknownProc()
 void __fastcall TSynVrml97Syn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsX3DHeader:
 		X3DHeaderProc();
@@ -1022,7 +1022,7 @@ bool __fastcall TSynVrml97Syn::GetEol()
 void* __fastcall TSynVrml97Syn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1140,12 +1140,12 @@ int __fastcall TSynVrml97Syn::GetTokenKind()
 
 void __fastcall TSynVrml97Syn::ResetRange()
 {
-	FRange = rsNormalText;
+	fRange = rsNormalText;
 }
 
 void __fastcall TSynVrml97Syn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynVrml97Syn::IsFilterStored()

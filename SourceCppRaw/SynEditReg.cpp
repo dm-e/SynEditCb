@@ -30,10 +30,10 @@ using namespace Synhighlighterbat;
 using namespace Synhighlightercac;
 using namespace Synhighlightercpm;
 using namespace Synhighlightercs;
+using namespace Synhighlightercss;
 using namespace Synhighlightercache;
 using namespace Synhighlightercobol;
 using namespace Synhighlightercpp;
-using namespace Synhighlightercss;
 using namespace Synhighlighterdot;
 using namespace Synhighlighterdws;
 using namespace Synhighlighterdfm;
@@ -84,7 +84,6 @@ using namespace Synhighlighterxml;
 using namespace Synmacrorecorder;
 using namespace Synspellcheck;
 using namespace Synuriopener;
-using namespace System;
 
 namespace Syneditreg
 {

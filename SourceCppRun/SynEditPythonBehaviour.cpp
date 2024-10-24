@@ -10,7 +10,6 @@ using namespace Synedit;
 using namespace Syneditkeycmds;
 using namespace Syneditstrconst;
 using namespace Synedittypes;
-using namespace System;
 using namespace System::Classes;
 
 namespace Syneditpythonbehaviour
@@ -61,12 +60,12 @@ void __fastcall TSynEditPythonBehaviour::doProcessUserCommand(TObject* Sender, b
 	}
 }
 
-__fastcall TSynEditPythonBehaviour::TSynEditPythonBehaviour(TComponent* AOwner)
- : inherited(AOwner),
+__fastcall TSynEditPythonBehaviour::TSynEditPythonBehaviour(TComponent* aOwner)
+ : inherited(aOwner),
 			FEditor(nullptr),
-			FIndent(0)
+			fIndent(0)
 {
-	FIndent = 4;
+	fIndent = 4;
 }
 
 

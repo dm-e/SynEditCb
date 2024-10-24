@@ -19,7 +19,7 @@ namespace Synedittextbuffer
 #define Synedittextbuffer__1 (TSynEditStringFlags() <<  \
 										sfModified << sfSaved << sfAsSaved)
 #define Synedittextbuffer__2 TSynLineChangeFlags()
-#define Synedittextbuffer__3 (TArray() << s)
+#define Synedittextbuffer__3 (TArray() << S)
 #define Synedittextbuffer__4 (TSynEditStringFlags() << sfExpandedLengthUnknown)
 #define Synedittextbuffer__5 (TSynEditStringFlags() << sfExpandedLengthUnknown)
 #define Synedittextbuffer__6 (TSynEditStringFlags() <<  \
@@ -56,21 +56,21 @@ __fastcall TSynEditStringList::TSynEditStringList(TExpandAtWideGlyphsFunc AExpan
  : FList(nullptr),
 			FCount(0),
 			FCapacity(0),
-			fFileFormat(sffDos),
-			fIndexOfLongestLine(0),
+			FFileFormat(sffDos),
+			FIndexOfLongestLine(0),
 			FTabWidth(0),
-			fCharIndexesAreValid(false),
-			fDetectUTF8(false),
-			fUTF8CheckLen(0)
+			FCharIndexesAreValid(false),
+			FDetectUTF8(false),
+			FUTF8CheckLen(0)
 {
 	//# inherited::Create();
-	fExpandAtWideGlyphsFunc = AExpandAtWideGlyphsFunc;
-	fFileFormat = sffDos;
-	fIndexOfLongestLine = -1;
+	FExpandAtWideGlyphsFunc = AExpandAtWideGlyphsFunc;
+	FFileFormat = sffDos;
+	FIndexOfLongestLine = -1;
 	TabWidth = 8;
-	fUTF8CheckLen = -1;
+	FUTF8CheckLen = -1;
 	Options = Options - Synedittextbuffer__0;
-	fDetectUTF8 = true;
+	FDetectUTF8 = true;
 }
 
 __fastcall TSynEditStringList::~TSynEditStringList()
@@ -96,13 +96,13 @@ void __fastcall TSynEditStringList::Clear()
 		Finalize((void**)&(*FList)[0], FCount);
 		FCount = 0;
 		SetCapacity(0);
-		if(ASSIGNED(fOnDeleted))
-			fOnDeleted(this, 0, OldCount);
-		if(ASSIGNED(fOnCleared))
-			fOnCleared(this);
+		if(ASSIGNED(FOnDeleted))
+			FOnDeleted(this, 0, OldCount);
+		if(ASSIGNED(FOnCleared))
+			FOnCleared(this);
 		EndUpdate();
 	}
-	fIndexOfLongestLine = -1;
+	FIndexOfLongestLine = -1;
 }
 
 void __fastcall TSynEditStringList::Delete(int Index)
@@ -116,11 +116,11 @@ void __fastcall TSynEditStringList::Delete(int Index)
 	--FCount;
 	if(Index < FCount)
 	{
-		System::Move(&(*FList)[Index + 1], &(*FList)[Index], (FCount - Index) * SynEditStringRecSize);
+		System::Move(&(*FList)[Index + 1], &(*FList)[Index], (size_t) ((FCount - Index) * SynEditStringRecSize));
 	}
-	fIndexOfLongestLine = -1;
-	if(ASSIGNED(fOnDeleted))
-		fOnDeleted(this, Index, 1);
+	FIndexOfLongestLine = -1;
+	if(ASSIGNED(FOnDeleted))
+		FOnDeleted(this, Index, 1);
 	EndUpdate();
 }
 
@@ -141,10 +141,10 @@ void __fastcall TSynEditStringList::DeleteLines(int Index, int NumLines)
 				NumLines = FCount - Index;
 			Finalize((void**)&(*FList)[Index], NumLines);
 			if(LinesAfter > 0)
-				System::Move(&(*FList)[Index + NumLines], &(*FList)[Index], LinesAfter * SynEditStringRecSize);
+				System::Move(&(*FList)[Index + NumLines], &(*FList)[Index], (size_t) (LinesAfter * SynEditStringRecSize));
 			FCount -= NumLines;
-			if(ASSIGNED(fOnDeleted))
-				fOnDeleted(this, Index, NumLines);
+			if(ASSIGNED(FOnDeleted))
+				FOnDeleted(this, Index, NumLines);
 		}
 		__finally
 		{
@@ -166,12 +166,12 @@ String __fastcall TSynEditStringList::ExpandString(int Index)
 			(*FList)[Index].FFlags >> sfExpandedLengthUnknown;
 			(*FList)[Index].FFlags >> sfHasTabs;
 			(*FList)[Index].FFlags << sfHasNoTabs;
-			(*FList)[Index].fExpandedLength = 0;
+			(*FList)[Index].FExpandedLength = 0;
 		}
 		else
 		{
-			result = fConvertTabsProc((*FList)[Index].FString, FTabWidth, HasTabs);
-			(*FList)[Index].fExpandedLength = Length(fExpandAtWideGlyphsFunc(result));
+			result = FConvertTabsProc((*FList)[Index].FString, FTabWidth, HasTabs);
+			(*FList)[Index].FExpandedLength = Length(FExpandAtWideGlyphsFunc(result));
 			(*FList)[Index].FFlags >> sfExpandedLengthUnknown;
 			(*FList)[Index].FFlags >> sfHasTabs;
 			(*FList)[Index].FFlags >> sfHasNoTabs;
@@ -196,19 +196,19 @@ String __fastcall TSynEditStringList::Get(int Index)
 
 void __fastcall TSynEditStringList::UpdateCharIndexes()
 {
-	int i = 0;
-	int n = 0;
+	int I = 0;
+	int N = 0;
 	PSynEditStringRec P = nullptr;
 	int stop = 0;
-	fCharIndexesAreValid = true;
+	FCharIndexesAreValid = true;
 	if(FCount == 0)
 		return;
 	P = &(*FList)[0];
-	n = 0;
-	for(stop = FCount, i = 1; i <= stop; i++)
+	N = 0;
+	for(stop = FCount, I = 1; I <= stop; I++)
 	{
-		P->fCharIndex = n;
-		n += P->FString.Length();
+		P->FCharIndex = N;
+		N += P->FString.Length();
 		++P;
 	}
 }
@@ -228,9 +228,9 @@ int __fastcall TSynEditStringList::LineCharIndex(int Index)
 	int result = 0;
 	if(((unsigned int) Index) < ((unsigned int) FCount))
 	{
-		if(!fCharIndexesAreValid)
+		if(!FCharIndexesAreValid)
 			UpdateCharIndexes();
-		result = (*FList)[Index].fCharIndex;
+		result = (*FList)[Index].FCharIndex;
 	}
 	else
 	result = 0;
@@ -284,7 +284,7 @@ int __fastcall TSynEditStringList::GetExpandedStringLength(int Index)
 		if((*FList)[Index].FFlags.Contains(sfExpandedLengthUnknown))
 			result = String(ExpandedStrings[Index]).Length();
 		else
-			result = (*FList)[Index].fExpandedLength;
+			result = (*FList)[Index].FExpandedLength;
 	}
 	else
 	result = 0;
@@ -294,31 +294,31 @@ int __fastcall TSynEditStringList::GetExpandedStringLength(int Index)
 int __fastcall TSynEditStringList::GetLengthOfLongestLine()
 {
 	int result = 0;
-	int i = 0;
+	int I = 0;
 	int MaxLen = 0;
-	PSynEditStringRec Prec = nullptr;
-	if(fIndexOfLongestLine < 0)
+	PSynEditStringRec PRec = nullptr;
+	if(FIndexOfLongestLine < 0)
 	{
 		MaxLen = 0;
 		if(FCount > 0)
 		{
 			int stop = 0;
-			Prec = &(*FList)[0];
-			for(stop = FCount - 1, i = 0; i <= stop; i++)
+			PRec = &(*FList)[0];
+			for(stop = FCount - 1, I = 0; I <= stop; I++)
 			{
-				if((*Prec).FFlags.Contains(sfExpandedLengthUnknown))
-					ExpandString(i);
-				if((*Prec).fExpandedLength > MaxLen)
+				if((*PRec).FFlags.Contains(sfExpandedLengthUnknown))
+					ExpandString(I);
+				if((*PRec).FExpandedLength > MaxLen)
 				{
-					MaxLen = (*Prec).fExpandedLength;
-					fIndexOfLongestLine = i;
+					MaxLen = (*PRec).FExpandedLength;
+					FIndexOfLongestLine = I;
 				}
-				++Prec;
+				++PRec;
 			}
 		}
 	}
-	if((fIndexOfLongestLine >= 0) && (fIndexOfLongestLine < FCount))
-		result = (*FList)[fIndexOfLongestLine].fExpandedLength;
+	if((FIndexOfLongestLine >= 0) && (FIndexOfLongestLine < FCount))
+		result = (*FList)[FIndexOfLongestLine].FExpandedLength;
 	else
 		result = 0;
 	return result;
@@ -345,40 +345,40 @@ TSynEditRange __fastcall TSynEditStringList::GetRange(int Index)
 }
 /* Optimized by Eric Grange */
 
-String __fastcall TSynEditStringList::GetSeparatedText(String SeparatorS)
+String __fastcall TSynEditStringList::GetSeparatedText(String Separators)
 {
 	String result;
-	int i = 0;
-	int l = 0;
+	int I = 0;
+	int L = 0;
 	int Size = 0;
 	int LineBreakSize = 0;
 	PChar P = nullptr;
 	PChar PLineBreak = nullptr;
-	PSynEditStringRec Prec = nullptr;
+	PSynEditStringRec PRec = nullptr;
 	int stop = 0;
 	if(FCount == 0)
 	{
 		result = L"";
 		return result;
 	}
-	LineBreakSize = SeparatorS.Length();
-	PLineBreak = ustr2pwchar(SeparatorS);
+	LineBreakSize = Separators.Length();
+	PLineBreak = ustr2pwchar(Separators);
 
   // compute buffer size
 	Size = (FCount - 1) * LineBreakSize + LineCharIndex(FCount - 1) + (*FList)[FCount - 1].FString.Length();
 	result.SetLength(Size);
 	P = ustr2pwchar(result);
-	Prec = &(*FList)[0];
+	PRec = &(*FList)[0];
 
   // handle 1st line separately (to avoid trailing line break)
-	l = Prec->FString.Length();
-	if(l != 0)
+	L = PRec->FString.Length();
+	if(L != 0)
 	{
-		System::Move(ustr2address(Prec->FString), P, l * sizeof(Char));
-		P += l;
+		System::Move(ustr2address(PRec->FString), P, (size_t) (L * sizeof(Char)));
+		P += L;
 	}
-	++Prec;
-	for(stop = FCount - 1, i = 1; i <= stop; i++)
+	++PRec;
+	for(stop = FCount - 1, I = 1; I <= stop; I++)
 	{
 		switch(LineBreakSize)
 		{
@@ -398,17 +398,17 @@ String __fastcall TSynEditStringList::GetSeparatedText(String SeparatorS)
 			}
 			break;
 			default:
-			System::Move(PLineBreak, P, LineBreakSize * sizeof(Char));
+			System::Move(PLineBreak, P, (size_t) (LineBreakSize * sizeof(Char)));
 			P += LineBreakSize;
 			break;
 		}
-		if(ustr2address(Prec->FString) != nullptr)
+		if(ustr2address(PRec->FString) != nullptr)
 		{
-			l = Prec->FString.Length();
-			System::Move(ustr2address(Prec->FString), P, l * sizeof(Char));
-			P += l;
+			L = PRec->FString.Length();
+			System::Move(ustr2address(PRec->FString), P, (size_t) (L * sizeof(Char)));
+			P += L;
 		}
-		++Prec;
+		++PRec;
 	}
 	return result;
 }
@@ -418,33 +418,33 @@ void __fastcall TSynEditStringList::Grow()
 	SetCapacity(Syneditmiscprocs::GrowCollection(FCapacity, FCount + 1));
 }
 
-void __fastcall TSynEditStringList::Insert(int Index, const String s)
+void __fastcall TSynEditStringList::Insert(int Index, const String S)
 {
 //	InsertStrings(Index, SynEditTextBuffer__3);
 	TArray<String> arr;
 	arr.Length = 1;
-	arr[0] = s;
+	arr[0] = S;
 	InsertStrings(Index, arr);
 }
 
-void __fastcall TSynEditStringList::InsertItem(int Index, const String s)
+void __fastcall TSynEditStringList::InsertItem(int Index, const String S)
 {
 	BeginUpdate();
 	if(FCount == FCapacity)
 		Grow();
 	if(Index < FCount)
 	{
-		System::Move(&(*FList)[Index], &(*FList)[Index + 1], (FCount - Index) * SynEditStringRecSize);
+		System::Move(&(*FList)[Index], &(*FList)[Index + 1], (size_t) ((FCount - Index) * SynEditStringRecSize));
 	}
-	fIndexOfLongestLine = -1;
+	FIndexOfLongestLine = -1;
 	/*# with FList^[Index] do */
 	{
 		
 		CastAssign<void*>(&(*FList)[Index].FString, nullptr);
-		(*FList)[Index].FString = s;
+		(*FList)[Index].FString = S;
 		(*FList)[Index].FObject = nullptr;
 		(*FList)[Index].FRange = const_cast<TSynEditRange>(NullRange);
-		(*FList)[Index].fExpandedLength = -1;
+		(*FList)[Index].FExpandedLength = -1;
 		(*FList)[Index].FFlags = Synedittextbuffer__4;
 	}
 	++FCount;
@@ -453,39 +453,39 @@ void __fastcall TSynEditStringList::InsertItem(int Index, const String s)
 
 void __fastcall TSynEditStringList::InsertStrings(int Index, TArray<String>& Strings, int FromIndex/*# = 0*/)
 {
-	int i = 0;
-	int lineCount = 0;
+	int I = 0;
+	int LineCount = 0;
 	if((Index < 0) || (Index > FCount))
 		ListIndexOutOfBounds(Index);
-	lineCount = Strings.Length - FromIndex;
-	if(lineCount > 0)
+	LineCount = Strings.Length - FromIndex;
+	if(LineCount > 0)
 	{
 		BeginUpdate();
 		try
 		{
 			int stop = 0;
-			if(FCapacity < FCount + lineCount)
-				SetCapacity(Syneditmiscprocs::GrowCollection(FCapacity, FCount + lineCount));
+			if(FCapacity < FCount + LineCount)
+				SetCapacity(Syneditmiscprocs::GrowCollection(FCapacity, FCount + LineCount));
 			if(Index < FCount)
 			{
-				System::Move(&(*FList)[Index], &(*FList)[Index + lineCount], (FCount - Index) * SynEditStringRecSize);
+				System::Move(&(*FList)[Index], &(*FList)[Index + LineCount], (size_t) ((FCount - Index) * SynEditStringRecSize));
 			}
-			for(stop = lineCount - 1, i = 0; i <= stop; i++)
+			for(stop = LineCount - 1, I = 0; I <= stop; I++)
 			{
-				/*# with FList^[Index + i] do */
+				/*# with FList^[Index + I] do */
 				{
 					
-					CastAssign<void*>(&(*FList)[Index + i].FString, nullptr);
-					(*FList)[Index + i].FString = Strings[FromIndex + i];
-					(*FList)[Index + i].FObject = nullptr;
-					(*FList)[Index + i].FRange = const_cast<TSynEditRange>(NullRange);
-					(*FList)[Index + i].fExpandedLength = -1;
-					(*FList)[Index + i].FFlags = Synedittextbuffer__5;
+					CastAssign<void*>(&(*FList)[Index + I].FString, nullptr);
+					(*FList)[Index + I].FString = Strings[FromIndex + I];
+					(*FList)[Index + I].FObject = nullptr;
+					(*FList)[Index + I].FRange = const_cast<TSynEditRange>(NullRange);
+					(*FList)[Index + I].FExpandedLength = -1;
+					(*FList)[Index + I].FFlags = Synedittextbuffer__5;
 				}
 			}
-			FCount += lineCount;
+			FCount += LineCount;
 			if(ASSIGNED(OnInserted))
-				OnInserted(this, Index, lineCount);
+				OnInserted(this, Index, LineCount);
 		}
 		__finally
 		{
@@ -543,7 +543,7 @@ void __fastcall TSynEditStringList::SaveToStream(TStream* Stream, TEncoding* Enc
 {
 	bool Cancel = false;
 	String OldLineBreak;
-	String s;
+	String S;
 	TBytes Buffer;
 	TBytes Preamble;
 	if(Encoding == nullptr)
@@ -551,23 +551,23 @@ void __fastcall TSynEditStringList::SaveToStream(TStream* Stream, TEncoding* Enc
 	OldLineBreak = LineBreak;
 	try
 	{
-		LineBreak = LineBreakFromFileFormat(fFileFormat);
-		s = GetTextStr();
+		LineBreak = LineBreakFromFileFormat(FFileFormat);
+		S = GetTextStr();
 	}
 	__finally
 	{
 		LineBreak = OldLineBreak;
 	}
 	Cancel = false;
-	if((Encoding == TEncoding::ANSI) && ASSIGNED(fOnInfoLoss) && !IsAnsiOnly(s))
+	if((Encoding == TEncoding::ANSI) && ASSIGNED(FOnInfoLoss) && !IsAnsiOnly(S))
 	{
-		fOnInfoLoss(Encoding, Cancel);
+		FOnInfoLoss(Encoding, Cancel);
 		if(Cancel)
 			return;
 		if(Encoding != TEncoding::ANSI)
 			SetEncoding(Encoding);
 	}
-	Buffer = Encoding->GetBytes(s);
+	Buffer = Encoding->GetBytes(S);
 	if(WriteBOM)
 	{
 		Preamble = Encoding->GetPreamble();
@@ -577,7 +577,7 @@ void __fastcall TSynEditStringList::SaveToStream(TStream* Stream, TEncoding* Enc
 	Stream->WriteBuffer(Buffer, Buffer.Length);
 }
 
-void __fastcall TSynEditStringList::Put(int Index, const String s)
+void __fastcall TSynEditStringList::Put(int Index, const String S)
 {
 	String OldLine;
 	BeginUpdate();
@@ -587,7 +587,7 @@ void __fastcall TSynEditStringList::Put(int Index, const String s)
 			Add(L"");
 		if(((unsigned int) Index) >= ((unsigned int) FCount))
 			ListIndexOutOfBounds(Index);
-		fIndexOfLongestLine = -1;
+		FIndexOfLongestLine = -1;
 		/*# with FList^[Index] do */
 		{
 			
@@ -595,7 +595,7 @@ void __fastcall TSynEditStringList::Put(int Index, const String s)
 			(*FList)[Index].FFlags >> sfHasTabs;
 			(*FList)[Index].FFlags >> sfHasNoTabs;
 			OldLine = (*FList)[Index].FString;
-			(*FList)[Index].FString = s;
+			(*FList)[Index].FString = S;
 		}
 		if(ASSIGNED(FOnPut))
 			FOnPut(this, Index, OldLine);
@@ -643,21 +643,21 @@ void __fastcall TSynEditStringList::SetEncoding(TEncoding* const Value)
 
 void __fastcall TSynEditStringList::SetTabWidth(int Value)
 {
-	int i = 0;
+	int I = 0;
 	if(Value != FTabWidth)
 	{
 		int stop = 0;
 		FTabWidth = Value;
-		fConvertTabsProc = GetBestConvertTabsProcEx(FTabWidth);
-		fIndexOfLongestLine = -1;
-		for(stop = FCount - 1, i = 0; i <= stop; i++)
+		FConvertTabsProc = GetBestConvertTabsProcEx(FTabWidth);
+		FIndexOfLongestLine = -1;
+		for(stop = FCount - 1, I = 0; I <= stop; I++)
 		{
-			/*# with FList^[i] do */
+			/*# with FList^[I] do */
 			{
 				
-				(*FList)[i].fExpandedLength = -1;
-				(*FList)[i].FFlags >> sfHasNoTabs;
-				(*FList)[i].FFlags << sfExpandedLengthUnknown;
+				(*FList)[I].FExpandedLength = -1;
+				(*FList)[I].FFlags >> sfHasNoTabs;
+				(*FList)[I].FFlags << sfExpandedLengthUnknown;
 			}
 		}
 	}
@@ -665,7 +665,7 @@ void __fastcall TSynEditStringList::SetTabWidth(int Value)
 
 void __fastcall TSynEditStringList::SetTextAndFileFormat(const String Value)
 {
-	String s;
+	String S;
 	int Size = 0;
 	PChar P = nullptr;
 	PChar Start = nullptr;
@@ -692,8 +692,8 @@ void __fastcall TSynEditStringList::SetTextAndFileFormat(const String Value)
 					++P;
 				if(P != Start)
 				{
-					SetString(s, Start, P - Start);
-					InsertItem(FCount, s);
+					SetString(S, Start, P - Start);
+					InsertItem(FCount, S);
 				}
 				else
 				InsertItem(FCount, L"");
@@ -749,7 +749,7 @@ void __fastcall TSynEditStringList::SetTextStr(const String Value)
 
 void __fastcall TSynEditStringList::SetUpdateState(bool Updating)
 {
-	fCharIndexesAreValid = false;
+	FCharIndexesAreValid = false;
 	if(Updating)
 	{
 		if(ASSIGNED(FOnChanging))
@@ -764,17 +764,17 @@ void __fastcall TSynEditStringList::SetUpdateState(bool Updating)
 
 void __fastcall TSynEditStringList::FontChanged()
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
-	fIndexOfLongestLine = -1;
-	for(stop = FCount - 1, i = 0; i <= stop; i++)
+	FIndexOfLongestLine = -1;
+	for(stop = FCount - 1, I = 0; I <= stop; I++)
 	{
-		/*# with FList^[i] do */
+		/*# with FList^[I] do */
 		{
 			
-			(*FList)[i].fExpandedLength = -1;
-			(*FList)[i].FFlags >> sfHasNoTabs;
-			(*FList)[i].FFlags << sfExpandedLengthUnknown;
+			(*FList)[I].FExpandedLength = -1;
+			(*FList)[I].FFlags >> sfHasNoTabs;
+			(*FList)[I].FFlags << sfExpandedLengthUnknown;
 		}
 	}
 }

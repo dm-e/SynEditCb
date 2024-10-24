@@ -183,7 +183,7 @@ private:
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	TtkTokenKind __fastcall FuncRem(int Index);
 	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall SymbolProc();
 	void __fastcall ApostropheProc();

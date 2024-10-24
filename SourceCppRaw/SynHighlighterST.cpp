@@ -23,7 +23,7 @@ namespace Synhighlighterst
 #define Synhighlighterst__5 (System::Set<TtkTokenKind, TtkTokenKind::tkAsm, TtkTokenKind::tkUnknown>() << tkNull << tkComment << tkSpace)
 
 
-const String Keywords[75/*# range 0..74*/] = {L"action", L"and", L"any", L"any_num", L"array", L"at", L"bool", L"by", L"byte", L"case", L"configuration", L"constant"
+const String KeyWords[75/*# range 0..74*/] = {L"action", L"and", L"any", L"any_num", L"array", L"at", L"bool", L"by", L"byte", L"case", L"configuration", L"constant"
                     , L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
                     , L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"
                     , L"external", L"finally", L"for", L"from", L"function", L"goto", L"if", L"index", L"initial_step", L"initialization", L"int"
@@ -53,14 +53,14 @@ unsigned int __fastcall TSynSTSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynSTSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynSTSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkAsm;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 210 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 210 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -92,7 +92,7 @@ TtkTokenKind __fastcall TSynSTSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynSTSyn::KeyWordFunc(int Index)
 {
 	TtkTokenKind result = tkAsm;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -102,7 +102,7 @@ TtkTokenKind __fastcall TSynSTSyn::KeyWordFunc(int Index)
 __fastcall TSynSTSyn::TSynSTSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsANil),
+			fRange(rsANil),
 			FTokenID(tkAsm),
 			fStringAttri(nullptr),
 			fNumberAttri(nullptr),
@@ -113,28 +113,28 @@ __fastcall TSynSTSyn::TSynSTSyn(TComponent* AOwner)
 			fIdentifierAttri(nullptr),
 			fSpaceAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
-	addAttribute(fAsmAttri);
+	AddAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterst__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterst__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 	fDefaultFilter = SYNS_FilterST;
 } /* Create */
 
@@ -175,10 +175,10 @@ void __fastcall TSynSTSyn::BorProc()
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					if(FRange == rsBorAsm)
-						FRange = rsAsm;
+					if(fRange == rsBorAsm)
+						fRange = rsAsm;
 					else
-						FRange = rsUnKnown;
+						fRange = rsUnKnown;
 					break;
 				}
 				++Run;
@@ -191,10 +191,10 @@ void __fastcall TSynSTSyn::BorProc()
 
 void __fastcall TSynSTSyn::BraceOpenProc()
 {
-	if(FRange == rsAsm)
-		FRange = rsBorAsm;
+	if(fRange == rsAsm)
+		fRange = rsBorAsm;
 	else
-		FRange = rsBor;
+		fRange = rsBor;
 	BorProc();
 }
 
@@ -334,10 +334,10 @@ void __fastcall TSynSTSyn::AnsiProc()
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == L')'))
 			{
 				Run += 2;
-				if(FRange == rsAnsiAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiAsm)
+					fRange = rsAsm;
 				else
-					FRange = rsUnKnown;
+					fRange = rsUnKnown;
 				break;
 			}
 			++Run;
@@ -355,10 +355,10 @@ void __fastcall TSynSTSyn::RoundOpenProc()
 		case L'*':
 		{
 			++Run;
-			if(FRange == rsAsm)
-				FRange = rsAnsiAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiAsm;
 			else
-				FRange = rsAnsi;
+				fRange = rsAnsi;
 			FTokenID = tkComment;
 			if(!IsLineEnd(Run))
 				AnsiProc();
@@ -376,12 +376,12 @@ void __fastcall TSynSTSyn::RoundOpenProc()
 	}
 }
 
-void __fastcall TSynSTSyn::SemiColonProc()
+void __fastcall TSynSTSyn::SemicolonProc()
 {
 	++Run;
 	FTokenID = tkSymbol;
-	if(FRange == rsProperty)
-		FRange = rsUnKnown;
+	if(fRange == rsProperty)
+		fRange = rsUnKnown;
 }
 
 void __fastcall TSynSTSyn::SlashProc()
@@ -440,7 +440,7 @@ void __fastcall TSynSTSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsi:
 		case rsAnsiAsm:
@@ -513,7 +513,7 @@ void __fastcall TSynSTSyn::Next()
 					PointProc();
 					break;
 					case L';':
-					SemiColonProc();
+					SemicolonProc();
 					break;
 					case L'/':
 					SlashProc();
@@ -580,7 +580,7 @@ bool __fastcall TSynSTSyn::GetEol()
 TtkTokenKind __fastcall TSynSTSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAsm;
-	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterst__5.Contains(FTokenID)))
+	if(!fAsmStart && (fRange == rsAsm) && !(Synhighlighterst__5.Contains(FTokenID)))
 		result = tkAsm;
 	else
 		result = FTokenID;
@@ -636,18 +636,18 @@ int __fastcall TSynSTSyn::GetTokenKind()
 void* __fastcall TSynSTSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynSTSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynSTSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnKnown;
 }
 
 /*#static*/

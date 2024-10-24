@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Syneditprint;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Classes;
 using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Controls;
@@ -262,7 +261,7 @@ void __fastcall TSynEditPrintPreview::ScrollHorzTo(int Value)
 	{
 		n = Value - FScrollPosition.X;
 		FScrollPosition.X = Value;
-		UpdateScrollBars();
+		UpdateScrollbars();
 		if(Abs(n) > (int)(nW / /*div*/ 2))
 			Invalidate();
 		else
@@ -292,7 +291,7 @@ void __fastcall TSynEditPrintPreview::ScrollVertTo(int Value)
 	{
 		n = Value - FScrollPosition.Y;
 		FScrollPosition.Y = Value;
-		UpdateScrollBars();
+		UpdateScrollbars();
 		if(Abs(n) > (int)(nH / /*div*/ 2))
 			Invalidate();
 		else
@@ -346,18 +345,18 @@ void __fastcall TSynEditPrintPreview::SizeChanged()
 	FVirtualOffset.Y = MARGIN_Y;
 	if(FVirtualSize.Y < ClientHeight)
 		FVirtualOffset.Y += (int)((ClientHeight - FVirtualSize.Y) / /*div*/ 2);
-	UpdateScrollBars();
+	UpdateScrollbars();
 // TODO
 	FScrollPosition.X = 0;
 	FScrollPosition.Y = 0;
 }
 
-void __fastcall TSynEditPrintPreview::UpdateScrollBars()
+void __fastcall TSynEditPrintPreview::UpdateScrollbars()
 {
-	TScrollInfo SI = {};
-	FillChar((void**)&SI, (int) sizeof(TScrollInfo), 0);
-	SI.cbSize = sizeof(TScrollInfo);
-	SI.fMask = (UINT) SIF_ALL;
+	TScrollInfo si = {};
+	FillChar((void**)&si, (int) sizeof(TScrollInfo), 0);
+	si.cbSize = sizeof(TScrollInfo);
+	si.fMask = (UINT) SIF_ALL;
 	switch(FScaleMode)
 	{
 		case pscWholePage:
@@ -365,20 +364,20 @@ void __fastcall TSynEditPrintPreview::UpdateScrollBars()
 		{
 			ShowScrollBar(Handle, SB_HORZ, false);
         // show vertical scrollbar, enable if more than one page
-			SI.fMask = SI.fMask | SIF_DISABLENOSCROLL;
-			SI.nMin = 1;
+			si.fMask = si.fMask | SIF_DISABLENOSCROLL;
+			si.nMin = 1;
 			if(ASSIGNED(FSynEditPrint))
 			{
-				SI.nMax = FSynEditPrint->PageCount;
-				SI.nPos = FPageNumber;
+				si.nMax = FSynEditPrint->PageCount;
+				si.nPos = FPageNumber;
 			}
 			else
 			{
-				SI.nMax = 1;
-				SI.nPos = 1;
+				si.nMax = 1;
+				si.nPos = 1;
 			}
-			SI.nPage = 1;
-			SetScrollInfo(Handle, SB_VERT, &SI, true);
+			si.nPage = 1;
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
         // hide horizontal scrollbar
@@ -386,28 +385,28 @@ void __fastcall TSynEditPrintPreview::UpdateScrollBars()
 		{
 			ShowScrollBar(Handle, SB_HORZ, false);
         // show vertical scrollbar
-			SI.fMask = SI.fMask | SIF_DISABLENOSCROLL;
-			SI.nMax = FVirtualSize.Y;
-			SI.nPos = -FScrollPosition.Y;
-			SI.nPage = (UINT) ClientHeight;
-			SetScrollInfo(Handle, SB_VERT, &SI, true);
+			si.fMask = si.fMask | SIF_DISABLENOSCROLL;
+			si.nMax = FVirtualSize.Y;
+			si.nPos = -FScrollPosition.Y;
+			si.nPage = (UINT) ClientHeight;
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
 		case pscUserScaled:
 		{
 			ShowScrollBar(Handle, SB_HORZ, true);
 			ShowScrollBar(Handle, SB_VERT, true);
-			SI.fMask = SI.fMask | SIF_DISABLENOSCROLL;
+			si.fMask = si.fMask | SIF_DISABLENOSCROLL;
         // show horizontal scrollbar
-			SI.nMax = FVirtualSize.X;
-			SI.nPos = -FScrollPosition.X;
-			SI.nPage = (UINT) ClientWidth;
-			SetScrollInfo(Handle, SB_HORZ, &SI, true);
+			si.nMax = FVirtualSize.X;
+			si.nPos = -FScrollPosition.X;
+			si.nPage = (UINT) ClientWidth;
+			SetScrollInfo(Handle, SB_HORZ, &si, true);
         // show vertical scrollbar
-			SI.nMax = FVirtualSize.Y;
-			SI.nPos = -FScrollPosition.Y;
-			SI.nPage = (UINT) ClientHeight;
-			SetScrollInfo(Handle, SB_VERT, &SI, true);
+			si.nMax = FVirtualSize.Y;
+			si.nPos = -FScrollPosition.Y;
+			si.nPage = (UINT) ClientHeight;
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
 		default:
@@ -540,8 +539,8 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 {
 	int nH = 0;
 	String s;
-	TRect RC = {};
-	TPoint Pt = {};
+	TRect rc = {};
+	TPoint pt = {};
 	THintWindow* ScrollHint = nullptr;
 	if(FScaleMode == pscWholePage)
 	{
@@ -584,10 +583,10 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 							ScrollHint->Visible = true;
 						}
 						s = Format(SYNS_PreviewScrollInfoFmt, ARRAYOFCONST((FPageNumber)));
-						RC = ScrollHint->CalcHintRect(200, s, nullptr);
-						Pt = ClientToScreen(Point(ClientWidth - RC.Right - 4, 10));
-						OffsetRect(RC, Pt.X, Pt.Y);
-						ScrollHint->ActivateHint(RC, s);
+						rc = ScrollHint->CalcHintRect(200, s, nullptr);
+						pt = ClientToScreen(Point(ClientWidth - rc.Right - 4, 10));
+						OffsetRect(rc, pt.X, pt.Y);
+						ScrollHint->ActivateHint(rc, s);
 						SendMessage(ScrollHint->Handle, (UINT) WM_NCPAINT, 1, 0);
 						ScrollHint->Update();
 					}
@@ -609,7 +608,7 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 			}
       /*Updating scroll position and redrawing*/
 		FScrollPosition.Y = -(FPageNumber - 1);
-		UpdateScrollBars();
+		UpdateScrollbars();
 		if(ASSIGNED(FOnPreviewPage))
 			FOnPreviewPage(this, FPageNumber);
 		Invalidate();

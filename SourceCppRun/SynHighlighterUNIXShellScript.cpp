@@ -47,7 +47,7 @@ bool __fastcall TSynUNIXShellScriptSyn::IsKeyword(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
@@ -56,8 +56,8 @@ bool __fastcall TSynUNIXShellScriptSyn::IsKeyword(const String AKeyword)
 	Token = Sysutils::AnsiLowerCase(AKeyword);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(ShellScriptKeys[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(ShellScriptKeys[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -66,9 +66,9 @@ bool __fastcall TSynUNIXShellScriptSyn::IsKeyword(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -79,7 +79,7 @@ bool __fastcall TSynUNIXShellScriptSyn::IsSecondKeyWord(String AToken)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
@@ -88,8 +88,8 @@ bool __fastcall TSynUNIXShellScriptSyn::IsSecondKeyWord(String AToken)
 	Token = Sysutils::AnsiLowerCase(AToken);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(ShellScriptSecondKeys[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(ShellScriptSecondKeys[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -98,9 +98,9 @@ bool __fastcall TSynUNIXShellScriptSyn::IsSecondKeyWord(String AToken)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -108,7 +108,7 @@ bool __fastcall TSynUNIXShellScriptSyn::IsSecondKeyWord(String AToken)
 
 __fastcall TSynUNIXShellScriptSyn::TSynUNIXShellScriptSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkComment),
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr),
@@ -120,32 +120,32 @@ __fastcall TSynUNIXShellScriptSyn::TSynUNIXShellScriptSyn(TComponent* AOwner)
 			fIdentifierAttri(nullptr),
 			fVarAttri(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clGreen;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) clNavy;
 	fKeyAttri->Style = Synhighlighterunixshellscript__0;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
-	addAttribute(fSecondKeyAttri);
+	AddAttribute(fSecondKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Foreground = (TColor) clRed;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fVarAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
 	fVarAttri->Foreground = (TColor) clPurple;
-	addAttribute(fVarAttri);
+	AddAttribute(fVarAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterUNIXShellScript;
 } /* Create */
@@ -505,7 +505,7 @@ bool __fastcall TSynUNIXShellScriptSyn::GetEol()
 void* __fastcall TSynUNIXShellScriptSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -567,12 +567,12 @@ int __fastcall TSynUNIXShellScriptSyn::GetTokenKind()
 
 void __fastcall TSynUNIXShellScriptSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynUNIXShellScriptSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 bool __fastcall TSynUNIXShellScriptSyn::IsFilterStored()

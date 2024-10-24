@@ -299,7 +299,7 @@ public:
 protected:
 	int fLine;
 	int fChar;
-	int FImage;
+	int fImage;
 	TCustomSynEdit* fEdit;
 	bool fVisible;
 	bool fInternalImage;
@@ -316,7 +316,7 @@ public:
 	__property int Line = { read = fLine, write = SetLine };
 	__property int Char = { read = fChar, write = SetChar };
 	__property TCustomSynEdit* Edit = { read = fEdit };
-	__property int ImageIndex = { read = FImage, write = SetImage };
+	__property int ImageIndex = { read = fImage, write = SetImage };
 	__property int BookmarkNumber = { read = fBookmarkNum, write = fBookmarkNum };
 	__property bool Visible = { read = fVisible, write = SetVisible };
 	__property bool InternalImage = { read = fInternalImage, write = SetInternalImage };
@@ -335,7 +335,7 @@ public:
 	typedef System::Contnrs::TObjectList inherited;
 protected:                                        // as it automatically frees its members
 	TCustomSynEdit* fEdit;
-	TNotifyEvent FOnChange;
+	TNotifyEvent fOnChange;
 	virtual void __fastcall Notify(void* Ptr, TListNotification Action);
 	TSynEditMark* __fastcall GetItem(int Index);
 	void __fastcall SetItem(int Index, TSynEditMark* Item);
@@ -345,12 +345,12 @@ public:                                           // because TSynEditMarkList al
 	TSynEditMark* __fastcall First();
 	TSynEditMark* __fastcall Last();
 	TSynEditMark* __fastcall Extract(TSynEditMark* Item);
-	void __fastcall ClearLine(int Line);
-	void __fastcall GetMarksForLine(int Line, TSynEditMarks& Marks);
-	void __fastcall Place(TSynEditMark* Mark);
+	void __fastcall ClearLine(int line);
+	void __fastcall GetMarksForLine(int line, TSynEditMarks& Marks);
+	void __fastcall Place(TSynEditMark* mark);
 	__property TSynEditMark* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
 	__property TCustomSynEdit* Edit = { read = fEdit };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 	__fastcall TSynEditMarkList();
 	__fastcall TSynEditMarkList(bool AOwnsObjects);
 };
@@ -370,7 +370,7 @@ class TSynEditPlugin : public System::TObject
 public:
 	typedef System::TObject inherited;
 private:
-	TCustomSynEdit* FOwner;
+	TCustomSynEdit* fOwner;
 protected:
 	TPlugInHandlers FHandlers;
 	virtual void __fastcall AfterPaint(TCanvas* ACanvas, const TRect& AClip, int FirstLine, int LastLine);
@@ -378,16 +378,19 @@ protected:
 	virtual void __fastcall LinesInserted(int FirstLine, int Count);
 	virtual void __fastcall LinesBeforeDeleted(int FirstLine, int Count);
 	virtual void __fastcall LinesDeleted(int FirstLine, int Count);
-	virtual void __fastcall LinePut(int AIndex, const String OldLine);
+	virtual void __fastcall LinePut(int aIndex, const String OldLine);
 	virtual void __fastcall LinesChanged();
-	__property TCustomSynEdit* Editor = { read = FOwner };
+	__property TCustomSynEdit* Editor = { read = fOwner };
 public:
 	__fastcall TSynEditPlugin(TCustomSynEdit* AOwner);
 	__fastcall TSynEditPlugin(TCustomSynEdit* AOwner, TPlugInHandlers AHandlers);
+	__fastcall void OnSynEditPluginDestruction();
 	virtual __fastcall ~TSynEditPlugin()
-{ // inline, because of C++Builder bug
-//	if(FOwner != nullptr)
-//		FOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+{
+//	if(fOwner != nullptr)
+//		fOwner->fPlugins->Extract(this); // we are being destroyed, fOwner should not free us
+	OnSynEditPluginDestruction();
+	//# inherited::Destroy();
 }
 	__property TPlugInHandlers Handlers = { read = FHandlers };
 	__fastcall TSynEditPlugin();
@@ -436,32 +439,32 @@ private:
 	TFont* fFontDummy;
 	TFontQuality fFontQuality;
 	bool fInserting;
-	TStrings* FLines;
+	TStrings* fLines;
 	TStrings* fOrigLines;
 	Synedittypes::ISynEditUndo* fOrigUndoRedo;
 	int fLinesInWindow;
 	int fLeftChar;
 	int fPaintLock;
-	bool FReadOnly;
+	bool fReadOnly;
 	int fRightEdge;
 	TColor fRightEdgeColor;
 	TColor fScrollHintColor;
 	TScrollHintFormat fScrollHintFormat;
 	TScrollStyle FScrollBars;
-	int FTextHeight;
+	int fTextHeight;
 	int fTextMargin;
 	int fTextOffset;
 	int fTopLine;
 	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
-	Syneditmiscclasses::TSynSelectedColor* FSelectedColor;
+	Syneditmiscclasses::TSynSelectedColor* fSelectedColor;
 	TColor fActiveLineColor;
 	Synedittypes::ISynEditUndo* fUndoRedo;
 	TSynEditMark* fBookMarks[10/*# range 0..9*/]; // these are just references, fMarkList is the owner
 	int fMouseDownX;
 	int fMouseDownY;
 	Syneditmiscclasses::TSynBookMarkOpt* fBookMarkOpt;
-	TSynBorderStyle FBorderStyle;
-	bool FHideSelection;
+	TSynBorderStyle fBorderStyle;
+	bool fHideSelection;
 	int fMouseWheelAccumulator;
 	TSynEditCaretType fOverwriteCaret;
 	TSynEditCaretType fInsertCaret;
@@ -469,15 +472,15 @@ private:
 	Syneditkeycmds::TSynEditKeyStrokes* fKeyStrokes;
 	TSynEditMarkList* fMarkList;
 	int fExtraLineSpacing;
-	Synedittypes::TSynSelectionMode FSelectionMode;
+	Synedittypes::TSynSelectionMode fSelectionMode;
 	Synedittypes::TSynSelectionMode fActiveSelectionMode; //mode of the active selection
-	bool FWantReturns;
-	bool FWantTabs;
+	bool fWantReturns;
+	bool fWantTabs;
 	Synedittypes::ISynEditBufferPlugin* fWordWrapPlugin;
 	Syneditmiscclasses::TSynGlyph* fWordWrapGlyph;
 	bool fCaretAtEOL; // used by wordwrap
 	Syneditmiscclasses::TSynGutter* fGutter;
-	int FTabWidth;
+	int fTabWidth;
 	Syntextdrawer::TheTextDrawer* fTextDrawer;
 	TRect fInvalidateRect;
 	TSynStateFlags fStateFlags;
@@ -490,7 +493,7 @@ private:
 	Syneditkbdhandler::TSynEditKbdHandler* fKbdHandler;
 	TList* fFocusList;
 	TObjectList* fPlugins;
-	TTimer* FScrollTimer;
+	TTimer* fScrollTimer;
 	int fScrollDeltaX;
 	int fScrollDeltaY;
 	TStopwatch fClickCountTimer;
@@ -503,13 +506,13 @@ private:
 	int SelLengthBeforeSearch;
 
     // event handlers
-	TNotifyEvent FOnChange;
+	TNotifyEvent fOnChange;
 	TPlaceMarkEvent fOnClearMark;
 	TProcessCommandEvent fOnCommandProcessed;
 	TDropFilesEvent fOnDropFiles;
 	TGutterClickEvent fOnGutterClick;
 	TMouseCursorEvent fOnMouseCursor;
-	TPaintEvent FOnPaint;
+	TPaintEvent fOnPaint;
 	TPlaceMarkEvent fOnPlaceMark;
 	TProcessCommandEvent fOnProcessCommand;
 	TProcessCommandEvent fOnProcessUserCommand;
@@ -517,7 +520,7 @@ private:
 	TSpecialLineColorsEvent fOnSpecialLineColors;
 	TContextHelpEvent fOnContextHelp;
 	TPaintTransient fOnPaintTransient;
-	TScrollEvent FOnScroll;
+	TScrollEvent fOnScroll;
 	TGutterGetTextEvent fOnGutterGetText;
 	TStatusChangeEvent fOnStatusChange;
 	TNotifyEvent fOnTripleClick;
@@ -597,7 +600,7 @@ private:
 	void __fastcall SetCaretY(int Value);
 	void __fastcall InternalSetCaretX(int Value);
 	void __fastcall InternalSetCaretY(int Value);
-	void __fastcall SetInternalDisplayXY(const Synedittypes::TDisplayCoord& APos);
+	void __fastcall SetInternalDisplayXY(const Synedittypes::TDisplayCoord& aPos);
 	void __fastcall SetActiveLineColor(TColor Value);
 	void __fastcall SetExtraLineSpacing(int Value);
 	void __fastcall SetFont(TFont* const Value);
@@ -657,7 +660,7 @@ protected:
 	DYNAMIC bool __fastcall DoMouseWheel(TShiftState Shift, int WheelDelta, const TPoint& MousePos);
 	virtual void __fastcall CreateParams(TCreateParams& Params);
 	virtual void __fastcall CreateWnd();
-	virtual void __fastcall InvalidateRect(const TRect& ARect, bool aErase);
+	virtual void __fastcall InvalidateRect(const TRect& aRect, bool aErase);
 	DYNAMIC void __fastcall DblClick();
 	virtual void __fastcall TripleClick();
 	virtual void __fastcall QuadrupleClick();
@@ -665,29 +668,29 @@ protected:
 	virtual void __fastcall DefineProperties(TFiler* Filer);
 	virtual void __fastcall DoChange();
     //++ Ole Drag & Drop
-	virtual void __fastcall OleDragEnter(TObject* Sender, IDataObject* dataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& result);
-	virtual void __fastcall OleDragOver(TObject* Sender, IDataObject* dataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& result);
-	virtual void __fastcall OleDrop(TObject* Sender, IDataObject* dataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& result);
-	virtual void __fastcall OleDragLeave(TObject* Sender, HRESULT& result);
+	virtual void __fastcall OleDragEnter(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	virtual void __fastcall OleDragOver(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	virtual void __fastcall OleDrop(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	virtual void __fastcall OleDragLeave(TObject* Sender, HRESULT& Result);
     //-- Ole Drag & Drop
 	virtual bool __fastcall GetReadOnly();
 	void __fastcall HighlighterAttrChanged(TObject* Sender);
 	void __fastcall IncPaintLock();
 	void __fastcall InitializeCaret();
-	DYNAMIC void __fastcall KeyUp(WORD& key, TShiftState Shift);
-	DYNAMIC void __fastcall KeyDown(WORD& key, TShiftState Shift);
-	DYNAMIC void __fastcall KeyPress(Char& key);
+	DYNAMIC void __fastcall KeyUp(WORD& Key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyDown(WORD& Key, TShiftState Shift);
+	DYNAMIC void __fastcall KeyPress(Char& Key);
 	virtual void __fastcall LinesChanged(TObject* Sender);
 	void __fastcall ListCleared(TObject* Sender);
-	void __fastcall ListBeforeDeleted(TObject* Sender, int AIndex, int ACount);
-	void __fastcall ListDeleted(TObject* Sender, int AIndex, int ACount);
-	void __fastcall ListInserted(TObject* Sender, int Index, int ACount);
+	void __fastcall ListBeforeDeleted(TObject* Sender, int aIndex, int aCount);
+	void __fastcall ListDeleted(TObject* Sender, int aIndex, int aCount);
+	void __fastcall ListInserted(TObject* Sender, int Index, int aCount);
 	void __fastcall ListPut(TObject* Sender, int Index, const String OldLine);
     //helper procs to chain list commands
 	void __fastcall ChainListCleared(TObject* Sender);
-	void __fastcall ChainListDeleted(TObject* Sender, int AIndex, int ACount);
-	void __fastcall ChainListInserted(TObject* Sender, int AIndex, int ACount);
-	void __fastcall ChainListPut(TObject* Sender, int AIndex, const String OldLine);
+	void __fastcall ChainListDeleted(TObject* Sender, int aIndex, int aCount);
+	void __fastcall ChainListInserted(TObject* Sender, int aIndex, int aCount);
+	void __fastcall ChainListPut(TObject* Sender, int aIndex, const String OldLine);
 	void __fastcall ChainLinesChanging(TObject* Sender);
 	void __fastcall ChainLinesChanged(TObject* Sender);
 	void __fastcall ChainModifiedChanged(TObject* Sender);
@@ -738,14 +741,14 @@ protected:
 	void __fastcall SetSelStart(int Value);
 	void __fastcall SetSelLength(int Value);
 	void __fastcall SetAlwaysShowCaret(bool Value);
-	String __fastcall ShrinkAtWideGlyphs(const String s, int First, int& CharCount);
+	String __fastcall ShrinkAtWideGlyphs(const String S, int First, int& CharCount);
 	void __fastcall LinesHookChanged();
 	__property int InternalCaretX = { write = InternalSetCaretX };
 	__property int InternalCaretY = { write = InternalSetCaretY };
 	__property TBufferCoord InternalCaretXY = { write = InternalSetCaretXY };
 	__property TFontQuality FontQuality = { read = fFontQuality, write = SetFontQuality };
 //++ DPI-Aware
-	DYNAMIC void __fastcall ChangeScale(int m, int D, bool isDpiChange);
+	DYNAMIC void __fastcall ChangeScale(int M, int D, bool isDpiChange);
 //-- DPI-Aware
 public:
 	typedef Vcl::Controls::TCustomControl inherited;
@@ -780,11 +783,11 @@ public:
 	virtual TBufferCoord __fastcall GetMatchingBracketEx(const TBufferCoord& APoint, String Brackets = L"()[]{}<>");
 	DYNAMIC bool __fastcall ExecuteAction(TBasicAction* Action);
 	virtual void __fastcall ExecuteCommand(Synedittypes::TSynEditorCommand Command, WideChar AChar, void* Data);
-	String __fastcall ExpandAtWideGlyphs(const String s);
+	String __fastcall ExpandAtWideGlyphs(const String S);
 	bool __fastcall GetBookMark(int BookMark, int& X, int& Y);
 	bool __fastcall GetHighlighterAttriAtRowCol(const TBufferCoord& XY, String& Token, Synedithighlighter::TSynHighlighterAttributes*& Attri);
 	bool __fastcall GetHighlighterAttriAtRowColEx(const TBufferCoord& XY, String& Token, int& TokenType, int& Start, Synedithighlighter::TSynHighlighterAttributes*& Attri);
-	bool __fastcall GetPositionOfMouse(TBufferCoord& APos);
+	bool __fastcall GetPositionOfMouse(TBufferCoord& aPos);
 	String __fastcall GetWordAtRowCol(const TBufferCoord& XY);
 	virtual void __fastcall GotoBookMark(int BookMark);
 	virtual void __fastcall GotoLineAndCenter(int ALine);
@@ -796,7 +799,7 @@ public:
 	void __fastcall DoBlockIndent();
 	void __fastcall DoBlockUnindent();
 	void __fastcall InvalidateGutter();
-	void __fastcall InvalidateGutterLine(int ALine);
+	void __fastcall InvalidateGutterLine(int aLine);
 	void __fastcall InvalidateGutterLines(int FirstLine, int LastLine);
 	void __fastcall InvalidateLine(int Line);
 	void __fastcall InvalidateLines(int FirstLine, int LastLine);
@@ -804,10 +807,10 @@ public:
 	bool __fastcall IsBookmark(int BookMark);
 	bool __fastcall IsPointInSelection(const TBufferCoord& Value);
 	void __fastcall LockUndo();
-	Synedittypes::TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& P);
-	TBufferCoord __fastcall DisplayToBufferPos(const Synedittypes::TDisplayCoord& P);
-	int __fastcall LineToRow(int ALine);
-	int __fastcall RowToLine(int ARow);
+	Synedittypes::TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& p);
+	TBufferCoord __fastcall DisplayToBufferPos(const Synedittypes::TDisplayCoord& p);
+	int __fastcall LineToRow(int aLine);
+	int __fastcall RowToLine(int aRow);
 	virtual void __fastcall Notification(TComponent* AComponent, TOperation Operation);
 	void __fastcall PasteFromClipboard();
 	virtual TBufferCoord __fastcall NextWordPos();
@@ -818,8 +821,8 @@ public:
 	virtual TBufferCoord __fastcall WordEndEx(const TBufferCoord& XY);
 	virtual TBufferCoord __fastcall PrevWordPos();
 	virtual TBufferCoord __fastcall PrevWordPosEx(const TBufferCoord& XY);
-	Synedittypes::TDisplayCoord __fastcall PixelsToRowColumn(int AX, int AY);
-	Synedittypes::TDisplayCoord __fastcall PixelsToNearestRowColumn(int AX, int AY);
+	Synedittypes::TDisplayCoord __fastcall PixelsToRowColumn(int aX, int aY);
+	Synedittypes::TDisplayCoord __fastcall PixelsToNearestRowColumn(int aX, int aY);
 	void __fastcall Redo();
 	void __fastcall RegisterCommandHandler(const Synedittypes::THookedCommandEvent AHandlerProc, void* AHandlerData);
 	TPoint __fastcall RowColumnToPixels(const Synedittypes::TDisplayCoord& RowCol);
@@ -842,8 +845,8 @@ public:
 	void __fastcall RemoveKeyDownHandler(TKeyEvent aHandler);
 	void __fastcall AddKeyPressHandler(TKeyPressEvent aHandler);
 	void __fastcall RemoveKeyPressHandler(TKeyPressEvent aHandler);
-	void __fastcall AddFocusControl(TWinControl* AControl);
-	void __fastcall RemoveFocusControl(TWinControl* AControl);
+	void __fastcall AddFocusControl(TWinControl* aControl);
+	void __fastcall RemoveFocusControl(TWinControl* aControl);
 	void __fastcall AddMouseDownHandler(TMouseEvent aHandler);
 	void __fastcall RemoveMouseDownHandler(TMouseEvent aHandler);
 	void __fastcall AddMouseUpHandler(TMouseEvent aHandler);
@@ -854,12 +857,12 @@ public:
 	void __fastcall SetLinesPointer(TCustomSynEdit* ASynEdit);
 	void __fastcall RemoveLinesPointer();
 	bool __fastcall IsChained();
-	void __fastcall HookTextBuffer(Synedittextbuffer::TSynEditStringList* ABuffer, Synedittypes::ISynEditUndo* aUndoRedo);
+	void __fastcall HookTextBuffer(Synedittextbuffer::TSynEditStringList* aBuffer, Synedittypes::ISynEditUndo* aUndoRedo);
 	void __fastcall UnHookTextBuffer();
     /*Command implementations*/
 	void __fastcall ExecCmdDeleteLine();
 	void __fastcall ExecCmdCopyOrMoveLine(Synedittypes::TSynEditorCommand Command);
-	void __fastcall ExecCmdCaseChange(Synedittypes::TSynEditorCommand cmd);
+	void __fastcall ExecCmdCaseChange(Synedittypes::TSynEditorCommand Cmd);
 //++ CodeFolding
 	void __fastcall CollapseAll();
 	void __fastcall UncollapseAll();
@@ -895,10 +898,10 @@ public:
 	__property TFont* Font = { read = GetFont, write = SetFont };
 	__property Synedithighlighter::TSynCustomHighlighter* Highlighter = { read = fHighlighter, write = SetHighlighter };
 	__property int LeftChar = { read = fLeftChar, write = SetLeftChar };
-	__property int LineHeight = { read = FTextHeight };
+	__property int LineHeight = { read = fTextHeight };
 	__property int LinesInWindow = { read = fLinesInWindow };
 	__property String LineText = { read = GetLineText, write = SetLineText };
-	__property TStrings* Lines = { read = FLines, write = SetLines };
+	__property TStrings* Lines = { read = fLines, write = SetLines };
 	__property TSynEditMarkList* Marks = { read = fMarkList };
 	__property bool Modified = { read = GetModified, write = SetModified };
 	__property int PaintLock = { read = fPaintLock };
@@ -923,10 +926,10 @@ public:
 	__property Syneditcodefolding::TSynFoldRanges* AllFoldRanges = { read = fAllFoldRanges };
 //-- CodeFolding
 	__property Syneditmiscclasses::TSynBookMarkOpt* BookMarkOptions = { read = fBookMarkOpt, write = fBookMarkOpt };
-	__property TSynBorderStyle BorderStyle = { read = FBorderStyle, write = SetBorderStyle, default = /*# bsSingle */ 1 };
+	__property TSynBorderStyle BorderStyle = { read = fBorderStyle, write = SetBorderStyle, default = /*# bsSingle */ 1 };
 	__property int ExtraLineSpacing = { read = fExtraLineSpacing, write = SetExtraLineSpacing, default = 0 };
 	__property Syneditmiscclasses::TSynGutter* Gutter = { read = fGutter, write = SetGutter };
-	__property bool HideSelection = { read = FHideSelection, write = SetHideSelection, default = false };
+	__property bool HideSelection = { read = fHideSelection, write = SetHideSelection, default = false };
 	__property TSynEditCaretType InsertCaret = { read = fInsertCaret, write = SetInsertCaret, default = /*# ctVerticalLine */ 0 };
 	__property bool InsertMode = { read = fInserting, write = SetInsertMode, default = true };
 	__property bool IsScrolling = { read = FIsScrolling };
@@ -939,15 +942,15 @@ public:
 	__property TColor ScrollHintColor = { read = fScrollHintColor, write = fScrollHintColor, default = clInfoBk };
 	__property TScrollHintFormat ScrollHintFormat = { read = fScrollHintFormat, write = fScrollHintFormat, default = /*# shfTopLineOnly */ 0 };
 	__property TScrollStyle ScrollBars = { read = FScrollBars, write = SetScrollBars, default = /*# ssBoth */ 3 };
-	__property Syneditmiscclasses::TSynSelectedColor* SelectedColor = { read = FSelectedColor, write = FSelectedColor };
-	__property Synedittypes::TSynSelectionMode SelectionMode = { read = FSelectionMode, write = SetSelectionMode, default = /*# smNormal */ 0 };
+	__property Syneditmiscclasses::TSynSelectedColor* SelectedColor = { read = fSelectedColor, write = fSelectedColor };
+	__property Synedittypes::TSynSelectionMode SelectionMode = { read = fSelectionMode, write = SetSelectionMode, default = /*# smNormal */ 0 };
 	__property Synedittypes::TSynSelectionMode ActiveSelectionMode = { read = fActiveSelectionMode, write = SetActiveSelectionMode, stored = false };
-	__property int TabWidth = { read = FTabWidth, write = SetTabWidth, default = 8 };
-	__property bool WantReturns = { read = FWantReturns, write = SetWantReturns, default = true };
-	__property bool WantTabs = { read = FWantTabs, write = SetWantTabs, default = false };
+	__property int TabWidth = { read = fTabWidth, write = SetTabWidth, default = 8 };
+	__property bool WantReturns = { read = fWantReturns, write = SetWantReturns, default = true };
+	__property bool WantTabs = { read = fWantTabs, write = SetWantTabs, default = false };
 	__property bool WordWrap = { read = GetWordWrap, write = SetWordWrap, default = false };
 	__property Syneditmiscclasses::TSynGlyph* WordWrapGlyph = { read = fWordWrapGlyph, write = SetWordWrapGlyph };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 	__property TPlaceMarkEvent OnClearBookmark = { read = fOnClearMark, write = fOnClearMark };
 	__property TProcessCommandEvent OnCommandProcessed = { read = fOnCommandProcessed, write = fOnCommandProcessed };
 	__property TContextHelpEvent OnContextHelp = { read = fOnContextHelp, write = fOnContextHelp };
@@ -955,14 +958,14 @@ public:
 	__property TGutterClickEvent OnGutterClick = { read = fOnGutterClick, write = fOnGutterClick };
 	__property TGutterGetTextEvent OnGutterGetText = { read = fOnGutterGetText, write = fOnGutterGetText };
 	__property TMouseCursorEvent OnMouseCursor = { read = fOnMouseCursor, write = fOnMouseCursor };
-	__property TPaintEvent OnPaint = { read = FOnPaint, write = FOnPaint };
+	__property TPaintEvent OnPaint = { read = fOnPaint, write = fOnPaint };
 	__property TPlaceMarkEvent OnPlaceBookmark = { read = fOnPlaceMark, write = fOnPlaceMark };
 	__property TProcessCommandEvent OnProcessUserCommand = { read = fOnProcessUserCommand, write = fOnProcessUserCommand };
 	__property TReplaceTextEvent OnReplaceText = { read = fOnReplaceText, write = fOnReplaceText };
 	__property TSpecialLineColorsEvent OnSpecialLineColors = { read = fOnSpecialLineColors, write = fOnSpecialLineColors };
 	__property TStatusChangeEvent OnStatusChange = { read = fOnStatusChange, write = fOnStatusChange };
 	__property TPaintTransient OnPaintTransient = { read = fOnPaintTransient, write = fOnPaintTransient };
-	__property TScrollEvent OnScroll = { read = FOnScroll, write = FOnScroll };
+	__property TScrollEvent OnScroll = { read = fOnScroll, write = fOnScroll };
 	__property TNotifyEvent OnTripleClick = { read = fOnTripleClick, write = fOnTripleClick };
 	__property TNotifyEvent OnQuadrupleClick = { read = fOnQudrupleClick, write = fOnQudrupleClick };
 //++ CodeFolding

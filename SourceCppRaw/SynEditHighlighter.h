@@ -110,15 +110,15 @@ Known Issues:
 class TSynHighlighterAttributes : public System::Classes::TPersistent
 {
 private:
-	TColor FBackground;
+	TColor fBackground;
 	TColor fBackgroundDefault;
-	TColor FForeground;
+	TColor fForeground;
 	TColor fForegroundDefault;
-	String FFriendlyName;
-	String FName;
-	TFontStyles FStyle;
+	String fFriendlyName;
+	String fName;
+	TFontStyles fStyle;
 	TFontStyles fStyleDefault;
-	TNotifyEvent FOnChange;
+	TNotifyEvent fOnChange;
 	virtual void __fastcall Changed();
 	bool __fastcall GetBackgroundColorStored();
 	bool __fastcall GetForegroundColorStored();
@@ -136,19 +136,19 @@ public:
 	__fastcall TSynHighlighterAttributes(String AName, String AFriendlyName);
 	void __fastcall InternalSaveDefaultValues();
 	virtual bool __fastcall LoadFromBorlandRegistry(HKEY RootKey, String AttrKey, String AttrName, bool OldStyle);
-	bool __fastcall LoadFromRegistry(Syneditmiscclasses::TBetterRegistry* reg);
-	bool __fastcall SaveToRegistry(Syneditmiscclasses::TBetterRegistry* reg);
+	bool __fastcall LoadFromRegistry(Syneditmiscclasses::TBetterRegistry* Reg);
+	bool __fastcall SaveToRegistry(Syneditmiscclasses::TBetterRegistry* Reg);
 	bool __fastcall LoadFromFile(TCustomIniFile* Ini);
 	bool __fastcall SaveToFile(TCustomIniFile* Ini);
 	void __fastcall SetColors(TColor Foreground, TColor Background);
-	__property String FriendlyName = { read = FFriendlyName };
+	__property String FriendlyName = { read = fFriendlyName };
 	__property int IntegerStyle = { read = GetStyleFromInt, write = SetStyleFromInt };
-	__property String Name = { read = FName };
-	__property TNotifyEvent OnChange = { read = FOnChange, write = FOnChange };
+	__property String Name = { read = fName };
+	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
 __published:
-	__property TColor Background = { read = FBackground, write = SetBackground, stored = GetBackgroundColorStored };
-	__property TColor Foreground = { read = FForeground, write = SetForeground, stored = GetForegroundColorStored };
-	__property TFontStyles Style = { read = FStyle, write = SetStyle, stored = GetFontStyleStored };
+	__property TColor Background = { read = fBackground, write = SetBackground, stored = GetBackgroundColorStored };
+	__property TColor Foreground = { read = fForeground, write = SetForeground, stored = GetForegroundColorStored };
+	__property TFontStyles Style = { read = fStyle, write = SetStyle, stored = GetFontStyleStored };
 public:
 	__fastcall TSynHighlighterAttributes();
 }; // supports Enum/UseUserSettings
@@ -168,12 +168,12 @@ class TSynCustomHighlighter : public System::Classes::TComponent
 private:
 	TStringList* fAttributes;
 	Syneditmiscclasses::TSynNotifyEventChain* fAttrChangeHooks;
-	int FUpdateCount;
-	bool FEnabled;
+	int fUpdateCount;
+	bool fEnabled;
 	TSysCharSet FAdditionalWordBreakChars;
 	TSysCharSet FAdditionalIdentChars;
 	String FExportName;
-	Synedithighlighteroptions::TSynEditHighlighterOptions* fOptions;
+	Synedithighlighteroptions::TSynEditHighlighterOptions* FOptions;
 	String __fastcall GetExportName();
 	void __fastcall SetEnabled(bool Value);
 	void __fastcall SetAdditionalIdentChars(const TSysCharSet Value);
@@ -181,7 +181,7 @@ private:
 protected:
 	PWideChar fCasedLine;
 	String fCasedLineStr;
-	bool FCaseSensitive;
+	bool fCaseSensitive;
 	String fDefaultFilter;
 	PWideChar fExpandedLine;
 	int fExpandedLineLen;
@@ -199,12 +199,12 @@ protected:
 	int ExpandedRun;
 	int fOldRun;
 	virtual void __fastcall Loaded();
-	void __fastcall addAttribute(TSynHighlighterAttributes* Attri);
+	void __fastcall AddAttribute(TSynHighlighterAttributes* Attri);
 	void __fastcall DefHighlightChange(TObject* Sender);
 	virtual void __fastcall DefineProperties(TFiler* Filer);
 	void __fastcall FreeHighlighterAttributes();
 	virtual int __fastcall GetAttribCount();
-	virtual TSynHighlighterAttributes* __fastcall getAttribute(int Index);
+	virtual TSynHighlighterAttributes* __fastcall GetAttribute(int Index);
 	virtual TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index){return nullptr;} // = 0;
 	virtual String __fastcall GetDefaultFilter();
 	virtual String __fastcall GetSampleSource();
@@ -248,8 +248,8 @@ public:
 	virtual void __fastcall ResetRange();
 	virtual bool __fastcall UseUserSettings(int settingIndex);
 	virtual void __fastcall EnumUserSettings(TStrings* Settings);
-	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String key);
-	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String key);
+	virtual bool __fastcall LoadFromRegistry(HKEY RootKey, String Key);
+	virtual bool __fastcall SaveToRegistry(HKEY RootKey, String Key);
 	bool __fastcall LoadFromIniFile(TCustomIniFile* AIni);
 	bool __fastcall SaveToIniFile(TCustomIniFile* AIni);
 	bool __fastcall LoadFromFile(String AFileName);
@@ -264,7 +264,7 @@ public:
 	__property TSysCharSet AdditionalIdentChars = { read = FAdditionalIdentChars, write = SetAdditionalIdentChars };
 	__property TSysCharSet AdditionalWordBreakChars = { read = FAdditionalWordBreakChars, write = SetAdditionalWordBreakChars };
 	__property int AttrCount = { read = GetAttribCount };
-	__property TSynHighlighterAttributes* Attribute[int Index] = { read = getAttribute };
+	__property TSynHighlighterAttributes* Attribute[int Index] = { read = GetAttribute };
 	__property TSynHighlighterCapabilities Capabilities = { read = GetCapabilitiesProp };
 	__property String SampleSource = { read = GetSampleSource, write = SetSampleSource };
 	__property TSynHighlighterAttributes* CommentAttribute = { index = SYN_ATTR_COMMENT, read = GetDefaultAttribute };
@@ -276,8 +276,8 @@ public:
 	__property String ExportName = { read = GetExportName };
 __published:
 	__property String DefaultFilter = { read = GetDefaultFilter, write = SetDefaultFilter, stored = IsFilterStored };
-	__property bool Enabled = { read = FEnabled, write = SetEnabled, default = true };
-	__property Synedithighlighteroptions::TSynEditHighlighterOptions* Options = { read = fOptions, write = fOptions }; // <-- Codehunter patch
+	__property bool Enabled = { read = fEnabled, write = SetEnabled, default = true };
+	__property Synedithighlighteroptions::TSynEditHighlighterOptions* Options = { read = FOptions, write = FOptions }; // <-- Codehunter patch
 };
 
 typedef System::TMetaClass* TSynCustomHighlighterClass;
@@ -299,7 +299,7 @@ public:
 	int __fastcall FindByClass(TComponent* Comp);
 	__property TSynCustomHighlighterClass Items[int Index] = { read = GetItem/*# default */ };
 };
-void __fastcall RegisterPlaceableHighlighter(TSynCustomHighlighterClass Highlighter);
+void __fastcall RegisterPlaceableHighlighter(TSynCustomHighlighterClass highlighter);
 TSynHighlighterList* __fastcall GetPlaceableHighlighters();
 
 void SynEditHighlighter_initialization();

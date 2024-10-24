@@ -23,19 +23,19 @@ __fastcall TSynEditDataObject::TSynEditDataObject() {}
 UINT SynEditClipboardFormat = 0;
 UINT HTMLClipboardFormat = 0;
 
-HGLOBAL __fastcall MakeGlobal(const String s)
+HGLOBAL __fastcall MakeGlobal(const String S)
 {
 	HGLOBAL result = 0;
 	PChar P = nullptr;
 	int Size = 0;
-	Size = ByteLength(s) + sizeof(Char);
+	Size = ByteLength(S) + sizeof(Char);
 	result = GlobalAlloc((UINT) GHND, (SIZE_T) Size);
 	if(result == 0)
 		OutOfMemoryError();
 	P = ((WideChar*) GlobalLock(result));
 	try
 	{
-		Move(ustr2address(s), P, Size);
+		Move(ustr2address(S), P, Size);
 	}
 	__finally
 	{
@@ -70,25 +70,25 @@ HGLOBAL __fastcall MakeGlobal(void** P, int Size)
 	return result;
 }
 
-bool __fastcall HasFormat(IDataObject* dataObject, TClipFormat Format)
+bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format)
 {
 	bool result = false;
 	IEnumFORMATETC* FormatEnumerator = nullptr;
-	TFormatEtc FORMATETC = {};
+	TFormatEtc FormatEtc = {};
 	int Returned = 0;
 	result = false;
-	if(dataObject->EnumFormatEtc(DATADIR_GET, FormatEnumerator) == S_OK)
+	if(DataObject->EnumFormatEtc(DATADIR_GET, FormatEnumerator) == S_OK)
 	{
 		FormatEnumerator->Reset();
-		while(FormatEnumerator->Next(1, (void**)&FORMATETC, &Returned) == S_OK)
-			if(FORMATETC.cfFormat == Format)
+		while(FormatEnumerator->Next(1, (void**)&FormatEtc, &Returned) == S_OK)
+			if(FormatEtc.cfFormat == Format)
 				return true;
 	}
 	return result;
 }
 
 __fastcall TSynEditDataObject::TSynEditDataObject(TObject* ASynEdit)
- : FText(((TCustomSynEdit*) ASynEdit)->SelText),
+ : fText(((TCustomSynEdit*) ASynEdit)->SelText),
 			FFormatEtc(nullptr),
 			MemoryStream(nullptr),
 			HtmlStream(nullptr)
@@ -126,7 +126,7 @@ HRESULT __stdcall TSynEditDataObject::GetData(const TFormatEtc& formatetcIn, TSt
 		{
 			medium.tymed = TYMED_HGLOBAL;
 			if(formatetcIn.cfFormat == CF_UNICODETEXT)
-				medium.hGlobal = MakeGlobal(FText);
+				medium.hGlobal = MakeGlobal(fText);
 			else
 			{
 				if(formatetcIn.cfFormat == SynEditClipboardFormat)
@@ -145,7 +145,7 @@ HRESULT __stdcall TSynEditDataObject::GetData(const TFormatEtc& formatetcIn, TSt
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::GetDataHere(const TFormatEtc& FORMATETC, TStgMedium& medium)
+HRESULT __stdcall TSynEditDataObject::GetDataHere(const TFormatEtc& formatetc, TStgMedium& medium)
 {
 	medium = {}; //# clear out parameter
 	HRESULT result = 0;
@@ -156,15 +156,15 @@ HRESULT __stdcall TSynEditDataObject::GetDataHere(const TFormatEtc& FORMATETC, T
 void __fastcall TSynEditDataObject::StreamHTML(TObject* Editor, TStream* Stream)
 {
 	TSynExporterHTML* HTMLExport = nullptr;
-	TSynEdit* ED = nullptr;
-	ED = (TSynEdit*) Editor;
+	TSynEdit* Ed = nullptr;
+	Ed = (TSynEdit*) Editor;
 	HTMLExport = new TSynExporterHTML(nullptr);
 	try
 	{
 		HTMLExport->CreateHTMLFragment = true;
 		HTMLExport->UseBackground = true;
-		HTMLExport->Highlighter = ED->Highlighter;
-		HTMLExport->ExportRange(ED->Lines, ED->BlockBegin, ED->BlockEnd);
+		HTMLExport->Highlighter = Ed->Highlighter;
+		HTMLExport->ExportRange(Ed->Lines, Ed->BlockBegin, Ed->BlockEnd);
 		HTMLExport->SaveToStream(Stream);
 	}
 	__finally
@@ -173,17 +173,17 @@ void __fastcall TSynEditDataObject::StreamHTML(TObject* Editor, TStream* Stream)
 	}
 }
 
-HRESULT __stdcall TSynEditDataObject::QueryGetData(const TFormatEtc& FORMATETC)
+HRESULT __stdcall TSynEditDataObject::QueryGetData(const TFormatEtc& formatetc)
 {
 	HRESULT result = 0;
-	if(((FORMATETC.tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(FORMATETC.cfFormat))
+	if(((formatetc.tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(formatetc.cfFormat))
 		result = S_OK;
 	else
 		result = DV_E_FORMATETC;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::GetCanonicalFormatEtc(const TFormatEtc& FORMATETC, TFormatEtc& formatetcOut)
+HRESULT __stdcall TSynEditDataObject::GetCanonicalFormatEtc(const TFormatEtc& formatetc, TFormatEtc& formatetcOut)
 {
 	formatetcOut = {}; //# clear out parameter
 	HRESULT result = 0;
@@ -192,22 +192,22 @@ HRESULT __stdcall TSynEditDataObject::GetCanonicalFormatEtc(const TFormatEtc& FO
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::SetData(const TFormatEtc& FORMATETC, TStgMedium& medium, BOOL fRelease)
+HRESULT __stdcall TSynEditDataObject::SetData(const TFormatEtc& formatetc, TStgMedium& medium, BOOL fRelease)
 {
 	HRESULT result = 0;
 	result = E_NOTIMPL;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::EnumFormatEtc(int dwDirection, IEnumFORMATETC*& EnumFormatEtc)
+HRESULT __stdcall TSynEditDataObject::EnumFormatEtc(int dwDirection, IEnumFORMATETC*& enumFormatEtc)
 {
-	EnumFormatEtc = nullptr; //# clear out parameter
+	enumFormatEtc = nullptr; //# clear out parameter
 	HRESULT result = 0;
 	try
 	{
 		if(dwDirection == DATADIR_GET)
 		{
-			EnumFormatEtc = new TSynEnumFormatEtc(FFormatEtc->ToArray());
+			enumFormatEtc = new TSynEnumFormatEtc(FFormatEtc->ToArray());
 			result = S_OK;
 		}
 		else
@@ -220,7 +220,7 @@ HRESULT __stdcall TSynEditDataObject::EnumFormatEtc(int dwDirection, IEnumFORMAT
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::DAdvise(const TFormatEtc& FORMATETC, int advf, IAdviseSink* const advSink, int& dwConnection)
+HRESULT __stdcall TSynEditDataObject::DAdvise(const TFormatEtc& formatetc, int advf, IAdviseSink* const advSink, int& dwConnection)
 {
 	dwConnection = 0; //# clear out parameter
 	HRESULT result = 0;
@@ -272,20 +272,20 @@ HRESULT __stdcall TSynEnumFormatEtc::Next(int celt, void** elt, PLongInt pceltFe
 {
 	elt = nullptr; //# clear out parameter
 	HRESULT result = 0;
-	int i = 0;
-	PFormatEtc FORMATETC = nullptr;
-	i = 0;
-	FORMATETC = ((PFormatEtc) elt);
-	while((i < celt) && (FIndex < FList.Length))
+	int I = 0;
+	PFormatEtc FormatEtc = nullptr;
+	I = 0;
+	FormatEtc = ((PFormatEtc) elt);
+	while((I < celt) && (FIndex < FList.Length))
 	{
-		(*FORMATETC) = GetFormatEtc(FList[FIndex]);
-		++FORMATETC;
+		(*FormatEtc) = GetFormatEtc(FList[FIndex]);
+		++FormatEtc;
 		++FIndex;
-		++i;
+		++I;
 	}
 	if(pceltFetched != nullptr)
-		(*pceltFetched) = i;
-	if(i == celt)
+		(*pceltFetched) = I;
+	if(I == celt)
 		result = S_OK;
 	else
 		result = S_FALSE;

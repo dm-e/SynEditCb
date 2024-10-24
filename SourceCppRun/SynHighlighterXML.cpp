@@ -33,8 +33,8 @@ namespace Synhighlighterxml
 
 __fastcall TSynXMLSyn::TSynXMLSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsText),
-			FTokenID(tkAposAttrValue),
+			fRange(rsText),
+			fTokenID(tkAposAttrValue),
 			fElementAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fTextAttri(nullptr),
@@ -50,7 +50,7 @@ __fastcall TSynXMLSyn::TSynXMLSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			FWantBracesParsed(false)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fElementAttri = new TSynHighlighterAttributes(SYNS_AttrElementName, SYNS_FriendlyAttrElementName);
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrWhitespace, SYNS_FriendlyAttrWhitespace);
@@ -89,32 +89,32 @@ __fastcall TSynXMLSyn::TSynXMLSyn(TComponent* AOwner)
 	fCommentAttri->Style = Synhighlighterxml__10;
 	fSymbolAttri->Foreground = (TColor) clBlue;
 	fSymbolAttri->Style = Synhighlighterxml__11;
-	addAttribute(fSymbolAttri);
-	addAttribute(fProcessingInstructionAttri);
-	addAttribute(fDocTypeAttri);
-	addAttribute(fCommentAttri);
-	addAttribute(fElementAttri);
-	addAttribute(fAttributeAttri);
-	addAttribute(fnsAttributeAttri);
-	addAttribute(fAttributeValueAttri);
-	addAttribute(fnsAttributeValueAttri);
-	addAttribute(fEntityRefAttri);
-	addAttribute(fCDATAAttri);
-	addAttribute(fSpaceAttri);
-	addAttribute(fTextAttri);
+	AddAttribute(fSymbolAttri);
+	AddAttribute(fProcessingInstructionAttri);
+	AddAttribute(fDocTypeAttri);
+	AddAttribute(fCommentAttri);
+	AddAttribute(fElementAttri);
+	AddAttribute(fAttributeAttri);
+	AddAttribute(fnsAttributeAttri);
+	AddAttribute(fAttributeValueAttri);
+	AddAttribute(fnsAttributeValueAttri);
+	AddAttribute(fEntityRefAttri);
+	AddAttribute(fCDATAAttri);
+	AddAttribute(fSpaceAttri);
+	AddAttribute(fTextAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterXML;
 }
 
 void __fastcall TSynXMLSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynXMLSyn::CarriageReturnProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -122,14 +122,14 @@ void __fastcall TSynXMLSyn::CarriageReturnProc()
 
 void __fastcall TSynXMLSyn::LineFeedProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
 void __fastcall TSynXMLSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while(fLine[Run] <= L'\x20')
 	{
 		if(CharInSet(fLine[Run], Synhighlighterxml__12))
@@ -147,30 +147,30 @@ void __fastcall TSynXMLSyn::LessThanProc()
 	{
 		if(NextTokenIs(L"--"))
 		{
-			FTokenID = tkSymbol;
-			FRange = rsComment;
+			fTokenID = tkSymbol;
+			fRange = rsComment;
 			Run += 3;
 		}
 		else
 		{
 			if(NextTokenIs(L"DOCTYPE"))
 			{
-				FTokenID = tkDocType;
-				FRange = rsDocType;
+				fTokenID = tkDocType;
+				fRange = rsDocType;
 				Run += 7;
 			}
 			else
 			{
 				if(NextTokenIs(L"[CDATA["))
 				{
-					FTokenID = tkCDATA;
-					FRange = rsCDATA;
+					fTokenID = tkCDATA;
+					fRange = rsCDATA;
 					Run += 7;
 				}
 				else
 				{
-					FTokenID = tkSymbol;
-					FRange = rsElement;
+					fTokenID = tkSymbol;
+					fRange = rsElement;
 					++Run;
 				}
 			}
@@ -180,22 +180,22 @@ void __fastcall TSynXMLSyn::LessThanProc()
 	{
 		if(fLine[Run] == L'?')
 		{
-			FTokenID = tkProcessingInstruction;
-			FRange = rsProcessingInstruction;
+			fTokenID = tkProcessingInstruction;
+			fRange = rsProcessingInstruction;
 			++Run;
 		}
 		else
 		{
-			FTokenID = tkSymbol;
-			FRange = rsElement;
+			fTokenID = tkSymbol;
+			fRange = rsElement;
 		}
 	}
 }
 
 void __fastcall TSynXMLSyn::GreaterThanProc()
 {
-	FTokenID = tkSymbol;
-	FRange = rsText;
+	fTokenID = tkSymbol;
+	fRange = rsText;
 	++Run;
 }
 
@@ -203,12 +203,12 @@ void __fastcall TSynXMLSyn::CommentProc()
 {
 	if((fLine[Run] == L'-') && (fLine[Run + 1] == L'-') && (fLine[Run + 2] == L'>'))
 	{
-		FTokenID = tkSymbol;
-		FRange = rsText;
+		fTokenID = tkSymbol;
+		fRange = rsText;
 		Run += 3;
 		return;
 	}
-	FTokenID = tkComment;
+	fTokenID = tkComment;
 	if(IsLineEnd(Run))
 	{
 		NextProcedure();
@@ -218,7 +218,7 @@ void __fastcall TSynXMLSyn::CommentProc()
 	{
 		if((fLine[Run] == L'-') && (fLine[Run + 1] == L'-') && (fLine[Run + 2] == L'>'))
 		{
-			FRange = rsComment;
+			fRange = rsComment;
 			break;
 		}
 		++Run;
@@ -227,7 +227,7 @@ void __fastcall TSynXMLSyn::CommentProc()
 
 void __fastcall TSynXMLSyn::ProcessingInstructionProc()
 {
-	FTokenID = tkProcessingInstruction;
+	fTokenID = tkProcessingInstruction;
 	if(IsLineEnd(Run))
 	{
 		NextProcedure();
@@ -237,7 +237,7 @@ void __fastcall TSynXMLSyn::ProcessingInstructionProc()
 	{
 		if((fLine[Run] == L'>') && (fLine[Run - 1] == L'?'))
 		{
-			FRange = rsText;
+			fRange = rsText;
 			++Run;
 			break;
 		}
@@ -247,13 +247,13 @@ void __fastcall TSynXMLSyn::ProcessingInstructionProc()
 
 void __fastcall TSynXMLSyn::DocTypeProc()
 {
-	FTokenID = tkDocType;
+	fTokenID = tkDocType;
 	if(IsLineEnd(Run))
 	{
 		NextProcedure();
 		return;
 	}
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsDocType:
 		{
@@ -277,7 +277,7 @@ void __fastcall TSynXMLSyn::DocTypeProc()
 								case L'\x0a':
 								case L'\x0d':
 								{
-									FRange = rsDocTypeSquareBraces;
+									fRange = rsDocTypeSquareBraces;
 									return;
 								}
 								default:
@@ -289,7 +289,7 @@ void __fastcall TSynXMLSyn::DocTypeProc()
 					break;
 					case L'>':
 					{
-						FRange = rsAttribute;
+						fRange = rsAttribute;
 						++Run;
 						goto label0;
 					}
@@ -308,7 +308,7 @@ void __fastcall TSynXMLSyn::DocTypeProc()
 			{
 				if(fLine[Run] == L']')
 				{
-					FRange = rsDocType;
+					fRange = rsDocType;
 					++Run;
 					return;
 				}
@@ -324,7 +324,7 @@ void __fastcall TSynXMLSyn::DocTypeProc()
 
 void __fastcall TSynXMLSyn::CDATAProc()
 {
-	FTokenID = tkCDATA;
+	fTokenID = tkCDATA;
 	if(IsLineEnd(Run))
 	{
 		NextProcedure();
@@ -334,7 +334,7 @@ void __fastcall TSynXMLSyn::CDATAProc()
 	{
 		if((fLine[Run] == L'>') && (fLine[Run - 1] == L']'))
 		{
-			FRange = rsText;
+			fRange = rsText;
 			++Run;
 			break;
 		}
@@ -348,8 +348,8 @@ void __fastcall TSynXMLSyn::ElementProc()
 		++Run;
 	while(IsNameChar())
 		++Run;
-	FRange = rsAttribute;
-	FTokenID = tkElement;
+	fRange = rsAttribute;
+	fTokenID = tkElement;
 }
 
 void __fastcall TSynXMLSyn::AttributeProc()
@@ -358,8 +358,8 @@ void __fastcall TSynXMLSyn::AttributeProc()
   //Check if we are starting on a closing quote
 	if(CharInSet(fLine[Run], Synhighlighterxml__13))
 	{
-		FTokenID = tkSymbol;
-		FRange = rsAttribute;
+		fTokenID = tkSymbol;
+		fRange = rsAttribute;
 		++Run;
 		return;
 	}
@@ -369,28 +369,28 @@ void __fastcall TSynXMLSyn::AttributeProc()
   //Check if this is an xmlns: attribute
 	if(Pos(L"xmlns", GetToken()) > 0)
 	{
-		FTokenID = tknsAttribute;
-		FRange = rsnsEqual;
+		fTokenID = tknsAttribute;
+		fRange = rsnsEqual;
 	}
 	else
 	{
-		FTokenID = tkAttribute;
-		FRange = rsEqual;
+		fTokenID = tkAttribute;
+		fRange = rsEqual;
 	}
 }
 
 void __fastcall TSynXMLSyn::EqualProc()
 {
-	if(FRange == rsnsEqual)
-		FTokenID = tknsEqual;
+	if(fRange == rsnsEqual)
+		fTokenID = tknsEqual;
 	else
-		FTokenID = tkEqual;
+		fTokenID = tkEqual;
 	while(!IsLineEnd(Run))
 	{
 		if(fLine[Run] == L'/')
 		{
-			FTokenID = tkSymbol;
-			FRange = rsElement;
+			fTokenID = tkSymbol;
+			fRange = rsElement;
 			++Run;
 			return;
 		}
@@ -398,10 +398,10 @@ void __fastcall TSynXMLSyn::EqualProc()
 		{
 			if(fLine[Run] == L'\x22')
 			{
-				if(FRange == rsnsEqual)
-					FRange = rsnsQuoteAttrValue;
+				if(fRange == rsnsEqual)
+					fRange = rsnsQuoteAttrValue;
 				else
-					FRange = rsQuoteAttrValue;
+					fRange = rsQuoteAttrValue;
 				++Run;
 				return;
 			}
@@ -409,10 +409,10 @@ void __fastcall TSynXMLSyn::EqualProc()
 			{
 				if(fLine[Run] == L'\x27')
 				{
-					if(FRange == rsnsEqual)
-						FRange = rsnsAposAttrValue;
+					if(fRange == rsnsEqual)
+						fRange = rsnsAposAttrValue;
 					else
-						FRange = rsAposAttrValue;
+						fRange = rsAposAttrValue;
 					++Run;
 					return;
 				}
@@ -424,18 +424,18 @@ void __fastcall TSynXMLSyn::EqualProc()
 
 void __fastcall TSynXMLSyn::QAttributeValueProc()
 {
-	if(FRange == rsnsQuoteAttrValue)
-		FTokenID = tknsQuoteAttrValue;
+	if(fRange == rsnsQuoteAttrValue)
+		fTokenID = tknsQuoteAttrValue;
 	else
-		FTokenID = tkQuoteAttrValue;
+		fTokenID = tkQuoteAttrValue;
 	while(!(IsLineEnd(Run) || (fLine[Run] == L'&') || (fLine[Run] == L'\x22')))
 		++Run;
 	if(fLine[Run] == L'&')
 	{
-		if(FRange == rsnsQuoteAttrValue)
-			FRange = rsnsQuoteEntityRef;
+		if(fRange == rsnsQuoteAttrValue)
+			fRange = rsnsQuoteEntityRef;
 		else
-			FRange = rsQuoteEntityRef;
+			fRange = rsQuoteEntityRef;
 		return;
 	}
 	else
@@ -443,23 +443,23 @@ void __fastcall TSynXMLSyn::QAttributeValueProc()
 		if(fLine[Run] != L'\x22')
 			return;
 	}
-	FRange = rsAttribute;
+	fRange = rsAttribute;
 }
 
 void __fastcall TSynXMLSyn::AAttributeValueProc()
 {
-	if(FRange == rsnsAposAttrValue)
-		FTokenID = tknsAposAttrValue;
+	if(fRange == rsnsAposAttrValue)
+		fTokenID = tknsAposAttrValue;
 	else
-		FTokenID = tkAposAttrValue;
+		fTokenID = tkAposAttrValue;
 	while(!(IsLineEnd(Run) || (fLine[Run] == L'&') || (fLine[Run] == L'\x27')))
 		++Run;
 	if(fLine[Run] == L'&')
 	{
-		if(FRange == rsnsAposAttrValue)
-			FRange = rsnsAPosEntityRef;
+		if(fRange == rsnsAposAttrValue)
+			fRange = rsnsAPosEntityRef;
 		else
-			FRange = rsAPosEntityRef;
+			fRange = rsAPosEntityRef;
 		return;
 	}
 	else
@@ -467,7 +467,7 @@ void __fastcall TSynXMLSyn::AAttributeValueProc()
 		if(fLine[Run] != L'\x27')
 			return;
 	}
-	FRange = rsAttribute;
+	fRange = rsAttribute;
 }
 
 void __fastcall TSynXMLSyn::TextProc()
@@ -477,62 +477,62 @@ void __fastcall TSynXMLSyn::TextProc()
 		NextProcedure();
 		return;
 	}
-	FTokenID = tkText;
+	fTokenID = tkText;
 	while(!((fLine[Run] <= L'\x1f') || (fLine[Run] == L'<') || (fLine[Run] == L'&')))
 		++Run;
 	if(fLine[Run] == L'&')
 	{
-		FRange = rsEntityRef;
+		fRange = rsEntityRef;
 		return;
 	}
 }
 
 void __fastcall TSynXMLSyn::EntityRefProc()
 {
-	FTokenID = tkEntityRef;
-	FRange = rsEntityRef;
+	fTokenID = tkEntityRef;
+	fRange = rsEntityRef;
 	while(!((fLine[Run] <= L'\x20') || (fLine[Run] == L';')))
 		++Run;
 	if(fLine[Run] == L';')
 		++Run;
-	FRange = rsText;
+	fRange = rsText;
 }
 
 void __fastcall TSynXMLSyn::QEntityRefProc()
 {
-	if(FRange == rsnsQuoteEntityRef)
-		FTokenID = tknsQuoteEntityRef;
+	if(fRange == rsnsQuoteEntityRef)
+		fTokenID = tknsQuoteEntityRef;
 	else
-		FTokenID = tkQuoteEntityRef;
+		fTokenID = tkQuoteEntityRef;
 	while(!((fLine[Run] <= L'\x20') || (fLine[Run] == L';')))
 		++Run;
 	if(fLine[Run] == L';')
 		++Run;
-	if(FRange == rsnsQuoteEntityRef)
-		FRange = rsnsQuoteAttrValue;
+	if(fRange == rsnsQuoteEntityRef)
+		fRange = rsnsQuoteAttrValue;
 	else
-		FRange = rsQuoteAttrValue;
+		fRange = rsQuoteAttrValue;
 }
 
 void __fastcall TSynXMLSyn::AEntityRefProc()
 {
-	if(FRange == rsnsAPosEntityRef)
-		FTokenID = tknsAposEntityRef;
+	if(fRange == rsnsAPosEntityRef)
+		fTokenID = tknsAposEntityRef;
 	else
-		FTokenID = tkAposEntityRef;
+		fTokenID = tkAposEntityRef;
 	while(!((fLine[Run] <= L'\x20') || (fLine[Run] == L';')))
 		++Run;
 	if(fLine[Run] == L';')
 		++Run;
-	if(FRange == rsnsAPosEntityRef)
-		FRange = rsnsAposAttrValue;
+	if(fRange == rsnsAPosEntityRef)
+		fRange = rsnsAposAttrValue;
 	else
-		FRange = rsAposAttrValue;
+		fRange = rsAposAttrValue;
 }
 
 void __fastcall TSynXMLSyn::IdentProc()
 {
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsElement:
 		{
@@ -588,7 +588,7 @@ void __fastcall TSynXMLSyn::IdentProc()
 void __fastcall TSynXMLSyn::Next()
 {
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsText:
 		TextProc();
@@ -651,14 +651,14 @@ void __fastcall TSynXMLSyn::NextProcedure()
 bool __fastcall TSynXMLSyn::NextTokenIs(String Token)
 {
 	bool result = false;
-	__int64 i = 0;
+	__int64 I = 0;
 	int Len = 0;
 	__int64 stop = 0;
 	result = true;
 	Len = Token.Length();
-	for(stop = Len, i = 1; i <= stop; i++)
+	for(stop = Len, I = 1; I <= stop; I++)
 	{
-		if(fLine[Run + i] != Token[i])
+		if(fLine[Run + I] != Token[I])
 		{
 			result = false;
 			break;
@@ -704,14 +704,14 @@ bool __fastcall TSynXMLSyn::GetEol()
 TtkTokenKind __fastcall TSynXMLSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAposAttrValue;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
 TSynHighlighterAttributes* __fastcall TSynXMLSyn::GetTokenAttribute()
 {
 	TSynHighlighterAttributes* result = nullptr;
-	switch(FTokenID)
+	switch(fTokenID)
 	{
 		case tkElement:
 		result = fElementAttri;
@@ -786,25 +786,25 @@ TSynHighlighterAttributes* __fastcall TSynXMLSyn::GetTokenAttribute()
 int __fastcall TSynXMLSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
 void* __fastcall TSynXMLSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 void __fastcall TSynXMLSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynXMLSyn::ResetRange()
 {
-	FRange = rsText;
+	fRange = rsText;
 }
 
 bool __fastcall TSynXMLSyn::IsFilterStored()

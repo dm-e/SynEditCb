@@ -23,7 +23,7 @@ namespace Synhighlightercobol
 										19 << 20 << 21 << 22 << 23 << 24 <<  \
 										25 << 26 << 27 << 28 << 29 << 30 <<  \
 										31 << 32)
-#define Synhighlightercobol__1 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteStringMayBe << rsApostStringMayBe)
+#define Synhighlightercobol__1 (System::Set<TRangeState, TRangeState::rsUnknown, TRangeState::rsApostStringMayBe>() << rsQuoteStringMayBe << rsApostStringMayBe)
 #define Synhighlightercobol__2 (TSysCharSet() <<  \
           48 << 49 << 50 << 51 << 52 << 53 <<  \
           54 << 55 << 56 << 57 << 'e' << 'E')
@@ -34,8 +34,8 @@ namespace Synhighlightercobol
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57 << '.')
 #define Synhighlightercobol__5 (TSysCharSet() << 'e' << 'E')
-#define Synhighlightercobol__6 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
-#define Synhighlightercobol__7 (System::Set<TRangeState, TRangeState::rsUnKnown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
+#define Synhighlightercobol__6 (System::Set<TRangeState, TRangeState::rsUnknown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
+#define Synhighlightercobol__7 (System::Set<TRangeState, TRangeState::rsUnknown, TRangeState::rsApostStringMayBe>() << rsQuoteString << rsApostString)
 #define Synhighlightercobol__8 (TFontStyles() << TFontStyle::fsItalic)
 #define Synhighlightercobol__9 (TFontStyles() << TFontStyle::fsBold)
 #define Synhighlightercobol__10 (TFontStyles() << TFontStyle::fsBold)
@@ -44,7 +44,7 @@ namespace Synhighlightercobol
 
 
 const String BooleanWords = L"false, true";
-const String Keywords = L"accept, access, acquire, add, address, advancing, after, all, allowing, "
+const String KeyWords = L"accept, access, acquire, add, address, advancing, after, all, allowing, "
 	           L"alphabet, alphabetic, alphabetic-lower, alphabetic-upper, alphanumeric, "
 	           L"alphanumeric-edited, also, alter, alternate, and, any, apply, are, "
 	           L"area, areas, area-value, arithmetic, ascending, assign, at, author, "
@@ -184,13 +184,13 @@ int __fastcall TSynCobolSyn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkComment;
 	TSynHashEntry* Entry = nullptr;
-	int i = 0;
-	fToIdent = Maybe;
-	Entry = fKeywords->Items[HashKey(Maybe)];
+	int I = 0;
+	fToIdent = MayBe;
+	Entry = fKeywords->Items[HashKey(MayBe)];
 	while(ASSIGNED(Entry))
 	{
 		if(Entry->KeywordLen > fStringLen)
@@ -206,10 +206,10 @@ TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar Maybe)
 					{
 						if(IsCurrentToken(L"label"))
 						{
-							i = Run + wcslen(L"label");
-							while(fLine[i] == L' ')
-								++i;
-							if((AnsiStrLComp(&fLine[i], const_cast<PWideChar>(L"record"), (unsigned int) wcslen(L"record")) == 0) && (i + wcslen(L"record") - 1 <= fCodeEndPos))
+							I = Run + wcslen(L"label");
+							while(fLine[I] == L' ')
+								++I;
+							if((AnsiStrLComp(&fLine[I], const_cast<PWideChar>(L"record"), (unsigned int) wcslen(L"record")) == 0) && (I + wcslen(L"record") - 1 <= fCodeEndPos))
 								result = tkKey;
 							else
 								result = tkPreprocessor;
@@ -229,7 +229,7 @@ TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar Maybe)
 
 void __fastcall TSynCobolSyn::SpaceProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	do
 	{
 		++Run;
@@ -239,14 +239,14 @@ void __fastcall TSynCobolSyn::SpaceProc()
 
 void __fastcall TSynCobolSyn::FirstCharsProc()
 {
-	int i = 0;
+	int I = 0;
 	if(IsLineEnd(Run))
 		NextProcedure();
 	else
 	{
 		if(Run < fCodeStartPos - 1)
 		{
-			FTokenID = tkSequence;
+			fTokenID = tkSequence;
 			do
 			{
 				++Run;
@@ -255,7 +255,7 @@ void __fastcall TSynCobolSyn::FirstCharsProc()
 		}
 		else
 		{
-			FTokenID = tkIndicator;
+			fTokenID = tkIndicator;
 			switch(fLine[Run])
 			{
 				case L'*':
@@ -265,13 +265,13 @@ void __fastcall TSynCobolSyn::FirstCharsProc()
 				fIndicator = fLine[Run];
 				break;
 				case L'-':
-				if(Synhighlightercobol__1.Contains(FRange))
+				if(Synhighlightercobol__1.Contains(fRange))
 				{
-					i = Run + 1;
-					while(fLine[i] == L' ')
-						++i;
-					if((AnsiStrLComp(&fLine[i], ustr2pwchar(StringOfChar(StringChars[FRange], 2)), 2) != 0) || (i + 1 > fCodeEndPos))
-						FRange = rsUnKnown;
+					I = Run + 1;
+					while(fLine[I] == L' ')
+						++I;
+					if((AnsiStrLComp(&fLine[I], ustr2pwchar(StringOfChar(StringChars[fRange], 2)), 2) != 0) || (I + 1 > fCodeEndPos))
+						fRange = rsUnknown;
 				}
 				break;
 				default:
@@ -289,7 +289,7 @@ void __fastcall TSynCobolSyn::LastCharsProc()
 		NextProcedure();
 	else
 	{
-		FTokenID = tkTagArea;
+		fTokenID = tkTagArea;
 		do
 		{
 			++Run;
@@ -305,7 +305,7 @@ void __fastcall TSynCobolSyn::CommentProc()
 		NextProcedure();
 	else
 	{
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			++Run;
@@ -321,7 +321,7 @@ void __fastcall TSynCobolSyn::DebugProc()
 		NextProcedure();
 	else
 	{
-		FTokenID = tkDebugLines;
+		fTokenID = tkDebugLines;
 		do
 		{
 			++Run;
@@ -361,7 +361,7 @@ void __fastcall TSynCobolSyn::NumberProc()
 		return result;
 	};
 	bool fFloat = false;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	++Run;
 	fFloat = false;
 	while(IsNumberChar() && (Run <= fCodeEndPos))
@@ -401,13 +401,13 @@ void __fastcall TSynCobolSyn::NumberProc()
 
 void __fastcall TSynCobolSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
 void __fastcall TSynCobolSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -415,7 +415,7 @@ void __fastcall TSynCobolSyn::CRProc()
 
 void __fastcall TSynCobolSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -424,15 +424,15 @@ void __fastcall TSynCobolSyn::StringOpenProc()
 	switch(fLine[Run])
 	{
 		case L'\"':
-		FRange = rsQuoteString;
+		fRange = rsQuoteString;
 		break;
 		case L'\'':
-		FRange = rsApostString;
+		fRange = rsApostString;
 		break;
 		default:
 		if(fLine[Run + 1] == L'=')
 		{
-			FRange = rsPseudoText;
+			fRange = rsPseudoText;
 			++Run;
 		}
 		else
@@ -444,22 +444,22 @@ void __fastcall TSynCobolSyn::StringOpenProc()
 	}
 	++Run;
 	StringProc();
-	FTokenID = tkString;
+	fTokenID = tkString;
 }
 
 void __fastcall TSynCobolSyn::StringProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	if(Run <= fCodeEndPos)
 	{
 		do
 		{
-			if((fLine[Run] == StringChars[FRange]) && ((fLine[Run] != L'=') || ((Run > 0) && (fLine[Run - 1] == L'='))))
+			if((fLine[Run] == StringChars[fRange]) && ((fLine[Run] != L'=') || ((Run > 0) && (fLine[Run - 1] == L'='))))
 			{
-				if((Run == fCodeEndPos) && (Synhighlightercobol__6.Contains(FRange)))
-					Inc(FRange, 3);
+				if((Run == fCodeEndPos) && (Synhighlightercobol__6.Contains(fRange)))
+					Inc(fRange, 3);
 				else
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 				++Run;
 				break;
 			}
@@ -476,19 +476,19 @@ void __fastcall TSynCobolSyn::StringEndProc()
 		NextProcedure();
 	else
 	{
-		FTokenID = tkString;
-		if((FRange != rsPseudoText) && (Run <= fCodeEndPos))
+		fTokenID = tkString;
+		if((fRange != rsPseudoText) && (Run <= fCodeEndPos))
 		{
 			do
 			{
-				if(fLine[Run] == StringChars[FRange])
+				if(fLine[Run] == StringChars[fRange])
 				{
-					if(Synhighlightercobol__7.Contains(FRange))
+					if(Synhighlightercobol__7.Contains(fRange))
 						++Run;
 					else
 					{
 						Run += 2;
-						Dec(FRange, 3);
+						Dec(fRange, 3);
 					}
 					break;
 				}
@@ -502,8 +502,8 @@ void __fastcall TSynCobolSyn::StringEndProc()
 
 __fastcall TSynCobolSyn::TSynCobolSyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
-			FTokenID(tkComment),
+			fRange(rsUnknown),
+			fTokenID(tkComment),
 			fIndicator(L'\0'),
 			fCodeStartPos(0),
 			fCodeMediumPos(0),
@@ -523,47 +523,47 @@ __fastcall TSynCobolSyn::TSynCobolSyn(TComponent* AOwner)
 			fDebugLinesAttri(nullptr),
 			fKeywords(nullptr)
 {
-	FCaseSensitive = false;
+	fCaseSensitive = false;
 	fKeywords = new TSynHashEntryList();
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightercobol__8;
 	fCommentAttri->Foreground = (TColor) clGray;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fAIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrAreaAIdentifier, SYNS_FriendlyAttrAreaAIdentifier);
 	fAIdentifierAttri->Foreground = (TColor) clTeal;
 	fAIdentifierAttri->Style = Synhighlightercobol__9;
-	addAttribute(fAIdentifierAttri);
+	AddAttribute(fAIdentifierAttri);
 	fPreprocessorAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fPreprocessorAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fPreprocessorAttri);
+	AddAttribute(fPreprocessorAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightercobol__10;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clGreen;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fBooleanAttri = new TSynHighlighterAttributes(SYNS_AttrBoolean, SYNS_FriendlyAttrBoolean);
 	fBooleanAttri->Foreground = (TColor) clGreen;
-	addAttribute(fBooleanAttri);
+	AddAttribute(fBooleanAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSequenceAttri = new TSynHighlighterAttributes(SYNS_AttrSequence, SYNS_FriendlyAttrSequence);
 	fSequenceAttri->Foreground = (TColor) clDkGray;
-	addAttribute(fSequenceAttri);
+	AddAttribute(fSequenceAttri);
 	fIndicatorAttri = new TSynHighlighterAttributes(SYNS_AttrIndicator, SYNS_FriendlyAttrIndicator);
 	fIndicatorAttri->Foreground = (TColor) clRed;
-	addAttribute(fIndicatorAttri);
+	AddAttribute(fIndicatorAttri);
 	fTagAreaAttri = new TSynHighlighterAttributes(SYNS_AttrTagArea, SYNS_FriendlyAttrTagArea);
 	fTagAreaAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fTagAreaAttri);
+	AddAttribute(fTagAreaAttri);
 	fDebugLinesAttri = new TSynHighlighterAttributes(SYNS_AttrDebugLines, SYNS_FriendlyAttrDebugLines);
 	fDebugLinesAttri->Foreground = (TColor) clDkGray;
-	addAttribute(fDebugLinesAttri);
+	AddAttribute(fDebugLinesAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterCOBOL;
 	fIndicator = L'\x00';
@@ -571,7 +571,7 @@ __fastcall TSynCobolSyn::TSynCobolSyn(TComponent* AOwner)
 	fCodeMediumPos = 11;
 	fCodeEndPos = 71;
 	EnumerateKeywords(int(tkBoolean), BooleanWords, IsIdentChar, DoAddKeyword);
-	EnumerateKeywords(int(tkKey), Keywords, IsIdentChar, DoAddKeyword);
+	EnumerateKeywords(int(tkKey), KeyWords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkPreprocessor), PreprocessorWords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkString), StringWords, IsIdentChar, DoAddKeyword);
 	EnumerateKeywords(int(tkUnknown), AmbigiousWords, IsIdentChar, DoAddKeyword);
@@ -592,9 +592,9 @@ void __fastcall TSynCobolSyn::IdentProc()
 	}
 	else
 	{
-		FTokenID = IdentKind((fLine + Run));
-		if((FTokenID == tkIdentifier) && (Run < fCodeMediumPos))
-			FTokenID = tkAIdentifier;
+		fTokenID = IdentKind((fLine + Run));
+		if((fTokenID == tkIdentifier) && (Run < fCodeMediumPos))
+			fTokenID = tkAIdentifier;
 		Run += fStringLen;
 		while(IsIdentChar(fLine[Run]) && (Run <= fCodeEndPos))
 			++Run;
@@ -604,7 +604,7 @@ void __fastcall TSynCobolSyn::IdentProc()
 void __fastcall TSynCobolSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynCobolSyn::Next()
@@ -627,14 +627,14 @@ void __fastcall TSynCobolSyn::Next()
 			if(fTokenPos > fCodeEndPos)
 				LastCharsProc();
 			else
-				switch(FRange)
+				switch(fRange)
 				{
 					case rsQuoteString: case rsApostString: case rsPseudoText: case rsQuoteStringMayBe: case rsApostStringMayBe:
 					StringEndProc();
 					break;
 					default:
 					{
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						NextProcedure();
 					}
 					break;
@@ -730,7 +730,7 @@ bool __fastcall TSynCobolSyn::GetEol()
 TtkTokenKind __fastcall TSynCobolSyn::GetTokenID()
 {
 	TtkTokenKind result = tkComment;
-	result = FTokenID;
+	result = fTokenID;
 	return result;
 }
 
@@ -791,7 +791,7 @@ TSynHighlighterAttributes* __fastcall TSynCobolSyn::GetTokenAttribute()
 int __fastcall TSynCobolSyn::GetTokenKind()
 {
 	int result = 0;
-	result = int(FTokenID);
+	result = int(fTokenID);
 	return result;
 }
 
@@ -950,18 +950,18 @@ String __fastcall TSynCobolSyn::GetLanguageName()
 
 void __fastcall TSynCobolSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynCobolSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void* __fastcall TSynCobolSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 

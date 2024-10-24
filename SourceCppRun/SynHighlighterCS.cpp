@@ -23,7 +23,7 @@ namespace Synhighlightercs
 #define Synhighlightercs__4 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
-const String Keywords[77/*# range 0..76*/] = {L"abstract", L"as", L"base", L"bool", L"break", L"byte", L"case", L"catch", L"class", L"const", L"continue", L"decimal"
+const String KeyWords[77/*# range 0..76*/] = {L"abstract", L"as", L"base", L"bool", L"break", L"byte", L"case", L"catch", L"class", L"const", L"continue", L"decimal"
                     , L"default", L"delegate", L"do", L"double", L"else", L"enum", L"event", L"explicit", L"extern", L"false", L"finally", L"fixed"
                     , L"float", L"for", L"foreach", L"goto", L"char", L"checked", L"if", L"implicit", L"in", L"int", L"interface", L"internal", L"is"
                     , L"lock", L"long", L"namespace", L"new", L"null", L"object", L"operator", L"out", L"override", L"params", L"private", L"protected", L"public"
@@ -53,14 +53,14 @@ unsigned int __fastcall TSynCSSyn::HashKey(PWideChar Str)
 }
 /*$Q+*/
 
-TtkTokenKind __fastcall TSynCSSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynCSSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkSymbol;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 210 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key](KeyIndices[key]);
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 210 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key](KeyIndices[Key]);
 	else
 		result = tkIdentifier;
 	return result;
@@ -168,7 +168,7 @@ TtkTokenKind __fastcall TSynCSSyn::AltFunc(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncAbstract(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -178,7 +178,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncAbstract(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncAs(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -188,7 +188,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncAs(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncBase(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -198,7 +198,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncBase(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncBreak(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -208,7 +208,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncBreak(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncCase(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -218,7 +218,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncCase(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncCatch(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -228,7 +228,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncCatch(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncChecked(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -238,7 +238,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncChecked(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncClass(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -248,7 +248,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncClass(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncConst(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -258,7 +258,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncConst(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncContinue(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -268,7 +268,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncContinue(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncDefault(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -278,7 +278,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncDefault(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncDelegate(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -288,7 +288,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncDelegate(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncDo(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -298,7 +298,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncDo(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncElse(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -308,7 +308,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncElse(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncEnum(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -318,7 +318,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncEnum(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncEvent(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -328,7 +328,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncEvent(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncExplicit(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -338,7 +338,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncExplicit(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncExtern(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -348,7 +348,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncExtern(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncFalse(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -358,7 +358,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncFalse(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncFinally(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -368,7 +368,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncFinally(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncFixed(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -378,7 +378,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncFixed(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncFor(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -388,7 +388,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncFor(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncForeach(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -398,7 +398,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncForeach(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncGoto(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -408,7 +408,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncGoto(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncIf(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -418,7 +418,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncIf(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncImplicit(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -428,7 +428,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncImplicit(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncIn(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -438,7 +438,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncIn(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncInterface(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -448,7 +448,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncInterface(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncInternal(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -458,7 +458,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncInternal(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncIs(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -468,7 +468,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncIs(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncLock(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -478,7 +478,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncLock(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncNamespace(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -488,7 +488,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncNamespace(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncNew(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -498,7 +498,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncNew(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncNull(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -508,7 +508,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncNull(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncObject(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -518,7 +518,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncObject(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncOperator(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -528,7 +528,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncOperator(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncOut(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -538,7 +538,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncOut(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncOverride(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -548,7 +548,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncOverride(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncParams(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -558,7 +558,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncParams(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncPrivate(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -568,7 +568,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncPrivate(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncProtected(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -578,7 +578,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncProtected(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncPublic(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -588,7 +588,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncPublic(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncReadonly(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -598,7 +598,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncReadonly(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncRef(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -608,7 +608,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncRef(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncReturn(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -618,7 +618,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncReturn(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncSealed(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -628,7 +628,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncSealed(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncSizeof(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -638,7 +638,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncSizeof(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncStackalloc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -648,7 +648,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncStackalloc(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncStatic(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -658,7 +658,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncStatic(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncStruct(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -668,7 +668,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncStruct(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncSwitch(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -678,7 +678,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncSwitch(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncThis(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -688,7 +688,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncThis(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncThrow(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -698,7 +698,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncThrow(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncTrue(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -708,7 +708,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncTrue(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncTry(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -718,7 +718,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncTry(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncTypeof(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -728,7 +728,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncTypeof(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncUnchecked(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -738,7 +738,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncUnchecked(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncUnsafe(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -748,7 +748,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncUnsafe(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncUsing(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -758,7 +758,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncUsing(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncVirtual(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -768,7 +768,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncVirtual(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncVoid(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -778,7 +778,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncVoid(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncVolatile(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -788,7 +788,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncVolatile(int Index)
 TtkTokenKind __fastcall TSynCSSyn::FuncWhile(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -798,7 +798,7 @@ TtkTokenKind __fastcall TSynCSSyn::FuncWhile(int Index)
 __fastcall TSynCSSyn::TSynCSSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkSymbol),
 			FExtTokenID(xtkAdd),
 			fAsmAttri(nullptr),
@@ -813,34 +813,34 @@ __fastcall TSynCSSyn::TSynCSSyn(TComponent* AOwner)
 			fSymbolAttri(nullptr),
 			fTypeAttri(nullptr)
 {
-	FCaseSensitive = true;
+	fCaseSensitive = true;
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
-	addAttribute(fAsmAttri);
+	AddAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlightercs__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fInvalidAttri = new TSynHighlighterAttributes(SYNS_AttrIllegalChar, SYNS_FriendlyAttrIllegalChar);
-	addAttribute(fInvalidAttri);
+	AddAttribute(fInvalidAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlightercs__1;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	fTypeAttri = new TSynHighlighterAttributes(SYNS_AttrDataType, SYNS_FriendlyAttrDataType);
-	addAttribute(fTypeAttri);
+	AddAttribute(fTypeAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	fDefaultFilter = SYNS_FilterCS;
 } /* Create */
 
@@ -875,18 +875,18 @@ void __fastcall TSynCSSyn::AnsiCProc()
 			if(fLine[Run + 1] == L'/')
 			{
 				Run += 2;
-				if(FRange == rsAnsiCAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiCAsm)
+					fRange = rsAsm;
 				else
 				{
-					if(FRange == rsAnsiCAsmBlock)
-						FRange = rsAsmBlock;
+					if(fRange == rsAnsiCAsmBlock)
+						fRange = rsAsmBlock;
 					else
 					{
-						if(FRange == rsDirectiveComment)
-							FRange = rsDirective;
+						if(fRange == rsDirectiveComment)
+							fRange = rsDirective;
 						else
-							FRange = rsUnKnown;
+							fRange = rsUnknown;
 					}
 				}
 				goto label0;
@@ -961,8 +961,8 @@ void __fastcall TSynCSSyn::BraceCloseProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkBraceClose;
-	if(FRange == rsAsmBlock)
-		FRange = rsUnKnown;
+	if(fRange == rsAsmBlock)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynCSSyn::BraceOpenProc()
@@ -970,9 +970,9 @@ void __fastcall TSynCSSyn::BraceOpenProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkBraceOpen;
-	if(FRange == rsAsm)
+	if(fRange == rsAsm)
 	{
-		FRange = rsAsmBlock;
+		fRange = rsAsmBlock;
 		fAsmStart = true;
 	}
 }
@@ -1015,7 +1015,7 @@ void __fastcall TSynCSSyn::CommaProc()
 TtkTokenKind __fastcall TSynCSSyn::DataTypeFunc(int Index)
 {
 	TtkTokenKind result = tkSymbol;
-	if(IsCurrentToken(Keywords[Index]))
+	if(IsCurrentToken(KeyWords[Index]))
 		result = tkType;
 	else
 		result = tkIdentifier;
@@ -1027,7 +1027,7 @@ void __fastcall TSynCSSyn::DirectiveProc()
 	if(IsLineEnd(Run))
 	{
 		if((Run <= 0) || (fLine[Run - 1] != L'\\'))
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 		NextProcedure();
 	}
 	else
@@ -1040,14 +1040,14 @@ void __fastcall TSynCSSyn::DirectiveProc()
 				{
 					if(fLine[Run + 1] == L'/') // is end of directive as well
 					{
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 						goto label3;
 					}
 					else
 					{
 						if(fLine[Run + 1] == L'*') // might be embedded only
 						{
-							FRange = rsDirectiveComment;
+							fRange = rsDirectiveComment;
 							goto label4;
 						}
 						else
@@ -1060,7 +1060,7 @@ void __fastcall TSynCSSyn::DirectiveProc()
 					++Run;
 					if(IsLineEnd(Run))
 					{
-						FRange = rsDirective;
+						fRange = rsDirective;
 						goto label5;
 					}
 				}
@@ -1069,7 +1069,7 @@ void __fastcall TSynCSSyn::DirectiveProc()
 				case L'\x0a':
 				case L'\x0d':
 				{
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 					goto label6;
 				}
 				default:
@@ -1406,7 +1406,7 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 	String CurLine;
 	__int64 Line = 0;
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -1414,7 +1414,7 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(GetHighlighterAttriAtRowCol(LinesToScan, Line, i) != fCommentAttri)
@@ -1475,17 +1475,17 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 9)) == L"//#REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 9)) == L"//#REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 12)) == L"//#ENDREGION")
+			if(UpperCase(S.SubString(1, 12)) == L"//#ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -1538,8 +1538,8 @@ void __fastcall TSynCSSyn::SemiColonProc()
 	++Run;
 	FTokenID = tkSymbol;
 	FExtTokenID = xtkSemiColon;
-	if(FRange == rsAsm)
-		FRange = rsUnKnown;
+	if(fRange == rsAsm)
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynCSSyn::SlashProc()
@@ -1557,16 +1557,16 @@ void __fastcall TSynCSSyn::SlashProc()
 		case L'*':
 		{
 			FTokenID = tkComment;
-			if(FRange == rsAsm)
-				FRange = rsAnsiCAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiCAsm;
 			else
 			{
-				if(FRange == rsAsmBlock)
-					FRange = rsAnsiCAsmBlock;
+				if(fRange == rsAsmBlock)
+					fRange = rsAnsiCAsmBlock;
 				else
 				{
-					if(FRange != rsDirectiveComment)
-						FRange = rsAnsiC;
+					if(fRange != rsDirectiveComment)
+						fRange = rsAnsiC;
 				}
 			}
 			Run += 2;
@@ -1577,18 +1577,18 @@ void __fastcall TSynCSSyn::SlashProc()
 					if(fLine[Run + 1] == L'/')
 					{
 						Run += 2;
-						if(FRange == rsDirectiveComment)
-							FRange = rsDirective;
+						if(fRange == rsDirectiveComment)
+							fRange = rsDirective;
 						else
 						{
-							if(FRange == rsAnsiCAsm)
-								FRange = rsAsm;
+							if(fRange == rsAnsiCAsm)
+								fRange = rsAsm;
 							else
 							{
-								if(FRange == rsAnsiCAsmBlock)
-									FRange = rsAsmBlock;
+								if(fRange == rsAnsiCAsmBlock)
+									fRange = rsAsmBlock;
 								else
-									FRange = rsUnKnown;
+									fRange = rsUnknown;
 							}
 						}
 						goto label8;
@@ -1599,8 +1599,8 @@ void __fastcall TSynCSSyn::SlashProc()
 					case L'\x0a':
 					case L'\x0d':
 					{
-						if(FRange == rsDirectiveComment)
-							FRange = rsAnsiC;
+						if(fRange == rsDirectiveComment)
+							fRange = rsAnsiC;
 						goto label9;
 					}
 					default:
@@ -1686,7 +1686,7 @@ void __fastcall TSynCSSyn::StringProc()
 				case L'\x00':
 				{
 					++Run;
-					FRange = rsMultiLineString;
+					fRange = rsMultiLineString;
 					return;
 				}
 				default:
@@ -1725,7 +1725,7 @@ void __fastcall TSynCSSyn::StringEndProc()
 		  ;
 		break;
 	}
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 	do
 	{
 		switch(fLine[Run])
@@ -1745,7 +1745,7 @@ void __fastcall TSynCSSyn::StringEndProc()
 					case L'\x00':
 					{
 						++Run;
-						FRange = rsMultiLineString;
+						fRange = rsMultiLineString;
 						return;
 					}
 					default:
@@ -1806,7 +1806,7 @@ void __fastcall TSynCSSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsiC:
 		case rsAnsiCAsm:
@@ -1822,7 +1822,7 @@ void __fastcall TSynCSSyn::Next()
 		break;
 		default:
 		{
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 			NextProcedure();
 		}
 		break;
@@ -1989,7 +1989,7 @@ bool __fastcall TSynCSSyn::GetEol()
 void* __fastcall TSynCSSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -1997,7 +1997,7 @@ TtkTokenKind __fastcall TSynCSSyn::GetTokenID()
 {
 	TtkTokenKind result = tkSymbol;
 	result = FTokenID;
-	if(((FRange == rsAsm) || (FRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercs__3.Contains(FTokenID)))
+	if(((fRange == rsAsm) || (fRange == rsAsmBlock)) && !fAsmStart && !(Synhighlightercs__3.Contains(FTokenID)))
 		result = tkAsm;
 	return result;
 }
@@ -2063,15 +2063,15 @@ int __fastcall TSynCSSyn::GetTokenKind()
 
 void __fastcall TSynCSSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynCSSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
-void __fastcall TSynCSSyn::EnumUserSettings(TStrings* Settings)
+void __fastcall TSynCSSyn::EnumUserSettings(TStrings* settings)
 {
 
   /* returns the user settings that exist in the registry */
@@ -2085,7 +2085,7 @@ void __fastcall TSynCSSyn::EnumUserSettings(TStrings* Settings)
 			{
 				try
 				{
-					with0->GetKeyNames(Settings);
+					with0->GetKeyNames(settings);
 				}
 				__finally
 				{
@@ -2114,38 +2114,38 @@ bool __fastcall TSynCSSyn::UseUserSettings(int settingIndex)
 	{
 		bool result = false;
 
-		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+		auto ReadCPPBSetting = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 		{
 			bool result = false;
 
-			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* Attri, String Name) -> bool 
+			auto ReadCPPB1 = [&](String settingTag, TSynHighlighterAttributes* attri, String name) -> bool 
 			{
 				bool result = false;
 				int i = 0;
 				int stop = 0;
-				for(stop = Name.Length(), i = 1; i <= stop; i++)
+				for(stop = name.Length(), i = 1; i <= stop; i++)
 				{
-					if(Name[i] == L' ')
-						Name[i] = L'_';
+					if(name[i] == L' ')
+						name[i] = L'_';
 				}
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
-	           + L"\\Highlight", Name, true);
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\SOFTWARE\\Borland\\C++Builder\\") + settingTag
+	           + L"\\Highlight", name, true);
 				return result;
 			}; /* ReadCPPB1 */
 
-			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* Attri, String key) -> bool 
+			auto ReadCPPB3OrMore = [&](String settingTag, TSynHighlighterAttributes* attri, String key) -> bool 
 			{
 				bool result = false;
-				result = Attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
+				result = attri->LoadFromBorlandRegistry(HKEY_CURRENT_USER, String(L"\\Software\\Borland\\C++Builder\\") + settingTag
 	           + L"\\Editor\\Highlight", key, false);
 				return result;
 			}; /* ReadCPPB3OrMore */ /* ReadCPPBSetting */
 			try
 			{
 				if(settingTag[1] == L'1')
-					result = ReadCPPB1(settingTag, Attri, key);
+					result = ReadCPPB1(settingTag, attri, key);
 				else
-					result = ReadCPPB3OrMore(settingTag, Attri, key);
+					result = ReadCPPB3OrMore(settingTag, attri, key);
 			}
 			catch(...)
 			{
@@ -2282,16 +2282,8 @@ void SynHighlighterCS_initialization()
 	
 	RegisterPlaceableHighlighter(__classid(TSynCSSyn));
 }
-class SynHighlighterCS_unit
-{
-public:
-	SynHighlighterCS_unit()
-	{
-		SynHighlighterCS_initialization();
-	}
-};
+// using unit initialization order file, so unit singleton has not been created
 
-SynHighlighterCS_unit _SynHighlighterCS_unit;
 
 }  // namespace SynHighlighterCS
 

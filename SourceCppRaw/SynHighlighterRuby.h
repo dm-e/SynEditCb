@@ -147,12 +147,12 @@ enum TtkTokenKind {tkComment,
                    tkString,
                    tkSymbol,
                    tkUnknown };
-enum TRangeState {rsUnKnown };
+enum TRangeState {rsUnknown };
 
 class TSynRubySyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TRangeState FRange;
+	TRangeState fRange;
 	TtkTokenKind FTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
@@ -162,7 +162,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fCommentAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSpaceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
-	TStrings* fKeywords;
+	TStrings* fKeyWords;
 	TStrings* fSecondKeys;
 	void __fastcall BraceOpenProc();
 	void __fastcall PointCommaProc();
@@ -193,7 +193,7 @@ public:
 	virtual void* __fastcall GetRange();
 	TtkTokenKind __fastcall GetTokenID();
 	virtual bool __fastcall IsKeyword(const String AKeyword);
-	bool __fastcall IsSecondKeyWord(String AToken);
+	bool __fastcall IsSecondKeyWord(String aToken);
 	virtual Synedithighlighter::TSynHighlighterAttributes* __fastcall GetTokenAttribute();
 	virtual int __fastcall GetTokenKind();
 	virtual void __fastcall Next();

@@ -184,7 +184,7 @@ private:
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar Maybe);
+	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
 	void __fastcall SymAsciiCharProc();
 	void __fastcall SymbolProc();
 	void __fastcall SymDollarProc();

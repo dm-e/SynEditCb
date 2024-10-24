@@ -11,7 +11,6 @@ using namespace d2c_system;
 using namespace Syneditmiscclasses;
 using namespace Synedittypes;
 using namespace Synunicode;
-using namespace System;
 using namespace System::Regularexpressions;
 using namespace System::Regularexpressionsapi;
 using namespace System::Regularexpressionscore;
@@ -45,8 +44,9 @@ void __fastcall TPerlRegExHelper::SetAdditionalPCREOptions(int PCREOptions)
 	/*# with Self do */
 	{
 		//auto with0 = m_Helped;
-		//with0->FPCREOptions = with0->FPCREOptions | PCREOptions;
-	// todo dme	m_Helped.FPCREOptions = m_Helped.FPCREOptions | PCREOptions;
+		int iPCREOptions = *(reinterpret_cast<int*>(&m_Helped.Options));
+		iPCREOptions |= PCREOptions;
+		m_Helped.Options = *(reinterpret_cast<TPerlRegExOptions*>(&iPCREOptions));
 	}
 }
 
@@ -65,9 +65,9 @@ void __fastcall TRegExHelper::SetAdditionalPCREOptions(int PCREOptions)
 {
 	/*# with Self do */
 	{
-//		auto& with0 = m_Helped;
-//		TPerlRegExHelper(*with0.FRegEx).SetAdditionalPCREOptions(PCREOptions);
-	// todo dme	TPerlRegExHelper(m_Helped.FRegEx).SetAdditionalPCREOptions(PCREOptions);
+		auto& with0 = m_Helped;
+		//with0.FRegEx.SetAdditionalPCREOptions(PCREOptions);
+		m_Helped.AddRawOptions(PCREOptions);   // todo dme guessed
 	}
 }
 
@@ -114,7 +114,7 @@ int __fastcall TSynEditRegexSearch::GetLength(int Index)
 String __fastcall TSynEditRegexSearch::GetPattern()
 {
 	String result;
-	result = FPattern;
+	result = fPattern;
 	return result;
 }
 
@@ -138,14 +138,14 @@ void __fastcall TSynEditRegexSearch::SetOptions(const TSynSearchOptions Value)
 		fOptions = Syneditregexsearch__3;
 	else
 		fOptions = Syneditregexsearch__4;
-	RegEx = TRegEx(FPattern, fOptions);
+	RegEx = TRegEx(fPattern, fOptions);
 	TRegExHelper(RegEx).SetAdditionalPCREOptions(PCRE_UCP);
 }
 
 void __fastcall TSynEditRegexSearch::SetPattern(const String Value)
 {
-	FPattern = Value;
-	RegEx = TRegEx(FPattern, fOptions);
+	fPattern = Value;
+	RegEx = TRegEx(fPattern, fOptions);
 	TRegExHelper(RegEx).SetAdditionalPCREOptions(PCRE_UCP);
 }
 

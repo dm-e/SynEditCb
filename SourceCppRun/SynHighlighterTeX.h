@@ -132,7 +132,7 @@ enum TtkTokenKind {tkBrace,
 class TSynTeXSyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	TtkTokenKind FTokenID;
+	TtkTokenKind fTokenID;
 	Synedithighlighter::TSynHighlighterAttributes* fTextAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fControlSequenceAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fMathmodeAttri;

@@ -11,8 +11,6 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
-using namespace System;
-using namespace System::Classes;
 using namespace System::Types;
 using namespace Vcl::Graphics;
 
@@ -31,17 +29,17 @@ bool __fastcall TSynRubySyn::IsKeyword(const String AKeyword)
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
-	Last = fKeywords->Count - 1;
+	Last = fKeyWords->Count - 1;
 	result = false;
 	Token = Sysutils::AnsiUpperCase(AKeyword);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(fKeywords->Strings[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(fKeyWords->Strings[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -50,30 +48,30 @@ bool __fastcall TSynRubySyn::IsKeyword(const String AKeyword)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
 } /* IsKeyWord */
 
-bool __fastcall TSynRubySyn::IsSecondKeyWord(String AToken)
+bool __fastcall TSynRubySyn::IsSecondKeyWord(String aToken)
 {
 	bool result = false;
 	int First = 0;
 	int Last = 0;
-	int i = 0;
+	int I = 0;
 	int Compare = 0;
 	String Token;
 	First = 0;
 	Last = fSecondKeys->Count - 1;
 	result = false;
-	Token = Sysutils::AnsiUpperCase(AToken);
+	Token = Sysutils::AnsiUpperCase(aToken);
 	while(First <= Last)
 	{
-		i = (First + Last) >> 1;
-		Compare = CompareStr(fSecondKeys->Strings[i], Token);
+		I = (First + Last) >> 1;
+		Compare = CompareStr(fSecondKeys->Strings[I], Token);
 		if(Compare == 0)
 		{
 			result = true;
@@ -82,9 +80,9 @@ bool __fastcall TSynRubySyn::IsSecondKeyWord(String AToken)
 		else
 		{
 			if(Compare < 0)
-				First = i + 1;
+				First = I + 1;
 			else
-				Last = i - 1;
+				Last = I - 1;
 		}
 	}
 	return result;
@@ -92,7 +90,7 @@ bool __fastcall TSynRubySyn::IsSecondKeyWord(String AToken)
 
 __fastcall TSynRubySyn::TSynRubySyn(TComponent* AOwner)
  : inherited(AOwner),
-			FRange(rsUnKnown),
+			fRange(rsUnknown),
 			FTokenID(tkComment),
 			fStringAttri(nullptr),
 			fSymbolAttri(nullptr),
@@ -102,14 +100,14 @@ __fastcall TSynRubySyn::TSynRubySyn(TComponent* AOwner)
 			fCommentAttri(nullptr),
 			fSpaceAttri(nullptr),
 			fIdentifierAttri(nullptr),
-			fKeywords(nullptr),
+			fKeyWords(nullptr),
 			fSecondKeys(nullptr)
 {
 	int i = 0;
-	FCaseSensitive = false;
-	fKeywords = new TStringList();
-	((TStringList*) fKeywords)->Sorted = true;
-	((TStringList*) fKeywords)->Duplicates = System::Types::dupIgnore;
+	fCaseSensitive = false;
+	fKeyWords = new TStringList();
+	((TStringList*) fKeyWords)->Sorted = true;
+	((TStringList*) fKeyWords)->Duplicates = System::Types::dupIgnore;
 	fSecondKeys = new TStringList();
 	((TStringList*) fSecondKeys)->Sorted = true;
 	((TStringList*) fSecondKeys)->Duplicates = System::Types::dupIgnore;
@@ -118,37 +116,37 @@ __fastcall TSynRubySyn::TSynRubySyn(TComponent* AOwner)
 		int stop = 0;
 		for(stop = RubyKeysCount, i = 1; i <= stop; i++)
 		{
-			fKeywords->Add(RubyKeys[i - 1]);
+			fKeyWords->Add(RubyKeys[i - 1]);
 		}
 	}
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clMaroon;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Foreground = (TColor) clBlue;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fSecondKeyAttri = new TSynHighlighterAttributes(SYNS_AttrSecondReservedWord, SYNS_FriendlyAttrSecondReservedWord);
-	addAttribute(fSecondKeyAttri);
+	AddAttribute(fSecondKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clGreen;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clPurple;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Foreground = (TColor) clBlue;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	fDefaultFilter = SYNS_FilterRuby;
 } /* Create */
 
 __fastcall TSynRubySyn::~TSynRubySyn()
 {
-	delete fKeywords;
+	delete fKeyWords;
 	delete fSecondKeys;
 	//# inherited::Destroy();
 } /* Destroy */
@@ -459,7 +457,7 @@ bool __fastcall TSynRubySyn::GetEol()
 void* __fastcall TSynRubySyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
@@ -518,12 +516,12 @@ int __fastcall TSynRubySyn::GetTokenKind()
 
 void __fastcall TSynRubySyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 void __fastcall TSynRubySyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynRubySyn::SetSecondKeys(TStrings* const Value)

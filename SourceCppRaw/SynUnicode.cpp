@@ -21,7 +21,7 @@ using namespace System::Sysutils;
 
 namespace Synunicode
 {
-#define Synunicode__0 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__0 (System::Set<Byte, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
@@ -33,21 +33,21 @@ namespace Synunicode
 										176 << 177 << 178 << 179 << 180 << 181 <<  \
 										182 << 183 << 184 << 185 << 186 << 187 <<  \
 										188 << 189 << 190 << 191)
-#define Synunicode__1 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__1 (System::Set<Byte, 0, 255>() <<  \
 										160 << 161 << 162 << 163 << 164 << 165 <<  \
 										166 << 167 << 168 << 169 << 170 << 171 <<  \
 										172 << 173 << 174 << 175 << 176 << 177 <<  \
 										178 << 179 << 180 << 181 << 182 << 183 <<  \
 										184 << 185 << 186 << 187 << 188 << 189 <<  \
 										190 << 191)
-#define Synunicode__2 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__2 (System::Set<Byte, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
 										146 << 147 << 148 << 149 << 150 << 151 <<  \
 										152 << 153 << 154 << 155 << 156 << 157 <<  \
 										158 << 159)
-#define Synunicode__3 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__3 (System::Set<Byte, 0, 255>() <<  \
 										144 << 145 << 146 << 147 << 148 << 149 <<  \
 										150 << 151 << 152 << 153 << 154 << 155 <<  \
 										156 << 157 << 158 << 159 << 160 << 161 <<  \
@@ -56,7 +56,7 @@ namespace Synunicode
 										174 << 175 << 176 << 177 << 178 << 179 <<  \
 										180 << 181 << 182 << 183 << 184 << 185 <<  \
 										186 << 187 << 188 << 189 << 190 << 191)
-#define Synunicode__4 (System::Set<unsigned char, 0, 255>() <<  \
+#define Synunicode__4 (System::Set<Byte, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143)
@@ -81,12 +81,12 @@ PWideChar __fastcall SynCharNext(PWideChar P, String& Element)
 	return result;
 }
 
-int __fastcall SynUniElementsCount(String s)
+int __fastcall SynUniElementsCount(String S)
 {
 	int result = 0;
 	PWideChar P = nullptr;
 	result = 0;
-	P = ustr2pwchar(s);
+	P = ustr2pwchar(S);
 	while((*P) != L'\x00')
 	{
 		P = ::CharNext(P);
@@ -112,14 +112,14 @@ void __fastcall StrSwapByteOrder(PWideChar Str)
 
 extern "C" __declspec(dllimport) /*# 'gdi32.dll' Name 'TranslateCharsetInfo'*/ BOOL __stdcall TranslateCharsetInfoEx(PDWORD lpSrc, TCharsetInfo& lpCs, DWORD dwFlags);
 
-TFontCharset __fastcall CharSetFromLocale(LCID Language)
+TFontCharSet __fastcall CharSetFromLocale(LCID Language)
 {
-	TFontCharset result = (TFontCharset) 0;
-	unsigned int cp = 0;
+	TFontCharSet result = (TFontCharSet) 0;
+	unsigned int CP = 0;
 	TCharsetInfo CSI = {};
-	cp = (unsigned int) CodePageFromLocale(Language);
-	TranslateCharsetInfoEx(((unsigned int*) ((void*) cp)), CSI, (DWORD) TCI_SRCCODEPAGE);
-	result = (TFontCharset) CSI.ciCharset;
+	CP = (unsigned int) CodePageFromLocale(Language);
+	TranslateCharsetInfoEx(((unsigned int*) ((void*) CP)), CSI, (DWORD) TCI_SRCCODEPAGE);
+	result = (TFontCharSet) CSI.ciCharset;
 	return result;
 }
 
@@ -396,12 +396,12 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 	auto TBytesEqual = [&](TBytes& A, TBytes& B, int Len) -> bool 
 	{
 		bool result = false;
-		int i = 0;
+		int I = 0;
 		int stop = 0;
 		result = true;
-		for(stop = Len - 1, i = 0; i <= stop; i++)
+		for(stop = Len - 1, I = 0; I <= stop; I++)
 		{
-			if(A[i] != B[i])
+			if(A[I] != B[I])
 				return false;
 		}
 		return result;

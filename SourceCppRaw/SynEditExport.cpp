@@ -46,33 +46,33 @@ __fastcall ESynEncoding::ESynEncoding(System::PResStringRec ResStringRec, int AH
 
 __fastcall TSynCustomExporter::TSynCustomExporter(TComponent* AOwner)
  : inherited(AOwner),
-			FBuffer(new TMemoryStream()),
+			fBuffer(new TMemoryStream()),
 			FCharSize(1),
 			fFirstAttribute(false),
 			FStreaming(false),
-			FBackgroundColor((TColor) 0),
-			FClipboardFormat(0),
+			fBackgroundColor((TColor) 0),
+			fClipboardFormat(0),
 			FEncoding(seUTF8),
 			fExportAsText(false),
-			FFont(nullptr),
+			fFont(nullptr),
 			fHighlighter(nullptr),
 			fLastBG((TColor) 0),
 			fLastFG((TColor) 0),
 			fUseBackground(false)
 {
-	FClipboardFormat = (UINT) CF_TEXT;
+	fClipboardFormat = (UINT) CF_TEXT;
 	FEncoding = seUTF8;
-	FFont = new TFont();
-	FBackgroundColor = (TColor) clWindow;
+	fFont = new TFont();
+	fBackgroundColor = (TColor) clWindow;
 	AssignFont(nullptr);
 	Clear();
-	FTitle = SYNS_Untitled;
+	fTitle = SYNS_Untitled;
 }
 
 __fastcall TSynCustomExporter::~TSynCustomExporter()
 {
-	delete FFont;
-	delete FBuffer;
+	delete fFont;
+	delete fBuffer;
 	//# inherited::Destroy();
 }
 
@@ -81,7 +81,7 @@ void __fastcall TSynCustomExporter::AddData(const String AText)
 	if(AText != L"")
 	{
 		WriteString(AText);
-		FBuffer->SetSize(FBuffer->Position);
+		fBuffer->SetSize(fBuffer->Position);
 	}
 }
 
@@ -94,27 +94,27 @@ void __fastcall TSynCustomExporter::AddDataNewLine(const String AText)
 void __fastcall TSynCustomExporter::AddNewLine()
 {
 	WriteString(WideCRLF);
-	FBuffer->SetSize(FBuffer->Position);
+	fBuffer->SetSize(fBuffer->Position);
 }
 
 void __fastcall TSynCustomExporter::AssignFont(TFont* Value)
 {
 	if(Value != nullptr)
-		FFont->Assign(Value);
+		fFont->Assign(Value);
 	else
 	{
-		FFont->Name = DefaultFontName();
-		FFont->Size = 10;
-		FFont->Color = (TColor) clWindowText;
-		FFont->Style = Syneditexport__0;
+		fFont->Name = DefaultFontName();
+		fFont->Size = 10;
+		fFont->Color = (TColor) clWindowText;
+		fFont->Style = Syneditexport__0;
 	}
 }
 
 void __fastcall TSynCustomExporter::Clear()
 {
-	FBuffer->Position = 0;
+	fBuffer->Position = 0;
   // Size is ReadOnly in Delphi 2
-	FBuffer->SetSize(0);
+	fBuffer->SetSize(0);
 	fLastStyle = Syneditexport__1;
 	fLastBG = (TColor) clWindow;
 	fLastFG = (TColor) clWindowText;
@@ -136,7 +136,7 @@ void __fastcall SetClipboardText(String Text)
 		Mem = GlobalAlloc((UINT) (GMEM_MOVEABLE | GMEM_DDESHARE), (SIZE_T) ((SLen + 1) * sizeof(WideChar)));
 		if(Mem != 0)
 		{
-			P = ((unsigned char*) GlobalLock(Mem));
+			P = ((Byte*) GlobalLock(Mem));
 			try
 			{
 				if(P != nullptr)
@@ -161,34 +161,34 @@ void __fastcall SetClipboardText(String Text)
 
 void __fastcall TSynCustomExporter::CopyToClipboard()
 {
-	const unsigned char Nulls[2/*# range 0..1*/] = {0, 0};
-	String s;
+	const Byte Nulls[2/*# range 0..1*/] = {0, 0};
+	String S;
 	if(fExportAsText)
 	{
-		FBuffer->Position = FBuffer->Size;
-		FBuffer->Write(&Nulls, FCharSize);
+		fBuffer->Position = fBuffer->Size;
+		fBuffer->Write(&Nulls, FCharSize);
 		switch(Encoding)
 		{
 			case seUTF16LE:
-			s = (wchar_t*) FBuffer->Memory /*# check length*/;
+			S = (wchar_t*) fBuffer->Memory /*# check length*/;
 			break;
 			case seUTF16BE:
 			{
-				s = (wchar_t*) FBuffer->Memory /*# check length*/;
-				StrSwapByteOrder(ustr2pwchar(s));
+				S = (wchar_t*) fBuffer->Memory /*# check length*/;
+				StrSwapByteOrder(ustr2pwchar(S));
 			}
 			break;
 			case seUTF8:
-			s = UTF8ToUnicodeString(((PAnsiChar) FBuffer->Memory));
+			S = UTF8ToUnicodeString(((PAnsiChar) fBuffer->Memory));
 			break;
 			case seAnsi:
-			s = UnicodeString((char*)FBuffer->Memory /*# check length*/);
+			S = UnicodeString((char*)fBuffer->Memory /*# check length*/);
 			break;
 			default:
 			  ;
 			break;
 		}
-		SetClipboardText(s);
+		SetClipboardText(S);
 	}
 	else
 	CopyToClipboardFormat(GetClipboardFormat());
@@ -204,13 +204,13 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 	if(hData != 0)
 		try
 		{
-			PtrData = ((unsigned char*) GlobalLock((HGLOBAL) hData));
+			PtrData = ((Byte*) GlobalLock((HGLOBAL) hData));
 			if(ASSIGNED(PtrData))
 			{
 				try
 				{
-					FBuffer->Position = 0;
-					FBuffer->Read((void**)PtrData, hDataSize - 1); // trailing #0
+					fBuffer->Position = 0;
+					fBuffer->Read((void**)PtrData, hDataSize - 1); // trailing #0
 				}
 				__finally
 				{
@@ -260,9 +260,9 @@ void __fastcall TSynCustomExporter::ExportRange(TStrings* ALines, const TBufferC
 		if((Start.Line == Stop.Line) && (Start.Char >= Stop.Char))
 			Abort();
     // initialization
-		FBuffer->Position = 0;
+		fBuffer->Position = 0;
     // Size is ReadOnly in Delphi 2
-		FBuffer->SetSize(Max(0x1000, (Stop.Line - Start.Line) * 128) * FCharSize);
+		fBuffer->SetSize(Max(0x1000, (Stop.Line - Start.Line) * 128) * FCharSize);
 		Highlighter->ResetRange();
     // export all the lines into fBuffer
 		fFirstAttribute = true;
@@ -293,7 +293,7 @@ void __fastcall TSynCustomExporter::ExportRange(TStrings* ALines, const TBufferC
 			FormatAfterLastAttribute();
 
     // insert header
-		insertData(0, GetHeader());
+		InsertData(0, GetHeader());
     // add footer
 		AddData(GetFooter());
 	}
@@ -311,14 +311,14 @@ void __fastcall TSynCustomExporter::FormatToken(String Token)
 int __fastcall TSynCustomExporter::GetBufferSize()
 {
 	int result = 0;
-	result = (int) FBuffer->Size;
+	result = (int) fBuffer->Size;
 	return result;
 }
 
 UINT __fastcall TSynCustomExporter::GetClipboardFormat()
 {
 	UINT result = 0;
-	result = FClipboardFormat;
+	result = fClipboardFormat;
 	return result;
 }
 
@@ -329,7 +329,7 @@ String __fastcall TSynCustomExporter::GetFormatName()
 	return result;
 }
 
-void __fastcall TSynCustomExporter::insertData(int APos, const String AText)
+void __fastcall TSynCustomExporter::InsertData(int APos, const String AText)
 {
 	int Size = 0;
 	int ToMove = 0;
@@ -338,31 +338,31 @@ void __fastcall TSynCustomExporter::insertData(int APos, const String AText)
 	Size = StringSize(AText);
 	if(Size > 0)
 	{
-		ToMove = (int) FBuffer->Position;
+		ToMove = (int) fBuffer->Position;
 		SizeNeeded = ToMove + Size;
-		if(FBuffer->Size < SizeNeeded)
+		if(fBuffer->Size < SizeNeeded)
       // Size is ReadOnly in Delphi 2
-			FBuffer->SetSize((SizeNeeded + 0x1800) & ~0xFFF); // increment in pages
-		Dest = ((unsigned char*) FBuffer->Memory);
+			fBuffer->SetSize((SizeNeeded + 0x1800) & ~0xFFF); // increment in pages
+		Dest = ((Byte*) fBuffer->Memory);
 		Dest += Size;
-		Move(FBuffer->Memory, Dest, ToMove);
-		FBuffer->Position = 0;
+		Move(fBuffer->Memory, Dest, ToMove);
+		fBuffer->Position = 0;
 		WriteString(AText);
-		FBuffer->Position = ToMove + Size;
-		FBuffer->SetSize(FBuffer->Position);
+		fBuffer->Position = ToMove + Size;
+		fBuffer->SetSize(fBuffer->Position);
 	}
 }
 
 String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 {
 	String result;
-	int i = 0;
+	int I = 0;
 	int ISrc = 0;
 	int IDest = 0;
 	int SrcLen = 0;
 	int DestLen = 0;
 	String Replace;
-	WideChar C = L'\0';
+	WideChar c = L'\0';
 	if(AToken != L"")
 	{
 		SrcLen = AToken.Length();
@@ -373,8 +373,8 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 		while(ISrc <= SrcLen)
 		{
 			int stop = 0;
-			C = AToken[ISrc];
-			Replace = ReplaceReservedChar(C);
+			c = AToken[ISrc];
+			Replace = ReplaceReservedChar(c);
 			if(Replace != L"")
 				++ISrc;
 			else
@@ -384,7 +384,7 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 					DestLen += 32;
 					result.SetLength(DestLen);
 				}
-				result[IDest] = C;
+				result[IDest] = c;
 				++ISrc;
 				++IDest;
 				continue;
@@ -394,9 +394,9 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 				DestLen += Max(32, IDest + Replace.Length() - DestLen);
 				result.SetLength(DestLen);
 			}
-			for(stop = Replace.Length(), i = 1; i <= stop; i++)
+			for(stop = Replace.Length(), I = 1; I <= stop; I++)
 			{
-				result[IDest] = Replace[i];
+				result[IDest] = Replace[I];
 				++IDest;
 			}
 		}
@@ -439,8 +439,8 @@ void __fastcall TSynCustomExporter::SaveToStream(TStream* Stream)
 			  ;
 			break;
 		}
-	FBuffer->Position = 0;
-	FBuffer->SaveToStream(Stream);
+	fBuffer->Position = 0;
+	fBuffer->SaveToStream(Stream);
 }
 
 void __fastcall TSynCustomExporter::SetEncoding(TSynEncoding Value)
@@ -484,18 +484,18 @@ void __fastcall TSynCustomExporter::SetHighlighter(TSynCustomHighlighter* Value)
 		fHighlighter = Value;
 		Clear();
 		if(ASSIGNED(fHighlighter) && ASSIGNED(fHighlighter->WhitespaceAttribute) && fUseBackground)
-			FBackgroundColor = fHighlighter->WhitespaceAttribute->Background;
+			fBackgroundColor = fHighlighter->WhitespaceAttribute->Background;
 	}
 }
 
 void __fastcall TSynCustomExporter::SetTitle(const String Value)
 {
-	if(FTitle != Value)
+	if(fTitle != Value)
 	{
 		if(Value != L"")
-			FTitle = Value;
+			fTitle = Value;
 		else
-			FTitle = SYNS_Untitled;
+			fTitle = SYNS_Untitled;
 	}
 }
 
@@ -517,15 +517,15 @@ void __fastcall TSynCustomExporter::SetTokenAttribute(TSynHighlighterAttributes*
 	if(fFirstAttribute)
 	{
 		fFirstAttribute = false;
-		fLastBG = ValidatedColor(Attri->Background, FBackgroundColor);
-		fLastFG = ValidatedColor(Attri->Foreground, FFont->Color);
+		fLastBG = ValidatedColor(Attri->Background, fBackgroundColor);
+		fLastFG = ValidatedColor(Attri->Foreground, fFont->Color);
 		fLastStyle = Attri->Style;
-		FormatBeforeFirstAttribute(UseBackground && (fLastBG != FBackgroundColor), fLastFG != FFont->Color, Attri->Style);
+		FormatBeforeFirstAttribute(UseBackground && (fLastBG != fBackgroundColor), fLastFG != fFont->Color, Attri->Style);
 	}
 	else
 	{
-		ChangedBG = UseBackground && (fLastBG != ValidatedColor(Attri->Background, FBackgroundColor));
-		ChangedFG = (fLastFG != ValidatedColor(Attri->Foreground, FFont->Color));
+		ChangedBG = UseBackground && (fLastBG != ValidatedColor(Attri->Background, fBackgroundColor));
+		ChangedFG = (fLastFG != ValidatedColor(Attri->Foreground, fFont->Color));
     // which font style bits are to be reset?
 		ChangedStyles = fLastStyle - Attri->Style;
 		if(ChangedBG || ChangedFG || (fLastStyle != Attri->Style))
@@ -533,8 +533,8 @@ void __fastcall TSynCustomExporter::SetTokenAttribute(TSynHighlighterAttributes*
 			FormatAttributeDone(ChangedBG, ChangedFG, ChangedStyles);
       // which font style bits are to be set?
 			ChangedStyles = Attri->Style - fLastStyle;
-			fLastBG = ValidatedColor(Attri->Background, FBackgroundColor);
-			fLastFG = ValidatedColor(Attri->Foreground, FFont->Color);
+			fLastBG = ValidatedColor(Attri->Background, fBackgroundColor);
+			fLastFG = ValidatedColor(Attri->Foreground, fFont->Color);
 			fLastStyle = Attri->Style;
 			FormatAttributeInit(ChangedBG, ChangedFG, ChangedStyles);
 		}
@@ -545,7 +545,7 @@ void __fastcall TSynCustomExporter::SetUseBackground(bool Value)
 {
 	fUseBackground = Value;
 	if(ASSIGNED(fHighlighter) && ASSIGNED(fHighlighter->WhitespaceAttribute) && fUseBackground)
-		FBackgroundColor = fHighlighter->WhitespaceAttribute->Background;
+		fBackgroundColor = fHighlighter->WhitespaceAttribute->Background;
 }
 
 int __fastcall TSynCustomExporter::StringSize(const String AText)
@@ -580,22 +580,22 @@ void __fastcall TSynCustomExporter::WriteString(const String AText)
 		case seUTF8:
 		{
 			UTF8Str = UTF8Encode(AText);
-			FBuffer->WriteBuffer(astr2pchar(UTF8Str, 1 - 1), UTF8Str.Length());
+			fBuffer->WriteBuffer(astr2pchar(UTF8Str, 1 - 1), UTF8Str.Length());
 		}
 		break;
 		case seUTF16LE:
-		FBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
+		fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		break;
 		case seUTF16BE:
 		{
 			StrSwapByteOrder(ustr2pwchar(AText));
-			FBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
+			fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		}
 		break;
 		case seAnsi:
 		{
 			AnsiStr = AnsiString(AText.c_str());
-			FBuffer->WriteBuffer(astr2pchar(AnsiStr, 1 - 1), AnsiStr.Length());
+			fBuffer->WriteBuffer(astr2pchar(AnsiStr, 1 - 1), AnsiStr.Length());
 		}
 		break;
 		default:

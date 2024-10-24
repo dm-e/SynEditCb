@@ -31,9 +31,9 @@ namespace Synhighlighterdws
 										77 << 78 << 79 << 80 << 81 << 82 <<  \
 										83 << 84 << 85 << 86 << 87 << 88 <<  \
 										89 << 90)
-#define Synhighlighterdws__7 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsDirective << rsDirectiveAsm)
-#define Synhighlighterdws__8 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsBorAsm << rsDirectiveAsm)
-#define Synhighlighterdws__9 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown>() << rsProperty << rsExports)
+#define Synhighlighterdws__7 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsDirective << rsDirectiveAsm)
+#define Synhighlighterdws__8 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsBorAsm << rsDirectiveAsm)
+#define Synhighlighterdws__9 (System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown>() << rsProperty << rsExports)
 #define Synhighlighterdws__10 (System::Set<TtkTokenKind, TtkTokenKind::tkAsm, TtkTokenKind::tkChar>() << tkNull << tkComment << tkDirec << tkSpace)
 #define Synhighlighterdws__11 (TRangeStates() << rsAnsi)
 #define Synhighlighterdws__12 (TRangeStates() << rsAsm << rsAnsiAsm << rsBorAsm << rsDirectiveAsm)
@@ -90,12 +90,12 @@ int __fastcall TAnsiStringList::CompareStrings(const String S1, const String S2)
 __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
  : inherited(AOwner),
 			fAsmStart(false),
-			FRange(rsANil),
+			fRange(rsANil),
 			fCommentClose(L'\0'),
-			fKeywords(nullptr),
+			fKeyWords(nullptr),
 			FKeywordsPropertyScoped(nullptr),
 			FKeywordsTypeScoped(nullptr),
-			FTokenID(tkAsm),
+			fTokenID(tkAsm),
 			fStringAttri(nullptr),
 			fCharAttri(nullptr),
 			fNumberAttri(nullptr),
@@ -109,49 +109,50 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 			fIdentifierAttri(nullptr),
 			fSpaceAttri(nullptr)
 {
-	FCaseSensitive = true; // bypass automatic lowercase, we handle it here
+	fCaseSensitive = true; // bypass automatic lowercase, we handle it here
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
 	fAsmAttri->Foreground = (TColor) RGB(128, 0, 0);
-	addAttribute(fAsmAttri);
+	AddAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clGreen;
 	fCommentAttri->Style = Synhighlighterdws__0;
-	addAttribute(fCommentAttri);
+	AddAttribute(fCommentAttri);
 	fDirecAttri = new TSynHighlighterAttributes(SYNS_AttrPreprocessor, SYNS_FriendlyAttrPreprocessor);
 	fDirecAttri->Foreground = ((TColor) 0x808000);
 	fDirecAttri->Style = Synhighlighterdws__1;
-	addAttribute(fDirecAttri);
+	AddAttribute(fDirecAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	addAttribute(fIdentifierAttri);
+	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterdws__2;
-	addAttribute(fKeyAttri);
+	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
 	fNumberAttri->Foreground = (TColor) clBlue;
-	addAttribute(fNumberAttri);
+	AddAttribute(fNumberAttri);
 	fFloatAttri = new TSynHighlighterAttributes(SYNS_AttrFloat, SYNS_FriendlyAttrFloat);
 	fFloatAttri->Foreground = (TColor) clBlue;
-	addAttribute(fFloatAttri);
+	AddAttribute(fFloatAttri);
 	fHexAttri = new TSynHighlighterAttributes(SYNS_AttrHexadecimal, SYNS_FriendlyAttrHexadecimal);
 	fHexAttri->Foreground = (TColor) clBlue;
-	addAttribute(fHexAttri);
+	AddAttribute(fHexAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
-	addAttribute(fSpaceAttri);
+	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
 	fStringAttri->Foreground = (TColor) clBlue;
-	addAttribute(fStringAttri);
+	AddAttribute(fStringAttri);
 	fCharAttri = new TSynHighlighterAttributes(SYNS_AttrCharacter, SYNS_FriendlyAttrCharacter);
 	fCharAttri->Foreground = (TColor) clBlue;
-	addAttribute(fCharAttri);
+	AddAttribute(fCharAttri);
 	fSymbolAttri = new TSynHighlighterAttributes(SYNS_AttrSymbol, SYNS_FriendlyAttrSymbol);
 	fSymbolAttri->Foreground = (TColor) clNavy;
-	addAttribute(fSymbolAttri);
+	AddAttribute(fSymbolAttri);
 	SetAttributesOnChange(DefHighlightChange);
-	fKeywords = new TAnsiStringList();
+	fKeyWords = new TAnsiStringList();
 	FKeywordsPropertyScoped = new TAnsiStringList();
 	FKeywordsTypeScoped = new TAnsiStringList();
 	InitIdent();
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
+	fAsmStart = false;
 	fDefaultFilter = SYNS_FilterDWS;
 
 //++ CodeFolding
@@ -167,7 +168,7 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 __fastcall TSynDWSSyn::~TSynDWSSyn()
 {
 	// inherited;
-	delete fKeywords;
+	delete fKeyWords;
 	delete FKeywordsPropertyScoped;
 	delete FKeywordsTypeScoped;
 }
@@ -175,14 +176,14 @@ __fastcall TSynDWSSyn::~TSynDWSSyn()
 unsigned int __fastcall TSynDWSSyn::HashKey(PWideChar Str)
 {
 	unsigned int result = 0;
-	WORD C = 0;
+	WORD c = 0;
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		C = (WORD) int((*Str));
-		if(Synhighlighterdws__6.Contains(C))
-			C = (WORD) (C + (int(L'a') - int(L'A')));
-		result = (unsigned int) (result * 692 + C * 171);
+		c = (WORD) int((*Str));
+		if(Synhighlighterdws__6.Contains(c))
+			c = (WORD) (c + (int(L'a') - int(L'A')));
+		result = (unsigned int) (result * 692 + c * 171);
 		++Str;
 	}
 	fStringLen = Str - fToIdent;
@@ -190,14 +191,14 @@ unsigned int __fastcall TSynDWSSyn::HashKey(PWideChar Str)
 	return result;
 }
 
-TtkTokenKind __fastcall TSynDWSSyn::IdentKind(PWideChar Maybe)
+TtkTokenKind __fastcall TSynDWSSyn::IdentKind(PWideChar MayBe)
 {
 	TtkTokenKind result = tkAsm;
-	unsigned int key = 0;
-	fToIdent = Maybe;
-	key = HashKey(Maybe);
-	if(key <= 388 /*# High(fIdentFuncTable) */)
-		result = fIdentFuncTable[key]();
+	unsigned int Key = 0;
+	fToIdent = MayBe;
+	Key = HashKey(MayBe);
+	if(Key <= 388 /*# High(fIdentFuncTable) */)
+		result = fIdentFuncTable[Key]();
 	else
 		result = tkIdentifier;
 	return result;
@@ -206,18 +207,18 @@ TtkTokenKind __fastcall TSynDWSSyn::IdentKind(PWideChar Maybe)
 void __fastcall TSynDWSSyn::InitIdent()
 {
 
-	auto SetIdentFunc = [&](int h, const TIdentFuncTableFunc Func) -> void 
+	auto SetIdentFunc = [&](int h, const TIdentFuncTableFunc func) -> void 
 	{
-		fIdentFuncTable[h] = Func;
+		fIdentFuncTable[h] = func;
 	};
 	int i = 0;
 	int stop = 0;
-	for(stop = 95 /*# High(cKeyWords) */, i = 1 /*# Low(cKeyWords) */; i <= stop; i++)
+	for(stop = 95 /*# High(cKeywords) */, i = 1 /*# Low(cKeywords) */; i <= stop; i++)
 	{
 		SetIdentFunc((int) HashKey(&((String)cKeyWords[i - 1])[1]), KeyWordFunc);
-		fKeywords->Add(cKeyWords[i - 1]);
+		fKeyWords->Add(cKeyWords[i - 1]);
 	}
-	for(stop = 4 /*# High(cKeyWordsPropertyScoped) */, i = 0; i <= stop; i++)
+	for(stop = 4 /*# High(cKeywordsPropertyScoped) */, i = 0; i <= stop; i++)
 	{
 		SetIdentFunc((int) HashKey(&((String)cKeyWordsPropertyScoped[i])[1]), FuncPropertyScoped);
 		FKeywordsPropertyScoped->Add(cKeyWordsPropertyScoped[i]);
@@ -236,7 +237,7 @@ void __fastcall TSynDWSSyn::InitIdent()
 	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"end")), FuncEnd);
 	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"property")), FuncProperty);
 	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"type")), FuncType);
-	fKeywords->Sorted = true;
+	fKeyWords->Sorted = true;
 }
 
 TtkTokenKind __fastcall TSynDWSSyn::AltFunc()
@@ -249,9 +250,9 @@ TtkTokenKind __fastcall TSynDWSSyn::AltFunc()
 TtkTokenKind __fastcall TSynDWSSyn::KeyWordFunc()
 {
 	TtkTokenKind result = tkAsm;
-	String Buf;
-	SetString(Buf, fToIdent, fStringLen);
-	if((fKeywords->IndexOf(Buf) >= 0) && (fLine[Run - 1] != L'&'))
+	String buf;
+	SetString(buf, fToIdent, fStringLen);
+	if((fKeyWords->IndexOf(buf) >= 0) && (fLine[Run - 1] != L'&'))
 		result = tkKey;
 	else
 		result = tkIdentifier;
@@ -264,7 +265,7 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncAsm()
 	if(IsCurrentToken(L"asm"))
 	{
 		result = tkKey;
-		FRange = rsAsm;
+		fRange = rsAsm;
 		fAsmStart = true;
 	}
 	else
@@ -280,7 +281,7 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncEnd()
 		if(fLine[Run - 1] != L'&')
 		{
 			result = tkKey;
-			FRange = rsUnKnown;
+			fRange = rsUnknown;
 		}
 		else
 		result = tkIdentifier;
@@ -293,9 +294,9 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncEnd()
 TtkTokenKind __fastcall TSynDWSSyn::FuncTypeScoped()
 {
 	TtkTokenKind result = tkAsm;
-	String Buf;
-	SetString(Buf, fToIdent, fStringLen);
-	if((FRange == rsType) && (FKeywordsTypeScoped->IndexOf(Buf) >= 0))
+	String buf;
+	SetString(buf, fToIdent, fStringLen);
+	if((fRange == rsType) && (FKeywordsTypeScoped->IndexOf(buf) >= 0))
 		result = tkKey;
 	else
 		result = KeyWordFunc();
@@ -310,7 +311,7 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncType()
 		if(fLine[Run - 1] != L'&')
 		{
 			result = tkKey;
-			FRange = rsType;
+			fRange = rsType;
 		}
 		else
 		result = tkIdentifier;
@@ -323,9 +324,9 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncType()
 TtkTokenKind __fastcall TSynDWSSyn::FuncPropertyScoped()
 {
 	TtkTokenKind result = tkAsm;
-	String Buf;
-	SetString(Buf, fToIdent, fStringLen);
-	if((FRange == rsProperty) && (FKeywordsPropertyScoped->IndexOf(Buf) >= 0))
+	String buf;
+	SetString(buf, fToIdent, fStringLen);
+	if((fRange == rsProperty) && (FKeywordsPropertyScoped->IndexOf(buf) >= 0))
 		result = tkKey;
 	else
 		result = KeyWordFunc();
@@ -338,7 +339,7 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncProperty()
 	if(IsCurrentToken(L"property"))
 	{
 		result = tkKey;
-		FRange = rsProperty;
+		fRange = rsProperty;
 	}
 	else
 	result = KeyWordFunc();
@@ -347,7 +348,7 @@ TtkTokenKind __fastcall TSynDWSSyn::FuncProperty()
 
 void __fastcall TSynDWSSyn::AddressOpProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(fLine[Run] == L'@')
 		++Run;
@@ -373,7 +374,7 @@ void __fastcall TSynDWSSyn::AsciiCharProc()
 		}
 		return result;
 	};
-	FTokenID = tkChar;
+	fTokenID = tkChar;
 	++Run;
 	if(fLine[Run] == L'\'')
 		StringAposMultiProc();
@@ -399,19 +400,19 @@ void __fastcall TSynDWSSyn::BorProc()
 		break;
 		default:
 		{
-			if(Synhighlighterdws__7.Contains(FRange))
-				FTokenID = tkDirec;
+			if(Synhighlighterdws__7.Contains(fRange))
+				fTokenID = tkDirec;
 			else
-				FTokenID = tkComment;
+				fTokenID = tkComment;
 			do
 			{
 				if(fLine[Run] == L'}')
 				{
 					++Run;
-					if(Synhighlighterdws__8.Contains(FRange))
-						FRange = rsAsm;
+					if(Synhighlighterdws__8.Contains(fRange))
+						fRange = rsAsm;
 					else
-						FRange = rsUnKnown;
+						fRange = rsUnknown;
 					break;
 				}
 				++Run;
@@ -426,24 +427,24 @@ void __fastcall TSynDWSSyn::BraceOpenProc()
 {
 	if(fLine[Run + 1] == L'$')
 	{
-		if(FRange == rsAsm)
-			FRange = rsDirectiveAsm;
+		if(fRange == rsAsm)
+			fRange = rsDirectiveAsm;
 		else
-			FRange = rsDirective;
+			fRange = rsDirective;
 	}
 	else
 	{
-		if(FRange == rsAsm)
-			FRange = rsBorAsm;
+		if(fRange == rsAsm)
+			fRange = rsBorAsm;
 		else
-			FRange = rsBor;
+			fRange = rsBor;
 	}
 	BorProc();
 }
 
 void __fastcall TSynDWSSyn::ColonOrGreaterProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if(fLine[Run] == L'=')
 		++Run;
@@ -451,7 +452,7 @@ void __fastcall TSynDWSSyn::ColonOrGreaterProc()
 
 void __fastcall TSynDWSSyn::CRProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 	if(fLine[Run] == L'\x0a')
 		++Run;
@@ -459,7 +460,7 @@ void __fastcall TSynDWSSyn::CRProc()
 
 void __fastcall TSynDWSSyn::IdentProc()
 {
-	FTokenID = IdentKind(fLine + Run);
+	fTokenID = IdentKind(fLine + Run);
 	Run += fStringLen;
 	while(IsIdentChar(fLine[Run]))
 		++Run;
@@ -485,14 +486,14 @@ void __fastcall TSynDWSSyn::IntegerProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkHex;
+	fTokenID = tkHex;
 	while(IsIntegerChar())
 		++Run;
 }
 
 void __fastcall TSynDWSSyn::LFProc()
 {
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	++Run;
 }
 
@@ -501,18 +502,18 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 
 	auto AddKeyword = [&](const String AName) -> void 
 	{
-		int i = 0;
-		i = (int) HashKey(ustr2pwchar(AName, 1 - 1));
-		fIdentFuncTable[i] = KeyWordFunc;
-		fKeywords->Add(AName);
+		int I = 0;
+		I = (int) HashKey(ustr2pwchar(AName, 1 - 1));
+		fIdentFuncTable[I] = KeyWordFunc;
+		fKeyWords->Add(AName);
 	};
 
 	auto RemoveKeyword = [&](const String AName) -> void 
 	{
-		int i = 0;
-		i = fKeywords->IndexOf(AName);
-		if(i != -1)
-			fKeywords->Delete(i);
+		int I = 0;
+		I = fKeyWords->IndexOf(AName);
+		if(I != -1)
+			fKeyWords->Delete(I);
 	};
 	const int clID = clNavy;
 	const int clString = clBlue;
@@ -545,7 +546,7 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 
 void __fastcall TSynDWSSyn::LowerProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if((fLine[Run] == L'=') || (fLine[Run] == L'>'))
 		++Run;
@@ -553,7 +554,7 @@ void __fastcall TSynDWSSyn::LowerProc()
 
 void __fastcall TSynDWSSyn::NullProc()
 {
-	FTokenID = tkNull;
+	fTokenID = tkNull;
 	++Run;
 }
 
@@ -580,7 +581,7 @@ void __fastcall TSynDWSSyn::NumberProc()
 		return result;
 	};
 	++Run;
-	FTokenID = tkNumber;
+	fTokenID = tkNumber;
 	while(IsNumberChar())
 	{
 		switch(fLine[Run])
@@ -589,16 +590,16 @@ void __fastcall TSynDWSSyn::NumberProc()
 			if(fLine[Run + 1] == L'.')
 				goto label0;
 			else
-				FTokenID = tkFloat;
+				fTokenID = tkFloat;
 			break;
 			case L'e':
 			case L'E':
-			FTokenID = tkFloat;
+			fTokenID = tkFloat;
 			break;
 			case L'-':
 			case L'+':
 			{
-				if(FTokenID != tkFloat)
+				if(fTokenID != tkFloat)
 					goto label1;
 				if((fLine[Run - 1] != L'e') && (fLine[Run - 1] != L'E'))
 					goto label2; //float, but it ends here
@@ -617,7 +618,7 @@ void __fastcall TSynDWSSyn::NumberProc()
 
 void __fastcall TSynDWSSyn::PointProc()
 {
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 	++Run;
 	if((fLine[Run] == L'.') || (fLine[Run - 1] == L')'))
 		++Run;
@@ -637,16 +638,16 @@ void __fastcall TSynDWSSyn::AnsiProc()
 		CRProc();
 		break;
 		default:
-		FTokenID = tkComment;
+		fTokenID = tkComment;
 		do
 		{
 			if((fLine[Run] == L'*') && (fLine[Run + 1] == fCommentClose))
 			{
 				Run += 2;
-				if(FRange == rsAnsiAsm)
-					FRange = rsAsm;
+				if(fRange == rsAnsiAsm)
+					fRange = rsAsm;
 				else
-					FRange = rsUnKnown;
+					fRange = rsUnknown;
 				break;
 			}
 			++Run;
@@ -664,11 +665,11 @@ void __fastcall TSynDWSSyn::RoundOpenProc()
 		case L'*':
 		{
 			++Run;
-			if(FRange == rsAsm)
-				FRange = rsAnsiAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiAsm;
 			else
-				FRange = rsAnsi;
-			FTokenID = tkComment;
+				fRange = rsAnsi;
+			fTokenID = tkComment;
 			fCommentClose = L')';
 			if(!IsLineEnd(Run))
 				AnsiProc();
@@ -677,21 +678,21 @@ void __fastcall TSynDWSSyn::RoundOpenProc()
 		case L'.':
 		{
 			++Run;
-			FTokenID = tkSymbol;
+			fTokenID = tkSymbol;
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		break;
 	}
 }
 
-void __fastcall TSynDWSSyn::SemiColonProc()
+void __fastcall TSynDWSSyn::SemicolonProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
-	if(Synhighlighterdws__9.Contains(FRange))
-		FRange = rsUnKnown;
+	fTokenID = tkSymbol;
+	if(Synhighlighterdws__9.Contains(fRange))
+		fRange = rsUnknown;
 }
 
 void __fastcall TSynDWSSyn::SlashProc()
@@ -701,7 +702,7 @@ void __fastcall TSynDWSSyn::SlashProc()
 	{
 		case L'/':
 		{
-			FTokenID = tkComment;
+			fTokenID = tkComment;
 			do
 			{
 				++Run;
@@ -712,18 +713,18 @@ void __fastcall TSynDWSSyn::SlashProc()
 		case L'*':
 		{
 			++Run;
-			if(FRange == rsAsm)
-				FRange = rsAnsiAsm;
+			if(fRange == rsAsm)
+				fRange = rsAnsiAsm;
 			else
-				FRange = rsAnsi;
-			FTokenID = tkComment;
+				fRange = rsAnsi;
+			fTokenID = tkComment;
 			fCommentClose = L'/';
 			if(!IsLineEnd(Run))
 				AnsiProc();
 		}
 		break;
 		default:
-		FTokenID = tkSymbol;
+		fTokenID = tkSymbol;
 		break;
 	}
 }
@@ -731,14 +732,14 @@ void __fastcall TSynDWSSyn::SlashProc()
 void __fastcall TSynDWSSyn::SpaceProc()
 {
 	++Run;
-	FTokenID = tkSpace;
+	fTokenID = tkSpace;
 	while((fLine[Run] <= L'\x20') && !IsLineEnd(Run))
 		++Run;
 }
 
 void __fastcall TSynDWSSyn::StringAposProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	++Run;
 	while(!IsLineEnd(Run))
 	{
@@ -754,10 +755,10 @@ void __fastcall TSynDWSSyn::StringAposProc()
 
 void __fastcall TSynDWSSyn::StringAposMultiProc()
 {
-	FTokenID = tkString;
+	fTokenID = tkString;
 	if((Run > 0) || IsLineEnd(Run + 1))
 		++Run;
-	FRange = rsHereDocSingle;
+	fRange = rsHereDocSingle;
 	while(!IsLineEnd(Run))
 	{
 		if(fLine[Run] == L'\'')
@@ -765,7 +766,7 @@ void __fastcall TSynDWSSyn::StringAposMultiProc()
 			++Run;
 			if(fLine[Run] != L'\'')
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 		}
@@ -775,10 +776,10 @@ void __fastcall TSynDWSSyn::StringAposMultiProc()
 
 void __fastcall TSynDWSSyn::StringQuoteProc()
 {
-	FTokenID = tkString;
-	if(FRange != rsHereDocDouble)
+	fTokenID = tkString;
+	if(fRange != rsHereDocDouble)
 	{
-		FRange = rsHereDocDouble;
+		fRange = rsHereDocDouble;
 		++Run;
 	}
 	else
@@ -796,7 +797,7 @@ void __fastcall TSynDWSSyn::StringQuoteProc()
 			++Run;
 			if(fLine[Run] != L'\"')
 			{
-				FRange = rsUnKnown;
+				fRange = rsUnknown;
 				break;
 			}
 		}
@@ -807,20 +808,20 @@ void __fastcall TSynDWSSyn::StringQuoteProc()
 void __fastcall TSynDWSSyn::SymbolProc()
 {
 	++Run;
-	FTokenID = tkSymbol;
+	fTokenID = tkSymbol;
 }
 
 void __fastcall TSynDWSSyn::UnknownProc()
 {
 	++Run;
-	FTokenID = tkUnknown;
+	fTokenID = tkUnknown;
 }
 
 void __fastcall TSynDWSSyn::Next()
 {
 	fAsmStart = false;
 	fTokenPos = Run;
-	switch(FRange)
+	switch(fRange)
 	{
 		case rsAnsi:
 		case rsAnsiAsm:
@@ -903,7 +904,7 @@ void __fastcall TSynDWSSyn::Next()
 					PointProc();
 					break;
 					case L';':
-					SemiColonProc();
+					SemicolonProc();
 					break;
 					case L'/':
 					SlashProc();
@@ -981,10 +982,10 @@ bool __fastcall TSynDWSSyn::GetEol()
 TtkTokenKind __fastcall TSynDWSSyn::GetTokenID()
 {
 	TtkTokenKind result = tkAsm;
-	if(!fAsmStart && (FRange == rsAsm) && !(Synhighlighterdws__10.Contains(FTokenID)))
+	if(!fAsmStart && (fRange == rsAsm) && !(Synhighlighterdws__10.Contains(fTokenID)))
 		result = tkAsm;
 	else
-		result = FTokenID;
+		result = fTokenID;
 	return result;
 }
 
@@ -1049,12 +1050,12 @@ int __fastcall TSynDWSSyn::GetTokenKind()
 void* __fastcall TSynDWSSyn::GetRange()
 {
 	void* result = nullptr;
-	result = ((void*) FRange);
+	result = ((void*) fRange);
 	return result;
 }
 
 //++ CodeFolding
-typedef System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnKnown> TRangeStates;
+typedef System::Set<TRangeState, TRangeState::rsANil, TRangeState::rsUnknown> TRangeStates;
 const int FT_Standard = 1;  // begin end, class end, record end
 const int FT_Comment = 11;
 const int FT_Asm = 12;
@@ -1112,17 +1113,17 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 8)) == L"{$REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 8)) == L"{$REGION")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 11)) == L"{$ENDREGION")
+			if(UpperCase(S.SubString(1, 11)) == L"{$ENDREGION")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -1134,17 +1135,17 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	auto ConditionalDirective = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 7)) == L"{$IFDEF")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 7)) == L"{$IFDEF")
 		{
 			FoldRanges->StartFoldRange(Line + 1, FT_ConditionalDirective);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 7)) == L"{$ENDIF")
+			if(UpperCase(S.SubString(1, 7)) == L"{$ENDIF")
 			{
 				FoldRanges->StopFoldRange(Line + 1, FT_ConditionalDirective);
 				result = true;
@@ -1319,12 +1320,12 @@ void __fastcall TSynDWSSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 
 void __fastcall TSynDWSSyn::SetRange(void* Value)
 {
-	FRange = (TRangeState)(NativeInt)Value;
+	fRange = (TRangeState)(NativeInt)Value;
 }
 
 void __fastcall TSynDWSSyn::ResetRange()
 {
-	FRange = rsUnKnown;
+	fRange = rsUnknown;
 }
 
 String __fastcall TSynDWSSyn::GetSampleSource()
@@ -1336,7 +1337,7 @@ String __fastcall TSynDWSSyn::GetSampleSource()
 	           L"  Number, I, X: Integer;\x0d\x0a"
 	           L"begin\x0d\x0a"
 	           L"  Number := 123456;\x0d\x0a"
-	           L"  Caption := 'The Number is' + #32 + IntToStr(Number);\x0d\x0a"
+			   L"  Caption := 'The Number is' + \" + IntToStr(Number);\x0d\x0a"
 	           L"  for I := 0 to Number do\x0d\x0a"
 	           L"  begin\x0d\x0a"
 	           L"    Inc(X);\x0d\x0a"
@@ -1384,20 +1385,20 @@ bool __fastcall TSynDWSSyn::IsCurrentToken(const String Token)
 {
 	bool result = false;
 	int i = 0;
-	PWideChar Temp = nullptr;
-	Temp = fToIdent;
+	PWideChar temp = nullptr;
+	temp = fToIdent;
 	if(Token.Length() == fStringLen)
 	{
 		int stop = 0;
 		result = true;
 		for(stop = fStringLen, i = 1; i <= stop; i++)
 		{
-			if(((*Temp) != Token[i]) && (((*Temp) > L'z') || (UpCase((*Temp)) != UpCase(Token[i]))))
+			if(((*temp) != Token[i]) && (((*temp) > L'z') || (UpCase((*temp)) != UpCase(Token[i]))))
 			{
 				result = false;
 				break;
 			}
-			++Temp;
+			++temp;
 		}
 	}
 	else

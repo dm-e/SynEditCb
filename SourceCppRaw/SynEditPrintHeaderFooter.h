@@ -254,7 +254,7 @@ public:
 private:
 	String FText;
 	TFont* FFont;
-	int fLineNumber;
+	int FLineNumber;
 	TAlignment FAlignment;
         /*Used to store the original Index when the item was added - the index
          might change when the list is sorted*/
@@ -265,13 +265,13 @@ private:
 public:
 	__fastcall THeaderFooterItem();
 	virtual __fastcall ~THeaderFooterItem();
-	String __fastcall GetText(int NumPages, int PageNum, bool Roman, String Title, String atime, String ADate);
+	String __fastcall GetText(int NumPages, int PageNum, bool Roman, String Title, String ATime, String ADate);
 	void __fastcall LoadFromStream(TStream* AStream);
 	void __fastcall SaveToStream(TStream* AStream);
 	__property TAlignment Alignment = { read = FAlignment, write = FAlignment };
 	__property String AsString = { read = GetAsString, write = SetAsString };
 	__property TFont* Font = { read = FFont, write = SetFont };
-	__property int LineNumber = { read = fLineNumber, write = fLineNumber };
+	__property int LineNumber = { read = FLineNumber, write = FLineNumber };
 	__property String Text = { read = FText, write = FText };
 };
 enum THeaderFooterType {hftHeader,
@@ -296,7 +296,7 @@ public:
 class THeaderFooter : public System::Classes::TPersistent
 {
 private:
-	THeaderFooterType fType; // Indicates if header or footer
+	THeaderFooterType FType; // Indicates if header or footer
 	Syneditprinttypes::TFrameTypes FFrameTypes;
 	TColor FShadedColor;
 	TColor FLineColor;
@@ -313,7 +313,7 @@ private:
 	TFont* FOldFont;
 	bool FRomanNumbers;
 	TList* FLineInfo;
-	int fLineCount;
+	int FLineCount;
 	bool FMirrorPosition;
 	void __fastcall SetDefaultFont(TFont* const Value);
 	void __fastcall DrawFrame(TCanvas* ACanvas);
