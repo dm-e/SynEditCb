@@ -5,8 +5,12 @@
 #include <Vcl.Forms.hpp>
 #include <Vcl.Themes.hpp>
 #include "uHighlighterProcs.h"
-USEFORM("Unit1.cpp", Form1);
-//---------------------------------------------------------------------------
+USEFORM("Unit1.cpp",Form1);
+
+
+
+//#pragma resource "*.res" 
+
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

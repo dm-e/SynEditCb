@@ -195,7 +195,7 @@ void __fastcall TSearchReplaceDemoForm::SynEditorReplaceText(TObject* Sender, co
 	TPoint APos = {};
 	TRect EditRect = {};
 	if(ASearch == AReplace)
-		Action = raSkip;
+		Action = TSynReplaceAction::raSkip;
 	else
 	{
 		APos = SynEditor->ClientToScreen(SynEditor->RowColumnToPixels(SynEditor->BufferToDisplayPos(BufferCoord(Column, Line))));
@@ -214,10 +214,10 @@ void __fastcall TSearchReplaceDemoForm::SynEditorReplaceText(TObject* Sender, co
 			Action = raReplaceAll;
 			break;
 			case mrNo:
-			Action = raSkip;
+			Action = TSynReplaceAction::raSkip;
 			break;
 			default:
-			Action = raCancel;
+			Action = TSynReplaceAction::raCancel;
 			break;
 		}
 	}
@@ -318,7 +318,8 @@ __fastcall TSearchReplaceDemoForm::TSearchReplaceDemoForm(TComponent* AOwner, in
 	ImageListMain = new TImageList(this);
 	// non-visible component: Left
 	// non-visible component: Top
-	ImageListMain->BITMAP = {
+ /* todo
+	ImageListMain->FBitmap = {
 					0x49,0x4C,0x01,0x01,0x05,0x00,0x09,0x00,0x04,0x00
 					,0x10,0x00,0x10,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x10
 					,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x42,0x4D
@@ -1182,6 +1183,7 @@ __fastcall TSearchReplaceDemoForm::TSearchReplaceDemoForm(TComponent* AOwner, in
 					,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 					,0x00,0x00,0x00,0x00
 					};
+                    */
 	OpenDialogFile = new TOpenDialog(this);
 	OpenDialogFile->Options = (TOpenOptions() << ofPathMustExist << ofFileMustExist << ofEnableSizing);
 	// non-visible component: Left

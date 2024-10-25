@@ -371,6 +371,7 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	Font->Style = (TFontStyles());
 	OnCreate = FormCreate;
 	OnDestroy = FormDestroy;
+	AssignFormPixelsPerInch(this, 96);
 	AssignFormTextHeight(this, 13);
 	ActionMainMenuBar1 = new TActionMainMenuBar(this);
 	ActionMainMenuBar1->Parent = this;
@@ -381,7 +382,7 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	ActionMainMenuBar1->UseSystemFont = false;
 	ActionMainMenuBar1->Caption = L"ActionMainMenuBar1";
 	ActionMainMenuBar1->Color = clMenuBar;
-	ActionMainMenuBar1->ColorMap->DisabledFontColor = 7171437;
+	ActionMainMenuBar1->ColorMap->DisabledFontColor = (TColor) 7171437;
 	ActionMainMenuBar1->ColorMap->HighlightColor = clWhite;
 	ActionMainMenuBar1->ColorMap->BtnSelectedFont = clBlack;
 	ActionMainMenuBar1->ColorMap->UnusedColor = clWhite;
@@ -391,11 +392,75 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	ActionMainMenuBar1->Font->Name = L"Segoe UI";
 	ActionMainMenuBar1->Font->Style = (TFontStyles());
 	ActionMainMenuBar1->Spacing = 0;
+	SynEdit1 = new TSynEdit(this);
+	SynEdit1->Parent = this;
+	SynEdit1->Left = 0;
+	SynEdit1->Top = 25;
+	SynEdit1->Width = 635;
+	SynEdit1->Height = 377;
+	SynEdit1->Align = alClient;
+	SynEdit1->Font->Charset = DEFAULT_CHARSET;
+	SynEdit1->Font->Color = clWindowText;
+	SynEdit1->Font->Height = -13;
+	SynEdit1->Font->Name = L"Consolas";
+	SynEdit1->Font->Pitch = TFontPitch::fpFixed;
+	SynEdit1->Font->Style = (TFontStyles());
+	SynEdit1->Font->Quality = TFontQuality::fqClearTypeNatural;
+	SynEdit1->TabOrder = 1;
+	SynEdit1->UseCodeFolding = false;
+	SynEdit1->Gutter->Font->Charset = DEFAULT_CHARSET;
+	SynEdit1->Gutter->Font->Color = clWindowText;
+	SynEdit1->Gutter->Font->Height = -13;
+	SynEdit1->Gutter->Font->Name = L"Consolas";
+	SynEdit1->Gutter->Font->Style = (TFontStyles());
+/* todo dme
+	SynEdit1->Gutter->Add();
+	SynEdit1->Gutter->Gutter[0]->Kind = gbkMarks;
+	SynEdit1->Gutter->Gutter[0]->Visible = true;
+	SynEdit1->Gutter->Gutter[0]->Width = 13;
+	SynEdit1->Gutter->Add();
+	SynEdit1->Gutter->Gutter[1]->Kind = gbkLineNumbers;
+	SynEdit1->Gutter->Add();
+	SynEdit1->Gutter->Gutter[2]->Kind = gbkFold;
+	SynEdit1->Gutter->Add();
+	SynEdit1->Gutter->Gutter[3]->Kind = gbkMargin;
+	SynEdit1->Gutter->Gutter[3]->Visible = true;
+	SynEdit1->Gutter->Gutter[3]->Width = 3;
+	*/
+	SynEdit1->Lines->Add(L"This project demonstrates the code folding capabilities of Synedit.");
+	SynEdit1->Lines->Add(L"Use the menu to open one of the demo files in the project directory.");
+	SynEdit1->Lines->Add(L"- demo.cpp");
+	SynEdit1->Lines->Add(L"- demo.js");
+	SynEdit1->Lines->Add(L"- demo.py");
+	SynEdit1->Lines->Add(L"Then select \"View, Code Folding\" to activate Code Foldind and try the ");
+	SynEdit1->Lines->Add(L"folding commands under the View menu.");
+	SynEdit1->Lines->Add(L"");
+	SynEdit1->Lines->Add(L"SynEdit folding commands and their default shorcuts:");
+	SynEdit1->Lines->Add(L"  AddKey(ecFoldAll, VK_OEM_MINUS, [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecUnfoldAll,  VK_OEM_PLUS, [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecFoldNearest, VK_OEM_2, [ssCtrl]);  // Divide \x27" L"/\x27");
+	SynEdit1->Lines->Add(L"  AddKey(ecUnfoldNearest, VK_OEM_2, [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecFoldLevel1, ord(\x27" L"K\x27" L"), [ssCtrl], Ord(\x27" L"1\x27" L"), [ssCtrl]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecFoldLevel2, ord(\x27" L"K\x27" L"), [ssCtrl], Ord(\x27" L"2\x27" L"), [ssCtrl]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecFoldLevel3, ord(\x27" L"K\x27" L"), [ssCtrl], Ord(\x27" L"3\x27" L"), [ssCtrl]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecUnfoldLevel1, ord(\x27" L"K\x27" L"), [ssCtrl, ssShift], Ord(\x27" L"1\x27" L"), [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecUnfoldLevel2, ord(\x27" L"K\x27" L"), [ssCtrl, ssShift], Ord(\x27" L"2\x27" L"), [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"  AddKey(ecUnfoldLevel3, ord(\x27" L"K\x27" L"), [ssCtrl, ssShift], Ord(\x27" L"3\x27" L"), [ssCtrl, ssShift]);");
+	SynEdit1->Lines->Add(L"");
+	SynEdit1->Lines->Add(L"Note: The JavaScript, and Python highlighters are Code Folding enabled, but");
+	SynEdit1->Lines->Add(L"the C++ highlighter is not.  Code folding for C++ is provided by a Synedit ");
+	SynEdit1->Lines->Add(L"event handler (ScanForFoldRanges).");
+	SynEdit1->Lines->Add(L"");
+	SynEdit1->Lines->Add(L"You can find technical information about the implementation of code folding");
+	SynEdit1->Lines->Add(L"in the unit SynEditCodeFolding.pas.");
+	SynEdit1->Options = (TSynEditorOptions() << eoAutoIndent << eoDragDropEditing << eoEnhanceEndKey << eoGroupUndo << eoShowScrollHint << eoSmartTabDelete << eoSmartTabs << eoTabIndent << eoTabsToSpaces << eoTrimTrailingSpaces);
+	SynEdit1->TabWidth = 4;
 	ActionManager1 = new TActionManager(this);
 	ActionManager1->OnUpdate = ActionManager1Update;
 	// non-visible component: Left
 	// non-visible component: Top
-	ActionManager1->StyleName = L"Platform Default";
+	//ActionManager1->
+	StyleName = L"Platform Default";
 	actShowCollapsedLines = new TAction(ActionManager1);
 	actShowCollapsedLines->Category = L"Folding Options";
 	actShowCollapsedLines->AutoCheck = true;
@@ -756,9 +821,62 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	Level12 = CreateTMenuItemTMenuItem(Unfold1);
 	Level22 = CreateTMenuItemTMenuItem(Unfold1);
 	Level32 = CreateTMenuItemTMenuItem(Unfold1);
+	SynEditPrint1 = new TSynEditPrint(this);
+	SynEditPrint1->Copies = 1;
+	SynEditPrint1->Header->DefaultFont->Charset = DEFAULT_CHARSET;
+	SynEditPrint1->Header->DefaultFont->Color = clBlack;
+	SynEditPrint1->Header->DefaultFont->Height = -13;
+	SynEditPrint1->Header->DefaultFont->Name = L"Arial";
+	SynEditPrint1->Header->DefaultFont->Style = (TFontStyles());
+	SynEditPrint1->Footer->DefaultFont->Charset = DEFAULT_CHARSET;
+	SynEditPrint1->Footer->DefaultFont->Color = clBlack;
+	SynEditPrint1->Footer->DefaultFont->Height = -13;
+	SynEditPrint1->Footer->DefaultFont->Name = L"Arial";
+	SynEditPrint1->Footer->DefaultFont->Style = (TFontStyles());
+	SynEditPrint1->Margins->Left = 25.000000000000000000;
+	SynEditPrint1->Margins->Right = 15.000000000000000000;
+	SynEditPrint1->Margins->Top = 25.000000000000000000;
+	SynEditPrint1->Margins->Bottom = 25.000000000000000000;
+	SynEditPrint1->Margins->Header = 15.000000000000000000;
+	SynEditPrint1->Margins->Footer = 15.000000000000000000;
+	SynEditPrint1->Margins->LeftHFTextIndent = 2.000000000000000000;
+	SynEditPrint1->Margins->RightHFTextIndent = 2.000000000000000000;
+	SynEditPrint1->Margins->HFInternalMargin = 0.500000000000000000;
+	SynEditPrint1->Margins->MirrorMargins = false;
+	SynEditPrint1->Font->Charset = DEFAULT_CHARSET;
+	SynEditPrint1->Font->Color = clWindowText;
+	SynEditPrint1->Font->Height = -11;
+	SynEditPrint1->Font->Name = L"Tahoma";
+	SynEditPrint1->Font->Style = (TFontStyles());
+	SynEditPrint1->TabWidth = 8;
+	SynEditPrint1->Color = clWhite;
+	// non-visible component: Left
+	// non-visible component: Top
+	SynCppSyn1 = new TSynCppSyn(this);
+	SynCppSyn1->Options->AutoDetectEnabled = false;
+	SynCppSyn1->Options->AutoDetectLineLimit = 0;
+	SynCppSyn1->Options->Visible = false;
+	// non-visible component: Left
+	// non-visible component: Top
+	SynJScriptSyn1 = new TSynJScriptSyn(this);
+	SynJScriptSyn1->Options->AutoDetectEnabled = false;
+	SynJScriptSyn1->Options->AutoDetectLineLimit = 0;
+	SynJScriptSyn1->Options->Visible = false;
+	// non-visible component: Left
+	// non-visible component: Top
+	SynPythonSyn1 = new TSynPythonSyn(this);
+	SynPythonSyn1->Options->AutoDetectEnabled = false;
+	SynPythonSyn1->Options->AutoDetectLineLimit = 0;
+	SynPythonSyn1->Options->Visible = false;
+	// non-visible component: Left
+	// non-visible component: Top
+	SynEditPythonBehaviour1 = new TSynEditPythonBehaviour(this);
+	// non-visible component: Left
+	// non-visible component: Top
 	ComponentState >> csLoading;
 	//----- shifted initializations from the dfm-file ---------------------------
 	ActionMainMenuBar1->ActionManager = ActionManager1;
+	SynEdit1->PopupMenu = PopupActionBar1;
 	Cut1->Action = EditCut1;
 	Copy1->Action = EditCopy1;
 	Paste1->Action = EditPaste1;
@@ -774,6 +892,7 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	Level12->Action = actUnfoldLevel1;
 	Level22->Action = actUnfoldLevel2;
 	Level32->Action = actUnfoldLevel3;
+	SynEditPythonBehaviour1->Editor = SynEdit1;
 	//----- end of initializations from the dfm-file ----------------------------
 }
 

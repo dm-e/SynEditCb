@@ -9,6 +9,8 @@
 
 
 
+USEFORM("Unit1.cpp", Form1);
+//---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

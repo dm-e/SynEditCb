@@ -33,8 +33,8 @@ located at http://SynEdit.SourceForge.net
 
 Known Issues:
 -------------------------------------------------------------------------------*/
-#ifndef FrmMainH
-#define FrmMainH
+#ifndef frmMainH
+#define frmMainH
 
 #include <System.hpp>
 #include "d2c_system.h"
@@ -139,7 +139,7 @@ __published:
 	TAction* ActionSearchReplace;
 	TOpenDialog* OpenDialogFile;
 	TImageList* ImageListMain;
-	TStatusBar* StatusBar;
+	TStatusBar* Statusbar;
 	TSynEdit* SynEditor;
 	TSynEditRegexSearch* SynEditRegexSearch;
 	TSynEditSearch* SynEditSearch;
@@ -161,7 +161,7 @@ __published:
 	void __fastcall SynEditorReplaceText(TObject* Sender, const UnicodeString ASearch, const UnicodeString AReplace, int Line, int Column, TSynReplaceAction& Action);
 	void __fastcall FormCreate(TObject* Sender);
 private:
-	bool fSearchFromCaret;
+	bool FSearchFromCaret;
 	void __fastcall DoSearchReplaceText(bool AReplace, bool ABackwards);
 	void __fastcall ShowSearchReplaceDialog(bool AReplace);
 public:
@@ -170,5 +170,5 @@ public:
 };
 extern PACKAGE TSearchReplaceDemoForm* SearchReplaceDemoForm;
 
-#endif // FrmMainH
+#endif // frmMainH
 

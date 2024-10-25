@@ -55,9 +55,15 @@ __published:
 	TMenuItem* Cut1;
 	TMenuItem* Copy1;
 	TMenuItem* Paste1;
+	TSynEdit* SynEdit1;
 	TFontEdit* DialogFontEdit1;
 	TAction* ActSave;
+	TSynEditPrint* SynEditPrint1;
 	TAction* actGutterLines;
+	TSynCppSyn* SynCppSyn1;
+	TSynJScriptSyn* SynJScriptSyn1;
+	TSynPythonSyn* SynPythonSyn1;
+	TSynEditPythonBehaviour* SynEditPythonBehaviour1;
 	TAction* actCPP;
 	TAction* actJavaScript;
 	TAction* actPython;
@@ -117,14 +123,7 @@ __published:
 	void __fastcall actFoldShapeSizeExecute(TObject* Sender);
 private:
     /* Private declarations */
-	TStringList* highlighters;
-	TSynEdit* SynEdit1;
-	TSynCppSyn* SynCppSyn1;
-	TSynJScriptSyn* SynJScriptSyn1;
-	TSynPythonSyn* SynPythonSyn1;
-	TSynEditPythonBehaviour* SynEditPythonBehaviour1;
-	TSynEditPrint* SynEditPrint1;
-
+	TStringList* Highlighters;
 public:
     /* Public declarations */
 	String FileName;

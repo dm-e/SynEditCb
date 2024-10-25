@@ -3,10 +3,15 @@
 #include <tchar.h>
 //---------------------------------------------------------------------------
 #include <Vcl.Forms.hpp>
-USEFORM("dlgConfirmReplace.cpp", ConfirmReplaceDialog);
-USEFORM("dlgSearchText.cpp", TextSearchDialog);
-USEFORM("frmMain.cpp", SearchReplaceDemoForm);
-//---------------------------------------------------------------------------
+USEFORM("frmMain.cpp",SearchReplaceDemoForm);
+USEFORM("dlgSearchText.cpp",TextSearchDialog);
+USEFORM("dlgReplaceText.cpp",TextReplaceDialog);
+USEFORM("dlgConfirmReplace.cpp",ConfirmReplaceDialog);
+
+
+
+//#pragma resource "*.RES" 
+
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

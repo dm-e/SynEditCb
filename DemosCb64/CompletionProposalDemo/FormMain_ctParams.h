@@ -27,7 +27,7 @@ public:
 	TButton* Button3;
 	TSynCompletionProposal* scpParams;
 	TFontDialog* FontDialog1;
-	void __fastcall scpParamsExecute(SynCompletionType Kind, TObject* Sender, UnicodeString& AString, int& X, int& Y, bool& CanExecute);
+	void __fastcall scpParamsExecute(SynCompletionType Kind, TObject* Sender, UnicodeString& AString, int& x, int& y, bool& CanExecute);
 	void __fastcall FormCreate(TObject* Sender);
 	void __fastcall FormDestroy(TObject* Sender);
 	void __fastcall FormShow(TObject* Sender);

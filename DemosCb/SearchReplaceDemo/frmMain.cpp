@@ -1,7 +1,7 @@
 #include <vcl.h>
 #pragma hdrstop
 
-#include "FrmMain.h"
+#include "frmMain.h"
 #include "dlgSearchText.h"
 #include "dlgReplaceText.h"
 #include "dlgConfirmReplace.h"
@@ -39,37 +39,6 @@ const System::Char STextNotFound[] = L"Text not found";
 
 void __fastcall TSearchReplaceDemoForm::FormCreate(TObject* Sender)
 {
-	SynEditor = new TSynEdit(this);
-	SynEditor->Parent = this;;
-	SynEditor->Left = 0;
-	SynEditor->Top = 26;
-	SynEditor->Width = 554;
-	SynEditor->Height = 300;
-	SynEditor->Align = alClient;
-	SynEditor->Font->Charset = DEFAULT_CHARSET;
-	SynEditor->Font->Color = clWindowText;
-	SynEditor->Font->Height-13;
-	SynEditor->Font->Name = "Courier New";
-	//SynEditor->Font->Style;
-	SynEditor->TabOrder = 0;
-	/* doesn't work in 110 any more
-	SynEditor->Gutter->Font->Charset = DEFAULT_CHARSET;
-	SynEditor->Gutter->Font->Color = clWindowText;
-	SynEditor->Gutter->Font->Height-11;
-	SynEditor->Gutter->Font->Name = "Terminal";
-	//SynEditor->Gutter->Font->Style;
-    */
-	SynEditor->OnReplaceText = SynEditorReplaceText;
-	RemovedKeystroke(SynEditor, L"ecDeleteLastChar", 8200);
-	RemovedKeystroke(SynEditor, L"ecLineBreak", 8205);
-	RemovedKeystroke(SynEditor, L"ecContextHelp", 112);
-	//SynEditor->AddedKeystrokes;
-	SynEditSearch = new TSynEditSearch(this);
-	//SynEditSearch->Left = 188;
-	//SynEditSearch->Top = 112;
-	SynEditRegexSearch = new TSynEditRegexSearch(this);
-	//SynEditRegexSearch->Left = 188;
-	//SynEditRegexSearch->Top = 160;
 	/*# with TSearchTextHightlighterSynEditPlugin.Create(SynEditor) do */
 	{
 		auto with0 = new TSearchTextHightlighterSynEditPlugin(SynEditor);
@@ -80,7 +49,7 @@ void __fastcall TSearchReplaceDemoForm::FormCreate(TObject* Sender)
 void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool ABackwards)
 {
 	TSynSearchOptions Options;
-	StatusBar->SimpleText = L"";
+	Statusbar->SimpleText = L"";
 	if(AReplace)
 		Options = Frmmain__0;
 	else
@@ -89,7 +58,7 @@ void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool 
 		Options << ssoBackwards;
 	if(gbSearchCaseSensitive)
 		Options << ssoMatchCase;
-	if(!fSearchFromCaret)
+	if(!FSearchFromCaret)
 		Options << ssoEntireScope;
 	if(gbSearchSelectionOnly)
 		Options << ssoSelectedOnly;
@@ -102,7 +71,7 @@ void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool 
 	if(SynEditor->SearchReplace(gsSearchText, gsReplaceText, Options) == 0)
 	{
 		MessageBeep((UINT) MB_ICONASTERISK);
-		StatusBar->SimpleText = STextNotFound;
+		Statusbar->SimpleText = STextNotFound;
 		if(Options.Contains(ssoBackwards))
 			SynEditor->BlockEnd = SynEditor->BlockBegin;
 		else
@@ -115,15 +84,15 @@ void __fastcall TSearchReplaceDemoForm::DoSearchReplaceText(bool AReplace, bool 
 
 void __fastcall TSearchReplaceDemoForm::ShowSearchReplaceDialog(bool AReplace)
 {
-	TTextSearchDialog* Dlg = nullptr;
-	StatusBar->SimpleText = L"";
+	TTextSearchDialog* dlg = nullptr;
+	Statusbar->SimpleText = L"";
 	if(AReplace)
-		Dlg = new TTextReplaceDialog(this);
+		dlg = new TTextReplaceDialog(this);
 	else
-		Dlg = new TTextSearchDialog(this);
-	/*# with Dlg do */
+		dlg = new TTextSearchDialog(this);
+	/*# with dlg do */
 	{
-		auto with0 = Dlg;
+		auto with0 = dlg;
 		try
 
     // assign search options
@@ -144,9 +113,9 @@ void __fastcall TSearchReplaceDemoForm::ShowSearchReplaceDialog(bool AReplace)
 			}
 			with0->SearchTextHistory = gsSearchTextHistory;
 			if(AReplace)
-				/*# with Dlg as TTextReplaceDialog do */
+				/*# with dlg as TTextReplaceDialog do */
 				{
-					auto with1 = (TTextReplaceDialog*) Dlg;
+					auto with1 = (TTextReplaceDialog*) dlg;
 					with1->ReplaceText = gsReplaceText;
 					with1->ReplaceTextHistory = gsReplaceTextHistory;
 				}
@@ -162,23 +131,23 @@ void __fastcall TSearchReplaceDemoForm::ShowSearchReplaceDialog(bool AReplace)
 				gsSearchText = with0->SearchText;
 				gsSearchTextHistory = with0->SearchTextHistory;
 				if(AReplace)
-					/*# with Dlg as TTextReplaceDialog do */
+					/*# with dlg as TTextReplaceDialog do */
 					{
-						auto with2 = (TTextReplaceDialog*) Dlg;
+						auto with2 = (TTextReplaceDialog*) dlg;
 						gsReplaceText = with2->ReplaceText;
 						gsReplaceTextHistory = with2->ReplaceTextHistory;
 					}
-				fSearchFromCaret = gbSearchFromCaret;
+				FSearchFromCaret = gbSearchFromCaret;
 				if(gsSearchText != L"")
 				{
 					DoSearchReplaceText(AReplace, gbSearchBackwards);
-					fSearchFromCaret = true;
+					FSearchFromCaret = true;
 				}
 			}
 		}
 		__finally
 		{
-			delete Dlg;
+			delete dlg;
 		}
 	}
 }

@@ -7,6 +7,8 @@
 
 
 
+USEFORM("FormMain_ctParams.cpp", Form1);
+//---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;
