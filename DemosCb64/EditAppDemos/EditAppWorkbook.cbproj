@@ -476,7 +476,6 @@
                 </DeployFile>
                 <DeployFile LocalName="..\..\SourceCppRun64\SynEdit.res" Configuration="Debug" Class="ProjectFile"/>
                 <DeployFile LocalName=".\Win32\Debug\EditAppWorkbook.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName=".\Win32\Debug\EditAppWorkbook.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName=".\Win64\Debug\EditAppWorkbook.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName=".\Win64x\Debug\EditAppWorkbook.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">

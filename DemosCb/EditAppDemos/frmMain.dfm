@@ -12,7 +12,6 @@ object MainForm: TMainForm
   Menu = mnuMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object StatusBar: TStatusBar
     Left = 0

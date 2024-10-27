@@ -33,8 +33,8 @@ located at http://SynEdit.SourceForge.net
 
 Known Issues:
 -------------------------------------------------------------------------------*/
-#ifndef FrmMainH
-#define FrmMainH
+#ifndef frmMainH
+#define frmMainH
 
 #include <System.hpp>
 #include "d2c_system.h"
@@ -51,6 +51,7 @@ Known Issues:
 #include <Vcl.ActnList.hpp>
 #include "uEditAppIntfs.h"
 #include <Vcl.ComCtrls.hpp>
+#include <System.Actions.hpp>
 
 /*-------------------------------------------------------------------------------
 The contents of this file are subject to the Mozilla Public License
@@ -196,5 +197,5 @@ public:
 	__fastcall TMainForm(TComponent* AOwner);
 };
 
-#endif // FrmMainH
+#endif // frmMainH
 

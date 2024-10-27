@@ -158,8 +158,8 @@ __published:
 private:
 	TSynEdit* SynEditor;
 	TSynEditSearch* SynEditSearch1;
-	TEditor* FEditor;
-	TEditorKind FKind;
+	TEditor* fEditor;
+	TEditorKind fKind;
 	bool fSearchFromCaret;
 	bool __fastcall DoAskSaveChanges();
 	void __fastcall DoAssignInterfacePointer(bool AActive);
@@ -223,17 +223,17 @@ private:
 	void __fastcall ExecFindNext();
 	void __fastcall ExecFindPrev();
 	void __fastcall ExecReplace();
-
+	
     bool __fastcall CanDelete() {return false;} // dme else abstract
     void __fastcall ExecClose(){} // dme else abstract
     bool __fastcall CanFindPrev() {return false;} // dme abstract
-
-	String FFileName;
-	TEditorForm* FForm;
+    
+	String fFileName;
+	TEditorForm* fForm;
 	bool fHasSelection;
-	bool FIsEmpty;
+	bool fIsEmpty;
 	bool fIsReadOnly;
-	bool FModified;
+	bool fModified;
 	int fUntitledNumber;
 	__fastcall TEditor(TEditorForm* AForm);
 	void __fastcall DoSetFileName(String AFileName);

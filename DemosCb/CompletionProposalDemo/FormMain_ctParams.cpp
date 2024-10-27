@@ -14,13 +14,13 @@ TForm1* Form1 = nullptr;
 #pragma resource "*.DFM"
 
 
-void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender, UnicodeString& AString, int& X, int& Y, bool& CanExecute)
+void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender, UnicodeString& AString, int& x, int& y, bool& CanExecute)
 {
 	UnicodeString locline;
-	UnicodeString Lookup;
+	UnicodeString lookup;
 	int TmpX = 0;
-	int SavePos = 0;
-	int startX = 0;
+	int savepos = 0;
+	int StartX = 0;
 	int ParenCounter = 0;
 	int TmpLocation = 0;
 	bool FoundMatch = false;
@@ -82,20 +82,20 @@ void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender
 					if(locline[TmpX] == L'(')
         //we have a valid open paren, lets see what the word before it is
 					{
-						startX = TmpX;
+						StartX = TmpX;
 						while((TmpX > 0) && !SynEdit1->IsIdentChar(locline[TmpX]))
 							--TmpX;
 						if(TmpX > 0)
 						{
-							SavePos = TmpX;
+							savepos = TmpX;
 							while((TmpX > 0) && SynEdit1->IsIdentChar(locline[TmpX]))
 								--TmpX;
 							++TmpX;
-							Lookup = UpperCase(locline.SubString(TmpX, SavePos - TmpX + 1));
-							FoundMatch = LookupList->IndexOf(Lookup) > -1;
+							lookup = UpperCase(locline.SubString(TmpX, savepos - TmpX + 1));
+							FoundMatch = LookupList->IndexOf(lookup) > -1;
 							if(!(FoundMatch))
 							{
-								TmpX = startX;
+								TmpX = StartX;
 								--TmpX;
 							}
 						}
@@ -110,22 +110,22 @@ void __fastcall TForm1::scpParamsExecute(SynCompletionType Kind, TObject* Sender
 	if(CanExecute)
 	{
 		((TSynCompletionProposal*) Sender)->Form->CurrentIndex = TmpLocation;
-		if(Lookup != ((TSynCompletionProposal*) Sender)->PreviousToken)
+		if(lookup != ((TSynCompletionProposal*) Sender)->PreviousToken)
 		{
 			((TSynCompletionProposal*) Sender)->ItemList->Clear();
-			if(Lookup == L"TESTFUNCTION")
+			if(lookup == L"TESTFUNCTION")
 			{
 				((TSynCompletionProposal*) Sender)->ItemList->Add(L"\"FirstParam: integer\", \"SecondParam: integer\", \"ThirdParam: string\"");
 			}
 			else
 			{
-				if(Lookup == L"MIN")
+				if(lookup == L"MIN")
 				{
 					((TSynCompletionProposal*) Sender)->ItemList->Add(L"\"A: integer\", \"B: integer\"");
 				}
 				else
 				{
-					if(Lookup == L"MAX")
+					if(lookup == L"MAX")
 					{
 						((TSynCompletionProposal*) Sender)->ItemList->Add(L"\"A: integer\", \"B: integer\"");
 					}

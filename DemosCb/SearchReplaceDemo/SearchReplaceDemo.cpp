@@ -9,7 +9,6 @@ USEFORM("dlgReplaceText.cpp",TextReplaceDialog);
 USEFORM("dlgConfirmReplace.cpp",ConfirmReplaceDialog);
 
 
-
 //#pragma resource "*.RES" 
 
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)

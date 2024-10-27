@@ -12,7 +12,7 @@ __fastcall TCommandsDataModule::TCommandsDataModule(TComponent* AOwner) : inheri
 
 
 TCommandsDataModule* CommandsDataModule = nullptr;
-#pragma resource "*.DFM" 
+#pragma resource "*.DFM"
 
 const int MAX_MRU = 5;
 const System::Char SFilterAllFiles[] = L"All files|*.*|";

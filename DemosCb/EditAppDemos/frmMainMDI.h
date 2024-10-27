@@ -53,7 +53,6 @@ Known Issues:
 #include "uEditAppIntfs.h"
 #include <Vcl.StdActns.hpp>
 #include <Vcl.ComCtrls.hpp>
-#include <System.Actions.hpp>
 
 /*-------------------------------------------------------------------------------
 The contents of this file are subject to the Mozilla Public License

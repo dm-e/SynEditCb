@@ -39,6 +39,37 @@ const System::Char STextNotFound[] = L"Text not found";
 
 void __fastcall TSearchReplaceDemoForm::FormCreate(TObject* Sender)
 {
+	SynEditor = new TSynEdit(this);
+	SynEditor->Parent = this;;
+	SynEditor->Left = 0;
+	SynEditor->Top = 26;
+	SynEditor->Width = 554;
+	SynEditor->Height = 300;
+	SynEditor->Align = alClient;
+	SynEditor->Font->Charset = DEFAULT_CHARSET;
+	SynEditor->Font->Color = clWindowText;
+	SynEditor->Font->Height-13;
+	SynEditor->Font->Name = "Courier New";
+	//SynEditor->Font->Style;
+	SynEditor->TabOrder = 0;
+	/* doesn't work in 110 any more
+	SynEditor->Gutter->Font->Charset = DEFAULT_CHARSET;
+	SynEditor->Gutter->Font->Color = clWindowText;
+	SynEditor->Gutter->Font->Height-11;
+	SynEditor->Gutter->Font->Name = "Terminal";
+	//SynEditor->Gutter->Font->Style;
+    */
+	SynEditor->OnReplaceText = SynEditorReplaceText;
+	RemovedKeystroke(SynEditor, L"ecDeleteLastChar", 8200);
+	RemovedKeystroke(SynEditor, L"ecLineBreak", 8205);
+	RemovedKeystroke(SynEditor, L"ecContextHelp", 112);
+	//SynEditor->AddedKeystrokes;
+	SynEditSearch = new TSynEditSearch(this);
+	//SynEditSearch->Left = 188;
+	//SynEditSearch->Top = 112;
+	SynEditRegexSearch = new TSynEditRegexSearch(this);
+	//SynEditRegexSearch->Left = 188;
+	//SynEditRegexSearch->Top = 160;
 	/*# with TSearchTextHightlighterSynEditPlugin.Create(SynEditor) do */
 	{
 		auto with0 = new TSearchTextHightlighterSynEditPlugin(SynEditor);

@@ -8,7 +8,6 @@
 USEFORM("Unit1.cpp",Form1);
 
 
-
 //#pragma resource "*.res" 
 
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)

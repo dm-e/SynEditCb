@@ -45,17 +45,19 @@ namespace Syneditdataobject
 
 typedef System::Word TClipFormat;
 
-class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
+class TSynEnumFormatEtc : public IEnumFORMATETC
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
+	typedef IEnumFORMATETC inherited;
 private:
 	System::TArray<TClipFormat> FList;
 	int FIndex;
+    LONG m_refCount;
+
 protected:
-	TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
-		/*IEnumFORMATETC*/
+	Winapi::Activex::TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
+    /*IEnumFORMATETC*/
 	HRESULT __stdcall Next(unsigned long celt, tagFORMATETC* elt, unsigned long* pceltFetched);
 	HRESULT __stdcall Skip(unsigned long celt);
 	HRESULT __stdcall Reset();
@@ -63,27 +65,29 @@ protected:
 public:
 	__fastcall TSynEnumFormatEtc(System::TArray<TClipFormat> FormatList, int Index = 0);
 	__fastcall TSynEnumFormatEtc();
+    HRESULT __stdcall QueryInterface(REFIID riid, void **ppvObject) override;
+    ULONG __stdcall AddRef() override;
+    ULONG __stdcall Release() override;
 };
 
-class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
+class TSynEditDataObject : public System::TInterfacedObject, public IDataObject
 {
 	#include "SynEditDataObject_friends.inc"
 public:
 	typedef TInterfacedObject inherited;	
+	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
 private:
 	String FText;
 	TList__1<TClipFormat>* FFormatEtc;
 	TMemoryStream* MemoryStream;
-	TMemoryStream* HtmlStream;
-	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
 	HRESULT __stdcall GetData(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);
 	HRESULT __stdcall GetDataHere(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);
-	HRESULT __stdcall QueryGetData(tagFORMATETC* FORMATETC);
-	HRESULT __stdcall GetCanonicalFormatEtc(tagFORMATETC* FORMATETC, tagFORMATETC* formatetcOut);
-	HRESULT __stdcall SetData(tagFORMATETC* FORMATETC, tagSTGMEDIUM* medium, BOOL fRelease);
+	HRESULT __stdcall QueryGetData(tagFORMATETC* FormatEtc);
+	HRESULT __stdcall GetCanonicalFormatEtc(tagFORMATETC* FormatEtc, tagFORMATETC* formatetcOut);
+	HRESULT __stdcall SetData(tagFORMATETC* FormatEtc, tagSTGMEDIUM* medium, BOOL fRelease);
 	HRESULT __stdcall EnumFormatEtc(unsigned long dwDirection, IEnumFORMATETC** EnumFormatEtc);
-	HRESULT __stdcall DAdvise(tagFORMATETC* FORMATETC, unsigned long advf, IAdviseSink* const advSink, unsigned long* dwConnection);
+	HRESULT __stdcall DAdvise(tagFORMATETC* FormatEtc, unsigned long advf, IAdviseSink* const advSink, unsigned long* dwConnection);
 	HRESULT __stdcall DUnadvise(unsigned long dwConnection);
 	HRESULT __stdcall EnumDAdvise(IEnumSTATDATA** enumAdvise);
 public:
@@ -92,11 +96,10 @@ public:
 	__fastcall TSynEditDataObject();
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
-HGLOBAL __fastcall MakeGlobal(const String s);
+HGLOBAL __fastcall MakeGlobal(const String S);
 HGLOBAL __fastcall MakeGlobal(void** P, int Size);
-bool __fastcall HasFormat(IDataObject* dataObject, TClipFormat Format);
+bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format);
 extern UINT SynEditClipboardFormat;
-extern UINT HTMLClipboardFormat;
 
 void SynEditDataObject_initialization();
 void SynEditDataObject_finalization();

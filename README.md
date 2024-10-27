@@ -28,6 +28,7 @@ The directories of the C++ code are designed in such a way that simple code comp
 | TestCpp			|  project to assert that all files in SourceRun compile with the classic 32 bit compiler                        |
 | TestCpp64		|  project to assert that all files in SourceRun64 compile with the modern 64 bit compiler                   |
 
+Of the 64 bit demos, only EditAppDemo compiles with the modern 64 bit compiler. The other demos only compile with the 32 bit compiler without linker errors. They also have other issues.
 
 The demos were only tested sporadically. I'm presentig it here in hopes of getting feedback on bugs and suggestions for improvments.
 

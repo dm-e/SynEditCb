@@ -17,7 +17,6 @@ object EditorForm: TEditorForm
   OnDestroy = FormDestroy
   OnDeactivate = FormDeactivate
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object pmnuEditor: TPopupMenu
     Left = 92
