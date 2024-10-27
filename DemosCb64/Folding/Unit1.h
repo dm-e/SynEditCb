@@ -124,7 +124,7 @@ public:
 	void __fastcall actFoldShapeSizeExecute(TObject* Sender);
 private:
     /* Private declarations */
-	TStringList* highlighters;
+	TStringList* Highlighters;
 public:
     /* Public declarations */
 	String FileName;

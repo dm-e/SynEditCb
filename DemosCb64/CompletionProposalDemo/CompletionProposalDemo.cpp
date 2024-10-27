@@ -6,7 +6,8 @@
 #include "FormMain_ctCode.h"
 
 
-
+USEFORM("FormMain_ctCode.cpp", Form1);
+//---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{37A66084-931A-4D24-AAE3-3F2307E7A122}</ProjectGuid>
-        <ProjectVersion>20.1</ProjectVersion>
+        <ProjectVersion>20.2</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <AppType>Application</AppType>
         <MainSource>FoldingDemo.cpp</MainSource>
@@ -82,8 +82,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\;..\..\SourceCppRun\;..\..\d2c_cb\;D:\d2c_tests\SynEdit110\DemosCb\Folding\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\;..\..\SourceCppRun\;..\..\d2c_cb\;D:\d2c_tests\SynEdit110\DemosCb\Folding\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\;..\..\SourceCppRun64\;..\..\d2c_cb\;D:\d2c_tests\SynEdit110\DemosCb\Folding\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\;..\..\SourceCppRun64\;..\..\d2c_cb\;D:\d2c_tests\SynEdit110\DemosCb\Folding\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>FoldingDemo</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -108,6 +108,7 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <BCC_PCHName_Clang>FoldingDemoPCH1.h</BCC_PCHName_Clang>
+        <BCC_EnableBatchCompilation>true</BCC_EnableBatchCompilation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -158,6 +159,10 @@
             <DependentOn>..\..\d2c_cb\d2c_convert.h</DependentOn>
             <BuildOrder>23</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\d2c_cb\d2c_dfm.cpp">
+            <DependentOn>..\..\d2c_cb\d2c_dfm.h</DependentOn>
+            <BuildOrder>39</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\d2c_cb\d2c_syshelper.cpp">
             <DependentOn>..\..\d2c_cb\d2c_syshelper.h</DependentOn>
             <BuildOrder>36</BuildOrder>
@@ -191,122 +196,122 @@
             <DependentOn>Unit1.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEdit.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEdit.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEdit.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEdit.h</DependentOn>
             <BuildOrder>5</BuildOrder>
         </CppCompile>
-        <ResFiles Include="..\..\SourceCppRun\SynEdit.res">
+        <ResFiles Include="..\..\SourceCppRun64\SynEdit.res">
             <BuildOrder>38</BuildOrder>
         </ResFiles>
-        <CppCompile Include="..\..\SourceCppRun\SynEditCodeFolding.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditCodeFolding.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditCodeFolding.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditCodeFolding.h</DependentOn>
             <BuildOrder>6</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditDataObject.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditDataObject.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditDataObject.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditDataObject.h</DependentOn>
             <BuildOrder>7</BuildOrder>
         </CppCompile>
-        <DelphiCompile Include="..\..\SourceCppRun\SynEditDelphiInstances.pas">
+        <DelphiCompile Include="..\..\SourceCppRun64\SynEditDelphiInstances.pas">
             <BuildOrder>22</BuildOrder>
         </DelphiCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditDragDrop.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditDragDrop.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditDragDrop.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditDragDrop.h</DependentOn>
             <BuildOrder>8</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditExport.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditExport.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditExport.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditExport.h</DependentOn>
             <BuildOrder>26</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditHighlighter.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditHighlighter.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditHighlighter.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditHighlighter.h</DependentOn>
             <BuildOrder>9</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditHighlighterOptions.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditHighlighterOptions.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditHighlighterOptions.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditHighlighterOptions.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditKbdHandler.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditKbdHandler.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditKbdHandler.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditKbdHandler.h</DependentOn>
             <BuildOrder>11</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditKeyCmds.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditKeyCmds.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditKeyCmds.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditKeyCmds.h</DependentOn>
             <BuildOrder>12</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditMiscClasses.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditMiscClasses.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditMiscClasses.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditMiscClasses.h</DependentOn>
             <BuildOrder>13</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditMiscProcs.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditMiscProcs.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditMiscProcs.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditMiscProcs.h</DependentOn>
             <BuildOrder>14</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPrint.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPrint.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPrint.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPrint.h</DependentOn>
             <BuildOrder>30</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPrinterInfo.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPrinterInfo.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPrinterInfo.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPrinterInfo.h</DependentOn>
             <BuildOrder>31</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPrintHeaderFooter.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPrintHeaderFooter.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPrintHeaderFooter.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPrintHeaderFooter.h</DependentOn>
             <BuildOrder>32</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPrintMargins.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPrintMargins.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPrintMargins.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPrintMargins.h</DependentOn>
             <BuildOrder>33</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPrintTypes.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPrintTypes.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPrintTypes.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPrintTypes.h</DependentOn>
             <BuildOrder>34</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditPythonBehaviour.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditPythonBehaviour.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditPythonBehaviour.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditPythonBehaviour.h</DependentOn>
             <BuildOrder>35</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditTextBuffer.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditTextBuffer.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditTextBuffer.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditTextBuffer.h</DependentOn>
             <BuildOrder>15</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditTypes.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditTypes.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditTypes.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditTypes.h</DependentOn>
             <BuildOrder>16</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditUndo.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditUndo.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditUndo.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditUndo.h</DependentOn>
             <BuildOrder>37</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynEditWordWrap.cpp">
-            <DependentOn>..\..\SourceCppRun\SynEditWordWrap.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynEditWordWrap.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynEditWordWrap.h</DependentOn>
             <BuildOrder>17</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynExportHTML.cpp">
-            <DependentOn>..\..\SourceCppRun\SynExportHTML.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynExportHTML.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynExportHTML.h</DependentOn>
             <BuildOrder>27</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynHighlighterCpp.cpp">
-            <DependentOn>..\..\SourceCppRun\SynHighlighterCpp.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynHighlighterCpp.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynHighlighterCpp.h</DependentOn>
             <BuildOrder>19</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynHighlighterJScript.cpp">
-            <DependentOn>..\..\SourceCppRun\SynHighlighterJScript.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynHighlighterJScript.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynHighlighterJScript.h</DependentOn>
             <BuildOrder>20</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynHighlighterMulti.cpp">
-            <DependentOn>..\..\SourceCppRun\SynHighlighterMulti.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynHighlighterMulti.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynHighlighterMulti.h</DependentOn>
             <BuildOrder>29</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynHighlighterPython.cpp">
-            <DependentOn>..\..\SourceCppRun\SynHighlighterPython.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynHighlighterPython.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynHighlighterPython.h</DependentOn>
             <BuildOrder>21</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynTextDrawer.cpp">
-            <DependentOn>..\..\SourceCppRun\SynTextDrawer.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynTextDrawer.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynTextDrawer.h</DependentOn>
             <BuildOrder>18</BuildOrder>
         </CppCompile>
-        <CppCompile Include="..\..\SourceCppRun\SynUnicode.cpp">
-            <DependentOn>..\..\SourceCppRun\SynUnicode.h</DependentOn>
+        <CppCompile Include="..\..\SourceCppRun64\SynUnicode.cpp">
+            <DependentOn>..\..\SourceCppRun64\SynUnicode.h</DependentOn>
             <BuildOrder>4</BuildOrder>
         </CppCompile>
         <FormResources Include="Unit1.dfm"/>
@@ -337,7 +342,7 @@
                     <Source Name="MainSource">FoldingDemo.cpp</Source>
                 </Source>
             </CPlusPlusBuilder.Personality>
-            <Deployment Version="4">
+            <Deployment Version="5">
                 <DeployFile Condition="'$(DynamicRTL)'=='true'" LocalName="$(BDS)\Redist\osx32\libcgcrtl.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
@@ -394,7 +399,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\SourceCppRun\SynEdit.res" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="..\..\SourceCppRun64\SynEdit.res" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -424,16 +429,6 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
-                    </Platform>
-                </DeployClass>
-                <DeployClass Name="AndroidClasses">
-                    <Platform Name="Android">
-                        <RemoteDir>classes</RemoteDir>
-                        <Operation>64</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>classes</RemoteDir>
-                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">

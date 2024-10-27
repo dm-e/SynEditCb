@@ -33,11 +33,11 @@ void __fastcall TForm1::actFoldExecute(TObject* Sender)
 
 void __fastcall TForm1::actFoldShapeSizeExecute(TObject* Sender)
 {
-	String s;
+	String S;
 	int Size = 0;
 	Size = SynEdit1->CodeFolding->GutterShapeSize;
-	s = InputBox(L"New Gutter Square Size", L"New size in pixels (odd number):", IntToStr(Size));
-	if(TryStrToInt(s, Size))
+	S = InputBox(L"New Gutter Square Size", L"New size in pixels (odd number):", IntToStr(Size));
+	if(TryStrToInt(S, Size))
 		SynEdit1->CodeFolding->GutterShapeSize = Size;
 }
 
@@ -105,7 +105,7 @@ void __fastcall TForm1::FileOpen1Accept(TObject* Sender)
 {
 	FileName = FileOpen1->Dialog->FileName;
 	SynEdit1->Lines->LoadFromFile(FileName);
-	SynEdit1->Highlighter = GetHighlighterFromFileExt(highlighters, ExtractFileExt(FileName));
+	SynEdit1->Highlighter = GetHighlighterFromFileExt(Highlighters, ExtractFileExt(FileName));
 	if(SynEdit1->Highlighter == SynPythonSyn1)
 		SynEditPythonBehaviour1->Editor = SynEdit1;
 	else
@@ -125,9 +125,9 @@ void __fastcall TForm1::FileSaveAs1Accept(TObject* Sender)
 
 void __fastcall TForm1::FormCreate(TObject* Sender)
 {
-	highlighters = new TStringList();
-	GetHighlighters(this, highlighters, false);
-	FileOpen1->Dialog->Filter = GetHighlightersFilter(highlighters);
+	Highlighters = new TStringList();
+	GetHighlighters(this, Highlighters, false);
+	FileOpen1->Dialog->Filter = GetHighlightersFilter(Highlighters);
 	FileOpen1->Dialog->InitialDir = ExtractFilePath(Application->ExeName);
 	FileSaveAs1->Dialog->Filter = FileOpen1->Dialog->Filter;
 	actFoldAll->Tag = ecFoldAll;
@@ -146,7 +146,7 @@ void __fastcall TForm1::FormCreate(TObject* Sender)
 
 void __fastcall TForm1::FormDestroy(TObject* Sender)
 {
-	delete highlighters;
+	delete Highlighters;
 }
 
 void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFoldRanges, TStrings* LinesToScan, int FromLine, int ToLine)
@@ -163,7 +163,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		return result;
 	};
 
-	auto LineHasChar = [&](int Line, Char Character, int StartCol) -> bool 
+	auto LineHasChar = [&](int Line, Char character, int StartCol) -> bool 
 	{
 		bool result = false;
 		int i = 0;
@@ -171,7 +171,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		result = false;
 		for(stop = CurLine.Length(), i = StartCol; i <= stop; i++)
 		{
-			if(CurLine[i] == Character)
+			if(CurLine[i] == character)
         // Char must have proper highlighting (ignore stuff inside comments...)
 			{
 				if(!InsideComment(Line, i))
@@ -233,17 +233,17 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 	auto FoldRegion = [&](int Line) -> bool 
 	{
 		bool result = false;
-		String s;
+		String S;
 		result = false;
-		s = TrimLeft(CurLine);
-		if(UpperCase(s.SubString(1, 14)) == L"#PRAGMA REGION")
+		S = TrimLeft(CurLine);
+		if(UpperCase(S.SubString(1, 14)) == L"#PRAGMA REGION")
 		{
 			TopFoldRanges->StartFoldRange(Line + 1, FoldRegionType);
 			result = true;
 		}
 		else
 		{
-			if(UpperCase(s.SubString(1, 17)) == L"#PRAGMA ENDREGION")
+			if(UpperCase(S.SubString(1, 17)) == L"#PRAGMA ENDREGION")
 			{
 				TopFoldRanges->StopFoldRange(Line + 1, FoldRegionType);
 				result = true;
@@ -255,9 +255,9 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line] == Synhighlightercpp::rsAnsiC)
+		if((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[Line] == Synhighlightercpp::rsAnsiC)
 		{
-			if((Line == 0) || ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] != Synhighlightercpp::rsAnsiC))
+			if((Line == 0) || ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[Line - 1] != Synhighlightercpp::rsAnsiC))
 				TopFoldRanges->StartFoldRange((int) (Line + 1), 2);
 			else
 				TopFoldRanges->NoFoldInfo((int) (Line + 1));
@@ -265,7 +265,7 @@ void __fastcall TForm1::ScanForFoldRanges(TObject* Sender, TSynFoldRanges* TopFo
 		}
 		else
 		{
-			if((Line > 0) && ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[(int) Line - 1] == Synhighlightercpp::rsAnsiC))
+			if((Line > 0) && ((Synhighlightercpp::TRangeState)(NativeInt)((TSynEditStringList*) LinesToScan)->Ranges[Line - 1] == Synhighlightercpp::rsAnsiC))
 			{
 				TopFoldRanges->StopFoldRange((int) (Line + 1), 2);
 				continue;
@@ -413,20 +413,19 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	SynEdit1->Gutter->Font->Height = -13;
 	SynEdit1->Gutter->Font->Name = L"Consolas";
 	SynEdit1->Gutter->Font->Style = (TFontStyles());
-/* todo dme
-	SynEdit1->Gutter->Add();
-	SynEdit1->Gutter->Gutter[0]->Kind = gbkMarks;
-	SynEdit1->Gutter->Gutter[0]->Visible = true;
-	SynEdit1->Gutter->Gutter[0]->Width = 13;
-	SynEdit1->Gutter->Add();
-	SynEdit1->Gutter->Gutter[1]->Kind = gbkLineNumbers;
-	SynEdit1->Gutter->Add();
-	SynEdit1->Gutter->Gutter[2]->Kind = gbkFold;
-	SynEdit1->Gutter->Add();
-	SynEdit1->Gutter->Gutter[3]->Kind = gbkMargin;
-	SynEdit1->Gutter->Gutter[3]->Visible = true;
-	SynEdit1->Gutter->Gutter[3]->Width = 3;
-	*/
+// todo dme
+//	SynEdit1->Gutter->Add();
+//	SynEdit1->Gutter->Gutter[0]->Kind = gbkMarks;
+//	SynEdit1->Gutter->Gutter[0]->Visible = true;
+//	SynEdit1->Gutter->Gutter[0]->Width = 13;
+//	SynEdit1->Gutter->Add();
+//	SynEdit1->Gutter->Gutter[1]->Kind = gbkLineNumbers;
+//	SynEdit1->Gutter->Add();
+//	SynEdit1->Gutter->Gutter[2]->Kind = gbkFold;
+//	SynEdit1->Gutter->Add();
+//	SynEdit1->Gutter->Gutter[3]->Kind = gbkMargin;
+//	SynEdit1->Gutter->Gutter[3]->Visible = true;
+//	SynEdit1->Gutter->Gutter[3]->Width = 3;
 	SynEdit1->Lines->Add(L"This project demonstrates the code folding capabilities of Synedit.");
 	SynEdit1->Lines->Add(L"Use the menu to open one of the demo files in the project directory.");
 	SynEdit1->Lines->Add(L"- demo.cpp");
@@ -459,7 +458,6 @@ __fastcall TForm1::TForm1(TComponent* AOwner, int Dummy)
 	ActionManager1->OnUpdate = ActionManager1Update;
 	// non-visible component: Left
 	// non-visible component: Top
-	//ActionManager1->
 	StyleName = L"Platform Default";
 	actShowCollapsedLines = new TAction(ActionManager1);
 	actShowCollapsedLines->Category = L"Folding Options";
