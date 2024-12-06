@@ -124,7 +124,7 @@ enum TSynCompletionOption {scoCaseSensitive,
 typedef System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter> TSynCompletionOptions;
 const System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter> DefaultProposalOptions = System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter>() << Syncompletionproposal::scoLimitToMatchedText << Syncompletionproposal::scoEndCharCompletion << Syncompletionproposal::scoCompleteWithTab << Syncompletionproposal::scoCompleteWithEnter;
 const System::WideChar DefaultEndOfTokenChr[] = L"()[]. ";
-class DELPHICLASS TProposalColumns;
+class TProposalColumns;
 
 class TSynBaseCompletionProposalForm : public TSynForm
 {

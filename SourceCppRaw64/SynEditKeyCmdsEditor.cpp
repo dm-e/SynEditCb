@@ -7,6 +7,7 @@
 #include "SynEditKeyCmdEditor.h"
 #include "SynEditStrConst.h"
 #include "d2c_dfm.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -309,8 +310,11 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 	/*# with AForm do */
 	{
 		auto with0 = AForm;
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete AForm;
+			});
 			with0->Caption = L"Add Keystroke";
 			with0->ExtendedString = this->ExtendedString;
 			with0->Command = (TSynEditorCommand) ecNone;
@@ -336,10 +340,6 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 					}
 				}
 			}
-		}
-		__finally
-		{
-			delete AForm;
 		}
 	}
 }
@@ -415,8 +415,11 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 	/*# with AForm do */
 	{
 		auto with0 = AForm;
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete AForm;
+			});
 			with0->ExtendedString = this->ExtendedString;
 			with0->Command = FKeystrokes->Items[SelItem->Index]->Command;
 			with0->Keystroke = FKeystrokes->Items[SelItem->Index]->ShortCut;
@@ -424,8 +427,11 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 			if(EditKeyStroke())
 			{
 				KeyCmdList->Items->BeginUpdate();
-				try
 				{
+					auto olsLambda = onLeavingScope([&] 
+					{
+						KeyCmdList->Items->EndUpdate();
+					});
 					/*# with SelItem do */
 					{
 						auto with1 = SelItem;
@@ -446,15 +452,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 						}
 					}
 				}
-				__finally
-				{
-					KeyCmdList->Items->EndUpdate();
-				}
 			}
-		}
-		__finally
-		{
-			delete AForm;
 		}
 	}
 }                                                                            //DDH 10/16/01 End (reworked procs)

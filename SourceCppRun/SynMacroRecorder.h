@@ -132,7 +132,7 @@ const System::Char sCannotRecord[] = L"Cannot record macro; already recording or
 const System::Char sCannotPlay[] = L"Cannot playback macro; already playing or recording";
 const System::Char sCannotPause[] = L"Can only pause when recording";
 const System::Char sCannotResume[] = L"Can only resume when paused";
-class DELPHICLASS TCustomSynMacroRecorder;
+class TCustomSynMacroRecorder;
 enum TSynMacroState {msStopped,
                      msRecording,
                      msPlaying,

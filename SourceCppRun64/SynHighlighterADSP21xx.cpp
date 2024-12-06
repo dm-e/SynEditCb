@@ -5,6 +5,7 @@
 #include "SynHighlighterADSP21xx.h"
 #include <Winapi.Windows.hpp>
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -2769,8 +2770,11 @@ bool __fastcall TSynADSP21xxSyn::UseUserSettings(int settingIndex)
 	TSynHighlighterAttributes* tmpRegisterAttri = nullptr;
 	TStringList* StrLst = nullptr;  // UseUserSettings
 	StrLst = new TStringList();
-	try
 	{
+		auto olsLambda = onLeavingScope([&] 
+		{
+			delete StrLst;
+		});
 		EnumUserSettings(StrLst);
 		if(settingIndex >= StrLst->Count)
 			result = false;
@@ -2815,10 +2819,6 @@ bool __fastcall TSynADSP21xxSyn::UseUserSettings(int settingIndex)
 			delete tmpRegisterAttri;
 		}
 	}
-	__finally
-	{
-		delete StrLst;
-	}
 	return result;
 }
 
@@ -2852,17 +2852,18 @@ String __fastcall TSynADSP21xxSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangADSP21xx;
 	return result;
 }
-static bool SynHighlighterADSP21xx_Initialized = false;
 
-void SynHighlighterADSP21xx_initialization()
-{
-	if(SynHighlighterADSP21xx_Initialized)
-		return;
+	static bool SynHighlighterADSP21xx_Initialized = false;
 	
-	SynHighlighterADSP21xx_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynADSP21xxSyn));
-}
+	void SynHighlighterADSP21xx_initialization()
+	{
+		if(SynHighlighterADSP21xx_Initialized)
+			return;
+		
+		SynHighlighterADSP21xx_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynADSP21xxSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

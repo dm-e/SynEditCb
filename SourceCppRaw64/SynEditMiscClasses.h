@@ -124,8 +124,8 @@ namespace Syneditmiscclasses
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-class DELPHICLASS TSynGutter;
-class DELPHICLASS TSynInternalImage;
+class TSynGutter;
+class TSynInternalImage;
 
 class TSynSelectedColor : public System::Classes::TPersistent
 {
@@ -581,7 +581,7 @@ public:
 	typedef System::Win::Registry::TRegistry inherited;
 	bool __fastcall OpenKeyReadOnly(const String Key);
 	__fastcall TBetterRegistry();
-	__fastcall TBetterRegistry(unsigned long AAccess);
+	__fastcall TBetterRegistry(System::LongWord AAccess);
 };
 
   // ++ DPI-Aware

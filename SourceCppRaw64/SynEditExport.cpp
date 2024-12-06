@@ -6,6 +6,7 @@
 #include "SynEditMiscProcs.h"
 #include "SynEditStrConst.h"
 #include "d2c_convert.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -207,14 +208,13 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 			PtrData = ((Byte*) GlobalLock((HGLOBAL) hData));
 			if(ASSIGNED(PtrData))
 			{
-				try
 				{
+					auto olsLambda = onLeavingScope([&] 
+					{
+						GlobalUnlock((HGLOBAL) hData);
+					});
 					fBuffer->Position = 0;
 					fBuffer->Read((void**)PtrData, (TNativeCount) (hDataSize - 1)); // trailing #0
-				}
-				__finally
-				{
-					GlobalUnlock((HGLOBAL) hData);
 				}
 				Clipboard()->SetAsHandle(AFormat, hData);
 			}

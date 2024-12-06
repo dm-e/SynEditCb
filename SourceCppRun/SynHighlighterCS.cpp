@@ -2271,17 +2271,18 @@ String __fastcall TSynCSSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCS;
 	return result;
 }
-static bool SynHighlighterCS_Initialized = false;
 
-void SynHighlighterCS_initialization()
-{
-	if(SynHighlighterCS_Initialized)
-		return;
+	static bool SynHighlighterCS_Initialized = false;
 	
-	SynHighlighterCS_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCSSyn));
-}
+	void SynHighlighterCS_initialization()
+	{
+		if(SynHighlighterCS_Initialized)
+			return;
+		
+		SynHighlighterCS_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCSSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

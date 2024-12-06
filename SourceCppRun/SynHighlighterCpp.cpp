@@ -1969,17 +1969,18 @@ void __fastcall TSynCppSyn::SetNewPreprocesorStyle(bool Value)
 		ResetRange();
 	}
 }
-static bool SynHighlighterCpp_Initialized = false;
 
-void SynHighlighterCpp_initialization()
-{
-	if(SynHighlighterCpp_Initialized)
-		return;
+	static bool SynHighlighterCpp_Initialized = false;
 	
-	SynHighlighterCpp_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCppSyn));
-}
+	void SynHighlighterCpp_initialization()
+	{
+		if(SynHighlighterCpp_Initialized)
+			return;
+		
+		SynHighlighterCpp_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCppSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

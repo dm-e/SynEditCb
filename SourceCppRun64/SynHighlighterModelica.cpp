@@ -737,17 +737,18 @@ String __fastcall TSynModelicaSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangModelica;
 	return result;
 }
-static bool SynHighlighterModelica_Initialized = false;
 
-void SynHighlighterModelica_initialization()
-{
-	if(SynHighlighterModelica_Initialized)
-		return;
+	static bool SynHighlighterModelica_Initialized = false;
 	
-	SynHighlighterModelica_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynModelicaSyn));
-}
+	void SynHighlighterModelica_initialization()
+	{
+		if(SynHighlighterModelica_Initialized)
+			return;
+		
+		SynHighlighterModelica_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynModelicaSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

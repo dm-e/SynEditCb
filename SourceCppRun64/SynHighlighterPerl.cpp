@@ -1608,17 +1608,18 @@ void __fastcall TSynPerlSyn::StringEndProc()
 	label7:;
 	label8:;
 }
-static bool SynHighlighterPerl_Initialized = false;
 
-void SynHighlighterPerl_initialization()
-{
-	if(SynHighlighterPerl_Initialized)
-		return;
+	static bool SynHighlighterPerl_Initialized = false;
 	
-	SynHighlighterPerl_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynPerlSyn));
-}
+	void SynHighlighterPerl_initialization()
+	{
+		if(SynHighlighterPerl_Initialized)
+			return;
+		
+		SynHighlighterPerl_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPerlSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

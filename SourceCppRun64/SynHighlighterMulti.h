@@ -136,7 +136,7 @@ For example, in HTML as well as HTML tags there can also be JavaScript and/or VB
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-class DELPHICLASS TSynMultiSyn;
+class TSynMultiSyn;
 typedef void __fastcall (__closure *TOnCheckMarker) (TObject*, int&, int&, String&, int, const String);
 
 class TScheme : public System::Classes::TCollectionItem

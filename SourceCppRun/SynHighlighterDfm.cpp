@@ -600,17 +600,18 @@ String __fastcall TSynDfmSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangDfm;
 	return result;
 }
-static bool SynHighlighterDfm_Initialized = false;
 
-void SynHighlighterDfm_initialization()
-{
-	if(SynHighlighterDfm_Initialized)
-		return;
+	static bool SynHighlighterDfm_Initialized = false;
 	
-	SynHighlighterDfm_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynDfmSyn));
-}
+	void SynHighlighterDfm_initialization()
+	{
+		if(SynHighlighterDfm_Initialized)
+			return;
+		
+		SynHighlighterDfm_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynDfmSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

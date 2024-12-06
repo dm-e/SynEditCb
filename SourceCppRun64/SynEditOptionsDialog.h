@@ -100,7 +100,7 @@ Known Issues:
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-class DELPHICLASS TSynEditorOptionsContainer;
+class TSynEditorOptionsContainer;
 enum TColorPopup {cpGutter,
                   cpRightEdge };
 

@@ -639,17 +639,18 @@ String __fastcall TSynJSONSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangJSON;
 	return result;
 }
-static bool SynHighlighterJSON_Initialized = false;
 
-void SynHighlighterJSON_initialization()
-{
-	if(SynHighlighterJSON_Initialized)
-		return;
+	static bool SynHighlighterJSON_Initialized = false;
 	
-	SynHighlighterJSON_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynJSONSyn));
-}
+	void SynHighlighterJSON_initialization()
+	{
+		if(SynHighlighterJSON_Initialized)
+			return;
+		
+		SynHighlighterJSON_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynJSONSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

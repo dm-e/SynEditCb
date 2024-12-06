@@ -5,6 +5,7 @@
 #include "SynEditHighlighter.h"
 #include "SynEditMiscProcs.h"
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -284,15 +285,21 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 		{
 			reg = new TBetterRegistry();
 			reg->RootKey = RootKey;
-			try
 			{
+				auto olsLambda = onLeavingScope([&] 
+				{
+					delete reg;
+				});
 				/*# with reg do */
 				{
 					auto with0 = reg;
 					if(with0->OpenKeyReadOnly(AttrKey))
 					{
-						try
 						{
+							auto olsLambda = onLeavingScope([&] 
+							{
+								with0->CloseKey();
+							});
 							if(with0->ValueExists(AttrName))
 							{
 								descript = with0->ReadString(AttrName);
@@ -321,16 +328,8 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 								result = true;
 							}
 						}
-						__finally
-						{
-							with0->CloseKey();
-						}
 					} // if
 				} // with
-			}
-			__finally
-			{
-				delete reg;
 			}
 		}
 		catch(...)
@@ -363,15 +362,21 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 		{
 			reg = new TBetterRegistry();
 			reg->RootKey = RootKey;
-			try
 			{
+				auto olsLambda = onLeavingScope([&] 
+				{
+					delete reg;
+				});
 				/*# with reg do */
 				{
 					auto with0 = reg;
 					if(with0->OpenKeyReadOnly(AttrKey + L"\\" + AttrName))
 					{
-						try
 						{
+							auto olsLambda = onLeavingScope([&] 
+							{
+								with0->CloseKey();
+							});
 							if(with0->ValueExists(L"Foreground Color"))
 								fgColor = Pal16[with0->ReadInteger(L"Foreground Color")];
 							else
@@ -427,16 +432,8 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 								Style = Style + Synedithighlighter__7;
 							result = true;
 						}
-						__finally
-						{
-							with0->CloseKey();
-						}
 					} // if
 				} // with
-			}
-			__finally
-			{
-				delete reg;
 			}
 		}
 		catch(...)
@@ -1333,29 +1330,30 @@ int __fastcall TSynCustomHighlighter::PosToExpandedPos(int Pos)
 	}
 	return result;
 }
-static bool SynEditHighlighter_Initialized = false;
 
-void SynEditHighlighter_initialization()
-{
-	if(SynEditHighlighter_Initialized)
-		return;
+	static bool SynEditHighlighter_Initialized = false;
 	
-	SynEditHighlighter_Initialized = true;
+	void SynEditHighlighter_initialization()
+	{
+		if(SynEditHighlighter_Initialized)
+			return;
+		
+		SynEditHighlighter_Initialized = true;
+		
+		G_PlaceableHighlighters = new TSynHighlighterList();
+	}
+	static bool SynEditHighlighter_Finalized = false;
 	
-	G_PlaceableHighlighters = new TSynHighlighterList();
-}
-static bool SynEditHighlighter_Finalized = false;
-
-void SynEditHighlighter_finalization()
-{
-	if(SynEditHighlighter_Finalized)
-		return;
-	
-	SynEditHighlighter_Finalized = true;
-	
-	delete G_PlaceableHighlighters;
-	G_PlaceableHighlighters = nullptr;
-}
+	void SynEditHighlighter_finalization()
+	{
+		if(SynEditHighlighter_Finalized)
+			return;
+		
+		SynEditHighlighter_Finalized = true;
+		
+		delete G_PlaceableHighlighters;
+		G_PlaceableHighlighters = nullptr;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

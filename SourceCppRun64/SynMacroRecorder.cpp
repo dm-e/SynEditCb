@@ -6,6 +6,7 @@
 #include "SynEditMiscProcs.h"
 #include <System.RTLConsts.hpp>
 #include <System.SysUtils.hpp>
+#include "OnLeavingScope.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -510,8 +511,11 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 	fEvents = new TList();
   // process file line by line and create events
 	S = new TStringList();
-	try
 	{
+		auto olsLambda = onLeavingScope([&] 
+		{
+			delete S;
+		});
 		int stop = 0;
 		S->Text = Value;
 		for(stop = S->Count - 1, i = 0; i <= stop; i++)
@@ -536,10 +540,6 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 				}
 			}
 		}
-	}
-	__finally
-	{
-		delete S;
 	}
 }
 

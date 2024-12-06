@@ -1247,17 +1247,18 @@ String __fastcall TSynJavaSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangJava;
 	return result;
 }
-static bool SynHighlighterJava_Initialized = false;
 
-void SynHighlighterJava_initialization()
-{
-	if(SynHighlighterJava_Initialized)
-		return;
+	static bool SynHighlighterJava_Initialized = false;
 	
-	SynHighlighterJava_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynJavaSyn));
-}
+	void SynHighlighterJava_initialization()
+	{
+		if(SynHighlighterJava_Initialized)
+			return;
+		
+		SynHighlighterJava_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynJavaSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -972,17 +972,18 @@ String __fastcall TSynCobolSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCOBOL;
 	return result;
 }
-static bool SynHighlighterCobol_Initialized = false;
 
-void SynHighlighterCobol_initialization()
-{
-	if(SynHighlighterCobol_Initialized)
-		return;
+	static bool SynHighlighterCobol_Initialized = false;
 	
-	SynHighlighterCobol_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCobolSyn));
-}
+	void SynHighlighterCobol_initialization()
+	{
+		if(SynHighlighterCobol_Initialized)
+			return;
+		
+		SynHighlighterCobol_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCobolSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

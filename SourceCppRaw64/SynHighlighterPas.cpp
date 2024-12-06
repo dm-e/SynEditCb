@@ -4,6 +4,7 @@
 
 #include "SynHighlighterPas.h"
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 #include "SynEditDelphiInstances.hpp"
 #include "d2c_syshelper.h"
 
@@ -1344,8 +1345,11 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 		TStringList* iVersions = nullptr;
 		String iVersionTag; /* ReadDelphiSettings */
 		iVersions = new TStringList();
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete iVersions;
+			});
 			EnumUserSettings(iVersions);
 			if((settingIndex < 0) || (settingIndex >= iVersions->Count))
 			{
@@ -1353,10 +1357,6 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 				return result;
 			}
 			iVersionTag = iVersions->Strings[settingIndex];
-		}
-		__finally
-		{
-			delete iVersions;
 		}
 		tmpAsmAttri = new TSynHighlighterAttributes(L"", L"");
 		tmpCommentAttri = new TSynHighlighterAttributes(L"", L"");
@@ -1750,17 +1750,18 @@ void __fastcall TSynPasSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 		FoldRanges->Ranges->Delete(ImplementationIndex);
 }
 //-- CodeFolding
-static bool SynHighlighterPas_Initialized = false;
 
-void SynHighlighterPas_initialization()
-{
-	if(SynHighlighterPas_Initialized)
-		return;
+	static bool SynHighlighterPas_Initialized = false;
 	
-	SynHighlighterPas_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynPasSyn));
-}
+	void SynHighlighterPas_initialization()
+	{
+		if(SynHighlighterPas_Initialized)
+			return;
+		
+		SynHighlighterPas_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPasSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

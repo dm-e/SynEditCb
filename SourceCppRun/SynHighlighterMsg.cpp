@@ -536,17 +536,18 @@ String __fastcall TSynMsgSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangSynGenMsgfiles;
 	return result;
 }
-static bool SynHighlighterMsg_Initialized = false;
 
-void SynHighlighterMsg_initialization()
-{
-	if(SynHighlighterMsg_Initialized)
-		return;
+	static bool SynHighlighterMsg_Initialized = false;
 	
-	SynHighlighterMsg_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynMsgSyn));
-}
+	void SynHighlighterMsg_initialization()
+	{
+		if(SynHighlighterMsg_Initialized)
+			return;
+		
+		SynHighlighterMsg_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynMsgSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

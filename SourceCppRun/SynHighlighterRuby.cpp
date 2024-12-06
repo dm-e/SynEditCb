@@ -586,17 +586,18 @@ String __fastcall TSynRubySyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangRuby;
 	return result;
 }
-static bool SynHighlighterRuby_Initialized = false;
 
-void SynHighlighterRuby_initialization()
-{
-	if(SynHighlighterRuby_Initialized)
-		return;
+	static bool SynHighlighterRuby_Initialized = false;
 	
-	SynHighlighterRuby_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynRubySyn));
-}
+	void SynHighlighterRuby_initialization()
+	{
+		if(SynHighlighterRuby_Initialized)
+			return;
+		
+		SynHighlighterRuby_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynRubySyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

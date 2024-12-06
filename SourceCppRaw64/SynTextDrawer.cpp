@@ -813,17 +813,17 @@ int __fastcall TheTextDrawer::TextWidth(PWideChar Text, int Count)
 	result = Synunicode::GetTextSize(FStockBitmap->Canvas->Handle, Text, Count).cx;
 	return result;
 }
-static bool SynTextDrawer_Finalized = false;
-
-void SynTextDrawer_finalization()
-{
-	if(SynTextDrawer_Finalized)
-		return;
+	static bool SynTextDrawer_Finalized = false;
 	
-	SynTextDrawer_Finalized = true;
-	
-	delete gFontsInfoManager;
-}
+	void SynTextDrawer_finalization()
+	{
+		if(SynTextDrawer_Finalized)
+			return;
+		
+		SynTextDrawer_Finalized = true;
+		
+		delete gFontsInfoManager;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

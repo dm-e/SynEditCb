@@ -1138,17 +1138,18 @@ String __fastcall TSynIdlSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCORBAIDL;
 	return result;
 }
-static bool SynHighlighterIDL_Initialized = false;
 
-void SynHighlighterIDL_initialization()
-{
-	if(SynHighlighterIDL_Initialized)
-		return;
+	static bool SynHighlighterIDL_Initialized = false;
 	
-	SynHighlighterIDL_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynIdlSyn));
-}
+	void SynHighlighterIDL_initialization()
+	{
+		if(SynHighlighterIDL_Initialized)
+			return;
+		
+		SynHighlighterIDL_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynIdlSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

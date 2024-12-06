@@ -1617,17 +1617,18 @@ void* __fastcall TSynRexxSyn::GetRange()
 	result = ((void*) fRange);
 	return result;
 }
-static bool SynHighlighterRexx_Initialized = false;
 
-void SynHighlighterRexx_initialization()
-{
-	if(SynHighlighterRexx_Initialized)
-		return;
+	static bool SynHighlighterRexx_Initialized = false;
 	
-	SynHighlighterRexx_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynRexxSyn));
-}
+	void SynHighlighterRexx_initialization()
+	{
+		if(SynHighlighterRexx_Initialized)
+			return;
+		
+		SynHighlighterRexx_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynRexxSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -324,31 +324,32 @@ HRESULT __stdcall TSynEnumFormatEtc::Clone(IEnumFORMATETC*& Enum)
 	return result;
 }
 const WideChar CF_HTML[] = L"HTML Format";
-static bool SynEditDataObject_Initialized = false;
 
-void SynEditDataObject_initialization()
-{
-	if(SynEditDataObject_Initialized)
-		return;
+	static bool SynEditDataObject_Initialized = false;
 	
-	SynEditDataObject_Initialized = true;
+	void SynEditDataObject_initialization()
+	{
+		if(SynEditDataObject_Initialized)
+			return;
+		
+		SynEditDataObject_Initialized = true;
+		
+		OleInitialize(nullptr);
+		SynEditClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(L"Internal SynEdit clipboard format"));
+		HTMLClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
+	}
+	static bool SynEditDataObject_Finalized = false;
 	
-	OleInitialize(nullptr);
-	SynEditClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(L"Internal SynEdit clipboard format"));
-	HTMLClipboardFormat = RegisterClipboardFormat(const_cast<LPCWSTR>(CF_HTML));
-}
-static bool SynEditDataObject_Finalized = false;
-
-void SynEditDataObject_finalization()
-{
-	if(SynEditDataObject_Finalized)
-		return;
-	
-	SynEditDataObject_Finalized = true;
-	
-	OleFlushClipboard();
-	OleUninitialize();
-}
+	void SynEditDataObject_finalization()
+	{
+		if(SynEditDataObject_Finalized)
+			return;
+		
+		SynEditDataObject_Finalized = true;
+		
+		OleFlushClipboard();
+		OleUninitialize();
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

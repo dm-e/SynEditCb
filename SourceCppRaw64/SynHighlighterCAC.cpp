@@ -674,17 +674,18 @@ String __fastcall TSynCACSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCAClipper;
 	return result;
 }
-static bool SynHighlighterCAC_Initialized = false;
 
-void SynHighlighterCAC_initialization()
-{
-	if(SynHighlighterCAC_Initialized)
-		return;
+	static bool SynHighlighterCAC_Initialized = false;
 	
-	SynHighlighterCAC_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCACSyn));
-}
+	void SynHighlighterCAC_initialization()
+	{
+		if(SynHighlighterCAC_Initialized)
+			return;
+		
+		SynHighlighterCAC_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCACSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

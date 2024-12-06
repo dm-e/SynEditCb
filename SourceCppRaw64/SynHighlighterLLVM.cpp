@@ -1188,17 +1188,18 @@ void* __fastcall TSynLLVMIRSyn::GetRange()
 	result = ((void*) fRange);
 	return result;
 }
-static bool SynHighlighterLLVM_Initialized = false;
 
-void SynHighlighterLLVM_initialization()
-{
-	if(SynHighlighterLLVM_Initialized)
-		return;
+	static bool SynHighlighterLLVM_Initialized = false;
 	
-	SynHighlighterLLVM_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynLLVMIRSyn));
-}
+	void SynHighlighterLLVM_initialization()
+	{
+		if(SynHighlighterLLVM_Initialized)
+			return;
+		
+		SynHighlighterLLVM_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynLLVMIRSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

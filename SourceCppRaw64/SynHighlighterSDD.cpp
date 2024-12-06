@@ -740,17 +740,18 @@ String __fastcall TSynSDDSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangSDD;
 	return result;
 }
-static bool SynHighlighterSDD_Initialized = false;
 
-void SynHighlighterSDD_initialization()
-{
-	if(SynHighlighterSDD_Initialized)
-		return;
+	static bool SynHighlighterSDD_Initialized = false;
 	
-	SynHighlighterSDD_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynSDDSyn));
-}
+	void SynHighlighterSDD_initialization()
+	{
+		if(SynHighlighterSDD_Initialized)
+			return;
+		
+		SynHighlighterSDD_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynSDDSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

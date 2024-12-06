@@ -1255,17 +1255,18 @@ void __fastcall TSynPHPSyn::String96Proc()
 	++Run;
 	StringProc();
 }
-static bool SynHighlighterPHP_Initialized = false;
 
-void SynHighlighterPHP_initialization()
-{
-	if(SynHighlighterPHP_Initialized)
-		return;
+	static bool SynHighlighterPHP_Initialized = false;
 	
-	SynHighlighterPHP_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynPHPSyn));
-}
+	void SynHighlighterPHP_initialization()
+	{
+		if(SynHighlighterPHP_Initialized)
+			return;
+		
+		SynHighlighterPHP_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPHPSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

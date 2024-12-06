@@ -4,6 +4,7 @@
 
 #include "SynHighlighterDfm.h"
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -60,25 +61,23 @@ int __fastcall LoadDFMFile2Strings(const String AFile, TStrings* AStrings, bool&
 	try
 	{
 		Src = new TFileStream(AFile, (WORD) (fmOpenRead | fmShareDenyWrite));
-		try
 		{
-			Dest = new TMemoryStream();
-			try
+			auto olsLambda = onLeavingScope([&] 
 			{
+				delete Src;
+			});
+			Dest = new TMemoryStream();
+			{
+				auto olsLambda = onLeavingScope([&] 
+				{
+					delete Dest;
+				});
 				origFormat = sofUnknown;
 				ObjectResourceToText(Src, Dest, origFormat);
 				WasText = origFormat == sofText;
 				Dest->Seek(0, (WORD) soFromBeginning);
 				AStrings->LoadFromStream(Dest);
 			}
-			__finally
-			{
-				delete Dest;
-			}
-		}
-		__finally
-		{
-			delete Src;
 		}
 	}
 	catch(EInOutError* E)
@@ -101,23 +100,21 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile)
 	try
 	{
 		Src = new TMemoryStream();
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete Src;
+			});
 			AStrings->SaveToStream(Src);
 			Src->Seek(0, (WORD) soFromBeginning);
 			Dest = new TFileStream(AFile, (WORD) fmCreate);
-			try
 			{
+				auto olsLambda = onLeavingScope([&] 
+				{
+					delete Dest;
+				});
 				ObjectTextToResource(Src, Dest);
 			}
-			__finally
-			{
-				delete Dest;
-			}
-		}
-		__finally
-		{
-			delete Src;
 		}
 	}
 	catch(EInOutError* E)
@@ -600,17 +597,18 @@ String __fastcall TSynDfmSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangDfm;
 	return result;
 }
-static bool SynHighlighterDfm_Initialized = false;
 
-void SynHighlighterDfm_initialization()
-{
-	if(SynHighlighterDfm_Initialized)
-		return;
+	static bool SynHighlighterDfm_Initialized = false;
 	
-	SynHighlighterDfm_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynDfmSyn));
-}
+	void SynHighlighterDfm_initialization()
+	{
+		if(SynHighlighterDfm_Initialized)
+			return;
+		
+		SynHighlighterDfm_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynDfmSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -50,7 +50,7 @@ const int deNone = DROPEFFECT_NONE;
 const int deMove = DROPEFFECT_MOVE;
 const int deCopy = DROPEFFECT_COPY;
 const int deLink = DROPEFFECT_LINK;
-const unsigned long deScroll = DROPEFFECT_SCROLL;
+const System::LongWord deScroll = DROPEFFECT_SCROLL;
 
 // Provides a translation of a IDropTarget interface into Delphi
 typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, TShiftState, const TPoint&, int&, HRESULT&);

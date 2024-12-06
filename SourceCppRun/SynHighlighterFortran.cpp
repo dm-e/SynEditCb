@@ -696,17 +696,18 @@ String __fastcall TSynFortranSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangFortran;
 	return result;
 }
-static bool SynHighlighterFortran_Initialized = false;
 
-void SynHighlighterFortran_initialization()
-{
-	if(SynHighlighterFortran_Initialized)
-		return;
+	static bool SynHighlighterFortran_Initialized = false;
 	
-	SynHighlighterFortran_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynFortranSyn));
-}
+	void SynHighlighterFortran_initialization()
+	{
+		if(SynHighlighterFortran_Initialized)
+			return;
+		
+		SynHighlighterFortran_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynFortranSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

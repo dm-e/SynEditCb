@@ -1232,17 +1232,18 @@ String __fastcall TSynVrml97Syn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangVrml97;
 	return result;
 }
-static bool SynHighlighterVrml97_Initialized = false;
 
-void SynHighlighterVrml97_initialization()
-{
-	if(SynHighlighterVrml97_Initialized)
-		return;
+	static bool SynHighlighterVrml97_Initialized = false;
 	
-	SynHighlighterVrml97_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynVrml97Syn));
-}
+	void SynHighlighterVrml97_initialization()
+	{
+		if(SynHighlighterVrml97_Initialized)
+			return;
+		
+		SynHighlighterVrml97_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynVrml97Syn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

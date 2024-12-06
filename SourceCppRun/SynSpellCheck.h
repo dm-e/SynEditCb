@@ -551,7 +551,7 @@ namespace Synspellcheck
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-class DELPHICLASS TSynSpellCheck;
+class TSynSpellCheck;
 typedef int /*1..16*/ THashLength;
 typedef int /*1..8*/ TSoundExLength;
 typedef DynamicArray<int> TJHCMPLongintArray;

@@ -5,6 +5,7 @@
 #include "SynHighlighterCpp.h"
 #include <Winapi.Windows.hpp>
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -1820,8 +1821,11 @@ bool __fastcall TSynCppSyn::UseUserSettings(int settingIndex)
 		TSynHighlighterAttributes* tmpDirecAttri = nullptr;
 		TStringList* s = nullptr; /* ReadCPPBSettings */
 		s = new TStringList();
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete s;
+			});
 			EnumUserSettings(s);
 			if(settingIndex >= s->Count)
 				result = false;
@@ -1892,10 +1896,6 @@ bool __fastcall TSynCppSyn::UseUserSettings(int settingIndex)
 				delete tmpSpaceAttri;
 				delete tmpDirecAttri;
 			}
-		}
-		__finally
-		{
-			delete s;
 		}
 		return result;
 	}; /* ReadCPPBSettings */
@@ -1969,17 +1969,18 @@ void __fastcall TSynCppSyn::SetNewPreprocesorStyle(bool Value)
 		ResetRange();
 	}
 }
-static bool SynHighlighterCpp_Initialized = false;
 
-void SynHighlighterCpp_initialization()
-{
-	if(SynHighlighterCpp_Initialized)
-		return;
+	static bool SynHighlighterCpp_Initialized = false;
 	
-	SynHighlighterCpp_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCppSyn));
-}
+	void SynHighlighterCpp_initialization()
+	{
+		if(SynHighlighterCpp_Initialized)
+			return;
+		
+		SynHighlighterCpp_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCppSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

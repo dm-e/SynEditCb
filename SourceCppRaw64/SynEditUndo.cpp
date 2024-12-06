@@ -29,7 +29,7 @@ namespace Syneditundo
 #define Syneditundo__1 (TSynLineChangeFlags() << sfModified)
 
 
-class DELPHICLASS TSynEditUndo;
+class TSynEditUndo;
 
 class TSynLinePutUndoItem : public TSynUndoItem
 {

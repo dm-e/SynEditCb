@@ -909,17 +909,18 @@ String __fastcall TSynHTMLSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangHTML;
 	return result;
 }
-static bool SynHighlighterHtml_Initialized = false;
 
-void SynHighlighterHtml_initialization()
-{
-	if(SynHighlighterHtml_Initialized)
-		return;
+	static bool SynHighlighterHtml_Initialized = false;
 	
-	SynHighlighterHtml_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynHTMLSyn));
-}
+	void SynHighlighterHtml_initialization()
+	{
+		if(SynHighlighterHtml_Initialized)
+			return;
+		
+		SynHighlighterHtml_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynHTMLSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

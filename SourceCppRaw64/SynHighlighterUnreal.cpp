@@ -4,6 +4,7 @@
 
 #include "SynHighlighterUnreal.h"
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -2787,8 +2788,11 @@ bool __fastcall TSynUnrealSyn::UseUserSettings(int settingIndex)
 		TSynHighlighterAttributes* tmpDirecAttri = nullptr;
 		TStringList* sl = nullptr; /* ReadCPPBSettings */
 		sl = new TStringList();
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete sl;
+			});
 			EnumUserSettings(sl);
 			if(settingIndex >= sl->Count)
 				result = false;
@@ -2837,10 +2841,6 @@ bool __fastcall TSynUnrealSyn::UseUserSettings(int settingIndex)
 				delete tmpSpaceAttri;
 				delete tmpDirecAttri;
 			}
-		}
-		__finally
-		{
-			delete sl;
 		}
 		return result;
 	}; /* ReadCPPBSettings */
@@ -2895,17 +2895,18 @@ String __fastcall TSynUnrealSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangUnreal;
 	return result;
 }
-static bool SynHighlighterUnreal_Initialized = false;
 
-void SynHighlighterUnreal_initialization()
-{
-	if(SynHighlighterUnreal_Initialized)
-		return;
+	static bool SynHighlighterUnreal_Initialized = false;
 	
-	SynHighlighterUnreal_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynUnrealSyn));
-}
+	void SynHighlighterUnreal_initialization()
+	{
+		if(SynHighlighterUnreal_Initialized)
+			return;
+		
+		SynHighlighterUnreal_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynUnrealSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

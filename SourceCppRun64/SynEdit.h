@@ -255,7 +255,7 @@ enum TSynEditorOption {eoAltSetsColumnMode,
                        eoCopyPlainText };
 typedef System::Set<TSynEditorOption, TSynEditorOption::eoAltSetsColumnMode, TSynEditorOption::eoCopyPlainText> TSynEditorOptions;
 const System::Set<TSynEditorOption, TSynEditorOption::eoAltSetsColumnMode, TSynEditorOption::eoCopyPlainText> SYNEDIT_DEFAULT_OPTIONS = System::Set<TSynEditorOption, TSynEditorOption::eoAltSetsColumnMode, TSynEditorOption::eoCopyPlainText>() << Synedit::eoAutoIndent << Synedit::eoDragDropEditing << Synedit::eoEnhanceEndKey << Synedit::eoScrollPastEol << Synedit::eoShowScrollHint << Synedit::eoTabIndent << Synedit::eoTabsToSpaces << Synedit::eoSmartTabDelete << Synedit::eoGroupUndo;
-class DELPHICLASS TCustomSynEdit;
+class TCustomSynEdit;
 
 struct TCreateParamsW
 {

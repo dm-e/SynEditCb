@@ -924,17 +924,18 @@ bool __fastcall TSynGeneralSyn::IsStringDelim(WideChar aChar)
 	}
 	return result;
 }
-static bool SynHighlighterGeneral_Initialized = false;
 
-void SynHighlighterGeneral_initialization()
-{
-	if(SynHighlighterGeneral_Initialized)
-		return;
+	static bool SynHighlighterGeneral_Initialized = false;
 	
-	SynHighlighterGeneral_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynGeneralSyn));
-}
+	void SynHighlighterGeneral_initialization()
+	{
+		if(SynHighlighterGeneral_Initialized)
+			return;
+		
+		SynHighlighterGeneral_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynGeneralSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -514,17 +514,18 @@ String __fastcall TSynKixSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangKIX;
 	return result;
 }
-static bool SynHighlighterKix_Initialized = false;
 
-void SynHighlighterKix_initialization()
-{
-	if(SynHighlighterKix_Initialized)
-		return;
+	static bool SynHighlighterKix_Initialized = false;
 	
-	SynHighlighterKix_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynKixSyn));
-}
+	void SynHighlighterKix_initialization()
+	{
+		if(SynHighlighterKix_Initialized)
+			return;
+		
+		SynHighlighterKix_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynKixSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -138,7 +138,7 @@ The unit SynHighlighterHP48 provides SynEdit with a HP48 assembler highlighter.
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int NbSubList = 128;
-class DELPHICLASS TSpeedStringList;
+class TSpeedStringList;
 
 class TSpeedListObject : public System::TObject
 {

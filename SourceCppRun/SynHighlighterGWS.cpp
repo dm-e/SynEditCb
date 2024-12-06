@@ -1162,17 +1162,18 @@ String __fastcall TSynGWScriptSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangGWS;
 	return result;
 }
-static bool SynHighlighterGWS_Initialized = false;
 
-void SynHighlighterGWS_initialization()
-{
-	if(SynHighlighterGWS_Initialized)
-		return;
+	static bool SynHighlighterGWS_Initialized = false;
 	
-	SynHighlighterGWS_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynGWScriptSyn));
-}
+	void SynHighlighterGWS_initialization()
+	{
+		if(SynHighlighterGWS_Initialized)
+			return;
+		
+		SynHighlighterGWS_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynGWScriptSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

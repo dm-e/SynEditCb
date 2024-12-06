@@ -624,17 +624,18 @@ void __fastcall TSynUNIXShellScriptSyn::SymbolProc()
 	++Run;
 	FTokenID = tkSymbol;
 }
-static bool SynHighlighterUNIXShellScript_Initialized = false;
 
-void SynHighlighterUNIXShellScript_initialization()
-{
-	if(SynHighlighterUNIXShellScript_Initialized)
-		return;
+	static bool SynHighlighterUNIXShellScript_Initialized = false;
 	
-	SynHighlighterUNIXShellScript_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynUNIXShellScriptSyn));
-}
+	void SynHighlighterUNIXShellScript_initialization()
+	{
+		if(SynHighlighterUNIXShellScript_Initialized)
+			return;
+		
+		SynHighlighterUNIXShellScript_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynUNIXShellScriptSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

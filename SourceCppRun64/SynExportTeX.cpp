@@ -58,7 +58,7 @@ String __fastcall ColorToTeX(TColor AColor)
 	String result;
 	const WideChar f[] = L"%1.2g";
 	const WideChar f2[] = L"%s,%s,%s";
-	unsigned long RGBColor = 0;
+	LongWord RGBColor = 0;
 	String RValue;
 	String GValue;
 	String BValue;

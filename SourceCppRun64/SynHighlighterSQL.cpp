@@ -2556,17 +2556,18 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 	}
 	return result;
 }
-static bool SynHighlighterSQL_Initialized = false;
 
-void SynHighlighterSQL_initialization()
-{
-	if(SynHighlighterSQL_Initialized)
-		return;
+	static bool SynHighlighterSQL_Initialized = false;
 	
-	SynHighlighterSQL_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynSQLSyn));
-}
+	void SynHighlighterSQL_initialization()
+	{
+		if(SynHighlighterSQL_Initialized)
+			return;
+		
+		SynHighlighterSQL_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynSQLSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

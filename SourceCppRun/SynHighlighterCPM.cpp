@@ -2190,17 +2190,18 @@ String __fastcall TSynCPMSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCPM;
 	return result;
 }
-static bool SynHighlighterCPM_Initialized = false;
 
-void SynHighlighterCPM_initialization()
-{
-	if(SynHighlighterCPM_Initialized)
-		return;
+	static bool SynHighlighterCPM_Initialized = false;
 	
-	SynHighlighterCPM_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCPMSyn));
-}
+	void SynHighlighterCPM_initialization()
+	{
+		if(SynHighlighterCPM_Initialized)
+			return;
+		
+		SynHighlighterCPM_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCPMSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

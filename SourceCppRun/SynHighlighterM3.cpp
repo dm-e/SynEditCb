@@ -737,17 +737,18 @@ String __fastcall TSynM3Syn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangModula3;
 	return result;
 }
-static bool SynHighlighterM3_Initialized = false;
 
-void SynHighlighterM3_initialization()
-{
-	if(SynHighlighterM3_Initialized)
-		return;
+	static bool SynHighlighterM3_Initialized = false;
 	
-	SynHighlighterM3_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynM3Syn));
-}
+	void SynHighlighterM3_initialization()
+	{
+		if(SynHighlighterM3_Initialized)
+			return;
+		
+		SynHighlighterM3_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynM3Syn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

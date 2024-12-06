@@ -483,7 +483,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 void __fastcall TCustomSynEdit::CreateParams(TCreateParams& Params)
 {
 	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, (DWORD) WS_BORDER};
-	const unsigned long ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
+	const LongWord ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
   // Clear WindowText to avoid it being used as Caption, or else window creation will
   // fail if it's bigger than 64KB. It's useless to set the Caption anyway.
 	StrDispose(WindowText);

@@ -1,18 +1,16 @@
 ﻿// CodeGear C++Builder
-// Copyright (c) 1995, 2024 by Embarcadero Technologies, Inc.
+// Copyright (c) 1995, 2017 by Embarcadero Technologies, Inc.
 // All rights reserved
 
-// (DO NOT EDIT: machine generated header) 'SynEditDelphiInstances.pas' rev: 36.00 (Windows)
+// (DO NOT EDIT: machine generated header) 'SynEditDelphiInstances.pas' rev: 32.00 (Windows)
 
-#ifndef SynEditDelphiInstancesHPP
-#define SynEditDelphiInstancesHPP
+#ifndef SyneditdelphiinstancesHPP
+#define SyneditdelphiinstancesHPP
 
 #pragma delphiheader begin
 #pragma option push
-#if defined(__BORLANDC__) && !defined(__clang__)
 #pragma option -w-      // All warnings off
 #pragma option -Vx      // Zero-length empty class member 
-#endif
 #pragma pack(push,8)
 #include <System.hpp>
 #include <SysInit.hpp>
@@ -43,7 +41,7 @@ public:
 	bool Collapsed;
 	
 private:
-	int __fastcall GetLinesCollapsed();
+	int __fastcall GetLinesCollapsed(void);
 	
 public:
 	void __fastcall Move(int Count);
@@ -82,13 +80,6 @@ public:
 	static bool __fastcall _op_GreaterThanOrEqual(const TBufferCoord &a, const TBufferCoord &b);
 	static TBufferCoord __fastcall Min(const TBufferCoord &a, const TBufferCoord &b);
 	static TBufferCoord __fastcall Max(const TBufferCoord &a, const TBufferCoord &b);
-	
-	friend bool operator ==(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_Equality(a, b); }
-	friend bool operator !=(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_Inequality(a, b); }
-	friend bool operator <(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_LessThan(a, b); }
-	friend bool operator <=(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_LessThanOrEqual(a, b); }
-	friend bool operator >(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_GreaterThan(a, b); }
-	friend bool operator >=(const TBufferCoord &a, const TBufferCoord &b) { return TBufferCoord::_op_GreaterThanOrEqual(a, b); }
 };
 
 
@@ -104,8 +95,8 @@ public:
 	virtual void __fastcall Undo(Vcl::Controls::TCustomControl* Editor) = 0 ;
 	virtual void __fastcall Redo(Vcl::Controls::TCustomControl* Editor) = 0 ;
 public:
-	/* TObject.Create */ inline __fastcall TSynUndoItem() : System::TObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TSynUndoItem() { }
+	/* TObject.Create */ inline __fastcall TSynUndoItem(void) : System::TObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TSynUndoItem(void) { }
 	
 };
 
@@ -119,8 +110,8 @@ class PASCALIMPLEMENTATION TSynFoldRangesCmp : public System::TInterfacedObject
 public:
 	int __fastcall Compare(const TSynFoldRange &Left, const TSynFoldRange &Right);
 public:
-	/* TObject.Create */ inline __fastcall TSynFoldRangesCmp() : System::TInterfacedObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TSynFoldRangesCmp() { }
+	/* TObject.Create */ inline __fastcall TSynFoldRangesCmp(void) : System::TInterfacedObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TSynFoldRangesCmp(void) { }
 	
 private:
 	void *__IComparer__1;	// System::Generics::Defaults::IComparer__1<TSynFoldRange> 
@@ -140,8 +131,8 @@ class PASCALIMPLEMENTATION TLineFoldInfoCmp : public System::TInterfacedObject
 public:
 	int __fastcall Compare(const TLineFoldInfo &Left, const TLineFoldInfo &Right);
 public:
-	/* TObject.Create */ inline __fastcall TLineFoldInfoCmp() : System::TInterfacedObject() { }
-	/* TObject.Destroy */ inline __fastcall virtual ~TLineFoldInfoCmp() { }
+	/* TObject.Create */ inline __fastcall TLineFoldInfoCmp(void) : System::TInterfacedObject() { }
+	/* TObject.Destroy */ inline __fastcall virtual ~TLineFoldInfoCmp(void) { }
 	
 private:
 	void *__IComparer__1;	// System::Generics::Defaults::IComparer__1<TLineFoldInfo> 
@@ -154,8 +145,8 @@ public:
 #pragma pack(pop)
 
 //-- var, const, procedure ---------------------------------------------------
-extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TSynFoldRange>* __fastcall CreateFoldRangeList();
-extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TLineFoldInfo>* __fastcall CreateFoldInfoList();
+extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TSynFoldRange>* __fastcall CreateFoldRangeList(void);
+extern DELPHI_PACKAGE System::Generics::Collections::TList__1<TLineFoldInfo>* __fastcall CreateFoldInfoList(void);
 extern DELPHI_PACKAGE void __fastcall AddToFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, const TSynFoldRange &ARange);
 extern DELPHI_PACKAGE void __fastcall InsertIntoFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, int AIndex, const TSynFoldRange &ARange);
 extern DELPHI_PACKAGE bool __fastcall BinarySearchInFoldRangeList(System::Generics::Collections::TList__1<TSynFoldRange>* AList, const TSynFoldRange &ARange, int &AIndex);
@@ -170,4 +161,4 @@ using namespace Syneditdelphiinstances;
 
 #pragma delphiheader end.
 //-- end unit ----------------------------------------------------------------
-#endif	// SynEditDelphiInstancesHPP
+#endif	// SyneditdelphiinstancesHPP

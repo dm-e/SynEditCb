@@ -906,17 +906,18 @@ TSynEditorCommand __fastcall ConvertCodeStringToCommand(String AString)
 	}
 	return result;
 }
-static bool SynEditKeyCmds_Initialized = false;
 
-void SynEditKeyCmds_initialization()
-{
-	if(SynEditKeyCmds_Initialized)
-		return;
+	static bool SynEditKeyCmds_Initialized = false;
 	
-	SynEditKeyCmds_Initialized = true;
-	
-	RegisterIntegerConsts(TypeInfo<TSynEditorCommand>(), IdentToEditorCommand, EditorCommandToIdent);
-}
+	void SynEditKeyCmds_initialization()
+	{
+		if(SynEditKeyCmds_Initialized)
+			return;
+		
+		SynEditKeyCmds_Initialized = true;
+		
+		RegisterIntegerConsts(TypeInfo<TSynEditorCommand>(), IdentToEditorCommand, EditorCommandToIdent);
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

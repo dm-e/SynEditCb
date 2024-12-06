@@ -575,17 +575,18 @@ String __fastcall TSynAWKSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangAWK;
 	return result;
 }
-static bool SynHighlighterAWK_Initialized = false;
 
-void SynHighlighterAWK_initialization()
-{
-	if(SynHighlighterAWK_Initialized)
-		return;
+	static bool SynHighlighterAWK_Initialized = false;
 	
-	SynHighlighterAWK_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynAWKSyn));
-}
+	void SynHighlighterAWK_initialization()
+	{
+		if(SynHighlighterAWK_Initialized)
+			return;
+		
+		SynHighlighterAWK_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynAWKSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 
