@@ -760,17 +760,18 @@ void __fastcall TSynVBScriptSyn::REMProc()
 		IdentProc();
 	}
 }
-static bool SynHighlighterVBScript_Initialized = false;
 
-void SynHighlighterVBScript_initialization()
-{
-	if(SynHighlighterVBScript_Initialized)
-		return;
+	static bool SynHighlighterVBScript_Initialized = false;
 	
-	SynHighlighterVBScript_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynVBScriptSyn));
-}
+	void SynHighlighterVBScript_initialization()
+	{
+		if(SynHighlighterVBScript_Initialized)
+			return;
+		
+		SynHighlighterVBScript_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynVBScriptSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

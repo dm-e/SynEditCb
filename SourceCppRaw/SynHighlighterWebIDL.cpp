@@ -1107,17 +1107,18 @@ void* __fastcall TSynWebIDLSyn::GetRange()
 	result = ((void*) fRange);
 	return result;
 }
-static bool SynHighlighterWebIDL_Initialized = false;
 
-void SynHighlighterWebIDL_initialization()
-{
-	if(SynHighlighterWebIDL_Initialized)
-		return;
+	static bool SynHighlighterWebIDL_Initialized = false;
 	
-	SynHighlighterWebIDL_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynWebIDLSyn));
-}
+	void SynHighlighterWebIDL_initialization()
+	{
+		if(SynHighlighterWebIDL_Initialized)
+			return;
+		
+		SynHighlighterWebIDL_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynWebIDLSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

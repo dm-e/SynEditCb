@@ -1138,17 +1138,18 @@ String __fastcall TSynFoxproSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangFoxpro;
 	return result;
 }
-static bool SynHighlighterFoxpro_Initialized = false;
 
-void SynHighlighterFoxpro_initialization()
-{
-	if(SynHighlighterFoxpro_Initialized)
-		return;
+	static bool SynHighlighterFoxpro_Initialized = false;
 	
-	SynHighlighterFoxpro_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynFoxproSyn));
-}
+	void SynHighlighterFoxpro_initialization()
+	{
+		if(SynHighlighterFoxpro_Initialized)
+			return;
+		
+		SynHighlighterFoxpro_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynFoxproSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

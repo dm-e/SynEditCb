@@ -1,7 +1,6 @@
 
 friend class ESynError;
 friend struct TBufferCoord;
-friend struct TControlHelper;
 friend struct TDisplayCoord;
 friend class TSynEditUndoItem;
 //friend TBufferCoord __fastcall BufferCoord(int AChar, int ALine);

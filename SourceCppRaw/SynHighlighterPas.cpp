@@ -1750,17 +1750,18 @@ void __fastcall TSynPasSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 		FoldRanges->Ranges->Delete(ImplementationIndex);
 }
 //-- CodeFolding
-static bool SynHighlighterPas_Initialized = false;
 
-void SynHighlighterPas_initialization()
-{
-	if(SynHighlighterPas_Initialized)
-		return;
+	static bool SynHighlighterPas_Initialized = false;
 	
-	SynHighlighterPas_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynPasSyn));
-}
+	void SynHighlighterPas_initialization()
+	{
+		if(SynHighlighterPas_Initialized)
+			return;
+		
+		SynHighlighterPas_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPasSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

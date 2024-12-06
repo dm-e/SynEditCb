@@ -233,19 +233,20 @@ bool __fastcall TSynURIOpener::VisitedURI(String URI)
 }
 const Char* const IDC_LINK = (MakeIntResource) 32649;
 THandle CursorHandle = 0;
-static bool SynURIOpener_Initialized = false;
 
-void SynURIOpener_initialization()
-{
-	if(SynURIOpener_Initialized)
-		return;
+	static bool SynURIOpener_Initialized = false;
 	
-	SynURIOpener_Initialized = true;
-	
-	CursorHandle = (THandle) LoadCursor(0, const_cast<LPCWSTR>(IDC_LINK));
-	if(CursorHandle != 0)
-		Screen->Cursors[System::Uitypes::crHandPoint] = (HCURSOR) CursorHandle;
-}
+	void SynURIOpener_initialization()
+	{
+		if(SynURIOpener_Initialized)
+			return;
+		
+		SynURIOpener_Initialized = true;
+		
+		CursorHandle = (THandle) LoadCursor(0, const_cast<LPCWSTR>(IDC_LINK));
+		if(CursorHandle != 0)
+			Screen->Cursors[System::Uitypes::crHandPoint] = (HCURSOR) CursorHandle;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

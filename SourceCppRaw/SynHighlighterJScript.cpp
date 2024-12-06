@@ -993,17 +993,18 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	} // while Line
 }
 //-- CodeFolding
-static bool SynHighlighterJScript_Initialized = false;
 
-void SynHighlighterJScript_initialization()
-{
-	if(SynHighlighterJScript_Initialized)
-		return;
+	static bool SynHighlighterJScript_Initialized = false;
 	
-	SynHighlighterJScript_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynJScriptSyn));
-}
+	void SynHighlighterJScript_initialization()
+	{
+		if(SynHighlighterJScript_Initialized)
+			return;
+		
+		SynHighlighterJScript_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynJScriptSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

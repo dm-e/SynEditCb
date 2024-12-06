@@ -3664,17 +3664,18 @@ String __fastcall TSynDmlSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangGembase;
 	return result;
 }
-static bool SynHighlighterDml_Initialized = false;
 
-void SynHighlighterDml_initialization()
-{
-	if(SynHighlighterDml_Initialized)
-		return;
+	static bool SynHighlighterDml_Initialized = false;
 	
-	SynHighlighterDml_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynDmlSyn));
-}
+	void SynHighlighterDml_initialization()
+	{
+		if(SynHighlighterDml_Initialized)
+			return;
+		
+		SynHighlighterDml_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynDmlSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

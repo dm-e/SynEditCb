@@ -1088,17 +1088,18 @@ String __fastcall TSynHP48Syn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangHP48;
 	return result;
 }
-static bool SynHighlighterHP48_Initialized = false;
 
-void SynHighlighterHP48_initialization()
-{
-	if(SynHighlighterHP48_Initialized)
-		return;
+	static bool SynHighlighterHP48_Initialized = false;
 	
-	SynHighlighterHP48_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynHP48Syn));
-}
+	void SynHighlighterHP48_initialization()
+	{
+		if(SynHighlighterHP48_Initialized)
+			return;
+		
+		SynHighlighterHP48_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynHP48Syn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

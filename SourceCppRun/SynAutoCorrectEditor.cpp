@@ -115,7 +115,7 @@ void __fastcall TfrmAutoCorrectEditor::btnDoneClick(TObject* Sender)
 
 void __fastcall TfrmAutoCorrectEditor::btnClearClick(TObject* Sender)
 {
-	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != System::Uitypes::idYes)
+	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != IDYES)
 		return;
 	SynAutoCorrect->Items->Clear();
 	lbxItems->Items->Clear();

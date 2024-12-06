@@ -988,17 +988,18 @@ void __fastcall TSynTclTkSyn::SymbolProc()
 	FTokenID = tkSymbol;
 	++Run;
 }
-static bool SynHighlighterTclTk_Initialized = false;
 
-void SynHighlighterTclTk_initialization()
-{
-	if(SynHighlighterTclTk_Initialized)
-		return;
+	static bool SynHighlighterTclTk_Initialized = false;
 	
-	SynHighlighterTclTk_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynTclTkSyn));
-}
+	void SynHighlighterTclTk_initialization()
+	{
+		if(SynHighlighterTclTk_Initialized)
+			return;
+		
+		SynHighlighterTclTk_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynTclTkSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

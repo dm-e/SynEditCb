@@ -859,17 +859,18 @@ String __fastcall TSynCacheSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangCache;
 	return result;
 }
-static bool SynHighlighterCache_Initialized = false;
 
-void SynHighlighterCache_initialization()
-{
-	if(SynHighlighterCache_Initialized)
-		return;
+	static bool SynHighlighterCache_Initialized = false;
 	
-	SynHighlighterCache_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynCacheSyn));
-}
+	void SynHighlighterCache_initialization()
+	{
+		if(SynHighlighterCache_Initialized)
+			return;
+		
+		SynHighlighterCache_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynCacheSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

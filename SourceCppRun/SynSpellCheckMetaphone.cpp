@@ -219,55 +219,55 @@ void __fastcall ApplyRules(UnicodeString ScanStr, const TRule* RuleBase, int Rul
 			} //case
 		return result;
 	}; //function RuleApplicable
-	int II = 0;
-	int T = 0;
+	int iI = 0;
+	int t = 0;
 	UnicodeString SkipRule;
 	bool SkipFlag = false;
-	T = 0 /*# Low(RuleBase) */;
-	while(T <= RuleBase_maxidx /*# High(RuleBase) */)
+	t = 0 /*# Low(RuleBase) */;
+	while(t <= RuleBase_maxidx /*# High(RuleBase) */)
 	{
 		int stop = 0;
 		SkipFlag = false;
-		for(stop = ScanStr.Length(), II = 1; II <= stop; II++)
+		for(stop = ScanStr.Length(), iI = 1; iI <= stop; iI++)
 		{
-			if(RuleApplicable(RuleBase[T], II))
+			if(RuleApplicable(RuleBase[t], iI))
 			{
-				OutStr->AddObject(RuleBase[T].sTo, ((TObject*) II));
+				OutStr->AddObject(RuleBase[t].sTo, ((TObject*) iI));
 				SkipFlag = true;
-				SkipRule = RuleBase[T].sFrom;
+				SkipRule = RuleBase[t].sFrom;
 			}
 		}
 		if(SkipFlag)
 		{
-			while(RuleBase[T].sFrom == SkipRule)
-				++T;
+			while(RuleBase[t].sFrom == SkipRule)
+				++t;
 		}
 		else
-		++T; // Normal increment
+		++t; // Normal increment
 	}
 }
 
 UnicodeString __fastcall FindRel(int xx)
 {
 	UnicodeString result;
-	int II = 0;
+	int iI = 0;
 	int stop = 0;
-	for(stop = OutStr->Count - 1, II = 0; II <= stop; II++)
+	for(stop = OutStr->Count - 1, iI = 0; iI <= stop; iI++)
 	{
-		if(((int) OutStr->Objects[II]) == xx)
-			result = result + Format(L"%3.3s %d ", ARRAYOFCONST((OutStr[II], II)));
+		if(((int) OutStr->Objects[iI]) == xx)
+			result = result + Format(L"%3.3s %d ", ARRAYOFCONST((OutStr[iI], iI)));
 	}
 	return result;
 }
 
-PWideChar __stdcall metaphone(PWideChar A, int lg)
+PWideChar __stdcall metaphone(PWideChar a, int lg)
 {
 	PWideChar result = nullptr;
 	UnicodeString sResult;
 	UnicodeString InStr;
 	UnicodeString TempStr;
-	int X = 0;
-	int Y = 0;
+	int x = 0;
+	int y = 0;
 	int SmallestIndex = 0;
 	int SmallestValue = 0; //for selection sort
 	bool FirstFlag = false;
@@ -275,12 +275,12 @@ PWideChar __stdcall metaphone(PWideChar A, int lg)
 	try
 	{
 		int stop = 0;
-		TempStr = WideUpperCase(A);
+		TempStr = WideUpperCase(a);
 		InStr = L"";
-		for(stop = TempStr.Length(), X = 1; X <= stop; X++)
+		for(stop = TempStr.Length(), x = 1; x <= stop; x++)
 		{
-			if(Pos(TempStr.SubString(X, 1), String(AllowChar)) > 0)
-				InStr = InStr + TempStr.SubString(X, 1);
+			if(Pos(TempStr.SubString(x, 1), String(AllowChar)) > 0)
+				InStr = InStr + TempStr.SubString(x, 1);
 		}
 
     //remove doubles EXCEPT FOR G (ugly exception)
@@ -288,45 +288,45 @@ PWideChar __stdcall metaphone(PWideChar A, int lg)
 		{
 			int stop = 0;
 			TempStr = InStr.SubString(1, 1);
-			for(stop = InStr.Length(), X = 2; X <= stop; X++)
+			for(stop = InStr.Length(), x = 2; x <= stop; x++)
 			{
-				if(InStr.SubString(X, 1) == L"G")
-					TempStr = TempStr + InStr.SubString(X, 1);
+				if(InStr.SubString(x, 1) == L"G")
+					TempStr = TempStr + InStr.SubString(x, 1);
 				else
 				{
-					if(InStr.SubString(X, 1) != InStr.SubString(X - 1, 1))
-						TempStr = TempStr + InStr.SubString(X, 1);
+					if(InStr.SubString(x, 1) != InStr.SubString(x - 1, 1))
+						TempStr = TempStr + InStr.SubString(x, 1);
 				}
 			}
 			InStr = TempStr;
 		}
 
-	//scan input and create result for each rule in output array
+    //scan input and create result for each rule in output array
 		ApplyRules(InStr, Rules, 66);
 
     //get result - order output stringlist, then translate to string
     //do selection sort - or something like that, anyway :-)
-		for(stop = OutStr->Count - 1, X = 0; X <= stop; X++)
+		for(stop = OutStr->Count - 1, x = 0; x <= stop; x++)
 		{
 			int stop1 = 0;
-			SmallestIndex = X;
-			SmallestValue = ((int) OutStr->Objects[X]);
-			for(stop1 = OutStr->Count - 1, Y = X; Y <= stop1; Y++)
+			SmallestIndex = x;
+			SmallestValue = ((int) OutStr->Objects[x]);
+			for(stop1 = OutStr->Count - 1, y = x; y <= stop1; y++)
 			{
-				if(((int) OutStr->Objects[Y]) < SmallestValue)
+				if(((int) OutStr->Objects[y]) < SmallestValue)
 				{
-					SmallestIndex = Y;
-					SmallestValue = ((int) OutStr->Objects[Y]);
+					SmallestIndex = y;
+					SmallestValue = ((int) OutStr->Objects[y]);
 				}
 			}
-			if(SmallestIndex > X) //do swap with smallest
-				OutStr->Exchange(X, SmallestIndex);
+			if(SmallestIndex > x) //do swap with smallest
+				OutStr->Exchange(x, SmallestIndex);
 		}
 		FirstFlag = false;
-		for(stop = OutStr->Count - 1, X = 0; X <= stop; X++)
+		for(stop = OutStr->Count - 1, x = 0; x <= stop; x++)
 		{
-			sResult = sResult + OutStr->Strings[X];
-			if(((int) OutStr->Objects[X]) == 1)
+			sResult = sResult + OutStr->Strings[x];
+			if(((int) OutStr->Objects[x]) == 1)
 				FirstFlag = true;
 		}
 

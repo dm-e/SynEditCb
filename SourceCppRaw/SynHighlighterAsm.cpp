@@ -519,17 +519,18 @@ String __fastcall TSynAsmSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangX86Asm;
 	return result;
 }
-static bool SynHighlighterAsm_Initialized = false;
 
-void SynHighlighterAsm_initialization()
-{
-	if(SynHighlighterAsm_Initialized)
-		return;
+	static bool SynHighlighterAsm_Initialized = false;
 	
-	SynHighlighterAsm_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynAsmSyn));
-}
+	void SynHighlighterAsm_initialization()
+	{
+		if(SynHighlighterAsm_Initialized)
+			return;
+		
+		SynHighlighterAsm_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynAsmSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

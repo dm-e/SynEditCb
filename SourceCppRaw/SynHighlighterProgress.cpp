@@ -847,17 +847,18 @@ String __fastcall TSynProgressSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangProgress;
 	return result;
 }
-static bool SynHighlighterProgress_Initialized = false;
 
-void SynHighlighterProgress_initialization()
-{
-	if(SynHighlighterProgress_Initialized)
-		return;
+	static bool SynHighlighterProgress_Initialized = false;
 	
-	SynHighlighterProgress_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynProgressSyn));
-}
+	void SynHighlighterProgress_initialization()
+	{
+		if(SynHighlighterProgress_Initialized)
+			return;
+		
+		SynHighlighterProgress_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynProgressSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

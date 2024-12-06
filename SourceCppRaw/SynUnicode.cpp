@@ -118,7 +118,7 @@ TFontCharSet __fastcall CharSetFromLocale(LCID Language)
 	unsigned int CP = 0;
 	TCharsetInfo CSI = {};
 	CP = (unsigned int) CodePageFromLocale(Language);
-	TranslateCharsetInfoEx(((unsigned int*) ((void*) CP)), CSI, (DWORD) TCI_SRCCODEPAGE);
+	TranslateCharsetInfoEx(((LongWord*) ((void*) CP)), CSI, (DWORD) TCI_SRCCODEPAGE);
 	result = (TFontCharSet) CSI.ciCharset;
 	return result;
 }
@@ -478,17 +478,18 @@ bool __fastcall IsWideCharMappableToAnsi(WideChar WC)
 	result = !UsedDefaultChar;
 	return result;
 }
-static bool SynUnicode_Initialized = false;
 
-void SynUnicode_initialization()
-{
-	if(SynUnicode_Initialized)
-		return;
+	static bool SynUnicode_Initialized = false;
 	
-	SynUnicode_Initialized = true;
-	
-	Assert(Win32Platform() == VER_PLATFORM_WIN32_NT, L"Unsupported Windows version");
-}
+	void SynUnicode_initialization()
+	{
+		if(SynUnicode_Initialized)
+			return;
+		
+		SynUnicode_Initialized = true;
+		
+		Assert(Win32Platform() == VER_PLATFORM_WIN32_NT, L"Unsupported Windows version");
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -357,17 +357,18 @@ String __fastcall TSynTeXSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangTeX;
 	return result;
 }
-static bool SynHighlighterTeX_Initialized = false;
 
-void SynHighlighterTeX_initialization()
-{
-	if(SynHighlighterTeX_Initialized)
-		return;
+	static bool SynHighlighterTeX_Initialized = false;
 	
-	SynHighlighterTeX_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynTeXSyn));
-}
+	void SynHighlighterTeX_initialization()
+	{
+		if(SynHighlighterTeX_Initialized)
+			return;
+		
+		SynHighlighterTeX_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynTeXSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

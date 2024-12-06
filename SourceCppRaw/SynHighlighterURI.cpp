@@ -698,17 +698,18 @@ String __fastcall TSynURISyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangURI;
 	return result;
 }
-static bool SynHighlighterURI_Initialized = false;
 
-void SynHighlighterURI_initialization()
-{
-	if(SynHighlighterURI_Initialized)
-		return;
+	static bool SynHighlighterURI_Initialized = false;
 	
-	SynHighlighterURI_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynURISyn));
-}
+	void SynHighlighterURI_initialization()
+	{
+		if(SynHighlighterURI_Initialized)
+			return;
+		
+		SynHighlighterURI_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynURISyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

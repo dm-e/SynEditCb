@@ -759,17 +759,18 @@ String __fastcall TSynVBSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangVisualBASIC;
 	return result;
 }
-static bool SynHighlighterVB_Initialized = false;
 
-void SynHighlighterVB_initialization()
-{
-	if(SynHighlighterVB_Initialized)
-		return;
+	static bool SynHighlighterVB_Initialized = false;
 	
-	SynHighlighterVB_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynVBSyn));
-}
+	void SynHighlighterVB_initialization()
+	{
+		if(SynHighlighterVB_Initialized)
+			return;
+		
+		SynHighlighterVB_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynVBSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

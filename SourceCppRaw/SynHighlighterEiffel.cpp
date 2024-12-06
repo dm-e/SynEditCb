@@ -1637,17 +1637,18 @@ String __fastcall TSynEiffelSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangEiffel;
 	return result;
 }
-static bool SynHighlighterEiffel_Initialized = false;
 
-void SynHighlighterEiffel_initialization()
-{
-	if(SynHighlighterEiffel_Initialized)
-		return;
+	static bool SynHighlighterEiffel_Initialized = false;
 	
-	SynHighlighterEiffel_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynEiffelSyn));
-}
+	void SynHighlighterEiffel_initialization()
+	{
+		if(SynHighlighterEiffel_Initialized)
+			return;
+		
+		SynHighlighterEiffel_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynEiffelSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

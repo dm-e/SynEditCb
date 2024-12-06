@@ -532,7 +532,7 @@
         </CppCompile>
         <CppCompile Include="..\SourceCppRun\SynHighlighterManager.cpp">
             <DependentOn>..\SourceCppRun\SynHighlighterManager.h</DependentOn>
-            <BuildOrder>97</BuildOrder>
+            <BuildOrder>119</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\SourceCppRun\SynHighlighterModelica.cpp">
             <DependentOn>..\SourceCppRun\SynHighlighterModelica.h</DependentOn>
@@ -641,6 +641,10 @@
         <CppCompile Include="..\SourceCppRun\SynSpellCheck.cpp">
             <DependentOn>..\SourceCppRun\SynSpellCheck.h</DependentOn>
             <BuildOrder>119</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\SourceCppRun\SynSpellCheckMetaphone.cpp">
+            <DependentOn>..\SourceCppRun\SynSpellCheckMetaphone.h</DependentOn>
+            <BuildOrder>120</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\SourceCppRun\SynTextDrawer.cpp">
             <DependentOn>..\SourceCppRun\SynTextDrawer.h</DependentOn>
@@ -779,7 +783,19 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName=".\Win32\Debug\SyneditTest.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName=".\Win32\Debug\SyneditTest.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SyneditTest.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName=".\Win32\Debug\SyneditTest.tds" Configuration="Debug" Class="DebugSymbols"/>
+                <DeployFile LocalName=".\Win32\Debug\SyneditTest.tds" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win32">
+                        <RemoteName>SyneditTest.tds</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

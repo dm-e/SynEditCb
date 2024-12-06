@@ -76,7 +76,7 @@ __fastcall TSynInternalImage::TSynInternalImage() {}
 __fastcall TSynHotKey::TSynHotKey(HWND ParentWindow) : inherited(ParentWindow) {}
 __fastcall TSynEditSearchCustom::TSynEditSearchCustom(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TBetterRegistry::TBetterRegistry() {}
-__fastcall TBetterRegistry::TBetterRegistry(unsigned int AAccess) : inherited(AAccess) {}
+__fastcall TBetterRegistry::TBetterRegistry(System::LongWord AAccess) : inherited(AAccess) {}
 
 
 /*static */const int TSynGutterBand::MarginX = 2; 
@@ -1142,7 +1142,7 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 void __fastcall TSynHotKey::CreateParams(TCreateParams& Params)
 {
 	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TSynBorderStyle*/] = {0, (DWORD) WS_BORDER};
-	const unsigned int ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
+	const LongWord ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
 	inherited::CreateParams(Params);
 	/*# with Params do */
 	{

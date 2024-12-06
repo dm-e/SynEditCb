@@ -1063,17 +1063,18 @@ String __fastcall TSynHaskellSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangHaskell;
 	return result;
 }
-static bool SynHighlighterHaskell_Initialized = false;
 
-void SynHighlighterHaskell_initialization()
-{
-	if(SynHighlighterHaskell_Initialized)
-		return;
+	static bool SynHighlighterHaskell_Initialized = false;
 	
-	SynHighlighterHaskell_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynHaskellSyn));
-}
+	void SynHighlighterHaskell_initialization()
+	{
+		if(SynHighlighterHaskell_Initialized)
+			return;
+		
+		SynHighlighterHaskell_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynHaskellSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

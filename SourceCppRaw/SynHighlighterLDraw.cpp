@@ -497,17 +497,18 @@ String __fastcall TSynLDRSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangLDraw;
 	return result;
 }
-static bool SynHighlighterLDraw_Initialized = false;
 
-void SynHighlighterLDraw_initialization()
-{
-	if(SynHighlighterLDraw_Initialized)
-		return;
+	static bool SynHighlighterLDraw_Initialized = false;
 	
-	SynHighlighterLDraw_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynLDRSyn));
-}
+	void SynHighlighterLDraw_initialization()
+	{
+		if(SynHighlighterLDraw_Initialized)
+			return;
+		
+		SynHighlighterLDraw_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynLDRSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

@@ -1426,17 +1426,18 @@ String __fastcall TSynDWSSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangPascal;
 	return result;
 }
-static bool SynHighlighterDWS_Initialized = false;
 
-void SynHighlighterDWS_initialization()
-{
-	if(SynHighlighterDWS_Initialized)
-		return;
+	static bool SynHighlighterDWS_Initialized = false;
 	
-	SynHighlighterDWS_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynDWSSyn));
-}
+	void SynHighlighterDWS_initialization()
+	{
+		if(SynHighlighterDWS_Initialized)
+			return;
+		
+		SynHighlighterDWS_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynDWSSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

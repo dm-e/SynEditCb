@@ -770,17 +770,18 @@ String __fastcall TSynSMLSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangSML;
 	return result;
 }
-static bool SynHighlighterSml_Initialized = false;
 
-void SynHighlighterSml_initialization()
-{
-	if(SynHighlighterSml_Initialized)
-		return;
+	static bool SynHighlighterSml_Initialized = false;
 	
-	SynHighlighterSml_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynSMLSyn));
-}
+	void SynHighlighterSml_initialization()
+	{
+		if(SynHighlighterSml_Initialized)
+			return;
+		
+		SynHighlighterSml_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynSMLSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

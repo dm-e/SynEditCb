@@ -107,11 +107,11 @@ of this file under either the MPL or the GPL.
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-const unsigned char UTF8BOM[3/*# range 0..2*/] = {0xEF, 0xBB, 0xBF};
-const unsigned char UTF16BOMLE[2/*# range 0..1*/] = {0xFF, 0xFE};
-const unsigned char UTF16BOMBE[2/*# range 0..1*/] = {0xFE, 0xFF};
-const unsigned char UTF32BOMLE[4/*# range 0..3*/] = {0xFF, 0xFE, 0x00, 0x00};
-const unsigned char UTF32BOMBE[4/*# range 0..3*/] = {0x00, 0x00, 0xFE, 0xFF};
+const System::Byte UTF8BOM[3/*# range 0..2*/] = {0xEF, 0xBB, 0xBF};
+const System::Byte UTF16BOMLE[2/*# range 0..1*/] = {0xFF, 0xFE};
+const System::Byte UTF16BOMBE[2/*# range 0..1*/] = {0xFE, 0xFF};
+const System::Byte UTF32BOMLE[4/*# range 0..3*/] = {0xFF, 0xFE, 0x00, 0x00};
+const System::Byte UTF32BOMBE[4/*# range 0..3*/] = {0x00, 0x00, 0xFE, 0xFF};
   // constants describing range of the Unicode Private Use Area (Unicode 3.2)
 const System::WideChar PrivateUseLow = ((System::WideChar) 0xE000);
 const System::WideChar PrivateUseHigh = ((System::WideChar) 0xF8FF);
@@ -131,14 +131,14 @@ const System::WideChar WideCarriageReturn = L'\x0d';
 const System::UnicodeString WideCRLF = UnicodeString(L"\x0d\x0a");
 const System::WideChar WideLineSeparator = ((System::WideChar) 0x2028);
 const System::WideChar WideParagraphSeparator = ((System::WideChar) 0x2029);
-//typedef int /*0..255*/ TFontCharset;
+typedef int /*0..255*/ TFontCharSet;
 PWideChar __fastcall SynCharNext(PWideChar P);
 PWideChar __fastcall SynCharNext(PWideChar P, String& Element);
-int __fastcall SynUniElementsCount(String s);
+int __fastcall SynUniElementsCount(String S);
 
 /* functions taken from JCLUnicode.pas */
 void __fastcall StrSwapByteOrder(PWideChar Str);
-TFontCharset __fastcall CharSetFromLocale(LCID Language);
+TFontCharSet __fastcall CharSetFromLocale(LCID Language);
 int __fastcall CodePageFromLocale(LCID Language);
 WORD __fastcall KeyboardCodePage();
 

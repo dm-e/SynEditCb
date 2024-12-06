@@ -1333,29 +1333,30 @@ int __fastcall TSynCustomHighlighter::PosToExpandedPos(int Pos)
 	}
 	return result;
 }
-static bool SynEditHighlighter_Initialized = false;
 
-void SynEditHighlighter_initialization()
-{
-	if(SynEditHighlighter_Initialized)
-		return;
+	static bool SynEditHighlighter_Initialized = false;
 	
-	SynEditHighlighter_Initialized = true;
+	void SynEditHighlighter_initialization()
+	{
+		if(SynEditHighlighter_Initialized)
+			return;
+		
+		SynEditHighlighter_Initialized = true;
+		
+		G_PlaceableHighlighters = new TSynHighlighterList();
+	}
+	static bool SynEditHighlighter_Finalized = false;
 	
-	G_PlaceableHighlighters = new TSynHighlighterList();
-}
-static bool SynEditHighlighter_Finalized = false;
-
-void SynEditHighlighter_finalization()
-{
-	if(SynEditHighlighter_Finalized)
-		return;
-	
-	SynEditHighlighter_Finalized = true;
-	
-	delete G_PlaceableHighlighters;
-	G_PlaceableHighlighters = nullptr;
-}
+	void SynEditHighlighter_finalization()
+	{
+		if(SynEditHighlighter_Finalized)
+			return;
+		
+		SynEditHighlighter_Finalized = true;
+		
+		delete G_PlaceableHighlighters;
+		G_PlaceableHighlighters = nullptr;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

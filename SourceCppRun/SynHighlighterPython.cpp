@@ -1519,28 +1519,29 @@ String __fastcall TSynPythonSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangPython;
 	return result;
 }
-static bool SynHighlighterPython_Initialized = false;
 
-void SynHighlighterPython_initialization()
-{
-	if(SynHighlighterPython_Initialized)
-		return;
+	static bool SynHighlighterPython_Initialized = false;
 	
-	SynHighlighterPython_Initialized = true;
+	void SynHighlighterPython_initialization()
+	{
+		if(SynHighlighterPython_Initialized)
+			return;
+		
+		SynHighlighterPython_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPythonSyn));
+	}
+	static bool SynHighlighterPython_Finalized = false;
 	
-	RegisterPlaceableHighlighter(__classid(TSynPythonSyn));
-}
-static bool SynHighlighterPython_Finalized = false;
-
-void SynHighlighterPython_finalization()
-{
-	if(SynHighlighterPython_Finalized)
-		return;
-	
-	SynHighlighterPython_Finalized = true;
-	
-	delete GlobalKeywords;
-}
+	void SynHighlighterPython_finalization()
+	{
+		if(SynHighlighterPython_Finalized)
+			return;
+		
+		SynHighlighterPython_Finalized = true;
+		
+		delete GlobalKeywords;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 

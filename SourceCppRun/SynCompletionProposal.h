@@ -125,6 +125,7 @@ typedef System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive
 const System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter> DefaultProposalOptions = System::Set<TSynCompletionOption, TSynCompletionOption::scoCaseSensitive, TSynCompletionOption::scoCompleteWithEnter>() << Syncompletionproposal::scoLimitToMatchedText << Syncompletionproposal::scoEndCharCompletion << Syncompletionproposal::scoCompleteWithTab << Syncompletionproposal::scoCompleteWithEnter;
 const System::WideChar DefaultEndOfTokenChr[] = L"()[]. ";
 class TProposalColumns;
+typedef TProposalColumns PProposalColumns;
 
 class TSynBaseCompletionProposalForm : public TSynForm
 {
@@ -391,7 +392,7 @@ __published:
 	__property String Title = { read = GetTitle, write = SetTitle };
 	__property TFont* Font = { read = GetFont, write = SetFont };
 	__property TFont* TitleFont = { read = GetTitleFont, write = SetTitleFont };
-	__property TProposalColumns* Columns = { read = GetColumns, write = SetColumns };
+	__property PProposalColumns Columns = { read = GetColumns, write = SetColumns };
 	__property bool Resizeable = { read = GetResizeable, write = SetResizeable, default = false };
 	__property int ItemHeight = { read = GetItemHeight, write = SetItemHeight, default = 0 };
 	__property TCustomImageList* Images = { read = GetImages, write = SetImages, default = NULL };

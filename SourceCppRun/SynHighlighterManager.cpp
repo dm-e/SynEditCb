@@ -17,7 +17,6 @@ using namespace d2c_system;
 using namespace Designintf;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
-using namespace System;
 using namespace System::Classes;
 using namespace System::Sysutils;
 using namespace System::Uitypes;
@@ -54,9 +53,9 @@ typedef IDesigner TDesignerClass;
 __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
  : inherited(AOwner)
 {
-	TCustomForm* Form = nullptr;
+	TCustomForm* form = nullptr;
 	TDesignerClass* dsgn = nullptr;
-	TSynHighlighterList* Highlight = nullptr;
+	TSynHighlighterList* highlight = nullptr;
 	TSynHighlighterForm* synForm = nullptr;
 
 	auto CheckExisting = [&]() -> void 
@@ -64,9 +63,9 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		int i = 0;
 		int j = 0;
 		int stop = 0;
-		for(stop = Form->ComponentCount - 1, i = 0; i <= stop; i++)
+		for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 		{
-			j = Highlight->FindByClass(Form->Components[i]);
+			j = highlight->FindByClass(form->Components[i]);
 			if(j >= 0)
 			{
 // todo dme				j = synForm->clbHighlighters->Items->IndexOf(Highlight->Items[j]->GetFriendlyLanguageName);
@@ -82,7 +81,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		int i = 0;
 		int stop = 0;
 		result = -1;
-		for(stop = Form->ComponentCount - 1, i = 0; i <= stop; i++)
+		for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 		{
 // todo dme			if(ObjectIs(Form->Components[i], hlClass))
 			{
@@ -96,11 +95,11 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 	auto PlaceNew = [&]() -> void 
 	{
 		int i = 0;
-		int High = 0;
-		int Comp = 0;
-		int XPos = 0;
-		int YPos = 0;
-		int XStart = 0;
+		int high = 0;
+		int comp = 0;
+		int xpos = 0;
+		int ypos = 0;
+		int xstart = 0;
 
 		auto GetStartCoordinates = [&]() -> void 
 		{
@@ -108,34 +107,34 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			int compLeft = 0;
 			int i = 0;
 			int stop = 0;
-			XPos = -1;
-			YPos = -1;
-			for(stop = Form->ComponentCount - 1, i = 0; i <= stop; i++)
+			xpos = -1;
+			ypos = -1;
+			for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 			{
 // todo dme				if(ObjectIs(Form->Components[i], TSynCustomHighlighterClass**))
 				{
-					compLeft = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Lo;
-					compTop = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Hi;
-					if((XPos < 0) || (compLeft < XPos))
-						XPos = compLeft;
-					if((YPos < 0) || (compTop < YPos))
-						YPos = compTop;
+					compLeft = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Lo;
+					compTop = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Hi;
+					if((xpos < 0) || (compLeft < xpos))
+						xpos = compLeft;
+					if((ypos < 0) || (compTop < ypos))
+						ypos = compTop;
 				}
 			} //for
-			if(XPos < 0)
-				XPos = 8;
-			if(YPos < 0)
-				YPos = 8;
-			XStart = XPos;
+			if(xpos < 0)
+				xpos = 8;
+			if(ypos < 0)
+				ypos = 8;
+			xstart = xpos;
 		};
 
 		auto IncCoordinates = [&]() -> void 
 		{
-			XPos += 32;
+			xpos += 32;
 // todo dme			if((XPos + 32) >= Form->ClientWidth)
 			{
-				XPos = XStart;
-				YPos += 32;
+				xpos = xstart;
+				ypos += 32;
 			}
 		};
 
@@ -150,13 +149,13 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			int i = 0;
 			int stop = 0;
 			result = false;
-			testRect = Rect(XPos, YPos, XPos + 31, YPos + 31);
-			for(stop = Form->ComponentCount - 1, i = 0; i <= stop; i++)
+			testRect = Rect(xpos, ypos, xpos + 31, ypos + 31);
+			for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 			{
-				if((Form->Components[i] != this) && (!(ObjectIs(Form->Components[i], TControl*))))
+				if((form->Components[i] != this) && (!(ObjectIs(form->Components[i], TControl*))))
 				{
-					compLeft = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Lo;
-					compTop = (int) ((LongRec*) &Form->Components[i]->DesignInfo)->Hi;
+					compLeft = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Lo;
+					compTop = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Hi;
 					compRect = Rect(compLeft, compTop, compLeft + 31, compTop + 31);
 					if(IntersectRect(&interRect, &testRect, &compRect))
 					{
@@ -183,12 +182,12 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		{
 			if(!synForm->clbHighlighters->Checked[i]) // unchecked - remove
 			{
-				High = Highlight->FindByFriendlyName(synForm->clbHighlighters->Items->Strings[i]);
-				if(High >= 0)
+				high = highlight->FindByFriendlyName(synForm->clbHighlighters->Items->Strings[i]);
+				if(high >= 0)
 				{
-					Comp = FindHighlighterComp(Highlight->Items[High]);
-					if(Comp >= 0)
-						delete Form->Components[Comp];
+					comp = FindHighlighterComp(highlight->Items[high]);
+					if(comp >= 0)
+						delete form->Components[comp];
 				}
 			}
 		} //for
@@ -196,13 +195,13 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		{
 			if(synForm->clbHighlighters->Checked[i]) // checked - add
 			{
-				High = Highlight->FindByFriendlyName(synForm->clbHighlighters->Items->Strings[i]);
-				if(High >= 0)
+				high = highlight->FindByFriendlyName(synForm->clbHighlighters->Items->Strings[i]);
+				if(high >= 0)
 				{
-					if(FindHighlighterComp(Highlight->Items[High]) < 0)
+					if(FindHighlighterComp(highlight->Items[high]) < 0)
 					{
 						GetFreeCoordinates();
-						dsgn->CreateComponent(Highlight->Items[High], AOwner, XPos, YPos, 24, 24);
+						dsgn->CreateComponent(highlight->Items[high], AOwner, xpos, ypos, 24, 24);
 						IncCoordinates();
 					}
 				}
@@ -211,14 +210,14 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 	};
 	if((ComponentState.Contains(csDesigning)) && (ObjectIs(AOwner, TCustomForm*)))
 	{
-		Form = ((TCustomForm*) AOwner);
-// todo dme		dsgn = (TDesignerClass*) Form->Designer;
-		Highlight = GetPlaceableHighlighters();
-		if(Highlight->Count() == 0)
+		form = ((TCustomForm*) AOwner);
+// todo dme		dsgn = (TDesignerClass*) form->Designer;
+		highlight = GetPlaceableHighlighters();
+		if(highlight->Count() == 0)
 			Application->MessageBox(L"No highlighters found!", L"Highlighter Manager", MB_OK + MB_ICONEXCLAMATION);
 		else
 		{
-			synForm = new TSynHighlighterForm(Highlight);
+			synForm = new TSynHighlighterForm(highlight);
 			try
 			{
 				CheckExisting();

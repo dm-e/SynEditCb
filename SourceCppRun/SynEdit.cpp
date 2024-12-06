@@ -36,7 +36,6 @@ using namespace Syntextdrawer;
 using namespace Synunicode;
 using namespace System;
 using namespace System::Character;
-using namespace System::Classes;
 using namespace System::Contnrs;
 using namespace System::Sysutils;
 using namespace System::Types;
@@ -504,7 +503,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 void __fastcall TCustomSynEdit::CreateParams(TCreateParams& Params)
 {
 	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, (DWORD) WS_BORDER};
-	const unsigned int ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
+	const LongWord ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
   // Clear WindowText to avoid it being used as Caption, or else window creation will
   // fail if it's bigger than 64KB. It's useless to set the Caption anyway.
 	StrDispose(WindowText);
