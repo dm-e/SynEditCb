@@ -47,7 +47,7 @@ TBufferCoord __fastcall BufferCoord(int AChar, int ALine)
 /*
 /* TBufferCoord * /
 
-bool __fastcall operator == (const TBufferCoord& cA, const TBufferCoord& cB)
+/* TBufferCoord */
 
 bool __fastcall operator == (const TBufferCoord& ca, const TBufferCoord& cb)
 {
