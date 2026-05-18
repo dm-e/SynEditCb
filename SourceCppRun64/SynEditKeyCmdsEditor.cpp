@@ -107,9 +107,9 @@ __fastcall TSynEditKeystrokesEditorForm::TSynEditKeystrokesEditorForm(TComponent
 	KeyCmdList->Align = alClient;
 	KeyCmdList->BorderStyle = bsNone;
 	GetTListColumnsitem(KeyCmdList->Columns, 0)->Caption = L"Command";
-	GetTListColumnsitem(KeyCmdList->Columns, 0)->Width = (TWidth) 117;
+	GetTListColumnsitem(KeyCmdList->Columns, 0)->Width = static_cast<TWidth>(117);
 	GetTListColumnsitem(KeyCmdList->Columns, 1)->Caption = L"Keystroke";
-	GetTListColumnsitem(KeyCmdList->Columns, 1)->Width = (TWidth) 101;
+	GetTListColumnsitem(KeyCmdList->Columns, 1)->Width = static_cast<TWidth>(101);
 	KeyCmdList->ColumnClick = false;
 	KeyCmdList->HideSelection = false;
 	KeyCmdList->TabOrder = 0;
@@ -191,7 +191,7 @@ __fastcall TSynEditKeystrokesEditorForm::~TSynEditKeystrokesEditorForm()
 {
 	if(ASSIGNED(FKeystrokes))
 		delete FKeystrokes;
-	//# inherited::TForm::Destroy();
+	//# inherited::Destroy();
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::SetKeystrokes(TSynEditKeyStrokes* const Value)
@@ -258,7 +258,7 @@ void __fastcall TSynEditKeystrokesEditorForm::FormResize(TObject* Sender)
 	lnlInfo2->Top = pnlCommands->Top + pnlCommands->Height + 27;
 }
 
-void __fastcall TSynEditKeystrokesEditorForm::WMGetMinMaxInfo(TWMGetMinMaxInfo& Msg)
+void __fastcall TSynEditKeystrokesEditorForm::WMGetMinMaxInfo(Winapi::Messages::TWMGetMinMaxInfo& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMGetMinMaxInfo" not not accessible;
 	Msg.MinMaxInfo->ptMinTrackSize = Point(300, 225);
@@ -287,7 +287,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 				NewStroke->ShortCut = AForm->Keystroke;
 				NewStroke->ShortCut2 = AForm->Keystroke2;
 			}
-			catch(ESynKeyError*)
+			catch(const ESynKeyError&)
 			{
 				{
 					if(FExtended)
@@ -317,9 +317,9 @@ void __fastcall TSynEditKeystrokesEditorForm::btnAddClick(TObject* Sender)
 			});
 			with0->Caption = L"Add Keystroke";
 			with0->ExtendedString = this->ExtendedString;
-			with0->Command = (TSynEditorCommand) ecNone;
-			with0->Keystroke = (TShortCut) 0;
-			with0->Keystroke2 = (TShortCut) 0;
+			with0->Command = static_cast<TSynEditorCommand>(ecNone);
+			with0->Keystroke = static_cast<TShortCut>(0);
+			with0->Keystroke2 = static_cast<TShortCut>(0);
 			if(AddKeyStroke())
 			{
 				/*# with KeyCmdList.Items.Add do */
@@ -370,7 +370,7 @@ void __fastcall TSynEditKeystrokesEditorForm::btnEditClick(TObject* Sender)
 				FKeystrokes->Items[SelItem->Index]->ShortCut = AForm->Keystroke;
 				FKeystrokes->Items[SelItem->Index]->ShortCut2 = AForm->Keystroke2;
 			}
-			catch(ESynKeyError*)
+			catch(const ESynKeyError&)
 			{
 				{
 					if(FExtended)
@@ -489,12 +489,12 @@ void __fastcall TSynEditKeystrokesEditorForm::FormCreate(TObject* Sender)
 
 void __fastcall TSynEditKeystrokesEditorForm::btnOKClick(TObject* Sender)
 {
-	ModalResult = (TModalResult) mrOk;
+	ModalResult = static_cast<TModalResult>(mrOk);
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::btnCancelClick(TObject* Sender)
 {
-	ModalResult = (TModalResult) mrCancel;
+	ModalResult = static_cast<TModalResult>(mrCancel);
 }
 
 void __fastcall TSynEditKeystrokesEditorForm::KeyCmdListClick(TObject* Sender)

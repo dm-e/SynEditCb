@@ -201,8 +201,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fAtRuleAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall AtRuleProc();
 	void __fastcall SelectorProc();
 	void __fastcall AttributeProc();
@@ -272,7 +272,7 @@ public:
 void SynHighlighterCSS_initialization();
 
 
-}  // namespace SynHighlighterCss
+}  // namespace Synhighlightercss
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercss;

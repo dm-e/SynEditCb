@@ -115,10 +115,10 @@ unsigned int __fastcall TSynDmlSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 798 + int((*Str)) * 3);
+		result = static_cast<unsigned int>(result * 798 + int((*Str)) * 3);
 		++Str;
 	}
-	result = (unsigned int) (result % 2439);
+	result = static_cast<unsigned int>(result % 2439);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -3679,5 +3679,5 @@ String __fastcall TSynDmlSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterDml
+}  // namespace Synhighlighterdml
 

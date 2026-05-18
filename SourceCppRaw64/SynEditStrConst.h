@@ -627,7 +627,7 @@ const System::Char SYNS_FriendlyLangURI[] = L"URI";
 const System::Char SYNS_FriendlyLangVrml97[] = L"Vrml97";
 
 
-}  // namespace SynEditStrConst
+}  // namespace Syneditstrconst
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditstrconst;

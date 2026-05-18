@@ -1,8 +1,5 @@
-Char
-String
-Break
-Continue
-Result
+Eof
+IEnumFORMATETC
 SLICE
 Round
 clAppWorkSpace

@@ -11,7 +11,6 @@ using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Types;
 
 namespace Synhighlightergeneral
 {
@@ -751,7 +750,7 @@ TSynHighlighterAttributes* __fastcall TSynGeneralSyn::GetTokenAttribute()
 		result = nullptr;
 		break;
 	}
-	if(ASSIGNED(fOnGetTokenAttribute))
+	if(Assigned(fOnGetTokenAttribute))
 		fOnGetTokenAttribute(result);
 	return result;
 }
@@ -939,5 +938,5 @@ bool __fastcall TSynGeneralSyn::IsStringDelim(WideChar aChar)
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterGeneral
+}  // namespace Synhighlightergeneral
 

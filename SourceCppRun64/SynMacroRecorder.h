@@ -147,16 +147,16 @@ public:
 	typedef System::TObject inherited;
 protected:
 	System::Byte fRepeatCount;
-	virtual String __fastcall GetAsString(){return String();} // = 0;
-	virtual void __fastcall InitEventParameters(String aStr){} // = 0;
+	virtual String __fastcall GetAsString(){ThrowAbstractMethodError(L"TSynMacroEvent::GetAsString"); return String();};
+	virtual void __fastcall InitEventParameters(String aStr){ThrowAbstractMethodError(L"TSynMacroEvent::InitEventParameters");};
 public:
 	__fastcall TSynMacroEvent();
-	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData){} // = 0;
+	virtual void __fastcall Initialize(Synedittypes::TSynEditorCommand aCmd, WideChar aChar, void* aData){ThrowAbstractMethodError(L"TSynMacroEvent::Initialize");};
     /* the CommandID must not be read inside LoadFromStream/SaveToStream. It's read by the
     MacroRecorder component to decide which MacroEvent class to instanciate */
-	virtual void __fastcall LoadFromStream(TStream* aStream){} // = 0;
-	virtual void __fastcall SaveToStream(TStream* aStream){} // = 0;
-	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor){} // = 0;
+	virtual void __fastcall LoadFromStream(TStream* aStream){ThrowAbstractMethodError(L"TSynMacroEvent::LoadFromStream");};
+	virtual void __fastcall SaveToStream(TStream* aStream){ThrowAbstractMethodError(L"TSynMacroEvent::SaveToStream");};
+	virtual void __fastcall Playback(Synedit::TCustomSynEdit* aEditor){ThrowAbstractMethodError(L"TSynMacroEvent::Playback");};
 	__property String AsString = { read = GetAsString };
 	__property System::Byte RepeatCount = { read = fRepeatCount, write = fRepeatCount };
 };
@@ -340,7 +340,7 @@ public:
 };
 
 
-}  // namespace SynMacroRecorder
+}  // namespace Synmacrorecorder
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synmacrorecorder;

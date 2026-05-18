@@ -170,8 +170,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fDebugLinesAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall IdentProc();
 	void __fastcall UnknownProc();
 	void __fastcall NullProc();
@@ -233,7 +233,7 @@ public:
 void SynHighlighterCobol_initialization();
 
 
-}  // namespace SynHighlighterCobol
+}  // namespace Synhighlightercobol
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercobol;

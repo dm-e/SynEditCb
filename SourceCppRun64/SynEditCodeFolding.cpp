@@ -5,6 +5,7 @@
 #include <Winapi.Windows.hpp>
 #include <System.Math.hpp>
 #include "SynEditTextBuffer.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -123,7 +124,6 @@ __fastcall TSynFoldRanges::~TSynFoldRanges()
 	delete fFoldInfoList;
 	// inherited;
 }
-
 
 bool __fastcall TSynFoldRanges::FoldAroundLine(int Line)
 {
@@ -282,9 +282,9 @@ int __fastcall TSynFoldRanges::FoldRowToLine(int Row)
    ignoring fold ranges of type FoldRegionType
 */
 
-System::TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
+D2CArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
 {
-	System::TArray<int> result;
+	D2CArray<int> result;
 	int i = 0;
 	TList__1<int>* FRStack = nullptr;
 	TList__1<int>* ResultList = nullptr;
@@ -326,9 +326,9 @@ System::TArray<int> __fastcall TSynFoldRanges::FoldsAtLevel(int Level)
    Returns an array of indices of folds with FoldType = aType
 */
 
-System::TArray<int> __fastcall TSynFoldRanges::FoldsOfType(int aType)
+D2CArray<int> __fastcall TSynFoldRanges::FoldsOfType(int aType)
 {
-	System::TArray<int> result;
+	D2CArray<int> result;
 	int i = 0;
 	TList__1<int>* ResultList = nullptr;
 	ResultList = new TList__1<int>();
@@ -706,7 +706,7 @@ void __fastcall TSynFoldRanges::RestoreCollapsedState(TStream* Stream)
 	int Size = 0;
 	int Line = 0;
 	int Index = 0;
-	Size = (int) Stream->Size;
+	Size = static_cast<int>(Stream->Size);
 	while(Stream->Position < Size)
 	{
 		Stream->ReadData(Line);
@@ -806,9 +806,9 @@ void __fastcall TSynCodeFolding::Assign(TPersistent* Source)
 
 __fastcall TSynCodeFolding::TSynCodeFolding()
  : fIndentGuides(true),
-			fCollapsedLineColor((TColor) clGrayText),
-			fFolderBarLinesColor((TColor) clGrayText),
-			fIndentGuidesColor((TColor) clGray),
+			fCollapsedLineColor(static_cast<TColor>(clGrayText)),
+			fFolderBarLinesColor(static_cast<TColor>(clGrayText)),
+			fIndentGuidesColor(static_cast<TColor>(clGray)),
 			fShowCollapsedLine(false),
 			fShowHintMark(true),
 			fGutterShapeSize(11)
@@ -911,7 +911,7 @@ void __fastcall TSynCodeFolding::SetCollapsedLineColor(const TColor Value)
 	if(fCollapsedLineColor != Value)
 	{
 		fCollapsedLineColor = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -921,7 +921,7 @@ void __fastcall TSynCodeFolding::SetFolderBarLinesColor(const TColor Value)
 	if(fFolderBarLinesColor != Value)
 	{
 		fFolderBarLinesColor = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -933,7 +933,7 @@ void __fastcall TSynCodeFolding::SetGutterShapeSize(int Value)
 	if(fGutterShapeSize != NewValue)
 	{
 		fGutterShapeSize = NewValue;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -943,7 +943,7 @@ void __fastcall TSynCodeFolding::SetIndentGuides(bool Value)
 	if(fIndentGuides != Value)
 	{
 		fIndentGuides = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -953,7 +953,7 @@ void __fastcall TSynCodeFolding::SetIndentGuidesColor(const TColor Value)
 	if(fIndentGuidesColor != Value)
 	{
 		fIndentGuidesColor = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -963,7 +963,7 @@ void __fastcall TSynCodeFolding::SetShowHintMark(bool Value)
 	if(fShowHintMark != Value)
 	{
 		fShowHintMark = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -973,11 +973,11 @@ void __fastcall TSynCodeFolding::SetShowCollapsedLine(bool Value)
 	if(fShowCollapsedLine != Value)
 	{
 		fShowCollapsedLine = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
 
 
-}  // namespace SynEditCodeFolding
+}  // namespace Syneditcodefolding
 

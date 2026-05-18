@@ -362,8 +362,8 @@ public:
 // useful elsewhere.
 String __fastcall EditorCommandToDescrString(Synedittypes::TSynEditorCommand Cmd);
 String __fastcall EditorCommandToCodeString(Synedittypes::TSynEditorCommand Cmd);
-void __fastcall GetEditorCommandValues(TGetStrProc Proc);
-void __fastcall GetEditorCommandExtended(TGetStrProc Proc);
+void __fastcall GetEditorCommandValues(const TGetStrProc& Proc);
+void __fastcall GetEditorCommandExtended(const TGetStrProc& Proc);
 bool __fastcall IdentToEditorCommand(const String Ident, int& Cmd);
 bool __fastcall EditorCommandToIdent(int Cmd, String& Ident);
 String __fastcall ConvertCodeStringToExtended(String AString);
@@ -375,7 +375,7 @@ int __fastcall IndexToEditorCommand(int AIndex);
 void SynEditKeyCmds_initialization();
 
 
-}  // namespace SynEditKeyCmds
+}  // namespace Syneditkeycmds
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditkeycmds;

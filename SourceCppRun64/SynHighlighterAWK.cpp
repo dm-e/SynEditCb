@@ -153,11 +153,11 @@ void __fastcall TSynAWKSyn::IdentProc()
 	while(CharInSet(fLine[i], Synhighlighterawk__1))
 		++i;
 	s.SetLength(i - Run);
-	StrLCopy(ustr2pwchar(s), fLine + Run, (unsigned int) (i - Run));
+	StrLCopy(ustr2pwchar(s), fLine + Run, static_cast<unsigned int>(i - Run));
 	Run = i;
 	if(AWKSyntaxList->Find(s, idx) && (AWKSyntaxList->Strings[idx] == s))
 	{
-		FTokenID = (TtkTokenKind) (NativeInt) AWKSyntaxList->Objects[idx];
+		FTokenID = (TtkTokenKind)(NativeInt)AWKSyntaxList->Objects[idx];
 		if(FTokenID == tkUnknown)
 		{
 			FTokenID = tkKey;
@@ -409,11 +409,11 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	AddAttribute(fIdentifierAttri);
 	fInterFuncAttri = new TSynHighlighterAttributes(SYNS_AttrInternalFunction, SYNS_FriendlyAttrInternalFunction);
-	fInterFuncAttri->Foreground = (TColor) 0x00408080;
+	fInterFuncAttri->Foreground = static_cast<TColor>(0x00408080);
 	fInterFuncAttri->Style = Synhighlighterawk__8;
 	AddAttribute(fInterFuncAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Foreground = (TColor) 0x00FF0080;
+	fKeyAttri->Foreground = static_cast<TColor>(0x00FF0080);
 	fKeyAttri->Style = Synhighlighterawk__9;
 	AddAttribute(fKeyAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
@@ -427,7 +427,7 @@ __fastcall TSynAWKSyn::TSynAWKSyn(TComponent* AOwner)
 	fSymbolAttri->Style = Synhighlighterawk__10;
 	AddAttribute(fSymbolAttri);
 	fSysVarAttri = new TSynHighlighterAttributes(SYNS_AttrSystemValue, SYNS_FriendlyAttrSystemValue);
-	fSysVarAttri->Foreground = (TColor) 0x000080FF;
+	fSysVarAttri->Foreground = static_cast<TColor>(0x000080FF);
 	fSysVarAttri->Style = Synhighlighterawk__11;
 	AddAttribute(fSysVarAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -590,5 +590,5 @@ String __fastcall TSynAWKSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterAWK
+}  // namespace Synhighlighterawk
 

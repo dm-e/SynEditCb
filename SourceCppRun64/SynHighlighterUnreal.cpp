@@ -11,6 +11,7 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
+using namespace System;
 
 namespace Synhighlighterunreal
 {
@@ -59,10 +60,10 @@ unsigned int __fastcall TSynUnrealSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 41 + int((*Str)) * 701);
+		result = static_cast<unsigned int>(result * 41 + int((*Str)) * 701);
 		++Str;
 	}
-	result = (unsigned int) (result % 733);
+	result = static_cast<unsigned int>(result % 733);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -2910,5 +2911,5 @@ String __fastcall TSynUnrealSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterUnreal
+}  // namespace Synhighlighterunreal
 

@@ -311,7 +311,7 @@ public:
 };
 
 
-}  // namespace SynEditPrintMargins
+}  // namespace Syneditprintmargins
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditprintmargins;

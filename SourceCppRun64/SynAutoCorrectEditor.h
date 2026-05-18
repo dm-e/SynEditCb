@@ -115,8 +115,8 @@ public:
 	void __fastcall FormCreate(TObject* Sender);
 	void __fastcall FormPaint(TObject* Sender);
 private:
-	void __fastcall lbxItemsDrawItemCLX(TObject* Sender, int Index, const TRect& Rect, TOwnerDrawState State, bool& Handled);
-	void __fastcall lbxItemsDrawItem(TWinControl* Control, int Index, const TRect& Rect, TOwnerDrawState State);
+	void __fastcall lbxItemsDrawItemCLX(TObject* Sender, int Index, const TRect& Rect, Winapi::Windows::TOwnerDrawState State, bool& Handled);
+	void __fastcall lbxItemsDrawItem(TWinControl* Control, int Index, const TRect& Rect, Winapi::Windows::TOwnerDrawState State);
 public:
 	Synautocorrect::TSynAutoCorrect* SynAutoCorrect;
 	typedef TForm inherited;

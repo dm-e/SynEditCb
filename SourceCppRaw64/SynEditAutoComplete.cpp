@@ -4,6 +4,7 @@
 #include "SynEditAutoComplete.h"
 #include <System.SysUtils.hpp>
 #include "SynEditDelphiInstances.hpp"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -108,7 +109,7 @@ void __fastcall TCustomSynAutoComplete::Execute(TCustomSynEdit* AEditor)
 		i = j - 1;
 		if(i <= s.Length())
 		{
-			while((i > 0) && (s[i] > L' ') && (Pos(s[i], fEOTokenChars) == 0))
+			while((i > 0) && (s[i] > L' ') && (PosChar(s[i], fEOTokenChars) == 0))
 				--i;
 			++i;
 			s = s.SubString(i, j - i);
@@ -450,5 +451,5 @@ void __fastcall TCustomSynAutoComplete::SynEditCommandHandler(TObject* Sender, b
 }
 
 
-}  // namespace SynEditAutoComplete
+}  // namespace Syneditautocomplete
 

@@ -5,6 +5,7 @@
 #include <System.Types.hpp>
 #include "SynEditKeyConst.h"
 #include "SynEditMiscProcs.h"
+#include "d2c_sysinterface.h"
 #include "d2c_dfm.h"
 
 using namespace std;
@@ -15,6 +16,7 @@ using namespace Syneditkeyconst;
 using namespace Syneditmiscclasses;
 using namespace Syneditmiscprocs;
 using namespace Synedittypes;
+using namespace System;
 using namespace System::Classes;
 using namespace System::Types;
 using namespace System::Uitypes;
@@ -63,12 +65,12 @@ TSynEditorOptionsUserCommand __fastcall TSynEditOptionsDialog::GetUserCommandNam
 	return result;
 }
 
-void __fastcall TSynEditOptionsDialog::SetUserCommands(const TSynEditorOptionsAllUserCommands Value)
+void __fastcall TSynEditOptionsDialog::SetUserCommands(const TSynEditorOptionsAllUserCommands& Value)
 {
 	FForm->GetAllUserCommands = Value;
 }
 
-void __fastcall TSynEditOptionsDialog::SetUserCommandNames(const TSynEditorOptionsUserCommand Value)
+void __fastcall TSynEditOptionsDialog::SetUserCommandNames(const TSynEditorOptionsUserCommand& Value)
 {
 	FForm->GetUserCommandNames = Value;
 }
@@ -231,7 +233,7 @@ bool __fastcall TfmEditorOptionsDialog::Execute(TSynEditorOptionsContainer* Edit
   //Get Data
 	GetData();
   //Show the form
-	result = ShowModal() == System::Uitypes::mrOk;
+	result = ShowModal() == mrOk;
   //PutData
 	if(result)
 		PutData();
@@ -435,10 +437,10 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with0->Top = 55;
 		with0->Width = 185;
 		with0->Height = 21;
-		with0->HotKey = (TShortCut) 0;
+		with0->HotKey = static_cast<TShortCut>(0);
 		with0->InvalidKeys = Syneditoptionsdialog__1;
 		with0->Modifiers = Syneditoptionsdialog__2;
-		with0->TabOrder = (TTabOrder) 1;
+		with0->TabOrder = 1;
 	}
 	eKeyShort2 = new TSynHotKey(this);
 	/*# with eKeyShort2 do */
@@ -449,10 +451,10 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with1->Top = 87;
 		with1->Width = 185;
 		with1->Height = 21;
-		with1->HotKey = (TShortCut) 0;
+		with1->HotKey = static_cast<TShortCut>(0);
 		with1->InvalidKeys = Syneditoptionsdialog__3;
 		with1->Modifiers = Syneditoptionsdialog__4;
-		with1->TabOrder = (TTabOrder) 2;
+		with1->TabOrder = 2;
 	}
 }
 
@@ -514,7 +516,7 @@ void __fastcall TfmEditorOptionsDialog::btnUpdateKeyClick(TObject* Sender)
 	if(cKeyCommand->ItemIndex < 0)
 		return;
 	Cmd = (NativeInt) cKeyCommand->Items->Objects[cKeyCommand->ItemIndex];
-	((TSynEditKeyStroke*) OldSelected->Data)->Command = (TSynEditorCommand) Cmd;
+	((TSynEditKeyStroke*) OldSelected->Data)->Command = static_cast<TSynEditorCommand>(Cmd);
 	if(eKeyShort1->HotKey != 0)
 		((TSynEditKeyStroke*) OldSelected->Data)->ShortCut = eKeyShort1->HotKey;
 	if(eKeyShort2->HotKey != 0)
@@ -564,7 +566,7 @@ void __fastcall TfmEditorOptionsDialog::FormShow(TObject* Sender)
 	else
 		GetEditorCommandValues(EditStrCallback);
   //Now add in the user defined ones if they have any
-	if(ASSIGNED(FAllUserCommands))
+	if(Assigned(FAllUserCommands))
 	{
 		Commands = new TStringList();
 		try
@@ -593,7 +595,7 @@ void __fastcall TfmEditorOptionsDialog::KeyListEditing(TObject* Sender, TListIte
 void __fastcall TfmEditorOptionsDialog::btnOkClick(TObject* Sender)
 {
 	btnUpdateKey->Click();
-	ModalResult = (TModalResult) System::Uitypes::mrOk;
+	ModalResult = static_cast<TModalResult>(mrOk);
 }
 
 void __fastcall TfmEditorOptionsDialog::btnGutterFontClick(TObject* Sender)
@@ -641,8 +643,8 @@ void __fastcall TfmEditorOptionsDialog::FillInKeystrokeInfo(TSynEditKeyStroke* A
 		if(with0->Command >= ecUserFirst)
 		{
 			TmpString = L"User Command";
-			if(ASSIGNED(GetUserCommandNames))
-				GetUserCommandNames((int) with0->Command, TmpString);
+			if(Assigned(GetUserCommandNames))
+				GetUserCommandNames(static_cast<int>(with0->Command), TmpString);
 		}
 		else
 		{
@@ -1507,9 +1509,9 @@ __fastcall TfmEditorOptionsDialog::TfmEditorOptionsDialog(TComponent* AOwner, in
 	KeyList->Align = alClient;
 	KeyList->BorderStyle = bsNone;
 	GetTListColumnsitem(KeyList->Columns, 0)->Caption = L"Command";
-	GetTListColumnsitem(KeyList->Columns, 0)->Width = (TWidth) 167;
+	GetTListColumnsitem(KeyList->Columns, 0)->Width = static_cast<TWidth>(167);
 	GetTListColumnsitem(KeyList->Columns, 1)->Caption = L"Keystroke";
-	GetTListColumnsitem(KeyList->Columns, 1)->Width = (TWidth) 142;
+	GetTListColumnsitem(KeyList->Columns, 1)->Width = static_cast<TWidth>(142);
 	KeyList->ColumnClick = false;
 	KeyList->HideSelection = false;
 	KeyList->ReadOnly = true;

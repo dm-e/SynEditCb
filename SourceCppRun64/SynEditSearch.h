@@ -125,9 +125,9 @@ Known Issues:
 class TSynEditSearch : public Syneditmiscclasses::TSynEditSearchCustom
 {
 private:
-	PWideChar Run;
-	PWideChar Origin;
-	PWideChar TheEnd;
+	System::PWideChar Run;
+	System::PWideChar Origin;
+	System::PWideChar TheEnd;
 	String Pat;
 	String CasedPat;
 	int fCount;
@@ -170,7 +170,7 @@ public:
 };
 
 
-}  // namespace SynEditSearch
+}  // namespace Syneditsearch
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditsearch;

@@ -103,37 +103,37 @@ __fastcall TSynLLVMIRSyn::TSynLLVMIRSyn(TComponent* AOwner)
 	fBooleanAttri->Foreground = (TColor) clNavy;
 	AddAttribute(fBooleanAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
-	fCommentAttri->Foreground = (TColor) 0xB0A060;
+	fCommentAttri->Foreground = static_cast<TColor>(0xB0A060);
 	fCommentAttri->Style = Synhighlighterllvm__0;
 	AddAttribute(fCommentAttri);
 	fConstantAttri = new TSynHighlighterAttributes(SYNS_AttrConstant, SYNS_FriendlyAttrConstant);
 	fConstantAttri->Foreground = (TColor) clNavy;
 	AddAttribute(fConstantAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
-	fIdentifierAttri->Foreground = (TColor) 0xD560BB;
+	fIdentifierAttri->Foreground = static_cast<TColor>(0xD560BB);
 	AddAttribute(fIdentifierAttri);
 	fInstructionAttri = new TSynHighlighterAttributes(SYNS_AttrInstructions, SYNS_FriendlyAttrInstructions);
-	fInstructionAttri->Foreground = (TColor) 0x207000;
+	fInstructionAttri->Foreground = static_cast<TColor>(0x207000);
 	fInstructionAttri->Style = Synhighlighterllvm__1;
 	AddAttribute(fInstructionAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Foreground = (TColor) 0x207000;
+	fKeyAttri->Foreground = static_cast<TColor>(0x207000);
 	fKeyAttri->Style = Synhighlighterllvm__2;
 	AddAttribute(fKeyAttri);
 	fLabelAttri = new TSynHighlighterAttributes(SYNS_AttrLabel, SYNS_FriendlyAttrLabel);
-	fLabelAttri->Foreground = (TColor) 0x702000;
+	fLabelAttri->Foreground = static_cast<TColor>(0x702000);
 	fLabelAttri->Style = Synhighlighterllvm__3;
 	AddAttribute(fLabelAttri);
 	fNumberAttri = new TSynHighlighterAttributes(SYNS_AttrNumber, SYNS_FriendlyAttrNumber);
-	fNumberAttri->Foreground = (TColor) 0x70A040;
+	fNumberAttri->Foreground = static_cast<TColor>(0x70A040);
 	AddAttribute(fNumberAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	AddAttribute(fSpaceAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = (TColor) 0xA07040;
+	fStringAttri->Foreground = static_cast<TColor>(0xA07040);
 	AddAttribute(fStringAttri);
 	fTypesAttri = new TSynHighlighterAttributes(SYNS_AttrBasicTypes, SYNS_FriendlyAttrBasicTypes);
-	fTypesAttri->Foreground = (TColor) 0x002090;
+	fTypesAttri->Foreground = static_cast<TColor>(0x002090);
 	fTypesAttri->Style = Synhighlighterllvm__4;
 	AddAttribute(fTypesAttri);
 	SetAttributesOnChange(DefHighlightChange);
@@ -377,10 +377,10 @@ unsigned int __fastcall TSynLLVMIRSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 359 + int((*Str)) * 239);
+		result = static_cast<unsigned int>(result * 359 + int((*Str)) * 239);
 		++Str;
 	}
-	result = (unsigned int) (result % 1553);
+	result = static_cast<unsigned int>(result % 1553);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1203,5 +1203,5 @@ void* __fastcall TSynLLVMIRSyn::GetRange()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterLLVM
+}  // namespace Synhighlighterllvm
 

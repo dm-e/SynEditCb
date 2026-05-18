@@ -7,4 +7,4 @@ friend class TSynLinesDeletedUndoItem;
 friend class TSynLinesInsertedUndoItem;
 friend class TSynUndoItem;
 friend class TSynUndoPlugin;
-friend Synedittypes::ISynEditUndo* __fastcall CreateSynEditUndo(Synedit::TCustomSynEdit* Editor);
+friend Synedittypes::_di_ISynEditUndo __fastcall CreateSynEditUndo(Synedit::TCustomSynEdit* Editor);

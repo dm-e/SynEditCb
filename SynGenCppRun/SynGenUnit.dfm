@@ -14,6 +14,7 @@ object FrmMain: TFrmMain
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu
+  OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -113,6 +114,7 @@ object FrmMain: TFrmMain
         Top = 16
         Width = 241
         Height = 21
+        ItemHeight = 13
         TabOrder = 0
         Text = 'All files (*.*)|*.*'
         OnChange = CboLangNameChange
@@ -157,6 +159,7 @@ object FrmMain: TFrmMain
         Top = 48
         Width = 241
         Height = 21
+        ItemHeight = 13
         TabOrder = 1
         OnChange = CboLangNameChange
         Items.Strings = (
@@ -231,6 +234,7 @@ object FrmMain: TFrmMain
           Width = 209
           Height = 21
           Style = csDropDownList
+          ItemHeight = 13
           TabOrder = 0
         end
         object CboAttrReservedWord: TComboBox
@@ -239,6 +243,7 @@ object FrmMain: TFrmMain
           Width = 209
           Height = 21
           Style = csDropDownList
+          ItemHeight = 13
           TabOrder = 1
         end
       end
@@ -248,6 +253,7 @@ object FrmMain: TFrmMain
         Width = 153
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 1
         Items.Strings = (
           'Identifier'

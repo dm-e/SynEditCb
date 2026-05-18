@@ -213,9 +213,9 @@ public:
 	virtual void __fastcall SaveToStream(TStream* Stream, TEncoding* Encoding);
 	virtual void __fastcall SetEncoding(TEncoding* const Value); // just to elevate
     // Other public methods
-	__fastcall TSynEditStringList(TExpandAtWideGlyphsFunc AExpandAtWideGlyphsFunc);
+	__fastcall TSynEditStringList(const TExpandAtWideGlyphsFunc& AExpandAtWideGlyphsFunc);
 	virtual __fastcall ~TSynEditStringList();
-	void __fastcall InsertStrings(int Index, System::TArray<String>& Strings, int FromIndex = 0);
+	void __fastcall InsertStrings(int Index, System::D2CArray<String>& Strings, int FromIndex = 0);
 	void __fastcall InsertText(int Index, String NewText);
 	String __fastcall GetSeparatedText(String Separators);
 	void __fastcall FontChanged();
@@ -262,7 +262,7 @@ public:
 };
 
 
-}  // namespace SynEditTextBuffer
+}  // namespace Synedittextbuffer
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synedittextbuffer;

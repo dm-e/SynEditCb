@@ -150,7 +150,7 @@ void __fastcall TCustomSynAutoCorrect::LoadFromRegistry(DWORD ARoot, String AKey
 		{
 			auto with0 = Reg;
 			int stop = 0;
-			with0->RootKey = (HKEY) ARoot;
+			with0->RootKey = ARoot;
 			((TBetterRegistry*) Reg)->OpenKeyReadOnly(AKey);
 			FItems->Clear();
 			for(stop = Pred(with0->ReadInteger(L"", L"Count", 0)), i = 0; i <= stop; i++)
@@ -179,7 +179,7 @@ void __fastcall TCustomSynAutoCorrect::SaveToRegistry(DWORD ARoot, String AKey)
 		{
 			auto with0 = Reg;
 			int stop = 0;
-			with0->RootKey = (HKEY) ARoot;
+			with0->RootKey = ARoot;
 			with0->OpenKey(AKey, true);
 			with0->WriteInteger(L"", L"Count", FItems->Count);
 			for(stop = Pred(FItems->Count), i = 0; i <= stop; i++)
@@ -370,7 +370,7 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 						Correction = HalfString(CurrText, false);
 						b = b || FindAndCorrect(s, Original, Correction, cx);
 					}
-					if(ASSIGNED(OnCorrected))
+					if(Assigned(OnCorrected))
 						OnCorrected(this);
 				}
 			}
@@ -409,7 +409,7 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 			}
 			if(b)
 			{
-				if(ASSIGNED(FOnAutoCorrect))
+				if(Assigned(FOnAutoCorrect))
 				{
 					Action = aaCorrect;
 					FOnAutoCorrect(this, Editor->Lines->Strings[Pred(FPrevLine)], s, Editor->CaretY, 0, Action);
@@ -417,7 +417,7 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 						return;
 				}
 				Editor->Lines->Strings[Pred(FPrevLine)] = s;
-				if(ASSIGNED(OnCorrected))
+				if(Assigned(OnCorrected))
 					OnCorrected(this);
 			}
 		}
@@ -474,7 +474,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 			if(CurrentX > -1)
 			{
 				p = Editor->CaretXY;
-				if(ASSIGNED(FOnAutoCorrect))
+				if(Assigned(FOnAutoCorrect))
 				{
 					Action = aaCorrect;
 					FOnAutoCorrect(this, Original, Correction, p.Line, p.Char, Action);
@@ -573,5 +573,5 @@ void __fastcall TCustomSynAutoCorrect::SetItems(TStrings* const Value)
 }
 
 
-}  // namespace SynAutoCorrect
+}  // namespace Synautocorrect
 

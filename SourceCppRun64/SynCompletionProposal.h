@@ -128,9 +128,6 @@ class TProposalColumns;
 
 class TSynBaseCompletionProposalForm : public TSynForm
 {
-	#include "SynCompletionProposal_friends.inc"
-public:
-	typedef TSynForm inherited;
 private:
 	String FCurrentString;
 	TSynBaseCompletionProposalPaintItem FOnPaintItem;
@@ -206,7 +203,7 @@ private:
 	void __fastcall FontChange(TObject* Sender);
 	void __fastcall RecalcItemHeight();
 	bool __fastcall IsWordBreakChar(WideChar AChar);
-	HIDESBASE MESSAGE void __fastcall WMNCHitTest(TWMNCHitTest& Message)/*# WM_NCHITTEST */;
+	HIDESBASE MESSAGE void __fastcall WMNCHitTest(Winapi::Messages::TWMNCHitTest& Message)/*# WM_NCHITTEST */;
 protected:
 	DYNAMIC void __fastcall KeyDown(WORD& Key, TShiftState Shift);
 	DYNAMIC void __fastcall KeyPress(Char& Key);
@@ -217,12 +214,14 @@ protected:
 	DYNAMIC void __fastcall Resize();
 	virtual void __fastcall Notification(TComponent* AComponent, TOperation Operation);
 	HIDESBASE MESSAGE void __fastcall WMMouseWheel(::TMessage& Msg)/*# WM_MOUSEWHEEL */;
-	HIDESBASE MESSAGE void __fastcall WMActivate(TWMActivate& Message)/*# WM_ACTIVATE */;
+	HIDESBASE MESSAGE void __fastcall WMActivate(Winapi::Messages::TWMActivate& Message)/*# WM_ACTIVATE */;
 	MESSAGE void __fastcall WMEraseBackgrnd(::TMessage& Message)/*# WM_ERASEBKGND */;
-	MESSAGE void __fastcall WMGetDlgCode(TWMGetDlgCode& Message)/*# WM_GETDLGCODE */;
+	MESSAGE void __fastcall WMGetDlgCode(Winapi::Messages::TWMGetDlgCode& Message)/*# WM_GETDLGCODE */;
 	virtual void __fastcall CreateParams(TCreateParams& Params);
 	virtual int __fastcall GetCurrentPPI();
 public:
+	typedef TSynForm inherited;
+	#include "SynCompletionProposal_friends.inc"
 	__fastcall TSynBaseCompletionProposalForm(TComponent* AOwner);
 	virtual __fastcall ~TSynBaseCompletionProposalForm();
 	int __fastcall LogicalToPhysicalIndex(int Index);
@@ -266,11 +265,11 @@ public:
 	__property TCustomImageList* Images = { read = FImages, write = SetImages };
 protected:
 	BEGIN_MESSAGE_MAP
-	  VCL_MESSAGE_HANDLER(WM_ACTIVATE, TWMActivate, WMActivate)
-	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, TMessage, WMEraseBackgrnd)
-	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, TWMGetDlgCode, WMGetDlgCode)
-	  VCL_MESSAGE_HANDLER(WM_MOUSEWHEEL, TMessage, WMMouseWheel)
-	  VCL_MESSAGE_HANDLER(WM_NCHITTEST, TWMNCHitTest, WMNCHitTest)
+	  VCL_MESSAGE_HANDLER(WM_ACTIVATE, Winapi::Messages::TWMActivate, WMActivate)
+	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, Winapi::Messages::TMessage, WMEraseBackgrnd)
+	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, Winapi::Messages::TWMGetDlgCode, WMGetDlgCode)
+	  VCL_MESSAGE_HANDLER(WM_MOUSEWHEEL, Winapi::Messages::TMessage, WMMouseWheel)
+	  VCL_MESSAGE_HANDLER(WM_NCHITTEST, Winapi::Messages::TWMNCHitTest, WMNCHitTest)
 	END_MESSAGE_MAP(Vcl::Forms::TCustomForm)
 };
 
@@ -303,18 +302,18 @@ private:
 	void __fastcall SetItemList(TStrings* const Value);
 	void __fastcall SetInsertList(TStrings* const Value);
 	void __fastcall SetNbLinesInWindow(int Value);
-	void __fastcall SetOnCancel(const TNotifyEvent Value);
-	void __fastcall SetOnKeyPress(const TKeyPressEvent Value);
-	void __fastcall SetOnPaintItem(const TSynBaseCompletionProposalPaintItem Value);
-	void __fastcall SetOnMeasureItem(const TSynBaseCompletionProposalMeasureItem Value);
+	void __fastcall SetOnCancel(const TNotifyEvent& Value);
+	void __fastcall SetOnKeyPress(const TKeyPressEvent& Value);
+	void __fastcall SetOnPaintItem(const TSynBaseCompletionProposalPaintItem& Value);
+	void __fastcall SetOnMeasureItem(const TSynBaseCompletionProposalMeasureItem& Value);
 	void __fastcall SetPosition(int Value);
-	void __fastcall SetOnValidate(const TValidateEvent Value);
+	void __fastcall SetOnValidate(const TValidateEvent& Value);
 	void __fastcall SetWidth(int Value);
 	void __fastcall SetImages(TCustomImageList* const Value);
 	SynCompletionType __fastcall GetDisplayKind();
 	void __fastcall SetDisplayKind(SynCompletionType Value);
 	TCompletionParameter __fastcall GetParameterToken();
-	void __fastcall SetParameterToken(const TCompletionParameter Value);
+	void __fastcall SetParameterToken(const TCompletionParameter& Value);
 	SynCompletionType __fastcall GetDefaultKind();
 	void __fastcall SetDefaultKind(SynCompletionType Value);
 	TColor __fastcall GetClBack();
@@ -335,7 +334,7 @@ private:
 	String __fastcall GetTriggerChars();
 	void __fastcall SetTriggerChars(const String Value);
 	TCompletionChange __fastcall GetOnChange();
-	void __fastcall SetOnChange(const TCompletionChange Value);
+	void __fastcall SetOnChange(const TCompletionChange& Value);
 	void __fastcall SetColumns(TProposalColumns* const Value);
 	TProposalColumns* __fastcall GetColumns();
 	bool __fastcall GetResizeable();
@@ -560,7 +559,7 @@ int __fastcall FormattedTextWidth(TCanvas* TargetCanvas, const String Text, int 
 String __fastcall PrettyTextToFormattedString(const String APrettyText, bool AlternateBoldStyle = false);
 
 
-}  // namespace SynCompletionProposal
+}  // namespace Syncompletionproposal
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syncompletionproposal;

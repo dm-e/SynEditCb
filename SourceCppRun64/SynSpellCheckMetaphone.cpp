@@ -52,7 +52,7 @@ struct TRule
 const int RuleCount = 67;
 
   // Note - always make the default rule the LAST
-const TRule Rules[67/*# range 1..RuleCount*/] = {{(L"AE"), (L"E"), mrBeginningOfWord, (L"")}
+const TRule Rules[RuleCount/*# range 1..RuleCount*/] = {{(L"AE"), (L"E"), mrBeginningOfWord, (L"")}
                     ,                     {(L"GN"), (L"N"), mrBeginningOfWord, (L"")}
                     ,                     {(L"KN"), (L"N"), mrBeginningOfWord, (L"")}
                     ,                     {(L"PN"), (L"N"), mrBeginningOfWord, (L"")}
@@ -345,5 +345,5 @@ PWideChar __stdcall metaphone(PWideChar a, int lg)
 }
 
 
-}  // namespace SynSpellCheckMetaphone
+}  // namespace Synspellcheckmetaphone
 

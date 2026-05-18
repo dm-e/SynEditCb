@@ -12,6 +12,7 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.Forms.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include "d2c_sysinterface.h"
 
 namespace Syneditdragdrop
 {
@@ -50,59 +51,57 @@ const int deNone = DROPEFFECT_NONE;
 const int deMove = DROPEFFECT_MOVE;
 const int deCopy = DROPEFFECT_COPY;
 const int deLink = DROPEFFECT_LINK;
-const unsigned long deScroll = DROPEFFECT_SCROLL;
+const System::LongWord deScroll = DROPEFFECT_SCROLL;
 
 // Provides a translation of a IDropTarget interface into Delphi
-typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, TShiftState, const TPoint&, int&, HRESULT&);
-typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
+typedef void __fastcall (__closure *TOnDragEvent) (TObject*, const _di_IDataObject&, TShiftState, const TPoint&, int&, HRESULT&);
+typedef void __fastcall (__closure *TOnDragLeaveEvent)(TObject*, HRESULT&);
 
-class TSynDropTarget : public System::TInterfacedObject, public IDropTarget
+class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>
 {
-	#include "SynEditDragDrop_friends.inc"
+    #include "SynEditDragDrop_friends.inc"
 public:
-	typedef TInterfacedObject inherited;
-  INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+    typedef System::TCppInterfacedObject<IDropTarget> inherited;
 private:
-	IDataObject* FDataObject;
-	TOnDragEvent FOnDragEnter;
-	TOnDragEvent FOnDragOver;
-	TOnDragLeaveEvent FOnDragLeave;
-	TOnDragEvent FOnDrop;
-// IDropTarget
-	HRESULT __stdcall DragEnter(IDataObject* dataObj, unsigned long grfKeyState, _POINTL Pt, unsigned long* dwEffect);
-	HRESULT __stdcall DragOver(unsigned long grfKeyState, POINTL Pt, unsigned long* dwEffect);
-	HRESULT __stdcall DragLeave();
-	HRESULT __stdcall Drop(IDataObject* dataObj, unsigned long grfKeyState, _POINTL Pt, unsigned long* dwEffect);
+    _di_IDataObject FDataObject;
+    TOnDragEvent FOnDragEnter;
+    TOnDragEvent FOnDragOver;
+    TOnDragLeaveEvent FOnDragLeave;
+    TOnDragEvent FOnDrop;
+    // IDropTarget
+    HRESULT STDMETHODCALLTYPE DragEnter(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
+    HRESULT STDMETHODCALLTYPE DragOver(DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
+    HRESULT STDMETHODCALLTYPE DragLeave();
+    HRESULT STDMETHODCALLTYPE Drop(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
 protected:
-	void __fastcall DragEnter(IDataObject* dataObject, System::Classes::TShiftState State, POINTL Pt, unsigned long* dwEffect, HRESULT& result);
-	void __fastcall DragOver(System::Classes::TShiftState State, POINTL Pt, unsigned long* dwEffect, HRESULT& result);
-	void __fastcall DragLeave(HRESULT& result);
-	void __fastcall Drop(IDataObject* dataObject, System::Classes::TShiftState State, _POINTL Pt, unsigned long* dwEffect, HRESULT& result);
+	void __fastcall DragEnter(const _di_IDataObject& DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+	void __fastcall DragOver(TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+    void __fastcall DragLeave(HRESULT& Result);
+	void __fastcall Drop(const _di_IDataObject& DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
 public:
-	virtual __fastcall ~TSynDropTarget();
-	__property TOnDragEvent OnDragEnter = { read = FOnDragEnter, write = FOnDragEnter };
-	__property TOnDragEvent OnDragOver = { read = FOnDragOver, write = FOnDragOver };
-	__property TOnDragLeaveEvent OnDragLeave = { read = FOnDragLeave, write = FOnDragLeave };
-	__property TOnDragEvent OnDrop = { read = FOnDrop, write = FOnDrop };
-	__fastcall TSynDropTarget();
+    virtual __fastcall ~TSynDropTarget();
+    __property TOnDragEvent OnDragEnter = { read = FOnDragEnter, write = FOnDragEnter };
+    __property TOnDragEvent OnDragOver = { read = FOnDragOver, write = FOnDragOver };
+    __property TOnDragLeaveEvent OnDragLeave = { read = FOnDragLeave, write = FOnDragLeave };
+    __property TOnDragEvent OnDrop = { read = FOnDrop, write = FOnDrop };
+    __fastcall TSynDropTarget();
 };
 
-class TSynDragSource : public System::TInterfacedObject, public IDropSource
+class TSynDragSource : public System::TCppInterfacedObject<IDropSource>
 {
-	#include "SynEditDragDrop_friends.inc"
+    #include "SynEditDragDrop_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+    typedef System::TCppInterfacedObject<IDropSource> inherited;
 private:
-  // IDropSource
+    // IDropSource
     // Called routinely by Windows to check that drag operations are to continue. See the
    // implementation below of QueryContinueDrag method for the default operation.
-	HRESULT __stdcall QueryContinueDrag(int fEscapePressed, unsigned long grfKeyState);
+    HRESULT STDMETHODCALLTYPE QueryContinueDrag(BOOL fEscapePressed, DWORD grfKeyState);
     // Called routinely to modify the displayed cursor.
-	HRESULT __stdcall GiveFeedback(unsigned long dwEffect);
+    HRESULT STDMETHODCALLTYPE GiveFeedback(DWORD dwEffect);
 public:
-	virtual __fastcall ~TSynDragSource();
-	__fastcall TSynDragSource();
+    virtual __fastcall ~TSynDragSource();
+    __fastcall TSynDragSource();
 };
 
 

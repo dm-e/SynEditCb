@@ -125,7 +125,7 @@ namespace Syneditmiscprocs
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int MaxIntArraySize = (int)(System::MaxInt / /*div*/ 16);
-typedef int TIntArray[134217727/*# range 0..MaxIntArraySize-1*/];
+typedef int TIntArray[(MaxIntArraySize - 1) + 1/*# range 0..MaxIntArraySize-1*/];
 typedef TIntArray* PIntArray;
 int __fastcall MinMax(int x, int mi, int ma);
 void __fastcall SwapInt(int& l, int& r);
@@ -146,12 +146,12 @@ int __fastcall CharIndex2CaretPos(int Index, int TabWidth, const String Line);
 int __fastcall CaretPos2CharIndex(int Position, int TabWidth, const String Line, bool& InsideTabChar);
 
 // search for the first char of set AChars in Line, starting at index Start
-int __fastcall StrScanForCharInCategory(const String Line, int Start, Synedittypes::TCategoryMethod IsOfCategory);
+int __fastcall StrScanForCharInCategory(const String Line, int Start, const Synedittypes::TCategoryMethod& IsOfCategory);
 // the same, but searching backwards
-int __fastcall StrRScanForCharInCategory(const String Line, int Start, Synedittypes::TCategoryMethod IsOfCategory);
-PWideChar __fastcall GetEOL(PChar P);
+int __fastcall StrRScanForCharInCategory(const String Line, int Start, const Synedittypes::TCategoryMethod& IsOfCategory);
+System::PWideChar __fastcall GetEOL(PChar P);
 int __fastcall CountLines(const String S);
-System::TArray<String> __fastcall StringToLines(const String Value);
+System::D2CArray<String> __fastcall StringToLines(const String Value);
 
 // Remove all '/' characters from string by changing them into '\.'.
 // Change all '\' characters into '\\' to allow for unique decoding.
@@ -164,7 +164,7 @@ String __fastcall DecodeString(String s);
   // callback function.
   // This function also handles nested TSynMultiSyns including their MarkerAttri.
 typedef bool __fastcall (__closure *THighlighterAttriProc) (Synedithighlighter::TSynCustomHighlighter*, Synedithighlighter::TSynHighlighterAttributes*, String, void**, int Params_maxidx);
-bool __fastcall EnumHighlighterAttris(Synedithighlighter::TSynCustomHighlighter* Highlighter, bool SkipDuplicates, THighlighterAttriProc HighlighterAttriProc, void** Params, int Params_maxidx);
+bool __fastcall EnumHighlighterAttris(Synedithighlighter::TSynCustomHighlighter* Highlighter, bool SkipDuplicates, const THighlighterAttriProc& HighlighterAttriProc, void** Params, int Params_maxidx);
 void __fastcall SynDrawGradient(TCanvas* const ACanvas, const TColor AStartColor, const TColor AEndColor, int ASteps, const TRect& ARect, bool AHorizontal);
 String __fastcall DeleteTypePrefixAndSynSuffix(String s);
 
@@ -172,7 +172,7 @@ String __fastcall DeleteTypePrefixAndSynSuffix(String s);
 String __fastcall DefaultFontName();
 
 
-}  // namespace SynEditMiscProcs
+}  // namespace Syneditmiscprocs
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditmiscprocs;

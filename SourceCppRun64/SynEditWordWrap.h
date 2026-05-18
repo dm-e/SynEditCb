@@ -185,7 +185,7 @@ public:
 };
 
 
-}  // namespace SynEditWordWrap
+}  // namespace Syneditwordwrap
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditwordwrap;

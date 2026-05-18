@@ -156,7 +156,7 @@ void __fastcall Synedit_exit()
 }
 
 
-}  // namespace SyneditLCM
+}  // namespace Syneditlcm
 
 
 //The following pragmas do not work for all C++Builder compilers

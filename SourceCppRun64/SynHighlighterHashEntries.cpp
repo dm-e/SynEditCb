@@ -20,12 +20,12 @@ __fastcall TSynHashEntryList::TSynHashEntryList() {}
 
 
 
-void __fastcall EnumerateKeywords(int AKind, String KeywordList, TCategoryMethod IsIdentChar, TEnumerateKeywordEvent AKeywordProc)
+void __fastcall EnumerateKeywords(int AKind, String KeywordList, const TCategoryMethod& IsIdentChar, const TEnumerateKeywordEvent& AKeywordProc)
 {
 	PWideChar pStart = nullptr;
 	PWideChar pEnd = nullptr;
 	String Keyword;
-	if(ASSIGNED(AKeywordProc) && (KeywordList != L""))
+	if(Assigned(AKeywordProc) && (KeywordList != L""))
 	{
 		pEnd = ustr2pwchar(KeywordList);
 		pStart = pEnd;
@@ -78,7 +78,7 @@ TSynHashEntry* __fastcall TSynHashEntry::AddEntry(TSynHashEntry* NewEntry)
 	if(ASSIGNED(NewEntry))
 	{
 		if(CompareText(NewEntry->Keyword, fKeyword) == 0)
-			throw new Exception(L"Keyword \"%s\" already in list", ARRAYOFCONST((fKeyword)));
+			throw Exception(L"Keyword \"%s\" already in list", ARRAYOFCONST((fKeyword)));
 		if(NewEntry->fKeyLen < fKeyLen)
 		{
 			NewEntry->fNext = this;
@@ -132,5 +132,5 @@ void __fastcall TSynHashEntryList::Put(int HashKey, TSynHashEntry* Entry)
 }
 
 
-}  // namespace SynHighlighterHashEntries
+}  // namespace Synhighlighterhashentries
 

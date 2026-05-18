@@ -165,8 +165,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AsciiCharProc();
 	void __fastcall CRProc();
@@ -219,7 +219,7 @@ public:
 void SynHighlighterFortran_initialization();
 
 
-}  // namespace SynHighlighterFortran
+}  // namespace Synhighlighterfortran
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterfortran;

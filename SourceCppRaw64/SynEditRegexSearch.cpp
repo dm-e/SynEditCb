@@ -147,5 +147,5 @@ void __fastcall TSynEditRegexSearch::SetPattern(const String Value)
 }
 
 
-}  // namespace SynEditRegexSearch
+}  // namespace Syneditregexsearch
 

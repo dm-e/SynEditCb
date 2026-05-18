@@ -215,8 +215,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fHashList;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall AsciiCharProc();
 	void __fastcall CommentRangeProc();
 	void __fastcall IncludeRangeProc();
@@ -564,7 +564,7 @@ const String DefaultDataTypes = L"char character com-handle component-handle dat
 void SynHighlighterProgress_initialization();
 
 
-}  // namespace SynHighlighterProgress
+}  // namespace Synhighlighterprogress
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterprogress;

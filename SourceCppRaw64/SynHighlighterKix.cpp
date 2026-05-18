@@ -66,10 +66,10 @@ unsigned int __fastcall TSynKixSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 949 + int((*Str)) * 246);
+		result = static_cast<unsigned int>(result * 949 + int((*Str)) * 246);
 		++Str;
 	}
-	result = (unsigned int) (result % 971);
+	result = static_cast<unsigned int>(result % 971);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -529,5 +529,5 @@ String __fastcall TSynKixSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterKix
+}  // namespace Synhighlighterkix
 

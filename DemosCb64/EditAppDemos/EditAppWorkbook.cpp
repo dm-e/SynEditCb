@@ -15,6 +15,13 @@
 
 
 
+USEFORM("dmCommands.cpp", CommandsDataModule); /* TDataModule: File Type */
+USEFORM("..\SearchReplaceDemo\dlgSearchText.cpp", TextSearchDialog);
+USEFORM("frmEditor.cpp", EditorForm);
+USEFORM("frmMain.cpp", MainForm);
+USEFORM("frmMainWorkbook.cpp", WorkbookMainForm);
+USEFORM("..\SearchReplaceDemo\dlgConfirmReplace.cpp", ConfirmReplaceDialog);
+//---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

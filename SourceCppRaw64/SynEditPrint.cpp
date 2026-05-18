@@ -11,10 +11,10 @@ using namespace d2c_system;
 using namespace Synedit;
 using namespace Synedithighlighter;
 using namespace Syneditmiscprocs;
+using namespace Syneditprinterinfo;
 using namespace Syneditprintheaderfooter;
 using namespace Syneditprintmargins;
 using namespace Syneditprinttypes;
-using namespace Syneditprinterinfo;
 using namespace Synedittypes;
 using namespace Synunicode;
 using namespace System;
@@ -221,7 +221,7 @@ String __fastcall TSynEditPrint::ExpandAtWideGlyphs(const String S)
 void __fastcall TSynEditPrint::InitPrint()
 {
 	int TmpSize = 0;
-	TTextMetric TmpTextMetrics = {};
+	Winapi::Windows::TTextMetric TmpTextMetrics = {};
 //  FDefaultBG := FCanvas.Brush.Color;                                          
 	fFontColor = FFont->Color;
 	FCanvas->Font->Assign(FFont);
@@ -365,7 +365,7 @@ void __fastcall TSynEditPrint::CalcPages()
 			YPos = FMargins->PTop;
 			FPageCount = FPageCount + 1;
 			PageLine = new TPageLine();
-			PageLine->FirstLine = (int) i;
+			PageLine->FirstLine = static_cast<int>(i);
 			FPages->Add(PageLine);
 		}
 		StrWidth = FCanvas->TextWidth(Text);
@@ -722,7 +722,7 @@ void __fastcall TSynEditPrint::PrintPage(int Num)
 				iEnd = ((TPageLine*) FPages->Items[Num])->FirstLine - 1;
 			for(stop = iEnd, i = ((TPageLine*) FPages->Items[Num - 1])->FirstLine; i <= stop; i++)
 			{
-				FLineNumber = (int) (i + 1);
+				FLineNumber = static_cast<int>(i + 1);
 				if(!fSelectedOnly || ((i >= fBlockBegin.Line - 1) && (i <= fBlockEnd.Line - 1)))
 				{
 					if(!fSelectedOnly || (fSelMode == smLine))
@@ -739,7 +739,7 @@ void __fastcall TSynEditPrint::PrintPage(int Num)
 							iSelLen = MaxInt;
 						WriteLine(Lines->Strings[i].SubString(iSelStart, iSelLen));
 					}
-					PrintLine((int) (i + 1), Num);
+					PrintLine(static_cast<int>(i + 1), Num);
 				}
 			}
 		}
@@ -809,7 +809,7 @@ void __fastcall TSynEditPrint::PrintRange(int StartPage, int EndPage)
 
 void __fastcall TSynEditPrint::PrintLine(int LineNumber, int PageNumber)
 {
-	if(ASSIGNED(FOnPrintLine))
+	if(Assigned(FOnPrintLine))
 		FOnPrintLine(this, LineNumber, PageNumber);
 }
 //Fires the OnPrintStatus event
@@ -817,7 +817,7 @@ void __fastcall TSynEditPrint::PrintLine(int LineNumber, int PageNumber)
 void __fastcall TSynEditPrint::PrintStatus(TSynPrintStatus Status, int PageNumber, bool& Abort)
 {
 	Abort = false;
-	if(ASSIGNED(FOnPrintStatus))
+	if(Assigned(FOnPrintStatus))
 		FOnPrintStatus(this, Status, PageNumber, Abort);
 	if(Abort)
 	{
@@ -891,12 +891,12 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Read((void**)&Len, (NativeInt) sizeof(Len));
-		BufferSize = (int) (Len * sizeof(WideChar));
+		with0->Read(&Len, static_cast<NativeInt>(sizeof(Len)));
+		BufferSize = static_cast<int>(Len * sizeof(WideChar));
 		Buffer = (PWideChar) GetMemory(BufferSize + sizeof(WideChar));
 		try
 		{
-			with0->Read((void**)Buffer, BufferSize);
+			with0->Read(Buffer, BufferSize);
 			Buffer[(unsigned __int64)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
 			FTitle = Buffer;
 		}
@@ -904,12 +904,12 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&Len, (NativeInt) sizeof(Len));
-		BufferSize = (int) (Len * sizeof(WideChar));
+		with0->Read(&Len, static_cast<NativeInt>(sizeof(Len)));
+		BufferSize = static_cast<int>(Len * sizeof(WideChar));
 		Buffer = (PWideChar) GetMemory(BufferSize + sizeof(WideChar));
 		try
 		{
-			with0->Read((void**)Buffer, BufferSize);
+			with0->Read(Buffer, BufferSize);
 			Buffer[(unsigned __int64)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
 			FDocTitle = Buffer;
 		}
@@ -917,12 +917,12 @@ void __fastcall TSynEditPrint::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&FWrap, (NativeInt) sizeof(FWrap));
-		with0->Read((void**)&FHighlight, (NativeInt) sizeof(FHighlight));
-		with0->Read((void**)&FColors, (NativeInt) sizeof(FColors));
-		with0->Read((void**)&FLineNumbers, (NativeInt) sizeof(FLineNumbers));
-		with0->Read((void**)&FLineOffset, (NativeInt) sizeof(FLineOffset));
-		with0->Read((void**)&FPageOffset, (NativeInt) sizeof(FPageOffset));
+		with0->Read(&FWrap, static_cast<NativeInt>(sizeof(FWrap)));
+		with0->Read(&FHighlight, static_cast<NativeInt>(sizeof(FHighlight)));
+		with0->Read(&FColors, static_cast<NativeInt>(sizeof(FColors)));
+		with0->Read(&FLineNumbers, static_cast<NativeInt>(sizeof(FLineNumbers)));
+		with0->Read(&FLineOffset, static_cast<NativeInt>(sizeof(FLineOffset)));
+		with0->Read(&FPageOffset, static_cast<NativeInt>(sizeof(FPageOffset)));
 	}
 }
 
@@ -936,17 +936,17 @@ void __fastcall TSynEditPrint::SaveToStream(TStream* AStream)
 	{
 		auto with0 = AStream;
 		aLen = FTitle.Length();
-		with0->Write(&aLen, (NativeInt) sizeof(aLen));
-		with0->Write(FTitle.c_str(), (NativeInt) (aLen * sizeof(WideChar)));
+		with0->Write(&aLen, static_cast<NativeInt>(sizeof(aLen)));
+		with0->Write(FTitle.c_str(), static_cast<NativeInt>(aLen * sizeof(WideChar)));
 		aLen = FDocTitle.Length();
-		with0->Write(&aLen, (NativeInt) sizeof(aLen));
-		with0->Write(FDocTitle.c_str(), (NativeInt) (aLen * sizeof(WideChar)));
-		with0->Write(&FWrap, (NativeInt) sizeof(FWrap));
-		with0->Write(&FHighlight, (NativeInt) sizeof(FHighlight));
-		with0->Write(&FColors, (NativeInt) sizeof(FColors));
-		with0->Write(&FLineNumbers, (NativeInt) sizeof(FLineNumbers));
-		with0->Write(&FLineOffset, (NativeInt) sizeof(FLineOffset));
-		with0->Write(&FPageOffset, (NativeInt) sizeof(FPageOffset));
+		with0->Write(&aLen, static_cast<NativeInt>(sizeof(aLen)));
+		with0->Write(FDocTitle.c_str(), static_cast<NativeInt>(aLen * sizeof(WideChar)));
+		with0->Write(&FWrap, static_cast<NativeInt>(sizeof(FWrap)));
+		with0->Write(&FHighlight, static_cast<NativeInt>(sizeof(FHighlight)));
+		with0->Write(&FColors, static_cast<NativeInt>(sizeof(FColors)));
+		with0->Write(&FLineNumbers, static_cast<NativeInt>(sizeof(FLineNumbers)));
+		with0->Write(&FLineOffset, static_cast<NativeInt>(sizeof(FLineOffset)));
+		with0->Write(&FPageOffset, static_cast<NativeInt>(sizeof(FPageOffset)));
 	}
 }
 
@@ -966,5 +966,5 @@ void __fastcall TSynEditPrint::SetMargins(TSynEditPrintMargins* const Value)
 }
 
 
-}  // namespace SynEditPrint
+}  // namespace Syneditprint
 

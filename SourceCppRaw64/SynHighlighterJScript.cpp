@@ -958,19 +958,19 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsANSI)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line)) == rsANSI)
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsANSI)
-				FoldRanges->StartFoldRange((int) (Line + 1), 2);
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1)) != rsANSI)
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), 2);
 			else
-				FoldRanges->NoFoldInfo((int) (Line + 1));
+				FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 		else
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsANSI)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1)) == rsANSI)
 			{
-				FoldRanges->StopFoldRange((int) (Line + 1), 2);
+				FoldRanges->StopFoldRange(static_cast<int>(Line + 1), 2);
 				continue;
 			}
 		}
@@ -979,17 +979,17 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find an braces on this line  (Fold Type 1)
-		if(!FindBraces((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!FindBraces(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} // while Line
 }
 //-- CodeFolding
@@ -1008,5 +1008,5 @@ void __fastcall TSynJScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterJScript
+}  // namespace Synhighlighterjscript
 

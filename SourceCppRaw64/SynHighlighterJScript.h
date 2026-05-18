@@ -57,6 +57,7 @@ The highlighter formats JavaScript source code highlighting keywords, strings, n
 #include "SynUnicode.h"
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterjscript
 {
@@ -250,7 +251,7 @@ public:
 void SynHighlighterJScript_initialization();
 
 
-}  // namespace SynHighlighterJScript
+}  // namespace Synhighlighterjscript
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterjscript;

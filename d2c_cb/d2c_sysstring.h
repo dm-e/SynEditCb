@@ -2,17 +2,20 @@
 #define d2c_sysstringH
 
 /*
-This is a shortened version of the Delphi2CB utility file of the same name.
-The file is required in order to be able to compile the code of the SynEdit
-components, which were translated to C++ with Delphi2CB:
+    Copyright (C) 2026 Dr. Detlef Meyer-Eltz
+    ----------------------------------------
 
-	https://www.texttransformer.com/Delphi2CB_en.html
+    This file may be used without restriction in any
+    project generated with Delphi2Cpp or Delphi2CB.
 
-The translated code and this file are subject to the same license terms
-as the original SynEdit code. These terms are precisely specified in
+    It is a reduced version of the original Delphi2CB
+    utility file with the same name.
 
-	Source\Source\SynEditJedi.inc.
+    This file is required to compile the SynEdit
+    components translated from Delphi to C++ using
+    Delphi2CB:
 
+        https://www.texttransformer.com/Delphi2CB_en.html
 */
 
 #include "d2c_systypes.h"
@@ -24,14 +27,43 @@ as the original SynEdit code. These terms are precisely specified in
 
 namespace d2c_system
 {
+	int d2c_wcsncmp(const wchar_t* xs1, const wchar_t* xs2);
+	
+	// -------------------------------------------------
+// Insert / Delete
+// -------------------------------------------------
 
-
-void SetString( UnicodeString& S, wchar_t* Buf, int Len );
-int Length(const UnicodeString& S);
-int d2c_wcsncmp(const wchar_t* xs1, const wchar_t* xs2);
-bool CharEqualStr(wchar_t c, UnicodeString s);
-
+	void Insert(const UnicodeString& source, UnicodeString& dest, int index);
+	void Delete(UnicodeString& s, int index, int size);
 
 } // namespace d2c_string
+
+
+
+namespace System
+{
+	void SetString( UnicodeString& S, wchar_t* Buf, int Len );
+	int Length(const UnicodeString& S);
+	bool CharEqualStr(wchar_t c, UnicodeString s);
+
+// Creates a 1-character UnicodeString from a WideChar.
+	inline UnicodeString CharToStr(WideChar c)
+	{
+		UnicodeString tmp;
+		tmp.SetLength(1);
+		tmp[1] = c; // UnicodeString is 1-based in C++Builder
+		return tmp;
+	}
+
+
+	// Pos for a single character, Delphi-compatible.
+	inline int PosChar(WideChar c, const UnicodeString& s, int offset = 1)
+	{
+		return System::Pos(CharToStr(c), s, offset);
+	}
+
+	UnicodeString Copy(const UnicodeString& s, int index, int count);
+
+} // namespace System
 
 #endif

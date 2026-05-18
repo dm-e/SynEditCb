@@ -61,7 +61,7 @@ __fastcall TSynCustomExporter::TSynCustomExporter(TComponent* AOwner)
 			fLastFG((TColor) 0),
 			fUseBackground(false)
 {
-	fClipboardFormat = (UINT) CF_TEXT;
+	fClipboardFormat = static_cast<UINT>(CF_TEXT);
 	FEncoding = seUTF8;
 	fFont = new TFont();
 	fBackgroundColor = (TColor) clWindow;
@@ -134,7 +134,7 @@ void __fastcall SetClipboardText(String Text)
 
     // set unicode text, this also works on Win9X, even if the clipboard-viewer
     // can't show it, Word 2000+ can paste it including the unicode only characters
-		Mem = GlobalAlloc((UINT) (GMEM_MOVEABLE | GMEM_DDESHARE), (SLen + 1) * sizeof(WideChar));
+		Mem = GlobalAlloc(static_cast<UINT>(GMEM_MOVEABLE | GMEM_DDESHARE), (SLen + 1) * sizeof(WideChar));
 		if(Mem != 0)
 		{
 			P = ((Byte*) GlobalLock(Mem));
@@ -142,8 +142,8 @@ void __fastcall SetClipboardText(String Text)
 			{
 				if(P != nullptr)
 				{
-					Move(ustr2address(Text), P, (size_t) ((SLen + 1) * sizeof(WideChar)));
-					Clipboard()->SetAsHandle((UINT) CF_UNICODETEXT, (THandle) Mem);
+					Move(ustr2address(Text), P, static_cast<size_t>((SLen + 1) * sizeof(WideChar)));
+					Clipboard()->SetAsHandle(static_cast<UINT>(CF_UNICODETEXT), reinterpret_cast<::THandle>(Mem));
 				}
 			}
 			__finally
@@ -200,21 +200,21 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 	THandle hData = 0;
 	UINT hDataSize = 0;
 	PByte PtrData = nullptr;
-	hDataSize = (UINT) (GetBufferSize() + 1);
-	hData = (THandle) GlobalAlloc((UINT) (GMEM_MOVEABLE | GMEM_ZEROINIT | GMEM_SHARE), hDataSize);
+	hDataSize = static_cast<UINT>(GetBufferSize() + 1);
+	hData = reinterpret_cast<::THandle>(GlobalAlloc(static_cast<UINT>(GMEM_MOVEABLE | GMEM_ZEROINIT | GMEM_SHARE), hDataSize));
 	if(hData != 0)
 		try
 		{
-			PtrData = ((Byte*) GlobalLock((HGLOBAL) hData));
+			PtrData = ((Byte*) GlobalLock(reinterpret_cast<::HGLOBAL>(hData)));
 			if(ASSIGNED(PtrData))
 			{
 				{
 					auto olsLambda = onLeavingScope([&] 
 					{
-						GlobalUnlock((HGLOBAL) hData);
+						GlobalUnlock(reinterpret_cast<::HGLOBAL>(hData));
 					});
 					fBuffer->Position = 0;
-					fBuffer->Read((void**)PtrData, (TNativeCount) (hDataSize - 1)); // trailing #0
+					fBuffer->Read(PtrData, static_cast<TNativeCount>(hDataSize - 1)); // trailing #0
 				}
 				Clipboard()->SetAsHandle(AFormat, hData);
 			}
@@ -223,7 +223,7 @@ void __fastcall TSynCustomExporter::CopyToClipboardFormat(UINT AFormat)
 		}
 		catch(...)
 		{
-			GlobalFree((HGLOBAL) hData);
+			GlobalFree(reinterpret_cast<::HGLOBAL>(hData));
 			OutOfMemoryError();
 		}
 }
@@ -311,7 +311,7 @@ void __fastcall TSynCustomExporter::FormatToken(String Token)
 int __fastcall TSynCustomExporter::GetBufferSize()
 {
 	int result = 0;
-	result = (int) fBuffer->Size;
+	result = static_cast<int>(fBuffer->Size);
 	return result;
 }
 
@@ -338,7 +338,7 @@ void __fastcall TSynCustomExporter::InsertData(int APos, const String AText)
 	Size = StringSize(AText);
 	if(Size > 0)
 	{
-		ToMove = (int) fBuffer->Position;
+		ToMove = static_cast<int>(fBuffer->Position);
 		SizeNeeded = ToMove + Size;
 		if(fBuffer->Size < SizeNeeded)
       // Size is ReadOnly in Delphi 2
@@ -410,7 +410,7 @@ String __fastcall TSynCustomExporter::ReplaceReservedChars(String AToken)
 void __fastcall TSynCustomExporter::SaveToFile(const String FileName)
 {
 	TStream* Stream = nullptr;
-	Stream = new TFileStream(FileName, (WORD) fmCreate);
+	Stream = new TFileStream(FileName, static_cast<WORD>(fmCreate));
 	try
 	{
 		SaveToStream(Stream);
@@ -450,7 +450,7 @@ void __fastcall TSynCustomExporter::SetEncoding(TSynEncoding Value)
 	if(FStreaming)
 		return;
 	if(!(SupportedEncodings().Contains(Value)))
-		throw new ESynEncoding(SEncodingError, ARRAYOFCONST((EncodingStrs[Value], GetFormatName())));
+		throw ESynEncoding(SEncodingError, ARRAYOFCONST((EncodingStrs[Value], GetFormatName())));
 	FEncoding = Value;
 	if(Syneditexport__2.Contains(Value))
 		FCharSize = 1;
@@ -509,9 +509,9 @@ void __fastcall TSynCustomExporter::SetTokenAttribute(TSynHighlighterAttributes*
 	{
 		TColor result = (TColor) 0;
 		if(AColor == clNone)
-			result = (TColor) ColorToRGB(ADefColor);
+			result = static_cast<TColor>(ColorToRGB(ADefColor));
 		else
-			result = (TColor) ColorToRGB(AColor);
+			result = static_cast<TColor>(ColorToRGB(AColor));
 		return result;
 	};
 	if(fFirstAttribute)
@@ -584,12 +584,12 @@ void __fastcall TSynCustomExporter::WriteString(const String AText)
 		}
 		break;
 		case seUTF16LE:
-		fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), (NativeInt) (AText.Length() * sizeof(WideChar)));
+		fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), static_cast<NativeInt>(AText.Length() * sizeof(WideChar)));
 		break;
 		case seUTF16BE:
 		{
 			StrSwapByteOrder(ustr2pwchar(AText));
-			fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), (NativeInt) (AText.Length() * sizeof(WideChar)));
+			fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), static_cast<NativeInt>(AText.Length() * sizeof(WideChar)));
 		}
 		break;
 		case seAnsi:
@@ -605,5 +605,5 @@ void __fastcall TSynCustomExporter::WriteString(const String AText)
 }
 
 
-}  // namespace SynEditExport
+}  // namespace Syneditexport
 

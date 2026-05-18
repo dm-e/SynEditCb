@@ -1,37 +1,45 @@
-//---------------------------------------------------------------------------
-
 #include <vcl.h>
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
-USEFORM("HashTableGen.cpp", FrmHashTableGen);
-USEFORM("SynGenUnit.cpp", FrmMain);
-//---------------------------------------------------------------------------
-int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
-{
-	try
+#include <Vcl.Forms.hpp>
+#include "GenLex.h"
+#include "SynGenUnit.h"
+#include "HashTableGen.h"
+
+using namespace Genlex;
+using namespace Vcl::Forms;
+
+
+
+int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 	{
-		Application->Initialize();
-		Application->MainFormOnTaskBar = true;
-		Application->CreateForm(__classid(TFrmMain), &FrmMain);
-		Application->CreateForm(__classid(TFrmHashTableGen), &FrmHashTableGen);
-		Application->Run();
-	}
-	catch (Exception &exception)
-	{
-		Application->ShowException(&exception);
-	}
-	catch (...)
-	{
+		HInstance = hInstance;
 		try
 		{
-			throw Exception("");
+			Application->Initialize();
+			Application->Title = L"SynGen";
+			FrmMain = new TFrmMain(Application, 0);
+			FrmHashTableGen = new TFrmHashTableGen(Application, 0);
+			Application->Run();
+			FrmMain->Visible = true;
+			while(!Application->Terminated && FrmMain->Visible)
+			 Application->HandleMessage();
 		}
-		catch (Exception &exception)
+		catch (Exception& exception)
 		{
-			Application->ShowException(&exception);
+		  Application->ShowException(&exception);
 		}
+		catch (...)
+		{
+			try
+			{
+			  throw Exception("");
+			}
+			catch (Exception& exception)
+			{
+			  Application->ShowException(&exception);
+			}
+		}
+		return 0;
 	}
-	return 0;
-}
-//---------------------------------------------------------------------------

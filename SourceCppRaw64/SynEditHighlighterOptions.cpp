@@ -53,5 +53,5 @@ void __fastcall TSynEditHighlighterOptions::AssignTo(TPersistent* Dest)
 }
 
 
-}  // namespace SynEditHighlighterOptions
+}  // namespace Synedithighlighteroptions
 

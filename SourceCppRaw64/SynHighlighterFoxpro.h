@@ -58,6 +58,7 @@ Thanks to Martin Waldenburg.
 #include <System.Classes.hpp>
 #include <System.RegularExpressions.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterfoxpro
 {
@@ -179,8 +180,8 @@ private:
 	TRegEx RE_BlockEnd;
 //-- CodeFolding
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall AndSymbolProc();
 	void __fastcall AsciiCharProc();
 	void __fastcall AtSymbolProc();
@@ -246,7 +247,7 @@ public:
 void SynHighlighterFoxpro_initialization();
 
 
-}  // namespace SynHighlighterFoxpro
+}  // namespace Synhighlighterfoxpro
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterfoxpro;

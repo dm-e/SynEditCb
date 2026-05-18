@@ -7,6 +7,7 @@
 #include "SynEditStrConst.h"
 #include <System.RegularExpressions.hpp>
 #include <System.SysUtils.hpp>
+#include "d2c_sysinterface.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -223,7 +224,7 @@ void __fastcall TSynMultiSyn::OldRangeProc(TRangeOperation Operation, TRangeUNat
 			iHL = DefaultHighlighter;
 		else
 			iHL = Schemes->Items[fCurrScheme]->Highlighter;
-		iSchemeIndex = (unsigned int) (fCurrScheme + 2);
+		iSchemeIndex = static_cast<unsigned int>(fCurrScheme + 2);
 		Assert(iSchemeIndex <= MaxSchemeCount);
 		if(iHL != nullptr)
 		{
@@ -234,7 +235,7 @@ void __fastcall TSynMultiSyn::OldRangeProc(TRangeOperation Operation, TRangeUNat
 		iSchemeRange = 0;
     /* checks the limit of nested MultiSyns */
 		Assert(iSchemeRange >> ((MaxNestedMultiSyn - 1) * SchemeIndexSize + SchemeRangeSize) == 0);
-		iSchemeRange = (unsigned int) ((iSchemeRange << SchemeIndexSize) | iSchemeIndex);
+		iSchemeRange = static_cast<unsigned int>((iSchemeRange << SchemeIndexSize) | iSchemeIndex);
 		Range = iSchemeRange;
 	}
 	else
@@ -243,7 +244,7 @@ void __fastcall TSynMultiSyn::OldRangeProc(TRangeOperation Operation, TRangeUNat
 			return;
 		iSchemeRange = ((unsigned int) Range);
 		fCurrScheme = iSchemeRange & MaxSchemeCount - 2;
-		iSchemeRange = (unsigned int) (iSchemeRange >> SchemeIndexSize);
+		iSchemeRange = static_cast<unsigned int>(iSchemeRange >> SchemeIndexSize);
 		if(CurrScheme < 0)
 		{
 			if(DefaultHighlighter != nullptr)
@@ -446,7 +447,7 @@ void __fastcall TSynMultiSyn::SetDefaultHighlighter(TSynCustomHighlighter* const
 	if(DefaultHighlighter != Value)
 	{
 		if(Value == this)
-			throw new Exception(sDefaultHlSetToSelf);
+			throw Exception(sDefaultHlSetToSelf);
 		if(DefaultHighlighter != nullptr)
 			UnhookHighlighter(DefaultHighlighter);
 		fDefaultHighlighter = const_cast<TSynCustomHighlighter*>(Value);
@@ -464,11 +465,11 @@ void __fastcall TSynMultiSyn::DoCheckMarker(TScheme* Scheme, int StartPos, int M
 	aStartPos = StartPos;
 	aMarkerLen = MarkerLen;
 	aMarkerText = MarkerText;
-	if(Start && ASSIGNED(Scheme->OnCheckStartMarker))
+	if(Start && Assigned(Scheme->OnCheckStartMarker))
 		Scheme->OnCheckStartMarker(this, aStartPos, aMarkerLen, aMarkerText, Line, LineStr);
 	else
 	{
-		if(!Start && ASSIGNED(Scheme->OnCheckEndMarker))
+		if(!Start && Assigned(Scheme->OnCheckEndMarker))
 			Scheme->OnCheckEndMarker(this, aStartPos, aMarkerLen, aMarkerText, Line, LineStr);
 	}
 	if((aMarkerText != L"") && (aMarkerLen > 0))
@@ -594,21 +595,21 @@ void __fastcall TSynMultiSyn::NewRangeProc(TRangeOperation Operation, TRangeUNat
 		if(CurrScheme >= 0)
 		{
 			Assert((NativeUInt)Schemes->Items[CurrScheme]->Highlighter->GetRange() <= MaxSchemeRange);
-			Range = (TRangeUNativeInt) (Range << SchemeRangeSize);
-			Range = (TRangeUNativeInt) (Range | (NativeUInt)Schemes->Items[CurrScheme]->Highlighter->GetRange());
+			Range = static_cast<TRangeUNativeInt>(Range << SchemeRangeSize);
+			Range = static_cast<TRangeUNativeInt>(Range | (NativeUInt)Schemes->Items[CurrScheme]->Highlighter->GetRange());
 		}
 		Assert(CurrScheme <= MaxSchemeCount);
-		Range = (TRangeUNativeInt) (Range << SchemeIndexSize);
-		Range = (TRangeUNativeInt) (Range | ((unsigned int) (CurrScheme + 1)));
+		Range = static_cast<TRangeUNativeInt>(Range << SchemeIndexSize);
+		Range = static_cast<TRangeUNativeInt>(Range | ((unsigned int) (CurrScheme + 1)));
 	}
 	else
 	{
 		CurrScheme = Range & MaxSchemeCount - 1;
-		Range = (TRangeUNativeInt) (Range >> SchemeIndexSize);
+		Range = static_cast<TRangeUNativeInt>(Range >> SchemeIndexSize);
 		if(CurrScheme >= 0)
 		{
 			Schemes->Items[CurrScheme]->Highlighter->SetRange(((void*) (Range & MaxSchemeRange)));
-			Range = (TRangeUNativeInt) (Range >> SchemeRangeSize);
+			Range = static_cast<TRangeUNativeInt>(Range >> SchemeRangeSize);
 		}
 		if(DefaultHighlighter != nullptr)
 		{
@@ -625,7 +626,7 @@ bool __fastcall TSynMultiSyn::UpdateRangeProcs()
 	int i = 0;
 	TRangeProc OldProc;
 	OldProc = fRangeProc;
-	if(ASSIGNED(OnCustomRange))
+	if(Assigned(OnCustomRange))
 		fRangeProc = UserRangeProc;
 	else
 	{
@@ -640,7 +641,7 @@ bool __fastcall TSynMultiSyn::UpdateRangeProcs()
 			}
 		}
 	}
-	result = ((TMethod*) &OldProc)->Code != ((TMethod*) &fRangeProc)->Code;
+	result = to_method(OldProc).Code != to_method(fRangeProc).Code;
 	if(result)
 		DefHighlightChange(this);
 	return result;
@@ -653,9 +654,9 @@ void __fastcall TSynMultiSyn::UserRangeProc(TRangeOperation Operation, TRangeUNa
 		fTmpRange = DefaultHighlighter->GetRange();
 }
 
-void __fastcall TSynMultiSyn::SetOnCustomRange(const TCustomRangeEvent Value)
+void __fastcall TSynMultiSyn::SetOnCustomRange(const TCustomRangeEvent& Value)
 {
-	if((((TMethod*) &OnCustomRange)->Code != ((TMethod*) &Value)->Code) || (((TMethod*) &OnCustomRange)->Data != ((TMethod*) &Value)->Data))
+	if((to_method(OnCustomRange).Code != to_method(Value).Code) || (to_method(OnCustomRange).Data != to_method(Value).Data))
 	{
 		fOnCustomRange = Value;
 		UpdateRangeProcs();
@@ -937,5 +938,5 @@ void __fastcall TScheme::SetStartExpr(const String Value)
 }
 
 
-}  // namespace SynHighlighterMulti
+}  // namespace Synhighlightermulti
 

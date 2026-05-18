@@ -62,6 +62,7 @@ Two extra properties included (DelphiVersion, PackageSource):
 #include <System.Classes.hpp>
 #include <System.RegularExpressions.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterpas
 {
@@ -262,8 +263,8 @@ private:
 	TtkTokenKind __fastcall FuncWrite(int Index);
 	TtkTokenKind __fastcall FuncWriteonly(int Index);
 	TtkTokenKind __fastcall FuncType(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AddressOpProc();
 	void __fastcall AsciiCharProc();
@@ -327,14 +328,14 @@ public:
 	__property Synedithighlighter::TSynHighlighterAttributes* CharAttri = { read = fCharAttri, write = fCharAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* SymbolAttri = { read = fSymbolAttri, write = fSymbolAttri };
 	__property Synedithighlighter::TSynHighlighterAttributes* TypeAttri = { read = fTypeAttri, write = fTypeAttri };
-	__property TDelphiVersion DelphiVersion = { read = fDelphiVersion, write = SetDelphiVersion, default = /*# LastDelphiVersion */ 8 };
+	__property TDelphiVersion DelphiVersion = { read = fDelphiVersion, write = SetDelphiVersion, default = LastDelphiVersion };
 	__property bool PackageSource = { read = fPackageSource, write = SetPackageSource, default = true };
 };
 
 void SynHighlighterPas_initialization();
 
 
-}  // namespace SynHighlighterPas
+}  // namespace Synhighlighterpas
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterpas;

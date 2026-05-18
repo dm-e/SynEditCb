@@ -300,8 +300,8 @@ private:
 	TtkTokenKind __fastcall FuncVaroptions(int Index);
 	TtkTokenKind __fastcall FuncWhile(int Index);
 	TtkTokenKind __fastcall FuncZerorlenstr(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall LFProc();
@@ -351,7 +351,7 @@ public:
 void SynHighlighterCPM_initialization();
 
 
-}  // namespace SynHighlighterCPM
+}  // namespace Synhighlightercpm
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercpm;

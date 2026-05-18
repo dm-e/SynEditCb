@@ -13,5 +13,5 @@ namespace Syneditstrconst
 
 
 
-}  // namespace SynEditStrConst
+}  // namespace Syneditstrconst
 

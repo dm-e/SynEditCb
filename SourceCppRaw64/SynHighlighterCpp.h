@@ -56,6 +56,7 @@ Thanks to Martin Waldenburg.
 #include "SynUnicode.h"
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlightercpp
 {
@@ -252,8 +253,8 @@ private:
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	TtkTokenKind __fastcall FuncAsm(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AnsiCProc();
 	void __fastcall AndSymbolProc();
@@ -342,7 +343,7 @@ public:
 void SynHighlighterCpp_initialization();
 
 
-}  // namespace SynHighlighterCpp
+}  // namespace Synhighlightercpp
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercpp;

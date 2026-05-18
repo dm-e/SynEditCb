@@ -175,8 +175,8 @@ private:
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	TtkTokenKind __fastcall FuncBrp46open(int Index);
 	TtkTokenKind __fastcall FuncDate46num(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall AsciiCharProc();
@@ -241,7 +241,7 @@ public:
 void SynHighlighterBaan_initialization();
 
 
-}  // namespace SynHighlighterBaan
+}  // namespace Synhighlighterbaan
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterbaan;

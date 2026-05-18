@@ -30,7 +30,7 @@ const int SHADOW_SIZE = 2; // page shadow width
 
 __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
  : inherited(AOwner),
-			FBorderStyle((TBorderStyle) bsSingle),
+			FBorderStyle(static_cast<TBorderStyle>(bsSingle)),
 			FSynEditPrint(nullptr),
 			FScaleMode(pscWholePage),
 			FScalePercent(0),
@@ -56,7 +56,7 @@ __fastcall TSynEditPrintPreview::TSynEditPrintPreview(TComponent* AOwner)
 
 void __fastcall TSynEditPrintPreview::CreateParams(TCreateParams& Params)
 {
-	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, (DWORD) WS_BORDER};
+	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, static_cast<DWORD>(WS_BORDER)};
 	inherited::CreateParams(Params);
 	/*# with Params do */
 	{
@@ -204,7 +204,7 @@ void __fastcall TSynEditPrintPreview::PaintPaper()
 			auto& with3 = rcPaper;
 			with0->Rectangle(with3.Left, with3.Top, with3.Right + 1, with3.Bottom + 1);
 		}
-		DeleteObject(rgnPaper);
+		DeleteObject(reinterpret_cast<::HGDIOBJ>(rgnPaper));
 	}
 }
 
@@ -352,10 +352,10 @@ void __fastcall TSynEditPrintPreview::SizeChanged()
 
 void __fastcall TSynEditPrintPreview::UpdateScrollbars()
 {
-	TScrollInfo si = {};
-	FillChar((void**)&si, (int) sizeof(TScrollInfo), 0);
-	si.cbSize = (UINT) sizeof(TScrollInfo);
-	si.fMask = (UINT) SIF_ALL;
+	Winapi::Windows::TScrollInfo si = {};
+	FillChar(&si, static_cast<int>(sizeof(Winapi::Windows::TScrollInfo)), 0);
+	si.cbSize = static_cast<UINT>(sizeof(Winapi::Windows::TScrollInfo));
+	si.fMask = static_cast<UINT>(SIF_ALL);
 	switch(FScaleMode)
 	{
 		case pscWholePage:
@@ -376,7 +376,7 @@ void __fastcall TSynEditPrintPreview::UpdateScrollbars()
 				si.nPos = 1;
 			}
 			si.nPage = 1;
-			SetScrollInfo(Handle, SB_VERT, si, true);
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
         // hide horizontal scrollbar
@@ -387,8 +387,8 @@ void __fastcall TSynEditPrintPreview::UpdateScrollbars()
 			si.fMask = si.fMask | SIF_DISABLENOSCROLL;
 			si.nMax = FVirtualSize.Y;
 			si.nPos = -FScrollPosition.Y;
-			si.nPage = (UINT) ClientHeight;
-			SetScrollInfo(Handle, SB_VERT, si, true);
+			si.nPage = static_cast<UINT>(ClientHeight);
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
 		case pscUserScaled:
@@ -399,13 +399,13 @@ void __fastcall TSynEditPrintPreview::UpdateScrollbars()
         // show horizontal scrollbar
 			si.nMax = FVirtualSize.X;
 			si.nPos = -FScrollPosition.X;
-			si.nPage = (UINT) ClientWidth;
-			SetScrollInfo(Handle, SB_HORZ, si, true);
+			si.nPage = static_cast<UINT>(ClientWidth);
+			SetScrollInfo(Handle, SB_HORZ, &si, true);
         // show vertical scrollbar
 			si.nMax = FVirtualSize.Y;
 			si.nPos = -FScrollPosition.Y;
-			si.nPage = (UINT) ClientHeight;
-			SetScrollInfo(Handle, SB_VERT, si, true);
+			si.nPage = static_cast<UINT>(ClientHeight);
+			SetScrollInfo(Handle, SB_VERT, &si, true);
 		}
 		break;
 		default:
@@ -449,7 +449,7 @@ void __fastcall TSynEditPrintPreview::SetScaleMode(TSynPreviewScale Value)
 		FScaleMode = Value;
 		FScrollPosition = Point(0, 0);
 		SizeChanged();
-		if(ASSIGNED(FOnScaleChange))                                            // JD 2002-01-9
+		if(Assigned(FOnScaleChange))                                            // JD 2002-01-9
 			FOnScaleChange(this);                                                     // JD 2002-01-9
 		Invalidate();
 	}
@@ -467,16 +467,16 @@ void __fastcall TSynEditPrintPreview::SetScalePercent(int Value)
 	}
 	else
 	ScaleMode = pscUserScaled;
-	if(ASSIGNED(FOnScaleChange))                                              // JD 2002-01-9
+	if(Assigned(FOnScaleChange))                                              // JD 2002-01-9
 		FOnScaleChange(this);                                                       // JD 2002-01-9
 }
 
-void __fastcall TSynEditPrintPreview::WMEraseBkgnd(TWMEraseBkgnd& Msg)
+void __fastcall TSynEditPrintPreview::WMEraseBkgnd(Winapi::Messages::TWMEraseBkgnd& Msg)
 {
 	Msg.Result = 1;
 }
 
-void __fastcall TSynEditPrintPreview::WMHScroll(TWMHScroll& Msg)
+void __fastcall TSynEditPrintPreview::WMHScroll(Winapi::Messages::TWMHScroll& Msg)
 {
 	int nW = 0;
 	if(FScaleMode != pscWholePage)
@@ -513,7 +513,7 @@ void __fastcall TSynEditPrintPreview::WMHScroll(TWMHScroll& Msg)
 	}
 }
 
-void __fastcall TSynEditPrintPreview::WMSize(TWMSize& Msg)
+void __fastcall TSynEditPrintPreview::WMSize(Winapi::Messages::TWMSize& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMSize" not not accessible;
 	if(!(ComponentState.Contains(csDesigning)))
@@ -533,7 +533,7 @@ THintWindow* __fastcall GetScrollHint()
 	return result;
 }
 
-void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
+void __fastcall TSynEditPrintPreview::WMVScroll(Winapi::Messages::TWMVScroll& Msg)
 {
 	int nH = 0;
 	String s;
@@ -585,7 +585,7 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 						pt = ClientToScreen(Point(ClientWidth - rc.Right - 4, 10));
 						OffsetRect(rc, pt.X, pt.Y);
 						ScrollHint->ActivateHint(rc, s);
-						SendMessage(ScrollHint->Handle, (UINT) WM_NCPAINT, 1, 0);
+						SendMessage(ScrollHint->Handle, static_cast<UINT>(WM_NCPAINT), 1, 0);
 						ScrollHint->Update();
 					}
 				}
@@ -607,7 +607,7 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
       /*Updating scroll position and redrawing*/
 		FScrollPosition.Y = -(FPageNumber - 1);
 		UpdateScrollbars();
-		if(ASSIGNED(FOnPreviewPage))
+		if(Assigned(FOnPreviewPage))
 			FOnPreviewPage(this, FPageNumber);
 		Invalidate();
 	}
@@ -645,7 +645,7 @@ void __fastcall TSynEditPrintPreview::WMVScroll(TWMVScroll& Msg)
 	}
 }
 
-void __fastcall TSynEditPrintPreview::WMMouseWheel(TWMMouseWheel& Message)
+void __fastcall TSynEditPrintPreview::WMMouseWheel(Winapi::Messages::TWMMouseWheel& Message)
 {
 	bool bCtrl = false;
 
@@ -670,7 +670,7 @@ void __fastcall TSynEditPrintPreview::WMMouseWheel(TWMMouseWheel& Message)
 	bCtrl = GetKeyState(VK_CONTROL) < 0;
 
   /* Find mouse pos and increment accumulator */
-	MousePos = SmallPointToPoint(Message.Pos);
+	MousePos = SmallPointToPoint(&Message.Pos);
 	FWheelAccumulator += Message.WheelDelta;
 
   /* Do actions while accumulated is bigger than delta */
@@ -703,14 +703,14 @@ void __fastcall TSynEditPrintPreview::UpdatePreview()
 	ScaleMode = OldMode;
 	if(ScaleMode == pscUserScaled)
 		ScalePercent = OldScale;
-	if(ASSIGNED(FOnPreviewPage))
+	if(Assigned(FOnPreviewPage))
 		FOnPreviewPage(this, FPageNumber);
 }
 
 void __fastcall TSynEditPrintPreview::FirstPage()
 {
 	FPageNumber = 1;
-	if(ASSIGNED(FOnPreviewPage))
+	if(Assigned(FOnPreviewPage))
 		FOnPreviewPage(this, FPageNumber);
 	Invalidate();
 }
@@ -719,7 +719,7 @@ void __fastcall TSynEditPrintPreview::LastPage()
 {
 	if(ASSIGNED(FSynEditPrint))
 		FPageNumber = FSynEditPrint->PageCount;
-	if(ASSIGNED(FOnPreviewPage))
+	if(Assigned(FOnPreviewPage))
 		FOnPreviewPage(this, FPageNumber);
 	Invalidate();
 }
@@ -729,7 +729,7 @@ void __fastcall TSynEditPrintPreview::NextPage()
 	FPageNumber = FPageNumber + 1;
 	if(ASSIGNED(FSynEditPrint) && (FPageNumber > FSynEditPrint->PageCount))
 		FPageNumber = FSynEditPrint->PageCount;
-	if(ASSIGNED(FOnPreviewPage))
+	if(Assigned(FOnPreviewPage))
 		FOnPreviewPage(this, FPageNumber);
 	Invalidate();
 }
@@ -739,7 +739,7 @@ void __fastcall TSynEditPrintPreview::PreviousPage()
 	FPageNumber = FPageNumber - 1;
 	if(ASSIGNED(FSynEditPrint) && (FPageNumber < 1))
 		FPageNumber = 1;
-	if(ASSIGNED(FOnPreviewPage))
+	if(Assigned(FOnPreviewPage))
 		FOnPreviewPage(this, FPageNumber);
 	Invalidate();
 }
@@ -761,5 +761,5 @@ int __fastcall TSynEditPrintPreview::GetPageCount()
 }
 
 
-}  // namespace SynEditPrintPreview
+}  // namespace Syneditprintpreview
 

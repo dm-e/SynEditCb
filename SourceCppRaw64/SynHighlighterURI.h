@@ -196,7 +196,7 @@ typedef bool __fastcall (__closure *TAlreadyVisitedURIFunc) (String);
 class TSynURISyn : public Synedithighlighter::TSynCustomHighlighter
 {
 private:
-	PWideChar fMayBeProtocol;
+	System::PWideChar fMayBeProtocol;
 	TtkTokenKind fTokenID;
 	TIdentFuncTableFunc fIdentFuncTable[16/*# range 0..15*/];
 	Synedithighlighter::TSynHighlighterAttributes* fIdentifierAttri;
@@ -204,7 +204,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fURIAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fVisitedURIAttri;
 	TAlreadyVisitedURIFunc fAlreadyVisitedURI;
-	int __fastcall HashKey(PWideChar Str);
+	int __fastcall HashKey(System::PWideChar Str);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall LFProc();
@@ -241,7 +241,7 @@ protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsCurrentToken(const String Token);
 	virtual bool __fastcall IsFilterStored();
-	void __fastcall SetAlreadyVisitedURIFunc(TAlreadyVisitedURIFunc Value);
+	void __fastcall SetAlreadyVisitedURIFunc(const TAlreadyVisitedURIFunc& Value);
 public:
 	typedef Synedithighlighter::TSynCustomHighlighter inherited;
 	__classmethod virtual String __fastcall GetLanguageName();
@@ -266,7 +266,7 @@ const int SYN_ATTR_VISITEDURI = 7;
 void SynHighlighterURI_initialization();
 
 
-}  // namespace SynHighlighterURI
+}  // namespace Synhighlighteruri
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighteruri;

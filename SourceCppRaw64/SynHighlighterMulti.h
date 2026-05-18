@@ -266,7 +266,7 @@ private:
 	TMarker* __fastcall GetMarkers(int Index);
 	__property TMarker* Markers[int Index] = { read = GetMarkers };
 	void __fastcall DoCheckMarker(TScheme* Scheme, int StartPos, int MarkerLen, const String MarkerText, bool Start, int Line, const String LineStr);
-	void __fastcall SetOnCustomRange(const TCustomRangeEvent Value);
+	void __fastcall SetOnCustomRange(const TCustomRangeEvent& Value);
 protected:
 	TSchemes* fSchemes;
 	Synedithighlighter::TSynCustomHighlighter* fDefaultHighlighter;
@@ -319,7 +319,7 @@ public:
 };
 
 
-}  // namespace SynHighlighterMulti
+}  // namespace Synhighlightermulti
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightermulti;

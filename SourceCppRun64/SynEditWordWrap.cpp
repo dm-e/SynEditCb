@@ -77,10 +77,11 @@ __fastcall TSynWordWrapPlugin::TSynWordWrapPlugin(TCustomSynEdit* aOwner)
 {
 	//# inherited::Create(); // just to work as reminder in case I revert it to a TComponent...
 	if(aOwner == nullptr)
-		throw new Exception(L"Owner of TSynWordWrapPlugin must be a TCustomSynEdit");
+		throw Exception(L"Owner of TSynWordWrapPlugin must be a TCustomSynEdit");
 	fEditor = aOwner;
 	fLineCount = fEditor->Lines->Count;
 	Reset();
+	// AddRef(); //# Ensure COM contract: returned interface must have RefCount >= 1
 }
 
 __fastcall TSynWordWrapPlugin::~TSynWordWrapPlugin()
@@ -148,7 +149,7 @@ int __fastcall TSynWordWrapPlugin::GetRowLength(int aRow)
 	int result = 0;
 	if((aRow <= 0) || (aRow > RowCount()))
 		TList::Error(System_Rtlconsts_SListIndexError, aRow);
-	result = (int) (*fRowLengths)[aRow - 1];
+	result = static_cast<int>((*fRowLengths)[aRow - 1]);
 	return result;
 }
 
@@ -201,9 +202,9 @@ int __fastcall TSynWordWrapPlugin::LinesDeleted(int aIndex, int aCount)
 	result = vEndRow - vStartRow;
   // resize fRowLengths
 	if(vEndRow < RowCount())
-		MoveRows((TRowIndex) vEndRow, -result);
+		MoveRows(static_cast<TRowIndex>(vEndRow), -result);
   // resize fLineOffsets
-	MoveLines((TLineIndex) (aIndex + aCount), -aCount);
+	MoveLines(static_cast<TLineIndex>(aIndex + aCount), -aCount);
 	fLineCount -= aCount;
   // update offsets
 	for(stop = fLineCount - 1, cLine = aIndex; cLine <= stop; cLine++)
@@ -234,13 +235,13 @@ int __fastcall TSynWordWrapPlugin::LinesInserted(int aIndex, int aCount)
 	if(aIndex < fLineCount) // no need for MoveLines if inserting at LineCount (TSynEditStringList.Add)
 	{
 		fLineCount += aCount; // fLineCount must be updated before calling MoveLines()
-		MoveLines((TLineIndex) aIndex, aCount);
+		MoveLines(static_cast<TLineIndex>(aIndex), aCount);
 	}
 	else
 	fLineCount += aCount; 
   // set offset to same as previous line (i.e. the line has 0 rows)
 	if(aIndex == 0)
-		vPrevOffset = (TRowIndex) 0;
+		vPrevOffset = static_cast<TRowIndex>(0);
 	else
 		vPrevOffset = (*fLineOffsets)[aIndex - 1];
 	for(stop = aIndex + aCount - 1, cLine = aIndex; cLine <= stop; cLine++)
@@ -251,7 +252,7 @@ int __fastcall TSynWordWrapPlugin::LinesInserted(int aIndex, int aCount)
 	result = 0;
 	for(stop = aIndex + aCount - 1, cLine = aIndex; cLine <= stop; cLine++)
 	{
-		result += ReWrapLine((TLineIndex) cLine);
+		result += ReWrapLine(static_cast<TLineIndex>(cLine));
 	}
 	return result;
 }
@@ -268,7 +269,7 @@ int __fastcall TSynWordWrapPlugin::LinePut(int aIndex, const String OldLine)
 	Assert(aIndex < fLineCount);
   // Rewrap
 	result = 0;
-	result += ReWrapLine((TLineIndex) aIndex);
+	result += ReWrapLine(static_cast<TLineIndex>(aIndex));
 	return result;
 }
 
@@ -281,7 +282,7 @@ void __fastcall TSynWordWrapPlugin::MoveLines(TLineIndex aStart, int aMoveBy)
 	vMoveCount = fLineCount - aStart;
 	if(aMoveBy > 0)
 		vMoveCount -= aMoveBy;
-	Move(&(*fLineOffsets)[aStart], &(*fLineOffsets)[aStart + aMoveBy], (size_t) (vMoveCount * sizeof(TRowIndex)));
+	Move(&(*fLineOffsets)[aStart], &(*fLineOffsets)[aStart + aMoveBy], static_cast<size_t>(vMoveCount * sizeof(TRowIndex)));
 }
 
 void __fastcall TSynWordWrapPlugin::MoveRows(TRowIndex aStart, int aMoveBy)
@@ -293,14 +294,14 @@ void __fastcall TSynWordWrapPlugin::MoveRows(TRowIndex aStart, int aMoveBy)
 	vMoveCount = RowCount() - aStart;
 	if(aMoveBy > 0)
 		vMoveCount -= aMoveBy;
-	Move(&(*fRowLengths)[aStart], &(*fRowLengths)[aStart + aMoveBy], (size_t) (vMoveCount * sizeof(TRowLength)));
+	Move(&(*fRowLengths)[aStart], &(*fRowLengths)[aStart + aMoveBy], static_cast<size_t>(vMoveCount * sizeof(TRowLength)));
 }
 
 void __fastcall TSynWordWrapPlugin::Reset()
 {
 	Assert(Editor->CharsInWindow >= 0);
-	fMaxRowLength = (TRowLength) Editor->CharsInWindow;
-	fMinRowLength = (TRowLength) (Editor->CharsInWindow - ((int)(Editor->CharsInWindow / /*div*/ 3)));
+	fMaxRowLength = static_cast<TRowLength>(Editor->CharsInWindow);
+	fMinRowLength = static_cast<TRowLength>(Editor->CharsInWindow - ((int)(Editor->CharsInWindow / /*div*/ 3)));
 	if(fMinRowLength <= 0)
 		fMinRowLength = 1;
 	WrapLines();
@@ -328,8 +329,8 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 	vLine = ((TSynEditStringList*) Editor->Lines)->ExpandedStrings[aIndex];
 	vLine = Editor->ExpandAtWideGlyphs(vLine);
   // Pre-allocate a buffer for rowlengths - at least one row
-	vMaxNewRows = (unsigned int) Max(((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1, 1);
-	vTempRowLengths = ((PRowLengthArray) AllocMem((unsigned int) (vMaxNewRows * sizeof(TRowLength))));
+	vMaxNewRows = static_cast<unsigned int>(Max(((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1, 1));
+	vTempRowLengths = ((PRowLengthArray) AllocMem(static_cast<unsigned int>(vMaxNewRows * sizeof(TRowLength))));
 	try
 	{
 		vLineRowCount = 0;
@@ -359,14 +360,14 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 			}
 
       // Finally store the rowlength
-			(*vTempRowLengths)[vLineRowCount] = (TRowLength) (vRowEnd - vRowBegin);
+			(*vTempRowLengths)[vLineRowCount] = static_cast<TRowLength>(vRowEnd - vRowBegin);
 			++vLineRowCount;
 			vRowBegin = vRowEnd;
 			vRowEnd += fMaxRowLength;
 		} //endwhile vRowEnd < vLineEnd
 		if((vLineEnd > vRowBegin) || (vLine.Length() == 0))
 		{
-			(*vTempRowLengths)[vLineRowCount] = (TRowLength) (vLineEnd - vRowBegin);
+			(*vTempRowLengths)[vLineRowCount] = static_cast<TRowLength>(vLineEnd - vRowBegin);
 			++vLineRowCount;
 		}
 
@@ -407,7 +408,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 					}
 				}
 				if(vOldNextRow < RowCount() - result)
-					MoveRows((TRowIndex) vOldNextRow, result);
+					MoveRows(static_cast<TRowIndex>(vOldNextRow), result);
 			}
 			else
 
@@ -415,14 +416,14 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 			{
 				int stop = 0;
 				if(vOldNextRow < RowCount())
-					MoveRows((TRowIndex) vOldNextRow, result);
+					MoveRows(static_cast<TRowIndex>(vOldNextRow), result);
 				for(stop = fLineCount - 1, cLine = aIndex; cLine <= stop; cLine++)
 				{
 					(*fLineOffsets)[cLine] += result;
 				}
 			}
 		}
-		Move(&(*vTempRowLengths)[0], &(*fRowLengths)[vStartRow], (size_t) (vLineRowCount * sizeof(TRowLength)));
+		Move(&(*vTempRowLengths)[0], &(*fRowLengths)[vStartRow], static_cast<size_t>(vLineRowCount * sizeof(TRowLength)));
 	}
 	__finally
 	{
@@ -479,17 +480,17 @@ void __fastcall TSynWordWrapPlugin::WrapLines()
 					--vLastVisibleChar;
 				vRowEnd = vLastVisibleChar + 1;
 			}
-			(*fRowLengths)[cRow] = (TRowLength) (vRowEnd - vRowBegin);
+			(*fRowLengths)[cRow] = static_cast<TRowLength>(vRowEnd - vRowBegin);
 			++cRow;
 			vRowBegin = vRowEnd;
 			vRowEnd += fMaxRowLength;
 		}
 		if((vLineEnd > vRowBegin) || (vLine.Length() == 0))
 		{
-			(*fRowLengths)[cRow] = (TRowLength) (vLineEnd - vRowBegin);
+			(*fRowLengths)[cRow] = static_cast<TRowLength>(vLineEnd - vRowBegin);
 			++cRow;
 		}
-		(*fLineOffsets)[cLine] = (TRowIndex) cRow;
+		(*fLineOffsets)[cLine] = static_cast<TRowIndex>(cRow);
 	}
 }
 
@@ -519,5 +520,5 @@ void __fastcall TSynWordWrapPlugin::TrimArrays()
 }
 
 
-}  // namespace SynEditWordWrap
+}  // namespace Syneditwordwrap
 

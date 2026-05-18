@@ -9,6 +9,7 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
+using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlightercpm
@@ -62,10 +63,10 @@ unsigned int __fastcall TSynCPMSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 841 + int((*Str)) * 268);
+		result = static_cast<unsigned int>(result * 841 + int((*Str)) * 268);
 		++Str;
 	}
-	result = (unsigned int) (result % 797);
+	result = static_cast<unsigned int>(result % 797);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1752,7 +1753,7 @@ __fastcall TSynCPMSyn::TSynCPMSyn(TComponent* AOwner)
 	fSpecialVarAttri->Style = Synhighlightercpm__3;
 	AddAttribute(fSpecialVarAttri);
 	fSystemAttri = new TSynHighlighterAttributes(SYNS_AttrSystem, SYNS_FriendlyAttrSystem);
-	fSystemAttri->Foreground = (TColor) 0x000080FF;
+	fSystemAttri->Foreground = static_cast<TColor>(0x000080FF);
 	fSystemAttri->Style = Synhighlightercpm__4;
 	AddAttribute(fSystemAttri);
 	fVariableAttri = new TSynHighlighterAttributes(SYNS_AttrVariable, SYNS_FriendlyAttrVariable);
@@ -2205,5 +2206,5 @@ String __fastcall TSynCPMSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterCPM
+}  // namespace Synhighlightercpm
 

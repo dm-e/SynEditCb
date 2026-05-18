@@ -12,7 +12,7 @@ namespace Longintlist
 
 
 
-__fastcall TLongintList::TLongintList()
+__fastcall TLongIntList::TLongIntList()
  : FCapacity(0),
 			FCount(0),
 			FLongIntList(nullptr)
@@ -20,17 +20,16 @@ __fastcall TLongintList::TLongintList()
 	//# inherited::Create();
 } /* Create */
 
-__fastcall TLongintList::~TLongintList()
+__fastcall TLongIntList::~TLongIntList()
 {
 	Clear();
 	//# inherited::Destroy();
-}
- /* Destroy */
+} /* Destroy */
 
 /* Based on a non-recursive QuickSort from the SWAG-Archive.
   ( TV Sorting Unit by Brad Williams ) */
 
-void __fastcall TLongintList::Sort()
+void __fastcall TLongIntList::Sort()
 {
 	int Left = 0;
 	int Right = 0;
@@ -40,12 +39,12 @@ void __fastcall TLongintList::Sort()
 	int Temp = 0;
 	int Pivot = 0;
 
-	struct LongIntListRec__0
+	struct LongintlistRec__0
 	{
 		int First;
 		int Last;
 	};	
-	LongIntListRec__0 Stack[32/*# range 1..32*/];
+	LongintlistRec__0 Stack[32/*# range 1..32*/];
 	if(Count > 1)
 	{
 		SubArray = 1;
@@ -91,14 +90,14 @@ void __fastcall TLongintList::Sort()
 	}
 } /* Sort */
 
-int __fastcall TLongintList::GetItems(int Index)
+int __fastcall TLongIntList::GetItems(int Index)
 {
 	int result = 0;
 	result = (*FLongIntList)[Index];
 	return result;
 } /* GetItems */
 
-void __fastcall TLongintList::SetCapacity(int NewCapacity)
+void __fastcall TLongIntList::SetCapacity(int NewCapacity)
 {
 	if(NewCapacity < FCount)
 		FCount = NewCapacity;
@@ -109,19 +108,19 @@ void __fastcall TLongintList::SetCapacity(int NewCapacity)
 	}
 } /* SetCapacity */
 
-void __fastcall TLongintList::SetCount(int NewCount)
+void __fastcall TLongIntList::SetCount(int NewCount)
 {
 	if(NewCount > FCapacity)
 		SetCapacity(NewCount);
 	FCount = NewCount;
 } /* SetCount */
 
-void __fastcall TLongintList::SetItems(int Index, int Item)
+void __fastcall TLongIntList::SetItems(int Index, int Item)
 {
 	(*FLongIntList)[Index] = Item;
 } /* SetItems */
 
-int __fastcall TLongintList::Add(int Item)
+int __fastcall TLongIntList::Add(int Item)
 {
 	int result = 0;
 	result = FCount;
@@ -132,27 +131,27 @@ int __fastcall TLongintList::Add(int Item)
 	return result;
 } /* Add */
 
-void __fastcall TLongintList::Clear()
+void __fastcall TLongIntList::Clear()
 {
 	SetCount(0);
 	SetCapacity(0);
 } /* Clear */
 
-void __fastcall TLongintList::Delete(int Index)
+void __fastcall TLongIntList::Delete(int Index)
 {
 	--FCount;
 	if(Index < FCount)
-		System::Move(&(*FLongIntList)[Index + 1], &(*FLongIntList)[Index], (FCount - Index) * sizeof(int));
+		System::Move(&(*FLongIntList)[Index + 1], &(*FLongIntList)[Index], static_cast<size_t>((FCount - Index) * sizeof(int)));
 } /* Delete */
 
-void __fastcall TLongintList::DeleteGroup(int StartIndex, int GroupCount)
+void __fastcall TLongIntList::DeleteGroup(int StartIndex, int GroupCount)
 {
 	FCount -= GroupCount;
 	if(StartIndex < FCount)
-		System::Move(&(*FLongIntList)[StartIndex + GroupCount], &(*FLongIntList)[StartIndex], (FCount - StartIndex) * sizeof(int));
+		System::Move(&(*FLongIntList)[StartIndex + GroupCount], &(*FLongIntList)[StartIndex], static_cast<size_t>((FCount - StartIndex) * sizeof(int)));
 } /* DeleteGroup */
 
-void __fastcall TLongintList::Exchange(int Index1, int Index2)
+void __fastcall TLongIntList::Exchange(int Index1, int Index2)
 {
 	int Item = 0;
 	Item = (*FLongIntList)[Index1];
@@ -160,14 +159,14 @@ void __fastcall TLongintList::Exchange(int Index1, int Index2)
 	(*FLongIntList)[Index2] = Item;
 } /* Exchange */
 
-int __fastcall TLongintList::First()
+int __fastcall TLongIntList::First()
 {
 	int result = 0;
 	result = GetItems(0);
 	return result;
 } /* First */
 
-int __fastcall TLongintList::IndexOf(int Item)
+int __fastcall TLongIntList::IndexOf(int Item)
 {
 	int result = 0;
 	result = 0;
@@ -178,24 +177,24 @@ int __fastcall TLongintList::IndexOf(int Item)
 	return result;
 } /* IndexOf */
 
-void __fastcall TLongintList::Insert(int Index, int Item)
+void __fastcall TLongIntList::Insert(int Index, int Item)
 {
 	if(FCount == FCapacity)
 		SetCapacity(FCapacity + 1024);
 	if(Index < FCount)
-		System::Move(&(*FLongIntList)[Index], &(*FLongIntList)[Index + 1], (FCount - Index) * sizeof(int));
+		System::Move(&(*FLongIntList)[Index], &(*FLongIntList)[Index + 1], static_cast<size_t>((FCount - Index) * sizeof(int)));
 	(*FLongIntList)[Index] = Item;
 	++FCount;
 } /* Insert */
 
-int __fastcall TLongintList::Last()
+int __fastcall TLongIntList::Last()
 {
 	int result = 0;
 	result = GetItems(FCount - 1);
 	return result;
 } /* Last */
 
-void __fastcall TLongintList::Move(int CurIndex, int NewIndex)
+void __fastcall TLongIntList::Move(int CurIndex, int NewIndex)
 {
 	int Item = 0;
 	if(CurIndex != NewIndex)
@@ -206,15 +205,15 @@ void __fastcall TLongintList::Move(int CurIndex, int NewIndex)
 	}
 } /* Move */
 
-int __fastcall TLongintList::Remove(int Item)
+int __fastcall TLongIntList::Remove(int Item)
 {
 	int result = 0;
 	result = IndexOf(Item);
-	if(result !=  - 1)
+	if(result != -1)
 		Delete(result);
 	return result;
 } /* Remove */
 
 
-}  // namespace LongIntList
+}  // namespace Longintlist
 

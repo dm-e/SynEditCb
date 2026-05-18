@@ -180,20 +180,20 @@ private:
 	void __fastcall SetAdditionalIdentChars(const TSysCharSet Value);
 	void __fastcall SetAdditionalWordBreakChars(const TSysCharSet Value);
 protected:
-	PWideChar fCasedLine;
+	System::PWideChar fCasedLine;
 	String fCasedLineStr;
 	bool fCaseSensitive;
 	String fDefaultFilter;
-	PWideChar fExpandedLine;
+	System::PWideChar fExpandedLine;
 	int fExpandedLineLen;
 	String fExpandedLineStr;
 	int fExpandedTokenPos;
-	PWideChar fLine;
+	System::PWideChar fLine;
 	int fLineLen;
 	String fLineStr;
 	int fLineNumber;
 	int fStringLen;
-	PWideChar fToIdent;
+	System::PWideChar fToIdent;
 	int fTokenPos;
 	bool fUpdateChange;
 	int Run;
@@ -206,14 +206,14 @@ protected:
 	void __fastcall FreeHighlighterAttributes();
 	virtual int __fastcall GetAttribCount();
 	virtual TSynHighlighterAttributes* __fastcall GetAttribute(int Index);
-	virtual TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index){return nullptr;} // = 0;
+	virtual TSynHighlighterAttributes* __fastcall GetDefaultAttribute(int Index){ThrowAbstractMethodError(L"TSynCustomHighlighter::GetDefaultAttribute"); return nullptr;};
 	virtual String __fastcall GetDefaultFilter();
 	virtual String __fastcall GetSampleSource();
 	virtual void __fastcall DoSetLine(const String Value, int LineNumber);
 	virtual bool __fastcall IsCurrentToken(const String Token);
 	virtual bool __fastcall IsFilterStored();
 	virtual bool __fastcall IsLineEnd(int Run);
-	void __fastcall SetAttributesOnChange(TNotifyEvent AEvent);
+	void __fastcall SetAttributesOnChange(const TNotifyEvent& AEvent);
 	virtual void __fastcall SetDefaultFilter(String Value);
 	virtual void __fastcall SetSampleSource(String Value);
 	TSynHighlighterCapabilities __fastcall GetCapabilitiesProp();
@@ -230,14 +230,14 @@ public:
 	virtual void __fastcall Assign(TPersistent* Source);
 	void __fastcall BeginUpdate();
 	void __fastcall EndUpdate();
-	virtual bool __fastcall GetEol(){return false;} // = 0;
+	virtual bool __fastcall GetEol(){ThrowAbstractMethodError(L"TSynCustomHighlighter::GetEol"); return false;};
 	virtual String __fastcall GetExpandedToken();
 	virtual int __fastcall GetExpandedTokenPos();
 	virtual String __fastcall GetKeyWords(int TokenKind);
 	virtual void* __fastcall GetRange();
 	virtual String __fastcall GetToken();
-	virtual TSynHighlighterAttributes* __fastcall GetTokenAttribute(){return nullptr;} // = 0;
-	virtual int __fastcall GetTokenKind(){return 0;} // = 0;
+	virtual TSynHighlighterAttributes* __fastcall GetTokenAttribute(){ThrowAbstractMethodError(L"TSynCustomHighlighter::GetTokenAttribute"); return nullptr;};
+	virtual int __fastcall GetTokenKind(){ThrowAbstractMethodError(L"TSynCustomHighlighter::GetTokenKind"); return 0;};
 	virtual int __fastcall GetTokenPos();
 	virtual bool __fastcall IsKeyword(const String AKeyword);
 	virtual void __fastcall Next();
@@ -255,8 +255,8 @@ public:
 	bool __fastcall SaveToIniFile(TCustomIniFile* AIni);
 	bool __fastcall LoadFromFile(String AFileName);
 	bool __fastcall SaveToFile(String AFileName);
-	void __fastcall HookAttrChangeEvent(TNotifyEvent ANotifyEvent);
-	void __fastcall UnhookAttrChangeEvent(TNotifyEvent ANotifyEvent);
+	void __fastcall HookAttrChangeEvent(const TNotifyEvent& ANotifyEvent);
+	void __fastcall UnhookAttrChangeEvent(const TNotifyEvent& ANotifyEvent);
 	virtual bool __fastcall IsIdentChar(WideChar AChar);
 	virtual bool __fastcall IsWhiteChar(WideChar AChar);
 	virtual bool __fastcall IsWordBreakChar(WideChar AChar);
@@ -309,7 +309,7 @@ void SynEditHighlighter_initialization();
 void SynEditHighlighter_finalization();
 
 
-}  // namespace SynEditHighlighter
+}  // namespace Synedithighlighter
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synedithighlighter;

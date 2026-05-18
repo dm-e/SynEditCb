@@ -216,8 +216,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fTableNameAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fProcNameAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fVariableAttri;
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
 	void __fastcall SetDialect(TSQLDialect Value);
 	void __fastcall SetTableNames(TStrings* const Value);
@@ -306,7 +306,7 @@ public:
 void SynHighlighterSQL_initialization();
 
 
-}  // namespace SynHighlighterSQL
+}  // namespace Synhighlightersql
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightersql;

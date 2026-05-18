@@ -34,10 +34,10 @@ unsigned int __fastcall TSynHaskellSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 904 + int((*Str)) * 779);
+		result = static_cast<unsigned int>(result * 904 + int((*Str)) * 779);
 		++Str;
 	}
-	result = (unsigned int) (result % 29);
+	result = static_cast<unsigned int>(result % 29);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1078,5 +1078,5 @@ String __fastcall TSynHaskellSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterHaskell
+}  // namespace Synhighlighterhaskell
 

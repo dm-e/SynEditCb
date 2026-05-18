@@ -68,10 +68,10 @@ unsigned int __fastcall TSynADSP21xxSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 641 + int((*Str)) * 282);
+		result = static_cast<unsigned int>(result * 641 + int((*Str)) * 282);
 		++Str;
 	}
-	result = (unsigned int) (result % 821);
+	result = static_cast<unsigned int>(result % 821);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -2867,5 +2867,5 @@ String __fastcall TSynADSP21xxSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterADSP21xx
+}  // namespace Synhighlighteradsp21xx
 

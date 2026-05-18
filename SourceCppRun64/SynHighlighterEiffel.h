@@ -265,8 +265,8 @@ private:
 	TtkTokenKind __fastcall FuncWhen(int Index);
 	TtkTokenKind __fastcall FuncXor(int Index);
 	TtkTokenKind __fastcall FuncYes(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall IdentProc();
 	void __fastcall InitIdent();
 	void __fastcall OperatorAndSymbolProc();
@@ -315,7 +315,7 @@ public:
 void SynHighlighterEiffel_initialization();
 
 
-}  // namespace SynHighlighterEiffel
+}  // namespace Synhighlightereiffel
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightereiffel;

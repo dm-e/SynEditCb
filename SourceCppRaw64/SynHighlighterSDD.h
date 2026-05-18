@@ -173,8 +173,8 @@ private:
 	TtkTokenKind __fastcall FuncSuperspec(int Index);
 	TtkTokenKind __fastcall FuncTime(int Index);
 	TtkTokenKind __fastcall FuncVar(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall BraceOpenProc();
 	void __fastcall BraceCommentProc();
@@ -217,7 +217,7 @@ public:
 void SynHighlighterSDD_initialization();
 
 
-}  // namespace SynHighlighterSDD
+}  // namespace Synhighlightersdd
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightersdd;

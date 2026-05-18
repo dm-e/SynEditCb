@@ -43,69 +43,66 @@ namespace Syneditdataobject
   published in UNDO (www.undo.com)
 */
 
-typedef System::Word TClipFormat;
+typedef WORD TClipFormat;
 
-class TSynEnumFormatEtc : public IEnumFORMATETC
+class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef IEnumFORMATETC inherited;
+	typedef System::TCppInterfacedObject<IEnumFORMATETC> inherited;
 private:
-	System::TArray<TClipFormat> FList;
+	System::D2CArray<TClipFormat> FList;
 	int FIndex;
-    LONG m_refCount;
-
 protected:
-	Winapi::Activex::TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
-    /*IEnumFORMATETC*/
-	HRESULT __stdcall Next(unsigned long celt, tagFORMATETC* elt, unsigned long* pceltFetched);
-	HRESULT __stdcall Skip(unsigned long celt);
-	HRESULT __stdcall Reset();
-	HRESULT __stdcall Clone(IEnumFORMATETC** Enum);
+	TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
+	/*IEnumFORMATETC*/
+	HRESULT STDMETHODCALLTYPE Next(ULONG celt, FORMATETC *rgelt, ULONG *pceltFetched);
+	HRESULT STDMETHODCALLTYPE Skip(ULONG celt);
+	HRESULT STDMETHODCALLTYPE Reset();
+	HRESULT STDMETHODCALLTYPE Clone(IEnumFORMATETC** Enum);
 public:
-	__fastcall TSynEnumFormatEtc(System::TArray<TClipFormat> FormatList, int Index = 0);
+	__fastcall TSynEnumFormatEtc(const System::D2CArray<TClipFormat>& FormatList, int Index = 0);
 	__fastcall TSynEnumFormatEtc();
-    HRESULT __stdcall QueryInterface(REFIID riid, void **ppvObject) override;
-    ULONG __stdcall AddRef() override;
-    ULONG __stdcall Release() override;
 };
 
-class TSynEditDataObject : public System::TInterfacedObject, public IDataObject
+class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 {
-	#include "SynEditDataObject_friends.inc"
+    #include "SynEditDataObject_friends.inc"
 public:
-	typedef TInterfacedObject inherited;	
-	INTFOBJECT_IMPL_IUNKNOWN(System::TInterfacedObject)
+	typedef System::TCppInterfacedObject<IDataObject> inherited;
 private:
-	String FText;
-	TList__1<TClipFormat>* FFormatEtc;
+    String fText;
+    TList__1<TClipFormat>* FFormatEtc;
 	TMemoryStream* MemoryStream;
+    TMemoryStream* HtmlStream;
+    void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
-	HRESULT __stdcall GetData(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);
-	HRESULT __stdcall GetDataHere(tagFORMATETC* formatetcIn, tagSTGMEDIUM* medium);
-	HRESULT __stdcall QueryGetData(tagFORMATETC* FormatEtc);
-	HRESULT __stdcall GetCanonicalFormatEtc(tagFORMATETC* FormatEtc, tagFORMATETC* formatetcOut);
-	HRESULT __stdcall SetData(tagFORMATETC* FormatEtc, tagSTGMEDIUM* medium, BOOL fRelease);
-	HRESULT __stdcall EnumFormatEtc(unsigned long dwDirection, IEnumFORMATETC** EnumFormatEtc);
-	HRESULT __stdcall DAdvise(tagFORMATETC* FormatEtc, unsigned long advf, IAdviseSink* const advSink, unsigned long* dwConnection);
-	HRESULT __stdcall DUnadvise(unsigned long dwConnection);
-	HRESULT __stdcall EnumDAdvise(IEnumSTATDATA** enumAdvise);
+	HRESULT STDMETHODCALLTYPE GetData(TFormatEtc* formatetcIn, TStgMedium* medium);
+	HRESULT STDMETHODCALLTYPE GetDataHere(TFormatEtc* formatetc, TStgMedium* medium);
+	HRESULT STDMETHODCALLTYPE QueryGetData(TFormatEtc* formatetc);
+	HRESULT STDMETHODCALLTYPE GetCanonicalFormatEtc(TFormatEtc* formatetc, TFormatEtc* formatetcOut);
+	HRESULT STDMETHODCALLTYPE SetData(TFormatEtc* formatetc, TStgMedium* medium, BOOL fRelease);
+	HRESULT STDMETHODCALLTYPE EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** enumFormatEtc);
+	HRESULT STDMETHODCALLTYPE DAdvise(TFormatEtc* formatetc, DWORD advf, IAdviseSink* advSink, DWORD* dwConnection);
+	HRESULT STDMETHODCALLTYPE DUnadvise(DWORD dwConnection);
+	HRESULT STDMETHODCALLTYPE EnumDAdvise(IEnumSTATDATA** enumAdvise);
 public:
-	__fastcall TSynEditDataObject(TObject* ASynEdit);
-	virtual __fastcall ~TSynEditDataObject();
-	__fastcall TSynEditDataObject();
+    __fastcall TSynEditDataObject(TObject* ASynEdit);
+    virtual __fastcall ~TSynEditDataObject();
+    __fastcall TSynEditDataObject();
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
 HGLOBAL __fastcall MakeGlobal(const String S);
-HGLOBAL __fastcall MakeGlobal(void** P, int Size);
-bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format);
+HGLOBAL __fastcall MakeGlobal(void* P, int Size);
+bool __fastcall HasFormat(const _di_IDataObject& DataObject, TClipFormat Format);
 extern UINT SynEditClipboardFormat;
+extern UINT HTMLClipboardFormat;
 
 void SynEditDataObject_initialization();
 void SynEditDataObject_finalization();
 
 
-}  // namespace SynEditDataObject
+}  // namespace Syneditdataobject
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditdataobject;

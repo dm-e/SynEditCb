@@ -640,5 +640,5 @@ String __fastcall TSynInnoSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterInno
+}  // namespace Synhighlighterinno
 

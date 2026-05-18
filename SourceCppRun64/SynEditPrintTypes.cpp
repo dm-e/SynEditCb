@@ -131,5 +131,5 @@ String __fastcall IntToRoman(int Value)
 }
 
 
-}  // namespace SynEditPrintTypes
+}  // namespace Syneditprinttypes
 

@@ -48,7 +48,7 @@ void __fastcall TSynDataEvent::Initialize(TSynEditorCommand aCmd, WideChar aChar
 
 void __fastcall TSynDataEvent::LoadFromStream(TStream* aStream)
 {
-	aStream->Read((void**) fData, (NativeInt) sizeof(fData));
+	aStream->Read(fData, static_cast<NativeInt>(sizeof(fData)));
 }
 
 void __fastcall TSynDataEvent::Playback(TCustomSynEdit* aEditor)
@@ -59,7 +59,7 @@ void __fastcall TSynDataEvent::Playback(TCustomSynEdit* aEditor)
 void __fastcall TSynDataEvent::SaveToStream(TStream* aStream)
 {
 	inherited::SaveToStream(aStream);
-	aStream->Write(fData, (NativeInt) sizeof(fData));
+	aStream->Write(fData, static_cast<NativeInt>(sizeof(fData)));
 }
 
 /* TCustomSynMacroRecorder */
@@ -92,7 +92,7 @@ void __fastcall TCustomSynMacroRecorder::Clear()
 			fEvents->Delete(I);
 			delete Obj;
 		}
-		FreeAndNil(&fEvents);
+		FreeAndNil(fEvents);
 	}
 }
 
@@ -106,8 +106,8 @@ __fastcall TCustomSynMacroRecorder::TCustomSynMacroRecorder(TComponent* aOwner)
 	fMacroName = L"unnamed";
 	fCommandIDs[mcRecord] = NewPluginCommand();
 	fCommandIDs[mcPlayback] = NewPluginCommand();
-	fShortCuts[mcRecord] = Menus::ShortCut((WORD) int(L'R'), Synmacrorecorder__0);
-	fShortCuts[mcPlayback] = Menus::ShortCut((WORD) int(L'P'), Synmacrorecorder__1);
+	fShortCuts[mcRecord] = Menus::ShortCut(static_cast<WORD>(int(L'R')), Synmacrorecorder__0);
+	fShortCuts[mcPlayback] = Menus::ShortCut(static_cast<WORD>(int(L'P')), Synmacrorecorder__1);
 }
 
 TSynMacroEvent* __fastcall TCustomSynMacroRecorder::CreateMacroEvent(TSynEditorCommand aCmd)
@@ -117,7 +117,7 @@ TSynMacroEvent* __fastcall TCustomSynMacroRecorder::CreateMacroEvent(TSynEditorC
 	auto WantDefaultEvent = [&](TSynMacroEvent*& aEvent) -> bool 
 	{
 		bool result = false;
-		if(ASSIGNED(OnUserCommand))
+		if(Assigned(OnUserCommand))
 			OnUserCommand(this, aCmd, aEvent);
 		result = aEvent == nullptr;
 		return result;
@@ -170,8 +170,8 @@ __fastcall TCustomSynMacroRecorder::~TCustomSynMacroRecorder()
 
 void __fastcall TCustomSynMacroRecorder::DoAddEditor(TCustomSynEdit* aEditor)
 {
-	HookEditor(aEditor, RecordCommandID, (TShortCut) 0, RecordShortCut);
-	HookEditor(aEditor, PlaybackCommandID, (TShortCut) 0, PlaybackShortCut);
+	HookEditor(aEditor, RecordCommandID, static_cast<TShortCut>(0), RecordShortCut);
+	HookEditor(aEditor, PlaybackCommandID, static_cast<TShortCut>(0), PlaybackShortCut);
 }
 
 void __fastcall TCustomSynMacroRecorder::DoRemoveEditor(TCustomSynEdit* aEditor)
@@ -182,7 +182,7 @@ void __fastcall TCustomSynMacroRecorder::DoRemoveEditor(TCustomSynEdit* aEditor)
 
 void __fastcall TCustomSynMacroRecorder::Error(const String aMsg)
 {
-	throw new Exception(aMsg);
+	throw Exception(aMsg);
 }
 
 TSynMacroEvent* __fastcall TCustomSynMacroRecorder::GetEvent(int aIndex)
@@ -247,12 +247,12 @@ void __fastcall TCustomSynMacroRecorder::LoadFromStreamEx(TStream* aSrc, bool aC
 	if(aClear)
 		Clear();
 	fEvents = new TList();
-	aSrc->Read((void**)&cnt, (NativeInt) sizeof(cnt));
+	aSrc->Read(&cnt, static_cast<NativeInt>(sizeof(cnt)));
 	i = 0;
-	fEvents->Capacity = (NativeInt) ((unsigned __int64)(aSrc->Size / /*div*/ sizeof(TSynEditorCommand)));
+	fEvents->Capacity = static_cast<NativeInt>((unsigned __int64)(aSrc->Size / /*div*/ sizeof(TSynEditorCommand)));
 	while((aSrc->Position < aSrc->Size) && (i < cnt))
 	{
-		aSrc->Read((void**)&iCommand, (NativeInt) sizeof(TSynEditorCommand));
+		aSrc->Read(&iCommand, static_cast<NativeInt>(sizeof(TSynEditorCommand)));
 		iEvent = CreateMacroEvent(iCommand);
 		iEvent->Initialize(iCommand, L'\x00', nullptr);
 		iEvent->LoadFromStream(aSrc);
@@ -398,7 +398,7 @@ void __fastcall TCustomSynMacroRecorder::SaveToStream(TStream* aDest)
 	int eCnt = 0;
 	int stop = 0;
 	eCnt = EventCount;
-	aDest->Write(&eCnt, (NativeInt) sizeof(eCnt));
+	aDest->Write(&eCnt, static_cast<NativeInt>(sizeof(eCnt)));
 	for(stop = eCnt - 1, cEvent = 0; cEvent <= stop; cEvent++)
 	{
 		Events[cEvent]->SaveToStream(aDest);
@@ -435,7 +435,7 @@ void __fastcall TCustomSynMacroRecorder::SetShortCut(int Index, const TShortCut 
 
 void __fastcall TCustomSynMacroRecorder::StateChanged()
 {
-	if(ASSIGNED(OnStateChange))
+	if(Assigned(OnStateChange))
 		OnStateChange(this);
 }
 
@@ -446,7 +446,7 @@ void __fastcall TCustomSynMacroRecorder::Stop()
 	fState = msStopped;
 	fCurrentEditor = nullptr;
 	if(fEvents->Count == 0)
-		FreeAndNil(&fEvents);
+		FreeAndNil(fEvents);
 	StateChanged();
 }
 
@@ -528,7 +528,7 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 			if(IdentToEditorCommand(cmdStr.SubString(1, p - 1), Cmd))  // D2 needs type-cast
 			{
 				cmdStr.Delete(1, 	p);
-				iEvent = CreateMacroEvent((TSynEditorCommand) Cmd);
+				iEvent = CreateMacroEvent(static_cast<TSynEditorCommand>(Cmd));
 				try
 				{
 					fEvents->Add(iEvent);
@@ -546,7 +546,7 @@ void __fastcall TCustomSynMacroRecorder::SetAsString(const String Value)
 void __fastcall TCustomSynMacroRecorder::LoadFromFile(String aFilename)
 {
 	TFileStream* F = nullptr;
-	F = new TFileStream(aFilename, (WORD) fmOpenRead);
+	F = new TFileStream(aFilename, static_cast<WORD>(fmOpenRead));
 	try
 	{
 		LoadFromStream(F);
@@ -561,7 +561,7 @@ void __fastcall TCustomSynMacroRecorder::LoadFromFile(String aFilename)
 void __fastcall TCustomSynMacroRecorder::SaveToFile(String aFilename)
 {
 	TFileStream* F = nullptr;
-	F = new TFileStream(aFilename, (WORD) fmCreate);
+	F = new TFileStream(aFilename, static_cast<WORD>(fmCreate));
 	try
 	{
 		SaveToStream(F);
@@ -578,10 +578,10 @@ String __fastcall TSynBasicEvent::GetAsString()
 {
 	String result;
 	String Ident;
-	EditorCommandToIdent((int) Command, Ident);
+	EditorCommandToIdent(static_cast<int>(Command), Ident);
 	result = Ident;
 	if(RepeatCount > 1)
-		result = result + L" " + IntToStr((int) RepeatCount);
+		result = result + L" " + IntToStr(static_cast<int>(RepeatCount));
 	return result;
 }
 
@@ -589,7 +589,7 @@ void __fastcall TSynBasicEvent::InitEventParameters(String aStr)
 {
 
   // basic events have no parameters but can contain an optional repeat count
-	RepeatCount = (Byte) StrToIntDef(Trim(aStr), 1);
+	RepeatCount = static_cast<Byte>(StrToIntDef(Trim(aStr), 1));
 }
 
 void __fastcall TSynBasicEvent::Initialize(TSynEditorCommand aCmd, WideChar aChar, void* aData)
@@ -599,7 +599,7 @@ void __fastcall TSynBasicEvent::Initialize(TSynEditorCommand aCmd, WideChar aCha
 
 void __fastcall TSynBasicEvent::LoadFromStream(TStream* aStream)
 {
-	aStream->Read((void**)&fRepeatCount, (NativeInt) sizeof(fRepeatCount));
+	aStream->Read(&fRepeatCount, static_cast<NativeInt>(sizeof(fRepeatCount)));
 }
 
 void __fastcall TSynBasicEvent::Playback(TCustomSynEdit* aEditor)
@@ -614,8 +614,8 @@ void __fastcall TSynBasicEvent::Playback(TCustomSynEdit* aEditor)
 
 void __fastcall TSynBasicEvent::SaveToStream(TStream* aStream)
 {
-	aStream->Write(&Command, (NativeInt) sizeof(TSynEditorCommand));
-	aStream->Write(&RepeatCount, (NativeInt) sizeof(RepeatCount));
+	aStream->Write(&Command, static_cast<NativeInt>(sizeof(TSynEditorCommand)));
+	aStream->Write(&RepeatCount, static_cast<NativeInt>(sizeof(RepeatCount)));
 }
 
 /* TSynCharEvent */
@@ -627,7 +627,7 @@ String __fastcall TSynCharEvent::GetAsString()
 	EditorCommandToIdent(ecChar, Ident);
 	result = Ident + L" " + String(Key);
 	if(RepeatCount > 1)
-		result = result + L" " + IntToStr((int) RepeatCount);
+		result = result + L" " + IntToStr(static_cast<int>(RepeatCount));
 	return result;
 }
 
@@ -641,7 +641,7 @@ void __fastcall TSynCharEvent::InitEventParameters(String aStr)
 	else
 		Key = L' ';
 	aStr.Delete(1, 	1); // if possible delete the first character
-	RepeatCount = (Byte) StrToIntDef(Trim(aStr), 1);
+	RepeatCount = static_cast<Byte>(StrToIntDef(Trim(aStr), 1));
 }
 
 void __fastcall TSynCharEvent::Initialize(TSynEditorCommand aCmd, WideChar aChar, void* aData)
@@ -652,8 +652,8 @@ void __fastcall TSynCharEvent::Initialize(TSynEditorCommand aCmd, WideChar aChar
 
 void __fastcall TSynCharEvent::LoadFromStream(TStream* aStream)
 {
-	aStream->Read((void**)&fKey, (NativeInt) sizeof(Key));
-	aStream->Read((void**)&fRepeatCount, (NativeInt) sizeof(fRepeatCount));
+	aStream->Read(&fKey, static_cast<NativeInt>(sizeof(Key)));
+	aStream->Read(&fRepeatCount, static_cast<NativeInt>(sizeof(fRepeatCount)));
 }
 
 void __fastcall TSynCharEvent::Playback(TCustomSynEdit* aEditor)
@@ -662,16 +662,16 @@ void __fastcall TSynCharEvent::Playback(TCustomSynEdit* aEditor)
 	int stop = 0;
 	for(stop = RepeatCount, i = 1; i <= stop; i++)
 	{
-		aEditor->CommandProcessor((TSynEditorCommand) ecChar, Key, nullptr);
+		aEditor->CommandProcessor(static_cast<TSynEditorCommand>(ecChar), Key, nullptr);
 	}
 }
 
 void __fastcall TSynCharEvent::SaveToStream(TStream* aStream)
 {
 	const TSynEditorCommand iCharCommand = ecChar;
-	aStream->Write(&iCharCommand, (NativeInt) sizeof(TSynEditorCommand));
-	aStream->Write(&Key, (NativeInt) sizeof(Key));
-	aStream->Write(&RepeatCount, (NativeInt) sizeof(RepeatCount));
+	aStream->Write(&iCharCommand, static_cast<NativeInt>(sizeof(TSynEditorCommand)));
+	aStream->Write(&Key, static_cast<NativeInt>(sizeof(Key)));
+	aStream->Write(&RepeatCount, static_cast<NativeInt>(sizeof(RepeatCount)));
 }
 
 /* TSynPositionEvent */
@@ -683,7 +683,7 @@ String __fastcall TSynPositionEvent::GetAsString()
   // add position data here
 	result = result + Format(L" (%d, %d)", ARRAYOFCONST((Position.Char, Position.Line)));
 	if(RepeatCount > 1)
-		result = result + L" " + IntToStr((int) RepeatCount);
+		result = result + L" " + IntToStr(static_cast<int>(RepeatCount));
 	return result;
 }
 
@@ -713,7 +713,7 @@ void __fastcall TSynPositionEvent::InitEventParameters(String aStr)
 		Position = BufferCoord(x, y);
 		aStr.Delete(1, 	c);
 		aStr = Trim(aStr);
-		RepeatCount = (Byte) StrToIntDef(aStr, 1);
+		RepeatCount = static_cast<Byte>(StrToIntDef(aStr, 1));
 	}
 }
 
@@ -728,7 +728,7 @@ void __fastcall TSynPositionEvent::Initialize(TSynEditorCommand aCmd, WideChar a
 
 void __fastcall TSynPositionEvent::LoadFromStream(TStream* aStream)
 {
-	aStream->Read((void**)&fPosition, (NativeInt) sizeof(Position));
+	aStream->Read(&fPosition, static_cast<NativeInt>(sizeof(Position)));
 }
 
 void __fastcall TSynPositionEvent::Playback(TCustomSynEdit* aEditor)
@@ -742,7 +742,7 @@ void __fastcall TSynPositionEvent::Playback(TCustomSynEdit* aEditor)
 void __fastcall TSynPositionEvent::SaveToStream(TStream* aStream)
 {
 	inherited::SaveToStream(aStream);
-	aStream->Write(&Position, (NativeInt) sizeof(Position));
+	aStream->Write(&Position, static_cast<NativeInt>(sizeof(Position)));
 }
 
 /* TSynStringEvent */
@@ -754,7 +754,7 @@ String __fastcall TSynStringEvent::GetAsString()
 	EditorCommandToIdent(ecString, Ident);
 	result = Ident + L" " + AnsiQuotedStr(Value, L'\x27');
 	if(RepeatCount > 1)
-		result = result + L" " + IntToStr((int) RepeatCount);
+		result = result + L" " + IntToStr(static_cast<int>(RepeatCount));
 	return result;
 }
 
@@ -769,7 +769,7 @@ void __fastcall TSynStringEvent::InitEventParameters(String aStr)
 	valStr = aStr.SubString(o + 1, c - o - 1);
 	Value = StringReplace(valStr, L"'", L"\'", Synmacrorecorder__2);
 	aStr.Delete(1, 	c);
-	RepeatCount = (Byte) StrToIntDef(Trim(aStr), 1);
+	RepeatCount = static_cast<Byte>(StrToIntDef(Trim(aStr), 1));
 }
 
 void __fastcall TSynStringEvent::Initialize(TSynEditorCommand aCmd, WideChar aChar, void* aData)
@@ -781,19 +781,19 @@ void __fastcall TSynStringEvent::LoadFromStream(TStream* aStream)
 {
 	int l = 0;
 	PWideChar Buff = nullptr;
-	aStream->Read((void**)&l, (NativeInt) sizeof(l));
+	aStream->Read(&l, static_cast<NativeInt>(sizeof(l)));
 	Buff = (PWideChar) GetMemory(l * sizeof(WideChar));
 	try
 	{
-		FillMemory(Buff, (NativeUInt) l, 0);
-		aStream->Read((void**)Buff, (NativeInt) (l * sizeof(WideChar)));
+		FillMemory(Buff, static_cast<NativeUInt>(l), 0);
+		aStream->Read(Buff, static_cast<NativeInt>(l * sizeof(WideChar)));
 		fString = Buff;
 	}
 	__finally
 	{
 		FreeMemory(Buff);
 	}
-	aStream->Read((void**)&fRepeatCount, (NativeInt) sizeof(fRepeatCount));
+	aStream->Read(&fRepeatCount, static_cast<NativeInt>(sizeof(fRepeatCount)));
 }
 
 void __fastcall TSynStringEvent::Playback(TCustomSynEdit* aEditor)
@@ -809,7 +809,7 @@ void __fastcall TSynStringEvent::Playback(TCustomSynEdit* aEditor)
 		int stop1 = 0;
 		for(stop1 = Value.Length(), i = 1; i <= stop1; i++)
 		{
-			aEditor->CommandProcessor((TSynEditorCommand) ecChar, Value[i], nullptr);
+			aEditor->CommandProcessor(static_cast<TSynEditorCommand>(ecChar), Value[i], nullptr);
 		}
 	}
 }
@@ -819,21 +819,21 @@ void __fastcall TSynStringEvent::SaveToStream(TStream* aStream)
 	const TSynEditorCommand StrCommand = ecString;
 	int l = 0;
 	PWideChar Buff = nullptr;
-	aStream->Write(&StrCommand, (NativeInt) sizeof(StrCommand));
+	aStream->Write(&StrCommand, static_cast<NativeInt>(sizeof(StrCommand)));
 	l = Value.Length() + 1;
-	aStream->Write(&l, (NativeInt) sizeof(l));
+	aStream->Write(&l, static_cast<NativeInt>(sizeof(l)));
 	Buff = (PWideChar) GetMemory(l * sizeof(WideChar));
 	try
 	{
-		FillMemory(Buff, (NativeUInt) l, 0);
+		FillMemory(Buff, static_cast<NativeUInt>(l), 0);
 		StrCopy(Buff, ustr2pwchar(Value));
-		aStream->Write(Buff, (NativeInt) (l * sizeof(WideChar)));
+		aStream->Write(Buff, static_cast<NativeInt>(l * sizeof(WideChar)));
 	}
 	__finally
 	{
 		FreeMemory(Buff);
 	}
-	aStream->Write(&RepeatCount, (NativeInt) sizeof(RepeatCount));
+	aStream->Write(&RepeatCount, static_cast<NativeInt>(sizeof(RepeatCount)));
 }
 
 
@@ -846,5 +846,5 @@ __fastcall TSynMacroEvent::TSynMacroEvent()
 }
 
 
-}  // namespace SynMacroRecorder
+}  // namespace Synmacrorecorder
 

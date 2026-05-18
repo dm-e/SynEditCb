@@ -888,5 +888,5 @@ String __fastcall TSynXMLSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterXML
+}  // namespace Synhighlighterxml
 

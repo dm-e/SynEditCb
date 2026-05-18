@@ -261,7 +261,7 @@
 #include <System.SysUtils.hpp>
 #include "SynEdit.h"
 #include "SynEditTypes.h"
-#include <Vcl.comctrls.hpp>
+#include <Vcl.ComCtrls.hpp>
 #include "d2c_systypes.h"
 #include "SynEditDelphiInstances.hpp"
 
@@ -554,8 +554,8 @@ namespace Synspellcheck
 class TSynSpellCheck;
 typedef int /*1..16*/ THashLength;
 typedef int /*1..8*/ TSoundExLength;
-typedef DynamicArray<int> TJHCMPLongintArray;
-typedef DynamicArray<TJHCMPLongintArray> TJHCMPLongintMatrix;
+typedef D2CArray<int> TJHCMPLongintArray;
+typedef D2CArray<TJHCMPLongintArray> TJHCMPLongintMatrix;
 
 struct TLanguageRec
 {
@@ -578,11 +578,11 @@ class TSynEditEx : public Synedit::TCustomSynEdit
 public:
 	typedef Synedit::TCustomSynEdit inherited;
 	#include "SynSpellCheck_friends.inc"
-	String __fastcall GetWordAtRowColEx(const TBufferCoord& XY, Synedittypes::TCategoryMethod SpellIsIdentChar, bool OverrideHighlighterChars);
-	TBufferCoord __fastcall SCNextWordPosEx(Synedittypes::TCategoryMethod SpellIsIdentChar, Synedittypes::TCategoryMethod SpellIsWhiteChar);
-	TBufferCoord __fastcall SCPrevWordPosEx(Synedittypes::TCategoryMethod SpellIsIdentChar, Synedittypes::TCategoryMethod SpellIsWhiteChar);
-	TBufferCoord __fastcall SCWordEndEx(Synedittypes::TCategoryMethod SpellIsWhiteChar);
-	TBufferCoord __fastcall SCWordStartEx(Synedittypes::TCategoryMethod SpellIsWhiteChar);
+	String __fastcall GetWordAtRowColEx(const TBufferCoord& XY, const Synedittypes::TCategoryMethod& SpellIsIdentChar, bool OverrideHighlighterChars);
+	TBufferCoord __fastcall SCNextWordPosEx(const Synedittypes::TCategoryMethod& SpellIsIdentChar, const Synedittypes::TCategoryMethod& SpellIsWhiteChar);
+	TBufferCoord __fastcall SCPrevWordPosEx(const Synedittypes::TCategoryMethod& SpellIsIdentChar, const Synedittypes::TCategoryMethod& SpellIsWhiteChar);
+	TBufferCoord __fastcall SCWordEndEx(const Synedittypes::TCategoryMethod& SpellIsWhiteChar);
+	TBufferCoord __fastcall SCWordStartEx(const Synedittypes::TCategoryMethod& SpellIsWhiteChar);
 	__fastcall TSynEditEx(TComponent* AOwner);
 	__fastcall TSynEditEx(HWND ParentWindow);
 };
@@ -806,7 +806,7 @@ const int ACTION_UNDO = -2;
 void __fastcall Register();
 
 
-}  // namespace SynSpellCheck
+}  // namespace Synspellcheck
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synspellcheck;

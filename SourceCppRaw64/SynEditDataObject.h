@@ -43,31 +43,31 @@ namespace Syneditdataobject
   published in UNDO (www.undo.com)
 */
 
-class TSynEnumFormatEtc : public System::TCppInterfacedObject<Winapi::Activex::IEnumFORMATETC>
+class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef System::TCppInterfacedObject<Winapi::Activex::IEnumFORMATETC> inherited;
+	typedef System::TCppInterfacedObject<IEnumFORMATETC> inherited;
 private:
-	System::TArray<TClipFormat> FList;
+	System::D2CArray<TClipFormat> FList;
 	int FIndex;
 protected:
-	Winapi::Activex::TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
+	TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);
     /*IEnumFORMATETC*/
-	HRESULT __stdcall Next(int celt, void** elt, PLongInt pceltFetched);
-	HRESULT __stdcall Skip(int celt);
-	HRESULT __stdcall Reset();
-	HRESULT __stdcall Clone(IEnumFORMATETC*& Enum);
+	HRESULT STDMETHODCALLTYPE Next(LONG celt, LPVOID* elt, LONG pceltFetched);
+	HRESULT STDMETHODCALLTYPE Skip(LONG celt);
+	HRESULT STDMETHODCALLTYPE Reset();
+	HRESULT STDMETHODCALLTYPE Clone(IEnumFORMATETC** Enum);
 public:
-	__fastcall TSynEnumFormatEtc(System::TArray<TClipFormat>& FormatList, int Index = 0);
+	__fastcall TSynEnumFormatEtc(const System::D2CArray<TClipFormat>& FormatList, int Index = 0);
 	__fastcall TSynEnumFormatEtc();
 };
 
-class TSynEditDataObject : public System::TCppInterfacedObject<Winapi::Activex::IDataObject>
+class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
 {
 	#include "SynEditDataObject_friends.inc"
 public:
-	typedef System::TCppInterfacedObject<Winapi::Activex::IDataObject> inherited;
+	typedef System::TCppInterfacedObject<IDataObject> inherited;
 private:
 	String fText;
 	TList__1<TClipFormat>* FFormatEtc;
@@ -75,15 +75,15 @@ private:
 	TMemoryStream* HtmlStream;
 	void __fastcall StreamHTML(TObject* Editor, TStream* Stream);
 protected:
-	HRESULT __stdcall GetData(const Winapi::Activex::TFormatEtc& formatetcIn, Winapi::Activex::TStgMedium& medium);
-	HRESULT __stdcall GetDataHere(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TStgMedium& medium);
-	HRESULT __stdcall QueryGetData(const Winapi::Activex::TFormatEtc& formatetc);
-	HRESULT __stdcall GetCanonicalFormatEtc(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TFormatEtc& formatetcOut);
-	HRESULT __stdcall SetData(const Winapi::Activex::TFormatEtc& formatetc, Winapi::Activex::TStgMedium& medium, BOOL fRelease);
-	HRESULT __stdcall EnumFormatEtc(int dwDirection, IEnumFORMATETC*& enumFormatEtc);
-	HRESULT __stdcall DAdvise(const Winapi::Activex::TFormatEtc& formatetc, int advf, IAdviseSink* const advSink, int& dwConnection);
-	HRESULT __stdcall DUnadvise(int dwConnection);
-	HRESULT __stdcall EnumDAdvise(IEnumSTATDATA*& enumAdvise);
+	HRESULT STDMETHODCALLTYPE GetData(TFormatEtc* formatetcIn, TStgMedium* medium);
+	HRESULT STDMETHODCALLTYPE GetDataHere(TFormatEtc* formatetc, TStgMedium* medium);
+	HRESULT STDMETHODCALLTYPE QueryGetData(TFormatEtc* formatetc);
+	HRESULT STDMETHODCALLTYPE GetCanonicalFormatEtc(TFormatEtc* formatetc, TFormatEtc* formatetcOut);
+	HRESULT STDMETHODCALLTYPE SetData(TFormatEtc* formatetc, TStgMedium* medium, BOOL fRelease);
+	HRESULT STDMETHODCALLTYPE EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** enumFormatEtc);
+	HRESULT STDMETHODCALLTYPE DAdvise(TFormatEtc* formatetc, LONG advf, IAdviseSink* advSink, DWORD* dwConnection);
+	HRESULT STDMETHODCALLTYPE DUnadvise(DWORD dwConnection);
+	HRESULT STDMETHODCALLTYPE EnumDAdvise(IEnumSTATDATA** enumAdvise);
 public:
 	__fastcall TSynEditDataObject(TObject* ASynEdit);
 	virtual __fastcall ~TSynEditDataObject();
@@ -91,8 +91,8 @@ public:
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
 HGLOBAL __fastcall MakeGlobal(const String S);
-HGLOBAL __fastcall MakeGlobal(void** P, int Size);
-bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format);
+HGLOBAL __fastcall MakeGlobal(void* P, int Size);
+bool __fastcall HasFormat(const _di_IDataObject& DataObject, TClipFormat Format);
 extern UINT SynEditClipboardFormat;
 extern UINT HTMLClipboardFormat;
 
@@ -100,7 +100,7 @@ void SynEditDataObject_initialization();
 void SynEditDataObject_finalization();
 
 
-}  // namespace SynEditDataObject
+}  // namespace Syneditdataobject
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditdataobject;

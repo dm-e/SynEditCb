@@ -1,3 +1,53 @@
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynGenUnit.pas, released 2000-04-19.
+Description: Generator for skeletons of HighLighters to use in SynEdit,
+drived by a simple grammar.
+
+The Original Code is based on SynGenU.pas by Martin Waldenburg, part of
+the mwEdit component suite.
+Portions created by Martin Waldenburg are Copyright (C) 1998 Martin Waldenburg.
+Portions created by Pieter Polak are Copyright (C) 2001 Pieter Polak.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynGenUnit.pas,v 1.18.2.11 2008/10/25 23:30:31 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Todo:
+  - Remember the last opened MSG file
+  - Double-click a MSG file opens SynGen
+  - Add user-defined default attributes to TSynXXXSyn.Create
+  - SynEdit to edit the MSG file (using the highlighter for MSG files)
+  - Store language names list and attribute names list in INI file
+  - SynEdit with Pascal highlighter to preview the created highlighter source
+  - Allow to define different type of keywords in MSG file
+
+Known Issues:
+-------------------------------------------------------------------------------*/
 #ifndef SynGenUnitH
 #define SynGenUnitH
 
@@ -16,7 +66,7 @@
 #include "GenLex.h"
 #include <Vcl.ComCtrls.hpp>
 #include <Vcl.Menus.hpp>
-//#include "SynUnicode.h"
+#include "SynUnicode.h"
 #include "d2c_sysfile.h"
 
 
@@ -70,6 +120,41 @@ Todo:
 
 Known Issues:
 -------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------*/
+/* Common compiler defines                                                      */
+/* (remove the dot in front of a define to enable it)                           */
+/*------------------------------------------------------------------------------*/
+
+/*$B-,H+*/ // defaults are short evaluation of boolean values and long strings
+
+/*.$DEFINE SYN_DEVELOPMENT_CHECKS*/ // additional tests for debugging
+  
+
+/*------------------------------------------------------------------------------*/
+/* Pull in all defines from SynEditJedi.inc (must be done after the common      */
+/* compiler defines to  work correctly). Use SynEdit-prefix to avoid problems   */
+/* with other versions of jedi.inc in the search-path.                          */
+/*------------------------------------------------------------------------------*/
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+/*------------------------------------------------------------------------------*/
+/*  Please change this to suit your needs (to activate an option remove the dot */
+/*  in front of a DEFINE)                                                       */
+/*------------------------------------------------------------------------------*/
+
+// "Heredoc" syntax highlighting
+// If you enable the following statement and use highlighter(s) that have
+// support for "Heredoc" strings as scheme(s) in SynMultiSyn, you must
+// implement your own SynMultiSyn OnCustomRange event handler in order to
+// properly store Range State information
+/*.$DEFINE SYN_HEREDOC*/
+
+// Turn this off if you don't need complex script support, since it is slower
+/*.$DEFINE SYN_UNISCRIBE*/
+
+// $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 extern int mKeyHashTable[256/*# range #0..#255*/];
 extern int mSKeyHashTable[256/*# range #0..#255*/];
 
@@ -77,9 +162,9 @@ class TLexKeys : public System::TObject
 {
 	#include "SynGenUnit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 	String KeyName;
-	unsigned int key;
+	unsigned int Key;
 	String TokenType;
 	__fastcall TLexKeys();
 };
@@ -88,7 +173,7 @@ class TLexCharsets : public System::TObject
 {
 	#include "SynGenUnit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 	String SetName;
 	String Charset;
 	String ProcData;
@@ -100,7 +185,7 @@ class TLexEnclosedBy : public System::TObject
 {
 	#include "SynGenUnit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 	String TokenName;
 	String ProcName;
 	String StartsWith;
@@ -113,7 +198,7 @@ class TLexDefaultAttri : public System::TObject
 {
 	#include "SynGenUnit_friends.inc"
 public:
-	typedef TObject inherited;	
+	typedef System::TObject inherited;
 	String Style;
 	String Foreground;
 	String Background;
@@ -123,6 +208,7 @@ public:
 class TFrmMain : public TForm
 {
 __published:
+public:
 	TButton* BtnStart;
 	TOpenDialog* OpenDialog;
 	TPageControl* PageControl;
@@ -140,8 +226,8 @@ __published:
 	TLabel* LblUnknownTokenAttr;
 	TComboBox* CboUnknownTokenAttr;
 	TTabSheet* TabFields;
-	TButton* btnAdd;
-	TButton* btnDelete;
+	TButton* BtnAdd;
+	TButton* BtnDelete;
 	TEdit* EditAddField;
 	TListBox* ListBoxFields;
 	TMainMenu* MainMenu;
@@ -163,10 +249,10 @@ __published:
 	void __fastcall FormDestroy(TObject* Sender);
 	void __fastcall CboLangNameChange(TObject* Sender);
 	void __fastcall ListBoxFieldsClick(TObject* Sender);
-	void __fastcall btnAddClick(TObject* Sender);
-	void __fastcall btnDeleteClick(TObject* Sender);
+	void __fastcall BtnAddClick(TObject* Sender);
+	void __fastcall BtnDeleteClick(TObject* Sender);
 	void __fastcall EditAddFieldChange(TObject* Sender);
-	void __fastcall EditAddFieldKeyPress(TObject* Sender, Char& key);
+	void __fastcall EditAddFieldKeyPress(TObject* Sender, Char& Key);
 	void __fastcall MnuExitClick(TObject* Sender);
 	void __fastcall MnuOpenClick(TObject* Sender);
 	void __fastcall FormClose(TObject* Sender, TCloseAction& Action);
@@ -180,7 +266,7 @@ private:
 	d2c_system::TTextRec OutFile;
 	bool Sensitivity;
 	String LexFileContents;
-	TGenLex* Lex;
+	Genlex::TGenLex* Lex;
 	TList* KeyList;
 	TList* SetList;
 	TList* EnclosedList;
@@ -207,9 +293,13 @@ private:
 	bool __fastcall KeywordsAreAllAlphaNumAndDifferent();
 	String __fastcall GetFriendlyLangName();
 public:
-	typedef Vcl::Forms::TForm inherited;	
+	typedef TForm inherited;
 	#include "SynGenUnit_friends.inc"
-	__fastcall TFrmMain(System::Classes::TComponent* AOwner);
+	__fastcall TFrmMain(TComponent* AOwner, int Dummy);
+protected:
+	//# please uncomment for main forms
+	//# void __fastcall CreateParams(Vcl::Controls::TCreateParams &Params)
+		//# {inherited::CreateParams(Params); Params.ExStyle = Params.ExStyle | WS_EX_APPWINDOW;}
 };
 extern PACKAGE TFrmMain* FrmMain;
 #endif // SynGenUnitH

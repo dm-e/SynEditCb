@@ -11,6 +11,7 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace Synhighlighterhashentries;
+using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterprogress
@@ -657,18 +658,18 @@ void* __fastcall TSynProgressSyn::GetRange()
 {
 	void* result = nullptr;
 	TRangeInfo rng = {};
-	rng.Range = (WORD) int(fRange);
+	rng.Range = static_cast<WORD>(int(fRange));
 	rng.Level = 0;
 	switch(fRange)
 	{
 		case rsComment:
-		rng.Level = (WORD) fCommentLevel;
+		rng.Level = static_cast<WORD>(fCommentLevel);
 		break;
 		case rsInclude:
-		rng.Level = (WORD) fIncludeLevel;
+		rng.Level = static_cast<WORD>(fIncludeLevel);
 		break;
 		case rsPreprocessor:
-		rng.Level = (WORD) fPreProcessorLevel;
+		rng.Level = static_cast<WORD>(fPreProcessorLevel);
 		break;
 		default:
 		  ;
@@ -762,13 +763,13 @@ void __fastcall TSynProgressSyn::SetRange(void* Value)
 	switch(fRange)
 	{
 		case rsComment:
-		fCommentLevel = (int) rng.Level;
+		fCommentLevel = static_cast<int>(rng.Level);
 		break;
 		case rsInclude:
-		fIncludeLevel = (int) rng.Level;
+		fIncludeLevel = static_cast<int>(rng.Level);
 		break;
 		case rsPreprocessor:
-		fPreProcessorLevel = (int) rng.Level;
+		fPreProcessorLevel = static_cast<int>(rng.Level);
 		break;
 		default:
 		  ;
@@ -862,5 +863,5 @@ String __fastcall TSynProgressSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterProgress
+}  // namespace Synhighlighterprogress
 

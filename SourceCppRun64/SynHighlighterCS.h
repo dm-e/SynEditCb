@@ -62,6 +62,7 @@ Based on SynHighlighterCpp.pas
 #include <System.SysUtils.hpp>
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlightercs
 {
@@ -317,8 +318,8 @@ private:
 	TtkTokenKind __fastcall FuncVoid(int Index);
 	TtkTokenKind __fastcall FuncVolatile(int Index);
 	TtkTokenKind __fastcall FuncWhile(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AnsiCProc();
 	void __fastcall AndSymbolProc();
@@ -401,7 +402,7 @@ public:
 void SynHighlighterCS_initialization();
 
 
-}  // namespace SynHighlighterCS
+}  // namespace Synhighlightercs
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercs;

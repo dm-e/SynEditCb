@@ -21,7 +21,6 @@ using namespace System::Classes;
 using namespace System::Sysutils;
 using namespace System::Uitypes;
 using namespace Vcl::Forms;
-using namespace Winapi::Shellapi;
 
 namespace Synuriopener
 {
@@ -115,13 +114,13 @@ void __fastcall TSynURIOpener::NewMouseCursor(TObject* Sender, const TBufferCoor
 			auto with0 = FEditor;
 			with0->GetHighlighterAttriAtRowColEx(aLineCharPos, Token, TokenType, Start, Attri);
 			if(ASSIGNED(URIHighlighter) && ((Attri == URIHighlighter->URIAttri) || (Attri == URIHighlighter->VisitedURIAttri)) && !((with0->Options.Contains(eoDragDropEditing)) && with0->IsPointInSelection(aLineCharPos)))
-				aCursor = System::Uitypes::crHandPoint;
+				aCursor = crHandPoint;
 		}
 }
 
 void __fastcall TSynURIOpener::NewMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y)
 {
-	if((Button == System::Uitypes::TMouseButton::mbLeft) && !(FCtrlActivatesLinks) || FControlDown)
+	if((Button == TMouseButton::mbLeft) && !(FCtrlActivatesLinks) || FControlDown)
 	{
 		FMouseDownX = X;
 		FMouseDownY = Y;
@@ -135,7 +134,7 @@ void __fastcall TSynURIOpener::NewMouseUp(TObject* Sender, TMouseButton Button, 
 	int Start = 0;
 	String Token;
 	TSynHighlighterAttributes* Attri = nullptr;
-	if((Button != System::Uitypes::TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(FMouseDownX - X) > 4) || (Abs(FMouseDownY - Y) > 4))
+	if((Button != TMouseButton::mbLeft) || (FCtrlActivatesLinks && !FControlDown) || (Abs(FMouseDownX - X) > 4) || (Abs(FMouseDownY - Y) > 4))
 		return;
 	/*# with TAccessCustomSynEdit(FEditor) do */
 	{
@@ -231,7 +230,7 @@ bool __fastcall TSynURIOpener::VisitedURI(String URI)
 	result = FVisitedURIs->Find(URI, Dummy);
 	return result;
 }
-const Char* const IDC_LINK = (MakeIntResource) 32649;
+const Char* const IDC_LINK = (Winapi::Windows::MakeIntResource) 32649;
 THandle CursorHandle = 0;
 
 	static bool SynURIOpener_Initialized = false;
@@ -243,12 +242,12 @@ THandle CursorHandle = 0;
 		
 		SynURIOpener_Initialized = true;
 		
-		CursorHandle = (THandle) LoadCursor(0, const_cast<LPCWSTR>(IDC_LINK));
+		CursorHandle = reinterpret_cast<::THandle>(LoadCursor(0, const_cast<LPCWSTR>(IDC_LINK)));
 		if(CursorHandle != 0)
-			Screen->Cursors[System::Uitypes::crHandPoint] = (HCURSOR) CursorHandle;
+			Screen->Cursors[crHandPoint] = reinterpret_cast<::HCURSOR>(CursorHandle);
 	}
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynURIOpener
+}  // namespace Synuriopener
 

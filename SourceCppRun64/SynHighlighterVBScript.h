@@ -59,6 +59,7 @@ Thanks to Primoz Gabrijelcic and Martin Waldenburg.
 #include <System.Classes.hpp>
 #include <System.RegularExpressions.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlightervbscript
 {
@@ -185,8 +186,8 @@ private:
 	TRegEx RE_BlockEnd;
 //-- CodeFolding
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall ApostropheProc();
 	void __fastcall CRProc();
 	void __fastcall DateProc();
@@ -236,7 +237,7 @@ public:
 void SynHighlighterVBScript_initialization();
 
 
-}  // namespace SynHighlighterVBScript
+}  // namespace Synhighlightervbscript
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightervbscript;

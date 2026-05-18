@@ -141,10 +141,10 @@ unsigned int __fastcall TSynPerlSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 714 + int((*Str)) * 970);
+		result = static_cast<unsigned int>(result * 714 + int((*Str)) * 970);
 		++Str;
 	}
-	result = (unsigned int) (result % 2729);
+	result = static_cast<unsigned int>(result % 2729);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1545,17 +1545,17 @@ void __fastcall TSynPerlSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find an braces on this line  (Fold Type 1)
-		if(!FindBraces((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!FindBraces(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} // while Line
 }
 //-- CodeFolding
@@ -1623,5 +1623,5 @@ void __fastcall TSynPerlSyn::StringEndProc()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterPerl
+}  // namespace Synhighlighterperl
 

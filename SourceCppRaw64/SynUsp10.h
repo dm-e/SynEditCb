@@ -58,7 +58,7 @@ namespace Synusp10
 
 
 
-}  // namespace SynUsp10
+}  // namespace Synusp10
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synusp10;

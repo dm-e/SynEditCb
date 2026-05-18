@@ -83,8 +83,8 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 {
 	TRect Rect = cRect;
 	bool result = false;
-	DynamicArray<WideChar> Glyphs;
-	TGCPResults CharPlaceInfo = {};
+	D2CArray<WideChar> Glyphs;
+	Winapi::Windows::TGCPResults CharPlaceInfo = {};
 	DWORD TextOutFlags = 0;
 	TextOutFlags = 0;
 	if(Options.Contains(tooOpaque))
@@ -96,11 +96,11 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 		{
 			TextOutFlags = TextOutFlags | ETO_GLYPH_INDEX;
 			ZeroMemory(&CharPlaceInfo, sizeof(CharPlaceInfo));
-			CharPlaceInfo.lStructSize = (DWORD) sizeof(CharPlaceInfo);
+			CharPlaceInfo.lStructSize = static_cast<DWORD>(sizeof(CharPlaceInfo));
 			Glyphs.Length = wcslen(Str);
 			CharPlaceInfo.lpGlyphs = &Glyphs[0];
-			CharPlaceInfo.nGlyphs = (UINT) Glyphs.Length;
-			if(GetCharacterPlacement(DC, Str, wcslen(Str), 0, &CharPlaceInfo, (DWORD) GCP_LIGATE) != 0)
+			CharPlaceInfo.nGlyphs = static_cast<UINT>(Glyphs.Length);
+			if(GetCharacterPlacement(DC, Str, wcslen(Str), 0, &CharPlaceInfo, static_cast<DWORD>(GCP_LIGATE)) != 0)
 				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, array2ptr(Glyphs), Glyphs.Length, ((int*) ((void*) ETODist)));
 			else
 				result = ExtTextOutW(DC, X, Y, TextOutFlags, &Rect, Str, Count, ((int*) ((void*) ETODist)));
@@ -124,11 +124,11 @@ __fastcall TheFontsInfoManager::TheFontsInfoManager()
 	// inherited;
 }
 
-PheSharedFontsInfo __fastcall TheFontsInfoManager::CreateFontsInfo(TFont* ABaseFont, const TLogFont& LF)
+PheSharedFontsInfo __fastcall TheFontsInfoManager::CreateFontsInfo(TFont* ABaseFont, const Winapi::Windows::TLogFont& LF)
 {
 	PheSharedFontsInfo result = nullptr;
 	result = new TheSharedFontsInfo;
-	FillChar((void**)result, (int) sizeof(TheSharedFontsInfo), 0);
+	FillChar(result, static_cast<int>(sizeof(TheSharedFontsInfo)), 0);
 	/*# with result^ do */
 	{
 		auto& with0 = (*result);
@@ -167,17 +167,8 @@ __fastcall TheFontsInfoManager::~TheFontsInfoManager()
 	{
 		while(FFontsInfo->Count > 0)
 		{
-			//Assert(1 == (*((PheSharedFontsInfo) FFontsInfo->Items[FFontsInfo->Count - 1])).RefCount);
-			//ReleaseFontsInfo(((PheSharedFontsInfo) FFontsInfo->Items[FFontsInfo->Count - 1]));
-			void* p = FFontsInfo->Items[FFontsInfo->Count - 1];
-			PheSharedFontsInfo pInfo = (PheSharedFontsInfo) p;
-			if(pInfo->RefCount == 1)
-			{
-				Assert(1 == pInfo->RefCount);
-				ReleaseFontsInfo(pInfo);
-			}
-			else
-			  break; // todo dme
+			Assert(1 == (*((PheSharedFontsInfo) FFontsInfo->Items[FFontsInfo->Count - 1])).RefCount);
+			ReleaseFontsInfo(((PheSharedFontsInfo) FFontsInfo->Items[FFontsInfo->Count - 1]));
 		}
 		delete FFontsInfo;
 	}
@@ -198,7 +189,7 @@ void __fastcall TheFontsInfoManager::DestroyFontHandles(PheSharedFontsInfo pFont
 				
 				if(with0.FontsData[i].Handle != 0)
 				{
-					DeleteObject(with0.FontsData[i].Handle);
+					DeleteObject(reinterpret_cast<::HGDIOBJ>(with0.FontsData[i].Handle));
 					with0.FontsData[i].Handle = 0;
 				}
 			}
@@ -206,7 +197,7 @@ void __fastcall TheFontsInfoManager::DestroyFontHandles(PheSharedFontsInfo pFont
 	}
 }
 
-PheSharedFontsInfo __fastcall TheFontsInfoManager::FindFontsInfo(const TLogFont& LF)
+PheSharedFontsInfo __fastcall TheFontsInfoManager::FindFontsInfo(const Winapi::Windows::TLogFont& LF)
 {
 	PheSharedFontsInfo result = nullptr;
 	int i = 0;
@@ -214,7 +205,7 @@ PheSharedFontsInfo __fastcall TheFontsInfoManager::FindFontsInfo(const TLogFont&
 	for(stop = FFontsInfo->Count - 1, i = 0; i <= stop; i++)
 	{
 		result = ((PheSharedFontsInfo) FFontsInfo->Items[i]);
-		if(CompareMem(&((*result).BaseLF), (void*) &LF, (NativeInt) sizeof(TLogFont)))
+		if(CompareMem(&((*result).BaseLF), (void*) &LF, static_cast<NativeInt>(sizeof(Winapi::Windows::TLogFont))))
 			return result;
 	}
 	result = nullptr;
@@ -224,7 +215,7 @@ PheSharedFontsInfo __fastcall TheFontsInfoManager::FindFontsInfo(const TLogFont&
 PheSharedFontsInfo __fastcall TheFontsInfoManager::GetFontsInfo(TFont* ABaseFont)
 {
 	PheSharedFontsInfo result = nullptr;
-	TLogFont LF = {};
+	Winapi::Windows::TLogFont LF = {};
 	Assert(ASSIGNED(ABaseFont));
 	RetrieveLogFontForComparison(ABaseFont, LF);
 	result = FindFontsInfo(LF);
@@ -257,10 +248,10 @@ void __fastcall TheFontsInfoManager::ReleaseFontsInfo(PheSharedFontsInfo pFontsI
 	}
 }
 
-void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFont, TLogFont& LF)
+void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFont, Winapi::Windows::TLogFont& LF)
 {
 	PChar pEnd = nullptr;
-	GetObject(ABaseFont->Handle, (int) sizeof(TLogFont), &LF);
+	GetObject(reinterpret_cast<::HGDIOBJ>(ABaseFont->Handle), static_cast<int>(sizeof(Winapi::Windows::TLogFont)), &LF);
 	/*# with LF do */
 	{
 		auto& with0 = LF;
@@ -268,7 +259,7 @@ void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFo
 		with0.lfUnderline = 0;
 		with0.lfStrikeOut = 0;
 		pEnd = StrEnd(with0.lfFaceName);
-		FillChar((void**)&pEnd[1], &with0.lfFaceName[31 /*# High(lfFaceName) */] - pEnd, 0);
+		FillChar(&pEnd[1], &with0.lfFaceName[31 /*# High(lfFaceName) */] - pEnd, 0);
 	}
 }
 
@@ -281,8 +272,8 @@ void __fastcall TheFontsInfoManager::RetrieveLogFontForComparison(TFont* ABaseFo
 int __fastcall TheFontStock::CalcFontAdvance(HDC DC, PInteger pCharHeight)
 {
 	int result = 0;
-	TTextMetric TM = {};
-	TABC ABC = {};
+	Winapi::Windows::TTextMetric TM = {};
+	Winapi::Windows::TABC ABC = {};
 	bool HasABC = false;
   // Calculate advance of a character.
   // The following code uses ABC widths instead TextMetric.tmAveCharWidth
@@ -290,7 +281,7 @@ int __fastcall TheFontStock::CalcFontAdvance(HDC DC, PInteger pCharHeight)
   // A true-type font will have ABC widths but others like raster type will not
   // so if the function fails then use TextMetric.tmAveCharWidth.
 	GetTextMetrics(DC, &TM);
-	HasABC = GetCharABCWidths(DC, (UINT) int(L'M'), (UINT) int(L'M'), &ABC);
+	HasABC = GetCharABCWidths(DC, static_cast<UINT>(int(L'M')), static_cast<UINT>(int(L'M')), &ABC);
 	if(!HasABC)
 	{
 		/*# with ABC do */
@@ -372,14 +363,14 @@ bool __fastcall TheFontStock::GetIsTrueType()
 HFONT __fastcall TheFontStock::InternalCreateFont(TFontStyles Style)
 {
 	HFONT result = 0;
-	const int Bolds[2/*# boolean*/] = {400, 700};
+	const LONG Bolds[2/*# boolean*/] = {400, 700};
 	/*# with FBaseLF do */
 	{
 		auto& with0 = FBaseLF;
 		with0.lfWeight = Bolds[Style.Contains(TFontStyle::fsBold)];
-		with0.lfItalic = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsItalic)));
-		with0.lfUnderline = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsUnderline)));
-		with0.lfStrikeOut = (Byte) int(((BOOL) Style.Contains(TFontStyle::fsStrikeOut)));
+		with0.lfItalic = static_cast<BYTE>(int(((BOOL) Style.Contains(TFontStyle::fsItalic))));
+		with0.lfUnderline = static_cast<BYTE>(int(((BOOL) Style.Contains(TFontStyle::fsUnderline))));
+		with0.lfStrikeOut = static_cast<BYTE>(int(((BOOL) Style.Contains(TFontStyle::fsStrikeOut))));
 	}
 	result = CreateFontIndirect(&FBaseLF);
 	return result;
@@ -454,7 +445,7 @@ void __fastcall TheFontStock::SetBaseFont(TFont* Value)
 		}
 	}
 	else
-	throw new EheFontStockException(L"SetBaseFont: 'Value' must be specified.");
+	throw EheFontStockException(L"SetBaseFont: 'Value' must be specified.");
 }
 
 void __fastcall TheFontStock::SetStyle(TFontStyles Value)
@@ -464,7 +455,7 @@ void __fastcall TheFontStock::SetStyle(TFontStyles Value)
 	HFONT hOldFont = 0;
 	PheFontData p = nullptr;
 	Assert(sizeof(TFontStyles) == 1L);
-	idx = (int) ToByte(Value);
+	idx = static_cast<int>(ToByte(Value));
 	Assert(idx <= FontStyleCombineCount - 1 /*# High(TheStockFontPatterns) */);
 	UseFontHandles();
 	p = FontData[idx];
@@ -485,7 +476,7 @@ void __fastcall TheFontStock::SetStyle(TFontStyles Value)
   // create font
 	FCrntFont = InternalCreateFont(Value);
 	DC = InternalGetDC();
-	hOldFont = (HFONT) SelectObject(DC, FCrntFont);
+	hOldFont = reinterpret_cast<::HFONT>(SelectObject(DC, reinterpret_cast<::HGDIOBJ>(FCrntFont)));
 
   // retrieve height and advances of new font
 	/*# with FpCrntFontData^ do */
@@ -494,7 +485,7 @@ void __fastcall TheFontStock::SetStyle(TFontStyles Value)
 		with1.Handle = FCrntFont;
 		with1.CharAdv = CalcFontAdvance(DC, &with1.CharHeight);
 	}
-	SelectObject(DC, hOldFont);
+	SelectObject(DC, reinterpret_cast<::HGDIOBJ>(hOldFont));
 	InternalReleaseDC(DC);
 }
 
@@ -560,7 +551,7 @@ void __fastcall TheTextDrawer::BeginDrawing(HDC DC)
 		Assert((FDC == 0) && (DC != 0) && (FDrawingCount == 0));
 		FDC = DC;
 		FSaveDC = SaveDC(DC);
-		SelectObject(DC, FCrntFont);
+		SelectObject(DC, reinterpret_cast<::HGDIOBJ>(FCrntFont));
 		::SetTextColor(DC, ColorToRGB(FColor));
 		::SetBkColor(DC, ColorToRGB(FBkColor));
 		DoSetCharExtra(FCharExtra);
@@ -615,7 +606,7 @@ void __fastcall TheTextDrawer::SetBaseFont(TFont* Value)
 		SetStyle(Value->Style);
 	}
 	else
-	throw new EheTextDrawerException(L"SetBaseFont: 'Value' must be specified.");
+	throw EheTextDrawerException(L"SetBaseFont: 'Value' must be specified.");
 }
 
 void __fastcall TheTextDrawer::SetBaseStyle(const TFontStyles Value)
@@ -649,7 +640,7 @@ void __fastcall TheTextDrawer::SetStyle(TFontStyles Value)
 void __fastcall TheTextDrawer::AfterStyleSet()
 {
 	if(FDC != 0)
-		SelectObject(FDC, FCrntFont);
+		SelectObject(FDC, reinterpret_cast<::HGDIOBJ>(FCrntFont));
 }
 
 void __fastcall TheTextDrawer::SetForeColor(TColor Value)
@@ -689,11 +680,11 @@ void __fastcall TheTextDrawer::DoSetCharExtra(int Value)
 
 void __fastcall TheTextDrawer::FlushCharABCWidthCache()
 {
-	FillChar((void**)&FCharABCWidthCache, (int) (sizeof(TABC) * (MAXIDX(FCharABCWidthCache) + 1)), 0);
-	FillChar((void**)&FCharWidthCache, (int) (sizeof(int) * (MAXIDX(FCharWidthCache) + 1)), 0);
+	FillChar(&FCharABCWidthCache, static_cast<int>(sizeof(Winapi::Windows::TABC) * (MAXIDX(FCharABCWidthCache) + 1)), 0);
+	FillChar(&FCharWidthCache, static_cast<int>(sizeof(int) * (MAXIDX(FCharWidthCache) + 1)), 0);
 }
 
-bool __fastcall TheTextDrawer::GetCachedABCWidth(unsigned int c, TABC& abc)
+bool __fastcall TheTextDrawer::GetCachedABCWidth(unsigned int c, Winapi::Windows::TABC& abc)
 {
 	bool result = false;
 	if(c > 127 /*# High(FCharABCWidthCache) */)
@@ -745,11 +736,11 @@ void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options,
 		unsigned int LastChar = 0;
 		int RealCharWidth = 0;
 		int CharWidth = 0;
-		TABC CharInfo = {};
-		TTextMetricA tm = {};
+		Winapi::Windows::TABC CharInfo = {};
+		Winapi::Windows::TTextMetricA tm = {};
 		if(Length <= 0)
 			return;
-		LastChar = (unsigned int) int(Text[Length - 1]);
+		LastChar = static_cast<unsigned int>(int(Text[Length - 1]));
 		CharWidth = (*FETODist)[Length - 1];
 		RealCharWidth = CharWidth;
 		if(GetCachedABCWidth(LastChar, CharInfo))
@@ -800,7 +791,7 @@ int __fastcall TheTextDrawer::TextWidth(const String Text)
 	unsigned int c = 0;
 	if(Text.Length() == 1)
 	{
-		c = (unsigned int) int(Text[1]);
+		c = static_cast<unsigned int>(int(Text[1]));
 		if(c <= 127 /*# High(FCharWidthCache) */)
 		{
 			result = FCharWidthCache[c];
@@ -822,19 +813,19 @@ int __fastcall TheTextDrawer::TextWidth(PWideChar Text, int Count)
 	result = Synunicode::GetTextSize(FStockBitmap->Canvas->Handle, Text, Count).cx;
 	return result;
 }
-static bool SynTextDrawer_Finalized = false;
-
-void SynTextDrawer_finalization()
-{
-	if(SynTextDrawer_Finalized)
-		return;
+	static bool SynTextDrawer_Finalized = false;
 	
-	SynTextDrawer_Finalized = true;
-	
-	delete gFontsInfoManager;
-}
+	void SynTextDrawer_finalization()
+	{
+		if(SynTextDrawer_Finalized)
+			return;
+		
+		SynTextDrawer_Finalized = true;
+		
+		delete gFontsInfoManager;
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynTextDrawer
+}  // namespace Syntextdrawer
 

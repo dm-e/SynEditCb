@@ -185,8 +185,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSyntaxErrorAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall SymAsciiCharProc();
 	void __fastcall SymCommentHelpProc();
 	void __fastcall SymCRProc();
@@ -237,7 +237,7 @@ public:
 void SynHighlighterM3_initialization();
 
 
-}  // namespace SynHighlighterM3
+}  // namespace Synhighlighterm3
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterm3;

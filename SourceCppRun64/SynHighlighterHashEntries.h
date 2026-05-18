@@ -207,10 +207,10 @@ public:
   keyword is considered any number of successive chars that are contained in
   Identifiers, with chars not contained in Identifiers before and after them. */
 typedef void __fastcall (__closure *TEnumerateKeywordEvent) (String, int);
-void __fastcall EnumerateKeywords(int AKind, String KeywordList, Synedittypes::TCategoryMethod IsIdentChar, TEnumerateKeywordEvent AKeywordProc);
+void __fastcall EnumerateKeywords(int AKind, String KeywordList, const Synedittypes::TCategoryMethod& IsIdentChar, const TEnumerateKeywordEvent& AKeywordProc);
 
 
-}  // namespace SynHighlighterHashEntries
+}  // namespace Synhighlighterhashentries
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterhashentries;

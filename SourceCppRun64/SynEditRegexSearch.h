@@ -145,7 +145,7 @@ public:
 typedef ERegularExpressionError ESynRegEx;
 
 
-}  // namespace SynEditRegexSearch
+}  // namespace Syneditregexsearch
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditregexsearch;

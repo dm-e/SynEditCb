@@ -176,7 +176,7 @@ namespace Syntextdrawer
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int FontStyleCount = int((TFontStyle) 3 /*# High(TFontStyle) */) + 1;
 const int FontStyleCombineCount = (1 << FontStyleCount);
-typedef int TIntegerArray[536870911/*# range 0..MaxInt div SizeOf(Integer)-1*/];
+typedef int TIntegerArray[(MaxInt / sizeof(int) - 1) + 1/*# range 0..MaxInt div SizeOf(Integer)-1*/];
 typedef TIntegerArray* PIntegerArray;
 typedef int /*0..FontStyleCombineCount-1*/ TheStockFontPatterns;
 struct TheFontData;
@@ -201,7 +201,7 @@ struct TheSharedFontsInfo
 	int LockCount;
     // font information
 	TFont* BaseFont;
-	TLogFont BaseLF;
+	Winapi::Windows::TLogFont BaseLF;
 	bool IsTrueType;
 	TheFontsData FontsData;
 };
@@ -215,10 +215,10 @@ public:
 	typedef System::TObject inherited;
 private:
 	TList* FFontsInfo;
-	PheSharedFontsInfo __fastcall FindFontsInfo(const TLogFont& LF);
-	PheSharedFontsInfo __fastcall CreateFontsInfo(TFont* ABaseFont, const TLogFont& LF);
+	PheSharedFontsInfo __fastcall FindFontsInfo(const Winapi::Windows::TLogFont& LF);
+	PheSharedFontsInfo __fastcall CreateFontsInfo(TFont* ABaseFont, const Winapi::Windows::TLogFont& LF);
 	void __fastcall DestroyFontHandles(PheSharedFontsInfo pFontsInfo);
-	void __fastcall RetrieveLogFontForComparison(TFont* ABaseFont, TLogFont& LF);
+	void __fastcall RetrieveLogFontForComparison(TFont* ABaseFont, Winapi::Windows::TLogFont& LF);
 public:
 	__fastcall TheFontsInfoManager();
 	virtual __fastcall ~TheFontsInfoManager();
@@ -272,7 +272,7 @@ private:
 	TFontStyles FCrntStyle;
 	PheFontData FpCrntFontData;
     // local font info
-	TLogFont FBaseLF;
+	Winapi::Windows::TLogFont FBaseLF;
 	TFont* __fastcall GetBaseFont();
 	bool __fastcall GetIsTrueType();
 protected:
@@ -352,14 +352,14 @@ private:
 	int FDrawingCount;
 
     // GetCharABCWidthsW cache
-	TABC FCharABCWidthCache[128/*# range 0..127*/];
+	Winapi::Windows::TABC FCharABCWidthCache[128/*# range 0..127*/];
 	int FCharWidthCache[128/*# range 0..127*/];
 protected:
 	virtual void __fastcall ReleaseETODist();
 	virtual void __fastcall AfterStyleSet();
 	virtual void __fastcall DoSetCharExtra(int Value);
 	void __fastcall FlushCharABCWidthCache();
-	bool __fastcall GetCachedABCWidth(unsigned int c, TABC& abc);
+	bool __fastcall GetCachedABCWidth(unsigned int c, Winapi::Windows::TABC& abc);
 	__property HDC StockDC = { read = FDC };
 	__property int DrawingCount = { read = FDrawingCount };
 	__property TheFontStock* FontStock = { read = FFontStock };
@@ -372,12 +372,12 @@ public:
 	virtual int __fastcall GetCharHeight();
 	virtual void __fastcall BeginDrawing(HDC DC);
 	virtual void __fastcall EndDrawing();
-	virtual void __fastcall TextOut(int X, int Y, PWideChar Text, int Length);
-	virtual void __fastcall ExtTextOut(int X, int Y, TTextOutOptions Options, const TRect& ARect, PWideChar Text, int Length, bool UseLigatures = false);
+	virtual void __fastcall TextOut(int X, int Y, System::PWideChar Text, int Length);
+	virtual void __fastcall ExtTextOut(int X, int Y, TTextOutOptions Options, const TRect& ARect, System::PWideChar Text, int Length, bool UseLigatures = false);
 	TSize __fastcall TextExtent(const String Text);
-	TSize __fastcall TextExtent(PWideChar Text, int Count);
+	TSize __fastcall TextExtent(System::PWideChar Text, int Count);
 	int __fastcall TextWidth(const String Text);
-	int __fastcall TextWidth(PWideChar Text, int Count);
+	int __fastcall TextWidth(System::PWideChar Text, int Count);
 	virtual void __fastcall SetBaseFont(TFont* Value);
 	virtual void __fastcall SetBaseStyle(const TFontStyles Value);
 	virtual void __fastcall SetStyle(TFontStyles Value);
@@ -396,12 +396,12 @@ public:
 	__fastcall TheTextDrawer();
 };
 TheFontsInfoManager* __fastcall GetFontsInfoManager();
-bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Options, const TRect& Rect, PWideChar Str, int Count, PIntegerArray ETODist, bool UseLigatures = false);
+bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Options, const TRect& Rect, System::PWideChar Str, int Count, PIntegerArray ETODist, bool UseLigatures = false);
 
 void SynTextDrawer_finalization();
 
 
-}  // namespace SynTextDrawer
+}  // namespace Syntextdrawer
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syntextdrawer;

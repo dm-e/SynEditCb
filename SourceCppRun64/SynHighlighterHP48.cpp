@@ -4,6 +4,7 @@
 
 #include "SynHighlighterHP48.h"
 #include "SynEditStrConst.h"
+#include "d2c_sysinterface.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -140,7 +141,7 @@ TSpeedListObject* __fastcall TSpeedStringList::Add(const String Value)
 
 void __fastcall TSpeedStringList::Changed()
 {
-	if(ASSIGNED(FOnChange))
+	if(Assigned(FOnChange))
 		FOnChange(this);
 }
 
@@ -1070,7 +1071,7 @@ String __fastcall TSynHP48Syn::GetToken()
 	Len = (Run - 1) - fTokenPos;
 	result.SetLength(Len);
 	if(Len > 0)
-		StrLCopy(ustr2pwchar(result, 1 - 1), fCasedLine + fTokenPos, (unsigned int) Len);
+		StrLCopy(ustr2pwchar(result, 1 - 1), fCasedLine + fTokenPos, static_cast<unsigned int>(Len));
 	return result;
 }
 
@@ -1103,5 +1104,5 @@ String __fastcall TSynHP48Syn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterHP48
+}  // namespace Synhighlighterhp48
 

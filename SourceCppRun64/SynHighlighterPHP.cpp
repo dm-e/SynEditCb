@@ -58,10 +58,10 @@ unsigned int __fastcall TSynPHPSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 155 + int((*Str)) * 90);
+		result = static_cast<unsigned int>(result * 155 + int((*Str)) * 90);
 		++Str;
 	}
-	result = (unsigned int) (result % 439);
+	result = static_cast<unsigned int>(result % 439);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -528,19 +528,19 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if(Synhighlighterphp__3.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line)))
+		if(Synhighlighterphp__3.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line))))
 		{
-			if(!(Synhighlighterphp__4.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)))))
-				FoldRanges->StartFoldRange((int) (Line + 1), 2);
+			if(!(Synhighlighterphp__4.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1)))))
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), 2);
 			else
-				FoldRanges->NoFoldInfo((int) (Line + 1));
+				FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 		else
 		{
-			if(Synhighlighterphp__5.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1))))
+			if(Synhighlighterphp__5.Contains((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1))))
 			{
-				FoldRanges->StopFoldRange((int) (Line + 1), 2);
+				FoldRanges->StopFoldRange(static_cast<int>(Line + 1), 2);
 				continue;
 			}
 		}
@@ -549,17 +549,17 @@ void __fastcall TSynPHPSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find an braces on this line  (Fold Type 1)
-		if(!FindBraces((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!FindBraces(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} // while Line
 }
 //-- CodeFolding
@@ -1270,5 +1270,5 @@ void __fastcall TSynPHPSyn::String96Proc()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterPHP
+}  // namespace Synhighlighterphp
 

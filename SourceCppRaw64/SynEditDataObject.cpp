@@ -6,13 +6,13 @@
 #include "SynEdit.h"
 #include "SynExportHTML.h"
 #include "d2c_convert.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
 using namespace Synedit;
 using namespace Synexporthtml;
 using namespace System;
-using namespace Winapi::Activex;
 
 namespace Syneditdataobject
 {
@@ -29,8 +29,8 @@ HGLOBAL __fastcall MakeGlobal(const String S)
 	HGLOBAL result = 0;
 	PChar P = nullptr;
 	int Size = 0;
-	Size = (int) (ByteLength(S) + sizeof(Char));
-	result = GlobalAlloc((UINT) GHND, (SIZE_T) Size);
+	Size = static_cast<int>(ByteLength(S) + sizeof(Char));
+	result = GlobalAlloc(static_cast<UINT>(GHND), static_cast<SIZE_T>(Size));
 	if(result == 0)
 		OutOfMemoryError();
 	P = ((WideChar*) GlobalLock(result));
@@ -48,21 +48,21 @@ HGLOBAL __fastcall MakeGlobal(const String S)
 HGLOBAL __fastcall MakeGlobal(int Value)
 {
 	HGLOBAL result = 0;
-	result = MakeGlobal((void**)&Value, (int) sizeof(int));
+	result = MakeGlobal(&Value, static_cast<int>(sizeof(int)));
 	return result;
 }
 
-HGLOBAL __fastcall MakeGlobal(void** P, int Size)
+HGLOBAL __fastcall MakeGlobal(void* P, int Size)
 {
 	HGLOBAL result = 0;
 	void* D = nullptr;
-	result = GlobalAlloc((UINT) GHND, (SIZE_T) Size);
+	result = GlobalAlloc(static_cast<UINT>(GHND), static_cast<SIZE_T>(Size));
 	if(result == 0)
 		OutOfMemoryError();
 	D = GlobalLock(result);
 	try
 	{
-		Move(&(*P), D, Size);
+		Move(P, D, Size);
 	}
 	__finally
 	{
@@ -71,17 +71,17 @@ HGLOBAL __fastcall MakeGlobal(void** P, int Size)
 	return result;
 }
 
-bool __fastcall HasFormat(IDataObject* DataObject, TClipFormat Format)
+bool __fastcall HasFormat(const _di_IDataObject& DataObject, TClipFormat Format)
 {
 	bool result = false;
-	IEnumFORMATETC* FormatEnumerator = nullptr;
+	_di_IEnumFORMATETC FormatEnumerator;
 	TFormatEtc FormatEtc = {};
 	int Returned = 0;
 	result = false;
-	if(DataObject->EnumFormatEtc(DATADIR_GET, FormatEnumerator) == S_OK)
+	if(DataObject->EnumFormatEtc(DATADIR_GET, DiOut<IEnumFORMATETC>(FormatEnumerator)) == S_OK)
 	{
 		FormatEnumerator->Reset();
-		while(FormatEnumerator->Next(1, (void**)&FormatEtc, &Returned) == S_OK)
+		while(FormatEnumerator->Next(1, &FormatEtc, &Returned) == S_OK)
 			if(FormatEtc.cfFormat == Format)
 				return true;
 	}
@@ -98,14 +98,15 @@ __fastcall TSynEditDataObject::TSynEditDataObject(TObject* ASynEdit)
 	MemoryStream = new TMemoryStream();
 	HtmlStream = new TMemoryStream();
 	FFormatEtc = new TList__1<TClipFormat>();
-	FFormatEtc->Add((T) CF_UNICODETEXT);
-	FFormatEtc->Add((T) SynEditClipboardFormat); // InternalFormat
-	MemoryStream->Write(&((TCustomSynEdit*) ASynEdit)->ActiveSelectionMode, (TNativeCount) sizeof(((TCustomSynEdit*) ASynEdit)->ActiveSelectionMode));
+	FFormatEtc->Add(static_cast<WORD>(CF_UNICODETEXT));
+	FFormatEtc->Add(static_cast<WORD>(SynEditClipboardFormat)); // InternalFormat
+	MemoryStream->Write(&((TCustomSynEdit*) ASynEdit)->ActiveSelectionMode, static_cast<TNativeCount>(sizeof(((TCustomSynEdit*) ASynEdit)->ActiveSelectionMode)));
 	if(!(((TCustomSynEdit*) ASynEdit)->Options.Contains(eoCopyPlainText)) && ASSIGNED(((TCustomSynEdit*) ASynEdit)->Highlighter))
 	{
-		FFormatEtc->Add((T) HTMLClipboardFormat); // HTMLFormat
+		FFormatEtc->Add(static_cast<WORD>(HTMLClipboardFormat)); // HTMLFormat
 		StreamHTML(ASynEdit, HtmlStream);
 	}
+	// AddRef(); //# Ensure COM contract: returned interface must have RefCount >= 1
 }
 
 __fastcall TSynEditDataObject::~TSynEditDataObject()
@@ -116,26 +117,28 @@ __fastcall TSynEditDataObject::~TSynEditDataObject()
 	//# inherited::Destroy();
 }
 
-HRESULT __stdcall TSynEditDataObject::GetData(const TFormatEtc& formatetcIn, TStgMedium& medium)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetData(TFormatEtc* formatetcIn, TStgMedium* medium)
 {
-	medium = {}; //# clear out parameter
+	if (formatetcIn == nullptr)
+		return E_POINTER;
+	*medium = {}; //# clear out parameter
 	HRESULT result = 0;
-	ZeroMemory(&medium, sizeof(TStgMedium));
+	ZeroMemory(medium, sizeof(TStgMedium));
 	result = QueryGetData(formatetcIn);
 	if(result == S_OK)
 		try
 		{
-			medium.tymed = TYMED_HGLOBAL;
-			if(formatetcIn.cfFormat == CF_UNICODETEXT)
-				medium.hGlobal = MakeGlobal(fText);
+			medium->tymed = TYMED_HGLOBAL;
+			if(formatetcIn->cfFormat == CF_UNICODETEXT)
+				medium->hGlobal = MakeGlobal(fText);
 			else
 			{
-				if(formatetcIn.cfFormat == SynEditClipboardFormat)
-					medium.hGlobal = MakeGlobal((void**) MemoryStream->Memory, (int) MemoryStream->Position);
+				if(formatetcIn->cfFormat == SynEditClipboardFormat)
+					medium->hGlobal = MakeGlobal(MemoryStream->Memory, static_cast<LONG>(MemoryStream->Position));
 				else
 				{
-					if(formatetcIn.cfFormat == HTMLClipboardFormat)
-						medium.hGlobal = MakeGlobal((void**) HtmlStream->Memory, (int) HtmlStream->Position);
+					if(formatetcIn->cfFormat == HTMLClipboardFormat)
+						medium->hGlobal = MakeGlobal(HtmlStream->Memory, static_cast<LONG>(HtmlStream->Position));
 				}
 			}
 		}
@@ -146,9 +149,11 @@ HRESULT __stdcall TSynEditDataObject::GetData(const TFormatEtc& formatetcIn, TSt
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::GetDataHere(const TFormatEtc& formatetc, TStgMedium& medium)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetDataHere(TFormatEtc* formatetc, TStgMedium* medium)
 {
-	medium = {}; //# clear out parameter
+	if (formatetc == nullptr)
+		return E_POINTER;
+	*medium = {}; //# clear out parameter
 	HRESULT result = 0;
 	result = E_NOTIMPL;
 	return result;
@@ -174,41 +179,51 @@ void __fastcall TSynEditDataObject::StreamHTML(TObject* Editor, TStream* Stream)
 	}
 }
 
-HRESULT __stdcall TSynEditDataObject::QueryGetData(const TFormatEtc& formatetc)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::QueryGetData(TFormatEtc* formatetc)
 {
+	if (formatetc == nullptr)
+		return E_POINTER;
 	HRESULT result = 0;
-	if(((formatetc.tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(formatetc.cfFormat))
+	if(((formatetc->tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(formatetc->cfFormat))
 		result = S_OK;
 	else
 		result = DV_E_FORMATETC;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::GetCanonicalFormatEtc(const TFormatEtc& formatetc, TFormatEtc& formatetcOut)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetCanonicalFormatEtc(TFormatEtc* formatetc, TFormatEtc* formatetcOut)
 {
-	formatetcOut = {}; //# clear out parameter
+	if (formatetc == nullptr)
+		return E_POINTER;
+	*formatetcOut = {}; //# clear out parameter
 	HRESULT result = 0;
-	formatetcOut.ptd = nullptr;
+	formatetcOut->ptd = nullptr;
 	result = DATA_S_SAMEFORMATETC;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::SetData(const TFormatEtc& formatetc, TStgMedium& medium, BOOL fRelease)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::SetData(TFormatEtc* formatetc, TStgMedium* medium, BOOL fRelease)
 {
+	if (formatetc == nullptr)
+		return E_POINTER;
+	if(medium == nullptr)
+		return E_POINTER;
 	HRESULT result = 0;
 	result = E_NOTIMPL;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::EnumFormatEtc(int dwDirection, IEnumFORMATETC*& enumFormatEtc)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::EnumFormatEtc(DWORD dwDirection, IEnumFORMATETC** enumFormatEtc)
 {
-	enumFormatEtc = nullptr; //# clear out parameter
+	if(enumFormatEtc == nullptr)
+		return E_POINTER;
+	*enumFormatEtc = nullptr; //# clear out parameter
 	HRESULT result = 0;
 	try
 	{
 		if(dwDirection == DATADIR_GET)
 		{
-			enumFormatEtc = new TSynEnumFormatEtc(FFormatEtc->ToArray());
+			*enumFormatEtc = new TSynEnumFormatEtc(FFormatEtc->ToArray());
 			result = S_OK;
 		}
 		else
@@ -221,24 +236,28 @@ HRESULT __stdcall TSynEditDataObject::EnumFormatEtc(int dwDirection, IEnumFORMAT
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::DAdvise(const TFormatEtc& formatetc, int advf, IAdviseSink* const advSink, int& dwConnection)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::DAdvise(TFormatEtc* formatetc, LONG advf, IAdviseSink* advSink, DWORD* dwConnection)
 {
-	dwConnection = 0; //# clear out parameter
+	if (formatetc == nullptr)
+		return E_POINTER;
+	*dwConnection = 0; //# clear out parameter
 	HRESULT result = 0;
 	result = OLE_E_ADVISENOTSUPPORTED;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::DUnadvise(int dwConnection)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::DUnadvise(DWORD dwConnection)
 {
 	HRESULT result = 0;
 	result = OLE_E_ADVISENOTSUPPORTED;
 	return result;
 }
 
-HRESULT __stdcall TSynEditDataObject::EnumDAdvise(IEnumSTATDATA*& enumAdvise)
+HRESULT STDMETHODCALLTYPE TSynEditDataObject::EnumDAdvise(IEnumSTATDATA** enumAdvise)
 {
-	enumAdvise = nullptr; //# clear out parameter
+	if(enumAdvise == nullptr)
+		return E_POINTER;
+	*enumAdvise = nullptr; //# clear out parameter
 	HRESULT result = 0;
 	result = OLE_E_ADVISENOTSUPPORTED;
 	return result;
@@ -247,11 +266,12 @@ HRESULT __stdcall TSynEditDataObject::EnumDAdvise(IEnumSTATDATA*& enumAdvise)
 
 //=== BASE ENUM FORMATETC CLASS ================================================
 
-__fastcall TSynEnumFormatEtc::TSynEnumFormatEtc(System::TArray<TClipFormat>& FormatList, int Index/*# = 0*/)
+__fastcall TSynEnumFormatEtc::TSynEnumFormatEtc(const D2CArray<TClipFormat>& FormatList, int Index/*# = 0*/)
  : FList(FormatList),
 			FIndex(Index)
 {
 	//# inherited::Create();
+	// AddRef(); //# Ensure COM contract: returned interface must have RefCount >= 1
 }
 
 TFormatEtc __fastcall TSynEnumFormatEtc::GetFormatEtc(TClipFormat ClipFormat)
@@ -269,11 +289,13 @@ TFormatEtc __fastcall TSynEnumFormatEtc::GetFormatEtc(TClipFormat ClipFormat)
 	return result;
 }
 
-HRESULT __stdcall TSynEnumFormatEtc::Next(int celt, void** elt, PLongInt pceltFetched)
+HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Next(LONG celt, LPVOID* elt, LONG pceltFetched)
 {
-	elt = nullptr; //# clear out parameter
+	if(elt == nullptr)
+		return E_POINTER;
+	*elt = nullptr; //# clear out parameter
 	HRESULT result = 0;
-	int I = 0;
+	LONG I = 0;
 	PFormatEtc FormatEtc = nullptr;
 	I = 0;
 	FormatEtc = ((PFormatEtc) elt);
@@ -293,7 +315,7 @@ HRESULT __stdcall TSynEnumFormatEtc::Next(int celt, void** elt, PLongInt pceltFe
 	return result;
 }
 
-HRESULT __stdcall TSynEnumFormatEtc::Skip(int celt)
+HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Skip(LONG celt)
 {
 	HRESULT result = 0;
 	result = S_OK;
@@ -307,7 +329,7 @@ HRESULT __stdcall TSynEnumFormatEtc::Skip(int celt)
 	return result;
 }
 
-HRESULT __stdcall TSynEnumFormatEtc::Reset()
+HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Reset()
 {
 	HRESULT result = 0;
 	FIndex = 0;
@@ -315,12 +337,14 @@ HRESULT __stdcall TSynEnumFormatEtc::Reset()
 	return result;
 }
 
-HRESULT __stdcall TSynEnumFormatEtc::Clone(IEnumFORMATETC*& Enum)
+HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Clone(IEnumFORMATETC** Enum)
 {
-	Enum = nullptr; //# clear out parameter
+	if(Enum == nullptr)
+		return E_POINTER;
+	*Enum = nullptr; //# clear out parameter
 	HRESULT result = 0;
 	result = S_OK;
-	Enum = new TSynEnumFormatEtc(FList, FIndex);
+	*Enum = new TSynEnumFormatEtc(FList, FIndex);
 	return result;
 }
 const WideChar CF_HTML[] = L"HTML Format";
@@ -353,5 +377,5 @@ const WideChar CF_HTML[] = L"HTML Format";
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynEditDataObject
+}  // namespace Syneditdataobject
 

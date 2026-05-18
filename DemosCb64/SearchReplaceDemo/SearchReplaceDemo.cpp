@@ -9,6 +9,10 @@
 #include "dlgConfirmReplace.h"
 
 
+USEFORM("dlgConfirmReplace.cpp", ConfirmReplaceDialog);
+USEFORM("dlgSearchText.cpp", TextSearchDialog);
+USEFORM("frmMain.cpp", SearchReplaceDemoForm);
+//---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE, LPTSTR, int)
 {
 	HInstance = hInstance;

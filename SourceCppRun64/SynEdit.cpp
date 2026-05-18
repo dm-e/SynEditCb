@@ -44,9 +44,6 @@ using namespace Vcl::Consts;
 using namespace Vcl::Controls;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
-using namespace Winapi::Activex;
-using namespace Winapi::Imm;
-using namespace Winapi::Shellapi;
 
 namespace Synedit
 {
@@ -190,13 +187,13 @@ public:
 private:
 	THookedCommandEvent fEvent;
 	void* fData;
-	__fastcall THookedCommandHandlerEntry(THookedCommandEvent AEvent, void* AData);
-	HIDESBASE bool __fastcall Equals(THookedCommandEvent AEvent)/*# reintroduce */;
+	__fastcall THookedCommandHandlerEntry(const THookedCommandEvent& AEvent, void* AData);
+	HIDESBASE bool __fastcall Equals(const THookedCommandEvent& AEvent)/*# reintroduce */;
 public:
 	__fastcall THookedCommandHandlerEntry() {}
 };
 
-__fastcall THookedCommandHandlerEntry::THookedCommandHandlerEntry(THookedCommandEvent AEvent, void* AData)
+__fastcall THookedCommandHandlerEntry::THookedCommandHandlerEntry(const THookedCommandEvent& AEvent, void* AData)
  : fData(nullptr)
 {
 	//# inherited::Create();
@@ -204,13 +201,13 @@ __fastcall THookedCommandHandlerEntry::THookedCommandHandlerEntry(THookedCommand
 	fData = AData;
 }
 
-bool __fastcall THookedCommandHandlerEntry::Equals(THookedCommandEvent AEvent)
+bool __fastcall THookedCommandHandlerEntry::Equals(const THookedCommandEvent& AEvent)
 {
 	bool result = false;
 	/*# with TMethod(fEvent) do */
 	{
-		auto& with0 = *((TMethod*) &fEvent);
-		result = (with0.Code == ((TMethod*) &AEvent)->Code) && (with0.Data == ((TMethod*) &AEvent)->Data);
+		auto with0 = to_method(fEvent);
+		result = (with0.Code == to_method(AEvent).Code) && (with0.Data == to_method(AEvent).Data);
 	}
 	return result;
 }
@@ -222,7 +219,7 @@ TDisplayCoord __fastcall TCustomSynEdit::PixelsToNearestRowColumn(int aX, int aY
 {
 	TDisplayCoord result = {};
 	float f = 0.0F;
-	f = (float) (double((aX - fGutterWidth - fTextMargin)) / fCharWidth);
+	f = static_cast<float>(double((aX - fGutterWidth - fTextMargin)) / fCharWidth);
   // don't return a partially visible last line
 	if(aY >= fLinesInWindow * fTextHeight)
 	{
@@ -230,7 +227,7 @@ TDisplayCoord __fastcall TCustomSynEdit::PixelsToNearestRowColumn(int aX, int aY
 		if(aY < 0)
 			aY = 0;
 	}
-	result.Column = (int) Max(1, (int) (LeftChar + Round(f)));
+	result.Column = static_cast<int>(Max(static_cast<__int64>(1), LeftChar + Round(f)));
 	result.Row = Max(1, TopLine + ((int)(aY / /*div*/ fTextHeight)));
 	return result;
 }
@@ -296,7 +293,7 @@ void __fastcall TCustomSynEdit::ComputeScroll(int X, int Y)
 
 void __fastcall TCustomSynEdit::DoCopyToClipboard(const String SText)
 {
-	OleSetClipboard(new TSynEditDataObject(this));
+	OleSetClipboard(_di_IDataObject(new TSynEditDataObject(this)));
 }
 
 void __fastcall TCustomSynEdit::CopyToClipboard()
@@ -439,7 +436,8 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 	fRightEdge = 80;
 	fGutter = new TSynGutter(this);
 	fGutter->OnChange = GutterChanged;
-	fWordWrapGlyph = new TSynGlyph((THandle) HInstance, L"SynEditWrapped");
+	fWordWrapGlyph = new TSynGlyph((THandle)HInstance, L"SynEditWrapped");
+	fWordWrapGlyph = new TSynGlyph(WinHandleToDelphiHandle(HInstance), L"SynEditWrapped");
 	fWordWrapGlyph->OnChange = WordWrapGlyphChange;
 	ControlStyle = ControlStyle + Synedit__1;
 	ControlStyle = ControlStyle + Synedit__2;
@@ -450,7 +448,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 	fFontQuality = TFontQuality::fqClearTypeNatural;
 	fFontDummy->Name = DefaultFontName();
 	fFontDummy->Size = 10;
-	fFontDummy->Charset = (System::Uitypes::TFontCharset) DEFAULT_CHARSET;
+	fFontDummy->Charset = static_cast<System::Uitypes::TFontCharset>(DEFAULT_CHARSET);
 	fFontDummy->Quality = fFontQuality;
 	fTextDrawer = new TheTextDrawer(Synedit__3, fFontDummy);
 	Font->Assign(fFontDummy);
@@ -460,7 +458,7 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 	TabStop = true;
 	fInserting = true;
 	FScrollBars = TScrollStyle::ssBoth;
-	fBorderStyle = (TBorderStyle) bsSingle;
+	fBorderStyle = static_cast<TBorderStyle>(bsSingle);
 	fInsertCaret = ctVerticalLine;
 	fOverwriteCaret = ctBlock;
 	fSelectionMode = smNormal;
@@ -502,8 +500,8 @@ __fastcall TCustomSynEdit::TCustomSynEdit(TComponent* AOwner)
 
 void __fastcall TCustomSynEdit::CreateParams(TCreateParams& Params)
 {
-	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, (DWORD) WS_BORDER};
-	const unsigned long ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
+	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TBorderStyle*/] = {0, static_cast<DWORD>(WS_BORDER)};
+	const LongWord ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
   // Clear WindowText to avoid it being used as Caption, or else window creation will
   // fail if it's bigger than 64KB. It's useless to set the Caption anyway.
 	StrDispose(WindowText);
@@ -688,7 +686,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 			--Index;
 			pSrc = const_cast<PWideChar>(S.c_str() + Index);
 			DstLen = Min(SrcLen - Index, Count);
-			Move(pSrc, P, (size_t) (DstLen * sizeof(WideChar)));
+			Move(pSrc, P, static_cast<size_t>(DstLen * sizeof(WideChar)));
 			P += DstLen;
 			(*P) = L'\x00';
 		}
@@ -798,7 +796,7 @@ String __fastcall TCustomSynEdit::GetSelText()
 				TotalLen = 0;
 				for(stop = Last, cRow = First; cRow <= stop; cRow++)
 				{
-					vAuxRowCol.Row = (int) cRow;
+					vAuxRowCol.Row = static_cast<int>(cRow);
 					vAuxRowCol.Column = ColFrom;
 					vAuxLineChar = DisplayToBufferPos(vAuxRowCol);
 					l = vAuxLineChar.Char;
@@ -1036,7 +1034,7 @@ void __fastcall TCustomSynEdit::KeyUp(WORD& Key, TShiftState Shift)
 	{
 		if((FCharCodeString != L"") && TryStrToInt(FCharCodeString, CharCode) && (CharCode >= 256) && (CharCode <= 65535))
 		{
-			SendMessage(Handle, (UINT) WM_CHAR, CharCode, 0);
+			SendMessage(Handle, static_cast<UINT>(WM_CHAR), CharCode, 0);
 			FIgnoreNextChar = true;
 		}
 		FCharCodeString = L"";
@@ -1095,7 +1093,7 @@ void __fastcall TCustomSynEdit::KeyPress(Char& Key)
 	if(!(fStateFlags.Contains(sfIgnoreNextChar)))
 	{
 		fKbdHandler->ExecuteKeyPress(this, Key);
-		CommandProcessor((TSynEditorCommand) ecChar, Key, nullptr);
+		CommandProcessor(static_cast<TSynEditorCommand>(ecChar), Key, nullptr);
 	}
 	else
 
@@ -1163,7 +1161,7 @@ void __fastcall TCustomSynEdit::LinesChanged(TObject* Sender)
     //SetBlockBegin(CaretXY);
 		fActiveSelectionMode = vOldMode;
 		InvalidateRect(fInvalidateRect, false);
-		FillChar((void**)&fInvalidateRect, (int) sizeof(TRect), 0);
+		FillChar(&fInvalidateRect, static_cast<int>(sizeof(TRect)), 0);
 		if(!(Options.Contains(eoScrollPastEof)))
 			TopLine = TopLine;
 	}
@@ -1177,9 +1175,9 @@ void __fastcall TCustomSynEdit::MouseDown(TMouseButton Button, TShiftState Shift
 	TBufferCoord TmpEnd = {};
 	TPoint P = {};
   // Ole drag drop
-	IDropSource* DragSource = nullptr;
-	IDataObject* DataObject = nullptr;
-	DWORD dwEffect = 0;   // dme
+	_di_IDropSource DragSource;
+	_di_IDataObject DataObject;
+	DWORD dwEffect = 0;
 	inherited::MouseDown(Button, Shift, X, Y);
 	TmpBegin = fBlockBegin;
 	TmpEnd = fBlockEnd;
@@ -1254,7 +1252,7 @@ void __fastcall TCustomSynEdit::MouseDown(TMouseButton Button, TShiftState Shift
 				if(ControlState.Contains(csLButtonDown))
 				{
 					GetCursorPos(&P);
-					PostMessage(Handle, (UINT) WM_LBUTTONUP, 0, PointToLParam(ScreenToClient(P)));
+					PostMessage(Handle, static_cast<UINT>(WM_LBUTTONUP), 0, Winapi::Windows::PointToLParam(ScreenToClient(P)));
 				}
 			}
 		}
@@ -1435,7 +1433,7 @@ void __fastcall TCustomSynEdit::DoOnGutterClick(TMouseButton Button, int X, int 
 		Band = fGutter->BandAtX(X);
 		if(ASSIGNED(Band))
 			Band->DoClick(this, Button, X, Y, RowColumn.Row, Line);
-		if(ASSIGNED(fOnGutterClick))
+		if(Assigned(fOnGutterClick))
       // Check gutter marks
 		{
 			int stop = 0;
@@ -1607,7 +1605,7 @@ String __fastcall TCustomSynEdit::ExpandAtWideGlyphs(const String S)
 		if(int(S[i]) <= 0x00FF)
 			CountOfAvgGlyphs = 1;
 		else
-			CountOfAvgGlyphs = (int) CeilOfIntDiv((unsigned int) fTextDrawer->TextWidth(String(S[i])), (WORD) fCharWidth);
+			CountOfAvgGlyphs = static_cast<int>(CeilOfIntDiv(static_cast<unsigned int>(fTextDrawer->TextWidth(String(S[i]))), static_cast<WORD>(fCharWidth)));
 		if(j + CountOfAvgGlyphs > result.Length())
 			result.SetLength(result.Length() + 128);
 
@@ -1867,7 +1865,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 					++FillerCount;
 					++NonFillerPos;
 				}
-				CountOfAvgGlyphs = (int) CeilOfIntDiv((unsigned int) fTextDrawer->TextWidth(String(Token[NonFillerPos])), (WORD) fCharWidth);
+				CountOfAvgGlyphs = static_cast<int>(CeilOfIntDiv(static_cast<unsigned int>(fTextDrawer->TextWidth(String(Token[NonFillerPos]))), static_cast<WORD>(fCharWidth)));
 
         // first visible part of the glyph (1-based)
         // (the glyph is visually sectioned in parts of size fCharWidth)
@@ -1938,9 +1936,9 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 		unsigned int LastChar = 0;
 		int NormalCharWidth = 0;
 		int RealCharWidth = 0;
-		TABC CharInfo = {};
-		TTextMetricA tm = {};
-		LastChar = (unsigned int) int(TokenAccu.s[TokenAccu.Len]);
+		Winapi::Windows::TABC CharInfo = {};
+		Winapi::Windows::TTextMetricA tm = {};
+		LastChar = static_cast<unsigned int>(int(TokenAccu.s[TokenAccu.Len]));
 		NormalCharWidth = fTextDrawer->TextWidth(String(((WideChar) LastChar)));
 		RealCharWidth = NormalCharWidth;
 		if(GetCharABCWidthsW(Canvas->Handle, LastChar, LastChar, &CharInfo))
@@ -2216,18 +2214,18 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
     // Paint indent guides using custom pen
 		if(fCodeFolding->IndentGuides)
 		{
-			DottedPenDesc.lbStyle = (UINT) BS_SOLID;
+			DottedPenDesc.lbStyle = static_cast<UINT>(BS_SOLID);
 			DottedPenDesc.lbColor = fCodeFolding->IndentGuidesColor;
-			DottedPen = ExtCreatePen((DWORD) (PS_COSMETIC | PS_ALTERNATE), 1, &DottedPenDesc, 0, nullptr);
+			DottedPen = ExtCreatePen(static_cast<DWORD>(PS_COSMETIC | PS_ALTERNATE), 1, &DottedPenDesc, 0, nullptr);
 			try
 			{
 				__int64 stop = 0;
-				OldPen = (HPEN) SelectObject(Canvas->Handle, DottedPen);
+				OldPen = reinterpret_cast<::HPEN>(SelectObject(Canvas->Handle, reinterpret_cast<::HGDIOBJ>(DottedPen)));
 
         // Now loop through all the lines. The indices are valid for Lines.
 				for(stop = aLastRow, cRow = aFirstRow; cRow <= stop; cRow++)
 				{
-					vLine = RowToLine((int) cRow);
+					vLine = RowToLine(static_cast<int>(cRow));
 					if((vLine > Lines->Count) && !(Lines->Count == 0))
 						break;
 
@@ -2237,7 +2235,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 						++Y;
 
         // Get next nonblank line
-					LastNonBlank = (int) cRow;
+					LastNonBlank = static_cast<int>(cRow);
 					while((RowToLine(LastNonBlank) <= fLines->Count) && (TrimLeft(fLines->Strings[RowToLine(LastNonBlank) - 1]) == L""))
 						++LastNonBlank;
 					LineIndent = LeftSpaces(fLines->Strings[RowToLine(LastNonBlank) - 1], true);
@@ -2262,11 +2260,11 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 				}
 
         // Reset pen
-				SelectObject(Canvas->Handle, OldPen);
+				SelectObject(Canvas->Handle, reinterpret_cast<::HGDIOBJ>(OldPen));
 			}
 			__finally
 			{
-				DeleteObject(DottedPen);
+				DeleteObject(reinterpret_cast<::HGDIOBJ>(DottedPen));
 			}
 		}
 
@@ -2356,7 +2354,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 		{
 //++ CodeFolding
 			__int64 stop1 = 0;
-			if(UseCodeFolding && AllFoldRanges->FoldHidesLine((int) nLine))
+			if(UseCodeFolding && AllFoldRanges->FoldHidesLine(static_cast<int>(nLine)))
 				continue;
 //-- CodeFolding
 			sLine = ((TSynEditStringList*) Lines)->ExpandedStrings[nLine - 1];
@@ -2367,7 +2365,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
       // use special values for them.
 			colFG = Font->Color;
 			colBG = colEditorBG();
-			bSpecialLine = DoOnSpecialLineColors((int) nLine, colFG, colBG);
+			bSpecialLine = DoOnSpecialLineColors(static_cast<int>(nLine), colFG, colBG);
 			if(bSpecialLine)
         // The selection colors are just swapped, like seen in Delphi.
 			{
@@ -2379,8 +2377,8 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 				colSelFG = fSelectedColor->Foreground;
 				colSelBG = fSelectedColor->Background;
 			}
-			vStartRow = Max(LineToRow((int) nLine), aFirstRow);
-			vEndRow = Min(LineToRow((int) (nLine + 1)) - 1, aLastRow);
+			vStartRow = Max(LineToRow(static_cast<int>(nLine)), aFirstRow);
+			vEndRow = Min(LineToRow(static_cast<int>(nLine + 1)) - 1, aLastRow);
 //++ CodeFolding
 			vEndRow = Max(vEndRow, vStartRow);
 //-- CodeFolding
@@ -2388,7 +2386,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 			{
 				if(WordWrap)
 				{
-					vAuxPos.Row = (int) cRow;
+					vAuxPos.Row = static_cast<int>(cRow);
 					if(ASSIGNED(fHighlighter))
 						vAuxPos.Column = FirstCol;
 					else
@@ -2498,7 +2496,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 						fHighlighter->ResetRange();
 					else
 						fHighlighter->SetRange(((TSynEditStringList*) Lines)->Ranges[nLine - 2]);
-					fHighlighter->SetLineExpandedAtWideGlyphs(sLine, sLineExpandedAtWideGlyphs, (int) (nLine - 1));
+					fHighlighter->SetLineExpandedAtWideGlyphs(sLine, sLineExpandedAtWideGlyphs, static_cast<int>(nLine - 1));
           // Try to concatenate as many tokens as possible to minimize the count
           // of ExtTextOutW calls necessary. This depends on the selection state
           // or the line having special colors. For spaces the foreground color
@@ -2656,12 +2654,12 @@ void __fastcall TCustomSynEdit::PasteFromClipboard()
 		Clipboard()->Open();
 		try
 		{
-			Mem = (HGLOBAL) Clipboard()->GetAsHandle(SynEditClipboardFormat);
+			Mem = reinterpret_cast<::HGLOBAL>(Clipboard()->GetAsHandle(SynEditClipboardFormat));
 			P = ((Byte*) GlobalLock(Mem));
 			try
 			{
 				if(P != nullptr)
-					PasteMode = (*(PSynSelectionMode) (NativeInt) P);
+					PasteMode = (*(PSynSelectionMode)(NativeInt)P);
 			}
 			__finally
 			{
@@ -2997,14 +2995,14 @@ void __fastcall TCustomSynEdit::SetFont(TFont* const Value)
 {
 	HDC DC = 0;
 	THandle Save = 0;
-	TTextMetric Metrics = {};
+	Winapi::Windows::TTextMetric Metrics = {};
 	int AveCW = 0;
 	int MaxCW = 0;
 	Value->Quality = FontQuality;
 	DC = GetDC(0);
-	Save = (THandle) SelectObject(DC, Value->Handle);
+	Save = reinterpret_cast<::THandle>(SelectObject(DC, reinterpret_cast<::HGDIOBJ>(Value->Handle)));
 	GetTextMetrics(DC, &Metrics);
-	SelectObject(DC, (void*) Save);
+	SelectObject(DC, reinterpret_cast<::HGDIOBJ>(Save));
 	ReleaseDC(0, DC);
 	/*# with Metrics do */
 	{
@@ -3174,7 +3172,7 @@ void __fastcall TCustomSynEdit::SetSelTextPrimitiveEx(TSynSelectionMode PasteMod
               // Delete all lines in the selection range.
 					((TSynEditStringList*) Lines)->DeleteLines(BB.Line, BE.Line - BB.Line);
               // Put the stuff that was outside of selection back in.
-					if(Options.ToInt() >= Synedit__27.ToInt())
+					if(Options >= Synedit__27)
 						TempString = TrimTrailingSpaces(TempString);
 					Lines->Strings[BB.Line - 1] = TempString;
 				}
@@ -3228,7 +3226,7 @@ void __fastcall TCustomSynEdit::SetSelTextPrimitiveEx(TSynSelectionMode PasteMod
 		{
 			String sLeftSide;
 			String sRightSide;
-			TArray<String> NewLines;
+			D2CArray<String> NewLines;
 			int LineCount = 0;
 			int I = 0;
 			NewLines = StringToLines(Value);
@@ -3321,7 +3319,7 @@ void __fastcall TCustomSynEdit::SetSelTextPrimitiveEx(TSynSelectionMode PasteMod
 		auto InsertLine = [&]() -> void 
 		{
 			String Str;
-			TArray<String> NewLines;
+			D2CArray<String> NewLines;
 			int LineCount = 0;
 			int I = 0;
 			int Index = 0;
@@ -3461,7 +3459,7 @@ void __fastcall TCustomSynEdit::SetTopLine(int Value)
 void __fastcall TCustomSynEdit::SetUseCodeFolding(bool Value)
 {
 	bool ValidValue = false;
-	ValidValue = Value && ((ASSIGNED(fHighlighter) && (ObjectIs(fHighlighter, TSynCustomCodeFoldingHighlighter*))) || ASSIGNED(fOnScanForFoldRanges));
+	ValidValue = Value && ((ASSIGNED(fHighlighter) && (ObjectIs(fHighlighter, TSynCustomCodeFoldingHighlighter*))) || Assigned(fOnScanForFoldRanges));
 	if(fUseCodeFolding != ValidValue)
 	{
 		AllFoldRanges->Reset();
@@ -3478,21 +3476,21 @@ void __fastcall TCustomSynEdit::SetUseCodeFolding(bool Value)
 	}
 }
 
-void __fastcall TCustomSynEdit::OleDragEnter(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
+void __fastcall TCustomSynEdit::OleDragEnter(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
 {
 	TPoint MousePt = cMousePt;
-	if(ReadOnly || !HasFormat(DataObject, (TClipFormat) CF_UNICODETEXT))
+	if(ReadOnly || !HasFormat(DataObject, static_cast<TClipFormat>(CF_UNICODETEXT)))
 		Effect = DROPEFFECT_NONE;
 }
 
 void __fastcall TCustomSynEdit::OleDragLeave(TObject* Sender, HRESULT& Result)
 {
 	fScrollTimer->Enabled = false;
-	if(fStateFlags.Contains(sfOleDragSource)) //internal dragging
+	if (fStateFlags.Contains(sfOleDragSource)) // internal dragging
 		ComputeCaret(fMouseDownX, fMouseDownY);
-}
+	}
 
-void __fastcall TCustomSynEdit::OleDragOver(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
+void __fastcall TCustomSynEdit::OleDragOver(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
 {
 	TPoint MousePt = cMousePt;
 	TDisplayCoord vNewPos = {};
@@ -3505,7 +3503,7 @@ void __fastcall TCustomSynEdit::OleDragOver(TObject* Sender, IDataObject* DataOb
 	ComputeScroll(Pt.X, Pt.Y);
 }
 
-void __fastcall TCustomSynEdit::OleDrop(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
+void __fastcall TCustomSynEdit::OleDrop(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& cMousePt, int& Effect, HRESULT& Result)
 {
 	TPoint MousePt = cMousePt;
 	TBufferCoord vNewCaret = {};
@@ -3516,107 +3514,107 @@ void __fastcall TCustomSynEdit::OleDrop(TObject* Sender, IDataObject* DataObject
 	TBufferCoord vBE = {};
 	String DragDropText;
 	bool ChangeScrollPastEOL = false;
-	tagFORMATETC* FormatEtc;
-	tagSTGMEDIUM Medium;
+	TFormatEtc FormatEtc = {};
+	TStgMedium Medium = {};
 	TPoint Pt = {};
 	Pt = ScreenToClient(MousePt);
 	DropMove = Effect == DROPEFFECT_MOVE;
-	IncPaintLock();
-	try
-	{
+    IncPaintLock();
+    try
+    {
 		ComputeCaret(Pt.X, Pt.Y);
-		vNewCaret = CaretXY;
+        vNewCaret = CaretXY;
 		if(!(fStateFlags.Contains(sfOleDragSource)))
-		{
-			DoDrop = true;
-			DropAfter = false;
-		}
-		else
+        {
+            DoDrop   = true;
+            DropAfter = false;
+        }
+        else
 
-      // Internal dragging
+            // Internal dragging
 		{
-			vBB = BlockBegin;
-			vBE = BlockEnd;
+            vBB = BlockBegin;
+            vBE = BlockEnd;
 			DropAfter = (vNewCaret.Line > vBE.Line) || ((vNewCaret.Line == vBE.Line) && ((vNewCaret.Char > vBE.Char) || ((!DropMove) && (vNewCaret.Char == vBE.Char))));
 			DoDrop = DropAfter || (vNewCaret.Line < vBB.Line) || ((vNewCaret.Line == vBB.Line) && ((vNewCaret.Char < vBB.Char) || ((!DropMove) && (vNewCaret.Char == vBB.Char))));
-		}
-		if(DoDrop)
-		{
+        }
+        if (DoDrop)
+        {
 			/*# with FormatEtc do */
 			{
 				auto& with0 = FormatEtc;
-				with0->cfFormat = (TClipFormat) CF_UNICODETEXT;
-				with0->dwAspect = DVASPECT_CONTENT;
-				with0->ptd = nullptr;
-				with0->tymed = TYMED_HGLOBAL;
-				with0->lindex = -1;
+				with0.cfFormat = static_cast<TClipFormat>(CF_UNICODETEXT);
+				with0.dwAspect = DVASPECT_CONTENT;
+				with0.ptd = nullptr;
+				with0.tymed = TYMED_HGLOBAL;
+				with0.lindex = -1;
 			}
-			if(DataObject->GetData(FormatEtc, &Medium) == S_OK)
+			if(DataObject->GetData(&FormatEtc, &Medium) == S_OK)
 			{
 				if(Medium.hGlobal != 0)
 				{
 					DragDropText = ((PChar) GlobalLock(Medium.hGlobal));
-					GlobalUnlock(Medium.hGlobal);
+                    GlobalUnlock(Medium.hGlobal);
 					DoDrop = DragDropText != L"";
-				}
+                }
 				else
-				DoDrop = false;
+                    DoDrop = false;
 				ReleaseStgMedium(&Medium);
-			}
-			else
-			DoDrop = false;
-		}
-		if(DoDrop)
-		{
-			BeginUndoBlock();
-			try
+            }
+            else
+                DoDrop = false;
+            }
+        if (DoDrop)
+        {
+            BeginUndoBlock();
+            try
 
-        // delete the selected text if necessary
+                // delete the selected text if necessary
 			{
-				if(DropMove)
-				{
-					if(fStateFlags.Contains(sfOleDragSource))
-            // Internal dragging
+                if (DropMove)
+                {
+                    if (fStateFlags.Contains(sfOleDragSource))
+                        // Internal dragging
 					{
-						Effect = DROPEFFECT_NONE;  // do not clear selection after drop
-						SelText = L"";
-            // adjust horizontal drop position
-						if(DropAfter && (vNewCaret.Line == vBE.Line))
+                        Effect = DROPEFFECT_NONE;  // do not clear selection after drop
+                        SelText = L"";
+                        // adjust horizontal drop position
+                        if (DropAfter && (vNewCaret.Line == vBE.Line))
 							vNewCaret.Char -= vBE.Char - vBB.Char;
-            // adjust vertical drop position
-						if(DropAfter && (vBE.Line > vBB.Line))
+                        // adjust vertical drop position
+                        if (DropAfter && (vBE.Line > vBB.Line))
 							vNewCaret.Line -= vBE.Line - vBB.Line;
-					}
-				}
-        // insert the selected text
+                    }
+                }
+                // insert the selected text
 				ChangeScrollPastEOL = !(fOptions.Contains(eoScrollPastEol));
-				try
+                try
 				{
-					if(ChangeScrollPastEOL)
+					if (ChangeScrollPastEOL)
 						fOptions << eoScrollPastEol;
-					InternalCaretXY = vNewCaret;
-					BlockBegin = vNewCaret;
-					SelText = DragDropText; // creates undo action
-				}
-				__finally
+                    InternalCaretXY = vNewCaret;
+                    BlockBegin      = vNewCaret;
+                    SelText         = DragDropText; // creates undo action
+                }
+                __finally
 				{
-					if(ChangeScrollPastEOL)
+					if (ChangeScrollPastEOL)
 						fOptions >> eoScrollPastEol;
 				}
-				SetCaretAndSelection(CaretXY, vNewCaret, CaretXY);
-			}
-			__finally
-			{
-				EndUndoBlock();
-			}
-		}
-		else
-		Effect = DROPEFFECT_NONE;
-	}
-	__finally
-	{
-		DecPaintLock();
-	}
+                SetCaretAndSelection(CaretXY, vNewCaret, CaretXY);
+            }
+            __finally
+            {
+                EndUndoBlock();
+            }
+        }
+        else
+            Effect = DROPEFFECT_NONE;
+        }
+    __finally
+    {
+        DecPaintLock();
+    }
 }
 
 void __fastcall TCustomSynEdit::OnCodeFoldingChange(TObject* Sender)
@@ -3671,7 +3669,7 @@ void __fastcall TCustomSynEdit::UpdateCaret()
 	TRect iClientRect = {};
 	TDisplayCoord vCaretDisplay = {};
 	TPoint vCaretPix = {};
-	TCompositionForm cf = {};
+	Winapi::Imm::TCompositionForm cf = {};
 	if((PaintLock != 0) || !(Focused() || fAlwaysShowCaret))
 		fStateFlags << sfCaretChanged;
 	else
@@ -3695,7 +3693,7 @@ void __fastcall TCustomSynEdit::UpdateCaret()
 			SetCaretPos(CX, CY);
 			HideCaret();
 		}
-		cf.dwStyle = (DWORD) CFS_POINT;
+		cf.dwStyle = static_cast<DWORD>(CFS_POINT);
 		cf.ptCurrentPos = Point(CX, CY);
 		ImmSetCompositionWindow(ImmGetContext(Handle), &cf);
 	}
@@ -3704,7 +3702,7 @@ void __fastcall TCustomSynEdit::UpdateCaret()
 void __fastcall TCustomSynEdit::UpdateScrollBars()
 {
 	int nMaxScroll = 0;
-	TScrollInfo ScrollInfo = {};
+	Winapi::Windows::TScrollInfo ScrollInfo = {};
 	int iRightChar = 0;
 	if(!HandleAllocated() || (PaintLock != 0))
 		fStateFlags << sfScrollbarChanged;
@@ -3713,8 +3711,8 @@ void __fastcall TCustomSynEdit::UpdateScrollBars()
 		fStateFlags >> sfScrollbarChanged;
 		if(FScrollBars != TScrollStyle::ssNone)
 		{
-			ScrollInfo.cbSize = (UINT) sizeof(ScrollInfo);
-			ScrollInfo.fMask = (UINT) SIF_ALL;
+			ScrollInfo.cbSize = static_cast<UINT>(sizeof(ScrollInfo));
+			ScrollInfo.fMask = static_cast<UINT>(SIF_ALL);
 			if(!(Options.Contains(eoHideShowScrollbars)))
 			{
 				ScrollInfo.fMask = ScrollInfo.fMask | SIF_DISABLENOSCROLL;
@@ -3728,14 +3726,14 @@ void __fastcall TCustomSynEdit::UpdateScrollBars()
 				{
 					ScrollInfo.nMin = 1;
 					ScrollInfo.nMax = nMaxScroll;
-					ScrollInfo.nPage = (UINT) CharsInWindow;
+					ScrollInfo.nPage = static_cast<UINT>(CharsInWindow);
 					ScrollInfo.nPos = LeftChar;
 				}
 				else
 				{
 					ScrollInfo.nMin = 0;
 					ScrollInfo.nMax = MAX_SCROLL;
-					ScrollInfo.nPage = (UINT) MulDiv(MAX_SCROLL, CharsInWindow, nMaxScroll);
+					ScrollInfo.nPage = static_cast<UINT>(MulDiv(MAX_SCROLL, CharsInWindow, nMaxScroll));
 					ScrollInfo.nPos = MulDiv(MAX_SCROLL, LeftChar, nMaxScroll);
 				}
 				ShowScrollBar(Handle, SB_HORZ, !(Options.Contains(eoHideShowScrollbars)) || (ScrollInfo.nMin == 0) || (ScrollInfo.nMax > CharsInWindow));
@@ -3747,22 +3745,22 @@ void __fastcall TCustomSynEdit::UpdateScrollBars()
 					iRightChar = LeftChar + CharsInWindow - 1;
 					if((LeftChar <= 1) && (iRightChar >= nMaxScroll))
 					{
-						EnableScrollBar(Handle, (UINT) SB_HORZ, (UINT) ESB_DISABLE_BOTH);
+						EnableScrollBar(Handle, static_cast<UINT>(SB_HORZ), static_cast<UINT>(ESB_DISABLE_BOTH));
 					}
 					else
 					{
-						EnableScrollBar(Handle, (UINT) SB_HORZ, (UINT) ESB_ENABLE_BOTH);
+						EnableScrollBar(Handle, static_cast<UINT>(SB_HORZ), static_cast<UINT>(ESB_ENABLE_BOTH));
 						if(LeftChar <= 1)
-							EnableScrollBar(Handle, (UINT) SB_HORZ, (UINT) ESB_DISABLE_LEFT);
+							EnableScrollBar(Handle, static_cast<UINT>(SB_HORZ), static_cast<UINT>(ESB_DISABLE_LEFT));
 						else
 						{
 							if(iRightChar >= nMaxScroll)
-								EnableScrollBar(Handle, (UINT) SB_HORZ, (UINT) ESB_DISABLE_RIGHT);
+								EnableScrollBar(Handle, static_cast<UINT>(SB_HORZ), static_cast<UINT>(ESB_DISABLE_RIGHT));
 						}
 					}
 				}
 				else
-				EnableScrollBar(Handle, (UINT) SB_HORZ, (UINT) ESB_ENABLE_BOTH);
+				EnableScrollBar(Handle, static_cast<UINT>(SB_HORZ), static_cast<UINT>(ESB_ENABLE_BOTH));
 			}
 			else
 			ShowScrollBar(Handle, SB_HORZ, false);
@@ -3775,14 +3773,14 @@ void __fastcall TCustomSynEdit::UpdateScrollBars()
 				{
 					ScrollInfo.nMin = 1;
 					ScrollInfo.nMax = Max(1, nMaxScroll);
-					ScrollInfo.nPage = (UINT) LinesInWindow;
+					ScrollInfo.nPage = static_cast<UINT>(LinesInWindow);
 					ScrollInfo.nPos = TopLine;
 				}
 				else
 				{
 					ScrollInfo.nMin = 0;
 					ScrollInfo.nMax = MAX_SCROLL;
-					ScrollInfo.nPage = (UINT) MulDiv(MAX_SCROLL, LinesInWindow, nMaxScroll);
+					ScrollInfo.nPage = static_cast<UINT>(MulDiv(MAX_SCROLL, LinesInWindow, nMaxScroll));
 					ScrollInfo.nPos = MulDiv(MAX_SCROLL, TopLine, nMaxScroll);
 				}
 				ShowScrollBar(Handle, SB_VERT, !(Options.Contains(eoHideShowScrollbars)) || (ScrollInfo.nMin == 0) || (ScrollInfo.nMax > LinesInWindow));
@@ -3791,22 +3789,22 @@ void __fastcall TCustomSynEdit::UpdateScrollBars()
 				{
 					if((TopLine <= 1) && (nMaxScroll <= LinesInWindow))
 					{
-						EnableScrollBar(Handle, (UINT) SB_VERT, (UINT) ESB_DISABLE_BOTH);
+						EnableScrollBar(Handle, static_cast<UINT>(SB_VERT), static_cast<UINT>(ESB_DISABLE_BOTH));
 					}
 					else
 					{
-						EnableScrollBar(Handle, (UINT) SB_VERT, (UINT) ESB_ENABLE_BOTH);
+						EnableScrollBar(Handle, static_cast<UINT>(SB_VERT), static_cast<UINT>(ESB_ENABLE_BOTH));
 						if(TopLine <= 1)
-							EnableScrollBar(Handle, (UINT) SB_VERT, (UINT) ESB_DISABLE_UP);
+							EnableScrollBar(Handle, static_cast<UINT>(SB_VERT), static_cast<UINT>(ESB_DISABLE_UP));
 						else
 						{
 							if((DisplayLineCount - TopLine - LinesInWindow + 1) == 0)
-								EnableScrollBar(Handle, (UINT) SB_VERT, (UINT) ESB_DISABLE_DOWN);
+								EnableScrollBar(Handle, static_cast<UINT>(SB_VERT), static_cast<UINT>(ESB_DISABLE_DOWN));
 						}
 					}
 				}
 				else
-				EnableScrollBar(Handle, (UINT) SB_VERT, (UINT) ESB_ENABLE_BOTH);
+				EnableScrollBar(Handle, static_cast<UINT>(SB_VERT), static_cast<UINT>(ESB_ENABLE_BOTH));
 
 //        if Visible then SendMessage(Handle, WM_SETREDRAW, -1, 0);
 //        if fPaintLock=0 then
@@ -3840,7 +3838,7 @@ bool __fastcall TCustomSynEdit::DoMouseWheel(TShiftState Shift, int WheelDelta, 
 	fMouseWheelAccumulator = fMouseWheelAccumulator % WHEEL_DIVISOR;
 	TopLine = TopLine - iWheelClicks * iLinesToScroll;
 	Update();
-	if(ASSIGNED(OnScroll))
+	if(Assigned(OnScroll))
 		OnScroll(this, sbVertical);
 	result = true;
 	return result;
@@ -3875,22 +3873,22 @@ void __fastcall TCustomSynEdit::WMDropFiles(::TMessage& Msg)
 {
 	int i = 0;
 	int iNumberDropped = 0;
-	WideChar FileNameW[260/*# range 0..MAX_PATH-1*/];
+	WideChar FileNameW[(MAX_PATH - 1) + 1/*# range 0..MAX_PATH-1*/];
 	TPoint Point = {};
 	TStringList* FilesList = nullptr;
 	try
 	{
-		if(ASSIGNED(fOnDropFiles))
+		if(Assigned(fOnDropFiles))
 		{
 			FilesList = new TStringList();
 			try
 			{
 				int stop = 0;
-				iNumberDropped = (int) DragQueryFile(((HDROP) Msg.WParam), ((unsigned int) -1), nullptr, 0);
+				iNumberDropped = static_cast<int>(DragQueryFile((HDROP)Msg.WParam, ((unsigned int) -1), nullptr, 0));
 				DragQueryPoint(((HDROP) Msg.WParam), &Point);
 				for(stop = iNumberDropped - 1, i = 0; i <= stop; i++)
 				{
-					DragQueryFileW(((HDROP) Msg.WParam), (UINT) i, FileNameW, (UINT) ((int)(sizeof(FileNameW) / 2)));
+					DragQueryFileW((HDROP) Msg.WParam, static_cast<UINT>(i), FileNameW, static_cast<UINT>((unsigned __int64)(sizeof(FileNameW) / /*div*/ 2L)));
 					FilesList->Add(FileNameW);
 				}
 				fOnDropFiles(this, Point.X, Point.Y, FilesList);
@@ -3908,7 +3906,7 @@ void __fastcall TCustomSynEdit::WMDropFiles(::TMessage& Msg)
 	}
 }
 
-void __fastcall TCustomSynEdit::WMDestroy(TWMDestroy& Message)
+void __fastcall TCustomSynEdit::WMDestroy(Winapi::Messages::TWMDestroy& Message)
 {
 
   // See https://en.delphipraxis.net/topic/456-destroywnd-not-called-at-destruction-of-wincontrols/
@@ -3923,7 +3921,7 @@ void __fastcall TCustomSynEdit::WMEraseBkgnd(::TMessage& Msg)
 	Msg.Result = 1;
 }
 
-void __fastcall TCustomSynEdit::WMGetDlgCode(TWMGetDlgCode& Msg)
+void __fastcall TCustomSynEdit::WMGetDlgCode(Winapi::Messages::TWMGetDlgCode& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMGetDlgCode" not not accessible;
 	Msg.Result = Msg.Result | DLGC_WANTARROWS | DLGC_WANTCHARS;
@@ -3933,12 +3931,12 @@ void __fastcall TCustomSynEdit::WMGetDlgCode(TWMGetDlgCode& Msg)
 		Msg.Result = Msg.Result | DLGC_WANTALLKEYS;
 }
 
-void __fastcall TCustomSynEdit::WMGetText(TWMGetText& Msg)
+void __fastcall TCustomSynEdit::WMGetText(Winapi::Messages::TWMGetText& Msg)
 {
-	Msg.Result = (LRESULT) StrLen(StrLCopy(Msg.Text, ustr2pwchar(Text), Msg.TextMax - 1));
+	Msg.Result = static_cast<LRESULT>(StrLen(StrLCopy(Msg.Text, ustr2pwchar(Text), Msg.TextMax - 1)));
 }
 
-void __fastcall TCustomSynEdit::WMGetTextLength(TWMGetTextLength& Msg)
+void __fastcall TCustomSynEdit::WMGetTextLength(Winapi::Messages::TWMGetTextLength& Msg)
 {
 
   // Avoid (useless) temporary copy of WindowText while window is recreated
@@ -3949,7 +3947,7 @@ void __fastcall TCustomSynEdit::WMGetTextLength(TWMGetTextLength& Msg)
 		Msg.Result = Text.Length();
 }
 
-void __fastcall TCustomSynEdit::WMHScroll(TWMScroll& Msg)
+void __fastcall TCustomSynEdit::WMHScroll(Winapi::Messages::TWMScroll& Msg)
 {
 	int iMaxWidth = 0;
 	Msg.Result = 0;
@@ -3997,7 +3995,7 @@ void __fastcall TCustomSynEdit::WMHScroll(TWMScroll& Msg)
 		  ;
 		break;
 	}
-	if(ASSIGNED(OnScroll))
+	if(Assigned(OnScroll))
 		OnScroll(this, sbHorizontal);
 }
 
@@ -4020,14 +4018,14 @@ void __fastcall TCustomSynEdit::WMImeComposition(::TMessage& Msg)
 		imc = ImmGetContext(Handle);
 		try
 		{
-			ImeCount = ImmGetCompositionStringW(imc, (DWORD) GCS_RESULTSTR, nullptr, 0);
+			ImeCount = ImmGetCompositionStringW(imc, static_cast<DWORD>(GCS_RESULTSTR), nullptr, 0);
       // ImeCount is always the size in bytes, also for Unicode
 			PW = (PWideChar) GetMemory(ImeCount + sizeof(WideChar));
 			try
 			{
-				ImmGetCompositionStringW(imc, (DWORD) GCS_RESULTSTR, PW, (DWORD) ImeCount);
+				ImmGetCompositionStringW(imc, static_cast<DWORD>(GCS_RESULTSTR), PW, static_cast<DWORD>(ImeCount));
 				PW[(unsigned __int64)(ImeCount / /*div*/ sizeof(WideChar))] = L'\x00';
-				CommandProcessor((TSynEditorCommand) ecImeStr, L'\x00', PW);
+				CommandProcessor(static_cast<TSynEditorCommand>(ecImeStr), L'\x00', PW);
 			}
 			__finally
 			{
@@ -4045,7 +4043,7 @@ void __fastcall TCustomSynEdit::WMImeComposition(::TMessage& Msg)
 void __fastcall TCustomSynEdit::WMImeNotify(::TMessage& Msg)
 {
 	HIMC imc = 0;
-	TLogFontW LogFontW = {};
+	Winapi::Windows::TLogFontW LogFontW = {};
 	/*# with Msg do */
 	{
 		auto& with0 = Msg;
@@ -4056,7 +4054,7 @@ void __fastcall TCustomSynEdit::WMImeNotify(::TMessage& Msg)
 				imc = ImmGetContext(Handle);
 				if(imc != 0)
 				{
-					GetObjectW(Font->Handle, (int) sizeof(TLogFontW), &LogFontW);
+					GetObjectW(reinterpret_cast<::HGDIOBJ>(Font->Handle), static_cast<int>(sizeof(Winapi::Windows::TLogFontW)), &LogFontW);
 					ImmSetCompositionFontW(imc, &LogFontW);
 					ImmReleaseContext(Handle, imc);
 				}
@@ -4070,10 +4068,10 @@ void __fastcall TCustomSynEdit::WMImeNotify(::TMessage& Msg)
 	inherited::Dispatch(&Msg);  //#inherited method "WMImeNotify" not not accessible;
 }
 
-void __fastcall TCustomSynEdit::WMKillFocus(TWMKillFocus& Msg)
+void __fastcall TCustomSynEdit::WMKillFocus(Winapi::Messages::TWMKillFocus& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMKillFocus" not not accessible;
-	CommandProcessor((TSynEditorCommand) ecLostFocus, L'\x00', nullptr);
+	CommandProcessor(static_cast<TSynEditorCommand>(ecLostFocus), L'\x00', nullptr);
   //Added check for focused to prevent caret disappearing problem
 	if(Focused() || fAlwaysShowCaret)
 		return;
@@ -4094,21 +4092,21 @@ void __fastcall TCustomSynEdit::WMCancelMode(::TMessage& Message)
 {
 }
 
-void __fastcall TCustomSynEdit::WMSetFocus(TWMSetFocus& Msg)
+void __fastcall TCustomSynEdit::WMSetFocus(Winapi::Messages::TWMSetFocus& Msg)
 {
-	CommandProcessor((TSynEditorCommand) ecGotFocus, L'\x00', nullptr);
+	CommandProcessor(static_cast<TSynEditorCommand>(ecGotFocus), L'\x00', nullptr);
 	InitializeCaret();
 	if(fHideSelection && SelAvail)
 		InvalidateSelection();
 }
 
-void __fastcall TCustomSynEdit::WMSetText(TWMSetText& Msg)
+void __fastcall TCustomSynEdit::WMSetText(Winapi::Messages::TWMSetText& Msg)
 {
 	Msg.Result = 1;
 	Text = Msg.Text;
 }
 
-void __fastcall TCustomSynEdit::WMSize(TWMSize& Msg)
+void __fastcall TCustomSynEdit::WMSize(Winapi::Messages::TWMSize& Msg)
 {
 	inherited::Dispatch(&Msg);  //#inherited method "WMSize" not not accessible;
 	SizeOrFontChanged(false);
@@ -4129,14 +4127,14 @@ THintWindow* __fastcall GetScrollHint()
 	return result;
 }
 
-void __fastcall TCustomSynEdit::WMVScroll(TWMScroll& Msg)
+void __fastcall TCustomSynEdit::WMVScroll(Winapi::Messages::TWMScroll& Msg)
 {
 	String s;
 	TRect rc = {};
 	TPoint pt = {};
 	THintWindow* ScrollHint = nullptr;
 	int ButtonH = 0;
-	TScrollInfo ScrollInfo = {};
+	Winapi::Windows::TScrollInfo ScrollInfo = {};
 	Msg.Result = 0;
 	switch(Msg.ScrollCode)
 	{
@@ -4187,9 +4185,9 @@ void __fastcall TCustomSynEdit::WMVScroll(TWMScroll& Msg)
 				if(fOptions.Contains(eoScrollHintFollows))
 				{
 					ButtonH = GetSystemMetrics(SM_CYVSCROLL);
-					FillChar((void**)&ScrollInfo, (int) sizeof(ScrollInfo), 0);
-					ScrollInfo.cbSize = (UINT) sizeof(ScrollInfo);
-					ScrollInfo.fMask = (UINT) SIF_ALL;
+					FillChar(&ScrollInfo, static_cast<int>(sizeof(ScrollInfo)), 0);
+					ScrollInfo.cbSize = static_cast<UINT>(sizeof(ScrollInfo));
+					ScrollInfo.fMask = static_cast<UINT>(SIF_ALL);
 					GetScrollInfo(Handle, SB_VERT, &ScrollInfo);                                    //half the size of the hint window
                   //The percentage of the page that has been scrolled
                              //The height minus the arrow buttons
@@ -4216,7 +4214,7 @@ void __fastcall TCustomSynEdit::WMVScroll(TWMScroll& Msg)
 		break;
 	}
 	Update();
-	if(ASSIGNED(OnScroll))
+	if(Assigned(OnScroll))
 		OnScroll(this, sbVertical);
 }
 
@@ -4257,7 +4255,7 @@ void __fastcall TCustomSynEdit::ListCleared(TObject* Sender)
 //-- CodeFolding
 	ClearUndo();
   // invalidate the *whole* client area
-	FillChar((void**)&fInvalidateRect, (int) sizeof(TRect), 0);
+	FillChar(&fInvalidateRect, static_cast<int>(sizeof(TRect)), 0);
 	Invalidate();
   // set caret and selected block to start of text
 	CaretXY = BufferCoord(1, 1);
@@ -4546,7 +4544,7 @@ void __fastcall TCustomSynEdit::CollapseAll()
 void __fastcall TCustomSynEdit::CollapseLevel(int Level)
 {
 	int i = 0;
-	TArray<int> RangeIndices;
+	D2CArray<int> RangeIndices;
 	int stop = 0;
 	if(!fUseCodeFolding)
 		return;
@@ -4573,7 +4571,7 @@ void __fastcall TCustomSynEdit::CollapseNearest()
 void __fastcall TCustomSynEdit::CollapseFoldType(int FoldType)
 {
 	int i = 0;
-	TArray<int> RangeIndices;
+	D2CArray<int> RangeIndices;
 	int stop = 0;
 	if(!fUseCodeFolding)
 		return;
@@ -4623,7 +4621,7 @@ void __fastcall TCustomSynEdit::UncollapseAroundLine(int Line)
 void __fastcall TCustomSynEdit::UnCollapseLevel(int Level)
 {
 	int i = 0;
-	TArray<int> RangeIndices;
+	D2CArray<int> RangeIndices;
 	int stop = 0;
 	if(!fUseCodeFolding)
 		return;
@@ -4650,7 +4648,7 @@ void __fastcall TCustomSynEdit::UncollapseNearest()
 void __fastcall TCustomSynEdit::UnCollapseFoldType(int FoldType)
 {
 	int i = 0;
-	TArray<int> RangeIndices;
+	D2CArray<int> RangeIndices;
 	int stop = 0;
 	if(!fUseCodeFolding)
 		return;
@@ -4722,7 +4720,7 @@ void __fastcall TCustomSynEdit::DoMouseSelectWordRange(const TBufferCoord& cNewP
 		BE = WordEndEx(BB);
 	else
 		BB = WordStartEx(BE);
-	NewPos.Char = Min(NewPos.Char, Lines->Strings[NewPos.Line - 1].Length() + 1);
+	NewPos.Char = Min(static_cast<int>(NewPos.Char), Lines->Strings[NewPos.Line - 1].Length() + 1);
 	if(NewPos > BE)
 	{
 		BE = NewPos;
@@ -5015,49 +5013,49 @@ void __fastcall TCustomSynEdit::WndProc(::TMessage& Msg)
 
 void __fastcall TCustomSynEdit::ChainListCleared(TObject* Sender)
 {
-	if(ASSIGNED(fChainListCleared))
+	if(Assigned(fChainListCleared))
 		fChainListCleared(Sender);
 	((TSynEditStringList*) fOrigLines)->OnCleared(Sender);
 }
 
 void __fastcall TCustomSynEdit::ChainListDeleted(TObject* Sender, int aIndex, int aCount)
 {
-	if(ASSIGNED(fChainListDeleted))
+	if(Assigned(fChainListDeleted))
 		fChainListDeleted(Sender, aIndex, aCount);
 	((TSynEditStringList*) fOrigLines)->OnDeleted(Sender, aIndex, aCount);
 }
 
 void __fastcall TCustomSynEdit::ChainListInserted(TObject* Sender, int aIndex, int aCount)
 {
-	if(ASSIGNED(fChainListInserted))
+	if(Assigned(fChainListInserted))
 		fChainListInserted(Sender, aIndex, aCount);
 	((TSynEditStringList*) fOrigLines)->OnInserted(Sender, aIndex, aCount);
 }
 
 void __fastcall TCustomSynEdit::ChainListPut(TObject* Sender, int aIndex, const String OldLine)
 {
-	if(ASSIGNED(fChainListPut))
+	if(Assigned(fChainListPut))
 		fChainListPut(Sender, aIndex, OldLine);
 	((TSynEditStringList*) fOrigLines)->OnPut(Sender, aIndex, OldLine);
 }
 
 void __fastcall TCustomSynEdit::ChainLinesChanging(TObject* Sender)
 {
-	if(ASSIGNED(fChainLinesChanging))
+	if(Assigned(fChainLinesChanging))
 		fChainLinesChanging(Sender);
 	((TSynEditStringList*) fOrigLines)->OnChanging(Sender);
 }
 
 void __fastcall TCustomSynEdit::ChainLinesChanged(TObject* Sender)
 {
-	if(ASSIGNED(fChainLinesChanged))
+	if(Assigned(fChainLinesChanged))
 		fChainLinesChanged(Sender);
 	((TSynEditStringList*) fOrigLines)->OnChange(Sender);
 }
 
 void __fastcall TCustomSynEdit::ChainModifiedChanged(TObject* Sender)
 {
-	if(ASSIGNED(fChainModifiedChanged))
+	if(Assigned(fChainModifiedChanged))
 		fChainModifiedChanged(Sender);
 	fOrigUndoRedo->OnModifiedChanged(Sender);
 }
@@ -5113,7 +5111,7 @@ void __fastcall TCustomSynEdit::UnHookTextBuffer()
 	WordWrap = vOldWrap;
 }
 
-void __fastcall TCustomSynEdit::HookTextBuffer(TSynEditStringList* aBuffer, ISynEditUndo* aUndoRedo)
+void __fastcall TCustomSynEdit::HookTextBuffer(TSynEditStringList* aBuffer, const _di_ISynEditUndo& aUndoRedo)
 {
 	bool vOldWrap = false;
 	Assert(fChainedEditor == nullptr);
@@ -5480,7 +5478,7 @@ TSynEditorCommand __fastcall TCustomSynEdit::TranslateKeyCode(WORD Code, TShiftS
 		if(i >= 0)
 			result = Keystrokes->Items[i]->Command;
 		else
-			result = (TSynEditorCommand) ecNone;
+			result = static_cast<TSynEditorCommand>(ecNone);
 	}
 	if((result == ecNone) && (Code >= VK_ACCEPT) && (Code <= VK_SCROLL))
 	{
@@ -5508,7 +5506,7 @@ void __fastcall TCustomSynEdit::TripleClick()
 			BE = BufferCoord(Lines->Strings[CaretY - 1].Length() + 1, CaretY);
 		SetCaretAndSelection(BE, BB, BE);
 	}
-	if(ASSIGNED(fOnTripleClick))
+	if(Assigned(fOnTripleClick))
 		fOnTripleClick(this);
 }
 
@@ -5532,7 +5530,7 @@ void __fastcall TCustomSynEdit::CommandProcessor(TSynEditorCommand Command, Wide
 			NotifyHookedCommandHandlers(true, Command, AChar, Data);
 	}
 	DoOnCommandProcessed(Command, AChar, Data);
-	fUndoRedo->CommandProcessed = (TSynEditorCommand) ecNone;
+	fUndoRedo->CommandProcessed = static_cast<TSynEditorCommand>(ecNone);
 }
 
 void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideChar AChar, void* Data)
@@ -5788,7 +5786,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 									BeginUndoBlock();
 									try
 									{
-										CaretXY = BufferCoord(Lines->Strings[CaretY - 2].Length() + 1, CaretY - 1);
+										CaretXY = BufferCoord(static_cast<int>(Lines->Strings[CaretY - 2].Length() + 1), CaretY - 1);
 										Lines->Delete(CaretY);
 										LineText = LineText + Temp;
 									}
@@ -5825,7 +5823,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 										Temp.Delete(1, 	LeftSpaces(Temp));
 										Temp2 = GetLeftSpacing(SpaceCount2, true);
 										Temp = Temp2 + Temp;
-										CaretXNew = Temp2.Length() + 1;
+										CaretXNew = static_cast<int>(Temp2.Length() + 1);
 									}
 									else
 									{
@@ -6026,7 +6024,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 							Lines->Insert(CaretY, SpaceBuffer + Temp2);
 							Lines->Strings[CaretY - 1] = Temp;
 							if(Command == ecLineBreak)
-								CaretXY = BufferCoord(SpaceBuffer.Length() + 1, CaretY + 1);
+								CaretXY = BufferCoord(static_cast<int>(SpaceBuffer.Length() + 1), CaretY + 1);
 						}
 						else
 						{
@@ -6057,7 +6055,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 						SpaceBuffer = GetLeftSpacing(SpaceCount2, true);
 						Lines->Insert(CaretY, SpaceBuffer);
 						if(Command == ecLineBreak)
-							CaretXY = BufferCoord(SpaceBuffer.Length() + 1, CaretY + 1);
+							CaretXY = BufferCoord(static_cast<int>(SpaceBuffer.Length() + 1), CaretY + 1);
 					}
 					UpdateLastCaretX();
 				}
@@ -6279,7 +6277,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 			break;
 			case ecContextHelp:
 			{
-				if(ASSIGNED(fOnContextHelp))
+				if(Assigned(fOnContextHelp))
 					fOnContextHelp(this, WordAtCursor);
 			}
 			break;
@@ -6402,7 +6400,7 @@ void __fastcall TCustomSynEdit::ExecuteCommand(TSynEditorCommand Command, WideCh
 
 void __fastcall TCustomSynEdit::DoOnCommandProcessed(TSynEditorCommand Command, WideChar AChar, void* Data)
 {
-	if(ASSIGNED(fOnCommandProcessed))
+	if(Assigned(fOnCommandProcessed))
 		fOnCommandProcessed(this, Command, AChar, Data);
 }
 
@@ -6410,12 +6408,12 @@ void __fastcall TCustomSynEdit::DoOnProcessCommand(TSynEditorCommand& Command, W
 {
 	if(Command < ecUserFirst)
 	{
-		if(ASSIGNED(fOnProcessCommand))
+		if(Assigned(fOnProcessCommand))
 			fOnProcessCommand(this, Command, AChar, Data);
 	}
 	else
 	{
-		if(ASSIGNED(fOnProcessUserCommand))
+		if(Assigned(fOnProcessUserCommand))
 			fOnProcessUserCommand(this, Command, AChar, Data);
 	}
 }
@@ -6424,7 +6422,7 @@ void __fastcall TCustomSynEdit::ClearAll()
 {
 	Lines->Clear();
 	fMarkList->Clear(); // fMarkList.Clear also frees all bookmarks,
-	FillChar((void**)&fBookMarks, (int) sizeof(fBookMarks), 0); // so fBookMarks should be cleared too
+	FillChar(&fBookMarks, static_cast<int>(sizeof(fBookMarks)), 0); // so fBookMarks should be cleared too
 	fUndoRedo->Clear();
 	Modified = false;
 	UpdateScrollBars();
@@ -6789,7 +6787,7 @@ void __fastcall TCustomSynEdit::UnlockUndo()
 	fUndoRedo->Unlock();
 }
 
-void __fastcall TCustomSynEdit::WMSetCursor(TWMSetCursor& Msg)
+void __fastcall TCustomSynEdit::WMSetCursor(Winapi::Messages::TWMSetCursor& Msg)
 {
 	if((Msg.HitTest == HTCLIENT) && (Msg.CursorWnd == Handle) && !(ComponentState.Contains(csDesigning)))
 	{
@@ -6863,7 +6861,7 @@ int __fastcall TCustomSynEdit::SearchReplace(const String ASearch, const String 
 		return result;
 	};
 	if(!ASSIGNED(fSearchEngine))
-		throw new ESynEditError(L"No search engine has been assigned");
+		throw ESynEditError(L"No search engine has been assigned");
 	result = 0;
   // can't search for or replace an empty string
 	if(ASearch.Length() == 0)
@@ -6997,7 +6995,7 @@ int __fastcall TCustomSynEdit::SearchReplace(const String ASearch, const String 
 					return result;
         // Prompt and replace or replace all.  If user chooses to replace
         // all after prompting, turn off prompting.
-				if(bPrompt && ASSIGNED(fOnReplaceText))
+				if(bPrompt && Assigned(fOnReplaceText))
 				{
 					nAction = DoOnReplaceText(ASearch, sReplace, ptCurrent.Line, nFound);
 					if(nAction == raCancel)
@@ -7145,7 +7143,7 @@ void __fastcall TCustomSynEdit::UpdateMouseCursor()
 			else
 			iNewCursor = Cursor;
 		}
-		if(ASSIGNED(OnMouseCursor))
+		if(Assigned(OnMouseCursor))
 			OnMouseCursor(this, ptLineCol, iNewCursor);
 		fKbdHandler->ExecuteMouseCursor(this, ptLineCol, iNewCursor);
 	}
@@ -7402,7 +7400,7 @@ void __fastcall TCustomSynEdit::RecalcCharExtent()
 	int cStyle = 0;
 	TFontStyles iCurr;
 	int stop = 0;
-	FillChar((void**)&iHasStyle, (int) sizeof(iHasStyle), 0);
+	FillChar(&iHasStyle, static_cast<int>(sizeof(iHasStyle)), 0);
 	if(ASSIGNED(fHighlighter) && (fHighlighter->AttrCount > 0))
 	{
 		int stop = 0;
@@ -8043,7 +8041,7 @@ void __fastcall TCustomSynEdit::DoBlockUnindent()
       //being deleted incase there is a TabChar
 			PLine = ustr2pwchar(Line);
 			if(fActiveSelectionMode == smColumn)
-				PLine += MinIntValue(OPENARRAY(int, (BB.Char - 1, BE.Char - 1, Line.Length())));
+				PLine += MinIntValue(OPENARRAY(int, (BB.Char - 1, BE.Char - 1, static_cast<int>(Line.Length()))));
 			TmpDelLen = GetDelLen(PLine);
 			if(TmpDelLen > 0)
 			{
@@ -8082,15 +8080,15 @@ bool __fastcall TCustomSynEdit::ExecuteAction(TBasicAction* Action)
 		if(result)
 		{
 			if(ObjectIs(Action, TEditCut*))
-				CommandProcessor((TSynEditorCommand) ecCut, L' ', nullptr);
+				CommandProcessor(static_cast<TSynEditorCommand>(ecCut), L' ', nullptr);
 			else
 			{
 				if(ObjectIs(Action, TEditCopy*))
-					CommandProcessor((TSynEditorCommand) ecCopy, L' ', nullptr);
+					CommandProcessor(static_cast<TSynEditorCommand>(ecCopy), L' ', nullptr);
 				else
 				{
 					if(ObjectIs(Action, TEditPaste*))
-						CommandProcessor((TSynEditorCommand) ecPaste, L' ', nullptr);
+						CommandProcessor(static_cast<TSynEditorCommand>(ecPaste), L' ', nullptr);
 					else
 					{
 						if(ObjectIs(Action, TEditDelete*))
@@ -8098,16 +8096,16 @@ bool __fastcall TCustomSynEdit::ExecuteAction(TBasicAction* Action)
 							if(SelAvail)
 								ClearSelection();
 							else
-								CommandProcessor((TSynEditorCommand) ecDeleteChar, L' ', nullptr);
+								CommandProcessor(static_cast<TSynEditorCommand>(ecDeleteChar), L' ', nullptr);
 						}
 						else
 						{
 							if(ObjectIs(Action, TEditUndo*))
-								CommandProcessor((TSynEditorCommand) ecUndo, L' ', nullptr);
+								CommandProcessor(static_cast<TSynEditorCommand>(ecUndo), L' ', nullptr);
 							else
 							{
 								if(ObjectIs(Action, TEditSelectAll*))
-									CommandProcessor((TSynEditorCommand) ecSelectAll, L' ', nullptr);
+									CommandProcessor(static_cast<TSynEditorCommand>(ecSelectAll), L' ', nullptr);
 							}
 						}
 					}
@@ -8222,7 +8220,7 @@ bool __fastcall TCustomSynEdit::UpdateAction(TBasicAction* Action)
 
 void __fastcall TCustomSynEdit::SetModified(bool Value)
 {
-	if(Value != fUndoRedo->Modified)
+	if(Value !=fUndoRedo->Modified)
 	{
 		fUndoRedo->Modified = Value;
 		if((Options.Contains(eoGroupUndo)) && (!Value) && fUndoRedo->CanUndo)
@@ -8235,7 +8233,7 @@ bool __fastcall TCustomSynEdit::DoOnSpecialLineColors(int Line, TColor& Foregrou
 {
 	bool result = false;
 	result = false;
-	if(ASSIGNED(fOnSpecialLineColors))
+	if(Assigned(fOnSpecialLineColors))
 		fOnSpecialLineColors(this, Line, result, Foreground, Background);
 	return result;
 }
@@ -8476,7 +8474,7 @@ bool __fastcall TCustomSynEdit::GetHighlighterAttriAtRowColEx(const TBufferCoord
 	return result;
 }
 
-int __fastcall TCustomSynEdit::FindHookedCmdEvent(THookedCommandEvent AHandlerProc)
+int __fastcall TCustomSynEdit::FindHookedCmdEvent(const THookedCommandEvent& AHandlerProc)
 {
 	int result = 0;
 	THookedCommandHandlerEntry* Entry = nullptr;
@@ -8501,9 +8499,9 @@ int __fastcall TCustomSynEdit::GetHookedCommandHandlersCount()
 	return result;
 }
 
-void __fastcall TCustomSynEdit::RegisterCommandHandler(const THookedCommandEvent AHandlerProc, void* AHandlerData)
+void __fastcall TCustomSynEdit::RegisterCommandHandler(const THookedCommandEvent& AHandlerProc, void* AHandlerData)
 {
-	if(!ASSIGNED(AHandlerProc))
+	if(!Assigned(AHandlerProc))
 	{
 		return;
 	}
@@ -8515,10 +8513,10 @@ void __fastcall TCustomSynEdit::RegisterCommandHandler(const THookedCommandEvent
 		;
 }
 
-void __fastcall TCustomSynEdit::UnregisterCommandHandler(THookedCommandEvent AHandlerProc)
+void __fastcall TCustomSynEdit::UnregisterCommandHandler(const THookedCommandEvent& AHandlerProc)
 {
 	int i = 0;
-	if(!ASSIGNED(AHandlerProc))
+	if(!Assigned(AHandlerProc))
 	{
 		return;
 	}
@@ -8545,12 +8543,12 @@ void __fastcall TCustomSynEdit::NotifyHookedCommandHandlers(bool AfterProcessing
 		Entry->fEvent(this, AfterProcessing, Handled, Command, AChar, Data, Entry->fData);
 	}
 	if(Handled)
-		Command = (TSynEditorCommand) ecNone;
+		Command = static_cast<TSynEditorCommand>(ecNone);
 }
 
 void __fastcall TCustomSynEdit::DoOnClearBookmark(TSynEditMark*& Mark)
 {
-	if(ASSIGNED(fOnClearMark))
+	if(Assigned(fOnClearMark))
 		fOnClearMark(this, Mark);
 }
 
@@ -8584,7 +8582,7 @@ void __fastcall TCustomSynEdit::DoOnPaintTransientEx(TTransientType TransientTyp
 			}
     // event
 		}
-		if(ASSIGNED(fOnPaintTransient))
+		if(Assigned(fOnPaintTransient))
 		{
 			Canvas->Font->Assign(Font);
 			Canvas->Brush->Color = Color;
@@ -8608,7 +8606,7 @@ void __fastcall TCustomSynEdit::DoOnPaintTransient(TTransientType TransientType)
 
 void __fastcall TCustomSynEdit::DoOnPaint()
 {
-	if(ASSIGNED(fOnPaint))
+	if(Assigned(fOnPaint))
 	{
 		Canvas->Font->Assign(Font);
 		Canvas->Brush->Color = Color;
@@ -8618,7 +8616,7 @@ void __fastcall TCustomSynEdit::DoOnPaint()
 
 void __fastcall TCustomSynEdit::DoOnPlaceMark(TSynEditMark*& Mark)
 {
-	if(ASSIGNED(fOnPlaceMark))
+	if(Assigned(fOnPlaceMark))
 		fOnPlaceMark(this, Mark);
 }
 
@@ -8626,14 +8624,14 @@ TSynReplaceAction __fastcall TCustomSynEdit::DoOnReplaceText(const String ASearc
 {
 	TSynReplaceAction result = raCancel;
 	result = raCancel;
-	if(ASSIGNED(fOnReplaceText))
+	if(Assigned(fOnReplaceText))
 		fOnReplaceText(this, ASearch, AReplace, Line, Column, result);
 	return result;
 }
 
 void __fastcall TCustomSynEdit::DoOnStatusChange(TSynStatusChanges Changes)
 {
-	if(ASSIGNED(fOnStatusChange))
+	if(Assigned(fOnStatusChange))
 	{
 		fOnStatusChange(this, fStatusChanges);
 		fStatusChanges = Synedit__51;
@@ -8700,7 +8698,7 @@ TDisplayCoord __fastcall TCustomSynEdit::BufferToDisplayPos(const TBufferCoord& 
 					if(int(s[i]) <= 0x00FF)
 						CountOfAvgGlyphs = 1;
 					else
-						CountOfAvgGlyphs = (int) CeilOfIntDiv((unsigned int) fTextDrawer->TextWidth(String(s[i])), (WORD) fCharWidth);
+						CountOfAvgGlyphs = static_cast<int>(CeilOfIntDiv(static_cast<unsigned int>(fTextDrawer->TextWidth(String(s[i]))), static_cast<WORD>(fCharWidth)));
 					x += CountOfAvgGlyphs;
 				}
 				else
@@ -8754,7 +8752,7 @@ TBufferCoord __fastcall TCustomSynEdit::DisplayToBufferPos(const TDisplayCoord& 
 					if(int(s[i]) <= 0x00FF)
 						CountOfAvgGlyphs = 1;
 					else
-						CountOfAvgGlyphs = (int) CeilOfIntDiv((unsigned int) fTextDrawer->TextWidth(String(s[i])), (WORD) fCharWidth);
+						CountOfAvgGlyphs = static_cast<int>(CeilOfIntDiv(static_cast<unsigned int>(fTextDrawer->TextWidth(String(s[i]))), static_cast<WORD>(fCharWidth)));
 					x += CountOfAvgGlyphs;
 				}
 				else
@@ -8903,36 +8901,36 @@ void __fastcall TCustomSynEdit::QuadrupleClick()
 {
 	if(!(fOptions.Contains(eoNoSelection)))
 		SelectAll();
-	if(ASSIGNED(fOnQudrupleClick))
+	if(Assigned(fOnQudrupleClick))
 		fOnQudrupleClick(this);
 }
 
-void __fastcall TCustomSynEdit::AddKeyUpHandler(TKeyEvent aHandler)
+void __fastcall TCustomSynEdit::AddKeyUpHandler(const TKeyEvent& aHandler)
 {
 	fKbdHandler->AddKeyUpHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveKeyUpHandler(TKeyEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveKeyUpHandler(const TKeyEvent& aHandler)
 {
 	fKbdHandler->RemoveKeyUpHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::AddKeyDownHandler(TKeyEvent aHandler)
+void __fastcall TCustomSynEdit::AddKeyDownHandler(const TKeyEvent& aHandler)
 {
 	fKbdHandler->AddKeyDownHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveKeyDownHandler(TKeyEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveKeyDownHandler(const TKeyEvent& aHandler)
 {
 	fKbdHandler->RemoveKeyDownHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::AddKeyPressHandler(TKeyPressEvent aHandler)
+void __fastcall TCustomSynEdit::AddKeyPressHandler(const TKeyPressEvent& aHandler)
 {
 	fKbdHandler->AddKeyPressHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveKeyPressHandler(TKeyPressEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveKeyPressHandler(const TKeyPressEvent& aHandler)
 {
 	fKbdHandler->RemoveKeyPressHandler(aHandler);
 }
@@ -9255,7 +9253,7 @@ void __fastcall TCustomSynEdit::DefineProperties(TFiler* Filer)
 
 void __fastcall TCustomSynEdit::DoChange()
 {
-	if(ASSIGNED(fOnChange))
+	if(Assigned(fOnChange))
 		fOnChange(this);
 }
 
@@ -9382,22 +9380,22 @@ void __fastcall TCustomSynEdit::WriteRemovedKeystrokes(TWriter* Writer)
 	}
 }
 
-void __fastcall TCustomSynEdit::AddMouseDownHandler(TMouseEvent aHandler)
+void __fastcall TCustomSynEdit::AddMouseDownHandler(const TMouseEvent& aHandler)
 {
 	fKbdHandler->AddMouseDownHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveMouseDownHandler(TMouseEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveMouseDownHandler(const TMouseEvent& aHandler)
 {
 	fKbdHandler->RemoveMouseDownHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::AddMouseUpHandler(TMouseEvent aHandler)
+void __fastcall TCustomSynEdit::AddMouseUpHandler(const TMouseEvent& aHandler)
 {
 	fKbdHandler->AddMouseUpHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveMouseUpHandler(TMouseEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveMouseUpHandler(const TMouseEvent& aHandler)
 {
 	fKbdHandler->RemoveMouseUpHandler(aHandler);
 }
@@ -9434,17 +9432,17 @@ void __fastcall TCustomSynEdit::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TS
 {
 	if(ObjectIs(fHighlighter, TSynCustomCodeFoldingHighlighter*))
 		((TSynCustomCodeFoldingHighlighter*) fHighlighter)->ScanForFoldRanges(FoldRanges, LinesToScan, FromLine, ToLine);
-	if(ASSIGNED(fOnScanForFoldRanges))
+	if(Assigned(fOnScanForFoldRanges))
 		fOnScanForFoldRanges(this, FoldRanges, LinesToScan, FromLine, ToLine);
 }
 //-- CodeFolding
 
-void __fastcall TCustomSynEdit::AddMouseCursorHandler(TMouseCursorEvent aHandler)
+void __fastcall TCustomSynEdit::AddMouseCursorHandler(const TMouseCursorEvent& aHandler)
 {
 	fKbdHandler->AddMouseCursorHandler(aHandler);
 }
 
-void __fastcall TCustomSynEdit::RemoveMouseCursorHandler(TMouseCursorEvent aHandler)
+void __fastcall TCustomSynEdit::RemoveMouseCursorHandler(const TMouseCursorEvent& aHandler)
 {
 	fKbdHandler->RemoveMouseCursorHandler(aHandler);
 }
@@ -9515,8 +9513,8 @@ BOOL __fastcall TCustomSynEdit::SearchByFindDialog(TFindDialog* FindDialog)
 	TSynSearchOptions Options;
 	String ReplaceText;
 	String MessageText;
-	int OldSelStart = 0;
-	int OldSelLength = 0;
+	LONG OldSelStart = 0;
+	LONG OldSelLength = 0;
 	if(FindDialog->Options.Contains(frReplaceAll))
 		Options = Synedit__53;
 	else
@@ -9547,7 +9545,7 @@ BOOL __fastcall TCustomSynEdit::SearchByFindDialog(TFindDialog* FindDialog)
 	{
 		SelStart = OldSelStart;
 		SelLength = OldSelLength;
-		if(ASSIGNED(OnSearchNotFound))
+		if(Assigned(OnSearchNotFound))
 			OnSearchNotFound(this, FindDialog->FindText);
 		else
 		{
@@ -9782,7 +9780,7 @@ __fastcall TSynEditMark::TSynEditMark(TCustomSynEdit* AOwner)
 void __fastcall TSynEditMarkList::Notify(void* Ptr, TListNotification Action)
 {
 	inherited::Notify(Ptr, Action);
-	if(ASSIGNED(fOnChange))
+	if(Assigned(fOnChange))
 		fOnChange(this);
 }
 
@@ -9842,7 +9840,7 @@ void __fastcall TSynEditMarkList::GetMarksForLine(int line, TSynEditMarks& Marks
 	int cnt = 0;
 	int i = 0;
 	int stop = 0;
-	FillChar((void**)&Marks, (int) sizeof(Marks), 0);
+	FillChar(&Marks, static_cast<int>(sizeof(Marks)), 0);
 	cnt = 0;
 	for(stop = Count - 1, i = 0; i <= stop; i++)
 	{
@@ -9860,7 +9858,7 @@ void __fastcall TSynEditMarkList::Place(TSynEditMark* mark)
 {
 	if(ASSIGNED(fEdit))
 	{
-		if(ASSIGNED(fEdit->OnPlaceBookmark))
+		if(Assigned(fEdit->OnPlaceBookmark))
 			fEdit->OnPlaceBookmark(fEdit, mark);
 	}
 	if(ASSIGNED(mark))
@@ -9947,5 +9945,5 @@ void __fastcall TSynEditPlugin::LinesDeleted(int FirstLine, int Count)
 }
 
 
-}  // namespace SynEdit
+}  // namespace Synedit
 

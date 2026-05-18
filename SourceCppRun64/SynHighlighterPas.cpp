@@ -4,6 +4,7 @@
 
 #include "SynHighlighterPas.h"
 #include "SynEditStrConst.h"
+#include "OnLeavingScope.h"
 #include "SynEditDelphiInstances.hpp"
 #include "d2c_syshelper.h"
 
@@ -72,10 +73,10 @@ unsigned int __fastcall TSynPasSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 526 + int((*Str)) * 502);
+		result = static_cast<unsigned int>(result * 526 + int((*Str)) * 502);
 		++Str;
 	}
-	result = (unsigned int) (result % 641);
+	result = static_cast<unsigned int>(result % 641);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1222,7 +1223,7 @@ void __fastcall TSynPasSyn::EnumUserSettings(TStrings* DelphiVersions)
 						}
 						__finally
 						{
-							FreeAndNil(&Versions);
+							FreeAndNil(Versions);
 						}
 					}
 					__finally
@@ -1344,8 +1345,11 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 		TStringList* iVersions = nullptr;
 		String iVersionTag; /* ReadDelphiSettings */
 		iVersions = new TStringList();
-		try
 		{
+			auto olsLambda = onLeavingScope([&] 
+			{
+				delete iVersions;
+			});
 			EnumUserSettings(iVersions);
 			if((settingIndex < 0) || (settingIndex >= iVersions->Count))
 			{
@@ -1353,10 +1357,6 @@ bool __fastcall TSynPasSyn::UseUserSettings(int VersionIndex)
 				return result;
 			}
 			iVersionTag = iVersions->Strings[settingIndex];
-		}
-		__finally
-		{
-			delete iVersions;
 		}
 		tmpAsmAttri = new TSynHighlighterAttributes(L"", L"");
 		tmpCommentAttri = new TSynHighlighterAttributes(L"", L"");
@@ -1405,8 +1405,8 @@ String __fastcall TSynPasSyn::GetSampleSource()
 	           L"  Number, I, X: Integer;\x0d\x0a"
 	           L"begin\x0d\x0a"
 	           L"  Number := 123456;\x0d\x0a"
-			   L"  Caption := 'The Number is' + \" + IntToStr(Number);\x0d\x0a"
-			   L"  for I := 0 to Number do\x0d\x0a"
+	           L"  Caption := 'The Number is' + #32 + IntToStr(Number);\x0d\x0a"
+	           L"  for I := 0 to Number do\x0d\x0a"
 	           L"  begin\x0d\x0a"
 	           L"    Inc(X);\x0d\x0a"
 	           L"    Dec(X);\x0d\x0a"
@@ -1613,38 +1613,38 @@ void __fastcall TSynPasSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline statements
-		if(IsMultiLineStatement((int) Line, Synhighlighterpas__13, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterpas__14, true, FT_Asm) || IsMultiLineStatement((int) Line, Synhighlighterpas__15, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterpas__16, false))
+		if(IsMultiLineStatement(static_cast<int>(Line), Synhighlighterpas__13, true, FT_Comment) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterpas__14, true, FT_Asm) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterpas__15, true, FT_Comment) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterpas__16, false))
 			continue;
 		CurLine = LinesToScan->Strings[Line];
 
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     //  Deal with ConditionalDirectives
-		if(ConditionalDirective((int) Line))
+		if(ConditionalDirective(static_cast<int>(Line)))
 			continue;
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Implementation
 		if(UpperCase(TrimLeft(CurLine)) == L"IMPLEMENTATION")
     // Functions and procedures
-			FoldRanges->StartFoldRange((int) (Line + 1), FT_Implementation);
+			FoldRanges->StartFoldRange(static_cast<int>(Line + 1), FT_Implementation);
 		else
 		{
 			if(RE_Code.Matches(CurLine).Count > 0)
     // Find begin or end  (Fold Type 1)
-				FoldRanges->StartFoldRange((int) (Line + 1), FT_CodeDeclaration);
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), FT_CodeDeclaration);
 			else
 			{
-				if(!BlockDelimiter((int) Line))
-					FoldRanges->NoFoldInfo((int) (Line + 1));
+				if(!BlockDelimiter(static_cast<int>(Line)))
+					FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			}
 		}
 	} //for Line
@@ -1750,19 +1750,20 @@ void __fastcall TSynPasSyn::AdjustFoldRanges(TSynFoldRanges* FoldRanges, TString
 		FoldRanges->Ranges->Delete(ImplementationIndex);
 }
 //-- CodeFolding
-static bool SynHighlighterPas_Initialized = false;
 
-void SynHighlighterPas_initialization()
-{
-	if(SynHighlighterPas_Initialized)
-		return;
+	static bool SynHighlighterPas_Initialized = false;
 	
-	SynHighlighterPas_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynPasSyn));
-}
+	void SynHighlighterPas_initialization()
+	{
+		if(SynHighlighterPas_Initialized)
+			return;
+		
+		SynHighlighterPas_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynPasSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterPas
+}  // namespace Synhighlighterpas
 

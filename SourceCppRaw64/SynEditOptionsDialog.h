@@ -280,9 +280,9 @@ class TSynEditOptionsDialog : public System::Classes::TComponent
 private:
 	TfmEditorOptionsDialog* FForm;
 	TSynEditorOptionsUserCommand __fastcall GetUserCommandNames();
-	void __fastcall SetUserCommandNames(const TSynEditorOptionsUserCommand Value);
+	void __fastcall SetUserCommandNames(const TSynEditorOptionsUserCommand& Value);
 	TSynEditorOptionsAllUserCommands __fastcall GetUserCommands();
-	void __fastcall SetUserCommands(const TSynEditorOptionsAllUserCommands Value);
+	void __fastcall SetUserCommands(const TSynEditorOptionsAllUserCommands& Value);
 	bool __fastcall GetExtended();
 	void __fastcall SetExtended(bool Value);
 public:

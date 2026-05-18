@@ -52,7 +52,7 @@ String __fastcall TSynExporterRTF::ColorToRTF(TColor AColor)
 	String result;
 	int Col = 0;
 	Col = ColorToRGB(AColor);
-	result = Format(L"\\red%d\\green%d\\blue%d;", ARRAYOFCONST((GetRValue((DWORD) Col), GetGValue((DWORD) Col), GetBValue((DWORD) Col))));
+	result = Format(L"\\red%d\\green%d\\blue%d;", ARRAYOFCONST((GetRValue(static_cast<DWORD>(Col)), GetGValue(static_cast<DWORD>(Col)), GetBValue(static_cast<DWORD>(Col)))));
 	return result;
 }
 
@@ -162,7 +162,7 @@ String __fastcall TSynExporterRTF::GetHeader()
 	result = result + L"{\\colortbl";
 	for(stop = fListColors->Count - 1, i = 0; i <= stop; i++)
 	{
-		result = result + ColorToRTF((TColor) (NativeInt) fListColors->Items[i]);
+		result = result + ColorToRTF((TColor)(NativeInt)fListColors->Items[i]);
 	}
 	result = result + L"}\x0d\x0a";
   // title and creator comment
@@ -221,5 +221,5 @@ bool __fastcall TSynExporterRTF::UseBom()
 }
 
 
-}  // namespace SynExportRTF
+}  // namespace Synexportrtf
 

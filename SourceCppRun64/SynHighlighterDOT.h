@@ -322,8 +322,8 @@ private:
 	TtkTokenKind __fastcall FuncWhen(int Index);
 	TtkTokenKind __fastcall FuncWidth(int Index);
 	TtkTokenKind __fastcall FuncZ(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall IdentProc();
 	void __fastcall UnknownProc();
@@ -374,7 +374,7 @@ public:
 void SynHighlighterDOT_initialization();
 
 
-}  // namespace SynHighlighterDOT
+}  // namespace Synhighlighterdot
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterdot;

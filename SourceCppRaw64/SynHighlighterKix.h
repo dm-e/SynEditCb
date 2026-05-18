@@ -167,8 +167,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fVariableAttri;
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AsciiCharProc();
 	void __fastcall VariableProc();
@@ -213,7 +213,7 @@ public:
 void SynHighlighterKix_initialization();
 
 
-}  // namespace SynHighlighterKix
+}  // namespace Synhighlighterkix
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterkix;

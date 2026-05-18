@@ -2,6 +2,7 @@
 #pragma hdrstop
 
 #include "SynDBEdit.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -13,7 +14,7 @@ using namespace System;
 
 namespace Syndbedit
 {
-#define Syndbedit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << (TBlobType) ftWideMemo << (TBlobType) ftWideString)
+#define Syndbedit__0 (System::Set<TBlobType, ftBlob, ftWideMemo>() << static_cast<TBlobType>(ftWideMemo) << static_cast<TBlobType>(ftWideString))
 
 __fastcall TCustomDBSynEdit::TCustomDBSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
 __fastcall TDBSynEdit::TDBSynEdit(TComponent* AOwner) : inherited(AOwner) {}
@@ -79,7 +80,7 @@ void __fastcall TCustomDBSynEdit::DataChange(TObject* Sender)
 			LoadMemo();
 		else
 			Text = FDataLink->Field->Text;
-		if(ASSIGNED(FLoadData))
+		if(Assigned(FLoadData))
 			FLoadData(this);
 	}
 	else
@@ -177,9 +178,9 @@ void __fastcall TCustomDBSynEdit::LoadMemo()
 		ClearUndo();
     // Memo too large 
 	}
-	catch(EInvalidOperation* E)
+	catch(const EInvalidOperation& E)
 	{
-		Lines->Text = Format(L"(%s)", ARRAYOFCONST((E->Message)));
+		Lines->Text = Format(L"(%s)", ARRAYOFCONST((E.Message)));
 	}
 	EditingChange(this);
 }
@@ -239,5 +240,5 @@ void __fastcall TCustomDBSynEdit::UpdateData(TObject* Sender)
 }
 
 
-}  // namespace SynDBEdit
+}  // namespace Syndbedit
 

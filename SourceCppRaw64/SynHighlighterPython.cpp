@@ -12,7 +12,6 @@ using namespace Syneditcodefolding;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Types;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterpython
@@ -82,13 +81,13 @@ TStringList* __fastcall TSynPythonSyn::GetKeywordIdentifiers()
 
   // List of keywords
 	const int KEYWORDCOUNT = 29;
-	const String KEYWORDS[29/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
+	const String KEYWORDS[KEYWORDCOUNT/*# range 1..KEYWORDCOUNT*/] = {L"and", L"assert", L"break", L"class", L"continue", L"def", L"del", L"elif", L"else", L"except", L"exec", L"finally"
                     , L"for", L"from", L"global", L"if", L"import", L"in", L"is", L"lambda", L"not", L"or", L"pass", L"print", L"raise", L"return", L"try"
                     , L"while", L"yield"};
 
   // List of non-keyword identifiers
 	const int NONKEYWORDCOUNT = 66;
-	const String NONKEYWORDS[66/*# range 1..NONKEYWORDCOUNT*/] = {L"__future__", L"__import__", L"abs", L"apply", L"as", L"buffer", L"callable", L"chr", L"cmp", L"coerce", L"compile"
+	const String NONKEYWORDS[NONKEYWORDCOUNT/*# range 1..NONKEYWORDCOUNT*/] = {L"__future__", L"__import__", L"abs", L"apply", L"as", L"buffer", L"callable", L"chr", L"cmp", L"coerce", L"compile"
                     , L"complex", L"delattr", L"dict", L"dir", L"divmod", L"eval", L"execfile", L"False", L"file", L"filter", L"float", L"getattr"
                     , L"globals", L"hasattr", L"hash", L"help", L"hex", L"id", L"input", L"int", L"intern", L"isinstance", L"issubclass", L"iter"
                     , L"len", L"list", L"locals", L"long", L"None", L"NotImplemented", L"map", L"max", L"min", L"oct", L"open", L"ord", L"pow", L"range"
@@ -140,7 +139,7 @@ TtkTokenKind __fastcall TSynPythonSyn::IdentKind(PWideChar MayBe)
 	if(i != -1)
 
   // Check if it is a system identifier (__*__)
-		result = (TtkTokenKind) (NativeInt) FKeywords->Objects[i];
+		result = (TtkTokenKind)(NativeInt)FKeywords->Objects[i];
 	else
 	{
 		if((fStringLen >= 5) && (MayBe[0] == L'_') && (MayBe[1] == L'_') && (MayBe[2] != L'_') && (MayBe[fStringLen - 1] == L'_') && (MayBe[fStringLen - 2] == L'_') && (MayBe[fStringLen - 3] != L'_'))
@@ -1437,7 +1436,7 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 	__int64 stop = 0;
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
-		if(IsMultiLineString((int) Line, rsMultilineString, true) || IsMultiLineString((int) Line, rsMultilineString2, true) || IsMultiLineString((int) Line, rsMultilineString3, false))
+		if(IsMultiLineString(static_cast<int>(Line), rsMultilineString, true) || IsMultiLineString(static_cast<int>(Line), rsMultilineString2, true) || IsMultiLineString(static_cast<int>(Line), rsMultilineString3, false))
 			continue;
 
     // Find Fold regions
@@ -1447,12 +1446,12 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
     // Skip empty lines
 		if(LeftTrimmedLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 		TabW = TabWidth(LinesToScan);
 		Indent = LeftSpaces();
@@ -1472,11 +1471,11 @@ void __fastcall TSynPythonSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
 					else
 						FoldType = 1;
 				}
-				FoldRanges->StartFoldRange((int) (Line + 1), FoldType, Indent);
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), FoldType, Indent);
 				continue;
 			}
 		}
-		FoldRanges->StopFoldRange((int) (Line + 1), 1, Indent);
+		FoldRanges->StopFoldRange(static_cast<int>(Line + 1), 1, Indent);
 	}
 }
 //-- CodeFolding
@@ -1546,5 +1545,5 @@ String __fastcall TSynPythonSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterPython
+}  // namespace Synhighlighterpython
 

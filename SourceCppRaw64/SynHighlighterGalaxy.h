@@ -207,7 +207,7 @@ public:
 void SynHighlighterGalaxy_initialization();
 
 
-}  // namespace SynHighlighterGalaxy
+}  // namespace Synhighlightergalaxy
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightergalaxy;

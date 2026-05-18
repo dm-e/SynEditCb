@@ -124,7 +124,7 @@ private:
 	bool FExtended;
 	void __fastcall SetKeystrokes(Syneditkeycmds::TSynEditKeyStrokes* const Value);
 	void __fastcall UpdateKeystrokesList();
-	HIDESBASE MESSAGE void __fastcall WMGetMinMaxInfo(TWMGetMinMaxInfo& Msg)/*# WM_GETMINMAXINFO */;
+	HIDESBASE MESSAGE void __fastcall WMGetMinMaxInfo(Winapi::Messages::TWMGetMinMaxInfo& Msg)/*# WM_GETMINMAXINFO */;
 public:
 	typedef TForm inherited;
 	__fastcall TSynEditKeystrokesEditorForm(TComponent* AOwner);
@@ -133,7 +133,7 @@ public:
 	__property bool ExtendedString = { read = FExtended, write = FExtended };
 protected:
 	BEGIN_MESSAGE_MAP
-	  VCL_MESSAGE_HANDLER(WM_GETMINMAXINFO, TWMGetMinMaxInfo, WMGetMinMaxInfo)
+	  VCL_MESSAGE_HANDLER(WM_GETMINMAXINFO, Winapi::Messages::TWMGetMinMaxInfo, WMGetMinMaxInfo)
 	END_MESSAGE_MAP(Vcl::Forms::TCustomForm)
 };
 #endif // SynEditKeyCmdsEditorH

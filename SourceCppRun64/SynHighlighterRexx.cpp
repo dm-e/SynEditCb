@@ -9,6 +9,7 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
+using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterrexx
@@ -159,10 +160,10 @@ unsigned int __fastcall TSynRexxSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 290 + int((*Str)) * 365);
+		result = static_cast<unsigned int>(result * 290 + int((*Str)) * 365);
 		++Str;
 	}
-	result = (unsigned int) (result % 349);
+	result = static_cast<unsigned int>(result % 349);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1348,13 +1349,13 @@ __fastcall TSynRexxSyn::TSynRexxSyn(TComponent* AOwner)
 	fCaseSensitive = false;
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Style = Synhighlighterrexx__0;
-	fCommentAttri->Foreground = (TColor) 0x00EFBC89;
+	fCommentAttri->Foreground = static_cast<TColor>(0x00EFBC89);
 	AddAttribute(fCommentAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	fIdentifierAttri->Foreground = (TColor) clLime;
 	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
-	fKeyAttri->Foreground = (TColor) 0x009797FF;
+	fKeyAttri->Foreground = static_cast<TColor>(0x009797FF);
 	AddAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	AddAttribute(fSpaceAttri);
@@ -1365,8 +1366,8 @@ __fastcall TSynRexxSyn::TSynRexxSyn(TComponent* AOwner)
 	fStdFunctionAttri->Foreground = (TColor) clAqua;
 	AddAttribute(fStdFunctionAttri);
 	fStringAttri = new TSynHighlighterAttributes(SYNS_AttrString, SYNS_FriendlyAttrString);
-	fStringAttri->Foreground = (TColor) 0x008CD959;
-	fStringAttri->Background = (TColor) 0x00606060;
+	fStringAttri->Foreground = static_cast<TColor>(0x008CD959);
+	fStringAttri->Background = static_cast<TColor>(0x00606060);
 	AddAttribute(fStringAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
@@ -1632,5 +1633,5 @@ void* __fastcall TSynRexxSyn::GetRange()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterRexx
+}  // namespace Synhighlighterrexx
 

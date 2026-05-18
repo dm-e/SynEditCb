@@ -171,7 +171,7 @@ public:
 void SynURIOpener_initialization();
 
 
-}  // namespace SynURIOpener
+}  // namespace Synuriopener
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synuriopener;

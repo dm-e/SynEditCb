@@ -37,10 +37,10 @@ unsigned int __fastcall TSynModelicaSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 598 + int((*Str)) * 127);
+		result = static_cast<unsigned int>(result * 598 + int((*Str)) * 127);
 		++Str;
 	}
-	result = (unsigned int) (result % 97);
+	result = static_cast<unsigned int>(result % 97);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -752,5 +752,5 @@ String __fastcall TSynModelicaSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterModelica
+}  // namespace Synhighlightermodelica
 

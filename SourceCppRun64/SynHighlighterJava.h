@@ -56,6 +56,7 @@ The SynHighlighterJava unit provides SynEdit with a Java source (.java) highligh
 #include "SynUnicode.h"
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterjava
 {
@@ -232,8 +233,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CommentProc();
 	void __fastcall AndSymbolProc();
@@ -310,7 +311,7 @@ public:
 void SynHighlighterJava_initialization();
 
 
-}  // namespace SynHighlighterJava
+}  // namespace Synhighlighterjava
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterjava;

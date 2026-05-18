@@ -83,10 +83,10 @@ unsigned int __fastcall TSynVBSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 573 + int((*Str)) * 524);
+		result = static_cast<unsigned int>(result * 573 + int((*Str)) * 524);
 		++Str;
 	}
-	result = (unsigned int) (result % 1511);
+	result = static_cast<unsigned int>(result % 1511);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -283,17 +283,17 @@ void __fastcall TSynVBSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find begin or end  (Fold Type 1)
-		if(!BlockDelimiter((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!BlockDelimiter(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} //for Line
 }
 /*
@@ -774,5 +774,5 @@ String __fastcall TSynVBSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterVB
+}  // namespace Synhighlightervb
 

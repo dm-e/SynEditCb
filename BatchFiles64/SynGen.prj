@@ -1,0 +1,100 @@
+D2Cpp VERSION = 2.7.0
+
+==========[INPUT]
+SYSTEM_PAS =System.pas
+
+[DEFINITIONS]
+COMPILERVERSION=33
+CPUX64=1
+JEDI_INC=1
+MSWINDOWS=1
+SYN_COMPILER_10_UP=1
+UNICODE=1
+WIN64=1
+[INCLUDEPATHS]
+..\Source
+..\SynGen
+[LIBINCLUDEPATHS]
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\sys
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\common
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\win
+C:\Program Files (x86)\Embarcadero\Studio\23.0\source\vcl
+[UNITSCOPENAMES]
+System
+Winapi
+Vcl
+System.Win
+Data
+Xml
+System.Generics
+
+==========[PROCESSORS]
+
+ENABLEDFMTRANSLATOR =true
+
+==========[SUBSTITUTIONS]
+IDENT_FILE =SynEditIdents.txt
+
+[PREREPLACEMENTS]
+
+[IDREPLACEMENTS]
+[ELEMENTIDREPLACEMENTS]
+HGLOBAL->hGlobal
+LPARAM->LParam
+RESULT->Result
+WPARAM->WParam
+[HELPERREPLACEMENTS]
+
+[REFACTORING]
+TComparer,TComparer__1,class,,,0,0,0,,true,false
+TDictionary,TDictionary__2,class,,,0,0,0,,true,false
+TEnumerable,TEnumerable__1,,,,0,0,0,,true,false
+TLineFoldInfo,TLineFoldInfo,record,,,0,0,0,SynEditDelphiInstances.hpp,false,true
+TList,TList__1,class,,,0,0,0,,true,false
+TSynFoldRange,TSynFoldRange,record,,,0,0,0,SynEditDelphiInstances.hpp,false,true
+TSynFoldRanges,TSynFoldRanges,class,,,0,0,0,SynEditCodeFolding,false,false
+0.TFoldOpenClose,TFoldOpenClose,enum,,,0,-1,0,SynEditDelphiInstances.hpp,false,true
+
+[DFMCONVERSION]
+Form,OldCreateOrder
+Form,PixelsPerInch
+Form,TextHeight
+TMainMenu,TMenuItem
+TMenuItem,TMenuItem
+
+
+
+==========[TYPES]
+
+DELPHISTRING =Delphi
+[GUIDASSIGNMENTS]
+ISynEditBufferPlugin:"{65F3874E-9858-4069-B091-72DEB3B0BA92}"
+ISynEditUndo:"{9A552F6C-26AF-470A-80D1-E4A514371342}"
+
+==========[NAMESPACES]
+
+NORMALIZE_NAMESPACES =true
+[NONAMESPACES]
+Winapi::Activex
+[NONODEFINES]
+[FORCENAMESPACE]
+
+
+==========[TUNING]
+
+APPLYEXTERNAL =true
+APPLYNODEFINE =true
+NOABSTRACT =true
+VIRTUALCLASSMETHODASSTATIC =false
+
+==========[TARGET]
+COMPILER =ModernCBuilder
+PHEADER =<vcl.h>
+TARGETPLATFORM =WINDOWS
+
+==========[OUTPUT]
+
+INDENTER =Tab
+INDENTDELTA =1
+
+

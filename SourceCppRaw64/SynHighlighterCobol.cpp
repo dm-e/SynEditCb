@@ -209,7 +209,7 @@ TtkTokenKind __fastcall TSynCobolSyn::IdentKind(PWideChar MayBe)
 							I = Run + wcslen(L"label");
 							while(fLine[I] == L' ')
 								++I;
-							if((AnsiStrLComp(&fLine[I], const_cast<PWideChar>(L"record"), (unsigned int) wcslen(L"record")) == 0) && (I + wcslen(L"record") - 1 <= fCodeEndPos))
+							if((AnsiStrLComp(&fLine[I], const_cast<PWideChar>(L"record"), static_cast<unsigned int>(wcslen(L"record"))) == 0) && (I + wcslen(L"record") - 1 <= fCodeEndPos))
 								result = tkKey;
 							else
 								result = tkPreprocessor;
@@ -987,5 +987,5 @@ String __fastcall TSynCobolSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterCobol
+}  // namespace Synhighlightercobol
 

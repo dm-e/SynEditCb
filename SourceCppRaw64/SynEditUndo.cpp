@@ -58,7 +58,7 @@ public:
 	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
-	System::TArray<String> FLines;
+	D2CArray<String> FLines;
 public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
@@ -73,11 +73,11 @@ public:
 	typedef TSynUndoItem inherited;
 private:
 	int FIndex;
-	System::TArray<String> FLines;
+	D2CArray<String> FLines;
 public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
-	__fastcall TSynLinesDeletedUndoItem(TCustomSynEdit* Editor, int Index, System::TArray<String>& DeletedLines);
+	__fastcall TSynLinesDeletedUndoItem(TCustomSynEdit* Editor, int Index, const D2CArray<String>& DeletedLines);
 	__fastcall TSynLinesDeletedUndoItem() {}
 };
 
@@ -103,7 +103,7 @@ public:
 	typedef TSynEditPlugin inherited;
 private:
 	TSynEditUndo* FSynEditUndo;
-	System::TArray<String> FDeletedLines;
+	D2CArray<String> FDeletedLines;
 protected:
 	virtual void __fastcall LinesInserted(int FirstLine, int Count);
 	virtual void __fastcall LinesBeforeDeleted(int FirstLine, int Count);
@@ -165,7 +165,7 @@ private:
 	void __fastcall SetModified(bool Value);
 	void __fastcall SetCommandProcessed(TSynEditorCommand Command);
 	void __fastcall SetMaxUndoActions(int Value);
-	void __fastcall SetOnModifiedChanged(const TNotifyEvent Value);
+	void __fastcall SetOnModifiedChanged(const TNotifyEvent& Value);
 	void __fastcall SetGroupUndo(bool Value);
 	int __fastcall GetMaxUndoActions();
 	void __fastcall BeginBlock(TControl* Editor);
@@ -199,7 +199,7 @@ __fastcall TSynEditUndoList::TSynEditUndoList(TSynEditUndo* Owner)
 void __fastcall TSynEditUndoList::EnsureMaxEntries()
 {
 	int KeepCount = 0;
-	System::TArray<TSynUndoItem*> ItemArray;
+	D2CArray<TSynUndoItem*> ItemArray;
 	__int64 I = 0;
 	if(FOwner->FMaxUndoActions <= 0)
 		return;
@@ -249,7 +249,7 @@ void __fastcall TSynEditUndo::AddUndoItem(TSynUndoItem* Item)
 	FUndoList->Push(Item);
 	FRedoList->Clear();
   // Do not sent unnecessary notifications
-	if((FBlockCount == 0) && (OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
+	if((FBlockCount == 0) && (OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
 		FOnModifiedChanged(this);
 }
 
@@ -297,6 +297,7 @@ __fastcall TSynEditUndo::TSynEditUndo(TCustomSynEdit* Editor)
 	FMaxUndoActions = 0;
 	FUndoList = new TSynEditUndoList(this);
 	FRedoList = new TSynEditUndoList(this);
+	// AddRef(); //# Ensure COM contract: returned interface must have RefCount >= 1
 }
 
 __fastcall TSynEditUndo::~TSynEditUndo()
@@ -327,7 +328,7 @@ void __fastcall TSynEditUndo::EndBlock(TControl* Editor)
 			}
 			FUndoList->FBlockChangeNumber = 0;
 			AddGroupBreak();
-			if(FBlockStartModified ^ GetModified() && ASSIGNED(FOnModifiedChanged))
+			if(FBlockStartModified ^ GetModified() && Assigned(FOnModifiedChanged))
 				FOnModifiedChanged(this);
 		}
 	}
@@ -441,7 +442,7 @@ void __fastcall TSynEditUndo::Redo(TControl* Editor)
 		}
 		__finally
 		{
-			if((OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
+			if((OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
 				FOnModifiedChanged(this);
 			FUndoList->BlockChangeNumber = 0;
 		}
@@ -492,7 +493,7 @@ void __fastcall TSynEditUndo::SetModified(bool Value)
 	}
 }
 
-void __fastcall TSynEditUndo::SetOnModifiedChanged(const TNotifyEvent Value)
+void __fastcall TSynEditUndo::SetOnModifiedChanged(const TNotifyEvent& Value)
 {
 	FOnModifiedChanged = Value;
 }
@@ -546,7 +547,7 @@ void __fastcall TSynEditUndo::Undo(TControl* Editor)
 		}
 		__finally
 		{
-			if((OldModified ^ GetModified()) && ASSIGNED(FOnModifiedChanged))
+			if((OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
 				FOnModifiedChanged(this);
 			FRedoList->BlockChangeNumber = 0;
 		}
@@ -561,9 +562,9 @@ void __fastcall TSynEditUndo::Unlock()
 
 /* Factory Method*/
 
-ISynEditUndo* __fastcall CreateSynEditUndo(TCustomSynEdit* Editor)
+_di_ISynEditUndo __fastcall CreateSynEditUndo(TCustomSynEdit* Editor)
 {
-	ISynEditUndo* result = nullptr;
+	_di_ISynEditUndo result;
 	result = new TSynEditUndo(Editor);
 	return result;
 }
@@ -592,7 +593,7 @@ void __fastcall TSynCaretAndSelectionUndoItem::Undo(TCustomSynEdit* Editor)
 
 /* TSynLinesDeletedUndoItem */
 
-__fastcall TSynLinesDeletedUndoItem::TSynLinesDeletedUndoItem(TCustomSynEdit* Editor, int Index, System::TArray<String>& DeletedLines)
+__fastcall TSynLinesDeletedUndoItem::TSynLinesDeletedUndoItem(TCustomSynEdit* Editor, int Index, const D2CArray<String>& DeletedLines)
  : FIndex(Index),
 			FLines(DeletedLines)
 {
@@ -662,8 +663,8 @@ __fastcall TSynLinePutUndoItem::TSynLinePutUndoItem(TCustomSynEdit* Editor, int 
 	String Line;
 	FCommandProcessed = Command;
 	Line = Editor->Lines->Strings[Index];
-	Len1 = OldLine.Length();
-	Len2 = Line.Length();
+	Len1 = static_cast<int>(OldLine.Length());
+	Len2 = static_cast<int>(Line.Length());
   // Compare from start
 	while((Len1 > 0) && (Len2 > 0) && (OldLine[FStartPos] == Line[FStartPos]))
 	{
@@ -694,7 +695,7 @@ void __fastcall TSynLinePutUndoItem::Redo(TCustomSynEdit* Editor)
 		if((FOldValue.Length() == 1) && (FNewValue.Length() == 1))  // Typing in Insert Mode
 			Char = FStartPos;
 		else
-			Char = FStartPos + FNewValue.Length();
+			Char = static_cast<int>(FStartPos + FNewValue.Length());
 		break;
 		case ecDeleteChar:
 		case ecDeleteWord:
@@ -702,7 +703,7 @@ void __fastcall TSynLinePutUndoItem::Redo(TCustomSynEdit* Editor)
 		Char = FStartPos;
 		break;
 		default:
-		Char = FStartPos + FNewValue.Length();
+		Char = static_cast<int>(FStartPos + FNewValue.Length());
 		break;
 	}
 	FCaret = BufferCoord(Char, FIndex + 1);
@@ -724,7 +725,7 @@ void __fastcall TSynLinePutUndoItem::Undo(TCustomSynEdit* Editor)
 		if((FOldValue.Length() == 1) && (FNewValue.Length() == 1))   // Typing in Insert Mode
 			Char = FStartPos;
 		else
-			Char = FStartPos + FOldValue.Length();
+			Char = static_cast<int>(FStartPos + FOldValue.Length());
 		break;
 		case ecDeleteChar:
 		case ecDeleteWord:
@@ -732,7 +733,7 @@ void __fastcall TSynLinePutUndoItem::Undo(TCustomSynEdit* Editor)
 		Char = FStartPos;
 		break;
 		default:
-		Char = FStartPos + FOldValue.Length();
+		Char = static_cast<int>(FStartPos + FOldValue.Length());
 		break;
 	}
 	FCaret = BufferCoord(Char, FIndex + 1);
@@ -806,5 +807,5 @@ void __fastcall TSynUndoPlugin::LinesInserted(int FirstLine, int Count)
 }
 
 
-}  // namespace SynEditUndo
+}  // namespace Syneditundo
 

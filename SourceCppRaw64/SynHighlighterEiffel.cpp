@@ -65,10 +65,10 @@ unsigned int __fastcall TSynEiffelSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)) || IsOperatorChar((*Str)))
 	{
-		result = (unsigned int) (result * 543 + int((*Str)) * 79);
+		result = static_cast<unsigned int>(result * 543 + int((*Str)) * 79);
 		++Str;
 	}
-	result = (unsigned int) (result % 503);
+	result = static_cast<unsigned int>(result % 503);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1652,5 +1652,5 @@ String __fastcall TSynEiffelSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterEiffel
+}  // namespace Synhighlightereiffel
 

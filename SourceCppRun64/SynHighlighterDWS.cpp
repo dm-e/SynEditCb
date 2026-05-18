@@ -111,7 +111,7 @@ __fastcall TSynDWSSyn::TSynDWSSyn(TComponent* AOwner)
 {
 	fCaseSensitive = true; // bypass automatic lowercase, we handle it here
 	fAsmAttri = new TSynHighlighterAttributes(SYNS_AttrAssembler, SYNS_FriendlyAttrAssembler);
-	fAsmAttri->Foreground = (TColor) RGB(128, 0, 0);
+	fAsmAttri->Foreground = static_cast<TColor>(RGB(128, 0, 0));
 	AddAttribute(fAsmAttri);
 	fCommentAttri = new TSynHighlighterAttributes(SYNS_AttrComment, SYNS_FriendlyAttrComment);
 	fCommentAttri->Foreground = (TColor) clGreen;
@@ -180,10 +180,10 @@ unsigned int __fastcall TSynDWSSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		c = (WORD) int((*Str));
+		c = static_cast<WORD>(int((*Str)));
 		if(Synhighlighterdws__6.Contains(c))
-			c = (WORD) (c + (int(L'a') - int(L'A')));
-		result = (unsigned int) (result * 692 + c * 171);
+			c = static_cast<WORD>(c + (int(L'a') - int(L'A')));
+		result = static_cast<unsigned int>(result * 692 + c * 171);
 		++Str;
 	}
 	fStringLen = Str - fToIdent;
@@ -207,7 +207,7 @@ TtkTokenKind __fastcall TSynDWSSyn::IdentKind(PWideChar MayBe)
 void __fastcall TSynDWSSyn::InitIdent()
 {
 
-	auto SetIdentFunc = [&](int h, const TIdentFuncTableFunc func) -> void 
+	auto SetIdentFunc = [&](int h, const TIdentFuncTableFunc& func) -> void 
 	{
 		fIdentFuncTable[h] = func;
 	};
@@ -215,17 +215,17 @@ void __fastcall TSynDWSSyn::InitIdent()
 	int stop = 0;
 	for(stop = 95 /*# High(cKeywords) */, i = 1 /*# Low(cKeywords) */; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(&((String)cKeyWords[i - 1])[1]), KeyWordFunc);
+		SetIdentFunc(static_cast<int>(HashKey(&((String)cKeyWords[i - 1])[1])), KeyWordFunc);
 		fKeyWords->Add(cKeyWords[i - 1]);
 	}
 	for(stop = 4 /*# High(cKeywordsPropertyScoped) */, i = 0; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(&((String)cKeyWordsPropertyScoped[i])[1]), FuncPropertyScoped);
+		SetIdentFunc(static_cast<int>(HashKey(&((String)cKeyWordsPropertyScoped[i])[1])), FuncPropertyScoped);
 		FKeywordsPropertyScoped->Add(cKeyWordsPropertyScoped[i]);
 	}
 	for(stop = 1 /*# High(cKeywordsTypeScoped) */, i = 0; i <= stop; i++)
 	{
-		SetIdentFunc((int) HashKey(&((String)cKeywordsTypeScoped[i])[1]), FuncTypeScoped);
+		SetIdentFunc(static_cast<int>(HashKey(&((String)cKeywordsTypeScoped[i])[1])), FuncTypeScoped);
 		FKeywordsTypeScoped->Add(cKeywordsTypeScoped[i]);
 	}
 	for(stop = 388 /*# High(fIdentFuncTable) */, i = 0 /*# Low(fIdentFuncTable) */; i <= stop; i++)
@@ -233,10 +233,10 @@ void __fastcall TSynDWSSyn::InitIdent()
 		if(fIdentFuncTable[i] == nullptr)
 			fIdentFuncTable[i] = AltFunc;
 	}
-	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"asm")), FuncAsm);
-	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"end")), FuncEnd);
-	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"property")), FuncProperty);
-	SetIdentFunc((int) HashKey(const_cast<PWideChar>(L"type")), FuncType);
+	SetIdentFunc(static_cast<int>(HashKey(const_cast<PWideChar>(L"asm"))), FuncAsm);
+	SetIdentFunc(static_cast<int>(HashKey(const_cast<PWideChar>(L"end"))), FuncEnd);
+	SetIdentFunc(static_cast<int>(HashKey(const_cast<PWideChar>(L"property"))), FuncProperty);
+	SetIdentFunc(static_cast<int>(HashKey(const_cast<PWideChar>(L"type"))), FuncType);
 	fKeyWords->Sorted = true;
 }
 
@@ -503,7 +503,7 @@ void __fastcall TSynDWSSyn::LoadDelphiStyle()
 	auto AddKeyword = [&](const String AName) -> void 
 	{
 		int I = 0;
-		I = (int) HashKey(ustr2pwchar(AName, 1 - 1));
+		I = static_cast<int>(HashKey(ustr2pwchar(AName, 1 - 1)));
 		fIdentFuncTable[I] = KeyWordFunc;
 		fKeyWords->Add(AName);
 	};
@@ -1180,38 +1180,38 @@ void __fastcall TSynDWSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrin
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline statements
-		if(IsMultiLineStatement((int) Line, Synhighlighterdws__11, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterdws__12, true, FT_Asm) || IsMultiLineStatement((int) Line, Synhighlighterdws__13, true, FT_HereDocDouble) || IsMultiLineStatement((int) Line, Synhighlighterdws__14, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, Synhighlighterdws__15, true, FT_HereDocSingle) || IsMultiLineStatement((int) Line, Synhighlighterdws__16, true, FT_Comment) || IsMultiLineStatement((int) Line, Synhighlighterdws__17, false))
+		if(IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__11, true, FT_Comment) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__12, true, FT_Asm) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__13, true, FT_HereDocDouble) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__14, true, FT_HereDocSingle) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__15, true, FT_HereDocSingle) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__16, true, FT_Comment) || IsMultiLineStatement(static_cast<int>(Line), Synhighlighterdws__17, false))
 			continue;
 		CurLine = LinesToScan->Strings[Line];
 
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     //  Deal with ConditionalDirectives
-		if(ConditionalDirective((int) Line))
+		if(ConditionalDirective(static_cast<int>(Line)))
 			continue;
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Implementation
 		if(UpperCase(TrimLeft(CurLine)) == L"IMPLEMENTATION")
     // Functions and procedures
-			FoldRanges->StartFoldRange((int) (Line + 1), FT_Implementation);
+			FoldRanges->StartFoldRange(static_cast<int>(Line + 1), FT_Implementation);
 		else
 		{
 			if(RE_Code.IsMatch(CurLine))
     // Find begin or end  (Fold Type 1)
-				FoldRanges->StartFoldRange((int) (Line + 1), FT_CodeDeclaration);
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), FT_CodeDeclaration);
 			else
 			{
-				if(!BlockDelimiter((int) Line))
-					FoldRanges->NoFoldInfo((int) (Line + 1));
+				if(!BlockDelimiter(static_cast<int>(Line)))
+					FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			}
 		}
 	} //for Line
@@ -1337,7 +1337,7 @@ String __fastcall TSynDWSSyn::GetSampleSource()
 	           L"  Number, I, X: Integer;\x0d\x0a"
 	           L"begin\x0d\x0a"
 	           L"  Number := 123456;\x0d\x0a"
-			   L"  Caption := 'The Number is' + \" + IntToStr(Number);\x0d\x0a"
+	           L"  Caption := 'The Number is' + #32 + IntToStr(Number);\x0d\x0a"
 	           L"  for I := 0 to Number do\x0d\x0a"
 	           L"  begin\x0d\x0a"
 	           L"    Inc(X);\x0d\x0a"
@@ -1426,19 +1426,20 @@ String __fastcall TSynDWSSyn::GetFriendlyLanguageName()
 	result = SYNS_FriendlyLangPascal;
 	return result;
 }
-static bool SynHighlighterDWS_Initialized = false;
 
-void SynHighlighterDWS_initialization()
-{
-	if(SynHighlighterDWS_Initialized)
-		return;
+	static bool SynHighlighterDWS_Initialized = false;
 	
-	SynHighlighterDWS_Initialized = true;
-	
-	RegisterPlaceableHighlighter(__classid(TSynDWSSyn));
-}
+	void SynHighlighterDWS_initialization()
+	{
+		if(SynHighlighterDWS_Initialized)
+			return;
+		
+		SynHighlighterDWS_Initialized = true;
+		
+		RegisterPlaceableHighlighter(__classid(TSynDWSSyn));
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterDWS
+}  // namespace Synhighlighterdws
 

@@ -1,9 +1,10 @@
-//---------------------------------------------------------------------------
-
+#include <vcl.h>
 #pragma hdrstop
 
 #include "d2c_syshelper.h"
 #include <System.SysConst.hpp>
+//#include <System.SysUtils.hpp>
+#include "d2c_convert.h"
 #include "d2c_openarray.h"
 //---------------------------------------------------------------------------
 /*$ZEROBASEDSTRINGS ON*/
@@ -39,8 +40,8 @@ enum TRuntimeError {reNone,
 										rePlatformNotImplemented,
 										reObjectDisposed };
 
-
-void Error(TRuntimeError errorCode)
+// in 23.2 twice void Error(TRuntimeError errorCode)  => linker error  ?
+void RError(TRuntimeError errorCode)
 {
 	throw Sysutils::Exception("");
 }
@@ -50,19 +51,10 @@ void Error(TRuntimeError errorCode)
 
 namespace d2c_system {
 
-#define Sysutils__38 (TCompareOptions() << coIgnoreCase)
-#define Sysutils__39 TCompareOptions()
-#define Sysutils__40 TCompareOptions()
-#define Sysutils__41 TCompareOptions()
-#define Sysutils__42 TCompareOptions()
-#define Sysutils__43 TCompareOptions()
-#define Sysutils__44 (TReplaceFlags() << rfReplaceAll)
-#define Sysutils__45 (TReplaceFlags() << rfReplaceAll)
-#define Sysutils__46 (System::Set<int, 0, 255>() << 0 << 1)
-#define Sysutils__47 (System::Set<int, 0, 255>() << 0 << 1)
-
-
-PChar ustr2pwchar(const String xs, int xiIndex = 0)
+#define Stringlist__0 (System::Set<int, 0, 255>() << coIgnoreCase)
+#define Stringlist__1 System::Set<int, 0, 255>()
+#define Stringlist__2 (System::Set<TCompareOption, TCompareOption::coLingIgnoreCase, TCompareOption::coStringSort>() << TStringSplitOptions::ExcludeEmpty << TStringSplitOptions::ExcludeLastEmpty)
+PChar ustr2pwchar(const String& xs, int xiIndex = 0)
 {
 	return xs.c_str() + xiIndex;
 }
@@ -72,13 +64,13 @@ void __fastcall ConvertErrorFmt(System::ResourceString* ResString, const TVarRec
 	throw EConvertError(ResString, Args, Args_maxidx);
 }
 
-void __fastcall ConvertErrorFmt(const String ResString, const TVarRec* Args, int Args_maxidx)
+void __fastcall ConvertErrorFmt(const String& ResString, const TVarRec* Args, int Args_maxidx)
 {
 	throw EConvertError(ResString, Args, Args_maxidx);
 }
 
 template <typename T>
-void Val(const String S, T* V, int& Code)
+void Val(const String& S, T* V, int& Code)
 {
 	std::wistringstream iss(S.c_str());
   iss >> *V;
@@ -86,14 +78,11 @@ void Val(const String S, T* V, int& Code)
 }
 
 
-int zbc = 1; // dme zero base correction
+//int zbc = 1; // dme zero base correction
 
-/*static */const WideChar TStringHelper::Empty[] = L"";
-
-
-#ifdef needed
 /*$ZEROBASEDSTRINGS ON*/
 
+/*static */const String& TStringHelper::Empty = L"";
 /*static */const float TSingleHelper::Epsilon = 1.4012984643248170709e-45F;
 /*static */const float TSingleHelper::MaxValue = 340282346638528859811704183484516925440.0F;
 /*static */const float TSingleHelper::MinValue = -340282346638528859811704183484516925440.0;
@@ -120,7 +109,7 @@ int zbc = 1; // dme zero base correction
 /*static */const int TWordHelper::MinValue = 0;
 /*static */const int TSmallIntHelper::MaxValue = 32767;
 /*static */const int TSmallIntHelper::MinValue = -32768;
-/*static */const int TCardinalHelper::MaxValue = 4294967295;
+/*static */const int TCardinalHelper::MaxValue = std::numeric_limits<unsigned int>::max(); // 4294967295;
 /*static */const int TCardinalHelper::MinValue = 0;
 /*static */const int TIntegerHelper::MaxValue = 2147483647;
 /*static */const int TIntegerHelper::MinValue = -2147483648;
@@ -133,57 +122,79 @@ int zbc = 1; // dme zero base correction
 /*static */const NativeInt TNativeIntHelper::MaxValue = 2147483647;
 /*static */const NativeInt TNativeIntHelper::MinValue = -2147483648;
 
-#endif // needed
 
-int __fastcall TStringHelper::GetLength() const
-{
-	int result = 0;
-	result = (int) m_Helped.Length();
-	return result;
-}
+/*$ZEROBASEDSTRINGS ON*/
 
-/*#static*/ bool __fastcall TStringHelper::CharInArray(const Char C, const Char* InArray, int InArray_maxidx)
+Char __fastcall TStringHelper::GetChars(int Index) const
 {
-  bool result = false;
-	//Char AChar = L'\0';
-	for(int i = 0; i < InArray_maxidx; i++)
-  {
-    WideChar AChar = InArray[i];
-		if(AChar == C)
-			return true;
-  }
-	result = false;
+  Char result = L'\0';
+  result = m_Helped[Index + 1];
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length)
+int __fastcall TStringHelper::GetLength() const
+{
+  int result = 0;
+  result = m_Helped.Length();
+  return result;
+}
+
+String __fastcall TStringHelper::Substring(int StartIndex) const
+{
+  return m_Helped.SubString(StartIndex + 1, m_Helped.Length() - StartIndex);
+}
+
+String __fastcall TStringHelper::Substring(int StartIndex, int Length) const
+{
+  String result;
+  result = m_Helped.SubString(StartIndex + 1, Length);
+  return result;
+}
+/*$ZEROBASEDSTRINGS OFF*/
+
+
+/*$ZEROBASEDSTRINGS ON*/
+
+/*#static*/
+bool __fastcall TStringHelper::CharInArray(Char C, const Char* InArray, int InArray_maxidx)
+{
+    for (int i = 0; i <= InArray_maxidx; ++i)
+      if (InArray[i] == C) return true;
+    return false;
+}
+
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length)
 {
   int result = 0;
   result = Compare(StrA, IndexA, StrB, IndexB, Length, false, SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TLocaleID LocaleID)
 {
   int result = 0;
   result = Compare(StrA, IndexA, StrB, IndexB, Length, false, LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, bool IgnoreCase)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, bool IgnoreCase)
 {
   int result = 0;
   result = Compare(StrA, IndexA, StrB, IndexB, Length, IgnoreCase, SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::InternalCompare(const String StrA, int IndexA, const String StrB, int IndexB, int LengthA, int lengthb, bool IgnoreCase, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::InternalCompare(const String& StrA, int IndexA, const String& StrB, int IndexB, int LengthA, int LengthB, bool IgnoreCase, TLocaleID LocaleID)
 {
   int result = 0;
   if(IgnoreCase)
-		result = InternalCompare(StrA, IndexA, StrB, IndexB, LengthA, lengthb, Sysutils__38, LocaleID);
+    result = InternalCompare(StrA, IndexA, StrB, IndexB, LengthA, LengthB, (TCompareOptions() << coIgnoreCase), LocaleID);
   else
-    result = InternalCompare(StrA, IndexA, StrB, IndexB, LengthA, lengthb, Sysutils__39, LocaleID);
+    result = InternalCompare(StrA, IndexA, StrB, IndexB, LengthA, LengthB, TCompareOptions(), LocaleID);
   return result;
 }
 
@@ -192,10 +203,11 @@ int __fastcall TStringHelper::GetLength() const
 //    coIgnoreNonSpace, coIgnoreSymbols, coIgnoreWidth,
 //    coLingCasing, coDigitAsNumbers, coStringSort);
 
-/*#static*/ unsigned long __fastcall TStringHelper::InternalMapOptionsToFlags(TCompareOptions AOptions)
+/*#static*/
+LongWord __fastcall TStringHelper::InternalMapOptionsToFlags(TCompareOptions AOptions)
 {
-  unsigned long result = 0;
-  const unsigned long MapFlags[10/*# TCompareOption*/] = {(unsigned long) LINGUISTIC_IGNORECASE, (unsigned long) LINGUISTIC_IGNOREDIACRITIC, (unsigned long) NORM_IGNORECASE, (unsigned long) NORM_IGNOREKANATYPE, (unsigned long) NORM_IGNORENONSPACE, (unsigned long) NORM_IGNORESYMBOLS, (unsigned long) NORM_IGNOREWIDTH, (unsigned long) NORM_LINGUISTIC_CASING, (unsigned long) SORT_DIGITSASNUMBERS, (unsigned long) SORT_STRINGSORT};
+  LongWord result = 0;
+  const LongWord MapFlags[10/*# TCompareOption*/] = {(LongWord) LINGUISTIC_IGNORECASE, (LongWord) LINGUISTIC_IGNOREDIACRITIC, (LongWord) NORM_IGNORECASE, (LongWord) NORM_IGNOREKANATYPE, (LongWord) NORM_IGNORENONSPACE, (LongWord) NORM_IGNORESYMBOLS, (LongWord) NORM_IGNOREWIDTH, (LongWord) NORM_LINGUISTIC_CASING, (LongWord) SORT_DIGITSASNUMBERS, (LongWord) SORT_STRINGSORT};
   TCompareOption option = coLingIgnoreCase;
   int stop = 0;
   result = 0;
@@ -211,903 +223,928 @@ int __fastcall TStringHelper::GetLength() const
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::InternalCompare(const String StrA, int IndexA, const String StrB, int IndexB, int LengthA, int lengthb, TCompareOptions Options, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::InternalCompare(const String& StrA, int IndexA, const String& StrB, int IndexB, int LengthA, int LengthB, TCompareOptions Options, TLocaleID LocaleID)
 {
-  int result = 0;
-  DWORD Flags = 0;
-  if((StrA.Length() == 0) || (StrB.Length() == 0))
+  if ((StrA.Length() == 0) || (StrB.Length() == 0))
   {
-    if(StrA.Length() > 0)
-      result = 1;
-    else
-    {
-      if(StrB.Length() > 0)
-        result = -1;
-      else
-        result = 0;
-    }
+    if (StrA.Length() > 0) return 1;
+    if (StrB.Length() > 0) return -1;
+    return 0;
   }
-  else
-  {
-    Flags = InternalMapOptionsToFlags(Options);
-//		result = CompareStringW(LocaleID, Flags, ustr2pwchar(StrA, IndexA - 1), LengthA, ustr2pwchar(StrB, IndexB - 1), lengthb) - CSTR_EQUAL;
-		result = CompareStringW(LocaleID, Flags, ustr2pwchar(StrA, IndexA), LengthA, ustr2pwchar(StrB, IndexB), lengthb) - CSTR_EQUAL;
-	}
-  return result;
+
+  const DWORD Flags = InternalMapOptionsToFlags(Options);
+
+  // IndexA/IndexB are 0-based (ZEROBASEDSTRINGS ON),
+  // ustr2pwchar expects a 0-based offset -> NO "-1" here.
+  const int cmp = ::CompareStringW(
+    LocaleID,
+    Flags,
+    ustr2pwchar(StrA, IndexA), LengthA,
+    ustr2pwchar(StrB, IndexB), LengthB);
+
+  if (cmp == 0)
+    System::Sysutils::RaiseLastOSError();
+
+  return cmp - CSTR_EQUAL;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, bool IgnoreCase, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, bool IgnoreCase, TLocaleID LocaleID)
 {
   int result = 0;
   result = InternalCompare(StrA, IndexA, StrB, IndexB, Length, Length, IgnoreCase, LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB, bool IgnoreCase)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB, bool IgnoreCase)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), IgnoreCase, SysLocale.DefaultLCID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), IgnoreCase, SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB, bool IgnoreCase, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB, bool IgnoreCase, TLocaleID LocaleID)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), IgnoreCase, LocaleID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), IgnoreCase, LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB, TCompareOptions Options, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB, TCompareOptions Options, TLocaleID LocaleID)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), Options, LocaleID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), Options, LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB, TCompareOptions Options)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB, TCompareOptions Options)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), Options, SysLocale.DefaultLCID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), Options, SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TCompareOptions Options, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TCompareOptions Options, TLocaleID LocaleID)
 {
   int result = 0;
   result = InternalCompare(StrA, IndexA, StrB, IndexB, Length, Length, Options, LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TCompareOptions Options)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TCompareOptions Options)
 {
   int result = 0;
   result = InternalCompare(StrA, IndexA, StrB, IndexB, Length, Length, Options, SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), Sysutils__40, SysLocale.DefaultLCID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), TCompareOptions(), SysLocale.DefaultLCID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::Compare(const String StrA, const String StrB, TLocaleID LocaleID)
+/*#static*/
+int __fastcall TStringHelper::Compare(const String& StrA, const String& StrB, TLocaleID LocaleID)
 {
   int result = 0;
-  result = InternalCompare(StrA, 0, StrB, 0, StrA.Length(), StrB.Length(), Sysutils__41, LocaleID);
+  result = InternalCompare(StrA, 0, StrB, 0, (int) StrA.Length(), (int) StrB.Length(), TCompareOptions(), LocaleID);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::CompareOrdinal(const String StrA, const String StrB)
+/*#static*/
+int __fastcall TStringHelper::CompareOrdinal(const String& StrA, const String& StrB)
 {
   int result = 0;
   int MaxLen = 0;
   if(StrA.Length() > StrB.Length())
-    MaxLen = StrA.Length();
+    MaxLen = (int) StrA.Length();
   else
-    MaxLen = StrB.Length();
-	result = StrLComp(ustr2pwchar(StrA, 0 - 1), ustr2pwchar(StrB, 0 - 1), (unsigned int) MaxLen);
+    MaxLen = (int) StrB.Length();
+  //result = System::Sysutils::StrLComp(ustr2pwchar(StrA, 0 - 1), ustr2pwchar(StrB, 0 - 1), MaxLen);
+  result = System::Sysutils::StrLComp(StrA.c_str(), StrB.c_str(), MaxLen);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::CompareOrdinal(const String StrA, int IndexA, const String StrB, int IndexB, int Length)
+/*#static*/
+int __fastcall TStringHelper::CompareOrdinal(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length)
 {
   int result = 0;
-	result = StrLComp(ustr2pwchar(StrA, IndexA - 1), ustr2pwchar(StrB, IndexB - 1), (unsigned int) Length);
+  result = System::Sysutils::StrLComp(ustr2pwchar(StrA, IndexA - 1), ustr2pwchar(StrB, IndexB - 1), Length);
   return result;
 }
 
-/*#static*/ int __fastcall TStringHelper::CompareText(const String StrA, const String StrB)
+/*#static*/
+int __fastcall TStringHelper::CompareText(const String& StrA, const String& StrB)
 {
   int result = 0;
   result = System::Sysutils::CompareText(StrA, StrB);
-	return result;
+  return result;
 }
 
-/*#static*/ bool __fastcall TStringHelper::ToBoolean(const String s)
+/*#static*/
+bool __fastcall TStringHelper::ToBoolean(const String& S)
 {
   bool result = false;
-  result = StrToBool(s);
+  result = StrToBool(S);
   return result;
 }
-#ifdef needed
 
-/*#static*/ int __fastcall TStringHelper::ToInteger(const String s)
+/*#static*/
+int __fastcall TStringHelper::ToInteger(const String& S)
 {
   int result = 0;
-	result = TIntegerHelper::Parse(s);
+  result = TIntegerHelper::Parse(S);
   return result;
 }
 
-/*#static*/ __int64 __fastcall TStringHelper::ToInt64(const String s)
+/*#static*/
+__int64 __fastcall TStringHelper::ToInt64(const String& S)
 {
   __int64 result = 0;
-  result = TInt64Helper::Parse(s);
+  result = TInt64Helper::Parse(S);
   return result;
 }
 
-/*#static*/ float __fastcall TStringHelper::ToSingle(const String s)
+/*#static*/
+float __fastcall TStringHelper::ToSingle(const String& S)
 {
   float result = 0.0F;
-  result = TSingleHelper::Parse(s);
+  result = TSingleHelper::Parse(S);
   return result;
 }
 
-/*#static*/ double __fastcall TStringHelper::ToDouble(const String s)
+/*#static*/
+double __fastcall TStringHelper::ToDouble(const String& S)
 {
   double result = 0.0;
-	result = TDoubleHelper::Parse(s);
+  result = TDoubleHelper::Parse(S);
   return result;
 }
 
-/*#static*/ long double __fastcall TStringHelper::ToExtended(const String s)
+/*#static*/
+long double __fastcall TStringHelper::ToExtended(const String& S)
 {
   long double result = 0.0L;
-  result = TExtendedHelper::Parse(s);
+  result = TExtendedHelper::Parse(S);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Parse(const int Value)
+/*#static*/
+String __fastcall TStringHelper::Parse(int Value)
 {
   String result;
   result = IntToStr(Value);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Parse(const __int64 Value)
+/*#static*/
+String __fastcall TStringHelper::Parse(__int64 Value)
 {
   String result;
   result = IntToStr(Value);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Parse(const bool Value)
+/*#static*/
+String __fastcall TStringHelper::Parse(bool Value)
 {
   String result;
   result = BoolToStr(Value);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Parse(const long double Value)
+/*#static*/
+String __fastcall TStringHelper::Parse(long double Value)
 {
   String result;
   result = FloatToStr(Value);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::LowerCase(const String s)
+/*#static*/
+String __fastcall TStringHelper::LowerCase(const String& S)
 {
   String result;
-  result = System::Sysutils::LowerCase(s);
+  result = System::Sysutils::LowerCase(S);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::LowerCase(const String s, TLocaleOptions LocaleOptions)
+/*#static*/
+String __fastcall TStringHelper::LowerCase(const String& S, TLocaleOptions LocaleOptions)
 {
   String result;
-  result = System::Sysutils::LowerCase(s, LocaleOptions);
+  result = System::Sysutils::LowerCase(S, LocaleOptions);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::UpperCase(const String s)
+/*#static*/
+String __fastcall TStringHelper::UpperCase(const String& S)
 {
   String result;
-  result = System::Sysutils::UpperCase(s);
+  result = System::Sysutils::UpperCase(S);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::UpperCase(const String s, TLocaleOptions LocaleOptions)
+/*#static*/
+String __fastcall TStringHelper::UpperCase(const String& S, TLocaleOptions LocaleOptions)
 {
   String result;
-  result = System::Sysutils::UpperCase(s, LocaleOptions);
+  result = System::Sysutils::UpperCase(S, LocaleOptions);
   return result;
 }
 
-int __fastcall TStringHelper::CompareTo(const String StrB)
+int __fastcall TStringHelper::CompareTo(const String& strB) const
 {
   int result = 0;
-	result = StrComp(ustr2pwchar(m_Helped), ustr2pwchar(StrB));
+  result = System::Sysutils::StrComp(ustr2pwchar(m_Helped), ustr2pwchar(strB));
   return result;
 }
 
-bool __fastcall TStringHelper::Contains(const String Value)
+bool __fastcall TStringHelper::Contains(const String& Value) const
 {
-	bool result = false;
-	result = m_Helped.Pos(Value) > 0;
-	return result;
+  bool result = false;
+  result = System::Pos(Value, m_Helped) > 0;
+  return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Copy(const String Str)
+/*#static*/
+String __fastcall TStringHelper::Copy(const String& Str)
 {
   String result;
-	result = Str.SubString(1-1, Str.Length());
+  result = Str.SubString(1, Str.Length());
   return result;
 }
-/*
-void __fastcall TStringHelper::CopyTo(int sourceIndex, Char* Destination, int Destination_maxidx, int DestinationIndex, int Count)
-{
-	d2c_Move(ustr2pwchar(m_Helped) + sourceIndex, Destination, DestinationIndex, Count * sizeof(Char));
-}  */
 
-void __fastcall TStringHelper::CopyTo(int sourceIndex, OpenArrayRef<WideChar> Destination, int DestinationIndex, int Count)
+void __fastcall TStringHelper::CopyTo(int SourceIndex, OpenArrayRef<Char> destination, int DestinationIndex, int Count) const
 {
-	Move((void*) (m_Helped.c_str() + sourceIndex), Destination.data() + DestinationIndex, Count * sizeof(Char));
+//  System::Move((ustr2pwchar(m_Helped) + SourceIndex), destination.data(), (size_t) (Count * sizeof(Char)));
+  System::Move( ustr2pwchar(m_Helped, SourceIndex), destination.data() + DestinationIndex, (size_t)(Count * sizeof(Char)));
 }
 
-int __fastcall TStringHelper::CountChar(const Char C)
+int __fastcall TStringHelper::CountChar(Char C) const
 {
   int result = 0;
-	int i = 0;
-	int stop = 0;
-  result = 0;
-	for(stop = High(m_Helped), i = 1 /*# Low(self)*/; i <= stop; i++)
-  {
-    if(m_Helped[i - 1] == C)
+  const int L = m_Helped.Length();
+  const Char* p = ustr2pwchar(m_Helped); // 0-based pointer
+
+  for (int i = 0; i < L; ++i)
+    if (p[i] == C)
       ++result;
-  }
-	return result;
+
+  return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Create(Char C, int Count)
+/*#static*/
+String __fastcall TStringHelper::Create(Char C, int Count)
 {
   String result;
   result = StringOfChar(C, Count);
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Create(const Char* Value, int Value_maxidx, int StartIndex, int Length)
+/*#static*/
+String __fastcall TStringHelper::Create(const Char* Value, int Value_maxidx, int StartIndex, int Length)
 {
-	String result;
-	result.SetLength(Length);
-	Move(Value + StartIndex, ustr2pwchar(result), Length * sizeof(Char));
-	return result;
-}
-
-/*#static*/ String __fastcall TStringHelper::Create(const Char* Value, int Value_maxidx)
-{
-	String result;
-	result.SetLength((int) Value_maxidx + 1);
-	Move(Value + 0, ustr2pwchar(result), Value_maxidx + 1 * sizeof(Char));
+  String result;
+  result.SetLength(Length);
+  Move(Value + StartIndex, ustr2address(result), Length * sizeof(Char));
   return result;
 }
 
-String __fastcall TStringHelper::DeQuotedString(const Char QuoteChar)
+/*#static*/
+String __fastcall TStringHelper::Create(const Char* Value, int Value_maxidx)
 {
   String result;
-  int i = 0;
-  bool LastQuoted = false;
-  int LPosDest = 0;
-	DynamicArray<Char> LResult;
-  if((m_Helped.Length() >= 2) && (m_Helped[1 /*# Low(self)*/ - 1] == QuoteChar) && (m_Helped[High(m_Helped) - 1] == QuoteChar))
+  result.SetLength((Value_maxidx + 1));
+  Move(Value, ustr2address(result), (Value_maxidx + 1) * sizeof(Char));
+  return result;
+}
+
+String __fastcall TStringHelper::DeQuotedString(Char QuoteChar) const
+{
+  const int L = m_Helped.Length();
+  if (L < 2)
+    return m_Helped;
+
+  const Char* p = ustr2pwchar(m_Helped); // 0-based
+  if (p[0] != QuoteChar || p[L - 1] != QuoteChar)
+    return m_Helped;
+
+  D2CArray<Char> Buf;
+  Buf.Length = L - 2; // maximum possible
+  int outPos = 0;
+  bool lastQuoted = false;
+
+  // scan between the outer quotes: indices 1 .. L-2
+  for (int i = 1; i <= L - 2; ++i)
   {
-    int stop = 0;
-    LastQuoted = false;
-    LPosDest = 0;
-		LResult.Length = m_Helped.Length() - 2;
-    for(stop = High(m_Helped) - 1, i = 1 /*# Low(self)*/ + 1; i <= stop; i++)
+    const Char ch = p[i];
+
+    if (ch == QuoteChar)
     {
-      if(m_Helped[i - 1] == QuoteChar)
+      if (lastQuoted)
       {
-        if(LastQuoted)
-        {
-          LastQuoted = false;
-					LResult[LPosDest] = m_Helped[i - 1];
-          ++LPosDest;
-        }
-        else
-        LastQuoted = true;
+        // doubled quote -> emit one
+        Buf[outPos++] = ch;
+        lastQuoted = false;
       }
       else
       {
-        if(LastQuoted)
-        {
-          LastQuoted = false;
-          // The quoted char is not doubled, should we put in the resulting string?
-				}
-				LResult[LPosDest] = m_Helped[i - 1];
-        ++LPosDest;
+        // first quote of a potential doubled quote
+        lastQuoted = true;
       }
     }
-		result = TStringHelper::Create(OpenArrayEx<Char>(LResult), LResult.Length, 0, LPosDest);
-	}
-	else
-	result = m_Helped;
-	return result;
+    else
+    {
+      // normal char
+      if (lastQuoted)
+      {
+        // quote was not doubled -> Delphi keeps char, quote effectively removed
+        lastQuoted = false;
+      }
+      Buf[outPos++] = ch;
+    }
+  }
+
+  // create string from Buf[0..outPos-1]
+  // IMPORTANT: your Create(Value, StartIndex, Length) must use Value + StartIndex
+  return TStringHelper::Create(DynamicArrayPointer(Buf), Buf.High, 0, outPos);
 }
 
-String __fastcall TStringHelper::DeQuotedString()
+String __fastcall TStringHelper::DeQuotedString() const
 {
   String result;
   result = this->DeQuotedString(L'\'');
   return result;
 }
 
-/*#static*/ bool __fastcall TStringHelper::EndsText(const String ASubText, const String AText)
+/*#static*/
+bool __fastcall TStringHelper::EndsText(const String& ASubText, const String& AText)
 {
   bool result = false;
-  int SubTextLocation = 0;
-  if(ASubText == Empty)
-    result = true;
+  result = TStringHelper(AText).EndsWith(ASubText, true);
+  return result;
+}
+
+bool __fastcall TStringHelper::EndsWith(const String& Value) const
+{
+  bool result = false;
+  result = EndsWith(Value, false);
+  return result;
+}
+
+bool __fastcall TStringHelper::EndsWith(const String& Value, bool IgnoreCase) const
+{
+  if (Value == Empty)
+    return true;
+
+  const int subPos0 = m_Helped.Length() - Value.Length(); // 0-based position
+  if (subPos0 < 0)
+    return false;
+
+  // ByteType is 1-based -> check at (subPos0 + 1)
+  if (System::Sysutils::ByteType(m_Helped, subPos0 + 1) == System::Sysutils::mbLeadByte)
+    return false;
+
+  TCompareOptions opts;
+  if (IgnoreCase)
+    opts = (TCompareOptions() << coIgnoreCase);
   else
-  {
-    SubTextLocation = AText.Length() - ASubText.Length();
-		if((SubTextLocation >= 0) && (ByteType(AText, SubTextLocation) != mbTrailByte))
-//			result = AnsiStrIComp(ustr2pwchar(ASubText), ustr2pwchar(AText, SubTextLocation - 1)) == 0;
-			result = AnsiStrIComp(ustr2pwchar(ASubText), ustr2pwchar(AText, SubTextLocation)) == 0;
-		else
-			result = false;
-  }
-  return result;
+    opts = TCompareOptions();
+
+  return TStringHelper::Compare(Value, 0, m_Helped, subPos0, (int)Value.Length(), opts) == 0;
 }
 
-bool __fastcall TStringHelper::EndsWith(const String Value, bool IgnoreCase)
+/*#static*/
+bool __fastcall TStringHelper::Equals(const String& a, const String& b)
 {
   bool result = false;
-  int SubTextLocation = 0;
-	if(IgnoreCase)
-    result = EndsText(Value, m_Helped);
-  else
-  {
-    if(Value == Empty)
-      result = true;
-    else
-    {
-      SubTextLocation = m_Helped.Length() - Value.Length();
-      if((SubTextLocation >= 0) && (ByteType(m_Helped, SubTextLocation) != mbTrailByte))
-        result = TStringHelper::Compare(Value, 0, m_Helped, SubTextLocation, Value.Length(), Sysutils__43) == 0;
-      else
-        result = false;
-    }
-  }
+  result = a == b;
   return result;
 }
 
-bool __fastcall TStringHelper::EndsWith(const String Value)
-{
-  bool result = false;
-	result = EndsWith(Value, false);
-  return result;
-}
-
-/*#static*/ bool __fastcall TStringHelper::Equals(const String A, const String B)
-{
-  bool result = false;
-  result = A == B;
-  return result;
-}
-
-bool __fastcall TStringHelper::Equals(const String Value)
+bool __fastcall TStringHelper::Equals(const String& Value) const
 {
   bool result = false;
   result = m_Helped == Value;
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Format(const String Format, const TVarRec* Args, int Args_maxidx)
+/*#static*/
+String __fastcall TStringHelper::Format(const String& Format, const TVarRec* args, int args_maxidx)
 {
   String result;
-	result = System::Sysutils::Format(Format, Args, Args_maxidx);
-  return result;
-}
-/*
-Char __fastcall TStringHelper::GetChars(int Index) const
-{
-	Char result = L'\0';
-	result = m_Helped[Index + 1];
-  return result;
-}
-*/
-int __fastcall TStringHelper::GetHashCode()
-{
-  int result = 0;
-  UInt32 LRESULT = 0;
-  int i = 0;
-  String Temp;
-// Used HashNameMBCS function
-  int stop = 0;
-	Temp = this->ToUpper(); // ToUpperInvariant ????
-  LRESULT = 0;
-  for(stop = Temp.Length() - 1, i = 0; i <= stop; i++)
-  {
-    LRESULT = (unsigned int) ((LRESULT << 5) | (LRESULT >> 27)); //ROL Result, 5
-    LRESULT = (unsigned int) (LRESULT ^ ((UInt32) Temp[i - 1]));
-  }
-  result = (int) LRESULT;
+  result = System::Sysutils::Format(Format, args, args_maxidx);
   return result;
 }
 
 int __fastcall TStringHelper::IndexOf(Char Value, int StartIndex, int Count) const
 {
   int result = 0;
-  result = (int) (System::Pos(Value, m_Helped, StartIndex + 1) - 1);
+  //result = System::PosChar(Value, m_Helped, StartIndex + 1) - 1;
+  result = System::Pos(Value, m_Helped, StartIndex + 1) - 1;
   if((result + 1) > (StartIndex + Count))
     result = -1;
   return result;
 }
 
-int __fastcall TStringHelper::IndexOf(const String Value, int StartIndex, int Count) const
+int __fastcall TStringHelper::IndexOf(const String& Value, int StartIndex, int Count) const
 {
   int result = 0;
-  result = (int) (System::Pos(Value, m_Helped, StartIndex + 1) - 1);
+  result = System::Pos(Value, m_Helped, StartIndex + 1) - 1;
   if((result + Value.Length()) > (StartIndex + Count))
     result = -1;
   return result;
 }
 
-int __fastcall TStringHelper::IndexOf(const String Value, int StartIndex) const
+int __fastcall TStringHelper::IndexOf(const String& Value, int StartIndex) const
 {
   int result = 0;
-  result = (int) (System::Pos(Value, m_Helped, StartIndex + 1) - 1);
+  result = System::Pos(Value, m_Helped, StartIndex + 1) - 1;
   return result;
 }
 
-int __fastcall TStringHelper::IndexOf(const String Value) const
+int __fastcall TStringHelper::IndexOf(const String& Value) const
 {
   int result = 0;
-	result = (int) (m_Helped.Pos(Value) - 1);
+  result = System::Pos(Value, m_Helped) - 1;
   return result;
 }
 
 int __fastcall TStringHelper::IndexOf(Char Value) const
 {
-	int result = 0;
-	result = (int) (m_Helped.Pos(String(Value)) - 1);
+  int result = 0;
+  PChar P = nullptr;
+  int I = 0;
+  int stop = 0;
+  P = ustr2pwchar(m_Helped);
+  for(stop = m_Helped.Length() - 1, I = 0; I <= stop; I++)
+  {
+    if(P[I] == Value)
+      return I;
+  }
+  result = -1;
   return result;
 }
 
 int __fastcall TStringHelper::IndexOf(Char Value, int StartIndex) const
 {
   int result = 0;
-  result = (int) (System::Pos(Value, m_Helped, StartIndex + 1) - 1);
-  return result;
-}
-
-int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count)
-{
-  int result = 0;
-  int i = 0;
-	//Char C = L'\0';
-  int Max = 0;
-	if((StartIndex + Count) >= m_Helped.Length())
-    Max = m_Helped.Length();
-  else
-    Max = StartIndex + Count;
-  i = StartIndex;
-	while(i < Max)
-	{
-		for(int k = 0; k < AnyOf_maxidx + 1; k++)
-		{
-			WideChar C = AnyOf[k];
-			if(m_Helped[i + 1] == C)
-			{
-				result = i;
-				return result;
-			}
-		}
-		++i;
-  }
-	result = -1;
-	return result;
-}
-
-int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex)
-{
-  int result = 0;
-	result = IndexOfAny(AnyOf, AnyOf_maxidx, StartIndex, m_Helped.Length());
-	return result;
-}
-
-int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx)
-{
-  int result = 0;
-	result = IndexOfAny(AnyOf, AnyOf_maxidx, 0, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote)
-{
-  int result = 0;
-	result = IndexOfAnyUnquoted(AnyOf, AnyOf_maxidx, StartQuote, EndQuote, 0, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex)
-{
-  int result = 0;
-	result = IndexOfAnyUnquoted(AnyOf, AnyOf_maxidx, StartQuote, EndQuote, StartIndex, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex, int Count)
-{
-  int result = 0;
-  int i = 0;
-	//Char C = L'\0';
-  int Max = 0;
-  int LInQuote = 0;
-  bool LInQuoteBool = false;
-	if((StartIndex + Count) >= m_Helped.Length())
-		Max = m_Helped.Length();
-  else
-    Max = StartIndex + Count;
-	i = StartIndex;
-	if(StartQuote != EndQuote)
-	{
-    LInQuote = 0;
-    while(i < Max)
-    {
-      if(m_Helped[i - 1] == StartQuote)
-        ++LInQuote;
-      else
-      {
-        if((m_Helped[i - 1] == EndQuote) && (LInQuote > 0))
-          --LInQuote;
-      }
-      if(LInQuote == 0)
-      {
-        for(int i = 0; i < AnyOf_maxidx; i++)
-				{
-          WideChar C = AnyOf[i];
-          if(m_Helped[i] == C)
-            return i;
-				}
-      }
-      ++i;
-    }
-  }
-  else
+  PChar P = nullptr;
+  int I = 0;
+  P = ustr2pwchar(m_Helped);
+  if(StartIndex >= 0)
   {
-    LInQuoteBool = false;
-    while(i < Max)
+    int stop = 0;
+    for(stop = m_Helped.Length() - 1, I = StartIndex; I <= stop; I++)
     {
-      if(m_Helped[i] == StartQuote)
-        LInQuoteBool = !LInQuoteBool;
-      if(!LInQuoteBool)
-      {
-        for(int i = 0; i < AnyOf_maxidx; i++)
-        {
-          WideChar C = AnyOf[i];
-          if(m_Helped[i] == C)
-						return i;
-        }
-      }
-      ++i;
+      if(P[I] == Value)
+        return I;
     }
   }
   result = -1;
   return result;
 }
 
-String __fastcall TStringHelper::Insert(int StartIndex, const String Value)
+int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count) const
 {
-  String result;
-  m_Helped.Insert(Value,StartIndex + 1-1);
-  result = m_Helped;
-	return result;
+  const int L = m_Helped.Length();
+  int Max = StartIndex + Count;
+  if (Max > L) Max = L;
+  if (StartIndex < 0) StartIndex = 0;
+  if (StartIndex >= Max) return -1;
+
+  const Char* P = ustr2pwchar(m_Helped); // 0-based
+
+  for (int i = StartIndex; i < Max; ++i)
+  {
+    const Char ch = P[i];
+    for (int j = 0; j <= AnyOf_maxidx; ++j)
+    {
+      if (ch == AnyOf[j])
+        return i;
+    }
+  }
+  return -1;
 }
 
-bool __fastcall TStringHelper::IsDelimiter(const String Delimiters, int Index)
+int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex) const
 {
-  bool result = false;
-  result = false;
-  if((Index < 1 /*# Low(String)*/) || (Index > High(m_Helped)) || (ByteType(m_Helped, Index) != mbSingleByte))
-    return result;
-	result = StrScan(ustr2pwchar(Delimiters), m_Helped[Index - 1]) != NULL;
+  int result = 0;
+  result = IndexOfAny(AnyOf, AnyOf_maxidx, StartIndex, (int) m_Helped.Length());
   return result;
 }
 
-bool __fastcall TStringHelper::IsEmpty()
+int __fastcall TStringHelper::IndexOfAny(const Char* AnyOf, int AnyOf_maxidx)  const
+{
+  int result = 0;
+  result = IndexOfAny(AnyOf, AnyOf_maxidx, 0, (int) m_Helped.Length());
+  return result;
+}
+
+int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote) const
+{
+  int result = 0;
+  result = IndexOfAnyUnquoted(AnyOf, AnyOf_maxidx, StartQuote, EndQuote, 0, (int) m_Helped.Length());
+  return result;
+}
+
+int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex) const
+{
+  int result = 0;
+  result = IndexOfAnyUnquoted(AnyOf, AnyOf_maxidx, StartQuote, EndQuote, StartIndex, (int) m_Helped.Length());
+  return result;
+}
+
+int __fastcall TStringHelper::IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex, int Count) const
+{
+  const int L = m_Helped.Length();
+  int Max = StartIndex + Count;
+  if (Max > L) Max = L;
+  if (StartIndex < 0) StartIndex = 0;
+  if (StartIndex >= Max) return -1;
+
+  const Char* P = ustr2pwchar(m_Helped); // 0-based
+
+  if (StartQuote != EndQuote)
+  {
+    int inQuote = 0;
+    for (int i = StartIndex; i < Max; ++i)
+    {
+      const Char ch = P[i];
+
+      if (ch == StartQuote) ++inQuote;
+      else if (ch == EndQuote && inQuote > 0) --inQuote;
+
+      if (inQuote == 0)
+      {
+        for (int j = 0; j <= AnyOf_maxidx; ++j)
+          if (ch == AnyOf[j]) return i;
+      }
+    }
+  }
+  else
+  {
+    bool inQuote = false;
+    for (int i = StartIndex; i < Max; ++i)
+    {
+      const Char ch = P[i];
+      if (ch == StartQuote) inQuote = !inQuote;
+
+      if (!inQuote)
+      {
+        for (int j = 0; j <= AnyOf_maxidx; ++j)
+          if (ch == AnyOf[j]) return i;
+      }
+    }
+  }
+
+  return -1;
+}
+
+String __fastcall TStringHelper::Insert(int StartIndex, const String& Value) const
+{
+  String Result = m_Helped;            // copy Self
+  ::Insert(Value, Result, StartIndex + 1);  // Delphi Insert is 1-based
+  return Result;
+}
+
+bool __fastcall TStringHelper::IsDelimiter(const String& Delimiters, int Index) const
+{
+  bool result = false;
+  result = false;
+  if((Index < 1 /*# Low(string)*/) || (Index > High(m_Helped)) || (ByteType(m_Helped, Index) != mbSingleByte))
+    return result;
+  result = StrScan(ustr2pwchar(Delimiters), m_Helped[Index]) != nullptr;
+  return result;
+}
+
+bool __fastcall TStringHelper::IsEmpty() const
 {
   bool result = false;
   result = m_Helped == Empty;
   return result;
 }
 
-/*#static*/ bool __fastcall TStringHelper::IsNullOrEmpty(const String Value)
+/*#static*/
+bool __fastcall TStringHelper::IsNullOrEmpty(const String& Value)
 {
   bool result = false;
   result = Value == Empty;
   return result;
 }
 
-/*#static*/ bool __fastcall TStringHelper::IsNullOrWhiteSpace(const String Value)
+/*#static*/
+bool __fastcall TStringHelper::IsNullOrWhiteSpace(const String& Value)
 {
   bool result = false;
-  result = TStringHelper(TStringHelper(Value).Trim()).Length == 0;
+  result = TStringHelper(Value).Trim().Length() == 0;
   return result;
 }
 
-/*#static*/ String __fastcall TStringHelper::Join(const String separator, const String* Values, int Values_maxidx)
+/*#static*/
+String __fastcall TStringHelper::Join(const String& Separator, const String* Values, int Values_maxidx)
 {
   String result;
-	result = Join(separator, Values, Values_maxidx, 0, (int) Values_maxidx + 1);
+  result = Join(Separator, Values, Values_maxidx, 0, (Values_maxidx + 1));
   return result;
 }
 
-/*#static String __fastcall TStringHelper::Join(const String separator, IEnumerable<String>* const Values)
+/*#static*/
+String __fastcall TStringHelper::Join(const String& Separator, const System::_di_IEnumerable__1<String>& Values)
 {
-  String result;
-  if(Values != NULL)
-    result = Join(separator, Values->GetEnumerator());
-  else
-    result = L"";
-  return result;
-}
-
-/*#static String __fastcall TStringHelper::Join(const String separator, IEnumerator<String>* const Values)
-{
-  String result;
-  if((Values != NULL) && Values->MoveNext)
+  if (Values)
   {
-    result = Values->current;
-    while(Values->MoveNext)
-      result = result + separator + Values->current;
+    // explizit generischen Enumerator holen
+    System::_di_IEnumerator__1<String> Enum = Values->GetEnumeratorT();
+    return Join(Separator, Enum);
   }
-  else
-	result = L"";
-  return result;
+
+  return String();
 }
-*/
-/*#static*/ String __fastcall TStringHelper::Join(const String separator, const String* Values, int Values_maxidx, int StartIndex, int Count)
+
+/*#static*/
+String __fastcall TStringHelper::Join(const String& Separator, const System::_di_IEnumerator__1<String>& Values)
 {
-  String result;
-  int i = 0;
-  int Max = 0;
-	if((Count == 0) || ((Values_maxidx + 1 == 0) && (StartIndex == 0)))
-    result = L"";
-  else
+  if (Values && Values->MoveNext())
   {
-    int stop = 0;
-    if((Count < 0) || (StartIndex >= Values_maxidx + 1))
-			throw new ERangeError(System_Sysconst_SRangeError);
-		if((StartIndex + Count) > Values_maxidx + 1)
-			Max = (int) Values_maxidx + 1;
-		else
-			Max = StartIndex + Count;
-		result = Values[StartIndex];
-		for(stop = Max - 1, i = StartIndex + 1; i <= stop; i++)
-		{
-			result = result + separator + Values[i];
-		}
-	}
-	return result;
-}
+    String Result = Values->Current;
 
-String ValueToString(const TVarRec& Val)
-{
-	String result;
-	switch(Val.VType)
-	{
-		case  vtInteger:
-		result = IntToStr(Val.VInteger);
-		break;
-		case  vtBoolean:
-		result = BoolToStr(Val.VBoolean, true);
-		break;
-		case  vtChar:
-		result = ((Char) Val.VChar);
-		break;
-		case  vtPChar:
-		result = Val.VPChar;
-		break;
-		case  vtExtended:
-		result = FloatToStr((*Val.VExtended));
-		break;
-		case  vtObject:
-		result = Val.VObject->ClassName();
-		break;
-		case  vtClass:
-		result = Val.VClass->ClassName();
-		break;
-		case  vtCurrency:
-		result = CurrToStr((*Val.VCurrency));
-		break;
-		case  vtInt64:
-		result = IntToStr((*((PInt64) Val.VInt64)));
-		break;
-		case  vtUnicodeString:
-		result = *(UnicodeString*)Val.VUnicodeString;
-		break;
-		default:
-		result = Format(L"(Unknown) : %d", ARRAYOFCONST((Val.VType)));
-		break;
-	}
-	return result;
-};
-
-
-/*#static*/ String __fastcall TStringHelper::Join(const String separator, const TVarRec* Values, int Values_maxidx)
-{
-  String result;
-  int i = 0;
-  int Len = 0;
-
-	Len = (int) Values_maxidx + 1;
-	if(Len == 0)
-		result = L"";
-	else
-	{
-		int stop = 0;
-		result = ValueToString(Values[0]);
-		for(stop = Len - 1, i = 1; i <= stop; i++)
-		{
-			result = result + separator + ValueToString(Values[i]);
-		}
-  }
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOf(const String Value, int StartIndex)
-{
-  int result = 0;
-  result = LastIndexOf(Value, StartIndex, StartIndex + 1);
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOf(Char Value, int StartIndex)
-{
-  int result = 0;
-  result = LastIndexOf(Value, StartIndex, StartIndex + 1);
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOf(Char Value)
-{
-  int result = 0;
-  result = LastIndexOf(Value, m_Helped.Length() - 1, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOf(const String Value)
-{
-  int result = 0;
-  result = LastIndexOf(Value, m_Helped.Length() - 1, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::LastDelimiter(const String delims)
-{
-  int result = 0;
-  int i = 0;
-  int j = 0;
-  i = High(m_Helped);
-  while(i >= 1 /*# Low(String)*/)
-  {
-    int stop = 0;
-    for(stop = High(delims), j = 1 /*# Low(String)*/; j <= stop; j++)
+    while (Values->MoveNext())
     {
-      if(this->Chars[i] == TStringHelper(delims).Chars[j])
-        return i;
+      Result = Result + Separator + Values->Current;
     }
-    --i;
+
+    return Result;
   }
-  result = -1;
+
+  return String();
+}
+
+
+
+/*#static*/
+String __fastcall TStringHelper::Join(const String& Separator, const String* Values, int Values_maxidx, int StartIndex, int Count)
+{
+  const int Len = Values_maxidx + 1;
+
+  if (Count == 0)
+    return String();
+
+  if (Len == 0)
+    return String();
+
+  if (Count < 0 || StartIndex < 0 || StartIndex >= Len)
+    throw ERangeError(System_Sysconst_SRangeError);
+
+  int Max = StartIndex + Count;
+  if (Max > Len)
+    Max = Len;
+
+  String Result = Values[StartIndex];
+  for (int i = StartIndex + 1; i < Max; ++i)
+  {
+    Result = Result + Separator + Values[i];
+  }
+
+  return Result;
+}
+
+static String __fastcall VarRecToString(const TVarRec& val)
+{
+  switch (val.VType)
+  {
+    case vtInteger:       return IntToStr(val.VInteger);
+    case vtBoolean:       return BoolToStr(val.VBoolean, true);
+    case vtChar:          return String((Char)val.VChar);
+    case vtPChar:         return UnicodeString(val.VPChar);
+    case vtExtended:      return FloatToStr(*val.VExtended);
+    case vtObject:        return (val.VObject != nullptr) ? val.VObject->ClassName() : String();
+    case vtClass:         return (val.VClass != nullptr) ? val.VClass->ClassName() : String();
+    case vtCurrency:      return CurrToStr(*val.VCurrency);
+    case vtInt64:         return IntToStr(*val.VInt64);
+
+    case vtUnicodeString:
+      // In C++Builder, VUnicodeString typically points to UnicodeString data.
+      // The safe way is to dereference as a UnicodeString pointer.
+      return *reinterpret_cast<const UnicodeString*>(val.VUnicodeString);
+
+    default:
+      return Format(L"(Unknown): %d", ARRAYOFCONST((val.VType)));
+  }
+}
+
+/*#static*/
+String __fastcall TStringHelper::Join(const String& Separator, const TVarRec* Values, int Values_maxidx)
+{
+  const int Len = Values_maxidx + 1;
+  if (Len <= 0)
+    return String();
+
+  String Result = VarRecToString(Values[0]);
+  for (int i = 1; i < Len; ++i)
+  {
+    Result = Result + Separator + VarRecToString(Values[i]);
+  }
+  return Result;
+}
+
+int __fastcall TStringHelper::LastIndexOf(const String& Value, int StartIndex) const
+{
+  int result = 0;
+  result = LastIndexOf(Value, StartIndex, StartIndex + 1);
   return result;
 }
 
-int __fastcall TStringHelper::LastIndexOf(const String Value, int StartIndex, int Count)
+int __fastcall TStringHelper::LastIndexOf(Char Value, int StartIndex) const
 {
   int result = 0;
-  int i = 0;
-  int Min = 0;
-  if(Value.Length() == 0)
+  result = LastIndexOf(Value, StartIndex, StartIndex + 1);
+  return result;
+}
+
+int __fastcall TStringHelper::LastIndexOf(Char Value) const
+{
+  const int Len = (int)m_Helped.Length();
+  if (Len == 0)
     return -1;
-  if(StartIndex < m_Helped.Length())
-    i = StartIndex - Value.Length() + 1;
-  else
-    i = m_Helped.Length() - Value.Length();
-  if((StartIndex - Count) < 0)
-    Min = 0;
-  else
-    Min = StartIndex - Count + 1;
-  while(i >= Min)
+
+  return LastIndexOf(Value, Len - 1, Len);
+}
+
+int __fastcall TStringHelper::LastIndexOf(const String& Value) const
+{
+  int result = 0;
+  result = LastIndexOf(Value, (int) (m_Helped.Length() - 1), (int) m_Helped.Length());
+  return result;
+}
+
+int __fastcall TStringHelper::LastDelimiter(const String& Delims) const
+{
+  const int L = m_Helped.Length();
+  if (L == 0 || Delims.IsEmpty())
+    return -1;
+
+  const Char* s = ustr2pwchar(m_Helped);  // 0-based
+  const Char* d = ustr2pwchar(Delims);    // 0-based
+  const int DL = Delims.Length();
+
+  for (int i = L - 1; i >= 0; --i)
   {
-    if(StrLComp(&ustr2pwchar(m_Helped)[i], ustr2pwchar(Value), (unsigned int) Value.Length()) == 0)
-      return i;
-    --i;
+    const Char ch = s[i];
+    for (int j = 0; j < DL; ++j)
+      if (ch == d[j])
+        return i; // 0-based
   }
-  result = -1;
-  return result;
+
+  return -1;
 }
 
-int __fastcall TStringHelper::LastIndexOf(Char Value, int StartIndex, int Count)
+int __fastcall TStringHelper::LastDelimiter(const TSysCharSet Delims) const
 {
   int result = 0;
-  int i = 0;
-  int Min = 0;
-  if(StartIndex < m_Helped.Length())
-    i = StartIndex;
-  else
-    i = m_Helped.Length() - 1;
-  if((StartIndex - Count) < 0)
-    Min = 0;
-  else
-    Min = StartIndex - Count + 1;
-  while(i >= Min)
+  PChar PSt = nullptr;
+  PChar P = nullptr;
+  PSt = ustr2pwchar(m_Helped);
+  if(PSt != nullptr)
   {
-    if(m_Helped[i - 1] == Value)
-      return i;
-    --i;
-  }
-  result = -1;
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx)
-{
-  int result = 0;
-	result = LastIndexOfAny(AnyOf, AnyOf_maxidx, m_Helped.Length() - 1, m_Helped.Length());
-  return result;
-}
-
-int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count)
-{
-  int result = 0;
-  int i = 0;
-  int Min = 0;
-  Char C = L'\0';
-  if(StartIndex < m_Helped.Length())
-    i = StartIndex;
-  else
-    i = m_Helped.Length() - 1;
-  if((StartIndex - Count) < 0)
-    Min = 0;
-  else
-    Min = StartIndex - Count + 1;
-  while(i >= Min)
-  {
-		//for(WideChar element_0 : *(Char(*)[AnyOf_maxidx])AnyOf)
-		for(int i = 0; i < AnyOf_maxidx + 1; i++)
+    P = PSt + m_Helped.Length() - 1;
+    while(P >= PSt)
     {
-			C = AnyOf[i];
-      if(m_Helped[i - 1] == C)
-				return i;
+      if(Delims.Contains((*P)))
+        return P - PSt;
+      --P;
     }
-    --i;
   }
   result = -1;
   return result;
 }
 
-int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex)
+int __fastcall TStringHelper::LastIndexOf(const String& Value, int StartIndex, int Count) const
+{
+  const int VLen = (int)Value.Length();
+  if (VLen == 0)
+    return -1;
+
+  const int Len = (int)m_Helped.Length();
+  if (Len == 0)
+    return -1;
+
+  if (Count <= 0)
+    return -1;
+
+  if (StartIndex < 0)
+    return -1;
+
+  if (StartIndex >= Len)
+    StartIndex = Len - 1;
+
+  // Wenn das Suchwort länger ist als der String, unmöglich
+  if (VLen > Len)
+    return -1;
+
+  // Startposition für Vergleich: höchstens so, dass Value noch reinpasst
+  int I = StartIndex - VLen + 1;
+  if (I > Len - VLen)
+    I = Len - VLen;
+
+  // Untere Grenze entsprechend Count (Count Zeichen rückwärts inkl. StartIndex)
+  int Min = StartIndex - Count + 1;
+  if (Min < 0)
+    Min = 0;
+
+  if (I < Min)
+    return -1;
+
+  const Char* S = ustr2pwchar(m_Helped); // 0-based
+  const Char* V = ustr2pwchar(Value);    // 0-based
+
+  while (I >= Min)
+  {
+    // Vergleiche VLen Zeichen ab S+I mit V
+    if (System::Sysutils::StrLComp(S + I, V, (unsigned int)VLen) == 0)
+      return I;
+    --I;
+  }
+
+  return -1;
+}
+
+int __fastcall TStringHelper::LastIndexOf(Char Value, int StartIndex, int Count) const
+{
+   const int Len = (int)m_Helped.Length();
+  if (Len == 0)
+    return -1;
+
+  if (Count <= 0 || StartIndex < 0)
+    return -1;
+
+  if (StartIndex >= Len)
+    StartIndex = Len - 1;
+
+  int I = StartIndex;
+  int Min = StartIndex - Count + 1;
+  if (Min < 0) Min = 0;
+
+  const Char* P = ustr2pwchar(m_Helped); // 0-based
+  while (I >= Min)
+  {
+    if (P[I] == Value)
+      return I;
+    --I;
+  }
+  return -1;
+}
+
+int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx) const
 {
   int result = 0;
-	result = LastIndexOfAny(AnyOf, AnyOf_maxidx, StartIndex, m_Helped.Length());
+  result = LastIndexOfAny(AnyOf, AnyOf_maxidx, (int) (m_Helped.Length() - 1), (int) m_Helped.Length());
   return result;
 }
 
-String __fastcall TStringHelper::PadLeft(int TotalWidth)
+int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count) const
 {
-  String result;
-  result = PadLeft(TotalWidth, L' ');
+  if (m_Helped.Length() == 0)
+    return -1;
+
+  int I = (StartIndex < m_Helped.Length()) ? StartIndex : (m_Helped.Length() - 1);
+  const int Min = ((StartIndex - Count) < 0) ? 0 : (StartIndex - Count + 1);
+
+  const Char* P = ustr2pwchar(m_Helped); // 0-based
+  while (I >= Min)
+  {
+    const Char ch = P[I];
+    for (int j = 0; j <= AnyOf_maxidx; ++j)
+      if (ch == AnyOf[j])
+        return I;
+    --I;
+  }
+
+  return -1;
+}
+
+int __fastcall TStringHelper::LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex) const
+{
+  int result = 0;
+  result = LastIndexOfAny(AnyOf, AnyOf_maxidx, StartIndex, (int) m_Helped.Length());
   return result;
 }
 
-String __fastcall TStringHelper::PadLeft(int TotalWidth, Char PaddingChar)
+String __fastcall TStringHelper::PadLeft(int TotalWidth, Char PaddingChar) const
 {
   String result;
-	TotalWidth = TotalWidth - m_Helped.Length();
+  TotalWidth = (int) (TotalWidth - m_Helped.Length());
   if(TotalWidth > 0)
     result = System::StringOfChar(PaddingChar, TotalWidth) + m_Helped;
   else
@@ -1115,120 +1152,123 @@ String __fastcall TStringHelper::PadLeft(int TotalWidth, Char PaddingChar)
   return result;
 }
 
-String __fastcall TStringHelper::PadRight(int TotalWidth)
+String __fastcall TStringHelper::PadLeft(int TotalWidth) const
+{
+  String result;
+  result = PadLeft(TotalWidth, L' ');
+  return result;
+}
+
+String __fastcall TStringHelper::PadRight(int TotalWidth, Char PaddingChar) const
+{
+  String result;
+  TotalWidth = (int) (TotalWidth - m_Helped.Length());
+  if(TotalWidth > 0)
+    result = m_Helped + System::StringOfChar(PaddingChar, TotalWidth);
+  else
+    result = m_Helped;
+  return result;
+}
+
+String __fastcall TStringHelper::PadRight(int TotalWidth) const
 {
   String result;
   result = PadRight(TotalWidth, L' ');
   return result;
 }
 
-String __fastcall TStringHelper::PadRight(int TotalWidth, Char PaddingChar)
+String __fastcall TStringHelper::QuotedString(Char QuoteChar) const
 {
-  String result;
-	TotalWidth = TotalWidth - m_Helped.Length();
-  if(TotalWidth > 0)
-    result = m_Helped + System::StringOfChar(PaddingChar, TotalWidth);
-  else
-		result = m_Helped;
-	return result;
-}
+  String Result = m_Helped; // oder Substring(0)
 
-String __fastcall TStringHelper::QuotedString(const Char QuoteChar)
-{
-  String result;
-  int i = 0;
-  int stop = 0;
-	result = TStringHelper(m_Helped).SubString(0);
-  for(stop = 0, i = result.Length() - 1; i >= stop; i--)
+  const Char* p = ustr2pwchar(Result); // 0-based view (valid until Result changes)
+
+  // Wir müssen rückwärts laufen, aber p wird ungültig sobald Result sich ändert.
+  // Daher: pro Iteration Zeichen über Helper/Chars oder SubString-Index holen.
+  for (int i = Result.Length() - 1; i >= 0; --i)
   {
-		if(TStringHelper(result).Chars[i] == QuoteChar)
-			result = result.Insert(QuoteChar, i);
+    if (TStringHelper(Result).GetChars(i) == QuoteChar) // oder TStringHelper(Result).Chars[i]
+    {
+      Result = TStringHelper(Result).Insert(i, String(QuoteChar));
+    }
   }
-	result = String(QuoteChar) + result + String(QuoteChar);
-	return result;
+
+  return String(QuoteChar) + Result + String(QuoteChar);
 }
 
-String __fastcall TStringHelper::QuotedString()
+String __fastcall TStringHelper::QuotedString() const
 {
-  String result;
-  int i = 0;
-  int stop = 0;
-	result = TStringHelper(m_Helped).SubString(0);
-  for(stop = 0, i = result.Length() - 1; i >= stop; i--)
-  {
-    if(TStringHelper(result).Chars[i] == L'\'')
-			result = result.Insert(L'\'', i);
-  }
-  result = String(L"\'") + result + L"\'";
-  return result;
+  return QuotedString(L'\'');
 }
 
-String __fastcall TStringHelper::Remove(int StartIndex, int Count)
+String __fastcall TStringHelper::Remove(int StartIndex, int Count) const
+{
+  String Result = m_Helped;
+  if (Count <= 0)
+    return Result;          // Delphi: bei Count <= 0 effektiv keine Änderung
+
+  Result.Delete(StartIndex + 1, Count);
+  return Result;
+}
+
+String __fastcall TStringHelper::Remove(int StartIndex) const
 {
   String result;
   result = m_Helped;
-	result.Delete(StartIndex + 1-1,  Count);
+  result.Delete(StartIndex + 1,  result.Length());
   return result;
 }
 
-String __fastcall TStringHelper::Remove(int StartIndex)
+String __fastcall TStringHelper::Replace(Char OldChar, Char NewChar) const
 {
   String result;
-	result = m_Helped;
-	result.Delete(StartIndex + 1-1,  result.Length());
+  result = System::Sysutils::StringReplace(m_Helped, String(OldChar), String(NewChar), (TReplaceFlags() << rfReplaceAll));
   return result;
 }
 
-String __fastcall TStringHelper::Replace(Char OldChar, Char NewChar)
+String __fastcall TStringHelper::Replace(Char OldChar, Char NewChar, TReplaceFlags ReplaceFlags) const
 {
   String result;
-  result = System::Sysutils::StringReplace(m_Helped, String(OldChar), String(NewChar), Sysutils__44);
+  result = System::Sysutils::StringReplace(m_Helped, OldChar, NewChar, ReplaceFlags);
   return result;
 }
 
-String __fastcall TStringHelper::Replace(Char OldChar, Char NewChar, TReplaceFlags ReplaceFlags)
+String __fastcall TStringHelper::Replace(const String& OldValue, const String& NewValue)  const
 {
   String result;
-  result = System::Sysutils::StringReplace(m_Helped, String(OldChar), String(NewChar), ReplaceFlags);
+  result = System::Sysutils::StringReplace(m_Helped, OldValue, NewValue, (TReplaceFlags() << rfReplaceAll));
   return result;
 }
 
-String __fastcall TStringHelper::Replace(const String OldValue, const String NewValue)
-{
-  String result;
-  result = System::Sysutils::StringReplace(m_Helped, OldValue, NewValue, Sysutils__45);
-  return result;
-}
-
-String __fastcall TStringHelper::Replace(const String OldValue, const String NewValue, TReplaceFlags ReplaceFlags)
+String __fastcall TStringHelper::Replace(const String& OldValue, const String& NewValue, TReplaceFlags ReplaceFlags) const
 {
   String result;
   result = System::Sysutils::StringReplace(m_Helped, OldValue, NewValue, ReplaceFlags);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, TStringSplitOptions Options) const
 {
-	TArray<String> result;
-  result = Split(separator, separator_maxidx, MaxInt, Options);
-	return result;
-}
-
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, int Count)
-{
-	TArray<String> result;
-	result = Split(separator, separator_maxidx, Count, TStringSplitOptions::None);
-	return result;
-}
-
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx)
-{
-	TArray<String> result;
-	result = Split(separator, separator_maxidx, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, MaxInt, Options);
   return result;
 }
 
-int __fastcall TStringHelper::IndexOfAny(const String* Values, int Values_maxidx, int& Index, int StartIndex)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, int Count) const
+{
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, Count, TStringSplitOptions::None);
+  return result;
+}
+
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx) const
+{
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, MaxInt, TStringSplitOptions::None);
+  return result;
+}
+
+int __fastcall TStringHelper::IndexOfAny(const String* Values, int Values_maxidx, int& Index, int StartIndex) const
 {
   int result = 0;
   int C = 0;
@@ -1236,31 +1276,10 @@ int __fastcall TStringHelper::IndexOfAny(const String* Values, int Values_maxidx
   int IoA = 0;
   int stop = 0;
   IoA = -1;
-	for(stop = (int) Values_maxidx /*# High(Values) */, C = 0; C <= stop; C++)
+  for(stop = Values_maxidx /*# High(Values) */, C = 0; C <= stop; C++)
   {
     P = IndexOf(Values[C], StartIndex);
-    if((P >= 0) && ((P < IoA) || (IoA ==  - 1)))
-    {
-			IoA = P;
-      Index = C;
-    }
-  }
-  result = IoA;
-  return result;
-}
-
-int __fastcall TStringHelper::IndexOfAnyUnquoted(const String* Values, int Values_maxidx, Char StartQuote, Char EndQuote, int& Index, int StartIndex)
-{
-  int result = 0;
-  int C = 0;
-  int P = 0;
-	int IoA = 0;
-  int stop = 0;
-  IoA = -1;
-  for(stop = (int) Values_maxidx /*# High(Values) */, C = 0; C <= stop; C++)
-  {
-    P = IndexOfQuoted(Values[C], StartQuote, EndQuote, StartIndex);
-    if((P >= 0) && ((P < IoA) || (IoA ==  - 1)))
+    if((P >= 0) && ((P < IoA) || (IoA == -1)))
     {
       IoA = P;
       Index = C;
@@ -1270,592 +1289,768 @@ int __fastcall TStringHelper::IndexOfAnyUnquoted(const String* Values, int Value
   return result;
 }
 
-int __fastcall PosX(const UnicodeString Substr, const UnicodeString Str, int Offset)
+int __fastcall TStringHelper::IndexOfAnyUnquoted(const String* Values, int Values_maxidx, Char StartQuote, Char EndQuote, int& Index, int StartIndex) const
 {
   int result = 0;
-  int i = 0;
-  int LIterCnt = 0;
-  int l = 0;
-  int j = 0;
-  PWideChar PSubStr = NULL;
-  PWideChar ps = NULL;
-  l = (int) Substr.Length();
-  LIterCnt = (int) (Str.Length() - Offset - l + 1);
-  if((Offset > 0) && (LIterCnt >= 0) && (l > 0))
+  int C = 0;
+  int P = 0;
+  int IoA = 0;
+  int stop = 0;
+  IoA = -1;
+  for(stop = Values_maxidx /*# High(Values) */, C = 0; C <= stop; C++)
   {
-    int stop = 0;
-    PSubStr = ustr2pwchar(Substr);
-    ps = ustr2pwchar(Str);
-    ps += Offset;
-    for(stop = LIterCnt, i = 0; i <= stop; i++)
+    P = IndexOfQuoted(Values[C], StartQuote, EndQuote, StartIndex);
+    if((P >= 0) && ((P < IoA) || (IoA == -1)))
     {
-      j = 0;
-      while((j >= 0) && (j < l))
-      {
-        if(ps[i + j] == PSubStr[j])
-          ++j;
-        else
-          j = -1;
-      }
-      if(j >= l)
-        return i + Offset;
+      IoA = P;
+      Index = C;
     }
   }
-  result = 0;
+  result = IoA;
   return result;
 }
 
-int __fastcall TStringHelper::IndexOfQuoted(const String Value, Char StartQuote, Char EndQuote, int StartIndex)
+int __fastcall Posx(const UnicodeString& SubStr, const UnicodeString& Str, int Offset)
 {
-  int result = 0;
-  int i = 0;
-  int LIterCnt = 0;
-  int l = 0;
-  int j = 0;
-  PWideChar PSubStr = NULL;
-  PWideChar ps = NULL;
-  int LInQuote = 0;
-  bool LInQuoteBool = false;
-  l = Value.Length();
-  LIterCnt = m_Helped.Length() - StartIndex - l + 1;
-  if((StartIndex >= 0) && (LIterCnt >= 0) && (l > 0))
+  // Returns: 1-based position (Delphi Pos semantics), or 0 if not found.
+  // Offset is 0-based start index into Str.
+
+  const int SubLen = SubStr.Length();
+  const int StrLen = Str.Length();
+
+  if (SubLen <= 0)
+    return 0;
+
+  if (Offset < 0)
+    Offset = 0;
+
+  if (Offset > StrLen)
+    return 0;
+
+  // Number of possible start positions (count), 0 means none
+  const int IterCnt = StrLen - Offset - SubLen + 1;
+  if (IterCnt <= 0)
+    return 0;
+
+  const PWideChar pSub = ustr2pwchar(SubStr); // 0-based
+  const PWideChar pStr = ustr2pwchar(Str);    // 0-based
+  const PWideChar p = pStr + Offset;
+
+  for (int i = 0; i < IterCnt; ++i)
   {
-    PSubStr = ustr2pwchar(Value);
-    ps = ustr2pwchar(m_Helped);
-    ps += StartIndex;
-    if(StartQuote != EndQuote)
+    int j = 0;
+    while (j < SubLen && p[i + j] == pSub[j])
+      ++j;
+
+    if (j == SubLen)
+      return (Offset + i) + 1; // convert 0-based index -> 1-based position
+  }
+
+  return 0;
+}
+
+
+int __fastcall TStringHelper::IndexOfQuoted(const String& Value, Char StartQuote, Char EndQuote, int StartIndex) const
+{
+  const int SubLen = (int)Value.Length();
+  const int StrLen = (int)m_Helped.Length();
+
+  if (SubLen <= 0)
+    return -1;
+
+  if (StartIndex < 0)
+    StartIndex = 0;
+
+  if (StartIndex > StrLen - SubLen)
+    return -1;
+
+  const Char* sub = ustr2pwchar(Value);     // 0-based
+  const Char* s   = ustr2pwchar(m_Helped);  // 0-based
+
+  // Quote state while scanning
+  int  depth = 0;
+  bool inQuote = false;
+
+  // Initialize quote state up to StartIndex (so StartIndex respects existing quotes)
+  if (StartIndex > 0)
+  {
+    if (StartQuote != EndQuote)
     {
-      int stop = 0;
-      LInQuote = 0;
-      for(stop = LIterCnt, i = 0; i <= stop; i++)
+      for (int k = 0; k < StartIndex; ++k)
       {
-        j = 0;
-        while((j >= 0) && (j < l))
-        {
-          if(ps[i + j] == StartQuote)
-            ++LInQuote;
-          else
-          {
-            if(ps[i + j] == EndQuote)
-              --LInQuote;
-          }
-          if(LInQuote > 0)
-            j = -1;
-          else
-          {
-            if(ps[i + j] == PSubStr[j])
-              ++j;
-            else
-              j = -1;
-          }
-        }
-        if(j >= l)
-          return i + StartIndex;
+        const Char ch = s[k];
+        if (ch == StartQuote) ++depth;
+        else if (ch == EndQuote && depth > 0) --depth;
       }
     }
     else
     {
-      int stop = 0;
-      LInQuoteBool = false;
-      for(stop = LIterCnt, i = 0; i <= stop; i++)
-      {
-        j = 0;
-        while((j >= 0) && (j < l))
-        {
-          if(ps[i + j] == StartQuote)
-            LInQuoteBool = !LInQuoteBool;
-          if(LInQuoteBool)
-            j = -1;
-          else
-          {
-            if(ps[i + j] == PSubStr[j])
-              ++j;
-            else
-              j = -1;
-          }
-        }
-        if(j >= l)
-          return i + StartIndex;
-      }
+      for (int k = 0; k < StartIndex; ++k)
+        if (s[k] == StartQuote) inQuote = !inQuote;
     }
   }
-  result = -1;
-  return result;
+
+  const int lastStart = StrLen - SubLen;
+
+  for (int i = StartIndex; i <= lastStart; ++i)
+  {
+    // Update quote state for position i (based on char at i-1)
+    // (We already pre-scanned up to StartIndex, so for i==StartIndex nothing to do.)
+    if (i > StartIndex)
+    {
+      const Char prev = s[i - 1];
+      if (StartQuote != EndQuote)
+      {
+        if (prev == StartQuote) ++depth;
+        else if (prev == EndQuote && depth > 0) --depth;
+      }
+      else
+      {
+        if (prev == StartQuote) inQuote = !inQuote;
+      }
+    }
+
+    const bool currentlyInQuote = (StartQuote != EndQuote) ? (depth > 0) : inQuote;
+    if (currentlyInQuote)
+      continue;
+
+    // Try to match Value at position i, but reject if the match touches quote chars
+    bool match = true;
+
+    if (StartQuote != EndQuote)
+    {
+      int localDepth = 0;
+      for (int j = 0; j < SubLen; ++j)
+      {
+        const Char ch = s[i + j];
+
+        // If the candidate window contains quote delimiters, reject it
+        if (ch == StartQuote) { match = false; break; }
+        if (ch == EndQuote)   { match = false; break; }
+
+        if (ch != sub[j]) { match = false; break; }
+
+        // localDepth stays 0 because we reject quote chars above,
+        // kept here to make the intent explicit.
+        (void)localDepth;
+      }
+    }
+    else
+    {
+      for (int j = 0; j < SubLen; ++j)
+      {
+        const Char ch = s[i + j];
+
+        // Same quote char toggles: reject if it appears in the window
+        if (ch == StartQuote) { match = false; break; }
+
+        if (ch != sub[j]) { match = false; break; }
+      }
+    }
+
+    if (match)
+      return i;
+  }
+
+  return -1;
 }
 
-TArray<String> __fastcall TStringHelper::InternalSplit(TSplitKind SplitType, const Char* SeparatorC, int SeparatorC_maxidx, const String* separators, int separators_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::InternalSplit(TSplitKind SplitType, const Char* SeparatorC, int SeparatorC_maxidx, const String* SeparatorS, int SeparatorS_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options) const
 {
-	TArray<String> result;
+  D2CArray<String> Result;
+
   const int DeltaGrow = 32;
-  int NextSeparator = 0;
-	int LastIndex = 0;
-  int total = 0;
-  int CurrentLength = 0;
-  int SeparatorIndex = 0;
-  String s;
-  total = 0;
-  LastIndex = 0;
-  CurrentLength = 0;
-  SeparatorIndex = 0;
-  switch(SplitType)
+
+  if (IsEmpty())
+    return D2CArray<String>();
+
+  if (Count <= 0)
+    return D2CArray<String>();
+
+  // Options
+    System::Set<TStringSplitOptions,
+                TStringSplitOptions::None,
+                TStringSplitOptions::ExcludeLastEmpty> OptSet;
+
+    OptSet << Options;
+
+    const bool ExcludeEmpty =
+      OptSet.Contains(TStringSplitOptions::ExcludeEmpty);
+
+    const bool ExcludeLastEmpty =
+      OptSet.Contains(TStringSplitOptions::ExcludeLastEmpty);
+
+  int NextSeparator   = -1; // 0-based
+  int LastIndex       = 0;  // 0-based start of current segment
+  int L               = 0;  // segment length
+  int Total           = 0;  // number of segments added
+  int CurrentLength   = 0;  // allocated length
+  int SeparatorIndex  = 0;  // which separator matched (for string-separators)
+
+  // Find first separator
+  switch (SplitType)
   {
-    case  TSplitKind::StringSeparatorNoQuoted:
-    NextSeparator = IndexOfAny(separators, separators_maxidx, SeparatorIndex, LastIndex);
+    case TSplitKind::StringSeparatorsNoQuoted:
+    case TSplitKind::StringSeparatorNoQuoted:
+    {
+      if (SeparatorS_maxidx == 0)
+      {
+        SplitType = TSplitKind::StringSeparatorNoQuoted;
+        NextSeparator = IndexOf(SeparatorS[0], LastIndex);
+      }
+      else
+      {
+        NextSeparator = IndexOfAny(SeparatorS, SeparatorS_maxidx, SeparatorIndex, LastIndex);
+      }
+    }
     break;
-    case  TSplitKind::StringSeparatorQuoted:
-    NextSeparator = IndexOfAnyUnquoted(separators, separators_maxidx, QuoteStart, QuoteEnd, SeparatorIndex, LastIndex);
+
+    case TSplitKind::StringSeparatorsQuoted:
+    {
+      NextSeparator = IndexOfAnyUnquoted(SeparatorS, SeparatorS_maxidx, QuoteStart, QuoteEnd, SeparatorIndex, LastIndex);
+    }
     break;
-    case  TSplitKind::CharSeparatorNoQuoted:
-    NextSeparator = IndexOfAny(SeparatorC, SeparatorC_maxidx, LastIndex);
+
+    case TSplitKind::CharSeparatorsNoQuoted:
+    case TSplitKind::CharSeparatorNoQuoted:
+    {
+      if (SeparatorC_maxidx == 0)
+      {
+        SplitType = TSplitKind::CharSeparatorNoQuoted;
+        NextSeparator = IndexOf(SeparatorC[0], LastIndex);
+      }
+      else
+      {
+        NextSeparator = IndexOfAny(SeparatorC, SeparatorC_maxidx, LastIndex);
+      }
+    }
     break;
-    case  TSplitKind::CharSeparatorQuoted:
-    NextSeparator = IndexOfAnyUnquoted(SeparatorC, SeparatorC_maxidx, QuoteStart, QuoteEnd, LastIndex);
+
+    case TSplitKind::CharSeparatorsQuoted:
+    {
+      NextSeparator = IndexOfAnyUnquoted(SeparatorC, SeparatorC_maxidx, QuoteStart, QuoteEnd, LastIndex);
+    }
     break;
+
     default:
-    NextSeparator = -1;
+      NextSeparator = -1;
     break;
   }
-  while((NextSeparator >= 0) && (total < Count))
+
+  // Main loop
+  while ((NextSeparator >= 0) && (Total < Count))
   {
-		s = m_Helped.SubString(LastIndex + 1, NextSeparator - LastIndex);
-		if((s != L"") || ((s == L"") && (Options != TStringSplitOptions::ExcludeEmpty)))
+    L = NextSeparator - LastIndex; // length of token (0..)
+    if ((L > 0) || !ExcludeEmpty)
     {
-      ++total;
-      if(CurrentLength < total)
+      ++Total;
+
+      if (CurrentLength < Total)
       {
-        CurrentLength = total + DeltaGrow;
-        result.Length = CurrentLength;
+        CurrentLength = Total + DeltaGrow;
+        Result.Length = CurrentLength;
       }
-			result[total - 1] = s;
+
+      // SubString is 1-based: LastIndex(0-based) -> +1
+      Result[Total - 1] = m_Helped.SubString(LastIndex + 1, L);
     }
-    switch(SplitType)
+
+    // Advance past separator and find next
+    switch (SplitType)
     {
-      case  TSplitKind::StringSeparatorNoQuoted:
+      case TSplitKind::StringSeparatorsNoQuoted:
       {
-        LastIndex = NextSeparator + separators[SeparatorIndex].Length();
-        NextSeparator = IndexOfAny(separators, separators_maxidx, SeparatorIndex, LastIndex);
+        LastIndex = NextSeparator + (int)SeparatorS[SeparatorIndex].Length();
+        NextSeparator = IndexOfAny(SeparatorS, SeparatorS_maxidx, SeparatorIndex, LastIndex);
       }
       break;
-      case  TSplitKind::StringSeparatorQuoted:
+
+      case TSplitKind::StringSeparatorsQuoted:
       {
-        LastIndex = NextSeparator + separators[SeparatorIndex].Length();
-        NextSeparator = IndexOfAnyUnquoted(separators, separators_maxidx, QuoteStart, QuoteEnd, SeparatorIndex, LastIndex);
+        LastIndex = NextSeparator + (int)SeparatorS[SeparatorIndex].Length();
+        NextSeparator = IndexOfAnyUnquoted(SeparatorS, SeparatorS_maxidx, QuoteStart, QuoteEnd, SeparatorIndex, LastIndex);
       }
       break;
-			case  TSplitKind::CharSeparatorNoQuoted:
+
+      case TSplitKind::StringSeparatorNoQuoted:
+      {
+        LastIndex = NextSeparator + (int)SeparatorS[0].Length();
+        NextSeparator = IndexOf(SeparatorS[0], LastIndex);
+      }
+      break;
+
+      case TSplitKind::CharSeparatorsNoQuoted:
       {
         LastIndex = NextSeparator + 1;
         NextSeparator = IndexOfAny(SeparatorC, SeparatorC_maxidx, LastIndex);
       }
       break;
-      case  TSplitKind::CharSeparatorQuoted:
+
+      case TSplitKind::CharSeparatorsQuoted:
       {
         LastIndex = NextSeparator + 1;
         NextSeparator = IndexOfAnyUnquoted(SeparatorC, SeparatorC_maxidx, QuoteStart, QuoteEnd, LastIndex);
       }
       break;
+
+      case TSplitKind::CharSeparatorNoQuoted:
+      {
+        LastIndex = NextSeparator + 1;
+        NextSeparator = IndexOf(SeparatorC[0], LastIndex);
+      }
+      break;
+
       default:
-        ;
+        NextSeparator = -1;
       break;
     }
   }
-  if((LastIndex < m_Helped.Length()) && (total < Count))
+
+  // Add tail
+  L = (int)m_Helped.Length() - LastIndex; // can be 0
+  if ((L >= 0) && (Total < Count))
   {
-    ++total;
-    result.Length = total;
-    result[total - 1] = m_Helped.SubString(LastIndex, m_Helped.Length() - LastIndex);
-	}
+    const bool TailIsEmpty = (L == 0);
+
+    // Add last segment unless excluded by options
+    if (!TailIsEmpty || (!ExcludeEmpty && !ExcludeLastEmpty))
+    {
+      ++Total;
+      Result.Length = Total;
+      Result[Total - 1] = m_Helped.SubString(LastIndex + 1, L);
+    }
+    else
+    {
+      Result.Length = Total;
+    }
+  }
   else
-  result.Length = total;
+  {
+    Result.Length = Total;
+  }
+
+  return Result;
+}
+
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, int Count, TStringSplitOptions Options) const
+{
+  D2CArray<String> result;
+  result = InternalSplit(TSplitKind::StringSeparatorsNoQuoted, nullptr, -1, Separator, Separator_maxidx, ((Char) 0), ((Char) 0), Count, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, int Count, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options)  const
 {
-	TArray<String> result;
-	result = InternalSplit(TSplitKind::StringSeparatorNoQuoted, NULL, 0, separator, separator_maxidx, ((Char) 0), ((Char) 0), Count, Options);
-	return result;
-}
-
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options)
-{
-	TArray<String> result;
-	result = InternalSplit(TSplitKind::StringSeparatorQuoted, NULL, 0, separator, separator_maxidx, QuoteStart, QuoteEnd, Count, Options);
-	return result;
-}
-
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, int Count, TStringSplitOptions Options)
-{
-	TArray<String> result;
-	result = InternalSplit(TSplitKind::CharSeparatorNoQuoted, separator, separator_maxidx, NULL, 0, ((Char) 0), ((Char) 0), Count, Options);
-	return result;
-}
-
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options)
-{
-  TArray<String> result;
-	result = InternalSplit(TSplitKind::CharSeparatorQuoted, separator, separator_maxidx, NULL, 0, QuoteStart, QuoteEnd, Count, Options);
+  D2CArray<String> result;
+  result = InternalSplit(TSplitKind::StringSeparatorsQuoted, nullptr, -1, Separator, Separator_maxidx, QuoteStart, QuoteEnd, Count, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, int Count, TStringSplitOptions Options) const
 {
-  TArray<String> result;
-  result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = InternalSplit(TSplitKind::CharSeparatorsNoQuoted, Separator, Separator_maxidx, nullptr, -1, ((Char) 0), ((Char) 0), Count, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, Char Quote)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options) const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, Quote, Quote, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = InternalSplit(TSplitKind::CharSeparatorsQuoted, Separator, Separator_maxidx, nullptr, -1, QuoteStart, QuoteEnd, Count, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd) const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, Count, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, MaxInt, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, Char Quote) const
 {
-  TArray<String> result;
-  result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, MaxInt, Options);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, Quote, Quote, MaxInt, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count)  const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, Count, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, int Count)
+D2CArray<String> __fastcall TStringHelper::Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options) const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, Count, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, MaxInt, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx) const
 {
-  TArray<String> result;
-  result = Split(separator, separator_maxidx, MaxInt, Options);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, MaxInt, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, Char Quote)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, int Count) const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, Quote, Quote, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, Count, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, TStringSplitOptions Options) const
 {
-  TArray<String> result;
-	result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, MaxInt, TStringSplitOptions::None);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, MaxInt, Options);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, Char Quote) const
 {
-  TArray<String> result;
-  result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, MaxInt, Options);
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, Quote, Quote, MaxInt, TStringSplitOptions::None);
   return result;
 }
 
-TArray<String> __fastcall TStringHelper::Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd) const
 {
-	TArray<String> result;
-	result = Split(separator, separator_maxidx, QuoteStart, QuoteEnd, Count, TStringSplitOptions::None);
-	return result;
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, MaxInt, TStringSplitOptions::None);
+  return result;
 }
 
-bool __fastcall TStringHelper::StartsWith(const String Value)
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options) const
+{
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, MaxInt, Options);
+  return result;
+}
+
+D2CArray<String> __fastcall TStringHelper::Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count) const
+{
+  D2CArray<String> result;
+  result = Split(Separator, Separator_maxidx, QuoteStart, QuoteEnd, Count, TStringSplitOptions::None);
+  return result;
+}
+
+/*#static*/
+bool __fastcall TStringHelper::StartsText(const String& ASubText, const String& AText)
+{
+  bool result = false;
+  int LSubLen = 0;
+  LSubLen = (int) ASubText.Length();
+  if(LSubLen == 0)
+    result = true;
+  else
+  {
+    if(AText.Length() >= LSubLen)
+      result = AnsiStrLIComp(ustr2pwchar(ASubText), ustr2pwchar(AText), LSubLen) == 0;
+    else
+      result = false;
+  }
+  return result;
+}
+
+bool __fastcall TStringHelper::StartsWith(const String& Value) const
 {
   bool result = false;
   result = StartsWith(Value, false);
   return result;
 }
 
-bool __fastcall TStringHelper::StartsWith(const String Value, bool IgnoreCase)
+bool __fastcall TStringHelper::StartsWith(const String& Value, bool IgnoreCase) const
 {
   bool result = false;
-  if(Value == L"")
+  int LValLen = 0;
+  LValLen = (int) Value.Length();
+  if(LValLen == 0)
     result = true;
   else
-	{
-    if(!IgnoreCase)
-			result = StrLComp(ustr2pwchar(m_Helped), ustr2pwchar(Value), (unsigned int) Value.Length()) == 0;
+  {
+    if(IgnoreCase)
+      result = StartsText(Value, m_Helped);
     else
-			result = StrLIComp(ustr2pwchar(m_Helped), ustr2pwchar(Value), (unsigned int) Value.Length()) == 0;
+    {
+      if(m_Helped.Length() >= LValLen)
+        result = CompareMem(ustr2address(Value), ustr2address(m_Helped), LValLen * sizeof(Char));
+      else
+        result = false;
+    }
   }
-	return result;
-}
-
-String __fastcall TStringHelper::SubString(int StartIndex)
-{
-	String result;
-	result = m_Helped.SubString(StartIndex + 1, m_Helped.Length() - StartIndex);
-	return result;
-}
-
-String __fastcall TStringHelper::SubString(int StartIndex, int Length)
-{
-  String result;
-	result = m_Helped.SubString(StartIndex + 1, Length);
   return result;
 }
 
-bool __fastcall TStringHelper::ToBoolean()
+bool __fastcall TStringHelper::ToBoolean() const
 {
   bool result = false;
   result = StrToBool(m_Helped);
   return result;
 }
 
-int __fastcall TStringHelper::ToInteger()
+int __fastcall TStringHelper::ToInteger() const
 {
   int result = 0;
-	result = TIntegerHelper::Parse(m_Helped);
+  result = TIntegerHelper::Parse(m_Helped);
   return result;
 }
 
-__int64 __fastcall TStringHelper::ToInt64()
+__int64 __fastcall TStringHelper::ToInt64() const
 {
   __int64 result = 0;
   result = TInt64Helper::Parse(m_Helped);
   return result;
 }
 
-float __fastcall TStringHelper::ToSingle()
+float __fastcall TStringHelper::ToSingle() const
 {
   float result = 0.0F;
   result = TSingleHelper::Parse(m_Helped);
   return result;
 }
 
-double __fastcall TStringHelper::ToDouble()
+double __fastcall TStringHelper::ToDouble() const
 {
   double result = 0.0;
   result = TDoubleHelper::Parse(m_Helped);
   return result;
 }
 
-long double __fastcall TStringHelper::ToExtended()
+long double __fastcall TStringHelper::ToExtended() const
 {
   long double result = 0.0L;
   result = TExtendedHelper::Parse(m_Helped);
   return result;
 }
 
-TArray<Char> __fastcall TStringHelper::ToCharArray()
+D2CArray<Char> __fastcall TStringHelper::ToCharArray() const
 {
-	TArray<Char> result;
-  result = ToCharArray(0, m_Helped.Length());
-	return result;
-}
-
-TArray<Char> __fastcall TStringHelper::ToCharArray(int StartIndex, int Length)
-{
-	TArray<Char> result;
-	result.Length = Length;
-	d2c_Move(ustr2pwchar(m_Helped) + StartIndex, result, 0, Length * sizeof(Char));
+  D2CArray<Char> result;
+  result = ToCharArray(0, (int) m_Helped.Length());
   return result;
 }
-#endif // needed
-String __fastcall TStringHelper::ToLower()
+
+D2CArray<Char> __fastcall TStringHelper::ToCharArray(int StartIndex, int Length) const
 {
-	String result;
+  D2CArray<Char> result;
+  result.Length = Length;
+  Move((ustr2pwchar(m_Helped) + StartIndex), DynamicArrayPointer(result, 0), (size_t) (Length * sizeof(Char)));
+  return result;
+}
+
+String __fastcall TStringHelper::ToLower() const
+{
+  String result;
   result = ToLower(SysLocale.DefaultLCID);
   return result;
 }
 
-String __fastcall TStringHelper::ToLower(TLocaleID LocaleID)
+String __fastcall TStringHelper::ToLower(TLocaleID LocaleID) const
 {
   String result;
   result = m_Helped;
   if(result != L"")
   {
     UniqueString(result);
-		if(LCMapStringW(LocaleID, (DWORD) (LCMAP_LOWERCASE | LCMAP_LINGUISTIC_CASING), ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0)
+    if(LCMapString(LocaleID, LCMAP_LOWERCASE | LCMAP_LINGUISTIC_CASING, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0)
       RaiseLastOSError();
   }
   return result;
 }
 
-String __fastcall TStringHelper::ToLowerInvariant()
+String __fastcall TStringHelper::ToLowerInvariant() const
 {
-	String result;
+  String result;
+  LCID MapLocale;
   result = m_Helped;
   if(result != L"")
   {
     UniqueString(result);
-		if(LCMapStringW(LOCALE_INVARIANT, (DWORD) LCMAP_LOWERCASE, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0) /*or LCMAP_LINGUISTIC_CASING*/
+    if (System::Sysutils::TOSVersion::Check(5, 1))
+      MapLocale = LOCALE_INVARIANT;
+    else
+      MapLocale = LOCALE_SYSTEM_DEFAULT;
+    if(LCMapString(MapLocale, LCMAP_LOWERCASE, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0) /*or LCMAP_LINGUISTIC_CASING*/
       RaiseLastOSError();
   }
   return result;
 }
 
-String __fastcall TStringHelper::ToUpper()
+String __fastcall TStringHelper::ToUpper() const
 {
   String result;
   result = ToUpper(SysLocale.DefaultLCID);
   return result;
 }
 
-String __fastcall TStringHelper::ToUpper(TLocaleID LocaleID)
+String __fastcall TStringHelper::ToUpper(TLocaleID LocaleID) const
 {
   String result;
   result = m_Helped;
   if(result != L"")
   {
     UniqueString(result);
-		if(LCMapStringW(LocaleID, (DWORD) (LCMAP_UPPERCASE | LCMAP_LINGUISTIC_CASING), ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0)
+    if(LCMapString(LocaleID, LCMAP_UPPERCASE | LCMAP_LINGUISTIC_CASING, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0)
       RaiseLastOSError();
-	}
+  }
   return result;
 }
 
-String __fastcall TStringHelper::ToUpperInvariant()
+String __fastcall TStringHelper::ToUpperInvariant() const
 {
   String result;
-  LCID MapLocale = 0;
+  LCID MapLocale;
   result = m_Helped;
   if(result != L"")
   {
     UniqueString(result);
-    if(TOSVersion::Check(5, 1))
-      MapLocale = (unsigned long) LOCALE_INVARIANT;
+    if (System::Sysutils::TOSVersion::Check(5, 1))
+      MapLocale = LOCALE_INVARIANT;
     else
-      MapLocale = (unsigned long) LOCALE_SYSTEM_DEFAULT;
-		if(LCMapStringW(MapLocale, (DWORD) LCMAP_UPPERCASE, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0) /*or LCMAP_LINGUISTIC_CASING*/
-			RaiseLastOSError();
+      MapLocale = LOCALE_SYSTEM_DEFAULT;
+    if(LCMapString(MapLocale, LCMAP_UPPERCASE, ustr2pwchar(m_Helped), m_Helped.Length(), ustr2pwchar(result), result.Length()) == 0) /*or LCMAP_LINGUISTIC_CASING*/
+      RaiseLastOSError();
   }
   return result;
 }
 
-String __fastcall TStringHelper::Trim()
+int __fastcall TStringHelper::GetHashCode() const
 {
-  String result;
-  int i = 0;
-  int l = 0;
-  l = m_Helped.Length() - 1;
-  i = 0;
-  if((l >  - 1) && (m_Helped[i - 1] > L' ') && (m_Helped[l - 1] > L' '))
-    return m_Helped;
-  while((i <= l) && (m_Helped[i - 1] <= L' '))
-    ++i;
-  if(i > l)
-    return L"";
-  while(m_Helped[l - 1] <= L' ')
-    --l;
-  result = m_Helped.SubString(i, l - i + 1);
-  return result;
-}
+  UInt32 h = 0;
+  const int L = m_Helped.Length();
+  const Char* p = ustr2pwchar(m_Helped); // 0-based
 
-String __fastcall TStringHelper::TrimLeft()
-{
-  String result;
-  int i = 0;
-  int l = 0;
-  l = m_Helped.Length() - 1;
-  i = 0;
-  while((i <= l) && (m_Helped[i - 1] <= L' '))
-    ++i;
-  if(i > 0)
-    result = m_Helped.SubString(i, m_Helped.Length() - i);
-  else
-    result = m_Helped;
-  return result;
-}
-
-String __fastcall TStringHelper::TrimRight()
-{
-  String result;
-  int i = 0;
-  i = m_Helped.Length() - 1;
-  if((i >= 0) && (m_Helped[i - 1] > L' '))
-    result = m_Helped;
-  else
+  for (int i = 0; i < L; ++i)
   {
-		//while((i >= 0) && (this->Chars[i] <= L' '))
-		while((i >= 0) && (m_Helped[i + 1] <= L' '))
-			--i;
-    result = m_Helped.SubString(0, i + 1);
+    h = (UInt32)((h << 5) | (h >> 27)); // ROL 5
+    h ^= (UInt32)p[i];
   }
-  return result;
+  return (Int32)h;
 }
 
-String __fastcall TStringHelper::Trim(const Char* TrimChars, int TrimChars_maxidx)
+String __fastcall TStringHelper::Trim() const
 {
-	String result;
-  int i = 0;
-	int l = 0;
-  l = m_Helped.Length() - 1;
-  i = 0;
-	if((l > 0) && (!CharInArray(m_Helped[i - 1], TrimChars, TrimChars_maxidx)) && (!CharInArray(m_Helped[l - 1], TrimChars, TrimChars_maxidx)))
-		return m_Helped;
-  while((i <= l) && (CharInArray(m_Helped[i - 1], TrimChars, TrimChars_maxidx)))
-		++i;
-  if(i > l)
-    return L"";
-  while(CharInArray(m_Helped[l - 1], TrimChars, TrimChars_maxidx))
-    --l;
-	result = m_Helped.SubString(i, l - i + 1);
-  return result;
-}
-
-String __fastcall TStringHelper::TrimLeft(const Char* TrimChars, int TrimChars_maxidx)
-{
-  String result;
-  int i = 0;
-  int l = 0;
-  l = m_Helped.Length();
-  i = 0;
-  while((i < l) && (CharInArray(m_Helped[i - 1], TrimChars, TrimChars_maxidx)))
-    ++i;
-	if(i > 0)
-		result = m_Helped.SubString(i, m_Helped.Length() - i);
-  else
-    result = m_Helped;
-  return result;
-}
-
-String __fastcall TStringHelper::TrimRight(const Char* TrimChars, int TrimChars_maxidx)
-{
-  String result;
-  int i = 0;
-	i = m_Helped.Length() - 1;
-  if((i >= 0) && (!CharInArray(m_Helped[i - 1], TrimChars, TrimChars_maxidx)))
+  const int Len = m_Helped.Length();
+  if (Len == 0)
     return m_Helped;
-  --i;
-  while((i >= 0) && (CharInArray(m_Helped[i - 1], TrimChars, TrimChars_maxidx)))
-    --i;
-	result = m_Helped.SubString(0, i + 1);
-  return result;
+
+  const Char* p = ustr2pwchar(m_Helped);
+  int i = 0;
+  int j = Len - 1;
+
+  if (p[i] > L' ' && p[j] > L' ')
+    return m_Helped;
+
+  while (i <= j && p[i] <= L' ') ++i;
+  if (i > j) return String();
+
+  while (p[j] <= L' ') --j;
+
+  return Substring(i, j - i + 1);
 }
 
-String __fastcall TStringHelper::TrimEnd(const Char* TrimChars, int TrimChars_maxidx)
+String __fastcall TStringHelper::TrimLeft() const
+{
+  const int Len = m_Helped.Length();
+  const Char* p = ustr2pwchar(m_Helped);
+  int i = 0;
+  while (i < Len && p[i] <= L' ') ++i;
+  return (i > 0) ? Substring(i) : m_Helped;
+}
+
+String __fastcall TStringHelper::TrimRight() const
+{
+  const int Len = m_Helped.Length();
+  if (Len == 0) return m_Helped;
+
+  const Char* p = ustr2pwchar(m_Helped);
+  int j = Len - 1;
+
+  if (p[j] > L' ')
+    return m_Helped;
+
+  while (j >= 0 && p[j] <= L' ') --j;
+  return Substring(0, j + 1);
+}
+
+String __fastcall TStringHelper::Trim(const Char* TrimChars, int TrimChars_maxidx) const
+{
+  const int Len = m_Helped.Length();
+  if (Len == 0)
+    return m_Helped;
+
+  const Char* p = ustr2pwchar(m_Helped); // 0-based
+
+  int i = 0;
+  int j = Len - 1;
+
+  // Fast path: nothing to trim at both ends
+  if (!CharInArray(p[i], TrimChars, TrimChars_maxidx) &&
+      !CharInArray(p[j], TrimChars, TrimChars_maxidx))
+    return m_Helped;
+
+  while (i <= j && CharInArray(p[i], TrimChars, TrimChars_maxidx))
+    ++i;
+
+  if (i > j)
+    return String(); // all trimmed
+
+  while (j >= i && CharInArray(p[j], TrimChars, TrimChars_maxidx))
+    --j;
+
+  return Substring(i, j - i + 1);
+}
+
+String __fastcall TStringHelper::TrimLeft(const Char* TrimChars, int TrimChars_maxidx) const
+{
+  const int Len = m_Helped.Length();
+  if (Len == 0)
+    return m_Helped;
+
+  const Char* p = ustr2pwchar(m_Helped); // 0-based
+
+  int i = 0;
+  while (i < Len && CharInArray(p[i], TrimChars, TrimChars_maxidx))
+    ++i;
+
+  return (i > 0) ? Substring(i) : m_Helped;
+}
+
+String __fastcall TStringHelper::TrimRight(const Char* TrimChars, int TrimChars_maxidx) const
+{
+  const int Len = m_Helped.Length();
+  if (Len == 0) return m_Helped;
+
+  const Char* p = ustr2pwchar(m_Helped);
+  int j = Len - 1;
+
+  if (!CharInArray(p[j], TrimChars, TrimChars_maxidx))
+    return m_Helped;
+
+  while (j >= 0 && CharInArray(p[j], TrimChars, TrimChars_maxidx))
+    --j;
+
+  return Substring(0, j + 1);
+}
+
+String __fastcall TStringHelper::TrimEnd(const Char* TrimChars, int TrimChars_maxidx) const
 {
   String result;
   result = this->TrimRight(TrimChars, TrimChars_maxidx);
   return result;
 }
 
-String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_maxidx)
+String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_maxidx) const
 {
   String result;
   result = this->TrimLeft(TrimChars, TrimChars_maxidx);
   return result;
-}
+} 
 /*$ZEROBASEDSTRINGS OFF*/ // Desktop platforms use One-based string
 
-#ifdef needed
 
 /* TSingleHelper */
 
@@ -1887,7 +2082,7 @@ String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_
   return result;
 }
 
-/*#static*/ float __fastcall TSingleHelper::Parse(const String s)
+/*#static*/ float __fastcall TSingleHelper::Parse(const String& s)
 {
 	float result = 0.0F;
 	if(!TryParse(s, result))
@@ -1895,7 +2090,7 @@ String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_
   return result;
 }
 
-/*#static*/ float __fastcall TSingleHelper::Parse(const String s, const TFormatSettings& AFormatSettings)
+/*#static*/ float __fastcall TSingleHelper::Parse(const String& s, const TFormatSettings& AFormatSettings)
 {
 	float result = 0.0F;
 	if(!TryParse(s, result, AFormatSettings))
@@ -1903,7 +2098,7 @@ String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_
   return result;
 }
 
-/*#static*/ bool __fastcall TSingleHelper::TryParse(const String s, float& Value)
+/*#static*/ bool __fastcall TSingleHelper::TryParse(const String& s, float& Value)
 {
   bool result = false;
   long double e = 0.0L;
@@ -1914,7 +2109,7 @@ String __fastcall TStringHelper::TrimStart(const Char* TrimChars, int TrimChars_
   return result;
 }
 
-/*#static*/ bool __fastcall TSingleHelper::TryParse(const String s, float& Value, const TFormatSettings& AFormatSettings)
+/*#static*/ bool __fastcall TSingleHelper::TryParse(const String& s, float& Value, const TFormatSettings& AFormatSettings)
 {
   bool result = false;
   long double e = 0.0L;
@@ -2126,7 +2321,7 @@ UInt8 __fastcall TSingleHelper::GetBytes(unsigned int Index) const
 {
   UInt8 result = 0;
 // todo  if(Index >= 4)
-// todo		System::Error(System::TRuntimeError::reRangeError);
+// todo		System::RError(System::TRuntimeError::reRangeError);
 	result = InternalGetBytes(Index);
   return result;
 }
@@ -2135,7 +2330,7 @@ UInt16 __fastcall TSingleHelper::GetWords(unsigned int Index) const
 {
   UInt16 result = 0;
 // todo	if(Index >= 2)
-// todo		System::Error(TRuntimeError::reRangeError);
+// todo		System::RError(TRuntimeError::reRangeError);
   result = InternalGetWords(Index);
   return result;
 }
@@ -2165,14 +2360,14 @@ bool __fastcall TSingleHelper::GetSign() const
 void __fastcall TSingleHelper::setbytes(unsigned int Index, const UInt8 Value)
 {
 	if(Index >= 4)
-		System::Error(reRangeError);
+		System::RError(reRangeError);
   InternalSetBytes(Index, Value);
 }
 
 void __fastcall TSingleHelper::SetWords(unsigned int Index, const UInt16 Value)
 {
 	if(Index >= 2)
-		System::Error(reRangeError);
+		System::RError(reRangeError);
   InternalSetWords(Index, Value);
 }
 
@@ -2284,7 +2479,7 @@ TFloatSpecial __fastcall TSingleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ double __fastcall TDoubleHelper::Parse(const String s)
+/*#static*/ double __fastcall TDoubleHelper::Parse(const String& s)
 {
   double result = 0.0;
   if(!TryParse(s, result))
@@ -2292,7 +2487,7 @@ TFloatSpecial __fastcall TSingleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ double __fastcall TDoubleHelper::Parse(const String s, const TFormatSettings& AFormatSettings)
+/*#static*/ double __fastcall TDoubleHelper::Parse(const String& s, const TFormatSettings& AFormatSettings)
 {
   double result = 0.0;
   if(!TryParse(s, result, AFormatSettings))
@@ -2300,14 +2495,14 @@ TFloatSpecial __fastcall TSingleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ bool __fastcall TDoubleHelper::TryParse(const String s, double& Value)
+/*#static*/ bool __fastcall TDoubleHelper::TryParse(const String& s, double& Value)
 {
   bool result = false;
   result = TryStrToFloat(s, Value);
   return result;
 }
 
-/*#static*/ bool __fastcall TDoubleHelper::TryParse(const String s, double& Value, const TFormatSettings& AFormatSettings)
+/*#static*/ bool __fastcall TDoubleHelper::TryParse(const String& s, double& Value, const TFormatSettings& AFormatSettings)
 {
   bool result = false;
   result = TryStrToFloat(s, Value, AFormatSettings);
@@ -2515,7 +2710,7 @@ UInt8 __fastcall TDoubleHelper::GetBytes(unsigned int Index) const
 {
   UInt8 result = 0;
 	if(Index >= 8)
-		System::Error(reRangeError);
+		System::RError(reRangeError);
   result = InternalGetBytes(Index);
   return result;
 }
@@ -2524,7 +2719,7 @@ UInt16 __fastcall TDoubleHelper::GetWords(unsigned int Index) const
 {
   UInt16 result = 0;
   if(Index >= 4)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   result = InternalGetWords(Index);
   return result;
 }
@@ -2553,14 +2748,14 @@ bool __fastcall TDoubleHelper::GetSign() const
 void __fastcall TDoubleHelper::setbytes(unsigned int Index, const UInt8 Value)
 {
   if(Index >= 8)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   InternalSetBytes(Index, Value);
 }
 
 void __fastcall TDoubleHelper::SetWords(unsigned int Index, const UInt16 Value)
 {
   if(Index >= 4)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   InternalSetWords(Index, Value);
 }
 
@@ -2671,7 +2866,7 @@ TFloatSpecial __fastcall TDoubleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ long double __fastcall TExtendedHelper::Parse(const String s)
+/*#static*/ long double __fastcall TExtendedHelper::Parse(const String& s)
 {
   long double result = 0.0L;
   if(!TryParse(s, result))
@@ -2679,7 +2874,7 @@ TFloatSpecial __fastcall TDoubleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ long double __fastcall TExtendedHelper::Parse(const String s, const TFormatSettings& AFormatSettings)
+/*#static*/ long double __fastcall TExtendedHelper::Parse(const String& s, const TFormatSettings& AFormatSettings)
 {
   long double result = 0.0L;
 	if(!TryParse(s, result, AFormatSettings))
@@ -2687,14 +2882,14 @@ TFloatSpecial __fastcall TDoubleHelper::SpecialType()
   return result;
 }
 
-/*#static*/ bool __fastcall TExtendedHelper::TryParse(const String s, long double& Value)
+/*#static*/ bool __fastcall TExtendedHelper::TryParse(const String& s, long double& Value)
 {
   bool result = false;
   result = TryStrToFloat(s, Value);
   return result;
 }
 
-/*#static*/ bool __fastcall TExtendedHelper::TryParse(const String s, long double& Value, const TFormatSettings& AFormatSettings)
+/*#static*/ bool __fastcall TExtendedHelper::TryParse(const String& s, long double& Value, const TFormatSettings& AFormatSettings)
 {
   bool result = false;
   result = TryStrToFloat(s, Value, AFormatSettings);
@@ -2902,7 +3097,7 @@ UInt8 __fastcall TExtendedHelper::GetBytes(unsigned int Index) const
 {
   UInt8 result = 0;
   if(Index >= 8)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   result = InternalGetBytes(Index);
   return result;
 }
@@ -2911,7 +3106,7 @@ UInt16 __fastcall TExtendedHelper::GetWords(unsigned int Index) const
 {
   UInt16 result = 0;
   if(Index >= 4)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   result = InternalGetWords(Index);
   return result;
 }
@@ -2940,14 +3135,14 @@ bool __fastcall TExtendedHelper::GetSign() const
 void __fastcall TExtendedHelper::setbytes(unsigned int Index, const UInt8 Value)
 {
   if(Index >= 8)
-    System::Error(reRangeError);
+    System::RError(reRangeError);
   InternalSetBytes(Index, Value);
 }
 
 void __fastcall TExtendedHelper::SetWords(unsigned int Index, const UInt16 Value)
 {
   if(Index >= 4)
-		System::Error(reRangeError);
+		System::RError(reRangeError);
   InternalSetWords(Index, Value);
 }
 
@@ -3044,7 +3239,7 @@ TFloatSpecial __fastcall TExtendedHelper::SpecialType()
   return result;
 }
 
-/*#static*/ unsigned char __fastcall TByteHelper::Parse(const String s)
+/*#static*/ unsigned char __fastcall TByteHelper::Parse(const String& s)
 {
   unsigned char result = 0;
   if(!TryParse(s, result))
@@ -3052,7 +3247,7 @@ TFloatSpecial __fastcall TExtendedHelper::SpecialType()
   return result;
 }
 
-/*#static*/ bool __fastcall TByteHelper::TryParse(const String s, unsigned char& Value)
+/*#static*/ bool __fastcall TByteHelper::TryParse(const String& s, unsigned char& Value)
 {
   bool result = false;
   int i = 0;
@@ -3129,7 +3324,7 @@ long double __fastcall TByteHelper::ToExtended()
   return result;
 }
 
-/*#static*/ signed char __fastcall TShortIntHelper::Parse(const String s)
+/*#static*/ signed char __fastcall TShortIntHelper::Parse(const String& s)
 {
   signed char result = 0;
   if(!TryParse(s, result))
@@ -3137,7 +3332,7 @@ long double __fastcall TByteHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TShortIntHelper::TryParse(const String s, signed char& Value)
+/*#static*/ bool __fastcall TShortIntHelper::TryParse(const String& s, signed char& Value)
 {
 	bool result = false;
   int i = 0;
@@ -3214,7 +3409,7 @@ long double __fastcall TShortIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ WORD __fastcall TWordHelper::Parse(const String s)
+/*#static*/ WORD __fastcall TWordHelper::Parse(const String& s)
 {
   WORD result = 0;
   if(!TryParse(s, result))
@@ -3222,7 +3417,7 @@ long double __fastcall TShortIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TWordHelper::TryParse(const String s, WORD& Value)
+/*#static*/ bool __fastcall TWordHelper::TryParse(const String& s, WORD& Value)
 {
   bool result = false;
   int i = 0;
@@ -3299,7 +3494,7 @@ long double __fastcall TWordHelper::ToExtended()
   return result;
 }
 
-/*#static*/ short int __fastcall TSmallIntHelper::Parse(const String s)
+/*#static*/ short int __fastcall TSmallIntHelper::Parse(const String& s)
 {
   short int result = 0;
   if(!TryParse(s, result))
@@ -3307,7 +3502,7 @@ long double __fastcall TWordHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TSmallIntHelper::TryParse(const String s, short int& Value)
+/*#static*/ bool __fastcall TSmallIntHelper::TryParse(const String& s, short int& Value)
 {
   bool result = false;
   int i = 0;
@@ -3384,7 +3579,7 @@ long double __fastcall TSmallIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ unsigned int __fastcall TCardinalHelper::Parse(const String s)
+/*#static*/ unsigned int __fastcall TCardinalHelper::Parse(const String& s)
 {
   unsigned int result = 0;
   if(!TryParse(s, result))
@@ -3392,7 +3587,7 @@ long double __fastcall TSmallIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TCardinalHelper::TryParse(const String s, unsigned int& Value)
+/*#static*/ bool __fastcall TCardinalHelper::TryParse(const String& s, unsigned int& Value)
 {
   bool result = false;
   __int64 i64 = 0;
@@ -3469,7 +3664,7 @@ long double __fastcall TCardinalHelper::ToExtended()
   return result;
 }
 
-/*#static*/ int __fastcall TIntegerHelper::Parse(const String s)
+/*#static*/ int __fastcall TIntegerHelper::Parse(const String& s)
 {
   int result = 0;
   if(!TryParse(s, result))
@@ -3477,7 +3672,7 @@ long double __fastcall TCardinalHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TIntegerHelper::TryParse(const String s, int& Value)
+/*#static*/ bool __fastcall TIntegerHelper::TryParse(const String& s, int& Value)
 {
   bool result = false;
   int e = 0;
@@ -3551,7 +3746,7 @@ long double __fastcall TIntegerHelper::ToExtended()
   return result;
 }
 
-/*#static*/ unsigned __int64 __fastcall TUInt64Helper::Parse(const String s)
+/*#static*/ unsigned __int64 __fastcall TUInt64Helper::Parse(const String& s)
 {
   unsigned __int64 result = 0L;
   if(!TryParse(s, result))
@@ -3559,7 +3754,7 @@ long double __fastcall TIntegerHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TUInt64Helper::TryParse(const String s, unsigned __int64& Value)
+/*#static*/ bool __fastcall TUInt64Helper::TryParse(const String& s, unsigned __int64& Value)
 {
   bool result = false;
 	int e = 0;
@@ -3633,7 +3828,7 @@ long double __fastcall TUInt64Helper::ToExtended()
   return result;
 }
 
-/*#static*/ __int64 __fastcall TInt64Helper::Parse(const String s)
+/*#static*/ __int64 __fastcall TInt64Helper::Parse(const String& s)
 {
   __int64 result = 0;
   if(!TryParse(s, result))
@@ -3641,7 +3836,7 @@ long double __fastcall TUInt64Helper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TInt64Helper::TryParse(const String s, __int64& Value)
+/*#static*/ bool __fastcall TInt64Helper::TryParse(const String& s, __int64& Value)
 {
   bool result = false;
   int e = 0;
@@ -3716,7 +3911,7 @@ long double __fastcall TInt64Helper::ToExtended()
   return result;
 }
 
-/*#static*/ NativeUInt __fastcall TNativeUIntHelper::Parse(const String s)
+/*#static*/ NativeUInt __fastcall TNativeUIntHelper::Parse(const String& s)
 {
   NativeUInt result = 0;
   if(!TryParse(s, result))
@@ -3724,7 +3919,7 @@ long double __fastcall TInt64Helper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TNativeUIntHelper::TryParse(const String s, NativeUInt& Value)
+/*#static*/ bool __fastcall TNativeUIntHelper::TryParse(const String& s, NativeUInt& Value)
 {
   bool result = false;
   __int64 i64 = 0;
@@ -3801,7 +3996,7 @@ long double __fastcall TNativeUIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ NativeInt __fastcall TNativeIntHelper::Parse(const String s)
+/*#static*/ NativeInt __fastcall TNativeIntHelper::Parse(const String& s)
 {
   NativeInt result = 0;
   if(!TryParse(s, result))
@@ -3809,7 +4004,7 @@ long double __fastcall TNativeUIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TNativeIntHelper::TryParse(const String s, NativeInt& Value)
+/*#static*/ bool __fastcall TNativeIntHelper::TryParse(const String& s, NativeInt& Value)
 {
   bool result = false;
   int e = 0;
@@ -3883,14 +4078,14 @@ long double __fastcall TNativeIntHelper::ToExtended()
   return result;
 }
 
-/*#static*/ bool __fastcall TBooleanHelper::Parse(const String s)
+/*#static*/ bool __fastcall TBooleanHelper::Parse(const String& s)
 {
   bool result = false;
   result = StrToBool(s);
   return result;
 }
 
-/*#static*/ bool __fastcall TBooleanHelper::TryToParse(const String s, bool& Value)
+/*#static*/ bool __fastcall TBooleanHelper::TryToParse(const String& s, bool& Value)
 {
   bool result = false;
   result = TryStrToBool(s, Value);
@@ -3927,14 +4122,14 @@ String __fastcall TBooleanHelper::ToString(TUseBoolStrs UseBoolStrs/*# = TUseBoo
   return result;
 }
 
-/*#static*/ bool __fastcall TByteBoolHelper::Parse(const String s)
+/*#static*/ bool __fastcall TByteBoolHelper::Parse(const String& s)
 {
   bool result = false;
   result = StrToBool(s);
   return result;
 }
 
-/*#static*/ bool __fastcall TByteBoolHelper::TryToParse(const String s, bool& Value)
+/*#static*/ bool __fastcall TByteBoolHelper::TryToParse(const String& s, bool& Value)
 {
   bool result = false;
   result = TryStrToBool(s, Value);
@@ -3971,14 +4166,14 @@ String __fastcall TByteBoolHelper::ToString()
   return result;
 }
 
-/*#static*/ bool __fastcall TWordBoolHelper::Parse(const String s)
+/*#static*/ bool __fastcall TWordBoolHelper::Parse(const String& s)
 {
   bool result = false;
   result = StrToBool(s);
   return result;
 }
 
-/*#static*/ bool __fastcall TWordBoolHelper::TryToParse(const String s, bool& Value)
+/*#static*/ bool __fastcall TWordBoolHelper::TryToParse(const String& s, bool& Value)
 {
   bool result = false;
   result = TryStrToBool(s, Value);
@@ -4015,14 +4210,14 @@ String __fastcall TWordBoolHelper::ToString()
   return result;
 }
 
-/*#static*/ bool __fastcall TLongBoolHelper::Parse(const String s)
+/*#static*/ bool __fastcall TLongBoolHelper::Parse(const String& s)
 {
   bool result = false;
   result = StrToBool(s);
   return result;
 }
 
-/*#static*/ bool __fastcall TLongBoolHelper::TryToParse(const String s, bool& Value)
+/*#static*/ bool __fastcall TLongBoolHelper::TryToParse(const String& s, bool& Value)
 {
   bool result = false;
   result = TryStrToBool(s, Value);
@@ -4042,6 +4237,5 @@ String __fastcall TLongBoolHelper::ToString()
   result = BoolToStr(m_Helped);
   return result;
 }
-#endif // needed
 
 } // namespace d2c_system

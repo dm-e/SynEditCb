@@ -1,6 +1,17 @@
 #ifndef d2c_syshelperH
 #define d2c_syshelperH
 
+/*
+    Copyright (C) <2026>  <Dr. Detlef Meyer-Eltz>
+    ---------------------------------------------
+
+    this file is authorized for unlimited use in any
+    project created with Delphi2CB or Delphi2Cpp.
+
+    http://www.texttransformer.com/
+*/
+
+
 #include <System.hpp>
 #include <System.SysUtils.hpp>
 #include "d2c_system.h"
@@ -23,172 +34,176 @@ enum TCompareOption {coLingIgnoreCase,
 
 struct TStringHelper
 {
-	TStringHelper(UnicodeString& Helped) : m_Helped(Helped) {}
-	TStringHelper(const UnicodeString& Helped) : m_Helped(const_cast<UnicodeString&>(Helped)) {}
+//  TStringHelper(UnicodeString& Helped) : m_Helped(Helped) {}
+  TStringHelper(const UnicodeString& Helped) : m_Helped(const_cast<UnicodeString&>(Helped)) {}
+//  TStringHelper(const UnicodeString& Helped) = delete;
 private:
-	enum TSplitKind {StringSeparatorNoQuoted,
-								 StringSeparatorQuoted,
-								 CharSeparatorNoQuoted,
-								 CharSeparatorQuoted };
-//	Char __fastcall GetChars(int Index) const;
-	int __fastcall GetLength() const;
-	static bool __fastcall CharInArray(const Char C, const Char* InArray, int iMaxIndex);
-	TArray<String> __fastcall InternalSplit(TSplitKind SplitType, const Char* SeparatorC, int SeparatorC_maxidx, const String* separators, int separators_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options);
-	int __fastcall IndexOfAny(const String* Values, int Values_maxidx, int& Index, int StartIndex);
-	int __fastcall IndexOfAnyUnquoted(const String* Values, int Values_maxidx, Char StartQuote, Char EndQuote, int& Index, int StartIndex);
-	int __fastcall IndexOfQuoted(const String Value, Char StartQuote, Char EndQuote, int StartIndex);
-	static int __fastcall InternalCompare(const String StrA, int IndexA, const String StrB, int IndexB, int LengthA, int lengthb, bool IgnoreCase, TLocaleID LocaleID);
-	static int __fastcall InternalCompare(const String StrA, int IndexA, const String StrB, int IndexB, int LengthA, int lengthb, TCompareOptions Options, TLocaleID LocaleID);
-	static unsigned long __fastcall InternalMapOptionsToFlags(TCompareOptions AOptions);
+  enum TSplitKind {StringSeparatorsNoQuoted,
+                 StringSeparatorsQuoted,
+                 StringSeparatorNoQuoted,
+                 CharSeparatorsNoQuoted,
+                 CharSeparatorsQuoted,
+                 CharSeparatorNoQuoted };
+  Char __fastcall GetChars(int Index) const;
+  int __fastcall GetLength() const;
+  static bool __fastcall CharInArray(Char C, const Char* InArray, int InArray_maxidx);
+  System::D2CArray<String> __fastcall InternalSplit(TSplitKind SplitType, const Char* SeparatorC, int SeparatorC_maxidx, const String* SeparatorS, int SeparatorS_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options) const;
+  int __fastcall IndexOfAny(const String* Values, int Values_maxidx, int& Index, int StartIndex) const;
+  int __fastcall IndexOfAnyUnquoted(const String* Values, int Values_maxidx, Char StartQuote, Char EndQuote, int& Index, int StartIndex) const;
+  int __fastcall IndexOfQuoted(const String& Value, Char StartQuote, Char EndQuote, int StartIndex) const;
+  static int __fastcall InternalCompare(const String& StrA, int IndexA, const String& StrB, int IndexB, int LengthA, int LengthB, bool IgnoreCase, TLocaleID LocaleID);
+  static int __fastcall InternalCompare(const String& StrA, int IndexA, const String& StrB, int IndexB, int LengthA, int LengthB, TCompareOptions Options, TLocaleID LocaleID);
+  static LongWord __fastcall InternalMapOptionsToFlags(TCompareOptions AOptions);
 public:
-	static const WideChar Empty[]; //  = L"";
-		// Methods
-	static String __fastcall Create(Char C, int Count);
-	static String __fastcall Create(const Char* Value, int Value_maxidx, int StartIndex, int Length);
-	static String __fastcall Create(const Char* Value, int Value_maxidx);
-	static int __fastcall Compare(const String StrA, const String StrB);
-	static int __fastcall Compare(const String StrA, const String StrB, TLocaleID LocaleID);
-	static int __fastcall Compare(const String StrA, const String StrB, bool IgnoreCase); //deprecated 'Use same with TCompareOptions';
-	static int __fastcall Compare(const String StrA, const String StrB, bool IgnoreCase, TLocaleID LocaleID); //deprecated 'Use same with TCompareOptions';
-	static int __fastcall Compare(const String StrA, const String StrB, TCompareOptions Options);
-	static int __fastcall Compare(const String StrA, const String StrB, TCompareOptions Options, TLocaleID LocaleID);
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length);
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TLocaleID LocaleID);
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, bool IgnoreCase); //deprecated 'Use same with TCompareOptions';
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, bool IgnoreCase, TLocaleID LocaleID); //deprecated 'Use same with TCompareOptions';
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TCompareOptions Options);
-	static int __fastcall Compare(const String StrA, int IndexA, const String StrB, int IndexB, int Length, TCompareOptions Options, TLocaleID LocaleID);
-	static int __fastcall CompareOrdinal(const String StrA, const String StrB);
-	static int __fastcall CompareOrdinal(const String StrA, int IndexA, const String StrB, int IndexB, int Length);
-	static int __fastcall CompareText(const String StrA, const String StrB);
-	static String __fastcall Parse(const int Value);
-	static String __fastcall Parse(const __int64 Value);
-	static String __fastcall Parse(const bool Value);
-	static String __fastcall Parse(const long double Value);
-	static bool __fastcall ToBoolean(const String s);
-	static int __fastcall ToInteger(const String s);
-		/// <summary>Class function to Convert a string to an Int64 value</summary>
-	static __int64 __fastcall ToInt64(const String s);
-	static float __fastcall ToSingle(const String s);
-	static double __fastcall ToDouble(const String s);
-	static long double __fastcall ToExtended(const String s);
-	static String __fastcall LowerCase(const String s);
-	static String __fastcall LowerCase(const String s, TLocaleOptions LocaleOptions);
-	static String __fastcall UpperCase(const String s);
-	static String __fastcall UpperCase(const String s, TLocaleOptions LocaleOptions);
-	int __fastcall CompareTo(const String StrB);
-	bool __fastcall Contains(const String Value);
-	static String __fastcall Copy(const String Str);
-	//void __fastcall CopyTo(int sourceIndex, Char* Destination, int Destination_maxidx, int DestinationIndex, int Count);
-	void __fastcall CopyTo(int sourceIndex, OpenArrayRef<WideChar> Destination, int DestinationIndex, int Count);
-	int __fastcall CountChar(const Char C);
-	String __fastcall DeQuotedString();
-	String __fastcall DeQuotedString(const Char QuoteChar);
-	static bool __fastcall EndsText(const String ASubText, const String AText);
-	bool __fastcall EndsWith(const String Value);
-	bool __fastcall EndsWith(const String Value, bool IgnoreCase);
-	bool __fastcall Equals(const String Value);
-	static bool __fastcall Equals(const String A, const String B);
-	static String __fastcall Format(const String Format, const TVarRec* Args, int Args_maxidx);
-	int __fastcall GetHashCode();
-	int __fastcall IndexOf(Char Value) const;
-	int __fastcall IndexOf(const String Value) const;
-	int __fastcall IndexOf(Char Value, int StartIndex) const;
-	int __fastcall IndexOf(const String Value, int StartIndex) const;
-	int __fastcall IndexOf(Char Value, int StartIndex, int Count) const;
-	int __fastcall IndexOf(const String Value, int StartIndex, int Count) const;
-	int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx);
-	int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex);
-	int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count);
-		/// <summary>Index of any given chars, excluding those that are between quotes</summary>
-	int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote);
-	int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex);
-	int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex, int Count);
-	String __fastcall Insert(int StartIndex, const String Value);
-	bool __fastcall IsDelimiter(const String Delimiters, int Index);
-	bool __fastcall IsEmpty();
-	static bool __fastcall IsNullOrEmpty(const String Value);
-	static bool __fastcall IsNullOrWhiteSpace(const String Value);
-	static String __fastcall Join(const String separator, const TVarRec* Values, int Values_maxidx);
-	static String __fastcall Join(const String separator, const String* Values, int Values_maxidx);
-// todo  static String __fastcall Join(const String separator, IEnumerator<String>* const Values);
-// todo  static String __fastcall Join(const String separator, IEnumerable<String>* const Values);
-	static String __fastcall Join(const String separator, const String* Values, int Values_maxidx, int StartIndex, int Count);
-	int __fastcall LastDelimiter(const String delims);
-	int __fastcall LastIndexOf(Char Value);
-	int __fastcall LastIndexOf(const String Value);
-	int __fastcall LastIndexOf(Char Value, int StartIndex);
-	int __fastcall LastIndexOf(const String Value, int StartIndex);
-	int __fastcall LastIndexOf(Char Value, int StartIndex, int Count);
-	int __fastcall LastIndexOf(const String Value, int StartIndex, int Count);
-	int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx);
-	int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex);
-	int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count);
-	String __fastcall PadLeft(int TotalWidth);
-	String __fastcall PadLeft(int TotalWidth, Char PaddingChar);
-	String __fastcall PadRight(int TotalWidth);
-	String __fastcall PadRight(int TotalWidth, Char PaddingChar);
-	String __fastcall QuotedString();
-	String __fastcall QuotedString(const Char QuoteChar);
-	String __fastcall Remove(int StartIndex);
-	String __fastcall Remove(int StartIndex, int Count);
-	String __fastcall Replace(Char OldChar, Char NewChar);
-	String __fastcall Replace(Char OldChar, Char NewChar, TReplaceFlags ReplaceFlags);
-	String __fastcall Replace(const String OldValue, const String NewValue);
-	String __fastcall Replace(const String OldValue, const String NewValue, TReplaceFlags ReplaceFlags);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, int Count);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, int Count, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, int Count);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, int Count, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, Char Quote);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count);
-	TArray<String> __fastcall Split(const Char* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, Char Quote);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count);
-	TArray<String> __fastcall Split(const String* separator, int separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options);
-	bool __fastcall StartsWith(const String Value);
-	bool __fastcall StartsWith(const String Value, bool IgnoreCase);
-	String __fastcall SubString(int StartIndex);
-	String __fastcall SubString(int StartIndex, int Length);
-	bool __fastcall ToBoolean();
-	int __fastcall ToInteger();
-		/// <summary>Converts the string to an Int64 value</summary>
-	__int64 __fastcall ToInt64();
-	float __fastcall ToSingle();
-	double __fastcall ToDouble();
-	long double __fastcall ToExtended();
-	TArray<Char> __fastcall ToCharArray();
-	TArray<Char> __fastcall ToCharArray(int StartIndex, int Length);
-	String __fastcall ToLower();
-	String __fastcall ToLower(TLocaleID LocaleID);
-	String __fastcall ToLowerInvariant();
-	String __fastcall ToUpper();
-	String __fastcall ToUpper(TLocaleID LocaleID);
-	String __fastcall ToUpperInvariant();
-	String __fastcall Trim();
-	String __fastcall TrimLeft();
-	String __fastcall TrimRight();
-	String __fastcall Trim(const Char* TrimChars, int TrimChars_maxidx);
-	String __fastcall TrimLeft(const Char* TrimChars, int TrimChars_maxidx);
-	String __fastcall TrimRight(const Char* TrimChars, int TrimChars_maxidx);
-	String __fastcall TrimEnd(const Char* TrimChars, int TrimChars_maxidx)/*# 'use trimright' */;
-	String __fastcall TrimStart(const Char* TrimChars, int TrimChars_maxidx)/*# 'use trimleft' */;
-//	__property Char Chars[int Index] = { read = GetChars };
-	__property int Length = { read = GetLength };
+  static const String& Empty;  //  = L"";
+    // Methods
+  static String __fastcall Create(Char C, int Count);
+  static String __fastcall Create(const Char* Value, int Value_maxidx, int StartIndex, int Length);
+  static String __fastcall Create(const Char* Value, int Value_maxidx);
+  static int __fastcall Compare(const String& StrA, const String& StrB);
+  static int __fastcall Compare(const String& StrA, const String& StrB, TLocaleID LocaleID);
+  static int __fastcall Compare(const String& StrA, const String& StrB, bool IgnoreCase); //deprecated 'Use same with TCompareOptions';
+  static int __fastcall Compare(const String& StrA, const String& StrB, bool IgnoreCase, TLocaleID LocaleID); //deprecated 'Use same with TCompareOptions';
+  static int __fastcall Compare(const String& StrA, const String& StrB, TCompareOptions Options);
+  static int __fastcall Compare(const String& StrA, const String& StrB, TCompareOptions Options, TLocaleID LocaleID);
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length);
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TLocaleID LocaleID);
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, bool IgnoreCase); //deprecated 'Use same with TCompareOptions';
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, bool IgnoreCase, TLocaleID LocaleID); //deprecated 'Use same with TCompareOptions';
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TCompareOptions Options);
+  static int __fastcall Compare(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length, TCompareOptions Options, TLocaleID LocaleID);
+  static int __fastcall CompareOrdinal(const String& StrA, const String& StrB);
+  static int __fastcall CompareOrdinal(const String& StrA, int IndexA, const String& StrB, int IndexB, int Length);
+  static int __fastcall CompareText(const String& StrA, const String& StrB);
+  static String __fastcall Parse(int Value);
+  static String __fastcall Parse(__int64 Value);
+  static String __fastcall Parse(bool Value);
+  static String __fastcall Parse(long double Value);
+  static bool __fastcall ToBoolean(const String& S);
+  static int __fastcall ToInteger(const String& S);
+    /// <summary>Class function to Convert a string to an Int64 value</summary>
+  static __int64 __fastcall ToInt64(const String& S);
+  static float __fastcall ToSingle(const String& S);
+  static double __fastcall ToDouble(const String& S);
+  static long double __fastcall ToExtended(const String& S);
+  static String __fastcall LowerCase(const String& S);
+  static String __fastcall LowerCase(const String& S, TLocaleOptions LocaleOptions);
+  static String __fastcall UpperCase(const String& S);
+  static String __fastcall UpperCase(const String& S, TLocaleOptions LocaleOptions);
+  int __fastcall CompareTo(const String& strB) const;
+  bool __fastcall Contains(const String& Value) const;
+  static String __fastcall Copy(const String& Str);
+  void __fastcall CopyTo(int SourceIndex, OpenArrayRef<Char> destination, int DestinationIndex, int Count) const;
+  int __fastcall CountChar(Char C) const;
+  String __fastcall DeQuotedString() const;
+  String __fastcall DeQuotedString(Char QuoteChar) const;
+  static bool __fastcall EndsText(const String& ASubText, const String& AText);
+  bool __fastcall EndsWith(const String& Value) const;
+  bool __fastcall EndsWith(const String& Value, bool IgnoreCase) const;
+  bool __fastcall Equals(const String& Value) const;
+  static bool __fastcall Equals(const String& a, const String& b);
+  static String __fastcall Format(const String& Format, const TVarRec* args, int args_maxidx);
+  int __fastcall GetHashCode() const;
+  int __fastcall IndexOf(Char Value) const;
+  int __fastcall IndexOf(const String& Value) const;
+  int __fastcall IndexOf(Char Value, int StartIndex) const;
+  int __fastcall IndexOf(const String& Value, int StartIndex) const;
+  int __fastcall IndexOf(Char Value, int StartIndex, int Count) const;
+  int __fastcall IndexOf(const String& Value, int StartIndex, int Count) const;
+  int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx) const;
+  int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex) const;
+  int __fastcall IndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count) const;
+    /// <summary>Index of any given chars, excluding those that are between quotes</summary>
+  int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote) const;
+  int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex) const;
+  int __fastcall IndexOfAnyUnquoted(const Char* AnyOf, int AnyOf_maxidx, Char StartQuote, Char EndQuote, int StartIndex, int Count) const;
+  String __fastcall Insert(int StartIndex, const String& Value) const;
+  bool __fastcall IsDelimiter(const String& Delimiters, int Index) const;
+  bool __fastcall IsEmpty() const;
+  static bool __fastcall IsNullOrEmpty(const String& Value);
+  static bool __fastcall IsNullOrWhiteSpace(const String& Value);
+  static String __fastcall Join(const String& Separator, const TVarRec* Values, int Values_maxidx);
+  static String __fastcall Join(const String& Separator, const String* Values, int Values_maxidx);
+//  static String __fastcall Join(const String& Separator, System::IEnumerator__1<String>* const Values);
+//  static String __fastcall Join(const String& Separator, System::IEnumerable__1<String>* const Values);
+  static String __fastcall Join( const String& Separator, const System::_di_IEnumerable__1<String>& Values);
+  static String __fastcall Join( const String& Separator, const System::_di_IEnumerator__1<String>& Values);
+  static String __fastcall Join(const String& Separator, const String* Values, int Values_maxidx, int StartIndex, int Count);
+  int __fastcall LastDelimiter(const String& Delims) const;
+  int __fastcall LastDelimiter(const TSysCharSet Delims) const;
+  int __fastcall LastIndexOf(Char Value) const;
+  int __fastcall LastIndexOf(const String& Value) const;
+  int __fastcall LastIndexOf(Char Value, int StartIndex) const;
+  int __fastcall LastIndexOf(const String& Value, int StartIndex) const;
+  int __fastcall LastIndexOf(Char Value, int StartIndex, int Count) const;
+  int __fastcall LastIndexOf(const String& Value, int StartIndex, int Count) const;
+  int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx) const;
+  int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex) const;
+  int __fastcall LastIndexOfAny(const Char* AnyOf, int AnyOf_maxidx, int StartIndex, int Count) const;
+  String __fastcall PadLeft(int TotalWidth) const;
+  String __fastcall PadLeft(int TotalWidth, Char PaddingChar) const;
+  String __fastcall PadRight(int TotalWidth) const;
+  String __fastcall PadRight(int TotalWidth, Char PaddingChar) const;
+  String __fastcall QuotedString() const;
+  String __fastcall QuotedString(Char QuoteChar) const;
+  String __fastcall Remove(int StartIndex) const;
+  String __fastcall Remove(int StartIndex, int Count) const;
+  String __fastcall Replace(Char OldChar, Char NewChar) const;
+  String __fastcall Replace(Char OldChar, Char NewChar, TReplaceFlags ReplaceFlags) const;
+  String __fastcall Replace(const String& OldValue, const String& NewValue) const;
+  String __fastcall Replace(const String& OldValue, const String& NewValue, TReplaceFlags ReplaceFlags) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, int Count) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, int Count, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, int Count) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, int Count, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, Char Quote) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count) const;
+  System::D2CArray<String> __fastcall Split(const Char* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, Char Quote) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, TStringSplitOptions Options) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count) const;
+  System::D2CArray<String> __fastcall Split(const String* Separator, int Separator_maxidx, Char QuoteStart, Char QuoteEnd, int Count, TStringSplitOptions Options) const;
+  static bool __fastcall StartsText(const String& ASubText, const String& AText);
+  bool __fastcall StartsWith(const String& Value) const;
+  bool __fastcall StartsWith(const String& Value, bool IgnoreCase) const;
+  String __fastcall Substring(int StartIndex) const;
+  String __fastcall Substring(int StartIndex, int Length) const;
+  bool __fastcall ToBoolean() const;
+  int __fastcall ToInteger() const;
+    /// <summary>Converts the string to an Int64 value</summary>
+  __int64 __fastcall ToInt64() const;
+  float __fastcall ToSingle() const;
+  double __fastcall ToDouble() const;
+  long double __fastcall ToExtended() const;
+  System::D2CArray<Char> __fastcall ToCharArray() const;
+  System::D2CArray<Char> __fastcall ToCharArray(int StartIndex, int Length) const;
+  String __fastcall ToLower() const;
+  String __fastcall ToLower(TLocaleID LocaleID) const;
+  String __fastcall ToLowerInvariant() const;
+  String __fastcall ToUpper() const;
+  String __fastcall ToUpper(TLocaleID LocaleID) const;
+  String __fastcall ToUpperInvariant() const;
+  String __fastcall Trim() const;
+  String __fastcall TrimLeft() const;
+  String __fastcall TrimRight() const;
+  String __fastcall Trim(const Char* TrimChars, int TrimChars_maxidx) const;
+  String __fastcall TrimLeft(const Char* TrimChars, int TrimChars_maxidx) const;
+  String __fastcall TrimRight(const Char* TrimChars, int TrimChars_maxidx) const;
+  String __fastcall TrimEnd(const Char* TrimChars, int TrimChars_maxidx) const/*# 'use trimright' */;
+  String __fastcall TrimStart(const Char* TrimChars, int TrimChars_maxidx) const/*# 'use trimleft' */;
+  __property Char Chars[int Index] = { read = GetChars };
+  __property int Length = { read = GetLength };
 private:
-	UnicodeString& m_Helped;
+  const UnicodeString& m_Helped;
 
 };
-
-#ifdef needed
 
 struct TSingleHelper
 {
@@ -239,10 +254,10 @@ public:
   static String __fastcall ToString(const float Value, const TFormatSettings& AFormatSettings);
   static String __fastcall ToString(const float Value, const TFloatFormat Format, const int Precision, const int Digits);
   static String __fastcall ToString(const float Value, const TFloatFormat Format, const int Precision, const int Digits, const TFormatSettings& AFormatSettings);
-  static float __fastcall Parse(const String s);
-  static float __fastcall Parse(const String s, const TFormatSettings& AFormatSettings);
-  static bool __fastcall TryParse(const String s, float& Value);
-  static bool __fastcall TryParse(const String s, float& Value, const TFormatSettings& AFormatSettings);
+  static float __fastcall Parse(const String& s);
+  static float __fastcall Parse(const String& s, const TFormatSettings& AFormatSettings);
+  static bool __fastcall TryParse(const String& s, float& Value);
+  static bool __fastcall TryParse(const String& s, float& Value, const TFormatSettings& AFormatSettings);
   static bool __fastcall IsNan(const float Value);
   static bool __fastcall IsInfinity(const float Value);
 	static bool __fastcall IsNegativeInfinity(const float Value);
@@ -301,10 +316,10 @@ public:
   static String __fastcall ToString(const double Value, const TFormatSettings& AFormatSettings);
   static String __fastcall ToString(const double Value, const TFloatFormat Format, const int Precision, const int Digits);
   static String __fastcall ToString(const double Value, const TFloatFormat Format, const int Precision, const int Digits, const TFormatSettings& AFormatSettings);
-  static double __fastcall Parse(const String s);
-  static double __fastcall Parse(const String s, const TFormatSettings& AFormatSettings);
-  static bool __fastcall TryParse(const String s, double& Value);
-  static bool __fastcall TryParse(const String s, double& Value, const TFormatSettings& AFormatSettings);
+  static double __fastcall Parse(const String& s);
+  static double __fastcall Parse(const String& s, const TFormatSettings& AFormatSettings);
+  static bool __fastcall TryParse(const String& s, double& Value);
+  static bool __fastcall TryParse(const String& s, double& Value, const TFormatSettings& AFormatSettings);
   static bool __fastcall IsNan(const double Value);
   static bool __fastcall IsInfinity(const double Value);
   static bool __fastcall IsNegativeInfinity(const double Value);
@@ -363,10 +378,10 @@ public:
   static String __fastcall ToString(const long double Value, const TFormatSettings& AFormatSettings);
   static String __fastcall ToString(const long double Value, const TFloatFormat Format, const int Precision, const int Digits);
   static String __fastcall ToString(const long double Value, const TFloatFormat Format, const int Precision, const int Digits, const TFormatSettings& AFormatSettings);
-  static long double __fastcall Parse(const String s);
-  static long double __fastcall Parse(const String s, const TFormatSettings& AFormatSettings);
-  static bool __fastcall TryParse(const String s, long double& Value);
-  static bool __fastcall TryParse(const String s, long double& Value, const TFormatSettings& AFormatSettings);
+  static long double __fastcall Parse(const String& s);
+  static long double __fastcall Parse(const String& s, const TFormatSettings& AFormatSettings);
+  static bool __fastcall TryParse(const String& s, long double& Value);
+  static bool __fastcall TryParse(const String& s, long double& Value, const TFormatSettings& AFormatSettings);
   static bool __fastcall IsNan(const long double Value);
   static bool __fastcall IsInfinity(const long double Value);
   static bool __fastcall IsNegativeInfinity(const long double Value);
@@ -392,8 +407,8 @@ struct TByteHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const unsigned char Value);
-	static unsigned char __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, unsigned char& Value);
+	static unsigned char __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, unsigned char& Value);
 private:
 	unsigned char& m_Helped;
 
@@ -414,8 +429,8 @@ struct TShortIntHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const signed char Value);
-  static signed char __fastcall Parse(const String s);
-  static bool __fastcall TryParse(const String s, signed char& Value);
+  static signed char __fastcall Parse(const String& s);
+  static bool __fastcall TryParse(const String& s, signed char& Value);
 private:
   signed char& m_Helped;
 
@@ -437,8 +452,8 @@ struct TWordHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const WORD Value);
-	static WORD __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, WORD& Value);
+	static WORD __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, WORD& Value);
 private:
   WORD& m_Helped;
 
@@ -460,8 +475,8 @@ struct TSmallIntHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const short int Value);
-	static short int __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, short int& Value);
+	static short int __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, short int& Value);
 private:
   short int& m_Helped;
 
@@ -482,8 +497,8 @@ struct TCardinalHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const unsigned int Value);
-	static unsigned int __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, unsigned int& Value);
+	static unsigned int __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, unsigned int& Value);
 private:
 	unsigned int& m_Helped;
 
@@ -505,8 +520,8 @@ struct TIntegerHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const int Value);
-	static int __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, int& Value);
+	static int __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, int& Value);
 private:
 	int& m_Helped;
 
@@ -528,10 +543,10 @@ struct TUInt64Helper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const unsigned __int64 Value);
-	static unsigned __int64 __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, unsigned __int64& Value);
+	static unsigned __int64 __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, unsigned __int64& Value);
 private:
-	unsigned unsigned __int64& m_Helped;
+	unsigned __int64& m_Helped;
 
 };
 
@@ -551,8 +566,8 @@ struct TInt64Helper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const __int64 Value);
-	static __int64 __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, __int64& Value);
+	static __int64 __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, __int64& Value);
 private:
 	__int64& m_Helped;
 
@@ -574,8 +589,8 @@ struct TNativeUIntHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const NativeUInt Value);
-	static NativeUInt __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, NativeUInt& Value);
+	static NativeUInt __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, NativeUInt& Value);
 private:
 	NativeUInt& m_Helped;
 
@@ -597,8 +612,8 @@ struct TNativeIntHelper
 	long double __fastcall ToExtended();
 	static int __fastcall Size();
 	static String __fastcall ToString(const NativeInt Value);
-	static NativeInt __fastcall Parse(const String s);
-	static bool __fastcall TryParse(const String s, NativeInt& Value);
+	static NativeInt __fastcall Parse(const String& s);
+	static bool __fastcall TryParse(const String& s, NativeInt& Value);
 private:
 	NativeInt& m_Helped;
 
@@ -619,8 +634,8 @@ struct TBooleanHelper
 	String __fastcall ToString(TUseBoolStrs UseBoolStrs = TUseBoolStrs::False);
 	static int __fastcall Size();
 	static String __fastcall ToString(const bool Value, TUseBoolStrs UseBoolStrs = TUseBoolStrs::False);
-	static bool __fastcall Parse(const String s);
-	static bool __fastcall TryToParse(const String s, bool& Value);
+	static bool __fastcall Parse(const String& s);
+	static bool __fastcall TryToParse(const String& s, bool& Value);
 private:
 	bool& m_Helped;
 
@@ -635,8 +650,8 @@ struct TByteBoolHelper
 	String __fastcall ToString();
 	static int __fastcall Size();
 	static String __fastcall ToString(const bool Value);
-	static bool __fastcall Parse(const String s);
-	static bool __fastcall TryToParse(const String s, bool& Value);
+	static bool __fastcall Parse(const String& s);
+	static bool __fastcall TryToParse(const String& s, bool& Value);
 private:
 	unsigned char& m_Helped;
 
@@ -651,8 +666,8 @@ struct TWordBoolHelper
 	String __fastcall ToString();
 	static int __fastcall Size();
 	static String __fastcall ToString(const bool Value);
-	static bool __fastcall Parse(const String s);
-	static bool __fastcall TryToParse(const String s, bool& Value);
+	static bool __fastcall Parse(const String& s);
+	static bool __fastcall TryToParse(const String& s, bool& Value);
 private:
 	unsigned short& m_Helped;
 
@@ -667,14 +682,12 @@ struct TLongBoolHelper
 	String __fastcall ToString();
 	static int __fastcall Size();
 	static String __fastcall ToString(const bool Value);
-	static bool __fastcall Parse(const String s);
-	static bool __fastcall TryToParse(const String s, bool& Value);
+	static bool __fastcall Parse(const String& s);
+	static bool __fastcall TryToParse(const String& s, bool& Value);
 private:
 	BOOL& m_Helped;
 
 };
-
-#endif // needed
 
 } //namespace d2c_system
 

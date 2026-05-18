@@ -12,5 +12,5 @@ namespace Syneditkeyconst
 
 
 
-}  // namespace SynEditKeyConst
+}  // namespace Syneditkeyconst
 

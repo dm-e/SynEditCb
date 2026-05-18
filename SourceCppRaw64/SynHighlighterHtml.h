@@ -136,7 +136,7 @@ The SynHighlighterHTML unit provides SynEdit with an HTML highlighter.
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
 const int MAX_ESCAPEAMPS = 249;
-const PWideChar EscapeAmps[249/*# range 0..MAX_ESCAPEAMPS-1*/] = {(L"&Alpha;")         /* ?        */  /* greek capital alpha */
+const System::PWideChar EscapeAmps[(MAX_ESCAPEAMPS - 1) + 1/*# range 0..MAX_ESCAPEAMPS-1*/] = {(L"&Alpha;")         /* ?        */  /* greek capital alpha */
                     , (L"&Beta;")          /* ?        */  /* greek capital beta */
                     , (L"&Gamma;")         /* G        */  /* greek capital gamma */
                     , (L"&Delta;")         /* ?        */  /* greek capital delta */
@@ -426,8 +426,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fValueAttri;
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall TextProc();
 	void __fastcall CommentProc();
@@ -476,7 +476,7 @@ public:
 void SynHighlighterHtml_initialization();
 
 
-}  // namespace SynHighlighterHtml
+}  // namespace Synhighlighterhtml
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterhtml;

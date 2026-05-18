@@ -137,15 +137,15 @@ unsigned int __fastcall TSynFoxproSyn::HashKey(PWideChar Str)
 			case 97: case 98: case 99: case 100: case 101: case 102: case 103: case 104: case 105: case 106:
 			 case 107: case 108: case 109: case 110: case 111: case 112: case 113: case 114: case 115: case 116:
 			 case 117: case 118: case 119: case 120: case 121: case 122:
-			result = (unsigned int) (1 + int((*Str)) - int(L'a'));
+			result = static_cast<unsigned int>(1 + int((*Str)) - int(L'a'));
 			break;
 			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
 			 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
 			 case 85: case 86: case 87: case 88: case 89: case 90:
-			result = (unsigned int) (1 + int((*Str)) - int(L'A'));
+			result = static_cast<unsigned int>(1 + int((*Str)) - int(L'A'));
 			break;
 			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
-			result = (unsigned int) (28 + int((*Str)) - int(L'0'));
+			result = static_cast<unsigned int>(28 + int((*Str)) - int(L'0'));
 			break;
 			case L'-':
 			result = 27;
@@ -159,10 +159,10 @@ unsigned int __fastcall TSynFoxproSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) ((7 * result + GetOrd()) & 0xFFFFFF);
+		result = static_cast<unsigned int>((7 * result + GetOrd()) & 0xFFFFFF);
 		++Str;
 	}
-	result = (unsigned int) (result & 0xFF); // 255
+	result = static_cast<unsigned int>(result & 0xFF); // 255
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -324,17 +324,17 @@ void __fastcall TSynFoxproSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TSt
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find begin or end  (Fold Type 1)
-		if(!BlockDelimiter((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!BlockDelimiter(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} //for Line
 }
 /*
@@ -551,7 +551,7 @@ __fastcall TSynFoxproSyn::~TSynFoxproSyn()
 void __fastcall TSynFoxproSyn::DoAddKeyword(String AKeyword, int AKind)
 {
 	int HashValue = 0;
-	HashValue = (int) HashKey(ustr2pwchar(AKeyword));
+	HashValue = static_cast<int>(HashKey(ustr2pwchar(AKeyword)));
 	fKeywords->Items[HashValue] = new TSynHashEntry(AKeyword, AKind);
 }
 
@@ -1153,5 +1153,5 @@ String __fastcall TSynFoxproSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterFoxpro
+}  // namespace Synhighlighterfoxpro
 

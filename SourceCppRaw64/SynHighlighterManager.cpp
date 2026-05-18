@@ -11,6 +11,7 @@
 #include "SynEditHighlighter.h"
 #include "SynEditStrConst.h"
 #include <System.SysUtils.hpp>
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -45,7 +46,7 @@ public:
 public:
 	typedef TForm inherited;
 	#include "SynHighlighterManager_friends.inc"
-	__fastcall TSynHighlighterForm(TComponent* AOwner) : inherited(AOwner) {}
+	__fastcall TSynHighlighterForm(TComponent* AOwner, 0) : inherited(AOwner, 0) {}
 };
 typedef IDesigner TDesignerClass;
 
@@ -55,7 +56,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
  : inherited(AOwner)
 {
 	TCustomForm* form = nullptr;
-	TDesignerClass* dsgn = nullptr;
+	_di_TDesignerClass dsgn;
 	TSynHighlighterList* highlight = nullptr;
 	TSynHighlighterForm* synForm = nullptr;
 
@@ -84,7 +85,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		result = -1;
 		for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 		{
-			if(ObjectIs(form->Components[i], hlClass))
+			if(IsInstanceOf(form->Components[i], hlClass))
 			{
 				result = i;
 				return result;
@@ -112,10 +113,10 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			ypos = -1;
 			for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 			{
-				if(ObjectIs(form->Components[i], TSynCustomHighlighterClass*))
+				if(ObjectIs(form->Components[i], TSynCustomHighlighter*))
 				{
-					compLeft = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Lo;
-					compTop = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Hi;
+					compLeft = static_cast<int>(((LongRec*) &form->Components[i]->DesignInfo)->Lo);
+					compTop = static_cast<int>(((LongRec*) &form->Components[i]->DesignInfo)->Hi);
 					if((xpos < 0) || (compLeft < xpos))
 						xpos = compLeft;
 					if((ypos < 0) || (compTop < ypos))
@@ -155,10 +156,10 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			{
 				if((form->Components[i] != this) && (!(ObjectIs(form->Components[i], TControl*))))
 				{
-					compLeft = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Lo;
-					compTop = (int) ((LongRec*) &form->Components[i]->DesignInfo)->Hi;
+					compLeft = static_cast<int>(((LongRec*) &form->Components[i]->DesignInfo)->Lo);
+					compTop = static_cast<int>(((LongRec*) &form->Components[i]->DesignInfo)->Hi);
 					compRect = Rect(compLeft, compTop, compLeft + 31, compTop + 31);
-					if(IntersectRect(&interRect, testRect, compRect))
+					if(IntersectRect(&interRect, &testRect, &compRect))
 					{
 						result = true;
 						return result;
@@ -212,7 +213,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 	if((ComponentState.Contains(csDesigning)) && (ObjectIs(AOwner, TCustomForm*)))
 	{
 		form = ((TCustomForm*) AOwner);
-		dsgn = (TDesignerClass*) form->Designer;
+		dsgn = as_di<TDesignerClass>(form->Designer);
 		highlight = GetPlaceableHighlighters();
 		if(highlight->Count() == 0)
 			Application->MessageBox(L"No highlighters found!", L"Highlighter Manager", MB_OK + MB_ICONEXCLAMATION);
@@ -222,7 +223,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 			try
 			{
 				CheckExisting();
-				if(synForm->ShowModal() == System::Uitypes::mrOk)
+				if(synForm->ShowModal() == mrOk)
 					PlaceNew();
 			}
 			__finally
@@ -310,7 +311,7 @@ clbHighlighters(new TCheckListBox(this)),
 		with0->Height = 201;
 		with0->ItemHeight = 13;
 		with0->Sorted = true;
-		with0->TabOrder = (TTabOrder) 0;
+		with0->TabOrder = 0;
 	}
 	/*# with btnSelectAll do */
 	{
@@ -322,7 +323,7 @@ clbHighlighters(new TCheckListBox(this)),
 		with1->Width = 75;
 		with1->Height = 25;
 		with1->Caption = L"&Select All";
-		with1->TabOrder = (TTabOrder) 1;
+		with1->TabOrder = static_cast<TTabOrder>(1);
 		with1->OnClick = SelectAll;
 	}
 	/*# with btnDeselectAll do */
@@ -335,7 +336,7 @@ clbHighlighters(new TCheckListBox(this)),
 		with2->Width = 75;
 		with2->Height = 25;
 		with2->Caption = L"&Deselect All";
-		with2->TabOrder = (TTabOrder) 2;
+		with2->TabOrder = static_cast<TTabOrder>(2);
 		with2->OnClick = DeselectAll;
 	}
 	/*# with btnOK do */
@@ -349,8 +350,8 @@ clbHighlighters(new TCheckListBox(this)),
 		with3->Height = 25;
 		with3->Caption = L"OK";
 		with3->Default = true;
-		with3->ModalResult = (TModalResult) 1;
-		with3->TabOrder = (TTabOrder) 3;
+		with3->ModalResult = static_cast<TModalResult>(1);
+		with3->TabOrder = static_cast<TTabOrder>(3);
 	}
 	/*# with btnCancel do */
 	{
@@ -362,8 +363,8 @@ clbHighlighters(new TCheckListBox(this)),
 		with4->Width = 75;
 		with4->Height = 25;
 		with4->Caption = L"Cancel";
-		with4->ModalResult = (TModalResult) 2;
-		with4->TabOrder = (TTabOrder) 4;
+		with4->ModalResult = static_cast<TModalResult>(2);
+		with4->TabOrder = static_cast<TTabOrder>(4);
 	}
 	LoadForm();
 }

@@ -86,20 +86,20 @@ String __fastcall TSynExporterHTML::ColorToHTML(TColor AColor)
 	Byte RGBValue = 0;
 	const Char Digits[16/*# range 0..15*/] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 	RGBColor = ColorToRGB(AColor);
-	result = L"\u00000";
-	RGBValue = GetRValue((DWORD) RGBColor);
+	result = L"#000000";
+	RGBValue = GetRValue(static_cast<DWORD>(RGBColor));
 	if(RGBValue > 0)
 	{
 		result[2] = Digits[RGBValue >> 4];
 		result[3] = Digits[RGBValue & 15];
 	}
-	RGBValue = GetGValue((DWORD) RGBColor);
+	RGBValue = GetGValue(static_cast<DWORD>(RGBColor));
 	if(RGBValue > 0)
 	{
 		result[4] = Digits[RGBValue >> 4];
 		result[5] = Digits[RGBValue & 15];
 	}
-	RGBValue = GetBValue((DWORD) RGBColor);
+	RGBValue = GetBValue(static_cast<DWORD>(RGBColor));
 	if(RGBValue > 0)
 	{
 		result[6] = Digits[RGBValue >> 4];
@@ -301,5 +301,5 @@ TSynEncodings __fastcall TSynExporterHTML::SupportedEncodings()
 }
 
 
-}  // namespace SynExportHTML
+}  // namespace Synexporthtml
 

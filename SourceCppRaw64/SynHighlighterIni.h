@@ -202,7 +202,7 @@ public:
 void SynHighlighterIni_initialization();
 
 
-}  // namespace SynHighlighterIni
+}  // namespace Synhighlighterini
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterini;

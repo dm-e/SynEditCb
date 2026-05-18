@@ -180,8 +180,8 @@ private:
 	bool __fastcall IsValidMLCharacter();
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall CharacterProc();
@@ -236,7 +236,7 @@ public:
 void SynHighlighterSml_initialization();
 
 
-}  // namespace SynHighlighterSml
+}  // namespace Synhighlightersml
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightersml;

@@ -59,6 +59,7 @@ The SynHighlighterPerl unit provides SynEdit with a Perl syntax highlighter.
 #include "SynUnicode.h"
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterperl
 {
@@ -195,8 +196,8 @@ private:
 	TtkTokenKind __fastcall FuncKey(int Index);
 	TtkTokenKind __fastcall FuncOperator(int Index);
 	TtkTokenKind __fastcall FuncPragma(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AndSymbolProc();
 	void __fastcall CRProc();
@@ -264,7 +265,7 @@ public:
 void SynHighlighterPerl_initialization();
 
 
-}  // namespace SynHighlighterPerl
+}  // namespace Synhighlighterperl
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterperl;

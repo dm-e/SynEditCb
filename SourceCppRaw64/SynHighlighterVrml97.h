@@ -257,8 +257,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fX3DHeaderAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall AndSymbolProc();
 	void __fastcall CommentProc();
 	void __fastcall DiesisCommentProc();
@@ -336,7 +336,7 @@ public:
 void SynHighlighterVrml97_initialization();
 
 
-}  // namespace SynHighlighterVrml97
+}  // namespace Synhighlightervrml97
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightervrml97;

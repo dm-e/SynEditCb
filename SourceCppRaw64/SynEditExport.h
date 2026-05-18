@@ -205,23 +205,23 @@ protected:
     /* Has to be overridden in descendant classes to add the closing format
       strings to the output buffer.  The parameters can be used to track what
       changes are made for the next token. */
-	virtual void __fastcall FormatAttributeDone(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){} // = 0;
+	virtual void __fastcall FormatAttributeDone(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){ThrowAbstractMethodError(L"TSynCustomExporter::FormatAttributeDone");};
     /* Has to be overridden in descendant classes to add the opening format
       strings to the output buffer.  The parameters can be used to track what
       changes have been made in respect to the previous token. */
-	virtual void __fastcall FormatAttributeInit(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){} // = 0;
+	virtual void __fastcall FormatAttributeInit(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){ThrowAbstractMethodError(L"TSynCustomExporter::FormatAttributeInit");};
     /* Has to be overridden in descendant classes to add the closing format
       strings to the output buffer after the last token has been written. */
-	virtual void __fastcall FormatAfterLastAttribute(){} // = 0;
+	virtual void __fastcall FormatAfterLastAttribute(){ThrowAbstractMethodError(L"TSynCustomExporter::FormatAfterLastAttribute");};
     /* Has to be overridden in descendant classes to add the opening format
       strings to the output buffer when the first token is about to be written. */
-	virtual void __fastcall FormatBeforeFirstAttribute(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){} // = 0;
+	virtual void __fastcall FormatBeforeFirstAttribute(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged){ThrowAbstractMethodError(L"TSynCustomExporter::FormatBeforeFirstAttribute");};
     /* Has to be overridden in descendant classes to add the formatted text of
       the actual token text to the output buffer. */
 	virtual void __fastcall FormatToken(String Token);
     /* Has to be overridden in descendant classes to add a newline in the output
       format to the output buffer. */
-	virtual void __fastcall FormatNewLine(){} // = 0;
+	virtual void __fastcall FormatNewLine(){ThrowAbstractMethodError(L"TSynCustomExporter::FormatNewLine");};
     /* Returns the size of the formatted text in the output buffer, to be used
       in the format header or footer. */
 	int __fastcall GetBufferSize();
@@ -229,18 +229,18 @@ protected:
 	virtual UINT __fastcall GetClipboardFormat();
     /* Has to be overridden in descendant classes to return the correct output
       format footer. */
-	virtual String __fastcall GetFooter(){return String();} // = 0;
+	virtual String __fastcall GetFooter(){ThrowAbstractMethodError(L"TSynCustomExporter::GetFooter"); return String();};
     /* Has to be overridden in descendant classes to return the name of the
       output format. */
 	virtual String __fastcall GetFormatName();
     /* Has to be overridden in descendant classes to return the correct output
       format header. */
-	virtual String __fastcall GetHeader(){return String();} // = 0;
+	virtual String __fastcall GetHeader(){ThrowAbstractMethodError(L"TSynCustomExporter::GetHeader"); return String();};
     /* Inserts a data block at the given position into the output buffer.  Is
       used to insert the format header after the exporting, since some header
       data may be known only after the conversion is done. */
 	void __fastcall InsertData(int APos, const String AText);
-	virtual String __fastcall ReplaceReservedChar(WideChar AChar){return String();} // = 0;
+	virtual String __fastcall ReplaceReservedChar(WideChar AChar){ThrowAbstractMethodError(L"TSynCustomExporter::ReplaceReservedChar"); return String();};
     /* Returns a string that has all the invalid chars of the output format
       replaced with the entries in the replacement array. */
 	String __fastcall ReplaceReservedChars(String AToken);
@@ -248,7 +248,7 @@ protected:
       of colors and font styles so the properties of the next token can be
       added to the output buffer. */
 	virtual void __fastcall SetTokenAttribute(Synedithighlighter::TSynHighlighterAttributes* Attri);
-	virtual bool __fastcall UseBom(){return false;} // = 0;
+	virtual bool __fastcall UseBom(){ThrowAbstractMethodError(L"TSynCustomExporter::UseBom"); return false;};
 public:
     /* Creates an instance of the exporter. */
 	typedef System::Classes::TComponent inherited;
@@ -270,7 +270,7 @@ public:
 	void __fastcall SaveToFile(const String FileName);
     /* Saves the contents of the output buffer to a stream. */
 	void __fastcall SaveToStream(TStream* Stream);
-	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings(){return Synunicode::TSynEncodings();} // = 0;
+	virtual Synunicode::TSynEncodings __fastcall SupportedEncodings(){ThrowAbstractMethodError(L"TSynCustomExporter::SupportedEncodings"); return Synunicode::TSynEncodings();};
     /* Default background color for text that has no token attribute assigned or
       for token attributes that have the background set to default. */
 	__property TColor Color = { read = fBackgroundColor, write = fBackgroundColor };
@@ -295,7 +295,7 @@ const String EncodingStrs[4/*# TSynEncoding*/] = {L"UTF-8", L"UTF-16 Little Endi
 const System::Char SEncodingError[] = L"%s encoding is not supported by %s-exporter";
 
 
-}  // namespace SynEditExport
+}  // namespace Syneditexport
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditexport;

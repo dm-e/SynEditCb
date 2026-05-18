@@ -4,6 +4,7 @@
 
 #include "SynHighlighterSQL.h"
 #include "SynEditStrConst.h"
+#include "d2c_sysinterface.h"
 #include "d2c_convert.h"
 
 using namespace std;
@@ -2571,5 +2572,5 @@ String __fastcall TSynSQLSyn::GetKeyWords(int TokenKind)
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterSQL
+}  // namespace Synhighlightersql
 

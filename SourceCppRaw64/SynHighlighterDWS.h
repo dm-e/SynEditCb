@@ -53,6 +53,7 @@ Known Issues:
 #include "SynEditCodeFolding.h"
 #include <System.RegularExpressions.hpp>
 #include <System.Character.hpp>
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterdws
 {
@@ -221,8 +222,8 @@ private:
 	TtkTokenKind __fastcall FuncProperty();
 	TtkTokenKind __fastcall FuncTypeScoped();
 	TtkTokenKind __fastcall FuncType();
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall AddressOpProc();
 	void __fastcall AsciiCharProc();
@@ -298,7 +299,7 @@ public:
 void SynHighlighterDWS_initialization();
 
 
-}  // namespace SynHighlighterDWS
+}  // namespace Synhighlighterdws
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterdws;

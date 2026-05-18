@@ -9,6 +9,7 @@
 #include "SynEditCodeFolding.h"
 #include "SynTextDrawer.h"
 #include "SynEdit.h"
+#include "d2c_sysinterface.h"
 #include "d2c_convert.h"
 #include "SynEditDelphiInstances.hpp"
 
@@ -28,9 +29,8 @@ using namespace System::Uitypes;
 using namespace System::Win::Registry;
 using namespace Vcl::Controls;
 using namespace Vcl::Forms;
-using namespace Vcl::Graphutil;
 using namespace Vcl::Graphics;
-using namespace Winapi::Wincodec;
+using namespace Vcl::Graphutil;
 
 namespace Syneditmiscclasses
 {
@@ -84,8 +84,8 @@ __fastcall TBetterRegistry::TBetterRegistry(System::LongWord AAccess) : inherite
 
 void __fastcall ResizeBitmap(TBitmap* Bitmap, int NewWidth, int NewHeight)
 {
-	IWICImagingFactory* Factory = nullptr;
-	IWICBitmapScaler* Scaler = nullptr;
+	_di_IWICImagingFactory Factory;
+	_di_IWICBitmapScaler Scaler;
 	TWICImage* Source = nullptr;
 	Bitmap->AlphaFormat = afDefined;
 	Source = new TWICImage();
@@ -93,11 +93,11 @@ void __fastcall ResizeBitmap(TBitmap* Bitmap, int NewWidth, int NewHeight)
 	{
 		Source->Assign(Bitmap);
 		Factory = TWICImage::ImagingFactory;
-		Factory->CreateBitmapScaler(Scaler);
+		Factory->CreateBitmapScaler(DiOut<IWICBitmapScaler>(Scaler));
 		try
 		{
-			Scaler->Initialize(Source->Handle, (UINT) NewWidth, (UINT) NewHeight, WICBitmapInterpolationModeHighQualityCubic);
-			Source->Handle = ((IWICBitmap*) Scaler);
+			Scaler->Initialize(Source->Handle, static_cast<UINT>(NewWidth), static_cast<UINT>(NewHeight), WICBitmapInterpolationModeHighQualityCubic);
+			Source->Handle = qi_as_throw<IWICBitmap>(Scaler);
 		}
 		__finally
 		{
@@ -117,8 +117,8 @@ void __fastcall ResizeBitmap(TBitmap* Bitmap, int NewWidth, int NewHeight)
 /* TSynSelectedColor */
 
 __fastcall TSynSelectedColor::TSynSelectedColor()
- : fBG((TColor) clHighlight),
-			fFG((TColor) clHighlightText)
+ : fBG(static_cast<TColor>(clHighlight)),
+			fFG(static_cast<TColor>(clHighlightText))
 {
 	//# inherited::Create();
 }
@@ -131,7 +131,7 @@ void __fastcall TSynSelectedColor::Assign(TPersistent* Source)
 		Src = ((TSynSelectedColor*) Source);
 		fBG = Src->fBG;
 		fFG = Src->fFG;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 	else
@@ -143,7 +143,7 @@ void __fastcall TSynSelectedColor::SetBG(TColor Value)
 	if(fBG != Value)
 	{
 		fBG = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -153,7 +153,7 @@ void __fastcall TSynSelectedColor::SetFG(TColor Value)
 	if(fFG != Value)
 	{
 		fFG = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -193,13 +193,13 @@ void __fastcall TSynGutter::CalcCharWidth()
 
 void __fastcall TSynGutter::Changed()
 {
-	if((FUpdateCount == 0) && ASSIGNED(fOnChange))
+	if((FUpdateCount == 0) && Assigned(fOnChange))
 		fOnChange(this);
 }
 
 void __fastcall TSynGutter::ChangeScale(int M, int D)
 {
-	FFont->Height = (int) Round(FFont->Height * M / D);
+	FFont->Height = static_cast<int>(Round(FFont->Height * M / D));
 	if(ASSIGNED(FInternalImage))
 		FInternalImage->ChangeScale(M, D);
 	FCurrentPPI = M; // Vcl does the same
@@ -609,7 +609,7 @@ TSynInternalImage* __fastcall TSynGutter::GetInternalImage()
 	TSynInternalImage* result = nullptr;
 	if(!ASSIGNED(FInternalImage))
 	{
-		FInternalImage = new TSynInternalImage((THandle) HInstance, L"SynEditInternalImages", 10);
+		FInternalImage = new TSynInternalImage(HInstance, L"SynEditInternalImages", 10);
     // ++ DPI-Aware
 		if(ASSIGNED(FOwner))
 			FInternalImage->ChangeScale(FCurrentPPI, 96);
@@ -667,7 +667,7 @@ void __fastcall TSynBookMarkOpt::Assign(TPersistent* Source)
 		FGlyphsVisible = Src->FGlyphsVisible;
 		FLeftMargin = Src->FLeftMargin;
 		FXoffset = Src->FXoffset;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 	else
@@ -681,7 +681,7 @@ void __fastcall TSynBookMarkOpt::SetBookmarkImages(TCustomImageList* const Value
 		FBookmarkImages = const_cast<TCustomImageList*>(Value);
 		if(ASSIGNED(FBookmarkImages))
 			FBookmarkImages->FreeNotification(FOwner);
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -691,7 +691,7 @@ void __fastcall TSynBookMarkOpt::SetDrawBookmarksFirst(bool Value)
 	if(Value != FDrawBookmarksFirst)
 	{
 		FDrawBookmarksFirst = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -701,7 +701,7 @@ void __fastcall TSynBookMarkOpt::SetGlyphsVisible(bool Value)
 	if(FGlyphsVisible != Value)
 	{
 		FGlyphsVisible = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -711,7 +711,7 @@ void __fastcall TSynBookMarkOpt::SetLeftMargin(int Value)
 	if(FLeftMargin != Value)
 	{
 		FLeftMargin = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -721,7 +721,7 @@ void __fastcall TSynBookMarkOpt::SetXOffset(int Value)
 	if(FXoffset != Value)
 	{
 		FXoffset = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -756,7 +756,7 @@ __fastcall TSynGlyph::TSynGlyph(THandle aModule, const String aName)
 __fastcall TSynGlyph::~TSynGlyph()
 {
 	if(ASSIGNED(FInternalGlyph))
-		FreeAndNil(&FInternalGlyph);
+		FreeAndNil(FInternalGlyph);
 	delete FGlyph;
 	//# inherited::Destroy();
 }
@@ -770,7 +770,7 @@ void __fastcall TSynGlyph::Assign(TPersistent* aSource)
 		FInternalGlyph = vSrc->FInternalGlyph;
 		FVisible = vSrc->FVisible;
 		FGlyph = vSrc->FGlyph;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 	else
@@ -815,7 +815,7 @@ void __fastcall TSynGlyph::SetGlyph(TBitmap* Value)
 
 void __fastcall TSynGlyph::GlyphChange(TObject* Sender)
 {
-	if(ASSIGNED(fOnChange))
+	if(Assigned(fOnChange))
 		fOnChange(this);
 }
 
@@ -824,7 +824,7 @@ void __fastcall TSynGlyph::SetVisible(bool Value)
 	if(FVisible != Value)
 	{
 		FVisible = Value;
-		if(ASSIGNED(fOnChange))
+		if(Assigned(fOnChange))
 			fOnChange(this);
 	}
 }
@@ -865,7 +865,7 @@ void __fastcall TSynMethodChain::Add(const TMethod& cAEvent)
 {
 	TMethod AEvent = cAEvent;
 	if(!ASSIGNED(AEvent.Code))
-		throw new ESynMethodChain(L"%s.Entry : the parameter `AEvent' must be specified.", ARRAYOFCONST((ClassName())));
+		throw ESynMethodChain(L"%s.Entry : the parameter `AEvent' must be specified.", ARRAYOFCONST((ClassName())));
 	/*# with FNotifyProcs, AEvent do */
 	{
 		auto with0 = FNotifyProcs;
@@ -890,8 +890,8 @@ __fastcall TSynMethodChain::~TSynMethodChain()
 bool __fastcall TSynMethodChain::DoHandleException(Exception* E)
 {
 	bool result = false;
-	if(!ASSIGNED(FExceptionHandler))
-		throw E;
+	if(!Assigned(FExceptionHandler))
+		throw *E;
 	else
 		try
 		{
@@ -900,7 +900,7 @@ bool __fastcall TSynMethodChain::DoHandleException(Exception* E)
 		}
 		catch(...)
 		{
-			throw new ESynMethodChain(L"%s.DoHandleException : MUST NOT occur any kind of exception in " L"ExceptionHandler", ARRAYOFCONST((ClassName())));
+			throw ESynMethodChain(L"%s.DoHandleException : MUST NOT occur any kind of exception in " L"ExceptionHandler", ARRAYOFCONST((ClassName())));
 		}
 	return result;
 }
@@ -927,7 +927,7 @@ void __fastcall TSynMethodChain::Fire()
 				}
 				while(!(I >= with0->Count));
 			}
-			catch(Exception* E)
+			catch(const Exception& E)
 			{
 				if(!DoHandleException(E))
 					I = MaxInt;
@@ -940,7 +940,7 @@ void __fastcall TSynMethodChain::Remove(const TMethod& cAEvent)
 	TMethod AEvent = cAEvent;
 	int I = 0;
 	if(!ASSIGNED(AEvent.Code))
-		throw new ESynMethodChain(L"%s.Remove: the parameter `AEvent' must be specified.", ARRAYOFCONST((ClassName())));
+		throw ESynMethodChain(L"%s.Remove: the parameter `AEvent' must be specified.", ARRAYOFCONST((ClassName())));
 	/*# with FNotifyProcs, AEvent do */
 	{
 		auto with0 = FNotifyProcs;
@@ -964,9 +964,9 @@ void __fastcall TSynMethodChain::Remove(const TMethod& cAEvent)
 
 /* TSynNotifyEventChain */
 
-void __fastcall TSynNotifyEventChain::Add(TNotifyEvent AEvent)
+void __fastcall TSynNotifyEventChain::Add(const TNotifyEvent& AEvent)
 {
-	inherited::Add(*((TMethod*) &AEvent));
+	inherited::Add(to_method(AEvent));
 }
 
 __fastcall TSynNotifyEventChain::TSynNotifyEventChain(TObject* ASender)
@@ -977,12 +977,12 @@ __fastcall TSynNotifyEventChain::TSynNotifyEventChain(TObject* ASender)
 
 void __fastcall TSynNotifyEventChain::DoFire(const TMethod& AEvent)
 {
-	(*(TNotifyEvent*)&AEvent)(FSender);
+	from_method<TNotifyEvent>(AEvent)(FSender);
 }
 
-void __fastcall TSynNotifyEventChain::Remove(TNotifyEvent AEvent)
+void __fastcall TSynNotifyEventChain::Remove(const TNotifyEvent& AEvent)
 {
-	inherited::Remove(*((TMethod*) &AEvent));
+	inherited::Remove(to_method(AEvent));
 }
 
 /* TSynInternalImage */
@@ -1129,11 +1129,11 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 			FHotKey((TShortCut) 0),
 			FPressedOnlyModifiers(false)
 {
-	BorderStyle = (TBorderStyle) bsSingle;
+	BorderStyle = static_cast<TBorderStyle>(bsSingle);
 	ControlStyle = ControlStyle + Syneditmiscclasses__10;
 	FInvalidKeys = Syneditmiscclasses__11;
 	FModifiers = Syneditmiscclasses__12;
-	SetHotKey((TShortCut) 0x0041); /* Alt+A */
+	SetHotKey(static_cast<TShortCut>(0x0041)); /* Alt+A */
 	ParentColor = false;
 	Color = (TColor) clWindow;
 	TabStop = true;
@@ -1141,7 +1141,7 @@ __fastcall TSynHotKey::TSynHotKey(TComponent* AOwner)
 
 void __fastcall TSynHotKey::CreateParams(TCreateParams& Params)
 {
-	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TSynBorderStyle*/] = {0, (DWORD) WS_BORDER};
+	const DWORD BorderStyles[bsSingle - bsNone+ 1/*# TSynBorderStyle*/] = {0, static_cast<DWORD>(WS_BORDER)};
 	const LongWord ClassStylesOff = CS_VREDRAW | CS_HREDRAW;
 	inherited::CreateParams(Params);
 	/*# with Params do */
@@ -1182,7 +1182,7 @@ void __fastcall TSynHotKey::KeyDown(WORD& Key, TShiftState Shift)
 	}
 	else
 	{
-		FHotKey = (TShortCut) 0;
+		FHotKey = static_cast<TShortCut>(0);
 		Key = 0;
 	}
 	if(Text != ShortCutToTextEx(Key, Shift))
@@ -1264,12 +1264,12 @@ void __fastcall TSynHotKey::WMGetDlgCode(::TMessage& Message)
 	Message.Result = DLGC_WANTTAB | DLGC_WANTARROWS;
 }
 
-void __fastcall TSynHotKey::WMKillFocus(TWMKillFocus& Msg)
+void __fastcall TSynHotKey::WMKillFocus(Winapi::Messages::TWMKillFocus& Msg)
 {
 	DestroyCaret();
 }
 
-void __fastcall TSynHotKey::WMSetFocus(TWMSetFocus& Msg)
+void __fastcall TSynHotKey::WMSetFocus(Winapi::Messages::TWMSetFocus& Msg)
 {
 	Canvas->Font = Font;
 	CreateCaret(Handle, 0, 1, -Canvas->Font->Height + 2);
@@ -1297,7 +1297,7 @@ bool __fastcall TBetterRegistry::OpenKeyReadOnly(const String Key)
 	if(!Relative)
 		S.Delete(1, 	1);
 	TempKey = 0;
-	result = RegOpenKeyEx(GetBaseKey(Relative), ustr2pwchar(S), 0, (REGSAM) KEY_READ, &TempKey) == ERROR_SUCCESS;
+	result = RegOpenKeyEx(GetBaseKey(Relative), ustr2pwchar(S), 0, static_cast<REGSAM>(KEY_READ), &TempKey) == ERROR_SUCCESS;
 	if(result)
 	{
 		if((CurrentKey != 0) && Relative)
@@ -1368,7 +1368,7 @@ void __fastcall TSynGutterBand::DoClick(TObject* Sender, TMouseButton Button, in
 			}
 		}
 	}
-	if(ASSIGNED(FOnClick))
+	if(Assigned(FOnClick))
 		FOnClick(Sender, Button, X, Y, Row, Line);
 }
 
@@ -1384,10 +1384,10 @@ void __fastcall TSynGutterBand::DoMouseCursor(TObject* Sender, int X, int Y, int
 		{
 			rcFold = FoldShapeRect(Row, Line);
 			if(!rcFold.IsEmpty() && PtInRect(rcFold, Point(X, Y)))
-				Cursor = System::Uitypes::crHandPoint;
+				Cursor = crHandPoint;
 		}
 	}
-	if(ASSIGNED(FOnMouseCursor))
+	if(Assigned(FOnMouseCursor))
 		FOnMouseCursor(Sender, X, Y, Row, Line, Cursor);
 }
 // Drawing of builtin bands
@@ -1574,7 +1574,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 		ShapeSize = SynEdit->CodeFolding->ScaledGutterShapeSize(PPI);
 		for(stop = LastRow, cRow = FirstRow; cRow <= stop; cRow++)
 		{
-			vLine = SynEdit->RowToLine((int) cRow);
+			vLine = SynEdit->RowToLine(static_cast<int>(cRow));
 			if(vLine > SynEdit->Lines->Count)
 				break;
 			rcFold.TopLeft() = Point(ClipR.Left + Margin, (cRow - SynEdit->TopLine) * SynEdit->LineHeight + (int)((SynEdit->LineHeight - ShapeSize) / /*div*/ 2));
@@ -1607,7 +1607,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 				{
 					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
 					Canvas->MoveTo(X, rcFold.Bottom);
-					Canvas->LineTo(X, (int) ((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
+					Canvas->LineTo(X, static_cast<int>((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
 				}
 			}
 			else
@@ -1617,7 +1617,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 				if(SynEdit->AllFoldRanges->FoldEndAtLine(vLine, Index))
 				{
 					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
-					Canvas->MoveTo(X, (int) ((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
+					Canvas->MoveTo(X, static_cast<int>((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
 					Canvas->LineTo(X, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / /*div*/ 2)));
 					Canvas->LineTo(rcFold.Right, rcFold.Top + ((int)((rcFold.Bottom - rcFold.Top) / /*div*/ 2)));
 				}
@@ -1625,8 +1625,8 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 				if(SynEdit->AllFoldRanges->FoldAroundLine(vLine, Index))
 				{
 					X = rcFold.Left + (int)(ShapeSize / /*div*/ 2);
-					Canvas->MoveTo(X, (int) ((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
-					Canvas->LineTo(X, (int) ((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
+					Canvas->MoveTo(X, static_cast<int>((cRow - SynEdit->TopLine) * SynEdit->LineHeight));
+					Canvas->LineTo(X, static_cast<int>((cRow - SynEdit->TopLine + 1) * SynEdit->LineHeight));
 				}
 			}
 		}
@@ -1655,8 +1655,8 @@ void __fastcall TSynGutterBand::PaintLineNumbers(TCanvas* Canvas, const TRect& c
 	Canvas->Brush->Style = bsClear;
 	for(stop = LastRow, Row = FirstRow; Row <= stop; Row++)
 	{
-		Line = SynEdit->RowToLine((int) Row);
-		LineTop = (int) ((Row - SynEdit->TopLine) * SynEdit->LineHeight);
+		Line = SynEdit->RowToLine(static_cast<int>(Row));
+		LineTop = static_cast<int>((Row - SynEdit->TopLine) * SynEdit->LineHeight);
 		if(SynEdit->WordWrap && (Row != SynEdit->LineToRow(Line)))
       // paint wrapped line glyphs
 			SynEdit->WordWrapGlyph->Draw(Canvas, ClipR.Right - SynEdit->WordWrapGlyph->Width, LineTop, SynEdit->LineHeight);
@@ -1664,7 +1664,7 @@ void __fastcall TSynGutterBand::PaintLineNumbers(TCanvas* Canvas, const TRect& c
 		{
 			LineRect = Rect(ClipR.Left + MulDiv(MarginX, PPI, 96), LineTop, ClipR.Right, LineTop + SynEdit->LineHeight);
 			S = Gutter->FormatLineNumber(Line);
-			if(ASSIGNED(SynEdit->OnGutterGetText))
+			if(Assigned(SynEdit->OnGutterGetText))
 				SynEdit->OnGutterGetText(this, Line, S);
 			Canvas->TextRect(LineRect, S, Syneditmiscclasses__15);
 		}
@@ -1676,7 +1676,7 @@ void __fastcall TSynGutterBand::PaintLines(TCanvas* Canvas, const TRect& cClipR,
 	TRect ClipR = cClipR;
 	bool DoDefault = false;
 	DoDefault = true;
-	if(ASSIGNED(FOnPaintLines))
+	if(Assigned(FOnPaintLines))
 		FOnPaintLines(Canvas, ClipR, FirstRow, LastRow, DoDefault);
 	if(DoDefault)
 		DoPaintLines(Canvas, ClipR, FirstRow, LastRow);
@@ -1739,7 +1739,7 @@ void __fastcall TSynGutterBand::PaintMarks(TCanvas* Canvas, const TRect& cClipR,
 	int vLastLine = 0;
 	int cMark = 0;
 	int vMarkRow = 0;
-	TArray<int> aGutterOffs;
+	D2CArray<int> aGutterOffs;
 	bool bHasOtherMarks = false;
 	int Index = 0;
 	SynEdit = ((TCustomSynEdit*) Editor);
@@ -1829,18 +1829,18 @@ void __fastcall TSynGutterBand::SetKind(TSynGutterBandKind Kind)
 	Changed(false);
 }
 
-void __fastcall TSynGutterBand::SetOnClick(const TGutterBandClickEvent Value)
+void __fastcall TSynGutterBand::SetOnClick(const TGutterBandClickEvent& Value)
 {
 	FOnClick = Value;
 	Changed(false);
 }
 
-void __fastcall TSynGutterBand::SetOnMouseCursor(const TGutterMouseCursorEvent Value)
+void __fastcall TSynGutterBand::SetOnMouseCursor(const TGutterMouseCursorEvent& Value)
 {
 	FOnMouseCursor = Value;
 }
 
-void __fastcall TSynGutterBand::SetOnPaintLines(const TGutterBandPaintEvent Value)
+void __fastcall TSynGutterBand::SetOnPaintLines(const TGutterBandPaintEvent& Value)
 {
 	FOnPaintLines = Value;
 	Changed(false);
@@ -1879,5 +1879,5 @@ void __fastcall TSynBandsCollection::Update(TCollectionItem* Item)
 }
 
 
-}  // namespace SynEditMiscClasses
+}  // namespace Syneditmiscclasses
 

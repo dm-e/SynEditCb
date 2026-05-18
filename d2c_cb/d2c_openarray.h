@@ -150,7 +150,4 @@ as the original SynEdit code. These terms are precisely specified in
 		OpenArrayRef3(System::SmallString<N>& Str) : inherited((char*) Str.c_str(), N) {}
 	};
 
-
-
-
 #endif  // d2c_openarrayH

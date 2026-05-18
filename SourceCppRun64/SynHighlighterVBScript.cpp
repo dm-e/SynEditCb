@@ -121,7 +121,7 @@ unsigned int __fastcall TSynVBScriptSyn::HashKey(PWideChar Str)
 void __fastcall TSynVBScriptSyn::DoAddKeyword(String AKeyword, int AKind)
 {
 	int HashValue = 0;
-	HashValue = (int) HashKey(ustr2pwchar(AKeyword));
+	HashValue = static_cast<int>(HashKey(ustr2pwchar(AKeyword)));
 	fKeywords->Items[HashValue] = new TSynHashEntry(AKeyword, AKind);
 }
 
@@ -299,17 +299,17 @@ void __fastcall TSynVBScriptSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, T
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find begin or end  (Fold Type 1)
-		if(!BlockDelimiter((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!BlockDelimiter(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} //for Line
 }
 /*
@@ -775,5 +775,5 @@ void __fastcall TSynVBScriptSyn::REMProc()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterVBScript
+}  // namespace Synhighlightervbscript
 

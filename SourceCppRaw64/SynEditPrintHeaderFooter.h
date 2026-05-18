@@ -370,7 +370,7 @@ public:
 };
 
 
-}  // namespace SynEditPrintHeaderFooter
+}  // namespace Syneditprintheaderfooter
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditprintheaderfooter;

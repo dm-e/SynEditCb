@@ -6,6 +6,7 @@
 #include <Winapi.Windows.hpp>
 #include "SynEditKeyConst.h"
 #include "SynEditStrConst.h"
+#include "d2c_sysinterface.h"
 #include "d2c_sysrtti.h"
 
 using namespace std;
@@ -281,7 +282,7 @@ const TIdentMapEntry EditorCommandStrs[113/*# range 0..112*/] = {{ecNone, L"ecNo
 
 // GetEditorCommandValues and GetEditorCommandExtended for editing key assignments
 
-void __fastcall GetEditorCommandValues(TGetStrProc Proc)
+void __fastcall GetEditorCommandValues(const TGetStrProc& Proc)
 {
 	int i = 0;
 	int stop = 0;
@@ -304,7 +305,7 @@ void __fastcall GetEditorCommandValues(TGetStrProc Proc)
 	}
 }
 
-void __fastcall GetEditorCommandExtended(TGetStrProc Proc)
+void __fastcall GetEditorCommandExtended(const TGetStrProc& Proc)
 {
 	int i = 0;
 	int stop = 0;
@@ -352,8 +353,8 @@ String __fastcall EditorCommandToDescrString(TSynEditorCommand Cmd)
 String __fastcall EditorCommandToCodeString(TSynEditorCommand Cmd)
 {
 	String result;
-	if(!EditorCommandToIdent((int) Cmd, result))
-		result = IntToStr((int) Cmd);
+	if(!EditorCommandToIdent(static_cast<int>(Cmd), result))
+		result = IntToStr(static_cast<int>(Cmd));
 	return result;
 }
 
@@ -421,7 +422,7 @@ void __fastcall TSynEditKeyStroke::SetShortCut(const TShortCut Value)
 		Dup = ((TSynEditKeyStrokes*) Collection)->FindShortcut2(Value, ShortCut2);
 		if((Dup != -1) && (Dup != this->Index))
 		{
-			throw new ESynKeyError(SYNS_EDuplicateShortcut);
+			throw ESynKeyError(SYNS_EDuplicateShortcut);
 		}
 	}
 	Menus::ShortCutToKey(Value, NewKey, NewShift);
@@ -455,7 +456,7 @@ void __fastcall TSynEditKeyStroke::SetShortCut2(const TShortCut Value)
 	{
 		Dup = ((TSynEditKeyStrokes*) Collection)->FindShortcut2(ShortCut, Value);
 		if((Dup != -1) && (Dup != this->Index))
-			throw new ESynKeyError(SYNS_EDuplicateShortcut);
+			throw ESynKeyError(SYNS_EDuplicateShortcut);
 	}
 	Menus::ShortCutToKey(Value, NewKey, NewShift);
 	if((NewKey != Key2) || (NewShift != Shift2))
@@ -477,11 +478,11 @@ void __fastcall TSynEditKeyStroke::LoadFromStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Read((void**)&FKey, (NativeInt) sizeof(FKey));
-		with0->Read((void**)&FShift, (NativeInt) sizeof(FShift));
-		with0->Read((void**)&FKey2, (NativeInt) sizeof(FKey2));
-		with0->Read((void**)&FShift2, (NativeInt) sizeof(FShift2));
-		with0->Read((void**)&FCommand, (NativeInt) sizeof(FCommand));
+		with0->Read(&FKey, static_cast<NativeInt>(sizeof(FKey)));
+		with0->Read(&FShift, static_cast<NativeInt>(sizeof(FShift)));
+		with0->Read(&FKey2, static_cast<NativeInt>(sizeof(FKey2)));
+		with0->Read(&FShift2, static_cast<NativeInt>(sizeof(FShift2)));
+		with0->Read(&FCommand, static_cast<NativeInt>(sizeof(FCommand)));
 	}
 }
 
@@ -490,11 +491,11 @@ void __fastcall TSynEditKeyStroke::SaveToStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Write(&FKey, (NativeInt) sizeof(FKey));
-		with0->Write(&FShift, (NativeInt) sizeof(FShift));
-		with0->Write(&FKey2, (NativeInt) sizeof(FKey2));
-		with0->Write(&FShift2, (NativeInt) sizeof(FShift2));
-		with0->Write(&FCommand, (NativeInt) sizeof(FCommand));
+		with0->Write(&FKey, static_cast<NativeInt>(sizeof(FKey)));
+		with0->Write(&FShift, static_cast<NativeInt>(sizeof(FShift)));
+		with0->Write(&FKey2, static_cast<NativeInt>(sizeof(FKey2)));
+		with0->Write(&FShift2, static_cast<NativeInt>(sizeof(FShift2)));
+		with0->Write(&FCommand, static_cast<NativeInt>(sizeof(FCommand)));
 	}
 }
 
@@ -659,7 +660,7 @@ void __fastcall TSynEditKeyStrokes::LoadFromStream(TStream* AStream)
 {
 	int Num = 0;
 	Clear();
-	AStream->Read((void**)&Num, (NativeInt) sizeof(Num));
+	AStream->Read(&Num, static_cast<NativeInt>(sizeof(Num)));
 	while(Num > 0)
 	{
 		/*# with Add do */
@@ -674,106 +675,106 @@ void __fastcall TSynEditKeyStrokes::LoadFromStream(TStream* AStream)
 void __fastcall TSynEditKeyStrokes::ResetDefaults()
 {
 	Clear();
-	AddKey((TSynEditorCommand) ecUp, SYNEDIT_UP, Syneditkeycmds__1);
-	AddKey((TSynEditorCommand) ecSelUp, SYNEDIT_UP, Syneditkeycmds__2);
-	AddKey((TSynEditorCommand) ecScrollUp, SYNEDIT_UP, Syneditkeycmds__3);
-	AddKey((TSynEditorCommand) ecDown, SYNEDIT_DOWN, Syneditkeycmds__4);
-	AddKey((TSynEditorCommand) ecSelDown, SYNEDIT_DOWN, Syneditkeycmds__5);
-	AddKey((TSynEditorCommand) ecScrollDown, SYNEDIT_DOWN, Syneditkeycmds__6);
-	AddKey((TSynEditorCommand) ecLeft, SYNEDIT_LEFT, Syneditkeycmds__7);
-	AddKey((TSynEditorCommand) ecSelLeft, SYNEDIT_LEFT, Syneditkeycmds__8);
-	AddKey((TSynEditorCommand) ecWordLeft, SYNEDIT_LEFT, Syneditkeycmds__9);
-	AddKey((TSynEditorCommand) ecSelWordLeft, SYNEDIT_LEFT, Syneditkeycmds__10);
-	AddKey((TSynEditorCommand) ecRight, SYNEDIT_RIGHT, Syneditkeycmds__11);
-	AddKey((TSynEditorCommand) ecSelRight, SYNEDIT_RIGHT, Syneditkeycmds__12);
-	AddKey((TSynEditorCommand) ecWordRight, SYNEDIT_RIGHT, Syneditkeycmds__13);
-	AddKey((TSynEditorCommand) ecSelWordRight, SYNEDIT_RIGHT, Syneditkeycmds__14);
-	AddKey((TSynEditorCommand) ecPageDown, SYNEDIT_NEXT, Syneditkeycmds__15);
-	AddKey((TSynEditorCommand) ecSelPageDown, SYNEDIT_NEXT, Syneditkeycmds__16);
-	AddKey((TSynEditorCommand) ecPageBottom, SYNEDIT_NEXT, Syneditkeycmds__17);
-	AddKey((TSynEditorCommand) ecSelPageBottom, SYNEDIT_NEXT, Syneditkeycmds__18);
-	AddKey((TSynEditorCommand) ecPageUp, SYNEDIT_PRIOR, Syneditkeycmds__19);
-	AddKey((TSynEditorCommand) ecSelPageUp, SYNEDIT_PRIOR, Syneditkeycmds__20);
-	AddKey((TSynEditorCommand) ecPageTop, SYNEDIT_PRIOR, Syneditkeycmds__21);
-	AddKey((TSynEditorCommand) ecSelPageTop, SYNEDIT_PRIOR, Syneditkeycmds__22);
-	AddKey((TSynEditorCommand) ecLineStart, SYNEDIT_HOME, Syneditkeycmds__23);
-	AddKey((TSynEditorCommand) ecSelLineStart, SYNEDIT_HOME, Syneditkeycmds__24);
-	AddKey((TSynEditorCommand) ecEditorTop, SYNEDIT_HOME, Syneditkeycmds__25);
-	AddKey((TSynEditorCommand) ecSelEditorTop, SYNEDIT_HOME, Syneditkeycmds__26);
-	AddKey((TSynEditorCommand) ecLineEnd, SYNEDIT_END, Syneditkeycmds__27);
-	AddKey((TSynEditorCommand) ecSelLineEnd, SYNEDIT_END, Syneditkeycmds__28);
-	AddKey((TSynEditorCommand) ecEditorBottom, SYNEDIT_END, Syneditkeycmds__29);
-	AddKey((TSynEditorCommand) ecSelEditorBottom, SYNEDIT_END, Syneditkeycmds__30);
-	AddKey((TSynEditorCommand) ecToggleMode, SYNEDIT_INSERT, Syneditkeycmds__31);
-	AddKey((TSynEditorCommand) ecCopy, SYNEDIT_INSERT, Syneditkeycmds__32);
-	AddKey((TSynEditorCommand) ecCut, SYNEDIT_DELETE, Syneditkeycmds__33);
-	AddKey((TSynEditorCommand) ecPaste, SYNEDIT_INSERT, Syneditkeycmds__34);
-	AddKey((TSynEditorCommand) ecDeleteChar, SYNEDIT_DELETE, Syneditkeycmds__35);
-	AddKey((TSynEditorCommand) ecDeleteLastChar, SYNEDIT_BACK, Syneditkeycmds__36);
-	AddKey((TSynEditorCommand) ecDeleteBOL, SYNEDIT_BACK, Syneditkeycmds__37);
-	AddKey((TSynEditorCommand) ecDeleteLastWord, SYNEDIT_BACK, Syneditkeycmds__38);
-	AddKey((TSynEditorCommand) ecUndo, SYNEDIT_BACK, Syneditkeycmds__39);
-	AddKey((TSynEditorCommand) ecRedo, SYNEDIT_BACK, Syneditkeycmds__40);
-	AddKey((TSynEditorCommand) ecLineBreak, SYNEDIT_RETURN, Syneditkeycmds__41);
-	AddKey((TSynEditorCommand) ecLineBreak, SYNEDIT_RETURN, Syneditkeycmds__42);
-	AddKey((TSynEditorCommand) ecTab, SYNEDIT_TAB, Syneditkeycmds__43);
-	AddKey((TSynEditorCommand) ecShiftTab, SYNEDIT_TAB, Syneditkeycmds__44);
-	AddKey((TSynEditorCommand) ecContextHelp, SYNEDIT_F1, Syneditkeycmds__45);
-	AddKey((TSynEditorCommand) ecSelectAll, (WORD) int(L'A'), Syneditkeycmds__46);
-	AddKey((TSynEditorCommand) ecCopy, (WORD) int(L'C'), Syneditkeycmds__47);
-	AddKey((TSynEditorCommand) ecPaste, (WORD) int(L'V'), Syneditkeycmds__48);
-	AddKey((TSynEditorCommand) ecCut, (WORD) int(L'X'), Syneditkeycmds__49);
-	AddKey((TSynEditorCommand) ecBlockIndent, (WORD) int(L'I'), Syneditkeycmds__50);
-	AddKey((TSynEditorCommand) ecBlockUnindent, (WORD) int(L'U'), Syneditkeycmds__51);
-	AddKey((TSynEditorCommand) ecLineBreak, (WORD) int(L'M'), Syneditkeycmds__52);
-	AddKey((TSynEditorCommand) ecInsertLine, (WORD) int(L'N'), Syneditkeycmds__53);
-	AddKey((TSynEditorCommand) ecDeleteWord, (WORD) int(L'T'), Syneditkeycmds__54);
-	AddKey((TSynEditorCommand) ecDeleteLine, (WORD) int(L'Y'), Syneditkeycmds__55);
-	AddKey((TSynEditorCommand) ecDeleteEOL, (WORD) int(L'Y'), Syneditkeycmds__56);
-	AddKey((TSynEditorCommand) ecUndo, (WORD) int(L'Z'), Syneditkeycmds__57);
-	AddKey((TSynEditorCommand) ecRedo, (WORD) int(L'Z'), Syneditkeycmds__58);
-	AddKey((TSynEditorCommand) ecGotoMarker0, (WORD) int(L'0'), Syneditkeycmds__59);
-	AddKey((TSynEditorCommand) ecGotoMarker1, (WORD) int(L'1'), Syneditkeycmds__60);
-	AddKey((TSynEditorCommand) ecGotoMarker2, (WORD) int(L'2'), Syneditkeycmds__61);
-	AddKey((TSynEditorCommand) ecGotoMarker3, (WORD) int(L'3'), Syneditkeycmds__62);
-	AddKey((TSynEditorCommand) ecGotoMarker4, (WORD) int(L'4'), Syneditkeycmds__63);
-	AddKey((TSynEditorCommand) ecGotoMarker5, (WORD) int(L'5'), Syneditkeycmds__64);
-	AddKey((TSynEditorCommand) ecGotoMarker6, (WORD) int(L'6'), Syneditkeycmds__65);
-	AddKey((TSynEditorCommand) ecGotoMarker7, (WORD) int(L'7'), Syneditkeycmds__66);
-	AddKey((TSynEditorCommand) ecGotoMarker8, (WORD) int(L'8'), Syneditkeycmds__67);
-	AddKey((TSynEditorCommand) ecGotoMarker9, (WORD) int(L'9'), Syneditkeycmds__68);
-	AddKey((TSynEditorCommand) ecSetMarker0, (WORD) int(L'0'), Syneditkeycmds__69);
-	AddKey((TSynEditorCommand) ecSetMarker1, (WORD) int(L'1'), Syneditkeycmds__70);
-	AddKey((TSynEditorCommand) ecSetMarker2, (WORD) int(L'2'), Syneditkeycmds__71);
-	AddKey((TSynEditorCommand) ecSetMarker3, (WORD) int(L'3'), Syneditkeycmds__72);
-	AddKey((TSynEditorCommand) ecSetMarker4, (WORD) int(L'4'), Syneditkeycmds__73);
-	AddKey((TSynEditorCommand) ecSetMarker5, (WORD) int(L'5'), Syneditkeycmds__74);
-	AddKey((TSynEditorCommand) ecSetMarker6, (WORD) int(L'6'), Syneditkeycmds__75);
-	AddKey((TSynEditorCommand) ecSetMarker7, (WORD) int(L'7'), Syneditkeycmds__76);
-	AddKey((TSynEditorCommand) ecSetMarker8, (WORD) int(L'8'), Syneditkeycmds__77);
-	AddKey((TSynEditorCommand) ecSetMarker9, (WORD) int(L'9'), Syneditkeycmds__78);
-	AddKey((TSynEditorCommand) ecNormalSelect, (WORD) int(L'N'), Syneditkeycmds__79);
-	AddKey((TSynEditorCommand) ecColumnSelect, (WORD) int(L'C'), Syneditkeycmds__80);
-	AddKey((TSynEditorCommand) ecLineSelect, (WORD) int(L'L'), Syneditkeycmds__81);
-	AddKey((TSynEditorCommand) ecMatchBracket, (WORD) int(L'B'), Syneditkeycmds__82);
-	AddKey((TSynEditorCommand) ecLowerCase, (WORD) int(L'K'), Syneditkeycmds__83, (WORD) int(L'L'), Syneditkeycmds__84);
-	AddKey((TSynEditorCommand) ecUpperCase, (WORD) int(L'K'), Syneditkeycmds__85, (WORD) int(L'U'), Syneditkeycmds__86);
-	AddKey((TSynEditorCommand) ecTitleCase, (WORD) int(L'K'), Syneditkeycmds__87, (WORD) int(L'T'), Syneditkeycmds__88);
-	AddKey((TSynEditorCommand) ecCopyLineUp, SYNEDIT_UP, Syneditkeycmds__89);
-	AddKey((TSynEditorCommand) ecCopyLineDown, SYNEDIT_DOWN, Syneditkeycmds__90);
-	AddKey((TSynEditorCommand) ecMoveLineUp, SYNEDIT_UP, Syneditkeycmds__91);
-	AddKey((TSynEditorCommand) ecMoveLineDown, SYNEDIT_DOWN, Syneditkeycmds__92);
+	AddKey(static_cast<TSynEditorCommand>(ecUp), SYNEDIT_UP, Syneditkeycmds__1);
+	AddKey(static_cast<TSynEditorCommand>(ecSelUp), SYNEDIT_UP, Syneditkeycmds__2);
+	AddKey(static_cast<TSynEditorCommand>(ecScrollUp), SYNEDIT_UP, Syneditkeycmds__3);
+	AddKey(static_cast<TSynEditorCommand>(ecDown), SYNEDIT_DOWN, Syneditkeycmds__4);
+	AddKey(static_cast<TSynEditorCommand>(ecSelDown), SYNEDIT_DOWN, Syneditkeycmds__5);
+	AddKey(static_cast<TSynEditorCommand>(ecScrollDown), SYNEDIT_DOWN, Syneditkeycmds__6);
+	AddKey(static_cast<TSynEditorCommand>(ecLeft), SYNEDIT_LEFT, Syneditkeycmds__7);
+	AddKey(static_cast<TSynEditorCommand>(ecSelLeft), SYNEDIT_LEFT, Syneditkeycmds__8);
+	AddKey(static_cast<TSynEditorCommand>(ecWordLeft), SYNEDIT_LEFT, Syneditkeycmds__9);
+	AddKey(static_cast<TSynEditorCommand>(ecSelWordLeft), SYNEDIT_LEFT, Syneditkeycmds__10);
+	AddKey(static_cast<TSynEditorCommand>(ecRight), SYNEDIT_RIGHT, Syneditkeycmds__11);
+	AddKey(static_cast<TSynEditorCommand>(ecSelRight), SYNEDIT_RIGHT, Syneditkeycmds__12);
+	AddKey(static_cast<TSynEditorCommand>(ecWordRight), SYNEDIT_RIGHT, Syneditkeycmds__13);
+	AddKey(static_cast<TSynEditorCommand>(ecSelWordRight), SYNEDIT_RIGHT, Syneditkeycmds__14);
+	AddKey(static_cast<TSynEditorCommand>(ecPageDown), SYNEDIT_NEXT, Syneditkeycmds__15);
+	AddKey(static_cast<TSynEditorCommand>(ecSelPageDown), SYNEDIT_NEXT, Syneditkeycmds__16);
+	AddKey(static_cast<TSynEditorCommand>(ecPageBottom), SYNEDIT_NEXT, Syneditkeycmds__17);
+	AddKey(static_cast<TSynEditorCommand>(ecSelPageBottom), SYNEDIT_NEXT, Syneditkeycmds__18);
+	AddKey(static_cast<TSynEditorCommand>(ecPageUp), SYNEDIT_PRIOR, Syneditkeycmds__19);
+	AddKey(static_cast<TSynEditorCommand>(ecSelPageUp), SYNEDIT_PRIOR, Syneditkeycmds__20);
+	AddKey(static_cast<TSynEditorCommand>(ecPageTop), SYNEDIT_PRIOR, Syneditkeycmds__21);
+	AddKey(static_cast<TSynEditorCommand>(ecSelPageTop), SYNEDIT_PRIOR, Syneditkeycmds__22);
+	AddKey(static_cast<TSynEditorCommand>(ecLineStart), SYNEDIT_HOME, Syneditkeycmds__23);
+	AddKey(static_cast<TSynEditorCommand>(ecSelLineStart), SYNEDIT_HOME, Syneditkeycmds__24);
+	AddKey(static_cast<TSynEditorCommand>(ecEditorTop), SYNEDIT_HOME, Syneditkeycmds__25);
+	AddKey(static_cast<TSynEditorCommand>(ecSelEditorTop), SYNEDIT_HOME, Syneditkeycmds__26);
+	AddKey(static_cast<TSynEditorCommand>(ecLineEnd), SYNEDIT_END, Syneditkeycmds__27);
+	AddKey(static_cast<TSynEditorCommand>(ecSelLineEnd), SYNEDIT_END, Syneditkeycmds__28);
+	AddKey(static_cast<TSynEditorCommand>(ecEditorBottom), SYNEDIT_END, Syneditkeycmds__29);
+	AddKey(static_cast<TSynEditorCommand>(ecSelEditorBottom), SYNEDIT_END, Syneditkeycmds__30);
+	AddKey(static_cast<TSynEditorCommand>(ecToggleMode), SYNEDIT_INSERT, Syneditkeycmds__31);
+	AddKey(static_cast<TSynEditorCommand>(ecCopy), SYNEDIT_INSERT, Syneditkeycmds__32);
+	AddKey(static_cast<TSynEditorCommand>(ecCut), SYNEDIT_DELETE, Syneditkeycmds__33);
+	AddKey(static_cast<TSynEditorCommand>(ecPaste), SYNEDIT_INSERT, Syneditkeycmds__34);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteChar), SYNEDIT_DELETE, Syneditkeycmds__35);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteLastChar), SYNEDIT_BACK, Syneditkeycmds__36);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteBOL), SYNEDIT_BACK, Syneditkeycmds__37);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteLastWord), SYNEDIT_BACK, Syneditkeycmds__38);
+	AddKey(static_cast<TSynEditorCommand>(ecUndo), SYNEDIT_BACK, Syneditkeycmds__39);
+	AddKey(static_cast<TSynEditorCommand>(ecRedo), SYNEDIT_BACK, Syneditkeycmds__40);
+	AddKey(static_cast<TSynEditorCommand>(ecLineBreak), SYNEDIT_RETURN, Syneditkeycmds__41);
+	AddKey(static_cast<TSynEditorCommand>(ecLineBreak), SYNEDIT_RETURN, Syneditkeycmds__42);
+	AddKey(static_cast<TSynEditorCommand>(ecTab), SYNEDIT_TAB, Syneditkeycmds__43);
+	AddKey(static_cast<TSynEditorCommand>(ecShiftTab), SYNEDIT_TAB, Syneditkeycmds__44);
+	AddKey(static_cast<TSynEditorCommand>(ecContextHelp), SYNEDIT_F1, Syneditkeycmds__45);
+	AddKey(static_cast<TSynEditorCommand>(ecSelectAll), static_cast<WORD>(int(L'A')), Syneditkeycmds__46);
+	AddKey(static_cast<TSynEditorCommand>(ecCopy), static_cast<WORD>(int(L'C')), Syneditkeycmds__47);
+	AddKey(static_cast<TSynEditorCommand>(ecPaste), static_cast<WORD>(int(L'V')), Syneditkeycmds__48);
+	AddKey(static_cast<TSynEditorCommand>(ecCut), static_cast<WORD>(int(L'X')), Syneditkeycmds__49);
+	AddKey(static_cast<TSynEditorCommand>(ecBlockIndent), static_cast<WORD>(int(L'I')), Syneditkeycmds__50);
+	AddKey(static_cast<TSynEditorCommand>(ecBlockUnindent), static_cast<WORD>(int(L'U')), Syneditkeycmds__51);
+	AddKey(static_cast<TSynEditorCommand>(ecLineBreak), static_cast<WORD>(int(L'M')), Syneditkeycmds__52);
+	AddKey(static_cast<TSynEditorCommand>(ecInsertLine), static_cast<WORD>(int(L'N')), Syneditkeycmds__53);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteWord), static_cast<WORD>(int(L'T')), Syneditkeycmds__54);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteLine), static_cast<WORD>(int(L'Y')), Syneditkeycmds__55);
+	AddKey(static_cast<TSynEditorCommand>(ecDeleteEOL), static_cast<WORD>(int(L'Y')), Syneditkeycmds__56);
+	AddKey(static_cast<TSynEditorCommand>(ecUndo), static_cast<WORD>(int(L'Z')), Syneditkeycmds__57);
+	AddKey(static_cast<TSynEditorCommand>(ecRedo), static_cast<WORD>(int(L'Z')), Syneditkeycmds__58);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker0), static_cast<WORD>(int(L'0')), Syneditkeycmds__59);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker1), static_cast<WORD>(int(L'1')), Syneditkeycmds__60);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker2), static_cast<WORD>(int(L'2')), Syneditkeycmds__61);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker3), static_cast<WORD>(int(L'3')), Syneditkeycmds__62);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker4), static_cast<WORD>(int(L'4')), Syneditkeycmds__63);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker5), static_cast<WORD>(int(L'5')), Syneditkeycmds__64);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker6), static_cast<WORD>(int(L'6')), Syneditkeycmds__65);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker7), static_cast<WORD>(int(L'7')), Syneditkeycmds__66);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker8), static_cast<WORD>(int(L'8')), Syneditkeycmds__67);
+	AddKey(static_cast<TSynEditorCommand>(ecGotoMarker9), static_cast<WORD>(int(L'9')), Syneditkeycmds__68);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker0), static_cast<WORD>(int(L'0')), Syneditkeycmds__69);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker1), static_cast<WORD>(int(L'1')), Syneditkeycmds__70);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker2), static_cast<WORD>(int(L'2')), Syneditkeycmds__71);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker3), static_cast<WORD>(int(L'3')), Syneditkeycmds__72);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker4), static_cast<WORD>(int(L'4')), Syneditkeycmds__73);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker5), static_cast<WORD>(int(L'5')), Syneditkeycmds__74);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker6), static_cast<WORD>(int(L'6')), Syneditkeycmds__75);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker7), static_cast<WORD>(int(L'7')), Syneditkeycmds__76);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker8), static_cast<WORD>(int(L'8')), Syneditkeycmds__77);
+	AddKey(static_cast<TSynEditorCommand>(ecSetMarker9), static_cast<WORD>(int(L'9')), Syneditkeycmds__78);
+	AddKey(static_cast<TSynEditorCommand>(ecNormalSelect), static_cast<WORD>(int(L'N')), Syneditkeycmds__79);
+	AddKey(static_cast<TSynEditorCommand>(ecColumnSelect), static_cast<WORD>(int(L'C')), Syneditkeycmds__80);
+	AddKey(static_cast<TSynEditorCommand>(ecLineSelect), static_cast<WORD>(int(L'L')), Syneditkeycmds__81);
+	AddKey(static_cast<TSynEditorCommand>(ecMatchBracket), static_cast<WORD>(int(L'B')), Syneditkeycmds__82);
+	AddKey(static_cast<TSynEditorCommand>(ecLowerCase), static_cast<WORD>(int(L'K')), Syneditkeycmds__83, static_cast<WORD>(int(L'L')), Syneditkeycmds__84);
+	AddKey(static_cast<TSynEditorCommand>(ecUpperCase), static_cast<WORD>(int(L'K')), Syneditkeycmds__85, static_cast<WORD>(int(L'U')), Syneditkeycmds__86);
+	AddKey(static_cast<TSynEditorCommand>(ecTitleCase), static_cast<WORD>(int(L'K')), Syneditkeycmds__87, static_cast<WORD>(int(L'T')), Syneditkeycmds__88);
+	AddKey(static_cast<TSynEditorCommand>(ecCopyLineUp), SYNEDIT_UP, Syneditkeycmds__89);
+	AddKey(static_cast<TSynEditorCommand>(ecCopyLineDown), SYNEDIT_DOWN, Syneditkeycmds__90);
+	AddKey(static_cast<TSynEditorCommand>(ecMoveLineUp), SYNEDIT_UP, Syneditkeycmds__91);
+	AddKey(static_cast<TSynEditorCommand>(ecMoveLineDown), SYNEDIT_DOWN, Syneditkeycmds__92);
 //++ CodeFolding
-	AddKey((TSynEditorCommand) ecFoldAll, (WORD) VK_OEM_MINUS, Syneditkeycmds__93);   /*- _*/
-	AddKey((TSynEditorCommand) ecUnfoldAll, (WORD) VK_OEM_PLUS, Syneditkeycmds__94); /*= +*/
-	AddKey((TSynEditorCommand) ecFoldNearest, (WORD) VK_OEM_2, Syneditkeycmds__95);  // Divide {'/'}
-	AddKey((TSynEditorCommand) ecUnfoldNearest, (WORD) VK_OEM_2, Syneditkeycmds__96);
-	AddKey((TSynEditorCommand) ecFoldLevel1, (WORD) int(L'K'), Syneditkeycmds__97, (WORD) int(L'1'), Syneditkeycmds__98);
-	AddKey((TSynEditorCommand) ecFoldLevel2, (WORD) int(L'K'), Syneditkeycmds__99, (WORD) int(L'2'), Syneditkeycmds__100);
-	AddKey((TSynEditorCommand) ecFoldLevel3, (WORD) int(L'K'), Syneditkeycmds__101, (WORD) int(L'3'), Syneditkeycmds__102);
-	AddKey((TSynEditorCommand) ecUnfoldLevel1, (WORD) int(L'K'), Syneditkeycmds__103, (WORD) int(L'1'), Syneditkeycmds__104);
-	AddKey((TSynEditorCommand) ecUnfoldLevel2, (WORD) int(L'K'), Syneditkeycmds__105, (WORD) int(L'2'), Syneditkeycmds__106);
-	AddKey((TSynEditorCommand) ecUnfoldLevel3, (WORD) int(L'K'), Syneditkeycmds__107, (WORD) int(L'3'), Syneditkeycmds__108);
+	AddKey(static_cast<TSynEditorCommand>(ecFoldAll), static_cast<WORD>(VK_OEM_MINUS), Syneditkeycmds__93);   /*- _*/
+	AddKey(static_cast<TSynEditorCommand>(ecUnfoldAll), static_cast<WORD>(VK_OEM_PLUS), Syneditkeycmds__94); /*= +*/
+	AddKey(static_cast<TSynEditorCommand>(ecFoldNearest), static_cast<WORD>(VK_OEM_2), Syneditkeycmds__95);  // Divide {'/'}
+	AddKey(static_cast<TSynEditorCommand>(ecUnfoldNearest), static_cast<WORD>(VK_OEM_2), Syneditkeycmds__96);
+	AddKey(static_cast<TSynEditorCommand>(ecFoldLevel1), static_cast<WORD>(int(L'K')), Syneditkeycmds__97, static_cast<WORD>(int(L'1')), Syneditkeycmds__98);
+	AddKey(static_cast<TSynEditorCommand>(ecFoldLevel2), static_cast<WORD>(int(L'K')), Syneditkeycmds__99, static_cast<WORD>(int(L'2')), Syneditkeycmds__100);
+	AddKey(static_cast<TSynEditorCommand>(ecFoldLevel3), static_cast<WORD>(int(L'K')), Syneditkeycmds__101, static_cast<WORD>(int(L'3')), Syneditkeycmds__102);
+	AddKey(static_cast<TSynEditorCommand>(ecUnfoldLevel1), static_cast<WORD>(int(L'K')), Syneditkeycmds__103, static_cast<WORD>(int(L'1')), Syneditkeycmds__104);
+	AddKey(static_cast<TSynEditorCommand>(ecUnfoldLevel2), static_cast<WORD>(int(L'K')), Syneditkeycmds__105, static_cast<WORD>(int(L'2')), Syneditkeycmds__106);
+	AddKey(static_cast<TSynEditorCommand>(ecUnfoldLevel3), static_cast<WORD>(int(L'K')), Syneditkeycmds__107, static_cast<WORD>(int(L'3')), Syneditkeycmds__108);
 //-- CodeFolding
 }
 
@@ -788,7 +789,7 @@ void __fastcall TSynEditKeyStrokes::SaveToStream(TStream* AStream)
 	int Num = 0;
 	int stop = 0;
 	Num = Count;
-	AStream->Write(&Num, (NativeInt) sizeof(Num));
+	AStream->Write(&Num, static_cast<NativeInt>(sizeof(Num)));
 	for(stop = Num - 1, i = 0; i <= stop; i++)
 	{
 		Items[i]->SaveToStream(AStream);
@@ -894,13 +895,13 @@ TSynEditorCommand __fastcall ConvertCodeStringToCommand(String AString)
 	TSynEditorCommand result = 0;
 	int I = 0;
 	int stop = 0;
-	result = (TSynEditorCommand) ecNone;
+	result = static_cast<TSynEditorCommand>(ecNone);
 	AString = UpperCase(AString);
 	for(stop = 112 /*# High(EditorCommandStrs) */, I = 0 /*# Low(EditorCommandStrs) */; I <= stop; I++)
 	{
 		if(UpperCase(EditorCommandStrs[I].Name) == AString)
 		{
-			result = (TSynEditorCommand) EditorCommandStrs[I].Value;
+			result = static_cast<TSynEditorCommand>(EditorCommandStrs[I].Value);
 			break;
 		}
 	}
@@ -921,5 +922,5 @@ TSynEditorCommand __fastcall ConvertCodeStringToCommand(String AString)
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynEditKeyCmds
+}  // namespace Syneditkeycmds
 

@@ -7,6 +7,7 @@
 #include "SynEditMiscProcs.h"
 #include "SynEditStrConst.h"
 #include <System.SysUtils.hpp>
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -39,7 +40,7 @@ int gCurrentCommand = ecPluginBase;
 TSynEditorCommand __fastcall NewPluginCommand()
 {
 	TSynEditorCommand result = 0;
-	result = (TSynEditorCommand) gCurrentCommand;
+	result = static_cast<TSynEditorCommand>(gCurrentCommand);
 	++gCurrentCommand;
 	return result;
 }
@@ -47,7 +48,7 @@ TSynEditorCommand __fastcall NewPluginCommand()
 void __fastcall ReleasePluginCommand(TSynEditorCommand aCmd)
 {
 	if(aCmd == Pred(gCurrentCommand))
-		gCurrentCommand = (int) aCmd;
+		gCurrentCommand = static_cast<int>(aCmd);
 }
 
 /* TAbstractSynPlugin */
@@ -179,7 +180,7 @@ void __fastcall TAbstractSynHookerPlugin::HookEditor(TCustomSynEdit* aEditor, TS
 	if(Syneditplugins__2 * ComponentState == Syneditplugins__3)
 	{
 		if(((TSynEdit*) aEditor)->Keystrokes->FindShortcut(aNewShortCut) >= 0)
-			throw new ESynKeyError(SYNS_EDuplicateShortcut);
+			throw ESynKeyError(SYNS_EDuplicateShortcut);
 		else
 			return;
 	}
@@ -265,7 +266,7 @@ __fastcall TAbstractSynSingleHookPlugin::TAbstractSynSingleHookPlugin(TComponent
 TShortCut __fastcall TAbstractSynSingleHookPlugin::DefaultShortCut()
 {
 	TShortCut result = (TShortCut) 0;
-	result = (TShortCut) 0;
+	result = static_cast<TShortCut>(0);
 	return result;
 }
 
@@ -280,7 +281,7 @@ __fastcall TAbstractSynSingleHookPlugin::~TAbstractSynSingleHookPlugin()
 void __fastcall TAbstractSynSingleHookPlugin::DoAddEditor(TCustomSynEdit* aEditor)
 {
 	if(ShortCut != 0)
-		HookEditor(aEditor, CommandID, (TShortCut) 0, ShortCut);
+		HookEditor(aEditor, CommandID, static_cast<TShortCut>(0), ShortCut);
 }
 
 void __fastcall TAbstractSynSingleHookPlugin::Execute(TCustomSynEdit* aEditor)
@@ -494,5 +495,5 @@ void __fastcall TAbstractSynCompletion::AddEditor(TCustomSynEdit* aEditor)
 }
 
 
-}  // namespace SynEditPlugins
+}  // namespace Syneditplugins
 

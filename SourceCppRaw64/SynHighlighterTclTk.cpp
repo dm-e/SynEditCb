@@ -11,7 +11,6 @@ using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
 using namespace System;
-using namespace System::Types;
 
 namespace Synhighlightertcltk
 {
@@ -1002,5 +1001,5 @@ void __fastcall TSynTclTkSyn::SymbolProc()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterTclTk
+}  // namespace Synhighlightertcltk
 

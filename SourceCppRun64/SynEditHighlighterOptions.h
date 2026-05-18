@@ -94,7 +94,7 @@ public:
 };
 
 
-}  // namespace SynEditHighlighterOptions
+}  // namespace Synedithighlighteroptions
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synedithighlighteroptions;

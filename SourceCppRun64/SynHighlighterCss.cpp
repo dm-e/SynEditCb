@@ -457,19 +457,19 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 	AddAttribute(fPropertyAttri);
 	fSelectorAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fSelectorAttri->Style = Synhighlightercss__3;
-	fSelectorAttri->Foreground = (TColor) 0x00FF0080;
+	fSelectorAttri->Foreground = static_cast<TColor>(0x00FF0080);
 	AddAttribute(fSelectorAttri);
 	fAttributeAttri = new TSynHighlighterAttributes(SYNS_AttrAttribute, SYNS_FriendlyAttrAttribute);
 	fAttributeAttri->Style = Synhighlightercss__4;
-	fAttributeAttri->Foreground = (TColor) 0x00FF0080;
+	fAttributeAttri->Foreground = static_cast<TColor>(0x00FF0080);
 	AddAttribute(fAttributeAttri);
 	fAtRuleAttri = new TSynHighlighterAttributes(SYNS_AttrAtRules, SYNS_FriendlyAttrAttribute);
 	fAtRuleAttri->Style = Synhighlightercss__5;
-	fAtRuleAttri->Foreground = (TColor) 0x00808000;
+	fAtRuleAttri->Foreground = static_cast<TColor>(0x00808000);
 	AddAttribute(fAtRuleAttri);
 	fUndefPropertyAttri = new TSynHighlighterAttributes(SYNS_AttrUndefinedProperty, SYNS_FriendlyAttrUndefinedProperty);
 	fUndefPropertyAttri->Style = Synhighlightercss__6;
-	fUndefPropertyAttri->Foreground = (TColor) 0x00FF0080;
+	fUndefPropertyAttri->Foreground = static_cast<TColor>(0x00FF0080);
 	AddAttribute(fUndefPropertyAttri);
 	fImportantPropertyAttri = new TSynHighlighterAttributes(L"Important", L"Important Marker");
 	fImportantPropertyAttri->Style = Synhighlightercss__7;
@@ -488,7 +488,7 @@ __fastcall TSynCssSyn::TSynCssSyn(TComponent* AOwner)
 	fTextAttri = new TSynHighlighterAttributes(SYNS_AttrText, SYNS_FriendlyAttrText);
 	AddAttribute(fTextAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = (TColor) 0x00FF8000;
+	fValueAttri->Foreground = static_cast<TColor>(0x00FF8000);
 	AddAttribute(fValueAttri);
 	SetAttributesOnChange(DefHighlightChange);
 
@@ -1173,7 +1173,7 @@ String __fastcall TSynCssSyn::GetSampleSource()
 	String result;
 	result = L"/* Syntax Highlighting */\x0d\x0a"
 	           L"body { font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 8pt }\x0d\x0a"
-	           L"H1 { font-size: 18pt; color: \u00099; made-up-property: 1 }";
+	           L"H1 { font-size: 18pt; color: #000099; made-up-property: 1 }";
 	return result;
 } /* GetSampleSource */
 
@@ -1237,5 +1237,5 @@ String __fastcall TSynCssSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterCss
+}  // namespace Synhighlightercss
 

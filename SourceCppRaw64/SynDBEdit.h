@@ -133,7 +133,7 @@ protected:
 	BEGIN_MESSAGE_MAP
 	  VCL_MESSAGE_HANDLER(CM_ENTER, TCMEnter, CMEnter)
 	  VCL_MESSAGE_HANDLER(CM_EXIT, TCMExit, CMExit)
-	  VCL_MESSAGE_HANDLER(CM_GETDATALINK, TMessage, CMGetDataLink)
+	  VCL_MESSAGE_HANDLER(CM_GETDATALINK, Winapi::Messages::TMessage, CMGetDataLink)
 	END_MESSAGE_MAP(Synedit::TCustomSynEdit)
 public:
 	__fastcall TCustomDBSynEdit(HWND ParentWindow);
@@ -234,7 +234,7 @@ public:
 };
 
 
-}  // namespace SynDBEdit
+}  // namespace Syndbedit
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syndbedit;

@@ -1,12 +1,13 @@
-#include <vcl.h>
+                                                                                                  #include <vcl.h>
 #pragma hdrstop
 
 #include "SynEditDragDrop.h"
+#include "d2c_graphics.h"
+#include "d2c_refconvert.h"
 
 using namespace std;
 using namespace d2c_system;
 using namespace System;
-using namespace Winapi::Activex;
 
 namespace Syneditdragdrop
 {
@@ -23,183 +24,178 @@ __fastcall TSynDragSource::TSynDragSource() {}
 
 int __fastcall StandardEffect(TShiftState Keys)
 {
-	int result = 0;
-	result = deMove;
-	if(Keys.Contains(ssCtrl))
-	{
-		result = deCopy;
-	}
-	return result;
+    int result = 0;
+    result = deMove;
+    if (Keys.Contains(ssCtrl))
+    {
+        result = deCopy;
+    }
+    return result;
 }
 
 /* TDropTarget */
 
-HRESULT __stdcall TSynDropTarget::DragEnter(IDataObject* dataObj, unsigned long grfKeyState, _POINTL Pt, unsigned long* dwEffect)
+HRESULT STDMETHODCALLTYPE TSynDropTarget::DragEnter(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect)
 {
-	HRESULT result = 0;
-	result = S_OK;
-	try
+	if (dwEffect == nullptr)
+		return E_POINTER;
+    HRESULT result = 0;
+    result = S_OK;
+    try
 	{
-		DragEnter(dataObj, KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
+		DragEnter(DataObj, KeysToShiftState(static_cast<WORD>(grfKeyState)), POINTLToTPoint(pt), d2c_inout_ref_conv<int>(dwEffect), result);
 	}
-	catch(...)
-	{
-		result = E_UNEXPECTED;
-	}
-	return result;
+    catch (...)
+    {
+        result = E_UNEXPECTED;
+    }
+    return result;
 }
 
-HRESULT __stdcall TSynDropTarget::DragLeave()
+HRESULT STDMETHODCALLTYPE TSynDropTarget::DragLeave()
 {
-	HRESULT result = 0;
-	result = S_OK;
-	try
-	{
-		DragLeave(result);
-	}
-	catch(...)
-	{
-		result = E_UNEXPECTED;
-	}
-	return result;
+    HRESULT result = 0;
+    result = S_OK;
+    try
+    {
+        DragLeave(result);
+    }
+    catch (...)
+    {
+        result = E_UNEXPECTED;
+    }
+    return result;
 }
 
-HRESULT __stdcall TSynDropTarget::DragOver(unsigned long grfKeyState, POINTL Pt, unsigned long* dwEffect)
+HRESULT STDMETHODCALLTYPE TSynDropTarget::DragOver(DWORD grfKeyState, POINTL pt, DWORD* dwEffect)
 {
-	HRESULT result = 0;
-	result = S_OK;
-	try
+    if (dwEffect == nullptr)
+        return E_POINTER;
+    HRESULT result = 0;
+    result = S_OK;
+    try
 	{
-		DragOver(KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
-	}
-	catch(...)
-	{
-		result = E_UNEXPECTED;
-	}
-	return result;
+		DragOver(KeysToShiftState(static_cast<WORD>(grfKeyState)), POINTLToTPoint(pt), d2c_inout_ref_conv<int>(dwEffect), result);
+    }
+    catch (...)
+    {
+        result = E_UNEXPECTED;
+    }
+    return result;
 }
 
-HRESULT __stdcall TSynDropTarget::Drop(IDataObject* dataObj, unsigned long grfKeyState, _POINTL Pt, unsigned long* dwEffect)
+HRESULT STDMETHODCALLTYPE TSynDropTarget::Drop(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect)
 {
-	HRESULT result = 0;
-	result = S_OK;
-	try
+    if (dwEffect == nullptr)
+        return E_POINTER;
+    HRESULT result = 0;
+    result = S_OK;
+    try
 	{
-		Drop(dataObj, KeysToShiftState((WORD) grfKeyState), Pt, dwEffect, result);
-	}
-	catch(...)
-	{
-		result = E_UNEXPECTED;
-	}
-	return result;
+		Drop(DataObj, KeysToShiftState(static_cast<WORD>(grfKeyState)), POINTLToTPoint(pt), d2c_inout_ref_conv<int>(dwEffect), result);
+    }
+    catch (...)
+    {
+        result = E_UNEXPECTED;
+    }
+    return result;
 }
 
-void __fastcall TSynDropTarget::DragEnter(IDataObject* dataObject, TShiftState State, _POINTL Pt, unsigned long* Effect, HRESULT& result)
+void __fastcall TSynDropTarget::DragEnter(const _di_IDataObject& DataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
-	*Effect = StandardEffect(State);
-	if(ASSIGNED(FOnDragEnter))
-	{
-		TPoint pt = *(TPoint*) &Pt;
-		int iEffect = StandardEffect(State);
-		FOnDragEnter(this, dataObject, State, pt, iEffect, result);
-	}
-	if(*Effect == deNone)
-		FDataObject = nullptr;
-	else
-		FDataObject = dataObject;
-}
+    TPoint Pt = cPt;
+    Effect = StandardEffect(State);
+    if (Assigned(FOnDragEnter))
+        FOnDragEnter(this, DataObject, State, Pt, Effect, Result);
+    if (Effect == deNone)
+        FDataObject = nullptr;
+    else
+        FDataObject = DataObject;
+    }
 
-void __fastcall TSynDropTarget::DragLeave(HRESULT& result)
+void __fastcall TSynDropTarget::DragLeave(HRESULT& Result)
 {
 	if(ASSIGNED(FDataObject))
-		try
-		{
-			if(ASSIGNED(FOnDragLeave))
-				FOnDragLeave(this, result);
-		}
-		__finally
-		{
-			FDataObject = nullptr;
-		}
-}
+        try
+        {
+            if (Assigned(FOnDragLeave))
+                FOnDragLeave(this, Result);
+            }
+        __finally
+        {
+            FDataObject = nullptr;
+        }
+    }
 
-void __fastcall TSynDropTarget::DragOver(TShiftState State, POINTL Pt, unsigned long* Effect, HRESULT& result)
+void __fastcall TSynDropTarget::DragOver(TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
-	if(FDataObject == nullptr)
-	{
-		*Effect = deNone;
-		return;
-	}
-	*Effect = StandardEffect(State);
-	if(ASSIGNED(FOnDragOver))
-	{
-		TPoint pt = *(TPoint*) &Pt;
-		int iEffect = deNone;
-		FOnDragOver(this, FDataObject, State, pt, iEffect, result);
-	}
-}
+    TPoint Pt = cPt;
+    if (FDataObject == nullptr)
+    {
+        Effect = deNone;
+        return;
+    }
+    Effect = StandardEffect(State);
+    if (Assigned(FOnDragOver))
+        FOnDragOver(this, FDataObject, State, Pt, Effect, Result);
+    }
 
-void __fastcall TSynDropTarget::Drop(IDataObject* dataObject, TShiftState State, _POINTL Pt, unsigned long* Effect, HRESULT& result)
+void __fastcall TSynDropTarget::Drop(const _di_IDataObject& DataObject, TShiftState State, const TPoint& cPt, int& Effect, HRESULT& Result)
 {
-	if(FDataObject == nullptr)
-	{
-		*Effect = deNone;
-		return;
-	}
-	*Effect = StandardEffect(State);
-	try
-	{
-		if(ASSIGNED(FOnDrop))
-		{
-			TPoint pt = *(TPoint*) &Pt;
-			int iEffect = deNone;
-			FOnDrop(this, dataObject, State, pt, iEffect, result);
-		}
-	}
-	__finally
-	{
-		FDataObject = nullptr;
-	}
+    TPoint Pt = cPt;
+    if (FDataObject == nullptr)
+    {
+        Effect = deNone;
+        return;
+    }
+    Effect = StandardEffect(State);
+    try
+    {
+        if (Assigned(FOnDrop))
+            FOnDrop(this, DataObject, State, Pt, Effect, Result);
+        }
+    __finally
+    {
+        FDataObject = nullptr;
+    }
 }
 
 __fastcall TSynDropTarget::~TSynDropTarget()
 {
-	FDataObject = nullptr;
-	// inherited;
+    FDataObject = nullptr;
+    // inherited;
 }
-
 
 //===  DRAG SOURCE CLASS ===================================================
 
-HRESULT __stdcall TSynDragSource::QueryContinueDrag(int fEscapePressed, unsigned long grfKeyState)
+HRESULT STDMETHODCALLTYPE TSynDragSource::QueryContinueDrag(BOOL fEscapePressed, DWORD grfKeyState)
 {
-	HRESULT result = 0;
+    HRESULT result = 0;
 	if(fEscapePressed)  // cancel the drop
-		result = DRAGDROP_S_CANCEL;
-	else
-	{
+        result = DRAGDROP_S_CANCEL;
+    else
+    {
 		if((grfKeyState & MK_LBUTTON) == 0)   // drop has occurred
-			result = DRAGDROP_S_DROP;
-		else
-			result = S_OK;
-	}
-	return result;
+            result = DRAGDROP_S_DROP;
+        else
+            result = S_OK;
+        }
+    return result;
 }
 
-HRESULT __stdcall TSynDragSource::GiveFeedback(unsigned long dwEffect)
+HRESULT STDMETHODCALLTYPE TSynDragSource::GiveFeedback(DWORD dwEffect)
 {
-	HRESULT result = 0;
-	result = DRAGDROP_S_USEDEFAULTCURSORS;
-	return result;
+    HRESULT result = 0;
+    result = DRAGDROP_S_USEDEFAULTCURSORS;
+    return result;
 }
 
 __fastcall TSynDragSource::~TSynDragSource()
 {
 
-  // for debugging purposes
-	// inherited;
+    // for debugging purposes
+    // inherited;
 }
-
 
 
 }  // namespace Syneditdragdrop

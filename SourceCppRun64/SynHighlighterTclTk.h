@@ -249,7 +249,7 @@ public:
 void SynHighlighterTclTk_initialization();
 
 
-}  // namespace SynHighlighterTclTk
+}  // namespace Synhighlightertcltk
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightertcltk;

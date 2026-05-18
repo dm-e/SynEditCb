@@ -8,10 +8,10 @@
 namespace Synspellcheckmetaphone
 {
 
-PWideChar __stdcall metaphone(PWideChar a, int lg);
+System::PWideChar __stdcall metaphone(System::PWideChar a, int lg);
 
 
-}  // namespace SynSpellCheckMetaphone
+}  // namespace Synspellcheckmetaphone
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synspellcheckmetaphone;

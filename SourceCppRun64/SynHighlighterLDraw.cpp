@@ -34,7 +34,7 @@ unsigned int __fastcall TSynLDRSyn::HashKey(PWideChar Str)
 		result = result + int((*Str));
 		++Str;
 	}
-	result = (unsigned int) (result % 2);
+	result = static_cast<unsigned int>(result % 2);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -126,10 +126,10 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 	fCommentAttri->Foreground = (TColor) clBlue;
 	AddAttribute(fCommentAttri);
 	fFirstTriAttri = new TSynHighlighterAttributes(SYNS_AttrFirstTri, SYNS_FriendlyAttrFirstTri);
-	fFirstTriAttri->Foreground = (TColor) RGB(206, 111, 73);
+	fFirstTriAttri->Foreground = static_cast<TColor>(RGB(206, 111, 73));
 	AddAttribute(fFirstTriAttri);
 	fFourthTriAttri = new TSynHighlighterAttributes(SYNS_AttrFourthTri, SYNS_FriendlyAttrFourthTri);
-	fFourthTriAttri->Foreground = (TColor) RGB(54, 99, 12);
+	fFourthTriAttri->Foreground = static_cast<TColor>(RGB(54, 99, 12));
 	AddAttribute(fFourthTriAttri);
 	fIdentifierAttri = new TSynHighlighterAttributes(SYNS_AttrIdentifier, SYNS_FriendlyAttrIdentifier);
 	AddAttribute(fIdentifierAttri);
@@ -146,10 +146,10 @@ __fastcall TSynLDRSyn::TSynLDRSyn(TComponent* AOwner)
 	fQuadAttri->Foreground = (TColor) clRed;
 	AddAttribute(fQuadAttri);
 	fSecondTriAttri = new TSynHighlighterAttributes(SYNS_AttrSecondTri, SYNS_FriendlyAttrSecondTri);
-	fSecondTriAttri->Foreground = (TColor) RGB(54, 99, 12);
+	fSecondTriAttri->Foreground = static_cast<TColor>(RGB(54, 99, 12));
 	AddAttribute(fSecondTriAttri);
 	fThirdTriAttri = new TSynHighlighterAttributes(SYNS_AttrThirdTri, SYNS_FriendlyAttrThirdTri);
-	fThirdTriAttri->Foreground = (TColor) RGB(206, 111, 73);
+	fThirdTriAttri->Foreground = static_cast<TColor>(RGB(206, 111, 73));
 	AddAttribute(fThirdTriAttri);
 	fTriangleAttri = new TSynHighlighterAttributes(SYNS_AttrTriangle, SYNS_FriendlyAttrTriangle);
 	fTriangleAttri->Foreground = (TColor) clBlack;
@@ -512,5 +512,5 @@ String __fastcall TSynLDRSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterLDraw
+}  // namespace Synhighlighterldraw
 

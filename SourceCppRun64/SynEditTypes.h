@@ -193,7 +193,9 @@ String __fastcall LineBreakFromFileFormat(TSynEditFileFormat FileFormat);
   // aRow parameter of GetRowLength() is 1-based.
 
     // conversion methods
-__interface ISynEditBufferPlugin
+
+__interface INTERFACE_UUID("{65F3874E-9858-4069-B091-72DEB3B0BA92}")
+ISynEditBufferPlugin: public System::IInterface // ancestor added by Delphi2Cpp
 {
 	virtual TDisplayCoord __fastcall BufferToDisplayPos(const TBufferCoord& aPos) = 0;
 	virtual TBufferCoord __fastcall DisplayToBufferPos(const TDisplayCoord& aPos) = 0;
@@ -208,6 +210,8 @@ __interface ISynEditBufferPlugin
     // pretty clear, heh?
 	virtual void __fastcall Reset() = 0;
 };
+
+typedef DelphiInterface<ISynEditBufferPlugin> _di_ISynEditBufferPlugin;
 
 /* ************************* For Undo Redo *********************************/
 
@@ -246,7 +250,9 @@ public:
 };
 
   /* Handles undo/redo and manages Modified status */
-__interface ISynEditUndo
+
+__interface INTERFACE_UUID("{9A552F6C-26AF-470A-80D1-E4A514371342}")
+ISynEditUndo: public System::IInterface // ancestor added by Delphi2Cpp
 {
 	virtual bool __fastcall GetModified() = 0;
 	virtual int __fastcall GetMaxUndoActions() = 0;
@@ -257,7 +263,7 @@ __interface ISynEditUndo
 	virtual void __fastcall SetModified(bool Value) = 0;
 	virtual void __fastcall SetMaxUndoActions(int Value) = 0;
 	virtual void __fastcall SetGroupUndo(bool Value) = 0;
-	virtual void __fastcall SetOnModifiedChanged(const TNotifyEvent Event) = 0;
+	virtual void __fastcall SetOnModifiedChanged(const TNotifyEvent& Event) = 0;
 	virtual void __fastcall SetCommandProcessed(TSynEditorCommand Command) = 0;
     /*  Begin/EndBlock pairs group undo actions together and also
        store/restore editor caret and selection
@@ -291,8 +297,10 @@ __interface ISynEditUndo
 	__property TNotifyEvent OnModifiedChanged = { read = GetOnModifiedChanged, write = SetOnModifiedChanged };
 };
 
+typedef DelphiInterface<ISynEditUndo> _di_ISynEditUndo;
 
-}  // namespace SynEditTypes
+
+}  // namespace Synedittypes
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synedittypes;

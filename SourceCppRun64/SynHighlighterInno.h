@@ -168,8 +168,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
-	int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall SymbolProc();
 	void __fastcall CRProc();
 	void __fastcall IdentProc();
@@ -217,7 +217,7 @@ public:
 void SynHighlighterInno_initialization();
 
 
-}  // namespace SynHighlighterInno
+}  // namespace Synhighlighterinno
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterinno;

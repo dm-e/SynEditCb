@@ -270,7 +270,7 @@ public:
 };
 
 
-}  // namespace SynEditPrint
+}  // namespace Syneditprint
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditprint;

@@ -12,6 +12,7 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.Forms.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include "d2c_sysinterface.h"
 
 namespace Syneditdragdrop
 {
@@ -53,30 +54,30 @@ const int deLink = DROPEFFECT_LINK;
 const System::LongWord deScroll = DROPEFFECT_SCROLL;
 
 // Provides a translation of a IDropTarget interface into Delphi
-typedef void __fastcall (__closure *TOnDragEvent) (TObject*, IDataObject*, TShiftState, const TPoint&, int&, HRESULT&);
+typedef void __fastcall (__closure *TOnDragEvent) (TObject*, const _di_IDataObject&, TShiftState, const TPoint&, int&, HRESULT&);
 typedef void __fastcall (__closure *TOnDragLeaveEvent) (TObject*, HRESULT&);
 
-class TSynDropTarget : public System::TCppInterfacedObject<Winapi::Activex::IDropTarget>
+class TSynDropTarget : public System::TCppInterfacedObject<IDropTarget>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
-	typedef System::TCppInterfacedObject<Winapi::Activex::IDropTarget> inherited;
+	typedef System::TCppInterfacedObject<IDropTarget> inherited;
 private:
-	IDataObject* FDataObject;
+	_di_IDataObject FDataObject;
 	TOnDragEvent FOnDragEnter;
 	TOnDragEvent FOnDragOver;
 	TOnDragLeaveEvent FOnDragLeave;
 	TOnDragEvent FOnDrop;
 // IDropTarget
-	HRESULT __stdcall DragEnter(IDataObject* const DataObj, int grfKeyState, const TPoint& pt, int& dwEffect);
-	HRESULT __stdcall DragOver(int grfKeyState, const TPoint& pt, int& dwEffect);
-	HRESULT __stdcall DragLeave();
-	HRESULT __stdcall Drop(IDataObject* const DataObj, int grfKeyState, const TPoint& pt, int& dwEffect);
+	HRESULT STDMETHODCALLTYPE DragEnter(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
+	HRESULT STDMETHODCALLTYPE DragOver(DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
+	HRESULT STDMETHODCALLTYPE DragLeave();
+	HRESULT STDMETHODCALLTYPE Drop(IDataObject* DataObj, DWORD grfKeyState, POINTL pt, DWORD* dwEffect);
 protected:
-	void __fastcall DragEnter(IDataObject* DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+	void __fastcall DragEnter(const _di_IDataObject& DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
 	void __fastcall DragOver(TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
 	void __fastcall DragLeave(HRESULT& Result);
-	void __fastcall Drop(IDataObject* DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
+	void __fastcall Drop(const _di_IDataObject& DataObject, TShiftState State, const TPoint& Pt, int& Effect, HRESULT& Result);
 public:
 	virtual __fastcall ~TSynDropTarget();
 	__property TOnDragEvent OnDragEnter = { read = FOnDragEnter, write = FOnDragEnter };
@@ -86,25 +87,25 @@ public:
 	__fastcall TSynDropTarget();
 };
 
-class TSynDragSource : public System::TCppInterfacedObject<Winapi::Activex::IDropSource>
+class TSynDragSource : public System::TCppInterfacedObject<IDropSource>
 {
 	#include "SynEditDragDrop_friends.inc"
 public:
-	typedef System::TCppInterfacedObject<Winapi::Activex::IDropSource> inherited;
+	typedef System::TCppInterfacedObject<IDropSource> inherited;
 private:
   // IDropSource
     // Called routinely by Windows to check that drag operations are to continue. See the
    // implementation below of QueryContinueDrag method for the default operation.
-	HRESULT __stdcall QueryContinueDrag(BOOL fEscapePressed, int grfKeyState);
+	HRESULT STDMETHODCALLTYPE QueryContinueDrag(BOOL fEscapePressed, DWORD grfKeyState);
     // Called routinely to modify the displayed cursor.
-	HRESULT __stdcall GiveFeedback(int dwEffect);
+	HRESULT STDMETHODCALLTYPE GiveFeedback(DWORD dwEffect);
 public:
 	virtual __fastcall ~TSynDragSource();
 	__fastcall TSynDragSource();
 };
 
 
-}  // namespace SynEditDragDrop
+}  // namespace Syneditdragdrop
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditdragdrop;

@@ -2,19 +2,21 @@
 #define d2c_sysmathH
 
 /*
-This is a shortened version of the Delphi2CB utility file of the same name.
-The file is required in order to be able to compile the code of the SynEdit
-components, which were translated to C++ with Delphi2CB:
+    Copyright (C) 2026 Dr. Detlef Meyer-Eltz
+    ----------------------------------------
 
-	https://www.texttransformer.com/Delphi2CB_en.html
+    This file may be used without restriction in any
+    project generated with Delphi2Cpp or Delphi2CB.
 
-The translated code and this file are subject to the same license terms
-as the original SynEdit code. These terms are precisely specified in
+    It is a reduced version of the original Delphi2CB
+    utility file with the same name.
 
-	Source\Source\SynEditJedi.inc.
+    This file is required to compile the SynEdit
+    components translated from Delphi to C++ using
+    Delphi2CB:
 
+        https://www.texttransformer.com/Delphi2CB_en.html
 */
-
 
 
 #include "d2c_systypes.h"

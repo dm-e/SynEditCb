@@ -45,10 +45,10 @@ unsigned int __fastcall TSynCSSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 52 + int((*Str)) * 456);
+		result = static_cast<unsigned int>(result * 52 + int((*Str)) * 456);
 		++Str;
 	}
-	result = (unsigned int) (result % 211);
+	result = static_cast<unsigned int>(result % 211);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1498,19 +1498,19 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
 	for(stop = ToLine, Line = FromLine; Line <= stop; Line++)
 	{
     // Deal first with Multiline comments (Fold Type 2)
-		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) Line) == rsAnsiC)
+		if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line)) == rsAnsiC)
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) != rsAnsiC)
-				FoldRanges->StartFoldRange((int) (Line + 1), 2);
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1)) != rsAnsiC)
+				FoldRanges->StartFoldRange(static_cast<int>(Line + 1), 2);
 			else
-				FoldRanges->NoFoldInfo((int) (Line + 1));
+				FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 		else
 		{
-			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, (int) (Line - 1)) == rsAnsiC)
+			if((TRangeState)(NativeInt)GetLineRange(LinesToScan, static_cast<int>(Line - 1)) == rsAnsiC)
 			{
-				FoldRanges->StopFoldRange((int) (Line + 1), 2);
+				FoldRanges->StopFoldRange(static_cast<int>(Line + 1), 2);
 				continue;
 			}
 		}
@@ -1519,17 +1519,17 @@ void __fastcall TSynCSSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TString
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find Fold regions
-		if(FoldRegion((int) Line))
+		if(FoldRegion(static_cast<int>(Line)))
 			continue;
 
     // Find an braces on this line  (Fold Type 1)
-		if(!FindBraces((int) Line))
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+		if(!FindBraces(static_cast<int>(Line)))
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 	} // while Line
 }
 //-- CodeFolding
@@ -2286,5 +2286,5 @@ String __fastcall TSynCSSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterCS
+}  // namespace Synhighlightercs
 

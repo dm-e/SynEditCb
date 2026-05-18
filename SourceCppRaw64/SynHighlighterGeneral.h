@@ -258,7 +258,7 @@ public:
 void SynHighlighterGeneral_initialization();
 
 
-}  // namespace SynHighlighterGeneral
+}  // namespace Synhighlightergeneral
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightergeneral;

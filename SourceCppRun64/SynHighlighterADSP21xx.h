@@ -354,8 +354,8 @@ private:
 	TtkTokenKind __fastcall FuncUu(int Index);
 	TtkTokenKind __fastcall FuncVar(int Index);
 	TtkTokenKind __fastcall FuncXor(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall PascalCommentProc();
 	void __fastcall BraceCloseProc();
@@ -410,7 +410,7 @@ public:
 void SynHighlighterADSP21xx_initialization();
 
 
-}  // namespace SynHighlighterADSP21xx
+}  // namespace Synhighlighteradsp21xx
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighteradsp21xx;

@@ -110,16 +110,16 @@ void __fastcall StrSwapByteOrder(PWideChar Str)
 	}
 }
 
-extern "C" __declspec(dllimport) /*# 'gdi32.dll' Name 'TranslateCharsetInfo'*/ BOOL __stdcall TranslateCharsetInfoEx(PDWORD lpSrc, TCharsetInfo& lpCs, DWORD dwFlags);
+//#extern "C" __declspec(dllimport) /*# 'gdi32.dll' Name 'TranslateCharsetInfo'*/ BOOL __stdcall TranslateCharsetInfoEx(PDWORD lpSrc, Winapi::Windows::TCharsetInfo& lpCs, DWORD dwFlags);
 
 TFontCharSet __fastcall CharSetFromLocale(LCID Language)
 {
 	TFontCharSet result = (TFontCharSet) 0;
 	unsigned int CP = 0;
-	TCharsetInfo CSI = {};
-	CP = (unsigned int) CodePageFromLocale(Language);
-	TranslateCharsetInfo(((unsigned long*) ((void*) CP)), &CSI, (DWORD) TCI_SRCCODEPAGE);
-	result = (TFontCharSet) CSI.ciCharset;
+	Winapi::Windows::TCharsetInfo CSI = {};
+	CP = static_cast<unsigned int>(CodePageFromLocale(Language));
+	TranslateCharsetInfo(((unsigned long*) ((void*) CP)), &CSI, static_cast<DWORD>(TCI_SRCCODEPAGE));
+	result = static_cast<TFontCharSet>(CSI.ciCharset);
 	return result;
 }
 
@@ -129,8 +129,8 @@ int __fastcall CodePageFromLocale(LCID Language)
 {
 	int result = 0;
 	Char Buf[7/*# range 0..6*/];
-	GetLocaleInfo(Language, (LCTYPE) LOCALE_IDEFAULTANSICODEPAGE, Buf, 6);
-	result = StrToIntDef(Buf, (int) GetACP());
+	GetLocaleInfo(Language, static_cast<LCTYPE>(LOCALE_IDEFAULTANSICODEPAGE), Buf, 6);
+	result = StrToIntDef(Buf, static_cast<int>(GetACP()));
 	return result;
 }
 
@@ -161,7 +161,7 @@ bool __fastcall IsAnsiOnly(const String WS)
 {
 	bool result = false;
 	BOOL UsedDefaultChar = false;
-	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, ustr2pwchar(WS), WS.Length(), nullptr, 0, nullptr, &UsedDefaultChar);
+	WideCharToMultiByte(static_cast<UINT>(DefaultSystemCodePage), 0, ustr2pwchar(WS), WS.Length(), nullptr, 0, nullptr, &UsedDefaultChar);
 	result = !UsedDefaultChar;
 	return result;
 }
@@ -171,7 +171,7 @@ bool __fastcall IsUTF8(const String FileName, bool& WithBOM, int BytesToCheck/*#
 	WithBOM = false; //# clear out parameter
 	bool result = false;
 	TStream* Stream = nullptr;
-	Stream = new TFileStream(FileName, (WORD) (fmOpenRead | fmShareDenyWrite));
+	Stream = new TFileStream(FileName, static_cast<WORD>(fmOpenRead | fmShareDenyWrite));
 	try
 	{
 		result = IsUTF8(Stream, WithBOM, BytesToCheck);
@@ -198,7 +198,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
-	BufferSize = (int) Min((__int64) BytesToCheck, Stream->Size - Stream->Position);
+	BufferSize = static_cast<int>(Min(static_cast<__int64>(BytesToCheck), Stream->Size - Stream->Position));
 
   // if no special characteristics are found it is not UTF-8
 	result = false;
@@ -207,7 +207,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
 	{
 		Buffer.Length = BufferSize;
 		Stream->Read(Buffer, 0, BufferSize);
-		Stream->Seek(-BufferSize, (WORD) soFromCurrent);
+		Stream->Seek(-BufferSize, static_cast<WORD>(soFromCurrent));
 
     /* first search for BOM */
 		Encoding = nullptr;
@@ -381,7 +381,7 @@ TEncoding* __fastcall GetEncoding(const String FileName, bool& WithBOM)
 	WithBOM = false; //# clear out parameter
 	TEncoding* result = nullptr;
 	TStream* Stream = nullptr;
-	Stream = new TFileStream(FileName, (WORD) (fmOpenRead | fmShareDenyWrite));
+	Stream = new TFileStream(FileName, static_cast<WORD>(fmOpenRead | fmShareDenyWrite));
 	try
 	{
 		result = GetEncoding(Stream, WithBOM);
@@ -418,7 +418,7 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
-	Size = (int) (Stream->Size - Stream->Position);
+	Size = static_cast<int>(Stream->Size - Stream->Position);
 
   // if no special characteristics are found it is probably ANSI
 	result = TEncoding::ANSI;
@@ -433,7 +433,7 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 	{
 		Buffer.Length = Preamble.Length;
 		Stream->Read(Buffer, 0, (int) Preamble.Length);
-		Stream->Seek((int) -Preamble.Length, (WORD) soFromCurrent);
+		Stream->Seek((int) -Preamble.Length, static_cast<WORD>(soFromCurrent));
 		if(TBytesEqual(Preamble, Buffer, (int) Preamble.Length))
 		{
 			WithBOM = true;
@@ -446,7 +446,7 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 	{
 		Buffer.Length = Preamble.Length;
 		Stream->Read(Buffer, 0, (int) Preamble.Length);
-		Stream->Seek((int) -Preamble.Length, (WORD) soFromCurrent);
+		Stream->Seek((int) -Preamble.Length, static_cast<WORD>(soFromCurrent));
 		if(TBytesEqual(Preamble, Buffer, (int) Preamble.Length))
 		{
 			WithBOM = true;
@@ -459,7 +459,7 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
 bool __fastcall ClipboardProvidesText()
 {
 	bool result = false;
-	result = IsClipboardFormatAvailable((UINT) CF_UNICODETEXT);
+	result = IsClipboardFormatAvailable(static_cast<UINT>(CF_UNICODETEXT));
 	return result;
 }
 
@@ -479,23 +479,24 @@ bool __fastcall IsWideCharMappableToAnsi(WideChar WC)
 {
 	bool result = false;
 	BOOL UsedDefaultChar = false;
-	WideCharToMultiByte((UINT) DefaultSystemCodePage, 0, (PWideChar)&WC, 1, nullptr, 0, nullptr, &UsedDefaultChar);
+	WideCharToMultiByte(static_cast<UINT>(DefaultSystemCodePage), 0, (PWideChar)&WC, 1, nullptr, 0, nullptr, &UsedDefaultChar);
 	result = !UsedDefaultChar;
 	return result;
 }
-static bool SynUnicode_Initialized = false;
 
-void SynUnicode_initialization()
-{
-	if(SynUnicode_Initialized)
-		return;
+	static bool SynUnicode_Initialized = false;
 	
-	SynUnicode_Initialized = true;
-	
-	Assert(Win32Platform() == VER_PLATFORM_WIN32_NT, L"Unsupported Windows version");
-}
+	void SynUnicode_initialization()
+	{
+		if(SynUnicode_Initialized)
+			return;
+		
+		SynUnicode_Initialized = true;
+		
+		Assert(Win32Platform() == VER_PLATFORM_WIN32_NT, L"Unsupported Windows version");
+	}
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynUnicode
+}  // namespace Synunicode
 

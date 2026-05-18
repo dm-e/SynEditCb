@@ -9,6 +9,7 @@
 #include "SynHighlighterURI.h"
 #include <System.UITypes.hpp>
 #include "d2c_convert.h"
+#include "d2c_sysinterface.h"
 #include "d2c_sysfile.h"
 #include <functional>
 
@@ -22,7 +23,6 @@ using namespace Synhighlighteruri;
 using namespace System;
 using namespace System::Classes;
 using namespace System::Sysutils;
-using namespace System::Types;
 using namespace System::Uitypes;
 using namespace System::Win::Registry;
 using namespace Vcl::Dialogs;
@@ -95,7 +95,7 @@ String __fastcall DupeString(const String AText, int ACount)
 		return result;
 	while(ACount > 0)
 	{
-		Move(ustr2address(AText), P, (size_t) (C * sizeof(WideChar)));
+		Move(ustr2address(AText), P, static_cast<size_t>(C * sizeof(WideChar)));
 		P += C;
 		--ACount;
 	}
@@ -306,7 +306,7 @@ void __fastcall TDrawAutoSpellCheckPlugin::AfterPaint(TCanvas* ACanvas, const TR
 		const signed char MW_POINTS[4/*# range 0..3*/] = {0, 1, 2, 1};
     // Corel Word Perfect style
 //  WP_POINTS: array[0..4] of ShortInt = (3, 2, 1, -1, -1);
-		const signed char WP_POINTS[4/*# range 0..3*/] = {2, 1, 0, (signed char) -1};
+		const signed char WP_POINTS[4/*# range 0..3*/] = {2, 1, 0, static_cast<signed char>(-1)};
 		TP.Y += LH - 3;
 		NewPoint = 0;
 		if(FUnderlineStyle == usMicrosoftWord)
@@ -444,7 +444,7 @@ __fastcall TSynSpellCheck::TSynSpellCheck(TComponent* AOwner)
 	FBusy = false;
 	FModified = false;
 	FHashAlgorithm = haDiff;
-	FHashLength = (THashLength) 4;
+	FHashLength = static_cast<THashLength>(4);
 	FMaxWordLength = 0;
 	FUnderlineStyle = usMicrosoftWord;
 	FUseUserDictionary = true;
@@ -576,10 +576,10 @@ String __fastcall TSynSpellCheck::GetWordFromASCIIWord(String sWord)
 		int stop = 0;
 		s1 = WideUpperCase(AsWord);
 		s2 = WideLowerCase(AsWord);
-		s3 = WideUpperCase(WORD);
-		s4 = WideLowerCase(WORD);
-		result = WORD;
-		for(stop = WORD.Length(), iX = 1; iX <= stop; iX++)
+		s3 = WideUpperCase(Word);
+		s4 = WideLowerCase(Word);
+		result = Word;
+		for(stop = Word.Length(), iX = 1; iX <= stop; iX++)
 		{
 			if(s1[iX] == AsWord[iX])
 				result[iX] = s3[iX];
@@ -706,14 +706,14 @@ void __fastcall TSynSpellCheck::AddDictWord(String Word)
 		int iI = 0;
 		result = 0;
     // If not any words at all starting with this letter, we find next word
-		if(FCacheArray[int(WORD[1])][1] == 0)
+		if(FCacheArray[int(Word[1])][1] == 0)
 		{
 			int stop = 0;
-			for(stop = 255, iI = int(WORD[1]) + 1; iI <= stop; iI++)
+			for(stop = 255, iI = int(Word[1]) + 1; iI <= stop; iI++)
 			{
 				if(FCacheArray[iI][1] != 0)
 				{
-					result = (int) FCacheArray[iI][0];
+					result = static_cast<int>(FCacheArray[iI][0]);
 					break;
 				}
 			}
@@ -721,9 +721,9 @@ void __fastcall TSynSpellCheck::AddDictWord(String Word)
 		else
 		{
 			int stop = 0;
-			for(stop = Succ(FCacheArray[int(WORD[1])][1]), iI = FCacheArray[int(WORD[1])][0]; iI <= stop; iI++)
+			for(stop = Succ(FCacheArray[int(Word[1])][1]), iI = FCacheArray[int(Word[1])][0]; iI <= stop; iI++)
 			{
-				if((*((PWordRec) FWordList->Items[iI])).Word > WORD)
+				if((*((PWordRec) FWordList->Items[iI])).Word > Word)
       // Words with this letter exists, we find right pos
 				{
 					result = iI;
@@ -733,22 +733,22 @@ void __fastcall TSynSpellCheck::AddDictWord(String Word)
 		}
 		return result;
 	};
-	if(Trim(WORD) == L"")
+	if(Trim(Word) == L"")
 		return;
-	WORD = WideLowerCase(WORD);
-	if(FindWord(WORD) == -1)
+	Word = WideLowerCase(Word);
+	if(FindWord(Word) == -1)
 	{
 		AWordItem = new TWordRec;
-		FMaxWordLength = Max(FMaxWordLength, WORD.Length());
-		(*AWordItem).Word = WORD;
+		FMaxWordLength = Max(FMaxWordLength, Word.Length());
+		(*AWordItem).Word = Word;
 		(*AWordItem).User = true;
-		(*AWordItem).Value = ElfHash(WORD);  
+		(*AWordItem).Value = ElfHash(Word);  
     // Quickest way is insert one word than add and than sort whole list
-		FWordList->Insert(GetInsertPos(AnsiLowerCase(WORD)), AWordItem);
+		FWordList->Insert(GetInsertPos(AnsiLowerCase(Word)), AWordItem);
 		CalculateCacheArray(); // Calculate cache array to speed up searches
 		FModified = true;
-		if(ASSIGNED(FOnAddWord))
-			FOnAddWord(this, WORD);
+		if(Assigned(FOnAddWord))
+			FOnAddWord(this, Word);
 	}
 }
 
@@ -813,8 +813,8 @@ int __fastcall TSynSpellCheck::AddEditor(TCustomSynEdit* AEditor)
 
 void __fastcall TSynSpellCheck::AddSkipWord(String Word)
 {
-	if(Trim(WORD) != L"")
-		FSkipList->Add(WideLowerCase(WORD));
+	if(Trim(Word) != L"")
+		FSkipList->Add(WideLowerCase(Word));
 }
 
 void __fastcall TSynSpellCheck::AddSkipWordList(TStringList* WordList)
@@ -848,21 +848,21 @@ void __fastcall TSynSpellCheck::CalculateCacheArray()
 		if(chOld != sNew[1])
 		{
 			chNew = sNew[1];
-			FCacheArray[int(chOld)][1] = (unsigned int) (iI - 1); // Last occurence of previous letter
-			FCacheArray[int(chNew)][0] = (unsigned int) iI; // First occurence of new letter
+			FCacheArray[int(chOld)][1] = static_cast<unsigned int>(iI - 1); // Last occurence of previous letter
+			FCacheArray[int(chNew)][0] = static_cast<unsigned int>(iI); // First occurence of new letter
 			chOld = chNew;
 		}
 	}
   // Last occurence of last letter
-	FCacheArray[int(chNew)][1] = (unsigned int) (FWordList->Count - 1);
+	FCacheArray[int(chNew)][1] = static_cast<unsigned int>(FWordList->Count - 1);
 }
 
 bool __fastcall TSynSpellCheck::CheckWord(String Word)
 {
 	bool result = false;
 	int iI = 0;
-	WORD = Trim(WORD);
-	if((WORD == L"") || (FOptions.Contains(sscoIgnoreSingleChars)) && (WORD.Length() == 1))
+	Word = Trim(Word);
+	if((Word == L"") || (FOptions.Contains(sscoIgnoreSingleChars)) && (Word.Length() == 1))
 	{
 		result = true;
 		return result;
@@ -871,9 +871,9 @@ bool __fastcall TSynSpellCheck::CheckWord(String Word)
 	if(FOptions.Contains(sscoIgnoreWordsWithNumbers))
 	{
 		int stop = 0;
-		for(stop = WORD.Length(), iI = 1; iI <= stop; iI++)
+		for(stop = Word.Length(), iI = 1; iI <= stop; iI++)
 		{
-			if(CharInSet(WORD[iI], Synspellcheck__4))
+			if(CharInSet(Word[iI], Synspellcheck__4))
 			{
 				result = true;
 				return result;
@@ -885,18 +885,18 @@ bool __fastcall TSynSpellCheck::CheckWord(String Word)
   // are used when dividing sections in ASCII text files.
   //////////////////////////////////////////////////////////////////////////////
 	}
-	if((TrimEx(WORD, L'-') == L"") || (TrimEx(WORD, L'\'') == L""))
+	if((TrimEx(Word, L'-') == L"") || (TrimEx(Word, L'\'') == L""))
 	{
 		result = true;
 		return result;
 	}
 	if(FOptions.Contains(sscoTrimApostrophes))
-		WORD = TrimEx(WORD, L'\''); // Trim apostrophes
+		Word = TrimEx(Word, L'\''); // Trim apostrophes
   //////////////////////////////////////////////////////////////////////////////
   // Main Searching Routine
   //////////////////////////////////////////////////////////////////////////////
-	result = (FindWord(AnsiLowerCase(WORD)) > -1);
-	if(!result && (FSkipList->IndexOf(AnsiLowerCase(WORD)) != -1))
+	result = (FindWord(AnsiLowerCase(Word)) > -1);
+	if(!result && (FSkipList->IndexOf(AnsiLowerCase(Word)) != -1))
 		result = true;
 	return result;
 }
@@ -931,13 +931,13 @@ void __fastcall TSynSpellCheck::CloseDictionary()
 	ClearDictWords();
 	FSkipList->Clear();
 	FOpenDictionary = false;
-	if(ASSIGNED(FOnDictClose))
+	if(Assigned(FOnDictClose))
 		FOnDictClose(this);
 }
 
 void __fastcall TSynSpellCheck::DeleteDictWord(String Word)
 {
-	delete ((PWordRec) FWordList->Items[FindWord(WideLowerCase(WORD))]);
+	delete ((PWordRec) FWordList->Items[FindWord(WideLowerCase(Word))]);
 }
 
 void __fastcall TSynSpellCheck::DeleteSkipWord(String Word)
@@ -945,21 +945,21 @@ void __fastcall TSynSpellCheck::DeleteSkipWord(String Word)
 	/*# with FSkipList do */
 	{
 		auto with0 = FSkipList;
-		with0->Delete(with0->IndexOf(WideLowerCase(WORD)));
+		with0->Delete(with0->IndexOf(WideLowerCase(Word)));
 	}
 }
 
 bool __fastcall TSynSpellCheck::IsDictWord(String Word)
 {
 	bool result = false;
-	result = (FindWord(WideLowerCase(WORD)) != -1);
+	result = (FindWord(WideLowerCase(Word)) != -1);
 	return result;
 }
 
 bool __fastcall TSynSpellCheck::IsSkipWord(String Word)
 {
 	bool result = false;
-	result = (FSkipList->IndexOf(WideLowerCase(WORD)) != -1);
+	result = (FSkipList->IndexOf(WideLowerCase(Word)) != -1);
 	return result;
 }
 
@@ -996,7 +996,7 @@ void __fastcall TSynSpellCheck::GetDictionaryList(TStringList*& tslList)
 	for(stop = tslList->Count - 1, iI = 0; iI <= stop; iI++)
 	{
 		tslList->Strings[iI] = WideUpperCase(String(tslList->Strings[iI][1]))
-	           + Copy(tslList->Strings[iI], 2, String(tslList->Strings[iI]).Length());
+	           + Copy(tslList->Strings[iI], 2, tslList->Strings[iI].Length());
 	}
 	tslList->Sort();
 }
@@ -1017,7 +1017,7 @@ int __fastcall TSynSpellCheck::GetSuggestions(String Word, TStringList* Suggesti
     ////////////////////////////////////////////////////////////////////////////
 	{
 		int stop = 0;
-		iLength = WORD.Length();
+		iLength = Word.Length();
 		for(stop = FWordList->Count - 1, iI = 0; iI <= stop; iI++)
 		{
 			if(((*(TWordRec*) FWordList->Items[iI]).Hash == sHash) && (Abs(iLength - (*(TWordRec*) FWordList->Items[iI]).Word.Length()) < 2))
@@ -1028,11 +1028,11 @@ int __fastcall TSynSpellCheck::GetSuggestions(String Word, TStringList* Suggesti
           // Maintain case for uppercase and capitalized words.
           //////////////////////////////////////////////////////////////////////
 				{
-					if(WideUpperCase(WORD) == WORD)
+					if(WideUpperCase(Word) == Word)
 						sWord = WideUpperCase(sWord);
 					else
 					{
-						if(WideUpperCase(String(sWord[1]))[1] == WORD[1])
+						if(WideUpperCase(String(sWord[1]))[1] == Word[1])
 							sWord[1] = WideUpperCase(String(sWord[1]))[1];
 					}
 				}
@@ -1056,13 +1056,13 @@ int __fastcall TSynSpellCheck::JHCMPFindSimilar(const String Word, int MaxDiffCo
 	TJHCMPLongintMatrix Differences;
 	int stop = 0;
 	result = 0;
-	if(Trim(WORD) == L"")
+	if(Trim(Word) == L"")
 		return result;
-	sLower = AnsiLowerCase(WORD);
+	sLower = AnsiLowerCase(Word);
 	chFirst = sLower[1];
 	Similar->Clear();
-	JHCMPInit(WORD.Length(), FMaxWordLength, Differences);
-	iLength = WORD.Length();
+	JHCMPInit(Word.Length(), FMaxWordLength, Differences);
+	iLength = Word.Length();
 	for(stop = FCacheArray[int(chFirst)][1], iI = FCacheArray[int(chFirst)][0]; iI <= stop; iI++)
 	{
 		sWord = (*((PWordRec) FWordList->Items[iI])).Word;
@@ -1070,7 +1070,7 @@ int __fastcall TSynSpellCheck::JHCMPFindSimilar(const String Word, int MaxDiffCo
 			continue;
 		if(JHCMPIsSimilar(sLower, sWord, MaxDiffCount, Differences))
 		{
-			if(AnsiUpperCase(WORD[1])[1] == WORD[1])
+			if(AnsiUpperCase(String(Word[1]))[1] == Word[1])
 				sWord[1] = AnsiUpperCase(String(sWord[1]))[1];
 			Similar->Add(sWord);
 		}
@@ -1090,7 +1090,7 @@ int __fastcall TSynSpellCheck::JHCMPFindSimilar(const String Word, int MaxDiffCo
 					continue;
 				if(JHCMPIsSimilar(sLower, sWord, MaxDiffCount, Differences))
 				{
-					if(AnsiUpperCase(WORD[1])[1] == WORD[1])
+					if(AnsiUpperCase(String(Word[1]))[1] == Word[1])
 						sWord[1] = AnsiUpperCase(String(sWord[1]))[1];
 					Similar->Add(sWord);
 				}
@@ -1128,7 +1128,7 @@ void __fastcall TSynSpellCheck::LoadDictionary(String Language, String FileName/
 		/*# with AWordItem^ do */
 		{
 			auto& with0 = (*AWordItem);
-			WORD = sWord;
+			with0.Word = sWord;
 			with0.User = IsUser;
 		}
 		FWordList->Add(AWordItem);
@@ -1203,8 +1203,8 @@ int __fastcall TSynSpellCheck::FindWord(String sWord)
 	sw = sWord;
 	if(FCacheArray[int(sw[1])][1] == 0)
 		return result;
-	L = (int) FCacheArray[int(sw[1])][0];
-	H = (int) FCacheArray[int(sw[1])][1];
+	L = static_cast<int>(FCacheArray[int(sw[1])][0]);
+	H = static_cast<int>(FCacheArray[int(sw[1])][1]);
 	while(L <= H)
 	{
 		I = (L + H) >> 1;
@@ -1407,7 +1407,7 @@ void __fastcall TSynSpellCheck::SpellCheck()
 		int iAction = 0;
 		String sCorrectWord;
 		result = true;
-		if(!CheckWord(WideLowerCase(WORD)))
+		if(!CheckWord(WideLowerCase(Word)))
 		{
 			if(FOptions.Contains(sscoHideCursor))
 				FEditor->EndUpdate();
@@ -1419,19 +1419,19 @@ void __fastcall TSynSpellCheck::SpellCheck()
 			}
 			if(FOptions.Contains(sscoHourGlass))
 				Screen->Cursor = FCursor;
-			if(ASSIGNED(FOnCheckWord))
+			if(Assigned(FOnCheckWord))
         // Get suggestions
 			{
 				if(FOptions.Contains(sscoSuggestWords))
 				{
 					if(FHashAlgorithm == haDiff)
-						JHCMPFindSimilar(WORD, 2, 2, tslSuggestions);
+						JHCMPFindSimilar(Word, 2, 2, tslSuggestions);
 					else
-						GetSuggestions(WORD, tslSuggestions);
+						GetSuggestions(Word, tslSuggestions);
 				}
 				if(FOptions.Contains(sscoSelectWord))
 					SelectWordAtCursor();
-				FOnCheckWord(this, WORD, tslSuggestions, sCorrectWord, iAction);
+				FOnCheckWord(this, Word, tslSuggestions, sCorrectWord, iAction);
 				tslSuggestions->Clear(); // Remove items to free some memory
 				switch(iAction)
 				{
@@ -1454,19 +1454,19 @@ void __fastcall TSynSpellCheck::SpellCheck()
 					{
 						SelectWordAtCursor();
 						((TSynEditEx*) FEditor)->SelText = sCorrectWord;
-						if(ASSIGNED(FOnCorrectWord))
+						if(Assigned(FOnCorrectWord))
 							FOnCorrectWord(this, sWord, sCorrectWord);
 					}
 					break;
 					case ACTION_SKIPALL:
 					{
 						AddSkipWord(sWord);
-						if(ASSIGNED(FOnSkipWord))
+						if(Assigned(FOnSkipWord))
 							FOnSkipWord(this, sWord, true);
 					}
 					break;
 					case ACTION_SKIP:
-					if(ASSIGNED(FOnSkipWord))
+					if(Assigned(FOnSkipWord))
 						FOnSkipWord(this, sWord, false);
 					break;
 					case ACTION_UNDO:
@@ -1500,7 +1500,7 @@ void __fastcall TSynSpellCheck::SpellCheck()
   // If no dictionary if loaded and spell checking is requested and Exception
   // is thrown.
 	if(!FOpenDictionary)
-		throw new ENoDictionaryLoaded(SNoDictionaryLoaded);
+		throw ENoDictionaryLoaded(SNoDictionaryLoaded);
 	FBusy = true;
 //  if Assigned(FOnStart) then
 //    FOnStart(Self);
@@ -1607,12 +1607,12 @@ void __fastcall TSynSpellCheck::SpellCheck()
 	}
 	if(bAborted)
 	{
-		if(ASSIGNED(FOnAbort))
+		if(Assigned(FOnAbort))
 			FOnAbort(this);
 	}
 	else
 	{
-		if(ASSIGNED(FOnDone))
+		if(Assigned(FOnDone))
 			FOnDone(this);
 	}
 	FBusy = false;
@@ -1630,7 +1630,7 @@ void __fastcall TSynSpellCheck::AddDiacritic(TProgressBar* Progress)
 	auto InternalCheckWord = [&](String Word) -> void 
 	{
 		String sCorrectWord;
-		sCorrectWord = GetWordFromASCIIWord(WORD);
+		sCorrectWord = GetWordFromASCIIWord(Word);
 		if(sCorrectWord != L"")
 		{
 			SelectWordAtCursor();
@@ -1640,7 +1640,7 @@ void __fastcall TSynSpellCheck::AddDiacritic(TProgressBar* Progress)
   // If no dictionary if loaded and spell checking is requested and Exception is
   // thrown.
 	if(!FOpenDictionary)
-		throw new ENoDictionaryLoaded(SNoDictionaryLoaded);
+		throw ENoDictionaryLoaded(SNoDictionaryLoaded);
 	if(FEditor == nullptr)
 		return;
 	if(FEditor->SelAvail)
@@ -1737,7 +1737,7 @@ void __fastcall TSynSpellCheck::AddDiacritic(TProgressBar* Progress)
 bool __fastcall TSynSpellCheck::SpellIsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || (Pos(AChar, FApostrophes) > 0) || (AChar == L'-');
+	result = IsCharAlphaNumeric(AChar) || (PosChar(AChar, FApostrophes) > 0) || (AChar == L'-');
 	return result;
 }
 
@@ -1761,7 +1761,7 @@ bool __fastcall TSynSpellCheck::SpellIsWhiteChar(WideChar AChar)
 
 /* TSynEditEx */
 
-String __fastcall TSynEditEx::GetWordAtRowColEx(const TBufferCoord& cXY, TCategoryMethod SpellIsIdentChar, bool OverrideHighlighterChars)
+String __fastcall TSynEditEx::GetWordAtRowColEx(const TBufferCoord& cXY, const TCategoryMethod& SpellIsIdentChar, bool OverrideHighlighterChars)
 {
 	TBufferCoord XY = cXY;
 	String result;
@@ -1789,7 +1789,7 @@ String __fastcall TSynEditEx::GetWordAtRowColEx(const TBufferCoord& cXY, TCatego
 function<void ()> CheckOnNextLine;
 
 
-TBufferCoord __fastcall TSynEditEx::SCNextWordPosEx(TCategoryMethod SpellIsIdentChar, TCategoryMethod SpellIsWhiteChar)
+TBufferCoord __fastcall TSynEditEx::SCNextWordPosEx(const TCategoryMethod& SpellIsIdentChar, const TCategoryMethod& SpellIsWhiteChar)
 {
 	TBufferCoord result = {};
 	int CX = 0;
@@ -1846,7 +1846,7 @@ TBufferCoord __fastcall TSynEditEx::SCNextWordPosEx(TCategoryMethod SpellIsIdent
 function<void ()> CheckForIdentChar;
 
 
-TBufferCoord __fastcall TSynEditEx::SCPrevWordPosEx(TCategoryMethod SpellIsIdentChar, TCategoryMethod SpellIsWhiteChar)
+TBufferCoord __fastcall TSynEditEx::SCPrevWordPosEx(const TCategoryMethod& SpellIsIdentChar, const TCategoryMethod& SpellIsWhiteChar)
 {
 	TBufferCoord result = {};
 	int CX = 0;
@@ -1919,7 +1919,7 @@ TBufferCoord __fastcall TSynEditEx::SCPrevWordPosEx(TCategoryMethod SpellIsIdent
 	return result;
 }
 
-TBufferCoord __fastcall TSynEditEx::SCWordEndEx(TCategoryMethod SpellIsWhiteChar)
+TBufferCoord __fastcall TSynEditEx::SCWordEndEx(const TCategoryMethod& SpellIsWhiteChar)
 {
 	TBufferCoord result = {};
 	int CX = 0;
@@ -1940,7 +1940,7 @@ TBufferCoord __fastcall TSynEditEx::SCWordEndEx(TCategoryMethod SpellIsWhiteChar
 	return result;
 }
 
-TBufferCoord __fastcall TSynEditEx::SCWordStartEx(TCategoryMethod SpellIsWhiteChar)
+TBufferCoord __fastcall TSynEditEx::SCWordStartEx(const TCategoryMethod& SpellIsWhiteChar)
 {
 	TBufferCoord result = {};
 	int CX = 0;
@@ -1965,5 +1965,5 @@ TBufferCoord __fastcall TSynEditEx::SCWordStartEx(TCategoryMethod SpellIsWhiteCh
 }
 
 
-}  // namespace SynSpellCheck
+}  // namespace Synspellcheck
 

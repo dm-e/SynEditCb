@@ -93,7 +93,7 @@ class TSynEditFontProperty : public Vcleditors::TFontProperty
 public:
 	typedef Vcleditors::TFontProperty inherited;
 	virtual void __fastcall Edit();
-	__fastcall TSynEditFontProperty(IDesigner* const ADesigner, int APropCount);
+	__fastcall TSynEditFontProperty(const _di_IDesigner ADesigner, int APropCount);
 	__fastcall TSynEditFontProperty();
 };
 
@@ -105,9 +105,9 @@ public:
 	virtual void __fastcall Edit();
 	virtual TPropertyAttributes __fastcall GetAttributes();
 	virtual String __fastcall GetValue();
-	virtual void __fastcall GetValues(TGetStrProc Proc);
+	virtual void __fastcall GetValues(const TGetStrProc& Proc);
 	virtual void __fastcall SetValue(const String Value);
-	__fastcall TSynEditCommandProperty(IDesigner* const ADesigner, int APropCount);
+	__fastcall TSynEditCommandProperty(const _di_IDesigner ADesigner, int APropCount);
 	__fastcall TSynEditCommandProperty();
 };
 
@@ -118,7 +118,7 @@ public:
 	typedef Designeditors::TClassProperty inherited;
 	virtual void __fastcall Edit();
 	virtual TPropertyAttributes __fastcall GetAttributes();
-	__fastcall TSynEditKeystrokesProperty(IDesigner* const ADesigner, int APropCount);
+	__fastcall TSynEditKeystrokesProperty(const _di_IDesigner ADesigner, int APropCount);
 	__fastcall TSynEditKeystrokesProperty();
 };
 
@@ -129,7 +129,7 @@ public:
 	typedef Designeditors::TClassProperty inherited;
 	virtual void __fastcall Edit();
 	virtual TPropertyAttributes __fastcall GetAttributes();
-	__fastcall TSynEditPrintMarginsProperty(IDesigner* const ADesigner, int APropCount);
+	__fastcall TSynEditPrintMarginsProperty(const _di_IDesigner ADesigner, int APropCount);
 	__fastcall TSynEditPrintMarginsProperty();
 };
 
@@ -141,7 +141,7 @@ public:
 	virtual void __fastcall Edit();
 	virtual TPropertyAttributes __fastcall GetAttributes();
 	virtual String __fastcall GetValue();
-	__fastcall TAutoCorrectionProperty(IDesigner* const ADesigner, int APropCount);
+	__fastcall TAutoCorrectionProperty(const _di_IDesigner ADesigner, int APropCount);
 	__fastcall TAutoCorrectionProperty();
 };
 
@@ -154,13 +154,13 @@ public:
 	virtual void __fastcall ExecuteVerb(int Index);
 	virtual String __fastcall GetVerb(int Index);
 	virtual int __fastcall GetVerbCount();
-	__fastcall TSynAutoCorrectComponentEditor(TComponent* AComponent, IDesigner* ADesigner);
+	__fastcall TSynAutoCorrectComponentEditor(TComponent* AComponent, const _di_IDesigner& ADesigner);
 	__fastcall TSynAutoCorrectComponentEditor();
 };
 void __fastcall Register();
 
 
-}  // namespace SynEditPropertyReg
+}  // namespace Syneditpropertyreg
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditpropertyreg;

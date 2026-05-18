@@ -445,8 +445,8 @@ private:
 	TtkTokenKind __fastcall FuncWrite(int Index);
 	TtkTokenKind __fastcall FuncWrite_line(int Index);
 	TtkTokenKind __fastcall FuncYesno_block(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall SymbolProc();
 	void __fastcall AddressOpProc();
@@ -501,7 +501,7 @@ public:
 void SynHighlighterDml_initialization();
 
 
-}  // namespace SynHighlighterDml
+}  // namespace Synhighlighterdml
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterdml;

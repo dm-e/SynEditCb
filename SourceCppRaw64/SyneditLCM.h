@@ -13,7 +13,7 @@ void __fastcall Synedit_init();
 void __fastcall Synedit_exit();
 
 
-}  // namespace SyneditLCM
+}  // namespace Syneditlcm
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditlcm;

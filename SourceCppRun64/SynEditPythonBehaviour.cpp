@@ -49,7 +49,7 @@ void __fastcall TSynEditPythonBehaviour::doProcessUserCommand(TObject* Sender, b
 				int stop = 0;
 				for(stop = Indent, cSpace = 1; cSpace <= stop; cSpace++)
 				{
-					iEditor->ExecuteCommand((TSynEditorCommand) ecChar, L'\x20', nullptr);
+					iEditor->ExecuteCommand(static_cast<TSynEditorCommand>(ecChar), L'\x20', nullptr);
 				}
 			}
 			__finally
@@ -69,5 +69,5 @@ __fastcall TSynEditPythonBehaviour::TSynEditPythonBehaviour(TComponent* aOwner)
 }
 
 
-}  // namespace SynEditPythonBehaviour
+}  // namespace Syneditpythonbehaviour
 

@@ -126,7 +126,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fLabelAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fNumberAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fTypesAttri;
-	unsigned int __fastcall HashKey(PWideChar Str);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
 	TtkTokenKind __fastcall FuncBoolean(int Index);
 	TtkTokenKind __fastcall FuncConstant(int Index);
 	TtkTokenKind __fastcall FuncInstruction(int Index);
@@ -136,7 +136,7 @@ private:
 	void __fastcall UnknownProc();
 	TtkTokenKind __fastcall AltFunc(int Index);
 	void __fastcall InitIdent();
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall NullProc();
 	void __fastcall SpaceProc();
 	void __fastcall CRProc();
@@ -186,7 +186,7 @@ public:
 void SynHighlighterLLVM_initialization();
 
 
-}  // namespace SynHighlighterLLVM
+}  // namespace Synhighlighterllvm
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterllvm;

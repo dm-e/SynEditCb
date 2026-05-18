@@ -151,7 +151,7 @@ public:
 };
 
 
-}  // namespace SynEditAutoComplete
+}  // namespace Syneditautocomplete
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditautocomplete;

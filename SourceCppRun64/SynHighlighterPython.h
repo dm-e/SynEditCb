@@ -57,6 +57,7 @@ The SynHighlighterPython implements a highlighter for Python for the SynEdit pro
 #include <System.Classes.hpp>
 #include "SynEditCodeFolding.h"
 #include <System.RegularExpressions.hpp>
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterpython
 {
@@ -207,7 +208,7 @@ private:
 //++ CodeFolding
 	TRegEx BlockOpenerRE;
 //-- CodeFolding
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall SymbolProc();
 	void __fastcall CRProc();
 	void __fastcall CommentProc();
@@ -271,7 +272,7 @@ void SynHighlighterPython_initialization();
 void SynHighlighterPython_finalization();
 
 
-}  // namespace SynHighlighterPython
+}  // namespace Synhighlighterpython
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterpython;

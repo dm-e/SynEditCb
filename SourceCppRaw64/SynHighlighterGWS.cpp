@@ -29,10 +29,10 @@ unsigned int __fastcall TSynGWScriptSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 797 + int((*Str)) * 6);
+		result = static_cast<unsigned int>(result * 797 + int((*Str)) * 6);
 		++Str;
 	}
-	result = (unsigned int) (result % 13);
+	result = static_cast<unsigned int>(result % 13);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -1177,5 +1177,5 @@ String __fastcall TSynGWScriptSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterGWS
+}  // namespace Synhighlightergws
 

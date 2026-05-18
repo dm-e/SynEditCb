@@ -132,18 +132,18 @@ const System::UnicodeString WideCRLF = UnicodeString(L"\x0d\x0a");
 const System::WideChar WideLineSeparator = ((System::WideChar) 0x2028);
 const System::WideChar WideParagraphSeparator = ((System::WideChar) 0x2029);
 typedef int /*0..255*/ TFontCharSet;
-PWideChar __fastcall SynCharNext(PWideChar P);
-PWideChar __fastcall SynCharNext(PWideChar P, String& Element);
+System::PWideChar __fastcall SynCharNext(System::PWideChar P);
+System::PWideChar __fastcall SynCharNext(System::PWideChar P, String& Element);
 int __fastcall SynUniElementsCount(String S);
 
 /* functions taken from JCLUnicode.pas */
-void __fastcall StrSwapByteOrder(PWideChar Str);
+void __fastcall StrSwapByteOrder(System::PWideChar Str);
 TFontCharSet __fastcall CharSetFromLocale(LCID Language);
 int __fastcall CodePageFromLocale(LCID Language);
 WORD __fastcall KeyboardCodePage();
 
 /* functions providing same behavior on Win9x and WinNT based systems*/
-TSize __fastcall GetTextSize(HDC DC, PWideChar Str, int Count);
+TSize __fastcall GetTextSize(HDC DC, System::PWideChar Str, int Count);
 
 /* Unicode streaming-support */
 enum TSynEncoding {seUTF8,
@@ -167,7 +167,7 @@ bool __fastcall IsWideCharMappableToAnsi(WideChar WC);
 void SynUnicode_initialization();
 
 
-}  // namespace SynUnicode
+}  // namespace Synunicode
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synunicode;

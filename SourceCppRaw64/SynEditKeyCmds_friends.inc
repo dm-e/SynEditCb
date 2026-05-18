@@ -9,8 +9,8 @@ friend Synedittypes::TSynEditorCommand __fastcall ConvertExtendedToCommand(Strin
 friend String __fastcall EditorCommandToCodeString(Synedittypes::TSynEditorCommand Cmd);
 friend String __fastcall EditorCommandToDescrString(Synedittypes::TSynEditorCommand Cmd);
 friend bool __fastcall EditorCommandToIdent(int Cmd, String& Ident);
-friend void __fastcall GetEditorCommandExtended(TGetStrProc Proc);
-friend void __fastcall GetEditorCommandValues(TGetStrProc Proc);
+friend void __fastcall GetEditorCommandExtended(const TGetStrProc& Proc);
+friend void __fastcall GetEditorCommandValues(const TGetStrProc& Proc);
 friend bool __fastcall IdentToEditorCommand(const String Ident, int& Cmd);
 friend int __fastcall IndexToEditorCommand(int AIndex);
 friend void SynEditKeyCmds_initialization();

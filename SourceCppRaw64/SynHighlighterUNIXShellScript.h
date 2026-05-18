@@ -217,7 +217,7 @@ public:
 void SynHighlighterUNIXShellScript_initialization();
 
 
-}  // namespace SynHighlighterUNIXShellScript
+}  // namespace Synhighlighterunixshellscript
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterunixshellscript;

@@ -276,7 +276,7 @@ void __fastcall TSynM3Syn::SymNestedHelperProc(WideChar AOpenChar, WideChar AClo
 							--fRange.Level;
 						if(fRange.Level == 0)
 						{
-							fRange.TokenRange = (WORD) int(trNone);
+							fRange.TokenRange = static_cast<WORD>(int(trNone));
 							break;
 						}
 					}
@@ -442,7 +442,7 @@ void __fastcall TSynM3Syn::SymPragmaProc()
 	if(fLine[Run] == L'*')
 	{
 		++Run;
-		fRange.TokenRange = (WORD) int(trPragma);
+		fRange.TokenRange = static_cast<WORD>(int(trPragma));
 		++fRange.Level;
 		if(IsLineEnd(Run))
 			FTokenID = tkPragma;
@@ -465,7 +465,7 @@ void __fastcall TSynM3Syn::SymRoundOpenProc()
 	if(fLine[Run] == L'*')
 	{
 		++Run;
-		fRange.TokenRange = (WORD) int(trComment);
+		fRange.TokenRange = static_cast<WORD>(int(trComment));
 		++fRange.Level;
 		if(IsLineEnd(Run))
 			FTokenID = tkComment;
@@ -752,5 +752,5 @@ String __fastcall TSynM3Syn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterM3
+}  // namespace Synhighlighterm3
 

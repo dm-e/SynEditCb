@@ -66,6 +66,8 @@ of this file under either the MPL or the GPL.
 #include <System.SysUtils.hpp>
 #include <System.Classes.hpp>
 #include "SynEditDelphiInstances.hpp"
+#include "SynEditCodeFolding.h"
+#include "d2c_sysinterface.h"
 
 namespace Synedit
 {
@@ -259,7 +261,7 @@ class TCustomSynEdit;
 
 struct TCreateParamsW
 {
-	PWideChar Caption;
+	System::PWideChar Caption;
 	DWORD Style;
 	DWORD ExStyle;
 	int X;
@@ -268,7 +270,7 @@ struct TCreateParamsW
 	int Height;
 	HWND WndParent;
 	void* Param;
-	TWndClassW WindowClass;
+	Winapi::Windows::TWndClassW WindowClass;
 	WideChar WinClassName[64/*# range 0..63*/];
 	String InternalCaption;
 };
@@ -324,7 +326,7 @@ public:
 	__fastcall TSynEditMark();
 };
 typedef void __fastcall (__closure *TPlaceMarkEvent) (TObject*, TSynEditMark*&);
-typedef TSynEditMark* TSynEditMarks[16/*# range 1..MAX_MARKS*/];
+typedef TSynEditMark* TSynEditMarks[MAX_MARKS/*# range 1..MAX_MARKS*/];
 
   /* A list of mark objects. Each object cause a litle picture to be drawn in the gutter. */            // It makes more sence to derive from TObjectList,
 
@@ -406,23 +408,23 @@ private:
 	MESSAGE void __fastcall WMCopy(::TMessage& Message)/*# WM_COPY */;
 	MESSAGE void __fastcall WMCut(::TMessage& Message)/*# WM_CUT */;
 	MESSAGE void __fastcall WMDropFiles(::TMessage& Msg)/*# WM_DROPFILES */;
-	HIDESBASE MESSAGE void __fastcall WMDestroy(TWMDestroy& Message)/*# WM_DESTROY */;
+	HIDESBASE MESSAGE void __fastcall WMDestroy(Winapi::Messages::TWMDestroy& Message)/*# WM_DESTROY */;
 	HIDESBASE MESSAGE void __fastcall WMEraseBkgnd(::TMessage& Msg)/*# WM_ERASEBKGND */;
-	MESSAGE void __fastcall WMGetDlgCode(TWMGetDlgCode& Msg)/*# WM_GETDLGCODE */;
-	MESSAGE void __fastcall WMGetText(TWMGetText& Msg)/*# WM_GETTEXT */;
-	MESSAGE void __fastcall WMGetTextLength(TWMGetTextLength& Msg)/*# WM_GETTEXTLENGTH */;
-	HIDESBASE MESSAGE void __fastcall WMHScroll(TWMScroll& Msg)/*# WM_HSCROLL */;
+	MESSAGE void __fastcall WMGetDlgCode(Winapi::Messages::TWMGetDlgCode& Msg)/*# WM_GETDLGCODE */;
+	MESSAGE void __fastcall WMGetText(Winapi::Messages::TWMGetText& Msg)/*# WM_GETTEXT */;
+	MESSAGE void __fastcall WMGetTextLength(Winapi::Messages::TWMGetTextLength& Msg)/*# WM_GETTEXTLENGTH */;
+	HIDESBASE MESSAGE void __fastcall WMHScroll(Winapi::Messages::TWMScroll& Msg)/*# WM_HSCROLL */;
 	MESSAGE void __fastcall WMPaste(::TMessage& Message)/*# WM_PASTE */;
-	MESSAGE void __fastcall WMSetText(TWMSetText& Msg)/*# WM_SETTEXT */;
+	MESSAGE void __fastcall WMSetText(Winapi::Messages::TWMSetText& Msg)/*# WM_SETTEXT */;
 	MESSAGE void __fastcall WMImeChar(::TMessage& Msg)/*# WM_IME_CHAR */;
 	MESSAGE void __fastcall WMImeComposition(::TMessage& Msg)/*# WM_IME_COMPOSITION */;
 	MESSAGE void __fastcall WMImeNotify(::TMessage& Msg)/*# WM_IME_NOTIFY */;
-	HIDESBASE MESSAGE void __fastcall WMKillFocus(TWMKillFocus& Msg)/*# WM_KILLFOCUS */;
-	HIDESBASE MESSAGE void __fastcall WMSetCursor(TWMSetCursor& Msg)/*# WM_SETCURSOR */;
-	HIDESBASE MESSAGE void __fastcall WMSetFocus(TWMSetFocus& Msg)/*# WM_SETFOCUS */;
-	HIDESBASE MESSAGE void __fastcall WMSize(TWMSize& Msg)/*# WM_SIZE */;
+	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus& Msg)/*# WM_KILLFOCUS */;
+	HIDESBASE MESSAGE void __fastcall WMSetCursor(Winapi::Messages::TWMSetCursor& Msg)/*# WM_SETCURSOR */;
+	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus& Msg)/*# WM_SETFOCUS */;
+	HIDESBASE MESSAGE void __fastcall WMSize(Winapi::Messages::TWMSize& Msg)/*# WM_SIZE */;
 	MESSAGE void __fastcall WMUndo(::TMessage& Msg)/*# WM_UNDO */;
-	HIDESBASE MESSAGE void __fastcall WMVScroll(TWMScroll& Msg)/*# WM_VSCROLL */;
+	HIDESBASE MESSAGE void __fastcall WMVScroll(Winapi::Messages::TWMScroll& Msg)/*# WM_VSCROLL */;
 //++ CodeFolding
 	bool fUseCodeFolding;
 	Syneditcodefolding::TSynCodeFolding* fCodeFolding;
@@ -441,7 +443,7 @@ private:
 	bool fInserting;
 	TStrings* fLines;
 	TStrings* fOrigLines;
-	Synedittypes::ISynEditUndo* fOrigUndoRedo;
+	Synedittypes::_di_ISynEditUndo fOrigUndoRedo;
 	int fLinesInWindow;
 	int fLeftChar;
 	int fPaintLock;
@@ -458,7 +460,7 @@ private:
 	Synedithighlighter::TSynCustomHighlighter* fHighlighter;
 	Syneditmiscclasses::TSynSelectedColor* fSelectedColor;
 	TColor fActiveLineColor;
-	Synedittypes::ISynEditUndo* fUndoRedo;
+	Synedittypes::_di_ISynEditUndo fUndoRedo;
 	TSynEditMark* fBookMarks[10/*# range 0..9*/]; // these are just references, fMarkList is the owner
 	int fMouseDownX;
 	int fMouseDownY;
@@ -476,7 +478,7 @@ private:
 	Synedittypes::TSynSelectionMode fActiveSelectionMode; //mode of the active selection
 	bool fWantReturns;
 	bool fWantTabs;
-	Synedittypes::ISynEditBufferPlugin* fWordWrapPlugin;
+	Synedittypes::_di_ISynEditBufferPlugin fWordWrapPlugin;
 	Syneditmiscclasses::TSynGlyph* fWordWrapGlyph;
 	bool fCaretAtEOL; // used by wordwrap
 	Syneditmiscclasses::TSynGutter* fGutter;
@@ -555,7 +557,7 @@ private:
 	void __fastcall DoLinePut(int FirstLine, const String OldLine);
 	void __fastcall DoShiftTabKey();
 	void __fastcall DoTabKey();
-	int __fastcall FindHookedCmdEvent(Synedittypes::THookedCommandEvent AHandlerProc);
+	int __fastcall FindHookedCmdEvent(const Synedittypes::THookedCommandEvent& AHandlerProc);
 	void __fastcall SynFontChanged(TObject* Sender);
 	void __fastcall ForceCaretX(int aCaretX);
 	TBufferCoord __fastcall GetBlockBegin();
@@ -667,12 +669,12 @@ protected:
 	void __fastcall DecPaintLock();
 	virtual void __fastcall DefineProperties(TFiler* Filer);
 	virtual void __fastcall DoChange();
-    //++ Ole Drag & Drop
-	virtual void __fastcall OleDragEnter(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
-	virtual void __fastcall OleDragOver(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
-	virtual void __fastcall OleDrop(TObject* Sender, IDataObject* DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	//++ Ole Drag & Drop
+	virtual void __fastcall OleDragEnter(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	virtual void __fastcall OleDragOver(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
+	virtual void __fastcall OleDrop(TObject* Sender, const _di_IDataObject& DataObject, TShiftState State, const TPoint& MousePt, int& Effect, HRESULT& Result);
 	virtual void __fastcall OleDragLeave(TObject* Sender, HRESULT& Result);
-    //-- Ole Drag & Drop
+	//-- Ole Drag & Drop
 	virtual bool __fastcall GetReadOnly();
 	void __fastcall HighlighterAttrChanged(TObject* Sender);
 	void __fastcall IncPaintLock();
@@ -686,7 +688,7 @@ protected:
 	void __fastcall ListDeleted(TObject* Sender, int aIndex, int aCount);
 	void __fastcall ListInserted(TObject* Sender, int Index, int aCount);
 	void __fastcall ListPut(TObject* Sender, int Index, const String OldLine);
-    //helper procs to chain list commands
+	//helper procs to chain list commands
 	void __fastcall ChainListCleared(TObject* Sender);
 	void __fastcall ChainListDeleted(TObject* Sender, int aIndex, int aCount);
 	void __fastcall ChainListInserted(TObject* Sender, int aIndex, int aCount);
@@ -824,7 +826,7 @@ public:
 	Synedittypes::TDisplayCoord __fastcall PixelsToRowColumn(int aX, int aY);
 	Synedittypes::TDisplayCoord __fastcall PixelsToNearestRowColumn(int aX, int aY);
 	void __fastcall Redo();
-	void __fastcall RegisterCommandHandler(const Synedittypes::THookedCommandEvent AHandlerProc, void* AHandlerData);
+	void __fastcall RegisterCommandHandler(const Synedittypes::THookedCommandEvent& AHandlerProc, void* AHandlerData);
 	TPoint __fastcall RowColumnToPixels(const Synedittypes::TDisplayCoord& RowCol);
 	int __fastcall RowColToCharIndex(const TBufferCoord& RowCol);
 	int __fastcall SearchReplace(const String ASearch, const String AReplace, Synedittypes::TSynSearchOptions AOptions);
@@ -836,28 +838,28 @@ public:
 	void __fastcall SetWordBlock(const TBufferCoord& Value);
 	void __fastcall Undo();
 	void __fastcall UnlockUndo();
-	void __fastcall UnregisterCommandHandler(Synedittypes::THookedCommandEvent AHandlerProc);
+	void __fastcall UnregisterCommandHandler(const Synedittypes::THookedCommandEvent& AHandlerProc);
 	virtual bool __fastcall UpdateAction(TBasicAction* Action);
 	virtual void __fastcall SetFocus();
-	void __fastcall AddKeyUpHandler(TKeyEvent aHandler);
-	void __fastcall RemoveKeyUpHandler(TKeyEvent aHandler);
-	void __fastcall AddKeyDownHandler(TKeyEvent aHandler);
-	void __fastcall RemoveKeyDownHandler(TKeyEvent aHandler);
-	void __fastcall AddKeyPressHandler(TKeyPressEvent aHandler);
-	void __fastcall RemoveKeyPressHandler(TKeyPressEvent aHandler);
+	void __fastcall AddKeyUpHandler(const TKeyEvent& aHandler);
+	void __fastcall RemoveKeyUpHandler(const TKeyEvent& aHandler);
+	void __fastcall AddKeyDownHandler(const TKeyEvent& aHandler);
+	void __fastcall RemoveKeyDownHandler(const TKeyEvent& aHandler);
+	void __fastcall AddKeyPressHandler(const TKeyPressEvent& aHandler);
+	void __fastcall RemoveKeyPressHandler(const TKeyPressEvent& aHandler);
 	void __fastcall AddFocusControl(TWinControl* aControl);
 	void __fastcall RemoveFocusControl(TWinControl* aControl);
-	void __fastcall AddMouseDownHandler(TMouseEvent aHandler);
-	void __fastcall RemoveMouseDownHandler(TMouseEvent aHandler);
-	void __fastcall AddMouseUpHandler(TMouseEvent aHandler);
-	void __fastcall RemoveMouseUpHandler(TMouseEvent aHandler);
-	void __fastcall AddMouseCursorHandler(TMouseCursorEvent aHandler);
-	void __fastcall RemoveMouseCursorHandler(TMouseCursorEvent aHandler);
+	void __fastcall AddMouseDownHandler(const TMouseEvent& aHandler);
+	void __fastcall RemoveMouseDownHandler(const TMouseEvent& aHandler);
+	void __fastcall AddMouseUpHandler(const TMouseEvent& aHandler);
+	void __fastcall RemoveMouseUpHandler(const TMouseEvent& aHandler);
+	void __fastcall AddMouseCursorHandler(const TMouseCursorEvent& aHandler);
+	void __fastcall RemoveMouseCursorHandler(const TMouseCursorEvent& aHandler);
 	virtual void __fastcall WndProc(::TMessage& Msg);
 	void __fastcall SetLinesPointer(TCustomSynEdit* ASynEdit);
 	void __fastcall RemoveLinesPointer();
 	bool __fastcall IsChained();
-	void __fastcall HookTextBuffer(Synedittextbuffer::TSynEditStringList* aBuffer, Synedittypes::ISynEditUndo* aUndoRedo);
+	void __fastcall HookTextBuffer(Synedittextbuffer::TSynEditStringList* aBuffer, const Synedittypes::_di_ISynEditUndo& aUndoRedo);
 	void __fastcall UnHookTextBuffer();
     /*Command implementations*/
 	void __fastcall ExecCmdDeleteLine();
@@ -917,7 +919,7 @@ public:
 	__property String WordAtMouse = { read = GetWordAtMouse };
 	__property int GutterWidth = { read = fGutterWidth };
 	__property int TextMargin = { read = fTextMargin };
-	__property Synedittypes::ISynEditUndo* UndoRedo = { read = fUndoRedo };
+	__property Synedittypes::_di_ISynEditUndo UndoRedo = { read = fUndoRedo };
 	__property TProcessCommandEvent OnProcessCommand = { read = fOnProcessCommand, write = fOnProcessCommand };
 
 //++ CodeFolding
@@ -974,29 +976,29 @@ public:
 	__property TCustomSynEditSearchNotFoundEvent OnSearchNotFound = { read = fSearchNotFound, write = fSearchNotFound };
 protected:
 	BEGIN_MESSAGE_MAP
-	  VCL_MESSAGE_HANDLER(WM_CANCELMODE, TMessage, WMCancelMode)
-	  VCL_MESSAGE_HANDLER(WM_CAPTURECHANGED, TMessage, WMCaptureChanged)
-	  VCL_MESSAGE_HANDLER(WM_CLEAR, TMessage, WMClear)
-	  VCL_MESSAGE_HANDLER(WM_COPY, TMessage, WMCopy)
-	  VCL_MESSAGE_HANDLER(WM_CUT, TMessage, WMCut)
-	  VCL_MESSAGE_HANDLER(WM_DESTROY, TWMDestroy, WMDestroy)
-	  VCL_MESSAGE_HANDLER(WM_DROPFILES, TMessage, WMDropFiles)
-	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, TMessage, WMEraseBkgnd)
-	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, TWMGetDlgCode, WMGetDlgCode)
-	  VCL_MESSAGE_HANDLER(WM_GETTEXT, TWMGetText, WMGetText)
-	  VCL_MESSAGE_HANDLER(WM_GETTEXTLENGTH, TWMGetTextLength, WMGetTextLength)
-	  VCL_MESSAGE_HANDLER(WM_HSCROLL, TWMScroll, WMHScroll)
-	  VCL_MESSAGE_HANDLER(WM_IME_CHAR, TMessage, WMImeChar)
-	  VCL_MESSAGE_HANDLER(WM_IME_COMPOSITION, TMessage, WMImeComposition)
-	  VCL_MESSAGE_HANDLER(WM_IME_NOTIFY, TMessage, WMImeNotify)
-	  VCL_MESSAGE_HANDLER(WM_KILLFOCUS, TWMKillFocus, WMKillFocus)
-	  VCL_MESSAGE_HANDLER(WM_PASTE, TMessage, WMPaste)
-	  VCL_MESSAGE_HANDLER(WM_SETCURSOR, TWMSetCursor, WMSetCursor)
-	  VCL_MESSAGE_HANDLER(WM_SETFOCUS, TWMSetFocus, WMSetFocus)
-	  VCL_MESSAGE_HANDLER(WM_SETTEXT, TWMSetText, WMSetText)
-	  VCL_MESSAGE_HANDLER(WM_SIZE, TWMSize, WMSize)
-	  VCL_MESSAGE_HANDLER(WM_UNDO, TMessage, WMUndo)
-	  VCL_MESSAGE_HANDLER(WM_VSCROLL, TWMScroll, WMVScroll)
+	  VCL_MESSAGE_HANDLER(WM_CANCELMODE, Winapi::Messages::TMessage, WMCancelMode)
+	  VCL_MESSAGE_HANDLER(WM_CAPTURECHANGED, Winapi::Messages::TMessage, WMCaptureChanged)
+	  VCL_MESSAGE_HANDLER(WM_CLEAR, Winapi::Messages::TMessage, WMClear)
+	  VCL_MESSAGE_HANDLER(WM_COPY, Winapi::Messages::TMessage, WMCopy)
+	  VCL_MESSAGE_HANDLER(WM_CUT, Winapi::Messages::TMessage, WMCut)
+	  VCL_MESSAGE_HANDLER(WM_DESTROY, Winapi::Messages::TWMDestroy, WMDestroy)
+	  VCL_MESSAGE_HANDLER(WM_DROPFILES, Winapi::Messages::TMessage, WMDropFiles)
+	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, Winapi::Messages::TMessage, WMEraseBkgnd)
+	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, Winapi::Messages::TWMGetDlgCode, WMGetDlgCode)
+	  VCL_MESSAGE_HANDLER(WM_GETTEXT, Winapi::Messages::TWMGetText, WMGetText)
+	  VCL_MESSAGE_HANDLER(WM_GETTEXTLENGTH, Winapi::Messages::TWMGetTextLength, WMGetTextLength)
+	  VCL_MESSAGE_HANDLER(WM_HSCROLL, Winapi::Messages::TWMScroll, WMHScroll)
+	  VCL_MESSAGE_HANDLER(WM_IME_CHAR, Winapi::Messages::TMessage, WMImeChar)
+	  VCL_MESSAGE_HANDLER(WM_IME_COMPOSITION, Winapi::Messages::TMessage, WMImeComposition)
+	  VCL_MESSAGE_HANDLER(WM_IME_NOTIFY, Winapi::Messages::TMessage, WMImeNotify)
+	  VCL_MESSAGE_HANDLER(WM_KILLFOCUS, Winapi::Messages::TWMKillFocus, WMKillFocus)
+	  VCL_MESSAGE_HANDLER(WM_PASTE, Winapi::Messages::TMessage, WMPaste)
+	  VCL_MESSAGE_HANDLER(WM_SETCURSOR, Winapi::Messages::TWMSetCursor, WMSetCursor)
+	  VCL_MESSAGE_HANDLER(WM_SETFOCUS, Winapi::Messages::TWMSetFocus, WMSetFocus)
+	  VCL_MESSAGE_HANDLER(WM_SETTEXT, Winapi::Messages::TWMSetText, WMSetText)
+	  VCL_MESSAGE_HANDLER(WM_SIZE, Winapi::Messages::TWMSize, WMSize)
+	  VCL_MESSAGE_HANDLER(WM_UNDO, Winapi::Messages::TMessage, WMUndo)
+	  VCL_MESSAGE_HANDLER(WM_VSCROLL, Winapi::Messages::TWMScroll, WMVScroll)
 	END_MESSAGE_MAP(Vcl::Controls::TCustomControl)
 public:
 	__fastcall TCustomSynEdit(HWND ParentWindow);
@@ -1118,7 +1120,7 @@ public:
 };
 
 
-}  // namespace SynEdit
+}  // namespace Synedit
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synedit;

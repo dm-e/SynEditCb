@@ -5,6 +5,7 @@
 #include "SynEditHighlighter.h"
 #include "SynEditMiscProcs.h"
 #include "SynEditStrConst.h"
+#include "d2c_sysinterface.h"
 #include "OnLeavingScope.h"
 #include "d2c_convert.h"
 
@@ -15,8 +16,8 @@ using namespace Syneditmiscclasses;
 using namespace Syneditmiscprocs;
 using namespace Syneditstrconst;
 using namespace Synunicode;
+using namespace System;
 using namespace System::Classes;
-using namespace System::Types;
 using namespace System::Uitypes;
 using namespace Vcl::Graphics;
 
@@ -70,7 +71,7 @@ int __fastcall TSynHighlighterList::FindByClass(TComponent* Comp)
 	result = -1;
 	for(stop = Count() - 1, i = 0; i <= stop; i++)
 	{
-		if(ObjectIs(Comp, Items[i]))
+		if(IsInstanceOf(Comp, Items[i]))
 		{
 			result = i;
 			return result;
@@ -172,7 +173,7 @@ void __fastcall TSynHighlighterAttributes::AssignColorAndStyle(TSynHighlighterAt
 
 void __fastcall TSynHighlighterAttributes::Changed()
 {
-	if(ASSIGNED(fOnChange))
+	if(Assigned(fOnChange))
 		fOnChange(this);
 }
 
@@ -412,11 +413,11 @@ bool __fastcall TSynHighlighterAttributes::LoadFromBorlandRegistry(HKEY RootKey,
 							if(IsTrue(bgDefault))
 								Background = (TColor) clWindow;
 							else
-								Background = (TColor) bgColor;
+								Background = static_cast<TColor>(bgColor);
 							if(IsTrue(fgDefault))
 								Foreground = (TColor) clWindowText;
 							else
-								Foreground = (TColor) fgColor;
+								Foreground = static_cast<TColor>(fgColor);
 							Style = Synedithighlighter__4;
 							if(IsTrue(fontBold))
 								Style = Style + Synedithighlighter__5;
@@ -488,9 +489,9 @@ bool __fastcall TSynHighlighterAttributes::LoadFromRegistry(TBetterRegistry* Reg
 	if(Reg->OpenKeyReadOnly(Name))
 	{
 		if(Reg->ValueExists(L"Background"))
-			Background = (TColor) Reg->ReadInteger(L"Background");
+			Background = static_cast<TColor>(Reg->ReadInteger(L"Background"));
 		if(Reg->ValueExists(L"Foreground"))
-			Foreground = (TColor) Reg->ReadInteger(L"Foreground");
+			Foreground = static_cast<TColor>(Reg->ReadInteger(L"Foreground"));
 		if(Reg->ValueExists(L"Style"))
 			IntegerStyle = Reg->ReadInteger(L"Style");
 		Reg->OpenKeyReadOnly(String(L"\\") + Key);
@@ -530,9 +531,9 @@ bool __fastcall TSynHighlighterAttributes::LoadFromFile(TCustomIniFile* Ini)
 		if(S->Count > 0)
 		{
 			if(S->IndexOf(L"Background") != -1)
-				Background = (TColor) Ini->ReadInteger(Name, L"Background", Background);
+				Background = static_cast<TColor>(Ini->ReadInteger(Name, L"Background", Background));
 			if(S->IndexOf(L"Foreground") != -1)
-				Foreground = (TColor) Ini->ReadInteger(Name, L"Foreground", Foreground);
+				Foreground = static_cast<TColor>(Ini->ReadInteger(Name, L"Foreground", Foreground));
 			if(S->IndexOf(L"Style") != -1)
 				IntegerStyle = Ini->ReadInteger(Name, L"Style", IntegerStyle);
 			result = true;
@@ -691,7 +692,7 @@ void __fastcall TSynCustomHighlighter::Assign(TPersistent* Source)
 				}
 			}
       // assign the sample source text only if same or descendant class
-			if(ObjectIs(Src, ClassType()*))
+			if(ObjectIs(Src, TObject*))
 				SampleSource = Src->SampleSource;
       //fWordBreakChars := Src.WordBreakChars; //TODO: does this make sense anyway?
 			DefaultFilter = Src->DefaultFilter;
@@ -899,7 +900,7 @@ String __fastcall TSynCustomHighlighter::GetExpandedToken()
 	Len = ExpandedRun - fExpandedTokenPos;
 	result.SetLength(Len);
 	if(Len > 0)
-		StrLCopy(ustr2pwchar(result, 1 - 1), fExpandedLine + fExpandedTokenPos, (unsigned int) Len);
+		StrLCopy(ustr2pwchar(result, 1 - 1), fExpandedLine + fExpandedTokenPos, static_cast<unsigned int>(Len));
 	return result;
 }
 
@@ -947,7 +948,7 @@ String __fastcall TSynCustomHighlighter::GetToken()
 	Len = Run - fTokenPos;
 	result.SetLength(Len);
 	if(Len > 0)
-		StrLCopy(ustr2pwchar(result, 1 - 1), fCasedLine + fTokenPos, (unsigned int) Len);
+		StrLCopy(ustr2pwchar(result, 1 - 1), fCasedLine + fTokenPos, static_cast<unsigned int>(Len));
 	return result;
 }
 
@@ -972,7 +973,7 @@ String __fastcall TSynCustomHighlighter::GetSampleSource()
 	return result;
 }
 
-void __fastcall TSynCustomHighlighter::HookAttrChangeEvent(TNotifyEvent ANotifyEvent)
+void __fastcall TSynCustomHighlighter::HookAttrChangeEvent(const TNotifyEvent& ANotifyEvent)
 {
 	fAttrChangeHooks->Add(ANotifyEvent);
 }
@@ -1202,7 +1203,7 @@ void __fastcall TSynCustomHighlighter::SetAdditionalWordBreakChars(const TSysCha
 	FAdditionalWordBreakChars = Value;
 }
 
-void __fastcall TSynCustomHighlighter::SetAttributesOnChange(TNotifyEvent AEvent)
+void __fastcall TSynCustomHighlighter::SetAttributesOnChange(const TNotifyEvent& AEvent)
 {
 	int i = 0;
 	TSynHighlighterAttributes* Attri = nullptr;
@@ -1282,7 +1283,7 @@ void __fastcall TSynCustomHighlighter::SetSampleSource(String Value)
   // TODO: sure this should be empty?
 }
 
-void __fastcall TSynCustomHighlighter::UnhookAttrChangeEvent(TNotifyEvent ANotifyEvent)
+void __fastcall TSynCustomHighlighter::UnhookAttrChangeEvent(const TNotifyEvent& ANotifyEvent)
 {
 	fAttrChangeHooks->Remove(ANotifyEvent);
 }
@@ -1351,5 +1352,5 @@ int __fastcall TSynCustomHighlighter::PosToExpandedPos(int Pos)
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynEditHighlighter
+}  // namespace Synedithighlighter
 

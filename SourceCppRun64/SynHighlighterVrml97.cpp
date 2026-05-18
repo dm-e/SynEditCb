@@ -392,7 +392,7 @@ __fastcall TSynVrml97Syn::TSynVrml97Syn(TComponent* AOwner)
 	AddAttribute(fVrmlNodeAttri);
 	fVrmlParameterAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlParameter, SYNS_FriendlyAttrVrmlParameter);
 	fVrmlParameterAttri->Style = Synhighlightervrml97__17;
-	fVrmlParameterAttri->Foreground = (TColor) 0xF0CAA6; //clSkyBlue
+	fVrmlParameterAttri->Foreground = static_cast<TColor>(0xF0CAA6); //clSkyBlue
 	fVrmlParameterAttri->Background = (TColor) clWhite;
 	AddAttribute(fVrmlParameterAttri);
 	fVrmlprotoAttri = new TSynHighlighterAttributes(SYNS_AttrVrmlProto, SYNS_FriendlyAttrVrmlProto);
@@ -1247,5 +1247,5 @@ String __fastcall TSynVrml97Syn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterVrml97
+}  // namespace Synhighlightervrml97
 

@@ -275,7 +275,7 @@ TSynHighlighterAttributes* __fastcall TSynURISyn::GetTokenAttribute()
 		case tkWebLink:
 		{
 			Visited = false;
-			if(ASSIGNED(fAlreadyVisitedURI))
+			if(Assigned(fAlreadyVisitedURI))
 				Visited = fAlreadyVisitedURI(GetToken());
 			if(Visited)
 				result = fVisitedURIAttri;
@@ -342,7 +342,7 @@ bool __fastcall TSynURISyn::IsIdentChar(WideChar AChar)
 	return result;
 }
 
-void __fastcall TSynURISyn::SetAlreadyVisitedURIFunc(TAlreadyVisitedURIFunc Value)
+void __fastcall TSynURISyn::SetAlreadyVisitedURIFunc(const TAlreadyVisitedURIFunc& Value)
 {
 	fAlreadyVisitedURI = Value;
 }
@@ -713,5 +713,5 @@ String __fastcall TSynURISyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterURI
+}  // namespace Synhighlighteruri
 

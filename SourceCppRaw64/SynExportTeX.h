@@ -185,7 +185,7 @@ public:
 };
 
 
-}  // namespace SynExportTeX
+}  // namespace Synexporttex
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synexporttex;

@@ -181,7 +181,7 @@ public:
 void SynHighlighterTeX_initialization();
 
 
-}  // namespace SynHighlighterTeX
+}  // namespace Synhighlightertex
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightertex;

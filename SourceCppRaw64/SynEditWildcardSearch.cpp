@@ -107,5 +107,5 @@ UnicodeString __fastcall TSynEditWildcardSearch::WildCardToRegExpr(UnicodeString
 }
 
 
-}  // namespace SynEditWildcardSearch
+}  // namespace Syneditwildcardsearch
 

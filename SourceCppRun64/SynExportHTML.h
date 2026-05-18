@@ -168,7 +168,7 @@ public:
 };
 
 
-}  // namespace SynExportHTML
+}  // namespace Synexporthtml
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synexporthtml;

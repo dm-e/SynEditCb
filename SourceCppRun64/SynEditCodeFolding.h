@@ -34,6 +34,7 @@
 #include <System.Generics.Defaults.hpp>
 #include <System.Generics.Collections.hpp>
 #include "SynEditHighlighter.h"
+#include "SynEditCodeFolding.h"
 #include "SynEditDelphiInstances.hpp"
 
 namespace Syneditcodefolding
@@ -209,8 +210,8 @@ public:
 	bool __fastcall FoldAroundLine(int Line, int& Index);
 	bool __fastcall FoldHidesLine(int Line);
 	bool __fastcall FoldHidesLine(int Line, int& Index);
-	System::TArray<int> __fastcall FoldsAtLevel(int Level);
-	System::TArray<int> __fastcall FoldsOfType(int aType);
+	System::D2CArray<int> __fastcall FoldsAtLevel(int Level);
+	System::D2CArray<int> __fastcall FoldsOfType(int aType);
 
     /*Scanning support*/
 	void __fastcall StoreCollapsedState();
@@ -297,7 +298,7 @@ public:
 	#include "SynEditCodeFolding_friends.inc"
 	virtual void __fastcall InitFoldRanges(TSynFoldRanges* FoldRanges);
     // Called after Highlighter ranges have been set
-	virtual void __fastcall ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan, int FromLine, int ToLine){} // = 0;
+	virtual void __fastcall ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan, int FromLine, int ToLine){ThrowAbstractMethodError(L"TSynCustomCodeFoldingHighlighter::ScanForFoldRanges");};
     // Called immediately after FoldRanges have been recreated
     // Override only if some finetuning of the FoldRanges is need.
 	virtual void __fastcall AdjustFoldRanges(TSynFoldRanges* FoldRanges, TStrings* LinesToScan);
@@ -306,7 +307,7 @@ public:
 const int FoldRegionType = 99;
 
 
-}  // namespace SynEditCodeFolding
+}  // namespace Syneditcodefolding
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditcodefolding;

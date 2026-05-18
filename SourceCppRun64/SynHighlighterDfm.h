@@ -215,7 +215,7 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile);
 void SynHighlighterDfm_initialization();
 
 
-}  // namespace SynHighlighterDfm
+}  // namespace Synhighlighterdfm
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterdfm;

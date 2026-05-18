@@ -185,7 +185,7 @@ const int SYNEDIT_PAUSE = VK_PAUSE;
 const int SYNEDIT_CAPITAL = VK_CAPITAL;
 
 
-}  // namespace SynEditKeyConst
+}  // namespace Syneditkeyconst
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditkeyconst;

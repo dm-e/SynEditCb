@@ -291,7 +291,7 @@ public:
 void SynHighlighterXML_initialization();
 
 
-}  // namespace SynHighlighterXML
+}  // namespace Synhighlighterxml
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterxml;

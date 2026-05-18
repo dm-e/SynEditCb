@@ -215,7 +215,7 @@ public:
 void SynHighlighterRuby_initialization();
 
 
-}  // namespace SynHighlighterRuby
+}  // namespace Synhighlighterruby
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterruby;

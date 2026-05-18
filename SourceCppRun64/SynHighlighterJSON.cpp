@@ -566,15 +566,15 @@ void __fastcall TSynJSONSyn::ScanForFoldRanges(TSynFoldRanges* FoldRanges, TStri
     // Skip empty lines
 		if(CurLine == L"")
 		{
-			FoldRanges->NoFoldInfo((int) (Line + 1));
+			FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 			continue;
 		}
 
     // Find an braces on this line  (Fold Type 1)
-		if(!FindBraces((int) Line, L'{', L'}', 1))
+		if(!FindBraces(static_cast<int>(Line), L'{', L'}', 1))
 		{
-			if(!FindBraces((int) Line, L'[', L']', 2))
-				FoldRanges->NoFoldInfo((int) (Line + 1));
+			if(!FindBraces(static_cast<int>(Line), L'[', L']', 2))
+				FoldRanges->NoFoldInfo(static_cast<int>(Line + 1));
 		}
 	} // while Line
 }
@@ -654,5 +654,5 @@ String __fastcall TSynJSONSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterJSON
+}  // namespace Synhighlighterjson
 

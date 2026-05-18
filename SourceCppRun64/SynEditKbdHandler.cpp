@@ -18,34 +18,34 @@ __fastcall TKeyboardControl::TKeyboardControl(HWND ParentWindow) : inherited(Par
 
 /* TSynEditKbdHandler */
 
-void __fastcall TSynEditKbdHandler::AddKeyDownHandler(TKeyEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddKeyDownHandler(const TKeyEvent& aHandler)
 {
-	fKeyDownChain->Add(*((TMethod*) &aHandler));
+	fKeyDownChain->Add(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::AddKeyUpHandler(TKeyEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddKeyUpHandler(const TKeyEvent& aHandler)
 {
-	fKeyUpChain->Add(*((TMethod*) &aHandler));
+	fKeyUpChain->Add(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::AddKeyPressHandler(TKeyPressEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddKeyPressHandler(const TKeyPressEvent& aHandler)
 {
-	fKeyPressChain->Add(*((TMethod*) &aHandler));
+	fKeyPressChain->Add(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::AddMouseDownHandler(TMouseEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddMouseDownHandler(const TMouseEvent& aHandler)
 {
-	fMouseDownChain->Add(*((TMethod*) &aHandler));
+	fMouseDownChain->Add(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::AddMouseUpHandler(TMouseEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddMouseUpHandler(const TMouseEvent& aHandler)
 {
-	fMouseUpChain->Add(*((TMethod*) &aHandler));
+	fMouseUpChain->Add(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::AddMouseCursorHandler(TMouseCursorEvent aHandler)
+void __fastcall TSynEditKbdHandler::AddMouseCursorHandler(const TMouseCursorEvent& aHandler)
 {
-	fMouseCursorChain->Add(*((TMethod*) &aHandler));
+	fMouseCursorChain->Add(to_method(aHandler));
 }
 
 __fastcall TSynEditKbdHandler::TSynEditKbdHandler()
@@ -105,8 +105,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyDown(TObject* Sender, WORD& Key, T
 			int stop = 0;
 			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				TMethod method = with0->Items[idx];
-				(*(TKeyEvent*)&method)(Sender, Key, Shift);
+				from_method<TKeyEvent>(with0->Items[idx])(Sender, Key, Shift);
 				if(Key == 0)
 				{
 					fInKeyDown = false;
@@ -135,8 +134,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyUp(TObject* Sender, WORD& Key, TSh
 			int stop = 0;
 			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				TMethod method = with0->Items[idx];
-				(*(TKeyEvent*)&method)(Sender, Key, Shift);
+				from_method<TKeyEvent>(with0->Items[idx])(Sender, Key, Shift);
 				if(Key == 0)
 				{
 					fInKeyUp = false;
@@ -165,8 +163,7 @@ void __fastcall TSynEditKbdHandler::ExecuteKeyPress(TObject* Sender, WideChar& K
 			int stop = 0;
 			for(stop = 0, idx = with0->Count - 1; idx >= stop; idx--)
 			{
-				TMethod method = with0->Items[idx];
-				(*(TKeyPressEvent*)&method)(Sender, Key);
+				from_method<TKeyPressEvent>(with0->Items[idx])(Sender, Key);
 				if(Key == L'\x00')
 				{
 					fInKeyPress = false;
@@ -192,8 +189,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseDown(TObject* Sender, TMouseButt
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseDownChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMethod method = fMouseDownChain->Items[cHandler];
-			(*(TMouseEvent*)&method)(Sender, Button, Shift, X, Y);
+			from_method<TMouseEvent>(fMouseDownChain->Items[cHandler])(Sender, Button, Shift, X, Y);
 		}
 	}
 	__finally
@@ -213,8 +209,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseUp(TObject* Sender, TMouseButton
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseUpChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMethod method = fMouseDownChain->Items[cHandler];
-			(*(TMouseEvent*)&method)(Sender, Button, Shift, X, Y);
+			from_method<TMouseEvent>(fMouseUpChain->Items[cHandler])(Sender, Button, Shift, X, Y);
 		}
 	}
 	__finally
@@ -234,8 +229,7 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseCursor(TObject* Sender, const TB
 		int stop = 0;
 		for(stop = 0, cHandler = fMouseCursorChain->Count - 1; cHandler >= stop; cHandler--)
 		{
-			TMethod method = fMouseDownChain->Items[cHandler];
-			(*(TMouseCursorEvent*)&method)(Sender, aLineCharPos, aCursor);
+			from_method<TMouseCursorEvent>(fMouseCursorChain->Items[cHandler])(Sender, aLineCharPos, aCursor);
 		}
 	}
 	__finally
@@ -244,34 +238,34 @@ void __fastcall TSynEditKbdHandler::ExecuteMouseCursor(TObject* Sender, const TB
 	}
 }
 
-void __fastcall TSynEditKbdHandler::RemoveKeyDownHandler(TKeyEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveKeyDownHandler(const TKeyEvent& aHandler)
 {
-	fKeyDownChain->Remove(*((TMethod*) &aHandler));
+	fKeyDownChain->Remove(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::RemoveKeyUpHandler(TKeyEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveKeyUpHandler(const TKeyEvent& aHandler)
 {
-	fKeyUpChain->Remove(*((TMethod*) &aHandler));
+	fKeyUpChain->Remove(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::RemoveKeyPressHandler(TKeyPressEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveKeyPressHandler(const TKeyPressEvent& aHandler)
 {
-	fKeyPressChain->Remove(*((TMethod*) &aHandler));
+	fKeyPressChain->Remove(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::RemoveMouseDownHandler(TMouseEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveMouseDownHandler(const TMouseEvent& aHandler)
 {
-	fMouseDownChain->Remove(*((TMethod*) &aHandler));
+	fMouseDownChain->Remove(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::RemoveMouseUpHandler(TMouseEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveMouseUpHandler(const TMouseEvent& aHandler)
 {
-	fMouseUpChain->Remove(*((TMethod*) &aHandler));
+	fMouseUpChain->Remove(to_method(aHandler));
 }
 
-void __fastcall TSynEditKbdHandler::RemoveMouseCursorHandler(TMouseCursorEvent aHandler)
+void __fastcall TSynEditKbdHandler::RemoveMouseCursorHandler(const TMouseCursorEvent& aHandler)
 {
-	fMouseCursorChain->Remove(*((TMethod*) &aHandler));
+	fMouseCursorChain->Remove(to_method(aHandler));
 }
 
 /* TMethodList */
@@ -329,5 +323,5 @@ void __fastcall TMethodList::Remove(const TMethod& caHandler)
 }
 
 
-}  // namespace SynEditKbdHandler
+}  // namespace Syneditkbdhandler
 

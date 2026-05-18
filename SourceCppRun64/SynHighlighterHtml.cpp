@@ -234,10 +234,10 @@ unsigned int __fastcall TSynHTMLSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 627 + int((*Str)) * 829);
+		result = static_cast<unsigned int>(result * 627 + int((*Str)) * 829);
 		++Str;
 	}
-	result = (unsigned int) (result % 2179);
+	result = static_cast<unsigned int>(result % 2179);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -312,7 +312,7 @@ __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
 	AddAttribute(fIdentifierAttri);
 	fKeyAttri = new TSynHighlighterAttributes(SYNS_AttrReservedWord, SYNS_FriendlyAttrReservedWord);
 	fKeyAttri->Style = Synhighlighterhtml__1;
-	fKeyAttri->Foreground = (TColor) 0x00FF0080;
+	fKeyAttri->Foreground = static_cast<TColor>(0x00FF0080);
 	AddAttribute(fKeyAttri);
 	fSpaceAttri = new TSynHighlighterAttributes(SYNS_AttrSpace, SYNS_FriendlyAttrSpace);
 	AddAttribute(fSpaceAttri);
@@ -326,11 +326,11 @@ __fastcall TSynHTMLSyn::TSynHTMLSyn(TComponent* AOwner)
 	fUndefKeyAttri->Foreground = (TColor) clRed;
 	AddAttribute(fUndefKeyAttri);
 	fValueAttri = new TSynHighlighterAttributes(SYNS_AttrValue, SYNS_FriendlyAttrValue);
-	fValueAttri->Foreground = (TColor) 0x00FF8000;
+	fValueAttri->Foreground = static_cast<TColor>(0x00FF8000);
 	AddAttribute(fValueAttri);
 	fAndAttri = new TSynHighlighterAttributes(SYNS_AttrEscapeAmpersand, SYNS_FriendlyAttrEscapeAmpersand);
 	fAndAttri->Style = Synhighlighterhtml__4;
-	fAndAttri->Foreground = (TColor) 0x0000FF00;
+	fAndAttri->Foreground = static_cast<TColor>(0x0000FF00);
 	AddAttribute(fAndAttri);
 	SetAttributesOnChange(DefHighlightChange);
 	InitIdent();
@@ -522,7 +522,7 @@ void __fastcall TSynHTMLSyn::TextProc()
 				int stop = 0;
 				for(stop = 248 /*# High(EscapeAmps) */, i = 0 /*# Low(EscapeAmps) */; i <= stop; i++)
 				{
-					if(AnsiStrLComp((fLine + Run), const_cast<PWideChar>(EscapeAmps[i]), (unsigned int) String(EscapeAmps[i]).Length()) == 0)
+					if(AnsiStrLComp((fLine + Run), const_cast<PWideChar>(EscapeAmps[i]), static_cast<unsigned int>(wcslen(EscapeAmps[i]))) == 0)
 					{
 						fAndCode = i;
 						fRange = rsAmpersand;
@@ -573,7 +573,7 @@ void __fastcall TSynHTMLSyn::AmpersandProc()
 		case 0:
 		{
 			fTokenID = tkAmpersand;
-			Run += String(EscapeAmps[fAndCode]).Length();
+			Run += wcslen(EscapeAmps[fAndCode]);
 		}
 		break;
 		default:
@@ -924,5 +924,5 @@ String __fastcall TSynHTMLSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterHtml
+}  // namespace Synhighlighterhtml
 

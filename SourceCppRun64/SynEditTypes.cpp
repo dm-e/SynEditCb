@@ -210,5 +210,5 @@ String __fastcall LineBreakFromFileFormat(TSynEditFileFormat FileFormat)
 }
 
 
-}  // namespace SynEditTypes
+}  // namespace Synedittypes
 

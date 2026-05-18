@@ -131,11 +131,11 @@ protected:
 	void __fastcall SetScaleMode(TSynPreviewScale Value);
 	void __fastcall SetScalePercent(int Value);
 private:
-	HIDESBASE MESSAGE void __fastcall WMEraseBkgnd(TWMEraseBkgnd& Msg)/*# WM_ERASEBKGND */;
-	HIDESBASE MESSAGE void __fastcall WMHScroll(TWMHScroll& Msg)/*# WM_HSCROLL */;
-	HIDESBASE MESSAGE void __fastcall WMSize(TWMSize& Msg)/*# WM_SIZE */;
-	HIDESBASE MESSAGE void __fastcall WMVScroll(TWMVScroll& Msg)/*# WM_VSCROLL */;
-	HIDESBASE MESSAGE void __fastcall WMMouseWheel(TWMMouseWheel& Message)/*# WM_MOUSEWHEEL */;
+	HIDESBASE MESSAGE void __fastcall WMEraseBkgnd(Winapi::Messages::TWMEraseBkgnd& Msg)/*# WM_ERASEBKGND */;
+	HIDESBASE MESSAGE void __fastcall WMHScroll(Winapi::Messages::TWMHScroll& Msg)/*# WM_HSCROLL */;
+	HIDESBASE MESSAGE void __fastcall WMSize(Winapi::Messages::TWMSize& Msg)/*# WM_SIZE */;
+	HIDESBASE MESSAGE void __fastcall WMVScroll(Winapi::Messages::TWMVScroll& Msg)/*# WM_VSCROLL */;
+	HIDESBASE MESSAGE void __fastcall WMMouseWheel(Winapi::Messages::TWMMouseWheel& Message)/*# WM_MOUSEWHEEL */;
 	void __fastcall PaintPaper();
 	int __fastcall GetPageCount();
 protected:
@@ -185,18 +185,18 @@ public:
                                                      // JD 2002-01-9
 protected:
 	BEGIN_MESSAGE_MAP
-	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, TWMEraseBkgnd, WMEraseBkgnd)
-	  VCL_MESSAGE_HANDLER(WM_HSCROLL, TWMHScroll, WMHScroll)
-	  VCL_MESSAGE_HANDLER(WM_MOUSEWHEEL, TWMMouseWheel, WMMouseWheel)
-	  VCL_MESSAGE_HANDLER(WM_SIZE, TWMSize, WMSize)
-	  VCL_MESSAGE_HANDLER(WM_VSCROLL, TWMVScroll, WMVScroll)
+	  VCL_MESSAGE_HANDLER(WM_ERASEBKGND, Winapi::Messages::TWMEraseBkgnd, WMEraseBkgnd)
+	  VCL_MESSAGE_HANDLER(WM_HSCROLL, Winapi::Messages::TWMHScroll, WMHScroll)
+	  VCL_MESSAGE_HANDLER(WM_MOUSEWHEEL, Winapi::Messages::TWMMouseWheel, WMMouseWheel)
+	  VCL_MESSAGE_HANDLER(WM_SIZE, Winapi::Messages::TWMSize, WMSize)
+	  VCL_MESSAGE_HANDLER(WM_VSCROLL, Winapi::Messages::TWMVScroll, WMVScroll)
 	END_MESSAGE_MAP(Vcl::Controls::TCustomControl)
 public:
 	__fastcall TSynEditPrintPreview(HWND ParentWindow);
 };
 
 
-}  // namespace SynEditPrintPreview
+}  // namespace Syneditprintpreview
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditprintpreview;

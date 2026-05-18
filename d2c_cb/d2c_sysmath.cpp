@@ -2,11 +2,11 @@
 #pragma hdrstop
 
 /*
-    Copyright (C) <2019>  <Dr. Detlef Meyer-Eltz>
+    Copyright (C) <2026>  <Dr. Detlef Meyer-Eltz>
     ---------------------------------------------
 
     this file is authorized for unlimited use in any
-    project created with Delphi2C# or DelphiXE2Cpp11.
+	project created with Delphi2Cpp or Delphi2CB.
 
     http://www.texttransformer.com/
 */

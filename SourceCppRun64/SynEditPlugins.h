@@ -120,7 +120,7 @@ class TAbstractSynHookerPlugin : public TAbstractSynPlugin
 protected:
 	void __fastcall HookEditor(Synedit::TCustomSynEdit* aEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut aOldShortCut, TShortCut aNewShortCut);
 	void __fastcall UnHookEditor(Synedit::TCustomSynEdit* aEditor, Synedittypes::TSynEditorCommand aCommandID, TShortCut aShortCut);
-	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData){} // = 0;
+	virtual void __fastcall OnCommand(TObject* Sender, bool AfterProcessing, bool& Handled, Synedittypes::TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData){ThrowAbstractMethodError(L"TAbstractSynHookerPlugin::OnCommand");};
 public:
 	typedef TAbstractSynPlugin inherited;
 	#include "SynEditPlugins_friends.inc"
@@ -145,9 +145,9 @@ protected:
 	virtual void __fastcall DoAddEditor(Synedit::TCustomSynEdit* aEditor);
 	virtual void __fastcall DoRemoveEditor(Synedit::TCustomSynEdit* aEditor);
     /**/
-	virtual void __fastcall DoExecute(){} // = 0;
-	virtual void __fastcall DoAccept(){} // = 0;
-	virtual void __fastcall DoCancel(){} // = 0;
+	virtual void __fastcall DoExecute(){ThrowAbstractMethodError(L"TAbstractSynSingleHookPlugin::DoExecute");};
+	virtual void __fastcall DoAccept(){ThrowAbstractMethodError(L"TAbstractSynSingleHookPlugin::DoAccept");};
+	virtual void __fastcall DoCancel(){ThrowAbstractMethodError(L"TAbstractSynSingleHookPlugin::DoCancel");};
 public:
 	typedef TAbstractSynHookerPlugin inherited;
 	#include "SynEditPlugins_friends.inc"
@@ -187,7 +187,7 @@ Synedittypes::TSynEditorCommand __fastcall NewPluginCommand();
 void __fastcall ReleasePluginCommand(Synedittypes::TSynEditorCommand aCmd);
 
 
-}  // namespace SynEditPlugins
+}  // namespace Syneditplugins
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditplugins;

@@ -60,7 +60,7 @@ int __fastcall LoadDFMFile2Strings(const String AFile, TStrings* AStrings, bool&
 	AStrings->Clear();
 	try
 	{
-		Src = new TFileStream(AFile, (WORD) (fmOpenRead | fmShareDenyWrite));
+		Src = new TFileStream(AFile, static_cast<WORD>(fmOpenRead | fmShareDenyWrite));
 		{
 			auto olsLambda = onLeavingScope([&] 
 			{
@@ -75,14 +75,14 @@ int __fastcall LoadDFMFile2Strings(const String AFile, TStrings* AStrings, bool&
 				origFormat = sofUnknown;
 				ObjectResourceToText(Src, Dest, origFormat);
 				WasText = origFormat == sofText;
-				Dest->Seek(0, (WORD) soFromBeginning);
+				Dest->Seek(0, static_cast<WORD>(soFromBeginning));
 				AStrings->LoadFromStream(Dest);
 			}
 		}
 	}
-	catch(EInOutError* E)
+	catch(const EInOutError& E)
 	{
-		result = -E->ErrorCode;
+		result = -E.ErrorCode;
 	}
 	catch(...)
 	{
@@ -106,8 +106,8 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile)
 				delete Src;
 			});
 			AStrings->SaveToStream(Src);
-			Src->Seek(0, (WORD) soFromBeginning);
-			Dest = new TFileStream(AFile, (WORD) fmCreate);
+			Src->Seek(0, static_cast<WORD>(soFromBeginning));
+			Dest = new TFileStream(AFile, static_cast<WORD>(fmCreate));
 			{
 				auto olsLambda = onLeavingScope([&] 
 				{
@@ -117,9 +117,9 @@ int __fastcall SaveStrings2DFMFile(TStrings* AStrings, const String AFile)
 			}
 		}
 	}
-	catch(EInOutError* E)
+	catch(const EInOutError& E)
 	{
-		result = -E->ErrorCode;
+		result = -E.ErrorCode;
 	}
 	catch(...)
 	{
@@ -612,5 +612,5 @@ String __fastcall TSynDfmSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterDfm
+}  // namespace Synhighlighterdfm
 

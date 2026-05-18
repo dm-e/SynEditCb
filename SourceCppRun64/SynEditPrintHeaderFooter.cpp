@@ -6,6 +6,7 @@
 #include <System.Math.hpp>
 #include "SynEditMiscProcs.h"
 #include "d2c_convert.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -35,7 +36,7 @@ String __fastcall GetFirstEl(String& Value, WideChar Delim)
 {
 	String result;
 	int p = 0;
-	p = Pos(Delim, Value);
+	p = PosChar(Delim, Value);
 	if(p == 0)
 		p = Value.Length() + 1;
 	result = Value.SubString(1, p - 1);
@@ -84,7 +85,7 @@ String __fastcall THeaderFooterItem::GetAsString()
 	           + L"/"
 	           + IntToStr(FFont->Size)
 	           + L"/"
-	           + IntToStr((int) ToByte(FFont->Style))
+	           + IntToStr(static_cast<int>(ToByte(FFont->Style)))
 	           + L"/"
 	           + IntToStr(FLineNumber)
 	           + L"/"
@@ -234,12 +235,12 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Read((void**)&Len, (NativeInt) sizeof(Len));
-		BufferSize = (int) (Len * sizeof(WideChar));
+		with0->Read(&Len, static_cast<NativeInt>(sizeof(Len)));
+		BufferSize = static_cast<int>(Len * sizeof(WideChar));
 		Buffer = (void*) GetMemory(BufferSize + sizeof(WideChar));
 		try
 		{
-			with0->Read((void**) Buffer, BufferSize);
+			with0->Read(Buffer, BufferSize);
 			((PWideChar) Buffer)[(unsigned __int64)(BufferSize / /*div*/ sizeof(WideChar))] = L'\x00';
 			FText = (wchar_t*) Buffer /*# check length*/;
 		}
@@ -247,16 +248,16 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&FLineNumber, (NativeInt) sizeof(FLineNumber));
+		with0->Read(&FLineNumber, static_cast<NativeInt>(sizeof(FLineNumber)));
     // font
-		with0->Read((void**)&aCharset, (NativeInt) sizeof(aCharset));
-		with0->Read((void**)&aColor, (NativeInt) sizeof(aColor));
-		with0->Read((void**)&aHeight, (NativeInt) sizeof(aHeight));
-		with0->Read((void**)&BufferSize, (NativeInt) sizeof(BufferSize));
+		with0->Read(&aCharset, static_cast<NativeInt>(sizeof(aCharset)));
+		with0->Read(&aColor, static_cast<NativeInt>(sizeof(aColor)));
+		with0->Read(&aHeight, static_cast<NativeInt>(sizeof(aHeight)));
+		with0->Read(&BufferSize, static_cast<NativeInt>(sizeof(BufferSize)));
 		Buffer = (void*) GetMemory(BufferSize + 1);
 		try
 		{
-			with0->Read((void**) Buffer, BufferSize);
+			with0->Read(Buffer, BufferSize);
 			((PAnsiChar) Buffer)[(unsigned __int64)(BufferSize / /*div*/ sizeof(AnsiChar))] = '\x00';
 			aName = UnicodeString((char*)Buffer /*# check length*/);
 		}
@@ -264,9 +265,9 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(Buffer);
 		}
-		with0->Read((void**)&aPitch, (NativeInt) sizeof(aPitch));
-		with0->Read((void**)&aSize, (NativeInt) sizeof(aSize));
-		with0->Read((void**)&aStyle, (NativeInt) sizeof(aStyle));
+		with0->Read(&aPitch, static_cast<NativeInt>(sizeof(aPitch)));
+		with0->Read(&aSize, static_cast<NativeInt>(sizeof(aSize)));
+		with0->Read(&aStyle, static_cast<NativeInt>(sizeof(aStyle)));
 		FFont->Charset = aCharset;
 		FFont->Color = aColor;
 		FFont->Height = aHeight;
@@ -274,7 +275,7 @@ void __fastcall THeaderFooterItem::LoadFromStream(TStream* AStream)
 		FFont->Pitch = aPitch;
 		FFont->Size = aSize;
 		FFont->Style = aStyle;
-		with0->Read((void**)&FAlignment, (NativeInt) sizeof(FAlignment));
+		with0->Read(&FAlignment, static_cast<NativeInt>(sizeof(FAlignment)));
 	}
 }
 
@@ -292,9 +293,9 @@ void __fastcall THeaderFooterItem::SaveToStream(TStream* AStream)
 	{
 		auto with0 = AStream;
 		aLen = FText.Length();
-		with0->Write(&aLen, (NativeInt) sizeof(aLen));
-		with0->Write(FText.c_str(), (NativeInt) (aLen * sizeof(WideChar)));
-		with0->Write(&FLineNumber, (NativeInt) sizeof(FLineNumber));
+		with0->Write(&aLen, static_cast<NativeInt>(sizeof(aLen)));
+		with0->Write(FText.c_str(), static_cast<NativeInt>(aLen * sizeof(WideChar)));
+		with0->Write(&FLineNumber, static_cast<NativeInt>(sizeof(FLineNumber)));
     // font
 		aCharset = FFont->Charset;
 		aColor = FFont->Color;
@@ -303,16 +304,16 @@ void __fastcall THeaderFooterItem::SaveToStream(TStream* AStream)
 		aPitch = FFont->Pitch;
 		aSize = FFont->Size;
 		aStyle = FFont->Style;
-		with0->Write(&aCharset, (NativeInt) sizeof(aCharset));
-		with0->Write(&aColor, (NativeInt) sizeof(aColor));
-		with0->Write(&aHeight, (NativeInt) sizeof(aHeight));
+		with0->Write(&aCharset, static_cast<NativeInt>(sizeof(aCharset)));
+		with0->Write(&aColor, static_cast<NativeInt>(sizeof(aColor)));
+		with0->Write(&aHeight, static_cast<NativeInt>(sizeof(aHeight)));
 		aLen = aName.Length();
-		with0->Write(&aLen, (NativeInt) sizeof(aLen));
+		with0->Write(&aLen, static_cast<NativeInt>(sizeof(aLen)));
 		with0->Write(AnsiString(aName).c_str(), aLen);
-		with0->Write(&aPitch, (NativeInt) sizeof(aPitch));
-		with0->Write(&aSize, (NativeInt) sizeof(aSize));
-		with0->Write(&aStyle, (NativeInt) sizeof(aStyle));
-		with0->Write(&FAlignment, (NativeInt) sizeof(FAlignment));
+		with0->Write(&aPitch, static_cast<NativeInt>(sizeof(aPitch)));
+		with0->Write(&aSize, static_cast<NativeInt>(sizeof(aSize)));
+		with0->Write(&aStyle, static_cast<NativeInt>(sizeof(aStyle)));
+		with0->Write(&FAlignment, static_cast<NativeInt>(sizeof(FAlignment)));
 	}
 }
 
@@ -322,8 +323,8 @@ void __fastcall THeaderFooterItem::SetAsString(const String Value)
 	TFontStyles sty;
 	s = Value;
 	FText = DecodeString(GetFirstEl(s, L'/'));
-	FFont->Charset = (System::Uitypes::TFontCharset) StrToIntDef(GetFirstEl(s, L'/'), 0);
-	FFont->Color = (TColor) StrToIntDef(GetFirstEl(s, L'/'), 0);
+	FFont->Charset = static_cast<System::Uitypes::TFontCharset>(StrToIntDef(GetFirstEl(s, L'/'), 0));
+	FFont->Color = static_cast<TColor>(StrToIntDef(GetFirstEl(s, L'/'), 0));
 	FFont->Height = StrToIntDef(GetFirstEl(s, L'/'), 0);
 	FFont->Name = DecodeString(GetFirstEl(s, L'/'));
 	FFont->Pitch = ((TFontPitch) StrToIntDef(GetFirstEl(s, L'/'), 0));
@@ -483,7 +484,7 @@ void __fastcall THeaderFooter::CalcHeight(TCanvas* ACanvas)
 	int CurLine = 0;
 	THeaderFooterItem* AItem = nullptr;
 	int FOrgHeight = 0;
-	TTextMetric TextMetric = {};
+	Winapi::Windows::TTextMetric TextMetric = {};
 	int stop = 0;
 	FFrameHeight = -1;
 	if(FItems->Count <= 0)
@@ -677,7 +678,7 @@ void __fastcall THeaderFooter::Print(TCanvas* ACanvas, int PageNum)
 			}
 		}
       /*Aligning at base line - Fonts can have different size in headers and footers*/
-		OldAlign = SetTextAlign(ACanvas->Handle, (UINT) TA_BASELINE);
+		OldAlign = SetTextAlign(ACanvas->Handle, static_cast<UINT>(TA_BASELINE));
 		ExtTextOutW(ACanvas->Handle, X, Y + ((TLineInfo*) FLineInfo->Items[CurLine - 1])->MaxBaseDist, 0, nullptr, ustr2pwchar(AStr), AStr.Length(), nullptr);
 		SetTextAlign(ACanvas->Handle, OldAlign);
 	}
@@ -781,20 +782,20 @@ void __fastcall THeaderFooter::LoadFromStream(TStream* AStream)
 	{
 		auto with0 = AStream;
     // read header/footer properties first
-		with0->Read((void**)&FFrameTypes, (NativeInt) sizeof(FFrameTypes));
-		with0->Read((void**)&FShadedColor, (NativeInt) sizeof(FShadedColor));
-		with0->Read((void**)&FLineColor, (NativeInt) sizeof(FLineColor));
-		with0->Read((void**)&FRomanNumbers, (NativeInt) sizeof(FRomanNumbers));
-		with0->Read((void**)&FMirrorPosition, (NativeInt) sizeof(FMirrorPosition));
+		with0->Read(&FFrameTypes, static_cast<NativeInt>(sizeof(FFrameTypes)));
+		with0->Read(&FShadedColor, static_cast<NativeInt>(sizeof(FShadedColor)));
+		with0->Read(&FLineColor, static_cast<NativeInt>(sizeof(FLineColor)));
+		with0->Read(&FRomanNumbers, static_cast<NativeInt>(sizeof(FRomanNumbers)));
+		with0->Read(&FMirrorPosition, static_cast<NativeInt>(sizeof(FMirrorPosition)));
     // font
-		with0->Read((void**)&aCharset, (NativeInt) sizeof(aCharset));
-		with0->Read((void**)&aColor, (NativeInt) sizeof(aColor));
-		with0->Read((void**)&aHeight, (NativeInt) sizeof(aHeight));
-		with0->Read((void**)&bufSize, (NativeInt) sizeof(bufSize));
+		with0->Read(&aCharset, static_cast<NativeInt>(sizeof(aCharset)));
+		with0->Read(&aColor, static_cast<NativeInt>(sizeof(aColor)));
+		with0->Read(&aHeight, static_cast<NativeInt>(sizeof(aHeight)));
+		with0->Read(&bufSize, static_cast<NativeInt>(sizeof(bufSize)));
 		buffer = (PAnsiChar) GetMemory(bufSize + 1);
 		try
 		{
-			with0->Read((void**)buffer, bufSize);
+			with0->Read(buffer, bufSize);
 			buffer[bufSize] = '\x00';
 			aName = UnicodeString(buffer);
 		}
@@ -802,9 +803,9 @@ void __fastcall THeaderFooter::LoadFromStream(TStream* AStream)
 		{
 			FreeMemory(buffer);
 		}
-		with0->Read((void**)&aPitch, (NativeInt) sizeof(aPitch));
-		with0->Read((void**)&aSize, (NativeInt) sizeof(aSize));
-		with0->Read((void**)&aStyle, (NativeInt) sizeof(aStyle));
+		with0->Read(&aPitch, static_cast<NativeInt>(sizeof(aPitch)));
+		with0->Read(&aSize, static_cast<NativeInt>(sizeof(aSize)));
+		with0->Read(&aStyle, static_cast<NativeInt>(sizeof(aStyle)));
 		FDefaultFont->Charset = aCharset;
 		FDefaultFont->Color = aColor;
 		FDefaultFont->Height = aHeight;
@@ -813,7 +814,7 @@ void __fastcall THeaderFooter::LoadFromStream(TStream* AStream)
 		FDefaultFont->Size = aSize;
 		FDefaultFont->Style = aStyle;
     // now read in the items
-		with0->Read((void**)&Num, (NativeInt) sizeof(Num));
+		with0->Read(&Num, static_cast<NativeInt>(sizeof(Num)));
 		while(Num > 0)
 
       // load headerfooter items from stream
@@ -842,11 +843,11 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 		auto with0 = AStream;
     // write the header/footer properties first
 		int stop = 0;
-		with0->Write(&FFrameTypes, (NativeInt) sizeof(FFrameTypes));
-		with0->Write(&FShadedColor, (NativeInt) sizeof(FShadedColor));
-		with0->Write(&FLineColor, (NativeInt) sizeof(FLineColor));
-		with0->Write(&FRomanNumbers, (NativeInt) sizeof(FRomanNumbers));
-		with0->Write(&FMirrorPosition, (NativeInt) sizeof(FMirrorPosition));
+		with0->Write(&FFrameTypes, static_cast<NativeInt>(sizeof(FFrameTypes)));
+		with0->Write(&FShadedColor, static_cast<NativeInt>(sizeof(FShadedColor)));
+		with0->Write(&FLineColor, static_cast<NativeInt>(sizeof(FLineColor)));
+		with0->Write(&FRomanNumbers, static_cast<NativeInt>(sizeof(FRomanNumbers)));
+		with0->Write(&FMirrorPosition, static_cast<NativeInt>(sizeof(FMirrorPosition)));
     // font
 		aCharset = FDefaultFont->Charset;
 		aColor = FDefaultFont->Color;
@@ -855,19 +856,19 @@ void __fastcall THeaderFooter::SaveToStream(TStream* AStream)
 		aPitch = FDefaultFont->Pitch;
 		aSize = FDefaultFont->Size;
 		aStyle = FDefaultFont->Style;
-		with0->Write(&aCharset, (NativeInt) sizeof(aCharset));
-		with0->Write(&aColor, (NativeInt) sizeof(aColor));
-		with0->Write(&aHeight, (NativeInt) sizeof(aHeight));
+		with0->Write(&aCharset, static_cast<NativeInt>(sizeof(aCharset)));
+		with0->Write(&aColor, static_cast<NativeInt>(sizeof(aColor)));
+		with0->Write(&aHeight, static_cast<NativeInt>(sizeof(aHeight)));
 		aLen = aName.Length();
-		with0->Write(&aLen, (NativeInt) sizeof(aLen));
+		with0->Write(&aLen, static_cast<NativeInt>(sizeof(aLen)));
 		with0->Write(AnsiString(aName).c_str(), aName.Length());
-		with0->Write(&aPitch, (NativeInt) sizeof(aPitch));
-		with0->Write(&aSize, (NativeInt) sizeof(aSize));
-		with0->Write(&aStyle, (NativeInt) sizeof(aStyle));
+		with0->Write(&aPitch, static_cast<NativeInt>(sizeof(aPitch)));
+		with0->Write(&aSize, static_cast<NativeInt>(sizeof(aSize)));
+		with0->Write(&aStyle, static_cast<NativeInt>(sizeof(aStyle)));
 
     // now write the items
 		Num = Count();
-		with0->Write(&Num, (NativeInt) sizeof(Num));
+		with0->Write(&Num, static_cast<NativeInt>(sizeof(Num)));
 		for(stop = Num - 1, i = 0; i <= stop; i++)
 		{
 			Get(i)->SaveToStream(AStream);
@@ -892,5 +893,5 @@ __fastcall TFooter::TFooter()
 }
 
 
-}  // namespace SynEditPrintHeaderFooter
+}  // namespace Syneditprintheaderfooter
 

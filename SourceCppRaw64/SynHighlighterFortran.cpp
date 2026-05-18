@@ -9,6 +9,7 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
+using namespace System;
 
 namespace Synhighlighterfortran
 {
@@ -39,10 +40,10 @@ unsigned int __fastcall TSynFortranSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 294 + int((*Str)) * 110);
+		result = static_cast<unsigned int>(result * 294 + int((*Str)) * 110);
 		++Str;
 	}
-	result = (unsigned int) (result % 193);
+	result = static_cast<unsigned int>(result % 193);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -711,5 +712,5 @@ String __fastcall TSynFortranSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterFortran
+}  // namespace Synhighlighterfortran
 

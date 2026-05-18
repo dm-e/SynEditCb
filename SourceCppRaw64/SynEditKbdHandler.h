@@ -189,22 +189,22 @@ public:
 	void __fastcall ExecuteMouseDown(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall ExecuteMouseUp(TObject* Sender, TMouseButton Button, TShiftState Shift, int X, int Y);
 	void __fastcall ExecuteMouseCursor(TObject* Sender, const TBufferCoord& aLineCharPos, TCursor& aCursor);
-	void __fastcall AddKeyDownHandler(TKeyEvent aHandler);
-	void __fastcall RemoveKeyDownHandler(TKeyEvent aHandler);
-	void __fastcall AddKeyUpHandler(TKeyEvent aHandler);
-	void __fastcall RemoveKeyUpHandler(TKeyEvent aHandler);
-	void __fastcall AddKeyPressHandler(TKeyPressEvent aHandler);
-	void __fastcall RemoveKeyPressHandler(TKeyPressEvent aHandler);
-	void __fastcall AddMouseDownHandler(TMouseEvent aHandler);
-	void __fastcall RemoveMouseDownHandler(TMouseEvent aHandler);
-	void __fastcall AddMouseUpHandler(TMouseEvent aHandler);
-	void __fastcall RemoveMouseUpHandler(TMouseEvent aHandler);
-	void __fastcall AddMouseCursorHandler(TMouseCursorEvent aHandler);
-	void __fastcall RemoveMouseCursorHandler(TMouseCursorEvent aHandler);
+	void __fastcall AddKeyDownHandler(const TKeyEvent& aHandler);
+	void __fastcall RemoveKeyDownHandler(const TKeyEvent& aHandler);
+	void __fastcall AddKeyUpHandler(const TKeyEvent& aHandler);
+	void __fastcall RemoveKeyUpHandler(const TKeyEvent& aHandler);
+	void __fastcall AddKeyPressHandler(const TKeyPressEvent& aHandler);
+	void __fastcall RemoveKeyPressHandler(const TKeyPressEvent& aHandler);
+	void __fastcall AddMouseDownHandler(const TMouseEvent& aHandler);
+	void __fastcall RemoveMouseDownHandler(const TMouseEvent& aHandler);
+	void __fastcall AddMouseUpHandler(const TMouseEvent& aHandler);
+	void __fastcall RemoveMouseUpHandler(const TMouseEvent& aHandler);
+	void __fastcall AddMouseCursorHandler(const TMouseCursorEvent& aHandler);
+	void __fastcall RemoveMouseCursorHandler(const TMouseCursorEvent& aHandler);
 };
 
 
-}  // namespace SynEditKbdHandler
+}  // namespace Syneditkbdhandler
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditkbdhandler;

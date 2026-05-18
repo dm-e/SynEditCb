@@ -142,7 +142,7 @@ String __fastcall IntToRoman(int Value);
 bool __fastcall WrapTextEx(const String Line, TSysCharSet BreakChars, int MaxCol, TList* AList);
 
 
-}  // namespace SynEditPrintTypes
+}  // namespace Syneditprinttypes
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditprinttypes;

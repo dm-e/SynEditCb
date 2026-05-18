@@ -131,7 +131,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fTypesAttri;
-	unsigned int __fastcall HashKey(PWideChar Str);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
 	TtkTokenKind __fastcall FuncAny(int Index);
 	TtkTokenKind __fastcall FuncAttribute(int Index);
 	TtkTokenKind __fastcall FuncBoolean(int Index);
@@ -174,7 +174,7 @@ private:
 	void __fastcall UnknownProc();
 	TtkTokenKind __fastcall AltFunc(int Index);
 	void __fastcall InitIdent();
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall BraceCloseProc();
 	void __fastcall BraceOpenProc();
 	void __fastcall ColonProc();
@@ -228,7 +228,7 @@ public:
 void SynHighlighterWebIDL_initialization();
 
 
-}  // namespace SynHighlighterWebIDL
+}  // namespace Synhighlighterwebidl
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterwebidl;

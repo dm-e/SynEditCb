@@ -370,7 +370,7 @@ void __fastcall TCustomSynAutoCorrect::KeyboardHandler(TObject* Sender, bool Aft
 						Correction = HalfString(CurrText, false);
 						b = b || FindAndCorrect(s, Original, Correction, cx);
 					}
-					if(ASSIGNED(OnCorrected))
+					if(Assigned(OnCorrected))
 						OnCorrected(this);
 				}
 			}
@@ -409,7 +409,7 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 			}
 			if(b)
 			{
-				if(ASSIGNED(FOnAutoCorrect))
+				if(Assigned(FOnAutoCorrect))
 				{
 					Action = aaCorrect;
 					FOnAutoCorrect(this, Editor->Lines->Strings[Pred(FPrevLine)], s, Editor->CaretY, 0, Action);
@@ -417,7 +417,7 @@ void __fastcall TCustomSynAutoCorrect::MouseDownHandler(TObject* Sender, TMouseB
 						return;
 				}
 				Editor->Lines->Strings[Pred(FPrevLine)] = s;
-				if(ASSIGNED(OnCorrected))
+				if(Assigned(OnCorrected))
 					OnCorrected(this);
 			}
 		}
@@ -474,7 +474,7 @@ bool __fastcall TCustomSynAutoCorrect::FindAndCorrect(String& EditLine, String O
 			if(CurrentX > -1)
 			{
 				p = Editor->CaretXY;
-				if(ASSIGNED(FOnAutoCorrect))
+				if(Assigned(FOnAutoCorrect))
 				{
 					Action = aaCorrect;
 					FOnAutoCorrect(this, Original, Correction, p.Line, p.Char, Action);
@@ -573,5 +573,5 @@ void __fastcall TCustomSynAutoCorrect::SetItems(TStrings* const Value)
 }
 
 
-}  // namespace SynAutoCorrect
+}  // namespace Synautocorrect
 

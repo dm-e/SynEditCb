@@ -70,7 +70,7 @@ TSynEditorCommand __fastcall TSynEditKeystrokeEditorForm::GetCommand()
 		result = ((TSynEditorCommand) (NativeInt) cmbCommand->Items->Objects[cmbCommand->ItemIndex]);
 	}
 	else
-	result = (TSynEditorCommand) ecNone;
+	result = static_cast<TSynEditorCommand>(ecNone);
 	return result;
 }
 
@@ -83,8 +83,8 @@ TShortCut __fastcall TSynEditKeystrokeEditorForm::GetKeystroke()
 
 void __fastcall TSynEditKeystrokeEditorForm::bntClearKeyClick(TObject* Sender)
 {
-	hkKeystroke->HotKey = (TShortCut) 0;
-	hkKeystroke2->HotKey = (TShortCut) 0;
+	hkKeystroke->HotKey = static_cast<TShortCut>(0);
+	hkKeystroke2->HotKey = static_cast<TShortCut>(0);
 }
 
 TShortCut __fastcall TSynEditKeystrokeEditorForm::GetKeystroke2()
@@ -116,7 +116,7 @@ void __fastcall TSynEditKeystrokeEditorForm::btnOKClick(TObject* Sender)
 			hkKeystroke->SetFocus();
 		}
 		else
-		ModalResult = (TModalResult) mrOk;
+		ModalResult = static_cast<TModalResult>(mrOk);
 	}
 }
 
@@ -131,10 +131,10 @@ void __fastcall TSynEditKeystrokeEditorForm::FormCreate(TObject* Sender)
 		with0->Top = 38;
 		with0->Width = 186;
 		with0->Height = 19;
-		with0->HotKey = (TShortCut) 0;
+		with0->HotKey = static_cast<TShortCut>(0);
 		with0->InvalidKeys = Syneditkeycmdeditor__2;
 		with0->Modifiers = Syneditkeycmdeditor__3;
-		with0->TabOrder = (TTabOrder) 1;
+		with0->TabOrder = static_cast<TTabOrder>(1);
 	}
 	hkKeystroke2 = new TSynHotKey(this);
 	/*# with hkKeystroke2 do */
@@ -145,10 +145,10 @@ void __fastcall TSynEditKeystrokeEditorForm::FormCreate(TObject* Sender)
 		with1->Top = 62;
 		with1->Width = 186;
 		with1->Height = 19;
-		with1->HotKey = (TShortCut) 0;
+		with1->HotKey = static_cast<TShortCut>(0);
 		with1->InvalidKeys = Syneditkeycmdeditor__4;
 		with1->Modifiers = Syneditkeycmdeditor__5;
-		with1->TabOrder = (TTabOrder) 2;
+		with1->TabOrder = static_cast<TTabOrder>(2);
 	}
 }
 

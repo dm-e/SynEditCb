@@ -2,11 +2,12 @@
 #pragma hdrstop
 
 #include "SynEditPrintMargins.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
-using namespace Syneditprinttypes;
 using namespace Syneditprinterinfo;
+using namespace Syneditprinttypes;
 using namespace System;
 using namespace System::Classes;
 
@@ -20,16 +21,16 @@ const double mmPrInch = 25.4;
 const int mmPrCm = 10;
 
 __fastcall TSynEditPrintMargins::TSynEditPrintMargins()
- : FLeft((double) DefLeft),
-			FRight((double) DefRight),
-			FTop((double) DefTop),
-			FBottom((double) DefBottom),
-			FHeader((double) DefHeader),
-			FFooter((double) DefFooter),
-			FLeftHFTextIndent((double) DefLeftHFTextIndent),
-			FRightHFTextIndent((double) DefRightHFTextIndent),
+ : FLeft(static_cast<double>(DefLeft)),
+			FRight(static_cast<double>(DefRight)),
+			FTop(static_cast<double>(DefTop)),
+			FBottom(static_cast<double>(DefBottom)),
+			FHeader(static_cast<double>(DefHeader)),
+			FFooter(static_cast<double>(DefFooter)),
+			FLeftHFTextIndent(static_cast<double>(DefLeftHFTextIndent)),
+			FRightHFTextIndent(static_cast<double>(DefRightHFTextIndent)),
 			FHFInternalMargin(DefHFInternalMargin),
-			FGutter((double) DefGutter),
+			FGutter(static_cast<double>(DefGutter)),
 			FMirrorMargins(false),
 			FUnitSystem(usMM),
 			PLeft(0),
@@ -234,10 +235,10 @@ void __fastcall TSynEditPrintMargins::InitPage(TCanvas* ACanvas, int PageNum, TS
 	PBottom = PrinterInfo->PrintableHeight - PrinterInfo->PixFromBottom(FBottom);
 	PHeader = PrinterInfo->PixFromTop(FHeader);
 	PFooter = PrinterInfo->PrintableHeight - PrinterInfo->PixFromBottom(FFooter);
-	PHFInternalMargin = (int) Round(PrinterInfo->YPixPrmm * FHFInternalMargin);
-	PGutter = (int) Round(PrinterInfo->XPixPrmm * FGutter);
-	PRightHFTextIndent = (int) (PRight - Round(PrinterInfo->XPixPrmm * FRightHFTextIndent));
-	PLeftHFTextIndent = (int) (PLeft + Round(PrinterInfo->XPixPrmm * FLeftHFTextIndent));
+	PHFInternalMargin = static_cast<int>(Round(PrinterInfo->YPixPrmm * FHFInternalMargin));
+	PGutter = static_cast<int>(Round(PrinterInfo->XPixPrmm * FGutter));
+	PRightHFTextIndent = static_cast<int>(PRight - Round(PrinterInfo->XPixPrmm * FRightHFTextIndent));
+	PLeftHFTextIndent = static_cast<int>(PLeft + Round(PrinterInfo->XPixPrmm * FLeftHFTextIndent));
 }
 
 // -----------------------------------------------------------------------------
@@ -273,18 +274,18 @@ void __fastcall TSynEditPrintMargins::LoadFromStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Read((void**)&FUnitSystem, (NativeInt) sizeof(FUnitSystem));
-		with0->Read((void**)&FLeft, (NativeInt) sizeof(FLeft));
-		with0->Read((void**)&FRight, (NativeInt) sizeof(FRight));
-		with0->Read((void**)&FTop, (NativeInt) sizeof(FTop));
-		with0->Read((void**)&FBottom, (NativeInt) sizeof(FBottom));
-		with0->Read((void**)&FHeader, (NativeInt) sizeof(FHeader));
-		with0->Read((void**)&FFooter, (NativeInt) sizeof(FFooter));
-		with0->Read((void**)&FLeftHFTextIndent, (NativeInt) sizeof(FLeftHFTextIndent));
-		with0->Read((void**)&FRightHFTextIndent, (NativeInt) sizeof(FRightHFTextIndent));
-		with0->Read((void**)&FHFInternalMargin, (NativeInt) sizeof(FHFInternalMargin));
-		with0->Read((void**)&FGutter, (NativeInt) sizeof(FGutter));
-		with0->Read((void**)&FMirrorMargins, (NativeInt) sizeof(FMirrorMargins));
+		with0->Read(&FUnitSystem, static_cast<NativeInt>(sizeof(FUnitSystem)));
+		with0->Read(&FLeft, static_cast<NativeInt>(sizeof(FLeft)));
+		with0->Read(&FRight, static_cast<NativeInt>(sizeof(FRight)));
+		with0->Read(&FTop, static_cast<NativeInt>(sizeof(FTop)));
+		with0->Read(&FBottom, static_cast<NativeInt>(sizeof(FBottom)));
+		with0->Read(&FHeader, static_cast<NativeInt>(sizeof(FHeader)));
+		with0->Read(&FFooter, static_cast<NativeInt>(sizeof(FFooter)));
+		with0->Read(&FLeftHFTextIndent, static_cast<NativeInt>(sizeof(FLeftHFTextIndent)));
+		with0->Read(&FRightHFTextIndent, static_cast<NativeInt>(sizeof(FRightHFTextIndent)));
+		with0->Read(&FHFInternalMargin, static_cast<NativeInt>(sizeof(FHFInternalMargin)));
+		with0->Read(&FGutter, static_cast<NativeInt>(sizeof(FGutter)));
+		with0->Read(&FMirrorMargins, static_cast<NativeInt>(sizeof(FMirrorMargins)));
 	}
 }
 
@@ -295,21 +296,21 @@ void __fastcall TSynEditPrintMargins::SaveToStream(TStream* AStream)
 	/*# with AStream do */
 	{
 		auto with0 = AStream;
-		with0->Write(&FUnitSystem, (NativeInt) sizeof(FUnitSystem));
-		with0->Write(&FLeft, (NativeInt) sizeof(FLeft));
-		with0->Write(&FRight, (NativeInt) sizeof(FRight));
-		with0->Write(&FTop, (NativeInt) sizeof(FTop));
-		with0->Write(&FBottom, (NativeInt) sizeof(FBottom));
-		with0->Write(&FHeader, (NativeInt) sizeof(FHeader));
-		with0->Write(&FFooter, (NativeInt) sizeof(FFooter));
-		with0->Write(&FLeftHFTextIndent, (NativeInt) sizeof(FLeftHFTextIndent));
-		with0->Write(&FRightHFTextIndent, (NativeInt) sizeof(FRightHFTextIndent));
-		with0->Write(&FHFInternalMargin, (NativeInt) sizeof(FHFInternalMargin));
-		with0->Write(&FGutter, (NativeInt) sizeof(FGutter));
-		with0->Write(&FMirrorMargins, (NativeInt) sizeof(FMirrorMargins));
+		with0->Write(&FUnitSystem, static_cast<NativeInt>(sizeof(FUnitSystem)));
+		with0->Write(&FLeft, static_cast<NativeInt>(sizeof(FLeft)));
+		with0->Write(&FRight, static_cast<NativeInt>(sizeof(FRight)));
+		with0->Write(&FTop, static_cast<NativeInt>(sizeof(FTop)));
+		with0->Write(&FBottom, static_cast<NativeInt>(sizeof(FBottom)));
+		with0->Write(&FHeader, static_cast<NativeInt>(sizeof(FHeader)));
+		with0->Write(&FFooter, static_cast<NativeInt>(sizeof(FFooter)));
+		with0->Write(&FLeftHFTextIndent, static_cast<NativeInt>(sizeof(FLeftHFTextIndent)));
+		with0->Write(&FRightHFTextIndent, static_cast<NativeInt>(sizeof(FRightHFTextIndent)));
+		with0->Write(&FHFInternalMargin, static_cast<NativeInt>(sizeof(FHFInternalMargin)));
+		with0->Write(&FGutter, static_cast<NativeInt>(sizeof(FGutter)));
+		with0->Write(&FMirrorMargins, static_cast<NativeInt>(sizeof(FMirrorMargins)));
 	}
 }
 
 
-}  // namespace SynEditPrintMargins
+}  // namespace Syneditprintmargins
 

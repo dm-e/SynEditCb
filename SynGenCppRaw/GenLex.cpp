@@ -8,42 +8,41 @@ using namespace std;
 using namespace d2c_system;
 using namespace Longintlist;
 using namespace System;
-using namespace System::Sysutils;
 
 namespace Genlex
 {
-#define GenLex__0 (TSysCharSet() << L'_' <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define GenLex__1 (TSysCharSet() << L'_' <<  \
-										48 << 49 << 50 << 51 << 52 << 53 <<  \
-										54 << 55 << 56 << 57 <<  \
-										97 << 98 << 99 << 100 << 101 << 102 <<  \
-										103 << 104 << 105 << 106 << 107 << 108 <<  \
-										109 << 110 << 111 << 112 << 113 << 114 <<  \
-										115 << 116 << 117 << 118 << 119 << 120 <<  \
-										121 << 122 <<  \
-										65 << 66 << 67 << 68 << 69 << 70 <<  \
-										71 << 72 << 73 << 74 << 75 << 76 <<  \
-										77 << 78 << 79 << 80 << 81 << 82 <<  \
-										83 << 84 << 85 << 86 << 87 << 88 <<  \
-										89 << 90)
-#define GenLex__2 (TSysCharSet() << L'\x0a' << L'\x0d')
-#define GenLex__3 (TSysCharSet() <<  \
-										1 << 2 << 3 << 4 << 5 << 6 <<  \
-										7 << 8 << 9 << L'\x0b' << L'\x0c' <<  \
-										14 << 15 << 16 << 17 << 18 << 19 <<  \
-										20 << 21 << 22 << 23 << 24 << 25 <<  \
-										26 << 27 << 28 << 29 << 30 << 31 <<  \
-										32)
+#define Genlex__0 (TSysCharSet() << '_' <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Genlex__1 (TSysCharSet() << '_' <<  \
+          48 << 49 << 50 << 51 << 52 << 53 <<  \
+          54 << 55 << 56 << 57 <<  \
+          97 << 98 << 99 << 100 << 101 << 102 <<  \
+          103 << 104 << 105 << 106 << 107 << 108 <<  \
+          109 << 110 << 111 << 112 << 113 << 114 <<  \
+          115 << 116 << 117 << 118 << 119 << 120 <<  \
+          121 << 122 <<  \
+          65 << 66 << 67 << 68 << 69 << 70 <<  \
+          71 << 72 << 73 << 74 << 75 << 76 <<  \
+          77 << 78 << 79 << 80 << 81 << 82 <<  \
+          83 << 84 << 85 << 86 << 87 << 88 <<  \
+          89 << 90)
+#define Genlex__2 (TSysCharSet() << '\x0a' << '\x0d')
+#define Genlex__3 (TSysCharSet() <<  \
+          1 << 2 << 3 << 4 << 5 << 6 <<  \
+          7 << 8 << 9 << '\x0b' << '\x0c' <<  \
+          14 << 15 << 16 << 17 << 18 << 19 <<  \
+          20 << 21 << 22 << 23 << 24 << 25 <<  \
+          26 << 27 << 28 << 29 << 30 << 31 <<  \
+          32)
 
 
 unsigned char Identifiers[256/*# range #0..#255*/];
@@ -51,12 +50,12 @@ int mHashTable[256/*# range #0..#255*/];
 
 void __fastcall MakeIdentTable()
 {
-	Char i = L'\0';
-	Char j = L'\0';
-	Char stop = 0;
-	for(stop = L'\xff', i = L'\x00'; i <= stop; i++)
+	Char I = L'\0';
+	Char J = L'\0';
+	WideChar stop = 0;
+	for(stop = L'\xff', I = L'\x00'; I <= stop; I++)
 	{
-		switch(i)
+		switch(I)
 		{
 			case L'_':
 			case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57:
@@ -66,20 +65,20 @@ void __fastcall MakeIdentTable()
 			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
 			 case 75: case 76: case 77: case 78: case 79: case 80: case 81: case 82: case 83: case 84:
 			 case 85: case 86: case 87: case 88: case 89: case 90:
-			Identifiers[i] = true;
+			Identifiers[I] = true;
 			break;
 			default:
-			Identifiers[i] = false;
+			Identifiers[I] = false;
 			break;
 		}
-		j = UpperCase(String(i))[1];
-		switch(CharInSet(i, GenLex__0))
+		J = UpperCase(String(I))[1];
+		switch(CharInSet(I, Genlex__0))
 		{
 			case true:
-			mHashTable[i] = int(j) - 64;
+			mHashTable[I] = int(J) - 64;
 			break;
 			default:
-			mHashTable[i] = 0;
+			mHashTable[I] = 0;
 			break;
 		}
 	}
@@ -87,47 +86,47 @@ void __fastcall MakeIdentTable()
 
 void __fastcall TGenLex::InitIdent()
 {
-	int i = 0;
+	int I = 0;
 	int stop = 0;
-	for(stop = 150, i = 0; i <= stop; i++)
+	for(stop = 150, I = 0; I <= stop; I++)
 	{
-		switch(i)
+		switch(I)
 		{
 			case 49:
-			fIdentFuncTable[i] = Func49;
+			fIdentFuncTable[I] = Func49;
 			break;
 			case 60:
-			fIdentFuncTable[i] = Func60;
+			fIdentFuncTable[I] = Func60;
 			break;
 			case 67:
-			fIdentFuncTable[i] = Func67;
+			fIdentFuncTable[I] = Func67;
 			break;
 			case 75:
-			fIdentFuncTable[i] = Func75;
+			fIdentFuncTable[I] = Func75;
 			break;
 			case 81:
-			fIdentFuncTable[i] = Func81;
+			fIdentFuncTable[I] = Func81;
 			break;
 			case 89:
-			fIdentFuncTable[i] = Func89;
+			fIdentFuncTable[I] = Func89;
 			break;
 			case 104:
-			fIdentFuncTable[i] = Func104;
+			fIdentFuncTable[I] = Func104;
 			break;
 			case 122:
-			fIdentFuncTable[i] = Func122;
+			fIdentFuncTable[I] = Func122;
 			break;
 			case 130:
-			fIdentFuncTable[i] = Func130;
+			fIdentFuncTable[I] = Func130;
 			break;
 			case 147:
-			fIdentFuncTable[i] = Func147;
+			fIdentFuncTable[I] = Func147;
 			break;
 			case 150:
-			fIdentFuncTable[i] = Func150;
+			fIdentFuncTable[I] = Func150;
 			break;
 			default:
-			fIdentFuncTable[i] = AltFunc;
+			fIdentFuncTable[I] = AltFunc;
 			break;
 		}
 	}
@@ -137,7 +136,7 @@ int __fastcall TGenLex::KeyHash(PWideChar ToHash)
 {
 	int result = 0;
 	result = 0;
-	while(CharInSet((*ToHash), GenLex__1))
+	while(CharInSet((*ToHash), Genlex__1))
 	{
 		result += mHashTable[(*ToHash)];
 		++ToHash;
@@ -146,19 +145,19 @@ int __fastcall TGenLex::KeyHash(PWideChar ToHash)
 	return result;
 } /* KeyHash */
 
-bool __fastcall TGenLex::KeyComp(String AKey)
+bool __fastcall TGenLex::KeyComp(String aKey)
 {
 	bool result = false;
-	int i = 0;
+	int I = 0;
 	PWideChar Temp = nullptr;
 	Temp = fToIdent;
-	if(AKey.Length() == fStringLen)
+	if(aKey.Length() == fStringLen)
 	{
 		int stop = 0;
 		result = true;
-		for(stop = fStringLen, i = 1; i <= stop; i++)
+		for(stop = fStringLen, I = 1; I <= stop; I++)
 		{
-			if(mHashTable[(*Temp)] != mHashTable[AKey[i]])
+			if(mHashTable[(*Temp)] != mHashTable[aKey[I]])
 			{
 				result = false;
 				break;
@@ -173,160 +172,160 @@ bool __fastcall TGenLex::KeyComp(String AKey)
 
 TIdTokenKind __fastcall TGenLex::Func49()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"Chars"))
-		result = TIdTokenKind::IdChars;
+		result = IdChars;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func60()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"Keys"))
-		result = TIdTokenKind::IdKeys;
+		result = IdKeys;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func67()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"EndFunc"))
-		result = TIdTokenKind::IdEndFunc;
+		result = IdEndFunc;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func75()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"EndProc"))
-		result = TIdTokenKind::IdEndProc;
+		result = IdEndProc;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func81()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"BeginFunc"))
-		result = TIdTokenKind::IdBeginFunc;
+		result = IdBeginFunc;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func89()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"BeginProc"))
-		result = TIdTokenKind::IdBeginProc;
+		result = IdBeginProc;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func104()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"EnclosedBy"))
-		result = TIdTokenKind::IdEnclosedBy;
+		result = IdEnclosedBy;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func122()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"Sensitive"))
-		result = TIdTokenKind::IdSensitive;
+		result = IdSensitive;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func130()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"IdentStart"))
-		result = TIdTokenKind::IdIdentStart;
+		result = IdIdentStart;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func147()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"SAMPLESOURCE"))
-		result = TIdTokenKind::IdSampleSource;
+		result = IdSampleSource;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::Func150()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	if(KeyComp(L"TOKENTYPES"))
-		result = TIdTokenKind::IdTokenTypes;
+		result = IdTokenTypes;
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 TIdTokenKind __fastcall TGenLex::AltFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdIdentifier;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdIdentifier;
 	return result;
 }
 
-TIdTokenKind __fastcall TGenLex::IdentKind(PWideChar Maybe)
+TIdTokenKind __fastcall TGenLex::IdentKind(PWideChar MayBe)
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	int HashKey = 0;
-	fToIdent = Maybe;
-	HashKey = KeyHash(Maybe);
+	fToIdent = MayBe;
+	HashKey = KeyHash(MayBe);
 	if(HashKey < 151)
 		result = fIdentFuncTable[HashKey]();
 	else
-		result = TIdTokenKind::IdIdentifier;
+		result = IdIdentifier;
 	return result;
 }
 
 void __fastcall TGenLex::MakeMethodTables()
 {
-	Char i = L'\0';
-	Char stop = 0;
-	for(stop = L'\xff', i = L'\x00'; i <= stop; i++)
+	Char I = L'\0';
+	WideChar stop = 0;
+	for(stop = L'\xff', I = L'\x00'; I <= stop; I++)
 	{
-		switch(i)
+		switch(I)
 		{
 			case L'{':
 			{
-				fProcTable[i] = BraceOpenProc;
-				fFuncTable[i] = BraceOpenFunc;
+				fProcTable[I] = BraceOpenProc;
+				fFuncTable[I] = BraceOpenFunc;
 			}
 			break;
 			case L'\x0a':
 			case L'\x0d':
 			{
-				fProcTable[i] = CRLFProc;
-				fFuncTable[i] = CRLFFunc;
+				fProcTable[I] = CRLFProc;
+				fFuncTable[I] = CRLFFunc;
 			}
 			break;
 			case L'\x27':
 			case L'#':
 			{
-				fProcTable[i] = CharsetProc;
-				fFuncTable[i] = CharsetFunc;
+				fProcTable[I] = CharsetProc;
+				fFuncTable[I] = CharsetFunc;
 			}
 			break;
 			case 65: case 66: case 67: case 68: case 69: case 70: case 71: case 72: case 73: case 74:
@@ -337,14 +336,14 @@ void __fastcall TGenLex::MakeMethodTables()
 			 case 117: case 118: case 119: case 120: case 121: case 122:
 			case L'_':
 			{
-				fProcTable[i] = IdentProc;
-				fFuncTable[i] = IdentFunc;
+				fProcTable[I] = IdentProc;
+				fFuncTable[I] = IdentFunc;
 			}
 			break;
 			case L'\x00':
 			{
-				fProcTable[i] = NullProc;
-				fFuncTable[i] = NullFunc;
+				fProcTable[I] = NullProc;
+				fFuncTable[I] = NullFunc;
 			}
 			break;
 			case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
@@ -353,19 +352,21 @@ void __fastcall TGenLex::MakeMethodTables()
 			case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
 			 case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32:
 			{
-				fProcTable[i] = SpaceProc;
-				fFuncTable[i] = SpaceFunc;
+				fProcTable[I] = SpaceProc;
+				fFuncTable[I] = SpaceFunc;
 			}
 			break;
 			case L'|':
 			{
-				fProcTable[i] = StopProc;
-				fFuncTable[i] = StopFunc;
+				fProcTable[I] = StopProc;
+				fFuncTable[I] = StopFunc;
 			}
 			break;
 			default:
-			fProcTable[i] = UnknownProc;
-			fFuncTable[i] = UnknownFunc;
+			{
+				fProcTable[I] = UnknownProc;
+				fFuncTable[I] = UnknownFunc;
+			}
 			break;
 		}
 	}
@@ -373,7 +374,7 @@ void __fastcall TGenLex::MakeMethodTables()
 
 __fastcall TGenLex::TGenLex()
  : fIgnoreComments(false),
-			FOrigin(nullptr),
+			fOrigin(nullptr),
 			Run(0),
 			Walker(0),
 			Running(0),
@@ -386,8 +387,8 @@ __fastcall TGenLex::TGenLex()
 	//# inherited::Create();
 	InitIdent();
 	MakeMethodTables();
-	FTokenPositionsList = new Longintlist::TLongintList();
-	FLinePosList = new Longintlist::TLongintList();
+	FTokenPositionsList = new Longintlist::TLongIntList();
+	FLinePosList = new Longintlist::TLongIntList();
 } /* Create */
 
 __fastcall TGenLex::~TGenLex()
@@ -395,12 +396,11 @@ __fastcall TGenLex::~TGenLex()
 	//# inherited::Destroy();
 	delete FTokenPositionsList;
 	delete FLinePosList;
-}
- /* Destroy */
+} /* Destroy */
 
 void __fastcall TGenLex::SetOrigin(PWideChar NewValue)
 {
-	FOrigin = NewValue;
+	fOrigin = NewValue;
 	Run = 0;
 	Walker = 0;
 	FTokenPositionsList->Clear();
@@ -419,9 +419,9 @@ void __fastcall TGenLex::BraceOpenProc()
 	++Walker;
 	if(!fIgnoreComments)
 	{
-		while(FOrigin[Walker] != L'\x00')
+		while(fOrigin[Walker] != L'\x00')
 		{
-			switch(FOrigin[Walker])
+			switch(fOrigin[Walker])
 			{
 				case L'}':
 				{
@@ -437,7 +437,7 @@ void __fastcall TGenLex::BraceOpenProc()
 				break;
 				case L'\x0d':
 				{
-					if(FOrigin[Walker + 1] == L'\x0a')
+					if(fOrigin[Walker + 1] == L'\x0a')
 						Walker += 2;
 					else
 						++Walker;
@@ -456,20 +456,20 @@ void __fastcall TGenLex::BraceOpenProc()
 
 TIdTokenKind __fastcall TGenLex::BraceOpenFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdBraceOpen;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdBraceOpen;
 	return result;
 }
 
 void __fastcall TGenLex::CRLFProc()
 {
-	switch(FOrigin[Walker])
+	switch(fOrigin[Walker])
 	{
 		case L'\x0a':
 		++Walker;
 		break;
 		case L'\x0d':
-		switch(FOrigin[Walker + 1])
+		switch(fOrigin[Walker + 1])
 		{
 			case L'\x0a':
 			Walker += 2;
@@ -489,22 +489,22 @@ void __fastcall TGenLex::CRLFProc()
 
 TIdTokenKind __fastcall TGenLex::CRLFFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdCRLF;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdCRLF;
 	return result;
 }
 
 void __fastcall TGenLex::CharsetProc()
 {
-	while(FOrigin[Walker] != L'\x00')
+	while(fOrigin[Walker] != L'\x00')
 	{
-		switch(FOrigin[Walker])
+		switch(fOrigin[Walker])
 		{
 			case L'\x0a':
 			case L'\x0d':
 			goto label1;
 			case L':':
-			if(FOrigin[Walker + 1] == L':')
+			if(fOrigin[Walker + 1] == L':')
 				goto label2;
 			else
 				++Walker;
@@ -520,22 +520,22 @@ void __fastcall TGenLex::CharsetProc()
 
 TIdTokenKind __fastcall TGenLex::CharsetFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdCharset;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdCharset;
 	return result;
 }
 
 void __fastcall TGenLex::IdentProc()
 {
 	++Walker;
-	while(Identifiers[FOrigin[Walker]])
+	while(Identifiers[fOrigin[Walker]])
 		++Walker;
 }
 
 TIdTokenKind __fastcall TGenLex::IdentFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = IdentKind((FOrigin + Running));
+	TIdTokenKind result = IdBeginFunc;
+	result = IdentKind((fOrigin + Running));
 	return result;
 }
 
@@ -543,37 +543,37 @@ void __fastcall TGenLex::NullProc()
 {
 	if(fTokenizing)
 	{
-		if(!CharInSet(FOrigin[Walker - 1], GenLex__2))
+		if(!CharInSet(fOrigin[Walker - 1], Genlex__2))
 			FLinePosList->Add(Walker);
 	}
 }
 
 TIdTokenKind __fastcall TGenLex::NullFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdNull;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdNull;
 	return result;
 }
 
 void __fastcall TGenLex::SpaceProc()
 {
-	while(CharInSet(FOrigin[Walker], GenLex__3))
+	while(CharInSet(fOrigin[Walker], Genlex__3))
 		++Walker;
 }
 
 TIdTokenKind __fastcall TGenLex::SpaceFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdSpace;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdSpace;
 	return result;
 }
 
 void __fastcall TGenLex::StopProc()
 {
 	++Walker;
-	while(FOrigin[Walker] != L'\x00')
+	while(fOrigin[Walker] != L'\x00')
 	{
-		switch(FOrigin[Walker])
+		switch(fOrigin[Walker])
 		{
 			case L'\x0a':
 			goto label3;
@@ -596,14 +596,14 @@ void __fastcall TGenLex::StopProc()
 
 TIdTokenKind __fastcall TGenLex::StopFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdUnknown;
-	if(FOrigin[Running + 1] == L'>')
+	TIdTokenKind result = IdBeginFunc;
+	result = IdUnknown;
+	if(fOrigin[Running + 1] == L'>')
 	{
-		if(FOrigin[Running + 2] == L'<')
+		if(fOrigin[Running + 2] == L'<')
 		{
-			if(FOrigin[Running + 3] == L'|')
-				result = TIdTokenKind::IdStop;
+			if(fOrigin[Running + 3] == L'|')
+				result = IdStop;
 		}
 	}
 	return result;
@@ -616,8 +616,8 @@ void __fastcall TGenLex::UnknownProc()
 
 TIdTokenKind __fastcall TGenLex::UnknownFunc()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
-	result = TIdTokenKind::IdUnknown;
+	TIdTokenKind result = IdBeginFunc;
+	result = IdUnknown;
 	return result;
 }
 
@@ -630,9 +630,9 @@ bool __fastcall TGenLex::Eof()
 
 TIdTokenKind __fastcall TGenLex::GetRunId()
 {
-	TIdTokenKind result = TIdTokenKind::IdBeginFunc;
+	TIdTokenKind result = IdBeginFunc;
 	Running = FTokenPositionsList->Items[Run];
-	result = fFuncTable[FOrigin[Running]]();
+	result = fFuncTable[fOrigin[Running]]();
 	return result;
 }
 
@@ -645,7 +645,7 @@ String __fastcall TGenLex::GetRunToken()
 	StartPos = FTokenPositionsList->Items[Run];
 	EndPos = FTokenPositionsList->Items[Run + 1];
 	StringLen = EndPos - StartPos;
-	SetString(result, (FOrigin + StartPos), StringLen);
+	SetString(result, (fOrigin + StartPos), StringLen);
 	return result;
 }
 
@@ -654,10 +654,10 @@ void __fastcall TGenLex::Tokenize()
 	fTokenizing = true;
 	do
 	{
-		fProcTable[FOrigin[Walker]]();
+		fProcTable[fOrigin[Walker]]();
 		FTokenPositionsList->Add(Walker);
 	}
-	while(!(FOrigin[Walker] == L'\x00'));
+	while(!(fOrigin[Walker] == L'\x00'));
 	fTokenizing = false;
 }
 
@@ -675,21 +675,22 @@ String __fastcall TGenLex::NextToken()
 	StartPos = FTokenPositionsList->Items[Run];
 	EndPos = FTokenPositionsList->Items[Run + 1];
 	Len = EndPos - StartPos;
-	SetString(result, (FOrigin + StartPos), Len);
+	SetString(result, (fOrigin + StartPos), Len);
 	++Run;
 	return result;
 }
-static bool GenLex_Initialized = false;
 
-void GenLex_initialization()
-{
-	if(GenLex_Initialized)
-		return;
+	static bool GenLex_Initialized = false;
 	
-	GenLex_Initialized = true;
-	
-	MakeIdentTable();
-}
+	void GenLex_initialization()
+	{
+		if(GenLex_Initialized)
+			return;
+		
+		GenLex_Initialized = true;
+		
+		MakeIdentTable();
+	}
 class GenLex_unit
 {
 public:
@@ -701,5 +702,5 @@ public:
 
 GenLex_unit _GenLex_unit;
 
-}  // namespace GenLex
+}  // namespace Genlex
 

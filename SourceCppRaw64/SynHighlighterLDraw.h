@@ -175,8 +175,8 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fTriangleAttri;
 	TtkTokenKind __fastcall AltFunc(int Index);
 	TtkTokenKind __fastcall FuncAuthor(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall IdentProc();
 	void __fastcall Number1Proc();
@@ -184,7 +184,7 @@ private:
 	void __fastcall NullProc();
 	void __fastcall CRProc();
 	void __fastcall LFProc();
-	WideChar __fastcall FirstChar(PWideChar DatLine);
+	WideChar __fastcall FirstChar(System::PWideChar DatLine);
 protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsFilterStored();
@@ -223,7 +223,7 @@ public:
 void SynHighlighterLDraw_initialization();
 
 
-}  // namespace SynHighlighterLDraw
+}  // namespace Synhighlighterldraw
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterldraw;

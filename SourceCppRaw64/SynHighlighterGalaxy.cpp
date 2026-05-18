@@ -10,7 +10,6 @@ using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditmiscclasses;
 using namespace Syneditstrconst;
-using namespace System::Types;
 
 namespace Synhighlightergalaxy
 {
@@ -463,5 +462,5 @@ String __fastcall TSynGalaxySyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterGalaxy
+}  // namespace Synhighlightergalaxy
 

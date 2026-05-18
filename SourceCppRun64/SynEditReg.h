@@ -163,7 +163,7 @@ namespace Syneditreg
 void __fastcall Register();
 
 
-}  // namespace SynEditReg
+}  // namespace Syneditreg
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditreg;

@@ -9,6 +9,7 @@ using namespace std;
 using namespace d2c_system;
 using namespace Synedithighlighter;
 using namespace Syneditstrconst;
+using namespace System;
 using namespace Vcl::Graphics;
 
 namespace Synhighlighterbat
@@ -34,10 +35,10 @@ unsigned int __fastcall TSynBatSyn::HashKey(PWideChar Str)
 	result = 0;
 	while(IsIdentChar((*Str)))
 	{
-		result = (unsigned int) (result * 869 + int((*Str)) * 61);
+		result = static_cast<unsigned int>(result * 869 + int((*Str)) * 61);
 		++Str;
 	}
-	result = (unsigned int) (result % 25);
+	result = static_cast<unsigned int>(result % 25);
 	fStringLen = Str - fToIdent;
 	return result;
 }
@@ -650,5 +651,5 @@ String __fastcall TSynBatSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterBat
+}  // namespace Synhighlighterbat
 

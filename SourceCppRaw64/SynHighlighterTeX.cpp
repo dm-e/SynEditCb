@@ -372,5 +372,5 @@ String __fastcall TSynTeXSyn::GetFriendlyLanguageName()
 // using unit initialization order file, so unit singleton has not been created
 
 
-}  // namespace SynHighlighterTeX
+}  // namespace Synhighlightertex
 

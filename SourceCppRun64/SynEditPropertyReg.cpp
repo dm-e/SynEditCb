@@ -31,13 +31,14 @@ using namespace Syneditprint;
 using namespace Syneditprintmargins;
 using namespace Synedittypes;
 using namespace Synmacrorecorder;
+using namespace System;
 using namespace System::Sysutils;
 using namespace System::Uitypes;
-using namespace Vcleditors;
 using namespace Vcl::Controls;
 using namespace Vcl::Dialogs;
 using namespace Vcl::Forms;
 using namespace Vcl::Graphics;
+using namespace Vcleditors;
 
 namespace Syneditpropertyreg
 {
@@ -47,17 +48,17 @@ namespace Syneditpropertyreg
 #define Syneditpropertyreg__3 (TPropertyAttributes() << paDialog << paSubProperties << paReadOnly << paSortList)
 #define Syneditpropertyreg__4 (TPropertyAttributes() << paDialog << paReadOnly)
 
-__fastcall TSynEditFontProperty::TSynEditFontProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditFontProperty::TSynEditFontProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditFontProperty::TSynEditFontProperty() {}
-__fastcall TSynEditCommandProperty::TSynEditCommandProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditCommandProperty::TSynEditCommandProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditCommandProperty::TSynEditCommandProperty() {}
-__fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty() {}
-__fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty() {}
-__fastcall TAutoCorrectionProperty::TAutoCorrectionProperty(IDesigner* const ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
+__fastcall TAutoCorrectionProperty::TAutoCorrectionProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
 __fastcall TAutoCorrectionProperty::TAutoCorrectionProperty() {}
-__fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor(TComponent* AComponent, IDesigner* ADesigner) : inherited(AComponent, ADesigner) {}
+__fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor(TComponent* AComponent, const _di_IDesigner& ADesigner) : inherited(AComponent, ADesigner) {}
 __fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor() {}
 
 
@@ -74,7 +75,7 @@ void __fastcall TSynEditFontProperty::Edit()
 	try
 	{
 		FontDialog->Font = ((TFont*) GetOrdValue());
-		FontDialog->HelpContext = (THelpContext) hcDFontEditor;
+		FontDialog->HelpContext = static_cast<THelpContext>(hcDFontEditor);
 		FontDialog->Options = FontDialog->Options + Syneditpropertyreg__0;
 		if(FontDialog->Execute())
 			SetOrdValue(((NativeInt) FontDialog->Font));
@@ -107,7 +108,7 @@ String __fastcall TSynEditCommandProperty::GetValue()
 	return result;
 }
 
-void __fastcall TSynEditCommandProperty::GetValues(TGetStrProc Proc)
+void __fastcall TSynEditCommandProperty::GetValues(const TGetStrProc& Proc)
 {
 	GetEditorCommandValues(Proc);
 }
@@ -126,12 +127,12 @@ void __fastcall TSynEditCommandProperty::SetValue(const String Value)
 void __fastcall TSynEditKeystrokesProperty::Edit()
 {
 	TSynEditKeystrokesEditorForm* Dlg = nullptr;
-	Application->CreateForm(__classid(TSynEditKeystrokesEditorForm), (void**)&Dlg);
+	Application->CreateForm(__classid(TSynEditKeystrokesEditorForm), Dlg);
 	try
 	{
 		Dlg->Caption = this->GetName();
 		Dlg->Keystrokes = ((TSynEditKeyStrokes*) GetOrdValue());
-		if(Dlg->ShowModal() == System::Uitypes::mrOk)
+		if(Dlg->ShowModal() == mrOk)
       /* SetOrdValue will operate on all selected propertiy values */
 		{
 			SetOrdValue(((NativeInt) Dlg->Keystrokes));
@@ -160,7 +161,7 @@ void __fastcall TSynEditPrintMarginsProperty::Edit()
 	try
 	{
 		SynEditPrintMarginsDlg->SetMargins(((TSynEditPrintMargins*) GetOrdValue()));
-		if(SynEditPrintMarginsDlg->ShowModal() == System::Uitypes::mrOk)
+		if(SynEditPrintMarginsDlg->ShowModal() == mrOk)
 			SynEditPrintMarginsDlg->GetMargins(((TSynEditPrintMargins*) GetOrdValue()));
 	}
 	__finally
@@ -189,7 +190,7 @@ void __fastcall TSynAutoCorrectComponentEditor::Edit()
 	{
 		delete frmAutoCorrectEditor;
 	}
-	Designer->Modified;
+	Designer->Modified();
 }
 
 void __fastcall TSynAutoCorrectComponentEditor::ExecuteVerb(int Index)
@@ -276,5 +277,5 @@ void __fastcall Register()
 }
 
 
-}  // namespace SynEditPropertyReg
+}  // namespace Syneditpropertyreg
 

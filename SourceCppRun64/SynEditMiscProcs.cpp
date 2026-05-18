@@ -5,6 +5,7 @@
 #include <System.SysUtils.hpp>
 #include "SynHighlighterMulti.h"
 #include "d2c_convert.h"
+#include "d2c_sysinterface.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -448,7 +449,7 @@ int __fastcall CaretPos2CharIndex(int Position, int TabWidth, const String Line,
 	return result;
 }
 
-int __fastcall StrScanForCharInCategory(const String Line, int Start, TCategoryMethod IsOfCategory)
+int __fastcall StrScanForCharInCategory(const String Line, int Start, const TCategoryMethod& IsOfCategory)
 {
 	int result = 0;
 	PWideChar p = nullptr;
@@ -471,7 +472,7 @@ int __fastcall StrScanForCharInCategory(const String Line, int Start, TCategoryM
 	return result;
 }
 
-int __fastcall StrRScanForCharInCategory(const String Line, int Start, TCategoryMethod IsOfCategory)
+int __fastcall StrRScanForCharInCategory(const String Line, int Start, const TCategoryMethod& IsOfCategory)
 {
 	int result = 0;
 	int i = 0;
@@ -531,9 +532,9 @@ int __fastcall CountLines(const String S)
 }
 // At least one line possibly empty
 
-TArray<String> __fastcall StringToLines(const String Value)
+D2CArray<String> __fastcall StringToLines(const String Value)
 {
-	TArray<String> result;
+	D2CArray<String> result;
 	int Count = 0;
 	PChar P = nullptr;
 	PChar PStart = nullptr;
@@ -660,7 +661,7 @@ int __fastcall GetHighlighterIndex(TSynCustomHighlighter* Highlighter, TList* Hi
 	return result;
 }
 
-bool __fastcall InternalEnumHighlighterAttris(TSynCustomHighlighter* Highlighter, bool SkipDuplicates, THighlighterAttriProc HighlighterAttriProc, void** Params, int Params_maxidx, TList* HighlighterList)
+bool __fastcall InternalEnumHighlighterAttris(TSynCustomHighlighter* Highlighter, bool SkipDuplicates, const THighlighterAttriProc& HighlighterAttriProc, void** Params, int Params_maxidx, TList* HighlighterList)
 {
 	bool result = false;
 	int i = 0;
@@ -716,11 +717,11 @@ bool __fastcall InternalEnumHighlighterAttris(TSynCustomHighlighter* Highlighter
 	return result;
 }
 
-bool __fastcall EnumHighlighterAttris(TSynCustomHighlighter* Highlighter, bool SkipDuplicates, THighlighterAttriProc HighlighterAttriProc, void** Params, int Params_maxidx)
+bool __fastcall EnumHighlighterAttris(TSynCustomHighlighter* Highlighter, bool SkipDuplicates, const THighlighterAttriProc& HighlighterAttriProc, void** Params, int Params_maxidx)
 {
 	bool result = false;
 	TList* HighlighterList = nullptr;
-	if(!ASSIGNED(Highlighter) || !ASSIGNED(HighlighterAttriProc))
+	if(!ASSIGNED(Highlighter) || !Assigned(HighlighterAttriProc))
 	{
 		result = false;
 		return result;
@@ -751,9 +752,9 @@ void __fastcall SynDrawGradient(TCanvas* const ACanvas, const TColor AStartColor
 	StartColorR = GetRValue(ColorToRGB(AStartColor));
 	StartColorG = GetGValue(ColorToRGB(AStartColor));
 	StartColorB = GetBValue(ColorToRGB(AStartColor));
-	DiffColorR = (int) (GetRValue(ColorToRGB(AEndColor)) - StartColorR);
-	DiffColorG = (int) (GetGValue(ColorToRGB(AEndColor)) - StartColorG);
-	DiffColorB = (int) (GetBValue(ColorToRGB(AEndColor)) - StartColorB);
+	DiffColorR = static_cast<int>(GetRValue(ColorToRGB(AEndColor)) - StartColorR);
+	DiffColorG = static_cast<int>(GetGValue(ColorToRGB(AEndColor)) - StartColorG);
+	DiffColorB = static_cast<int>(GetBValue(ColorToRGB(AEndColor)) - StartColorB);
 	ASteps = MinMax(ASteps, 2, 256);
 	if(AHorizontal)
 	{
@@ -765,7 +766,7 @@ void __fastcall SynDrawGradient(TCanvas* const ACanvas, const TColor AStartColor
 		{
 			PaintRect.Left = ARect.Left + MulDiv(i, Size, ASteps);
 			PaintRect.Right = ARect.Left + MulDiv(i + 1, Size, ASteps);
-			ACanvas->Brush->Color = (TColor) RGB(StartColorR + MulDiv(i, DiffColorR, ASteps - 1), StartColorG + MulDiv(i, DiffColorG, ASteps - 1), StartColorB + MulDiv(i, DiffColorB, ASteps - 1));
+			ACanvas->Brush->Color = static_cast<TColor>(RGB(StartColorR + MulDiv(i, DiffColorR, ASteps - 1), StartColorG + MulDiv(i, DiffColorG, ASteps - 1), StartColorB + MulDiv(i, DiffColorB, ASteps - 1)));
 			ACanvas->FillRect(PaintRect);
 		}
 	}
@@ -779,7 +780,7 @@ void __fastcall SynDrawGradient(TCanvas* const ACanvas, const TColor AStartColor
 		{
 			PaintRect.Top = ARect.Top + MulDiv(i, Size, ASteps);
 			PaintRect.Bottom = ARect.Top + MulDiv(i + 1, Size, ASteps);
-			ACanvas->Brush->Color = (TColor) RGB(StartColorR + MulDiv(i, DiffColorR, ASteps - 1), StartColorG + MulDiv(i, DiffColorG, ASteps - 1), StartColorB + MulDiv(i, DiffColorB, ASteps - 1));
+			ACanvas->Brush->Color = static_cast<TColor>(RGB(StartColorR + MulDiv(i, DiffColorR, ASteps - 1), StartColorG + MulDiv(i, DiffColorG, ASteps - 1), StartColorB + MulDiv(i, DiffColorB, ASteps - 1)));
 			ACanvas->FillRect(PaintRect);
 		}
 	}
@@ -818,5 +819,5 @@ int __fastcall GrowCollection(int OldCapacity, int NewCount)
 }
 
 
-}  // namespace SynEditMiscProcs
+}  // namespace Syneditmiscprocs
 

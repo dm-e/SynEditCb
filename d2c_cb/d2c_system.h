@@ -2,30 +2,37 @@
 #define d2c_systemH
 
 /*
-This is a shortened version of the Delphi2CB utility file of the same name.
-The file is required in order to be able to compile the code of the SynEdit
-components, which were translated to C++ with Delphi2CB:
+    Copyright (C) 2026 Dr. Detlef Meyer-Eltz
+    ----------------------------------------
 
-	https://www.texttransformer.com/Delphi2CB_en.html
+    This file may be used without restriction in any
+    project generated with Delphi2Cpp or Delphi2CB.
 
-The translated code and this file are subject to the same license terms
-as the original SynEdit code. These terms are precisely specified in
+    It is a reduced version of the original Delphi2CB
+    utility file with the same name.
 
-	Source\Source\SynEditJedi.inc.
+    This file is required to compile the SynEdit
+    components translated from Delphi to C++ using
+    Delphi2CB:
 
+        https://www.texttransformer.com/Delphi2CB_en.html
 */
-
 
 
 #include <exception>
 #include <stdlib.h>
 #include <sstream>
 
+#include "d2c_config.h"
 #include "d2c_systypes.h"
 #include "d2c_sysmath.h"
 #include "d2c_sysstring.h"
 #include "d2c_sysfile.h"
-
+#include "d2c_event.h"
+#include <algorithm>
+#include <type_traits>
+#include <System.hpp>   // for System::NativeInt and memory APIs
+#include <new>          // for std::bad_alloc
 
 #define MAXIDX(x) (sizeof(x)/sizeof(x[0]))-1
 
@@ -39,7 +46,8 @@ using namespace d2c_system;
 namespace d2c_system
 {
 
-#define ObjectIs(xObj, xIs) dynamic_cast< xIs >( xObj )
+#define ObjectIs(Intf, Cls) (dynamic_cast<Cls>(Intf) != D2C_NULLPTR)
+//#define ObjectIs(OBJ_PTR, CLASSPTR) (dynamic_cast<CLASSPTR>(OBJ_PTR) != nullptr)
 
 template <class T>
 T High()
@@ -209,7 +217,58 @@ void FillChar( void* X, int Count, unsignedchar Value );
 void Assert( bool expr );
 void Assert( bool expr, const AnsiString& Msg );
 void Initialize(void** V, int Count = -1);
-void Finalize(void** V, int Count = -1);
+
+template <class T>
+void Finalize(T* array)
+{
+	// default does nothing / doesn't compile array[0].~T();
+}
+//
+template <class T>
+void Finalize(T** array)
+{
+	// default does nothing delete array[0];
+}
+
+template <class T>
+void Finalize(T* array, int count)
+{
+	for (int i = 0; i < count; ++i)
+	{
+		// default does nothing / doesn't compile array[i].~T();
+	}
+}
+
+template <class T>
+void Finalize(T** array, int count)
+{
+    if(array == nullptr)
+      return;
+
+	for (int i = 0; i < count; ++i)
+	{
+		// default does nothing delete array[i];
+		//array[i] = nullptr;
+	}
+}
+
+class AbstractMethodError : public std::logic_error
+{
+public:
+	explicit AbstractMethodError(const std::string& methodName)
+		: std::logic_error("abstract method called: "),
+		m_sMethodName(methodName)
+	{
+	}
+
+	const std::string& getMethodName() const D2C_NOEXCEPT { return m_sMethodName; }
+	std::string whatW() const D2C_NOEXCEPT { return std::string("Cannot call abstract method: ") + m_sMethodName; }
+
+private:
+	std::string m_sMethodName;
+};
+
+void ThrowAbstractMethodError(const String& xsMethodName); // d2c
 
 }  // namespace d2c_system
 

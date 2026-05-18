@@ -2,11 +2,11 @@
 #pragma hdrstop
 
 /*
-    Copyright (C) <2019>  <Dr. Detlef Meyer-Eltz>
+    Copyright (C) <2026>  <Dr. Detlef Meyer-Eltz>
     ---------------------------------------------
 
     this file is authorized for unlimited use in any
-    project created with Delphi2C# or DelphiXE2Cpp11.
+	project created with Delphi2Cpp or Aurora2Cpp.
 
     http://www.texttransformer.com/
 */
@@ -979,13 +979,13 @@ void Reset( TTextRec& t )
 }
 
 
-int GetFileHandle( file& F )
+NativeInt GetFileHandle( file& F )
 {
   return (NativeInt) ((TFileRec*) &F )->Handle;
 }
 
 
-int GetFileHandle( TTextRec& F )
+NativeInt GetFileHandle( TTextRec& F )
 {
   return (NativeInt) ((TTextRec*) &F )->Handle;
 }
@@ -1577,15 +1577,15 @@ int indexbyte( const void* buf, int Len, unsigned char b )
   psrc = (PByte) buf;
   /* simulate assembler implementations behaviour, which is expected */
   /* fpc_pchar_to_ansistr in astrings.inc                           */
-  if ( ( Len < 0 ) || (psrc + Len < psrc) )
+  if ( ( Len < 0 ) || ( ((NativeInt) psrc ) + Len < ((NativeInt) psrc ) ) )
     pend = ((PByte) numeric_limits<DWORD>::max() ) - sizeof( unsigned char );
   else
   pend = (PByte) (psrc + Len);
-  while (psrc < pend)
+  while ( ((NativeInt) psrc ) < ((NativeInt) pend ) )
   {
     if ( *psrc == b )
     {
-      result = psrc - (PByte) buf;
+      result = ((NativeInt) psrc ) - ((NativeInt) ((PByte) buf ) );
       return result;
     }
     psrc++;

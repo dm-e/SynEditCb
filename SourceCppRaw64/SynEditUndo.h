@@ -32,6 +32,7 @@
 #include "SynEdit.h"
 #include "SynEditTypes.h"
 #include "SynEditKeyCmds.h"
+#include "d2c_sysinterface.h"
 
 namespace Syneditundo
 {
@@ -99,10 +100,10 @@ namespace Syneditundo
 
 
 /* Factory Method*/
-Synedittypes::ISynEditUndo* __fastcall CreateSynEditUndo(Synedit::TCustomSynEdit* Editor);
+Synedittypes::_di_ISynEditUndo __fastcall CreateSynEditUndo(Synedit::TCustomSynEdit* Editor);
 
 
-}  // namespace SynEditUndo
+}  // namespace Syneditundo
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditundo;

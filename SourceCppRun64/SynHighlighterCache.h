@@ -193,8 +193,8 @@ private:
 	TtkTokenKind __fastcall KeyWordFunc(int Index);
 	TtkTokenKind __fastcall Func38html(int Index);
 	TtkTokenKind __fastcall Func38sql(int Index);
-	unsigned int __fastcall HashKey(PWideChar Str);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 	void __fastcall InitIdent();
 	void __fastcall CRProc();
 	void __fastcall CommentProc();
@@ -250,7 +250,7 @@ public:
 void SynHighlighterCache_initialization();
 
 
-}  // namespace SynHighlighterCache
+}  // namespace Synhighlightercache
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlightercache;

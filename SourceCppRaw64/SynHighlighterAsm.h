@@ -164,7 +164,7 @@ private:
 	Synedithighlighter::TSynHighlighterAttributes* fStringAttri;
 	Synedithighlighter::TSynHighlighterAttributes* fSymbolAttri;
 	Synhighlighterhashentries::TSynHashEntryList* fKeywords;
-	unsigned int __fastcall HashKey(PWideChar Str);
+	unsigned int __fastcall HashKey(System::PWideChar Str);
 	void __fastcall CommentProc();
 	void __fastcall CRProc();
 	void __fastcall GreaterProc();
@@ -180,7 +180,7 @@ private:
 	void __fastcall SymbolProc();
 	void __fastcall UnknownProc();
 	void __fastcall DoAddKeyword(String AKeyword, int AKind);
-	TtkTokenKind __fastcall IdentKind(PWideChar MayBe);
+	TtkTokenKind __fastcall IdentKind(System::PWideChar MayBe);
 protected:
 	virtual String __fastcall GetSampleSource();
 	virtual bool __fastcall IsFilterStored();
@@ -210,7 +210,7 @@ public:
 void SynHighlighterAsm_initialization();
 
 
-}  // namespace SynHighlighterAsm
+}  // namespace Synhighlighterasm
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterasm;

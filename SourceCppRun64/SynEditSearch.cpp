@@ -82,7 +82,7 @@ void __fastcall TSynEditSearch::InitShiftTable()
 	int stop = 0;
 	PatLen = Pat.Length();
 	if(PatLen == 0)
-		throw new Exception(L"Pattern is empty");
+		throw Exception(L"Pattern is empty");
 	PatLenSucc = PatLen + 1;
 	Look_At = 1;
 	for(stop = High<WideChar>(), C = Low<WideChar>(); C <= stop; C++)
@@ -300,5 +300,5 @@ void __fastcall TSynEditSearch::SetOptions(const TSynSearchOptions Value)
 }
 
 
-}  // namespace SynEditSearch
+}  // namespace Syneditsearch
 

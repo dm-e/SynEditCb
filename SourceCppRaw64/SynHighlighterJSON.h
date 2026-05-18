@@ -42,6 +42,7 @@ located at http://SynEdit.SourceForge.net
 #include "SynEditCodeFolding.h"
 #include <System.SysUtils.hpp>
 #include <System.Classes.hpp>
+#include "SynEditCodeFolding.h"
 
 namespace Synhighlighterjson
 {
@@ -154,7 +155,7 @@ public:
 void SynHighlighterJSON_initialization();
 
 
-}  // namespace SynHighlighterJSON
+}  // namespace Synhighlighterjson
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterjson;

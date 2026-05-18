@@ -173,10 +173,10 @@ private:
 	void __fastcall SetInObject(int Index, TObject* const Value);
 protected:
 	TNotifyEvent FOnChange;
-	int SumOfUsed[128/*# range 0..NbSubList-1*/];
-	int DatasUsed[128/*# range 0..NbSubList-1*/];
-	PSpeedListObjects Datas[128/*# range 0..NbSubList-1*/];
-	int LengthDatas[128/*# range 0..NbSubList-1*/];
+	int SumOfUsed[(NbSubList - 1) + 1/*# range 0..NbSubList-1*/];
+	int DatasUsed[(NbSubList - 1) + 1/*# range 0..NbSubList-1*/];
+	PSpeedListObjects Datas[(NbSubList - 1) + 1/*# range 0..NbSubList-1*/];
+	int LengthDatas[(NbSubList - 1) + 1/*# range 0..NbSubList-1*/];
 	virtual void __fastcall Changed();
 	virtual String __fastcall Get(int Index);
 	TSpeedListObject* __fastcall GetObject(int Index);
@@ -293,7 +293,7 @@ public:
 void SynHighlighterHP48_initialization();
 
 
-}  // namespace SynHighlighterHP48
+}  // namespace Synhighlighterhp48
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Synhighlighterhp48;

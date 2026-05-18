@@ -195,14 +195,14 @@ private:
 	void __fastcall SetVisible(bool Value);
 	void __fastcall SetWidth(int Value);
 	void __fastcall SetKind(TSynGutterBandKind Kind);
-	void __fastcall SetOnPaintLines(const TGutterBandPaintEvent Value);
+	void __fastcall SetOnPaintLines(const TGutterBandPaintEvent& Value);
 	bool __fastcall IsWidthStored();
 	int __fastcall GetWidth();
 	bool __fastcall GetVisible();
-	void __fastcall SetOnClick(const TGutterBandClickEvent Value);
+	void __fastcall SetOnClick(const TGutterBandClickEvent& Value);
 	int __fastcall GetLeftX();
 	TRect __fastcall FoldShapeRect(int Row, int Line);
-	void __fastcall SetOnMouseCursor(const TGutterMouseCursorEvent Value);
+	void __fastcall SetOnMouseCursor(const TGutterMouseCursorEvent& Value);
 	bool __fastcall IsVisibleStored();
 protected:
 	virtual String __fastcall GetDisplayName();
@@ -437,7 +437,7 @@ private:
 	TList* FNotifyProcs;
 	TSynExceptionEvent FExceptionHandler;
 protected:
-	virtual void __fastcall DoFire(const System::TMethod& AEvent){} // = 0;
+	virtual void __fastcall DoFire(const System::TMethod& AEvent){ThrowAbstractMethodError(L"TSynMethodChain::DoFire");};
 	virtual bool __fastcall DoHandleException(Exception* E);
 	__property TSynExceptionEvent ExceptionHandler = { read = FExceptionHandler, write = FExceptionHandler };
 public:
@@ -461,8 +461,8 @@ protected:
 	virtual void __fastcall DoFire(const System::TMethod& AEvent);
 public:
 	__fastcall TSynNotifyEventChain(TObject* ASender);
-	void __fastcall Add(TNotifyEvent AEvent);
-	void __fastcall Remove(TNotifyEvent AEvent);
+	void __fastcall Add(const TNotifyEvent& AEvent);
+	void __fastcall Remove(const TNotifyEvent& AEvent);
 	__property  ExceptionHandler;
 	__property TObject* Sender = { read = FSender, write = FSender };
 	__fastcall TSynNotifyEventChain();
@@ -520,8 +520,8 @@ private:
 	void __fastcall SetInvalidKeys(const THKInvalidKeys Value);
 	void __fastcall SetModifiers(const THKModifiers Value);
 	MESSAGE void __fastcall WMGetDlgCode(::TMessage& Message)/*# WM_GETDLGCODE */;
-	HIDESBASE MESSAGE void __fastcall WMKillFocus(TWMKillFocus& Msg)/*# WM_KILLFOCUS */;
-	HIDESBASE MESSAGE void __fastcall WMSetFocus(TWMSetFocus& Msg)/*# WM_SETFOCUS */;
+	HIDESBASE MESSAGE void __fastcall WMKillFocus(Winapi::Messages::TWMKillFocus& Msg)/*# WM_KILLFOCUS */;
+	HIDESBASE MESSAGE void __fastcall WMSetFocus(Winapi::Messages::TWMSetFocus& Msg)/*# WM_SETFOCUS */;
 protected:
 	virtual void __fastcall CreateParams(TCreateParams& Params);
 	DYNAMIC void __fastcall DoExit();
@@ -543,9 +543,9 @@ public:
 	__property THKModifiers Modifiers = { read = FModifiers, write = SetModifiers, default = /*# hkAlt */ 0 };
 protected:
 	BEGIN_MESSAGE_MAP
-	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, TMessage, WMGetDlgCode)
-	  VCL_MESSAGE_HANDLER(WM_KILLFOCUS, TWMKillFocus, WMKillFocus)
-	  VCL_MESSAGE_HANDLER(WM_SETFOCUS, TWMSetFocus, WMSetFocus)
+	  VCL_MESSAGE_HANDLER(WM_GETDLGCODE, Winapi::Messages::TMessage, WMGetDlgCode)
+	  VCL_MESSAGE_HANDLER(WM_KILLFOCUS, Winapi::Messages::TWMKillFocus, WMKillFocus)
+	  VCL_MESSAGE_HANDLER(WM_SETFOCUS, Winapi::Messages::TWMSetFocus, WMSetFocus)
 	END_MESSAGE_MAP(Vcl::Controls::TCustomControl)
 public:
 	__fastcall TSynHotKey(HWND ParentWindow);
@@ -554,18 +554,18 @@ public:
 class TSynEditSearchCustom : public System::Classes::TComponent
 {
 protected:
-	virtual String __fastcall GetPattern(){return String();} // = 0;
-	virtual void __fastcall SetPattern(const String Value){} // = 0;
-	virtual int __fastcall GetLength(int Index){return 0;} // = 0;
-	virtual int __fastcall GetResult(int Index){return 0;} // = 0;
-	virtual int __fastcall GetResultCount(){return 0;} // = 0;
-	virtual void __fastcall SetOptions(const Synedittypes::TSynSearchOptions Value){} // = 0;
+	virtual String __fastcall GetPattern(){ThrowAbstractMethodError(L"TSynEditSearchCustom::GetPattern"); return String();};
+	virtual void __fastcall SetPattern(const String Value){ThrowAbstractMethodError(L"TSynEditSearchCustom::SetPattern");};
+	virtual int __fastcall GetLength(int Index){ThrowAbstractMethodError(L"TSynEditSearchCustom::GetLength"); return 0;};
+	virtual int __fastcall GetResult(int Index){ThrowAbstractMethodError(L"TSynEditSearchCustom::GetResult"); return 0;};
+	virtual int __fastcall GetResultCount(){ThrowAbstractMethodError(L"TSynEditSearchCustom::GetResultCount"); return 0;};
+	virtual void __fastcall SetOptions(const Synedittypes::TSynSearchOptions Value){ThrowAbstractMethodError(L"TSynEditSearchCustom::SetOptions");};
 public:
 	typedef System::Classes::TComponent inherited;
 	#include "SynEditMiscClasses_friends.inc"
-	virtual int __fastcall FindAll(const String NewText){return 0;} // = 0;
+	virtual int __fastcall FindAll(const String NewText){ThrowAbstractMethodError(L"TSynEditSearchCustom::FindAll"); return 0;};
 	virtual String __fastcall PreprocessReplaceExpression(const String AReplace);
-	virtual String __fastcall Replace(const String aOccurrence, const String aReplacement){return String();} // = 0;
+	virtual String __fastcall Replace(const String aOccurrence, const String aReplacement){ThrowAbstractMethodError(L"TSynEditSearchCustom::Replace"); return String();};
 	__property String Pattern = { read = GetPattern, write = SetPattern };
 	__property int ResultCount = { read = GetResultCount };
 	__property int Results[int Index] = { read = GetResult };
@@ -589,7 +589,7 @@ void __fastcall ResizeBitmap(TBitmap* Bitmap, int NewWidth, int NewHeight);
 // -- DPI-Aware
 
 
-}  // namespace SynEditMiscClasses
+}  // namespace Syneditmiscclasses
 
 #if !defined(DELPHIHEADER_NO_IMPLICIT_NAMESPACE_USE)
 using namespace Syneditmiscclasses;
