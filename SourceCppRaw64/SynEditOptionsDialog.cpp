@@ -440,7 +440,7 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with0->HotKey = static_cast<TShortCut>(0);
 		with0->InvalidKeys = Syneditoptionsdialog__1;
 		with0->Modifiers = Syneditoptionsdialog__2;
-		with0->TabOrder = 1;
+		with0->TabOrder = static_cast<TTabOrder>(1);
 	}
 	eKeyShort2 = new TSynHotKey(this);
 	/*# with eKeyShort2 do */
@@ -454,7 +454,7 @@ void __fastcall TfmEditorOptionsDialog::FormCreate(TObject* Sender)
 		with1->HotKey = static_cast<TShortCut>(0);
 		with1->InvalidKeys = Syneditoptionsdialog__3;
 		with1->Modifiers = Syneditoptionsdialog__4;
-		with1->TabOrder = 2;
+		with1->TabOrder = static_cast<TTabOrder>(2);
 	}
 }
 

@@ -311,7 +311,7 @@ clbHighlighters(new TCheckListBox(this)),
 		with0->Height = 201;
 		with0->ItemHeight = 13;
 		with0->Sorted = true;
-		with0->TabOrder = 0;
+		with0->TabOrder = static_cast<TTabOrder>(0);
 	}
 	/*# with btnSelectAll do */
 	{

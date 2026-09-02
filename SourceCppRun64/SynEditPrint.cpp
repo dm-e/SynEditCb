@@ -489,6 +489,7 @@ String __fastcall TSynEditPrint::ClipLineToRect(String S, const TRect& cR)
 {
 	TRect R = cR;
 	String result;
+
 	while(FCanvas->TextWidth(S) > FMaxWidth)
 		S.SetLength(S.Length() - 1);
 	result = S;

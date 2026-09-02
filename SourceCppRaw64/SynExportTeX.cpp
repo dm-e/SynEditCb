@@ -174,18 +174,22 @@ void __fastcall TSynExporterTeX::FormatNewLine()
 
 void __fastcall TSynExporterTeX::FormatAfterLastAttribute()
 {
+
 }
 
 void __fastcall TSynExporterTeX::FormatAttributeDone(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged)
 {
+
 }
 
 void __fastcall TSynExporterTeX::FormatAttributeInit(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged)
 {
+
 }
 
 void __fastcall TSynExporterTeX::FormatBeforeFirstAttribute(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged)
 {
+
 }
 
 String __fastcall TSynExporterTeX::GetCommandName(TSynCustomHighlighter* Highlighter, TSynHighlighterAttributes* Attri)

@@ -9,6 +9,7 @@
 #include <System.Classes.hpp>
 #include <Winapi.ActiveX.hpp>
 #include <System.Generics.Collections.hpp>
+#include "d2c_systypes.h"
 
 namespace Syneditdataobject
 {
@@ -51,7 +52,7 @@ class TSynEnumFormatEtc : public System::TCppInterfacedObject<IEnumFORMATETC>
 public:
 	typedef System::TCppInterfacedObject<IEnumFORMATETC> inherited;
 private:
-	System::D2CArray<TClipFormat> FList;
+	D2CArray<TClipFormat> FList;
 	int FIndex;
 protected:
 	TFormatEtc __fastcall GetFormatEtc(TClipFormat ClipFormat);

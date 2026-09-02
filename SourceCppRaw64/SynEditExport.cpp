@@ -246,6 +246,7 @@ void __fastcall TSynCustomExporter::ExportRange(TStrings* ALines, const TBufferC
 	String Line;
 	String Token;
 	TSynHighlighterAttributes* Attri = nullptr;
+
 	FStreaming = true;
 	try
 
@@ -584,12 +585,12 @@ void __fastcall TSynCustomExporter::WriteString(const String AText)
 		}
 		break;
 		case seUTF16LE:
-		fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), static_cast<NativeInt>(AText.Length() * sizeof(WideChar)));
+		fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		break;
 		case seUTF16BE:
 		{
 			StrSwapByteOrder(ustr2pwchar(AText));
-			fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), static_cast<NativeInt>(AText.Length() * sizeof(WideChar)));
+			fBuffer->WriteBuffer(ustr2pwchar(AText, 1 - 1), AText.Length() * sizeof(WideChar));
 		}
 		break;
 		case seAnsi:

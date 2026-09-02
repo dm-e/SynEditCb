@@ -9,6 +9,7 @@
 #include <Vcl.Controls.hpp>
 #include "SynEditTextBuffer.h"
 #include "SynEditDelphiInstances.hpp"
+#include "d2c_systypes.h"
 
 using namespace std;
 using namespace d2c_system;

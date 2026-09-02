@@ -309,6 +309,7 @@ void __fastcall TMethodList::Remove(const TMethod& caHandler)
 {
 	TMethod aHandler = caHandler;
 	int cPos = 0;
+
 	cPos = fData->Count - 2;
 	while(cPos >= 0)
 	{

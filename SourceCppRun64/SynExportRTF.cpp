@@ -60,6 +60,7 @@ void __fastcall TSynExporterRTF::FormatAfterLastAttribute()
 {
 
   // no need to reset the font style here...
+
 }
 
 void __fastcall TSynExporterRTF::FormatAttributeDone(bool BackgroundChanged, bool ForegroundChanged, TFontStyles FontStylesChanged)
@@ -67,7 +68,7 @@ void __fastcall TSynExporterRTF::FormatAttributeDone(bool BackgroundChanged, boo
 	const String FontTags[4/*# TFontStyle*/] = {L"\\b0", L"\\i0", L"\\ul0", L"\\strike0"};
 	TFontStyle AStyle = TFontStyle::fsBold;
   // nothing to do about the color, but reset the font style
-	int stop = 0;
+	TFontStyle stop = (TFontStyle) 0;
 	for(stop = (TFontStyle) 3 /*# High(TFontStyle) */, AStyle = (TFontStyle) 0 /*# Low(TFontStyle) */; AStyle <= stop; Inc(AStyle))
 	{
 		if(FontStylesChanged.Contains(AStyle))
@@ -83,7 +84,7 @@ void __fastcall TSynExporterRTF::FormatAttributeInit(bool BackgroundChanged, boo
 	const String FontTags[4/*# TFontStyle*/] = {L"\\b", L"\\i", L"\\ul", L"\\strike"};
 	TFontStyle AStyle = TFontStyle::fsBold;
   // background color
-	int stop = 0;
+	TFontStyle stop = (TFontStyle) 0;
 	if(BackgroundChanged)
 	{
 		AddData(Format(L"\\chshdng10000\\chcbpat%d\\cb%d", ARRAYOFCONST((GetColorIndex(fLastBG), GetColorIndex(fLastBG)))));

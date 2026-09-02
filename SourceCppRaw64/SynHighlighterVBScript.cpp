@@ -5,8 +5,8 @@
 #include "SynHighlighterVBScript.h"
 #include "SynEditStrConst.h"
 #include "d2c_convert.h"
-#include "SynEditDelphiInstances.hpp"
 #include "d2c_syshelper.h"
+#include "SynEditDelphiInstances.hpp"
 
 using namespace std;
 using namespace d2c_system;

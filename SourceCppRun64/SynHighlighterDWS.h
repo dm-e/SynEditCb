@@ -181,6 +181,7 @@ public:
 	__fastcall TAnsiStringList(Char QuoteChar, Char Delimiter);
 	__fastcall TAnsiStringList(Char QuoteChar, Char Delimiter, TStringsOptions Options);
 	__fastcall TAnsiStringList(TDuplicates Duplicates, bool Sorted, bool CaseSensitive);
+	__fastcall TAnsiStringList(TStringsOptions Options, TDuplicates Duplicates = System::Types::dupIgnore);
 };
 //++ CodeFolding
 

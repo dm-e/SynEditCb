@@ -25,6 +25,7 @@ void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItemCLX(TObject* Sender, int 
 {
 	TRect Rect = cRect;
 	String s;
+
 	/*# with lbxItems do */
 	{
 		auto with0 = lbxItems;
@@ -40,6 +41,7 @@ void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItem(TWinControl* Control, in
 {
 	TRect Rect = cRect;
 	bool Dummy = false;
+
 	Dummy = true;
 	lbxItemsDrawItemCLX(Control, Index, Rect, State, Dummy);
 }

@@ -606,7 +606,7 @@ void __fastcall TSynBasicEvent::Playback(TCustomSynEdit* aEditor)
 {
 	int i = 0;
 	int stop = 0;
-	for(stop = RepeatCount, i = 1; i <= stop; i++)
+	for(stop = (int) RepeatCount, i = 1; i <= stop; i++)
 	{
 		aEditor->CommandProcessor(Command, L'\x00', nullptr);
 	}
@@ -660,7 +660,7 @@ void __fastcall TSynCharEvent::Playback(TCustomSynEdit* aEditor)
 {
 	int i = 0;
 	int stop = 0;
-	for(stop = RepeatCount, i = 1; i <= stop; i++)
+	for(stop = (int) RepeatCount, i = 1; i <= stop; i++)
 	{
 		aEditor->CommandProcessor(static_cast<TSynEditorCommand>(ecChar), Key, nullptr);
 	}
@@ -801,7 +801,7 @@ void __fastcall TSynStringEvent::Playback(TCustomSynEdit* aEditor)
 	int i = 0;
 	int j = 0;
 	int stop = 0;
-	for(stop = RepeatCount, j = 1; j <= stop; j++)
+	for(stop = (int) RepeatCount, j = 1; j <= stop; j++)
 	{
 //    aEditor.CommandProcessor( ecString, #0, Pointer(Value) );
     // SynEdit doesn't actually support the ecString command so we convert

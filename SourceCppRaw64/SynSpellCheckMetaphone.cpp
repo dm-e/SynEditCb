@@ -158,6 +158,7 @@ void __fastcall ApplyRules(UnicodeString ScanStr, TRule* RuleBase, int RuleBase_
 		int PrevChar = 0;
 		int ArgLength = 0;
 		int InpLength = 0;
+
 		InpLength = ScanStr.Length();
 		RemChar = InpLength - CharIndex;
 		PrevChar = CharIndex - 1;

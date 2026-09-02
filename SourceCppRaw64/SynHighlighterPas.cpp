@@ -5,8 +5,8 @@
 #include "SynHighlighterPas.h"
 #include "SynEditStrConst.h"
 #include "OnLeavingScope.h"
-#include "SynEditDelphiInstances.hpp"
 #include "d2c_syshelper.h"
+#include "SynEditDelphiInstances.hpp"
 
 using namespace std;
 using namespace d2c_system;

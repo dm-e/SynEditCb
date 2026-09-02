@@ -22,6 +22,33 @@ using namespace System::Sysutils;
 namespace Synunicode
 {
 #define Synunicode__0 (System::Set<Byte, 0, 255>() <<  \
+										160 << 161 << 162 << 163 << 164 << 165 <<  \
+										166 << 167 << 168 << 169 << 170 << 171 <<  \
+										172 << 173 << 174 << 175 << 176 << 177 <<  \
+										178 << 179 << 180 << 181 << 182 << 183 <<  \
+										184 << 185 << 186 << 187 << 188 << 189 <<  \
+										190 << 191)
+#define Synunicode__1 (System::Set<Byte, 0, 255>() <<  \
+										128 << 129 << 130 << 131 << 132 << 133 <<  \
+										134 << 135 << 136 << 137 << 138 << 139 <<  \
+										140 << 141 << 142 << 143 << 144 << 145 <<  \
+										146 << 147 << 148 << 149 << 150 << 151 <<  \
+										152 << 153 << 154 << 155 << 156 << 157 <<  \
+										158 << 159)
+#define Synunicode__2 (System::Set<Byte, 0, 255>() <<  \
+										144 << 145 << 146 << 147 << 148 << 149 <<  \
+										150 << 151 << 152 << 153 << 154 << 155 <<  \
+										156 << 157 << 158 << 159 << 160 << 161 <<  \
+										162 << 163 << 164 << 165 << 166 << 167 <<  \
+										168 << 169 << 170 << 171 << 172 << 173 <<  \
+										174 << 175 << 176 << 177 << 178 << 179 <<  \
+										180 << 181 << 182 << 183 << 184 << 185 <<  \
+										186 << 187 << 188 << 189 << 190 << 191)
+#define Synunicode__3 (System::Set<Byte, 0, 255>() <<  \
+										128 << 129 << 130 << 131 << 132 << 133 <<  \
+										134 << 135 << 136 << 137 << 138 << 139 <<  \
+										140 << 141 << 142 << 143)
+#define Synunicode__4 (System::Set<Byte, 0, 255>() <<  \
 										128 << 129 << 130 << 131 << 132 << 133 <<  \
 										134 << 135 << 136 << 137 << 138 << 139 <<  \
 										140 << 141 << 142 << 143 << 144 << 145 <<  \
@@ -33,33 +60,6 @@ namespace Synunicode
 										176 << 177 << 178 << 179 << 180 << 181 <<  \
 										182 << 183 << 184 << 185 << 186 << 187 <<  \
 										188 << 189 << 190 << 191)
-#define Synunicode__1 (System::Set<Byte, 0, 255>() <<  \
-										160 << 161 << 162 << 163 << 164 << 165 <<  \
-										166 << 167 << 168 << 169 << 170 << 171 <<  \
-										172 << 173 << 174 << 175 << 176 << 177 <<  \
-										178 << 179 << 180 << 181 << 182 << 183 <<  \
-										184 << 185 << 186 << 187 << 188 << 189 <<  \
-										190 << 191)
-#define Synunicode__2 (System::Set<Byte, 0, 255>() <<  \
-										128 << 129 << 130 << 131 << 132 << 133 <<  \
-										134 << 135 << 136 << 137 << 138 << 139 <<  \
-										140 << 141 << 142 << 143 << 144 << 145 <<  \
-										146 << 147 << 148 << 149 << 150 << 151 <<  \
-										152 << 153 << 154 << 155 << 156 << 157 <<  \
-										158 << 159)
-#define Synunicode__3 (System::Set<Byte, 0, 255>() <<  \
-										144 << 145 << 146 << 147 << 148 << 149 <<  \
-										150 << 151 << 152 << 153 << 154 << 155 <<  \
-										156 << 157 << 158 << 159 << 160 << 161 <<  \
-										162 << 163 << 164 << 165 << 166 << 167 <<  \
-										168 << 169 << 170 << 171 << 172 << 173 <<  \
-										174 << 175 << 176 << 177 << 178 << 179 <<  \
-										180 << 181 << 182 << 183 << 184 << 185 <<  \
-										186 << 187 << 188 << 189 << 190 << 191)
-#define Synunicode__4 (System::Set<Byte, 0, 255>() <<  \
-										128 << 129 << 130 << 131 << 132 << 133 <<  \
-										134 << 135 << 136 << 137 << 138 << 139 <<  \
-										140 << 141 << 142 << 143)
 
 
 
@@ -75,6 +75,7 @@ PWideChar __fastcall SynCharNext(PWideChar P, String& Element)
 	Element; //# clear out parameter
 	PWideChar result = nullptr;
 	PWideChar Start = nullptr;
+
 	Start = P;
 	result = ::CharNext(P);
 	SetString(Element, Start, result - Start);
@@ -166,6 +167,7 @@ bool __fastcall IsUTF8(const String FileName, bool& WithBOM, int BytesToCheck/*#
 	WithBOM = false; //# clear out parameter
 	bool result = false;
 	TStream* Stream = nullptr;
+
 	Stream = new TFileStream(FileName, static_cast<WORD>(fmOpenRead | fmShareDenyWrite));
 	try
 	{
@@ -193,6 +195,7 @@ bool __fastcall IsUTF8(TStream* Stream, bool& WithBOM, int BytesToCheck/*# = 0x4
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
+
 	BufferSize = static_cast<int>(Min(static_cast<__int64>(BytesToCheck), Stream->Size - Stream->Position));
 
   // if no special characteristics are found it is not UTF-8
@@ -240,7 +243,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 		++i;
 		while((i < Len) && (result < 4))
 		{
-			if(Synunicode__0.Contains(Bytes[i]))
+			if(Synunicode__4.Contains(Bytes[i]))
 				++result;
 			else
 				break;
@@ -287,7 +290,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xE0:
 			{
 				++i;
-				if((i < Len) && (Synunicode__1.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
+				if((i < Len) && (Synunicode__0.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
 					++FoundUTF8Strings;
 				else
 					goto label1;
@@ -304,7 +307,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xED:
 			{
 				++i;
-				if((i < Len) && (Synunicode__2.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
+				if((i < Len) && (Synunicode__1.Contains(Bytes[i])) && (CountOfTrailingBytes() == 1))
 					++FoundUTF8Strings;
 				else
 					goto label3;
@@ -313,7 +316,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xF0:
 			{
 				++i;
-				if((i < Len) && (Synunicode__3.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
+				if((i < Len) && (Synunicode__2.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
 					++FoundUTF8Strings;
 				else
 					goto label4;
@@ -328,7 +331,7 @@ bool __fastcall IsUTF8(const TBytes& Bytes, int Start/*# = 0*/, int BytesToCheck
 			case 0xF4:
 			{
 				++i;
-				if((i < Len) && (Synunicode__4.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
+				if((i < Len) && (Synunicode__3.Contains(Bytes[i])) && (CountOfTrailingBytes() == 2))
 					++FoundUTF8Strings;
 				else
 					goto label6;
@@ -376,6 +379,7 @@ TEncoding* __fastcall GetEncoding(const String FileName, bool& WithBOM)
 	WithBOM = false; //# clear out parameter
 	TEncoding* result = nullptr;
 	TStream* Stream = nullptr;
+
 	Stream = new TFileStream(FileName, static_cast<WORD>(fmOpenRead | fmShareDenyWrite));
 	try
 	{
@@ -413,6 +417,7 @@ TEncoding* __fastcall GetEncoding(TStream* Stream, bool& WithBOM)
   // to signal an invalid result
 
   // start analysis at actual Stream.Position
+
 	Size = static_cast<int>(Stream->Size - Stream->Position);
 
   // if no special characteristics are found it is probably ANSI

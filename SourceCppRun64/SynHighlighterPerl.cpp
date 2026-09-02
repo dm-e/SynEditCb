@@ -1304,7 +1304,8 @@ bool __fastcall TSynPerlSyn::IsFilterStored()
 
 bool __fastcall TSynPerlSyn::IsIdentChar(WideChar AChar)
 {
-	bool result = false; //Fiala
+	bool result = false;
+ //Fiala
 	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, Synhighlighterperl__5);
 	return result;
 }

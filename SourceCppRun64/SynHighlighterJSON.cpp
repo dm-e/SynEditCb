@@ -16,20 +16,20 @@ using namespace Vcl::Graphics;
 namespace Synhighlighterjson
 {
 #define Synhighlighterjson__0 (TFontStyles() << TFontStyle::fsBold)
-#define Synhighlighterjson__1 (TSysCharSet() <<  \
+#define Synhighlighterjson__1 (TSysCharSet() << 'e' << 'E')
+#define Synhighlighterjson__2 (TSysCharSet() << '+' << '-')
+#define Synhighlighterjson__3 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define Synhighlighterjson__2 (TSysCharSet() <<  \
+#define Synhighlighterjson__4 (TSysCharSet() <<  \
 										48 << 49 << 50 << 51 << 52 << 53 <<  \
 										54 << 55 << 56 << 57)
-#define Synhighlighterjson__3 (TSysCharSet() << 'e' << 'E')
-#define Synhighlighterjson__4 (TSysCharSet() << '+' << '-')
-#define Synhighlighterjson__5 (TSysCharSet() <<  \
+#define Synhighlighterjson__5 (TSysCharSet() << '\x20' << '\"')
+#define Synhighlighterjson__6 (TSysCharSet() <<  \
           48 << 49 << 50 << 51 << 52 << 53 <<  \
           54 << 55 << 56 << 57 <<  \
           65 << 66 << 67 << 68 << 69 << 70 <<  \
           97 << 98 << 99 << 100 << 101 << 102)
-#define Synhighlighterjson__6 (TSysCharSet() << '\x20' << '\"')
 #define Synhighlighterjson__7 (System::Set<TRangeState, TRangeState::rsUnknown, TRangeState::rsArrayValue>() << rsObjectValue << rsArrayValue)
 
 
@@ -132,8 +132,8 @@ void __fastcall TSynJSONSyn::NumberProc()
 	auto ExpectDigit = [&]() -> bool 
 	{
 		bool result = false;
-		result = CharInSet(fLine[Run], Synhighlighterjson__1);
-		while(CharInSet(fLine[Run], Synhighlighterjson__2))
+		result = CharInSet(fLine[Run], Synhighlighterjson__3);
+		while(CharInSet(fLine[Run], Synhighlighterjson__4))
 			++Run;
 		return result;
 	};
@@ -179,12 +179,12 @@ void __fastcall TSynJSONSyn::NumberProc()
 	}
 
   // check for an exponent
-	if(CharInSet(fLine[Run], Synhighlighterjson__3))
+	if(CharInSet(fLine[Run], Synhighlighterjson__1))
 	{
 		++Run;
 
     // allow +/- here
-		if(CharInSet(fLine[Run], Synhighlighterjson__4))
+		if(CharInSet(fLine[Run], Synhighlighterjson__2))
 			++Run;
 
     // at least any digit must appear here
@@ -268,7 +268,7 @@ void __fastcall TSynJSONSyn::StringProc()
 	auto IsHex = [&](Char Digit) -> bool 
 	{
 		bool result = false;
-		result = CharInSet(Digit, Synhighlighterjson__5);
+		result = CharInSet(Digit, Synhighlighterjson__6);
 		return result;
 	};
 	FTokenID = tkString;
@@ -302,7 +302,7 @@ void __fastcall TSynJSONSyn::StringProc()
                 // a 4 hex digit is expected
 					{
 						FTokenID = tkUnknown;
-						while(!CharInSet(fLine[Run], Synhighlighterjson__6) && !IsLineEnd(Run))
+						while(!CharInSet(fLine[Run], Synhighlighterjson__5) && !IsLineEnd(Run))
 							++Run;
 						return;
 					}

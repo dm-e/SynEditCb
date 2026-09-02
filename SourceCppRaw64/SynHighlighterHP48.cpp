@@ -439,7 +439,7 @@ __fastcall TSynHP48Syn::~TSynHP48Syn()
 {
 	TtkTokenKind i = tkNull;
 	int stop = 0;
-	for(stop = (TtkTokenKind) 9 /*# High(TtkTokenKind) */, i = (TtkTokenKind) 0 /*# Low(TtkTokenKind) */; i <= stop; Inc(i))
+	for(stop = (TtkTokenKind) tkRplComment /*# High(TtkTokenKind) */, i = (TtkTokenKind) tkNull /*# Low(TtkTokenKind) */; (TtkTokenKind) i <= stop; Inc(i))
 	{
 		delete Attribs[i];
 	}
@@ -885,11 +885,12 @@ bool __fastcall TSynHP48Syn::SaveToRegistry(HKEY RootKey, String Key)
 
 void __fastcall TSynHP48Syn::Assign(TPersistent* Source)
 {
-	TtkTokenKind i = tkNull;
+
+	int i = tkNull;
 	if(ObjectIs(Source, TSynHP48Syn*))
 	{
 		int stop = 0;
-		for(stop = (TtkTokenKind) 9 /*# High(Attribs) */, i = (TtkTokenKind) 0 /*# Low(Attribs) */; i <= stop; Inc(i))
+		for(stop = 9 /*# High(Attribs) */, i = 0 /*# Low(Attribs) */; i <= stop; Inc(i))
 		{
 			Attribs[i]->Background = ((TSynHP48Syn*) Source)->Attribs[i]->Background;
 			Attribs[i]->Foreground = ((TSynHP48Syn*) Source)->Attribs[i]->Foreground;
@@ -912,7 +913,7 @@ int __fastcall TSynHP48Syn::GetAttribCount()
 TSynHighlighterAttributes* __fastcall TSynHP48Syn::GetAttribute(int idx)
 {
 	TSynHighlighterAttributes* result = nullptr; // sorted by name
-	if(idx <= int((TtkTokenKind) 9 /*# High(TtkTokenKind) */))
+	if(idx <= int(tkRplComment /*# High(TtkTokenKind) */))
 		result = Attribs[((TtkTokenKind) idx)];
 	else
 		result = nullptr;
@@ -936,9 +937,10 @@ String __fastcall TSynHP48Syn::GetLanguageName()
 
 void __fastcall TSynHP48Syn::SetHighLightChange()
 {
-	TtkTokenKind i = tkNull;
+
+	int i = tkNull;
 	int stop = 0;
-	for(stop = (TtkTokenKind) 9 /*# High(Attribs) */, i = (TtkTokenKind) 0 /*# Low(Attribs) */; i <= stop; Inc(i))
+	for(stop = 9 /*# High(Attribs) */, i = 0 /*# Low(Attribs) */; i <= stop; Inc(i))
 	{
 		Attribs[i]->OnChange = DefHighlightChange;
 		Attribs[i]->InternalSaveDefaultValues();

@@ -62,6 +62,7 @@ __fastcall TAnsiStringList::TAnsiStringList(bool OwnsObjects) : inherited(OwnsOb
 __fastcall TAnsiStringList::TAnsiStringList(Char QuoteChar, Char Delimiter) : inherited(QuoteChar, Delimiter) {}
 __fastcall TAnsiStringList::TAnsiStringList(Char QuoteChar, Char Delimiter, TStringsOptions Options) : inherited(QuoteChar, Delimiter, Options) {}
 __fastcall TAnsiStringList::TAnsiStringList(TDuplicates Duplicates, bool Sorted, bool CaseSensitive) : inherited(Duplicates, Sorted, CaseSensitive) {}
+__fastcall TAnsiStringList::TAnsiStringList(TStringsOptions Options, TDuplicates Duplicates/*# = dupIgnore*/) : inherited(Options, Duplicates) {}
 
 
    // if the language is case-insensitive keywords *must* be in lowercase

@@ -2176,7 +2176,7 @@ void __fastcall TSynSQLSyn::InitializeKeywordLists()
 	fKeywords->Clear();
 	FTableDict->Clear();
 	fToIdent = nullptr;
-	for(stop = int((TtkTokenKind) 20 /*# High(TtkTokenKind) */), I = 0; I <= stop; I++)
+	for(stop = int(tkConsoleOutput /*# High(TtkTokenKind) */), I = 0; I <= stop; I++)
 	{
 		EnumerateKeywords(I, GetKeyWords(I), IsIdentChar, DoAddKeyword);
 	}

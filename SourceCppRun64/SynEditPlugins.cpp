@@ -95,10 +95,12 @@ void __fastcall TAbstractSynPlugin::Notification(TComponent* aComponent, TOperat
 
 void __fastcall TAbstractSynPlugin::DoAddEditor(TCustomSynEdit* aEditor)
 {
+
 }
 
 void __fastcall TAbstractSynPlugin::DoRemoveEditor(TCustomSynEdit* aEditor)
 {
+
 }
 
 int __fastcall TAbstractSynPlugin::RemoveEditor(TCustomSynEdit* aEditor)

@@ -4,8 +4,8 @@
 
 #include "SynHighlighterFoxpro.h"
 #include "SynEditStrConst.h"
-#include "SynEditDelphiInstances.hpp"
 #include "d2c_syshelper.h"
+#include "SynEditDelphiInstances.hpp"
 #include "d2c_convert.h"
 
 using namespace std;

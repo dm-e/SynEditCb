@@ -13,6 +13,7 @@
 #include "SynEditDataObject.h"
 #include "SynEditDragDrop.h"
 #include "d2c_convert.h"
+#include "d2c_systypes.h"
 #include "d2c_syshelper.h"
 
 using namespace std;

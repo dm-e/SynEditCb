@@ -1,4 +1,4 @@
-D2Cpp VERSION = 2.7.0
+D2Cpp VERSION = 2.8.0
 
 ==========[INPUT]
 SYSTEM_PAS =System.pas
@@ -14,15 +14,15 @@ WIN64=1
 [INCLUDEPATHS]
 ..\Source
 [LIBINCLUDEPATHS]
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\sys
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\common
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\rtl\win
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\vcl
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\ToolsAPI
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\data
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\data\vclctrls
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\Property Editors
-C:\Program Files (x86)\Embarcadero\Studio\23.0\source\xml
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\rtl\sys
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\rtl\common
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\rtl\win
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\vcl
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\ToolsAPI
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\data
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\data\vclctrls
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\Property Editors
+C:\Program Files (x86)\Embarcadero\Studio\37.0\source\xml
 [UNITSCOPENAMES]
 System
 Winapi

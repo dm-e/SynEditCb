@@ -1136,36 +1136,36 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 	{
 		/*# with Bitmap do */
 		{
-			auto with1 = Bitmap;
+			auto with0 = Bitmap;
 			int stop = 0;
 			ResetCanvas();
-			with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
-			with1->Canvas->Rectangle(0, 0, ClientWidth - FScrollbar->Width, ClientHeight);
+			with0->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
+			with0->Canvas->Rectangle(0, 0, ClientWidth - FScrollbar->Width, ClientHeight);
 			for(stop = Min(FLinesInWindow - 1, FAssignedList->Count - 1), i = 0; i <= stop; i++)
 			{
 				if(i + FScrollbar->Position == Position)
 				{
-					with1->Canvas->Brush->Color = StyleServices()->GetSystemColor(FClSelect);
-					with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(FClSelect);
-					with1->Canvas->Rectangle(0, FEffectiveItemHeight * i, ClientWidth - FScrollbar->Width, FEffectiveItemHeight * (i + 1));
-					with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(fClSelectText);
-					with1->Canvas->Font->Assign(FFont);
-					with1->Canvas->Font->Color = StyleServices()->GetSystemColor(fClSelectText);
+					with0->Canvas->Brush->Color = StyleServices()->GetSystemColor(FClSelect);
+					with0->Canvas->Pen->Color = StyleServices()->GetSystemColor(FClSelect);
+					with0->Canvas->Rectangle(0, FEffectiveItemHeight * i, ClientWidth - FScrollbar->Width, FEffectiveItemHeight * (i + 1));
+					with0->Canvas->Pen->Color = StyleServices()->GetSystemColor(fClSelectText);
+					with0->Canvas->Font->Assign(FFont);
+					with0->Canvas->Font->Color = StyleServices()->GetSystemColor(fClSelectText);
 				}
 				AlreadyDrawn = false;
 				if(Assigned(OnPaintItem))
-					OnPaintItem(this, LogicalToPhysicalIndex(FScrollbar->Position + i), with1->Canvas, Rect(0, FEffectiveItemHeight * i, ClientWidth - FScrollbar->Width, FEffectiveItemHeight * (i + 1)), AlreadyDrawn);
+					OnPaintItem(this, LogicalToPhysicalIndex(FScrollbar->Position + i), with0->Canvas, Rect(0, FEffectiveItemHeight * i, ClientWidth - FScrollbar->Width, FEffectiveItemHeight * (i + 1)), AlreadyDrawn);
 				if(AlreadyDrawn)
 					ResetCanvas();
 				else
 				{
 					if(FFormattedText)
 					{
-						FormattedTextOut(with1->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)), Bitmap->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
+						FormattedTextOut(with0->Canvas, Rect(ScaledMargin, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)), Bitmap->Width, FEffectiveItemHeight * (i + 1)), CurrentPPI, FAssignedList->Strings[FScrollbar->Position + i], (i + FScrollbar->Position == Position), FColumns, FImages);
 					}
 					else
 					{
-						with1->Canvas->TextOut(ScaledMargin, FEffectiveItemHeight * i, FAssignedList->Strings[FScrollbar->Position + i]);
+						with0->Canvas->TextOut(ScaledMargin, FEffectiveItemHeight * i, FAssignedList->Strings[FScrollbar->Position + i]);
 					}
 					if(i + FScrollbar->Position == Position)
 						ResetCanvas();
@@ -1174,7 +1174,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 			if(TStyleManager::IsCustomStyleActive)
 			{
 				TmpRect = ClientRect;
-				DrawStyleEdge(with1->Canvas, TmpRect, Syncompletionproposal__18, Syncompletionproposal__19);
+				DrawStyleEdge(with0->Canvas, TmpRect, Syncompletionproposal__18, Syncompletionproposal__19);
 			}
 		}
 		Canvas->Draw(0, FHeightBuffer, Bitmap);
@@ -1182,20 +1182,20 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 		{
 			/*# with TitleBitmap do */
 			{
-				auto with2 = TitleBitmap;
-				with2->Canvas->Brush->Color = StyleServices()->GetSystemColor(FClTitleBackground);
+				auto with1 = TitleBitmap;
+				with1->Canvas->Brush->Color = StyleServices()->GetSystemColor(FClTitleBackground);
 				TmpRect = Rect(0, 0, ClientWidth + 1, FHeightBuffer);                        //GBN
-				with2->Canvas->FillRect(TmpRect);
-				with2->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnShadow);
+				with1->Canvas->FillRect(TmpRect);
+				with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnShadow);
 				TmpRect.Bottom -= 1;
-				with2->Canvas->PenPos = TmpRect.BottomRight();
-				with2->Canvas->LineTo(TmpRect.Left - 1, TmpRect.Bottom);
-				with2->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
-				with2->Canvas->Font->Assign(FTitleFont);
-				with2->Canvas->Font->Color = StyleServices()->GetSystemColor(FTitleFont->Color);
+				with1->Canvas->PenPos = TmpRect.BottomRight();
+				with1->Canvas->LineTo(TmpRect.Left - 1, TmpRect.Bottom);
+				with1->Canvas->Pen->Color = StyleServices()->GetSystemColor(clBtnFace);
+				with1->Canvas->Font->Assign(FTitleFont);
+				with1->Canvas->Font->Color = StyleServices()->GetSystemColor(FTitleFont->Color);
 				if(CenterTitle)
 				{
-					TmpX = (int)((with2->Width - with2->Canvas->TextWidth(Title)) / /*div*/ 2);
+					TmpX = (int)((with1->Width - with1->Canvas->TextWidth(Title)) / /*div*/ 2);
 					if(TmpX < ScaledMargin)
 						TmpX = ScaledMargin;  //We still want to be able to read it, even if it does go over the edge
 				}
@@ -1203,7 +1203,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 				{
 					TmpX = ScaledMargin;
 				}
-				with2->Canvas->TextRect(TmpRect, TmpX, ScaledMargin - 1, FTitle); // -1 because TmpRect.Top is already 1
+				with1->Canvas->TextRect(TmpRect, TmpX, ScaledMargin - 1, FTitle); // -1 because TmpRect.Top is already 1
 			}
 			Canvas->Draw(0, 0, TitleBitmap);
 		}
@@ -1214,18 +1214,18 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 		{
 			/*# with Bitmap do */
 			{
-				auto with3 = Bitmap;
+				auto with2 = Bitmap;
 				int stop = 0;
 				ResetCanvas();
 				TmpRect = Rect(0, 0, ClientWidth, ClientHeight);
-				with3->Canvas->FillRect(TmpRect);
+				with2->Canvas->FillRect(TmpRect);
 				if(StyleServices()->IsSystemStyle)
-					Frame3D(with3->Canvas, TmpRect, cl3DLight, cl3DDkShadow, 1);
+					Frame3D(with2->Canvas, TmpRect, cl3DLight, cl3DDkShadow, 1);
 				for(stop = FAssignedList->Count - 1, i = 0; i <= stop; i++)
 				{
 					AlreadyDrawn = false;
 					if(Assigned(OnPaintItem))
-						OnPaintItem(this, i, with3->Canvas, Rect(0, FEffectiveItemHeight * i + ScaledMargin, ClientWidth, FEffectiveItemHeight * (i + 1) + ScaledMargin), AlreadyDrawn);
+						OnPaintItem(this, i, with2->Canvas, Rect(0, FEffectiveItemHeight * i + ScaledMargin, ClientWidth, FEffectiveItemHeight * (i + 1) + ScaledMargin), AlreadyDrawn);
 					if(AlreadyDrawn)
 						ResetCanvas();
 					else
@@ -1234,7 +1234,7 @@ void __fastcall TSynBaseCompletionProposalForm::Paint()
 							TmpString = FormatParamList(FAssignedList->Strings[i], CurrentIndex);
 						else
 							TmpString = FAssignedList->Strings[i];
-						FormattedTextOut(with3->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)) + ScaledMargin, Bitmap->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
+						FormattedTextOut(with2->Canvas, Rect(ScaledMargin + 1, FEffectiveItemHeight * i + ((int)((FEffectiveItemHeight - FFontHeight) / /*div*/ 2)) + ScaledMargin, Bitmap->Width - 1, FEffectiveItemHeight * (i + 1) + ScaledMargin), CurrentPPI, TmpString, false, nullptr, FImages);
 					}
 				}
 			}
@@ -2404,12 +2404,14 @@ void __fastcall TSynBaseCompletionProposal::EditorCancelMode(TObject* Sender)
 {
 
   //Do nothing here, used in TSynCompletionProposal
+
 }
 
 void __fastcall TSynBaseCompletionProposal::HookedEditorCommand(TObject* Sender, bool AfterProcessing, bool& Handled, TSynEditorCommand& Command, WideChar& AChar, void* Data, void* HandlerData)
 {
 
   // Do nothing here, used in TSynCompletionProposal
+
 }
 
 TCompletionChange __fastcall TSynBaseCompletionProposal::GetOnChange()

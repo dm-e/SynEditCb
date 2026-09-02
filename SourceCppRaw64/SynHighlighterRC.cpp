@@ -533,6 +533,7 @@ void __fastcall TSynRCSyn::EnumUserSettings(TStrings* Settings)
 {
 
   // ** ??
+
 }
 
 bool __fastcall TSynRCSyn::UseUserSettings(int SettingIndex)

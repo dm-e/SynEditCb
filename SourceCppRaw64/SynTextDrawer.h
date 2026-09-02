@@ -174,7 +174,7 @@ namespace Syntextdrawer
 /*.$DEFINE SYN_UNISCRIBE*/
 
 // $Id: SynEdit.inc,v 1.16.2.19 2009/06/14 13:41:44 maelh Exp $
-const int FontStyleCount = int((TFontStyle) 3 /*# High(TFontStyle) */) + 1;
+const int FontStyleCount = int(fsStrikeOut /*# High(TFontStyle) */) + 1;
 const int FontStyleCombineCount = (1 << FontStyleCount);
 typedef int TIntegerArray[(MaxInt / sizeof(int) - 1) + 1/*# range 0..MaxInt div SizeOf(Integer)-1*/];
 typedef TIntegerArray* PIntegerArray;

@@ -40,6 +40,7 @@ HRESULT STDMETHODCALLTYPE TSynDropTarget::DragEnter(IDataObject* DataObj, DWORD 
 	if(dwEffect == nullptr)
 		return E_POINTER;
 	HRESULT result = 0;
+
 	result = S_OK;
 	try
 	{
@@ -72,6 +73,7 @@ HRESULT STDMETHODCALLTYPE TSynDropTarget::DragOver(DWORD grfKeyState, POINTL pt,
 	if(dwEffect == nullptr)
 		return E_POINTER;
 	HRESULT result = 0;
+
 	result = S_OK;
 	try
 	{
@@ -89,6 +91,7 @@ HRESULT STDMETHODCALLTYPE TSynDropTarget::Drop(IDataObject* DataObj, DWORD grfKe
 	if(dwEffect == nullptr)
 		return E_POINTER;
 	HRESULT result = 0;
+
 	result = S_OK;
 	try
 	{

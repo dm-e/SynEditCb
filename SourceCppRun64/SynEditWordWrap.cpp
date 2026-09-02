@@ -49,7 +49,7 @@ TDisplayCoord __fastcall TSynWordWrapPlugin::BufferToDisplayPos(const TBufferCoo
 	else
 		vStartRow = (*fLineOffsets)[aPos.Line - 2];
 	vRowLen = 0;
-	for(stop = (*fLineOffsets)[aPos.Line - 1] - 1, cRow = vStartRow; cRow <= stop; cRow++)
+	for(stop = (int) (*fLineOffsets)[aPos.Line - 1] - 1, cRow = vStartRow; cRow <= stop; cRow++)
 	{
 		vRowLen += (*fRowLengths)[cRow];
 		if(aPos.Char <= vRowLen)
@@ -123,7 +123,7 @@ TBufferCoord __fastcall TSynWordWrapPlugin::DisplayToBufferPos(const TDisplayCoo
 				result.Char = Min(aPos.Column, fMaxRowLength + 1);
 			else
 				result.Char = Min(aPos.Column, (*fRowLengths)[aPos.Row - 1] + 1);
-			for(stop1 = aPos.Row - 2, cRow = (*fLineOffsets)[cLine]; cRow <= stop1; cRow++)
+			for(stop1 = aPos.Row - 2, cRow = (int) (*fLineOffsets)[cLine]; cRow <= stop1; cRow++)
 			{
 				result.Char += (*fRowLengths)[cRow];
 			}
@@ -393,7 +393,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 				{
 					int stop = 0;
 					p = fLineOffsets;
-					for(stop = fLineCount - 1, cLine = aIndex; cLine <= stop; cLine++)
+					for(stop = fLineCount - 1, cLine = (int) aIndex; cLine <= stop; cLine++)
 					{
 						++(*p)[cLine];
 					}
@@ -402,7 +402,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 				{
 					int stop = 0;
 					p = fLineOffsets;
-					for(stop = fLineCount - 1, cLine = aIndex; cLine <= stop; cLine++)
+					for(stop = fLineCount - 1, cLine = (int) aIndex; cLine <= stop; cLine++)
 					{
 						(*p)[cLine] += result;
 					}
@@ -417,7 +417,7 @@ int __fastcall TSynWordWrapPlugin::ReWrapLine(TLineIndex aIndex)
 				int stop = 0;
 				if(vOldNextRow < RowCount())
 					MoveRows(static_cast<TRowIndex>(vOldNextRow), result);
-				for(stop = fLineCount - 1, cLine = aIndex; cLine <= stop; cLine++)
+				for(stop = fLineCount - 1, cLine = (int) aIndex; cLine <= stop; cLine++)
 				{
 					(*fLineOffsets)[cLine] += result;
 				}
@@ -454,7 +454,7 @@ void __fastcall TSynWordWrapPlugin::WrapLines()
 	{
 		vLine = ((TSynEditStringList*) Editor->Lines)->ExpandedStrings[cLine];
 		vLine = Editor->ExpandAtWideGlyphs(vLine);
-		vMaxNewRows = ((int)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1;
+		vMaxNewRows = ((NativeInt)((vLine.Length() - 1) / /*div*/ fMinRowLength)) + 1;
 		GrowRows(cRow + vMaxNewRows);
 		vRowBegin = ustr2pwchar(vLine);
 		vRowEnd = vRowBegin + fMaxRowLength;

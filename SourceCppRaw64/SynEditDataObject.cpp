@@ -123,6 +123,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetData(TFormatEtc* formatetcIn, T
 		return E_POINTER;
 	*medium = {}; //# clear out parameter
 	HRESULT result = 0;
+
 	ZeroMemory(medium, sizeof(TStgMedium));
 	result = QueryGetData(formatetcIn);
 	if(result == S_OK)
@@ -155,6 +156,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetDataHere(TFormatEtc* formatetc,
 		return E_POINTER;
 	*medium = {}; //# clear out parameter
 	HRESULT result = 0;
+
 	result = E_NOTIMPL;
 	return result;
 }
@@ -184,6 +186,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::QueryGetData(TFormatEtc* formatetc
 	if (formatetc == nullptr)
 		return E_POINTER;
 	HRESULT result = 0;
+
 	if(((formatetc->tymed & TYMED_HGLOBAL) == TYMED_HGLOBAL) && FFormatEtc->Contains(formatetc->cfFormat))
 		result = S_OK;
 	else
@@ -197,6 +200,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::GetCanonicalFormatEtc(TFormatEtc* 
 		return E_POINTER;
 	*formatetcOut = {}; //# clear out parameter
 	HRESULT result = 0;
+
 	formatetcOut->ptd = nullptr;
 	result = DATA_S_SAMEFORMATETC;
 	return result;
@@ -209,6 +213,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::SetData(TFormatEtc* formatetc, TSt
 	if(medium == nullptr)
 		return E_POINTER;
 	HRESULT result = 0;
+
 	result = E_NOTIMPL;
 	return result;
 }
@@ -219,6 +224,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::EnumFormatEtc(DWORD dwDirection, I
 		return E_POINTER;
 	*enumFormatEtc = nullptr; //# clear out parameter
 	HRESULT result = 0;
+
 	try
 	{
 		if(dwDirection == DATADIR_GET)
@@ -242,6 +248,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::DAdvise(TFormatEtc* formatetc, LON
 		return E_POINTER;
 	*dwConnection = 0; //# clear out parameter
 	HRESULT result = 0;
+
 	result = OLE_E_ADVISENOTSUPPORTED;
 	return result;
 }
@@ -259,6 +266,7 @@ HRESULT STDMETHODCALLTYPE TSynEditDataObject::EnumDAdvise(IEnumSTATDATA** enumAd
 		return E_POINTER;
 	*enumAdvise = nullptr; //# clear out parameter
 	HRESULT result = 0;
+
 	result = OLE_E_ADVISENOTSUPPORTED;
 	return result;
 }
@@ -297,6 +305,7 @@ HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Next(LONG celt, LPVOID* elt, LONG p
 	HRESULT result = 0;
 	LONG I = 0;
 	PFormatEtc FormatEtc = nullptr;
+
 	I = 0;
 	FormatEtc = ((PFormatEtc) elt);
 	while((I < celt) && (FIndex < FList.Length))
@@ -343,6 +352,7 @@ HRESULT STDMETHODCALLTYPE TSynEnumFormatEtc::Clone(IEnumFORMATETC** Enum)
 		return E_POINTER;
 	*Enum = nullptr; //# clear out parameter
 	HRESULT result = 0;
+
 	result = S_OK;
 	*Enum = new TSynEnumFormatEtc(FList, FIndex);
 	return result;

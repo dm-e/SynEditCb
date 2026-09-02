@@ -77,6 +77,7 @@ void __fastcall TSynEditSearch::FixResults(int First, int Delta)
 
 void __fastcall TSynEditSearch::InitShiftTable()
 {
+
 	int C = 0;
 	int I = 0;
 	int stop = 0;

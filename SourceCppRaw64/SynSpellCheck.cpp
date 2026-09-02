@@ -1154,9 +1154,9 @@ void __fastcall TSynSpellCheck::LoadDictionary(String Language, String FileName/
 	sName = ExtractFileName(sName);
 	/*# with FLanguage do */
 	{
-		auto& with1 = FLanguage;
-		with1.Name = (AnsiString) FDictionary;
-		with1.Version = (AnsiString) sName.SubString(Pos(L".", sName) + 1, 5);
+		auto& with0 = FLanguage;
+		with0.Name = (AnsiString) FDictionary;
+		with0.Version = (AnsiString) sName.SubString(Pos(L".", sName) + 1, 5);
 	}
 	FUserFileName = (AnsiString) FLanguage.Name + L".user.dic";
   //////////////////////////////////////////////////////////////////////////////
@@ -1513,8 +1513,8 @@ void __fastcall TSynSpellCheck::SpellCheck()
 	tslSuggestions = new TStringList();
 	/*# with TSynEditEx(FEditor) do */
 	{
-		auto with3 = ((TSynEditEx*) FEditor);
-		if(Trim(with3->Lines->Text) == L"")
+		auto with0 = ((TSynEditEx*) FEditor);
+		if(Trim(with0->Lines->Text) == L"")
 		{
 			Screen->Cursor = FCursor;
 			FOnDone(this);
@@ -1522,13 +1522,13 @@ void __fastcall TSynSpellCheck::SpellCheck()
 			return;
 		}
 		if(!(FOptions.Contains(sscoStartFromCursor)))
-			with3->CaretXY = BufferCoord(1, 1);
+			with0->CaretXY = BufferCoord(1, 1);
 		if(FOptions.Contains(sscoHideCursor))
-			with3->BeginUpdate();
+			with0->BeginUpdate();
 		if(FOptions.Contains(sscoGoUp))
-			pNextWord = with3->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+			pNextWord = with0->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
 		else
-			pNextWord = with3->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+			pNextWord = with0->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
 		pLastWord = pNextWord;
 		while(pNextWord.Char > 0)
 		{
@@ -1539,45 +1539,45 @@ void __fastcall TSynSpellCheck::SpellCheck()
       //////////////////////////////////////////////////////////////////////////
 			if(FOptions.Contains(sscoGoUp))
 			{
-				if((with3->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar).Char == with3->CaretX) && (with3->Lines->Count == with3->CaretY))
+				if((with0->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar).Char == with0->CaretX) && (with0->Lines->Count == with0->CaretY))
 					break;
 			}
 			else
 			{
-				if((with3->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar).Char == with3->CaretX) && (with3->Lines->Count == with3->CaretY))
+				if((with0->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar).Char == with0->CaretX) && (with0->Lines->Count == with0->CaretY))
 					break;
 			}
       //////////////////////////////////////////////////////////////////////////
       // Make sure we do not get any 'blank' words
       //////////////////////////////////////////////////////////////////////////
-			while(Trim(with3->GetWordAtRowColEx(with3->CaretXY, SpellIsIdentChar, true)) == L"")
+			while(Trim(with0->GetWordAtRowColEx(with0->CaretXY, SpellIsIdentChar, true)) == L"")
 
         /* Just move to next word */
 			{
 				if(FOptions.Contains(sscoGoUp))
-					pNextWord = with3->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+					pNextWord = with0->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
 				else
-					pNextWord = with3->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
-				with3->CaretXY = pNextWord;
+					pNextWord = with0->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+				with0->CaretXY = pNextWord;
         /* If it the last word then exit loop */
 				if(pNextWord.Char == 0)
 					break;
 			}
 			if(pNextWord.Char == 0)
 				break;
-			sWord = with3->GetWordAtRowColEx(with3->CaretXY, SpellIsIdentChar, true);
+			sWord = with0->GetWordAtRowColEx(with0->CaretXY, SpellIsIdentChar, true);
       //////////////////////////////////////////////////////////////////////////
       // Check if the word is in the dictionary
       //////////////////////////////////////////////////////////////////////////
-			if((with3->Highlighter == nullptr) || (ObjectIs(with3->Highlighter, TSynURISyn*)))
+			if((with0->Highlighter == nullptr) || (ObjectIs(with0->Highlighter, TSynURISyn*)))
 			{
 				if(InternalCheckWord(sWord) == false)
 					break;
 			}
 			else
 			{
-				if(with3->GetHighlighterAttriAtRowCol(with3->CaretXY, sToken, Attri) == false)
-					Attri = with3->Highlighter->WhitespaceAttribute;
+				if(with0->GetHighlighterAttriAtRowCol(with0->CaretXY, sToken, Attri) == false)
+					Attri = with0->Highlighter->WhitespaceAttribute;
 				if(ASSIGNED(Attri) && (FCheckAttribs->IndexOf(Attri->Name) != -1) && (!InternalCheckWord(sWord)))
 					break;
 			}
@@ -1585,13 +1585,13 @@ void __fastcall TSynSpellCheck::SpellCheck()
       // Prepare next word position
       //////////////////////////////////////////////////////////////////////////
 			if(FOptions.Contains(sscoGoUp))
-				pNextWord = with3->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+				pNextWord = with0->SCPrevWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
 			else
-				pNextWord = with3->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
-			with3->CaretXY = pNextWord;
+				pNextWord = with0->SCNextWordPosEx(SpellIsIdentChar, SpellIsWhiteChar);
+			with0->CaretXY = pNextWord;
 		}
 		if(FOptions.Contains(sscoHideCursor))
-			with3->EndUpdate();
+			with0->EndUpdate();
 	}
 	delete tslSuggestions;
 	if(FOptions.Contains(sscoHourGlass))
@@ -1601,9 +1601,9 @@ void __fastcall TSynSpellCheck::SpellCheck()
   //////////////////////////////////////////////////////////////////////////////
 	/*# with FEditor do */
 	{
-		auto with4 = FEditor;
-		with4->BlockBegin = with4->CaretXY;
-		with4->BlockEnd = with4->BlockBegin;
+		auto with1 = FEditor;
+		with1->BlockBegin = with1->CaretXY;
+		with1->BlockEnd = with1->BlockBegin;
 	}
 	if(bAborted)
 	{
@@ -1768,6 +1768,7 @@ String __fastcall TSynEditEx::GetWordAtRowColEx(const TBufferCoord& cXY, const T
 	String Line;
 	int Len = 0;
 	int Stop = 0;
+
 	result = L"";
 	if((XY.Line >= 1) && (XY.Line <= Lines->Count))
 	{

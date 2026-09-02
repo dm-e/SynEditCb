@@ -12,6 +12,7 @@
 #include "d2c_sysinterface.h"
 #include "d2c_convert.h"
 #include "SynEditDelphiInstances.hpp"
+#include "d2c_systypes.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -939,6 +940,7 @@ void __fastcall TSynMethodChain::Remove(const TMethod& cAEvent)
 {
 	TMethod AEvent = cAEvent;
 	int I = 0;
+
 	if(!ASSIGNED(AEvent.Code))
 		throw ESynMethodChain(L"%s.Remove: the parameter `AEvent' must be specified.", ARRAYOFCONST((ClassName())));
 	/*# with FNotifyProcs, AEvent do */
@@ -1560,6 +1562,7 @@ void __fastcall TSynGutterBand::PaintFoldShapes(TCanvas* Canvas, const TRect& cC
 	int PMMargin = 0;
 	int ShapeSize = 0;
 	int PPI = 0;
+
 	SynEdit = ((TCustomSynEdit*) Editor);
 	Assert(ASSIGNED(SynEdit));
 	Assert(ASSIGNED(Gutter));
@@ -1643,6 +1646,7 @@ void __fastcall TSynGutterBand::PaintLineNumbers(TCanvas* Canvas, const TRect& c
 	TRect LineRect = {};
 	int PPI = 0;
 	String S;
+
 	__int64 stop = 0;
 	SynEdit = ((TCustomSynEdit*) Editor);
 	Assert(ASSIGNED(Gutter));
@@ -1675,6 +1679,7 @@ void __fastcall TSynGutterBand::PaintLines(TCanvas* Canvas, const TRect& cClipR,
 {
 	TRect ClipR = cClipR;
 	bool DoDefault = false;
+
 	DoDefault = true;
 	if(Assigned(FOnPaintLines))
 		FOnPaintLines(Canvas, ClipR, FirstRow, LastRow, DoDefault);
@@ -1686,6 +1691,7 @@ void __fastcall TSynGutterBand::PaintMargin(TCanvas* Canvas, const TRect& cClipR
 {
 	TRect ClipR = cClipR;
 	int Offset = 0;
+
 	if(Gutter->BorderStyle != gbsNone)
 		/*# with Canvas do */
 		{
@@ -1742,6 +1748,7 @@ void __fastcall TSynGutterBand::PaintMarks(TCanvas* Canvas, const TRect& cClipR,
 	D2CArray<int> aGutterOffs;
 	bool bHasOtherMarks = false;
 	int Index = 0;
+
 	SynEdit = ((TCustomSynEdit*) Editor);
 	Assert(ASSIGNED(SynEdit));
 	vFirstLine = SynEdit->RowToLine(FirstRow);

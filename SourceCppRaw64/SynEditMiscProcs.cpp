@@ -14,7 +14,6 @@ using namespace Synedittypes;
 using namespace Synhighlightermulti;
 using namespace System;
 using namespace System::Sysutils;
-using namespace System::Types;
 
 namespace Syneditmiscprocs
 {

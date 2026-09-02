@@ -13,6 +13,7 @@
 #include "SynEditDataObject.h"
 #include "SynEditDragDrop.h"
 #include "d2c_convert.h"
+#include "d2c_systypes.h"
 #include "d2c_syshelper.h"
 
 using namespace std;
@@ -2537,6 +2538,7 @@ void __fastcall TCustomSynEdit::PaintTextLines(const TRect& cAClip, int aFirstRo
 	};
 
 /* end local procedures */
+
 	vFirstLine = RowToLine(aFirstRow);
 	vLastLine = RowToLine(aLastRow);
 	bCurrentLine = false;
@@ -2680,6 +2682,7 @@ void __fastcall TCustomSynEdit::SetBlockBegin(const TBufferCoord& cValue)
 	int nInval1 = 0;
 	int nInval2 = 0;
 	bool SelChanged = false;
+
 	ActiveSelectionMode = SelectionMode;
 	Value.Char = Max(Value.Char, 1);
 	Value.Line = MinMax(Value.Line, 1, Lines->Count);
@@ -2721,6 +2724,7 @@ void __fastcall TCustomSynEdit::SetBlockEnd(const TBufferCoord& cValue)
 {
 	TBufferCoord Value = cValue;
 	int nLine = 0;
+
 	ActiveSelectionMode = SelectionMode;
 	if(!(Options.Contains(eoNoSelection)))
 	{
@@ -2863,6 +2867,7 @@ void __fastcall TCustomSynEdit::SetCaretXYEx(bool CallEnsureCursorPos, const TBu
 	bool vTriggerPaint = false;
 	String S;
 	String TS;
+
 	fCaretAtEOL = false;
 	vTriggerPaint = HandleAllocated();
 	if(vTriggerPaint)
@@ -3473,6 +3478,7 @@ void __fastcall TCustomSynEdit::OleDragOver(TObject* Sender, const _di_IDataObje
 	TPoint MousePt = cMousePt;
 	TDisplayCoord vNewPos = {};
 	TPoint Pt = {};
+
 	Pt = ScreenToClient(MousePt);
 	vNewPos = PixelsToNearestRowColumn(Pt.X, Pt.Y);
 	vNewPos.Column = MinMax(vNewPos.Column, LeftChar, LeftChar + CharsInWindow - 1);
@@ -3495,6 +3501,7 @@ void __fastcall TCustomSynEdit::OleDrop(TObject* Sender, const _di_IDataObject& 
 	TFormatEtc FormatEtc = {};
 	TStgMedium Medium = {};
 	TPoint Pt = {};
+
 	Pt = ScreenToClient(MousePt);
 	DropMove = Effect == DROPEFFECT_MOVE;
 	IncPaintLock();
@@ -3804,6 +3811,7 @@ bool __fastcall TCustomSynEdit::DoMouseWheel(TShiftState Shift, int WheelDelta, 
 	const int WHEEL_DIVISOR = 120; // Mouse Wheel standard
 	int iWheelClicks = 0;
 	int iLinesToScroll = 0;
+
 	result = inherited::DoMouseWheel(Shift, WheelDelta, MousePos);
 	if(result)
 		return result;
@@ -3984,6 +3992,7 @@ void __fastcall TCustomSynEdit::WMImeChar(::TMessage& Msg)
 
   // Handling the WM_IME_CHAR message stops Windows from sending WM_CHAR
   // messages while using the IME
+
 }
 
 void __fastcall TCustomSynEdit::WMImeComposition(::TMessage& Msg)
@@ -4068,6 +4077,7 @@ void __fastcall TCustomSynEdit::WMPaste(::TMessage& Message)
 
 void __fastcall TCustomSynEdit::WMCancelMode(::TMessage& Message)
 {
+
 }
 
 void __fastcall TCustomSynEdit::WMSetFocus(Winapi::Messages::TWMSetFocus& Msg)
@@ -4407,6 +4417,7 @@ void __fastcall TCustomSynEdit::SetWordBlock(const TBufferCoord& cValue)
 			}
 		}
 	};
+
 	Value.Char = Max(Value.Char, 1);
 	Value.Line = MinMax(Value.Line, 1, Lines->Count);
 	TempString = Lines->Strings[Value.Line - 1] + L"\x00"; //needed for CaretX = LineLength + 1
@@ -4646,6 +4657,7 @@ void __fastcall TCustomSynEdit::DoMouseSelectLineRange(const TBufferCoord& cNewP
 	TBufferCoord NewPos = cNewPos;
 	TBufferCoord BB = {};
 	TBufferCoord BE = {};
+
 	BB = BlockBegin;
 	BE = BlockEnd;
   //  Set AnchorLine
@@ -4692,6 +4704,7 @@ void __fastcall TCustomSynEdit::DoMouseSelectWordRange(const TBufferCoord& cNewP
 	TBufferCoord BB = {};
 	TBufferCoord BE = {};
   //  Set Anchor Selection (Word)
+
 	BB = BlockBegin;
 	BE = BlockEnd;
 	if(CaretXY > BB)
@@ -8625,6 +8638,7 @@ String __fastcall TCustomSynEdit::GetWordAtRowCol(const TBufferCoord& cXY)
 	int Len = 0;
 	int Start = 0;
 	int Stop = 0;
+
 	result = L"";
 	if((XY.Line >= 1) && (XY.Line <= Lines->Count))
 	{
@@ -9080,6 +9094,7 @@ bool __fastcall TCustomSynEdit::GetPositionOfMouse(TBufferCoord& aPos)
 	aPos = {}; //# clear out parameter
 	bool result = false;
 	TPoint Point = {};
+
 	GetCursorPos(&Point);                    // mouse position (on screen)
 	Point = this->ScreenToClient(Point);    // convert to SynEdit coordinates
   /* Make sure it fits within the SynEdit bounds */
@@ -9138,6 +9153,7 @@ int __fastcall TCustomSynEdit::RowColToCharIndex(const TBufferCoord& cRowCol)
 	TBufferCoord RowCol = cRowCol;
 	int result = 0;
 	TSynEditStringList* synEditStringList = nullptr;
+
 	RowCol.Line = Max(0, Min(Lines->Count, RowCol.Line) - 1);
 	synEditStringList = ((TSynEditStringList*) fLines);
   // CharIndexToRowCol assumes a line break size of two
@@ -9873,42 +9889,49 @@ void __fastcall TSynEditPlugin::AfterPaint(TCanvas* ACanvas, const TRect& AClip,
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::PaintTransient(TCanvas* ACanvas, TTransientType ATransientType)
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::LinesChanged()
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::LinesInserted(int FirstLine, int Count)
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::LinePut(int aIndex, const String OldLine)
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::LinesBeforeDeleted(int FirstLine, int Count)
 {
 
   // nothing
+
 }
 
 void __fastcall TSynEditPlugin::LinesDeleted(int FirstLine, int Count)
 {
 
   // nothing
+
 }
 
 

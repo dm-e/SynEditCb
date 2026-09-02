@@ -5,8 +5,8 @@
 #include "SynTextDrawer.h"
 #include <System.Types.hpp>
 #include <System.UITypes.hpp>
-#include "d2c_systypes.h"
 #include "d2c_convert.h"
+#include "d2c_systypes.h"
 
 using namespace std;
 using namespace d2c_system;
@@ -86,6 +86,7 @@ bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Option
 	D2CArray<WideChar> Glyphs;
 	Winapi::Windows::TGCPResults CharPlaceInfo = {};
 	DWORD TextOutFlags = 0;
+
 	TextOutFlags = 0;
 	if(Options.Contains(tooOpaque))
 		TextOutFlags = TextOutFlags | ETO_OPAQUE;
@@ -761,6 +762,7 @@ void __fastcall TheTextDrawer::ExtTextOut(int X, int Y, TTextOutOptions Options,
 			ARect.Right += RealCharWidth - CharWidth;
 		(*FETODist)[Length - 1] = Max(RealCharWidth, CharWidth);
 	};
+
 	InitETODist(GetCharWidth());
 	AdjustLastCharWidthAndRect();
 	UniversalExtTextOut(FDC, X, Y, Options, ARect, Text, Length, FETODist, UseLigatures);
