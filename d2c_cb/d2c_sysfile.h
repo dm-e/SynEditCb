@@ -4,31 +4,42 @@
 #include <Winapi.Windows.hpp>
 
 /*
-    This library is derived from the FreePascal library:
-
-    http://www.freepascal.org/
-
-    FreePascal is published under the terms of GNU Lesser General
-    Public License and the same terms apply to this library.
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-		License along with this package; if not, write to the Free Software
-		Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-    see COPYING.txt
-
-*/
-
+ * File and text I/O support for Delphi-to-C++ converted programs.
+ *
+ * Portions derived from the Free Pascal 2.2.4 Run-Time Library:
+ *
+ *   rtl/win/sysos.inc
+ *   rtl/win/sysfile.inc
+ *   rtl/win/sysdir.inc
+ *   rtl/inc/system.inc
+ *   rtl/inc/text.inc
+ *   rtl/inc/file.inc
+ *   rtl/inc/typefile.inc
+ *   rtl/inc/generic.inc
+ *   rtl/inc/filerec.inc
+ *   rtl/inc/textrec.inc
+ *   rtl/win32/system.pp
+ *
+ * Original copyright notices:
+ *
+ *   Copyright (c) 1999-2000 by the Free Pascal development team
+ *   Copyright (c) 2001 by Free Pascal development team
+ *   Copyright (c) 1999-2000 by Florian Klaempfl and Pavel Ozerski,
+ *   member of the Free Pascal development team.
+ *   Copyright (c) 1999-2005 by Florian Klaempfl and Pavel Ozerski,
+ *   member of the Free Pascal development team.
+ *
+ * C++ translation and modifications:
+ *   Copyright (C) 2011-2026 Dr. Detlef Meyer-Eltz
+ *
+ * Initially translated and adapted from Object Pascal to C++ in 2011.
+ * Subsequently modified through 2026.
+ *
+ * SPDX-License-Identifier:
+ * LGPL-2.1-or-later WITH Independent-modules-exception
+ *
+ * See COPYING and COPYING.FPC for the complete license terms.
+ */
 
 
 
