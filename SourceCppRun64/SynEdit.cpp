@@ -63,8 +63,12 @@ bool RemovedKeystroke(TSynEdit* xpSynEdit, const String xsCmd, int xiShiftState)
 		iKey->Shift = NewShift;
 		int iToDelete = xpSynEdit->Keystrokes->FindShortcut2(iKey->ShortCut, iKey->ShortCut2);
 		if (iToDelete >= 0 && xpSynEdit->Keystrokes->Items[iToDelete]->Command == iKey->Command)
+		{
 			xpSynEdit->Keystrokes->Delete(iToDelete);
+			return true;
+		}
 	}
+	return false;
 }
 
 

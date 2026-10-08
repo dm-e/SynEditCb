@@ -45,6 +45,13 @@ __fastcall ESynEditStringList::ESynEditStringList(System::PResStringRec ResStrin
 const System::Char SListIndexOutOfBounds[] = L"Invalid stringlist index %d";
 const System::Char SInvalidCapacity[] = L"Stringlist capacity cannot be smaller than count";
 
+// Records are moved as raw storage; release only their managed string fields.
+static void FinalizeStrings(PSynEditStringRec Records, int Count = 1)
+{
+	for(int I = 0; I < Count; ++I)
+		Records[I].FString = String();
+}
+
   /* TSynEditStringList */
 
 void __fastcall ListIndexOutOfBounds(int Index)
@@ -79,7 +86,7 @@ __fastcall TSynEditStringList::~TSynEditStringList()
 	FOnChanging = nullptr;
 	//# inherited::Destroy();
 	if(FCount != 0)
-		Finalize(&(*FList)[0], FCount);
+		FinalizeStrings(&(*FList)[0], FCount);
 	FCount = 0;
 	SetCapacity(0);
 }
@@ -93,7 +100,7 @@ void __fastcall TSynEditStringList::Clear()
 		OldCount = FCount;
 		if(Assigned(FOnBeforeDeleted))
 			FOnBeforeDeleted(this, 0, OldCount);
-		Finalize(&(*FList)[0], FCount);
+		FinalizeStrings(&(*FList)[0], FCount);
 		FCount = 0;
 		SetCapacity(0);
 		if(Assigned(FOnDeleted))
@@ -112,7 +119,7 @@ void __fastcall TSynEditStringList::Delete(int Index)
 	BeginUpdate();
 	if(Assigned(FOnBeforeDeleted))
 		FOnBeforeDeleted(this, Index, 1);
-	Finalize(&(*FList)[Index]);
+	FinalizeStrings(&(*FList)[Index]);
 	--FCount;
 	if(Index < FCount)
 	{
@@ -139,7 +146,7 @@ void __fastcall TSynEditStringList::DeleteLines(int Index, int NumLines)
 			LinesAfter = FCount - (Index + NumLines);
 			if(LinesAfter < 0)
 				NumLines = FCount - Index;
-			Finalize(&(*FList)[Index], NumLines);
+			FinalizeStrings(&(*FList)[Index], NumLines);
 			if(LinesAfter > 0)
 				System::Move(&(*FList)[Index + NumLines], &(*FList)[Index], static_cast<size_t>(LinesAfter * SynEditStringRecSize));
 			FCount -= NumLines;
@@ -625,7 +632,7 @@ void __fastcall TSynEditStringList::PutRange(int Index, TSynEditRange ARange)
 void __fastcall TSynEditStringList::SetCapacity(int NewCapacity)
 {
 	if(NewCapacity < Count)
-		new /*#possible memory leak*/ EListError(SInvalidCapacity);
+		throw EListError(SInvalidCapacity);
 	FList = (PSynEditStringRecList) ReallocMemory(FList, NewCapacity * SynEditStringRecSize);
 	FCapacity = NewCapacity;
 }
