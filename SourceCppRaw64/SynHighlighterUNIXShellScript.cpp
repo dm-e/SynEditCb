@@ -30,6 +30,51 @@ namespace Synhighlighterunixshellscript
           89 << 90)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterUNIXShellScript.pas, released 2001-11-13.
+The Initial Author of this file is Stefan Ascher.
+Portions by Jan Verhoeven (http://jansfreeware.com/jfdelphi.htm)
+"Heredoc" syntax highlighting implementation by Marko Njezic.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterUNIXShellScript.pas,v 1.7.2.11 2008/09/14 16:25:03 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a UNIX Shell Script highlighter for SynEdit)
+@author(Stefan Ascher <stievie2002@yahoo.com>)
+@created(10 November 2001)
+@lastmod(2001-11-13)
+The SynHighlighterUNIXShellScript unit provides SynEdit with a UNIX Shell Script highlighter.
+*/
 const String ShellScriptKeys[110/*# range 0..109*/] = {L"awk", L"banner", L"basename", L"bdiff", L"bg", L"break", L"case", L"cat", L"cc", L"cd", L"chdir", L"chgrp", L"chmod"
                     , L"chown", L"clear", L"compress", L"continue", L"cp", L"cpio", L"cut", L"date", L"dd", L"df", L"diff", L"do", L"done", L"dtpad", L"echo"
                     , L"elif", L"else", L"esac", L"eval", L"exit", L"export", L"expr", L"fg", L"fi", L"finger", L"fold", L"for", L"ftp", L"g++", L"gcc"

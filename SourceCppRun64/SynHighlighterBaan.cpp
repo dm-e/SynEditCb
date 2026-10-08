@@ -17,6 +17,52 @@ namespace Synhighlighterbaan
 #define Synhighlighterbaan__1 (TFontStyles() << TFontStyle::fsBold)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterBaan.pas, released 2000-04-21.
+The Original Code is based on the mwBaanSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is "riceball".
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterBaan.pas,v 1.13.2.6 2008/09/14 16:24:59 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Baan syntax highlighter for SynEdit)
+@author(riceball <teditor@mailroom.com>, converted to SynEdit by Bruno Mikkelsen <btm@scientist.com>)
+@created(2000, converted to SynEdit 2000-04-21)
+@lastmod(2000-04-21)
+The SynHighlighterBaan unit provides SynEdit with a Baan syntax highlighter.
+Thanks to Martin Waldenburg.
+*/
 const String KeyWords[113/*# range 0..112*/] = {L"__based", L"__cdecl", L"__declspe", L"__except", L"__export", L"__far", L"__fastcal", L"__fortran", L"__import"
                     , L"__int16", L"__int32", L"__int64", L"__int8", L"__interrup", L"__loadds", L"__near", L"__pascal", L"__rtti", L"__segment"
                     , L"__segname", L"__self", L"__stdcall", L"__thread", L"__try", L"_cdecl", L"_export", L"_fastcall", L"_import", L"_pascal"

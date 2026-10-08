@@ -58,6 +58,254 @@ __fastcall ENoDictionaryLoaded::ENoDictionaryLoaded(System::PResStringRec ResStr
 
 
 
+////////////////////////////////////////////////////////////////////////////////
+// TSynSpellCheck 1.30
+//
+// Copyright (c) 2002 Jacob Dybala a.k.a. "m3Rlin". All rights reserved.
+//
+// E-Mail: jacobdybala@synspellcheck.prv.pl
+// WWW   : http://www.synspellcheck.prv.pl/ SynSpellCheck Home
+//         http://www.delphifaq.net/        Merlin's Delphi Forge
+//
+// Elf hash algorithm
+//   Copyright (c) 1998-2002 Scalabium
+//   <http://www.scalabium.com/faq/dct0136.htm>
+// SoundEx algorithm
+//   Copyright (c) 1995-2001 Borland Software Corporation
+// Metaphone Phonetic Hash Algorithm
+//   Copyright (c) Tom White <wcstom@yahoo.com>
+// Word differences algorithm JHCMP...
+//   Copyright (c) Josef Hampl
+//
+// Created : Jan-10-2002
+// Modified: Aug-31-2002
+////////////////////////////////////////////////////////////////////////////////
+// All dictionaries are located in the 'Program Files\Common\SynSpell' folder.
+// This is to limit the number of copies of the same dictionary on a single
+// computer to one file.
+//
+// Dictionaries are flat text files with a single word in each line. All words
+// MUST be lowercase. The dictionaries are case insensitive.
+////////////////////////////////////////////////////////////////////////////////
+// Changes:
+//
+// 1.30 (Contributed in large by Jan Fiala)
+//   * Many, many minor adjustments, optimizations.
+//   * Rewritten SetApostrophes().
+//   + New word suggestion algorithm: haDiff. Finds words based on differences.
+//     haSoundex and haMetaphone *may* be removed in upcoming versions.
+//   + New action added: ACTION_UNDO.
+//   + New function: GetDictionaryDir(). This allows users to specify their own
+//     paths.
+//   + Dutch (compiled by Arno Verhoeven) dictionary added.
+//
+// 1.24 Released privately to certain users.
+//   * Bug Fix: PChar and string incompatiblity. Fixed.
+//
+// 1.23 Released privately to certain users.
+//   * Minor code adjustments.
+//   + New dictionaries: Norwegian and Spanish.
+//
+// 1.22
+//   * Bug Fix: The Apostrophes property did not allow changing. Fixed.
+//     Submitted by R.K. Wittye.
+//   * Bug Fix: ClearDictWords did not properly dispose of words creating a
+//     rather large memory leak. Fixed. Submitted by Ascher Stefan.
+//   * English and Polish dictionaries updated.
+//   + Added Value field to TWordRec record. Each word is assigned an Elf value
+//     and is checked by it. Major speed optimization. Suggested by Jan Fiala
+//     (CRC32).
+//
+// 1.21
+//   * Bug Fix: %ProgramFilesDir%\Common Files was read instead of %CommonFilesDir%.
+//     This created problems on non-English versions of Windows. The directory
+//     was not found. Fixed.
+//   * English and Polish dictionaries updated.
+//
+// 1.20
+//   * FindWord() routine rewritten to make use of cache array. Other functions
+//     have only been slightly modified yet no functions have been broken.
+//   * LoadDictionary() routine now converts all words to lowercase.
+//   * LoadSkipList() does not add the words one-by-one any more. They are
+//     assigned in whole.
+//   * FSkipList is now cleared when a dictionary is closed.
+//   * SaveSkipList() now removes all empty lines before saving to file.
+//   + Added cache array to speed up word checks.
+//   + ENoDictionaryLoaded is now thrown when no dictionary has been loaded.
+//
+// 1.19
+//   * Bug Fix: Word underlining would also draw on gutter when the word was
+//     partially scrolled under it. Fixed.
+//   * SoundexLength property converted to HashLength.
+//   * PaintUnderLine() code modified to directly color pixels instead of drawing
+//     lines.
+//   * Dictionary updates: English (1.1.2), Polish (1.1.1). The Polish word list
+//     has been *significantly* reduced due to the fact that this word list is
+//     being started all over to include words with non-latin characters.
+//   + New option: sscoTrimApostrophes.
+//   + New properties: Busy and UnderlineStyle (to mimic Corel Wordperfect
+//     auto spell checking).
+//   + MetaPhone algorithm has been finally implemented. In beta stage (works,
+//     but slow on big lists).
+//   + AddDictSkipList(), AddDictWordList() routines added.
+//   + New dictionaries: German (by Ascher Stefan) and Russian.
+//
+// 1.18
+//   * Bug Fix: OnSkipWord event did not return proper ASkipAll value. Fixed.
+//   * Bug Fix: GetDictionaryList() included all copies of dictionaries for a
+//     specific language instead of newest. Fixed.
+//   * DupeString() has been corrected with proper compiler conditional.
+//   * Minor code changes to always pass lowercase words to FindWord().
+//   * English dictionary updated to version 1.1.0.
+//   * Updated component demo.
+//   + New option: sscoMaintainCase. Idea suggested by Jeff Rafter.
+//   + New event: OnAddWord.
+//   + Added support for words with apostrophes. Idea by Stefan van As.
+//   + GetDictionaryList() now returns a sorted list.
+//
+// 1.17
+//   * SelectWordAtCursor() made public.
+//   + Added support for localized languages and numbers.
+//
+// 1.16
+//   * Bug Fix: Compiler conditional around SoundEx() routines was broken.
+//     Fixed.
+//   * Bug Fix: sscoSelectWord did not work when set to False. Fixed.
+//   + SelectWordAtCursor() routine added. Contributed by Stefan van As.
+//
+// 1.15
+//   * Bug Fix: PenColor property did not work. Fixed by Jeff Corbets.
+//   * Bug Fix: OnAbort event was not called when spell checking was aborted.
+//     Fixed.
+//   * TSoundEx class has been removed in favor of Borland implementation of
+//     SoundEx() function.
+//   * Minor code modifications.
+//   + Added support for dashed words.
+//   + New option: sscoGoUp.
+//   + New property: SoundExLength.
+//
+// 1.14
+//   * Bug Fix: If the editor had no text and sscoHourGlass was set the cursor
+//     did not revert to it's previous value. Fixed by Jeff Corbets.
+//
+// 1.13
+//   * Bug Fix: When empty lines in base dictionary and user dictionary were
+//     added to word list and raised AV when attempting to calculate word hash.
+//     Fixed.
+//
+// 1.12
+//   * Bug Fix: GetSuggestions did not properly support words with uppercase
+//     characters. Fixed. Found by Jeff Rafter.
+//   + Added Metaphon algorithm for word hashes. Not working, just skeleton for
+//     now.
+//
+// 1.11
+//   + Added support for multiple editors: AddEditor() and RemoveEditor().
+//
+// 1.10 (code contributed by Ricardo Cardona)
+//   * Bug Fix: When not highlighter was selected and sscoAutoSpellCheck was set
+//     in Options the component generated an AV. Fixed.
+//   * New property: CheckAttribs.
+//   * Improved code for underlining unknown words.
+//
+// 1.09
+//   * Bug Fix: FWordList did not free memory when the component was destroyed.
+//     It just cleared the word and hash lists. Fixed.
+//
+// 1.08
+//   * Bug Fix: FindWord() function was case sensitive. Fix contributed by
+//     Gerald Nunn.
+//   + New events: OnDictClose and OnDictLoad.
+//   + New options: sscoAutoSpellCheck (contributed by Ricardo Cardona),
+//     sscoIgnoreWordsWithNumbers and sscoIgnoreSingleChars.
+//   + New property: PenColor.
+//   + Added support for Java documentation.
+//
+// 1.07
+//   * Bug Fix: When spell checking the last word under certain conditions the
+//     component would enter an infinite loop. Fixed.
+//
+// 1.06
+//   * Bug Fix: When correcting words in OnCheckWord event the word would not be
+//     replaced but added to the beginning of the old one. Fixed.
+//   + New dictionary: Danish.
+//   + New property: OpenDictionary.
+//   + New option: sscoSelectWord.
+//
+// 1.05
+//   + New events: OnCorrectWord and OnSkipWord.
+//   + Demo added.
+//
+// 1.04
+//   * Bug Fix: Would not compile under Delphi 6 due to duplicate resource
+//     error. Fixed.
+//   * GetDictionaryList() now searches for file that match the correct naming
+//     scheme - name.major-minor-revision.dic, where major, minor and revision
+//     are single characters.
+//   + New dictionaries: Italian, Latin, Japanese, Polish, Spanish (Thanks to
+//     Ricardo Cardona), and Turkish.
+//   + New routines: CloseDictionary(), GetWordCount().
+//   + New property: Dictionary.
+//   - Removed {$IFDEF SYN_WIN32} directive from GetDictionaryList(). The
+//     routines are available under Kylix also.
+//   - Removed Version parameter from LoadDictionary.
+//
+// 1.03
+//   + Added /usr/local/SynSpell dir under Linux as the default dictionary
+//     directory.
+//   + Added Language property.
+//   + %ProgramFiles%\Common Files\SynSpell is now dynamically read from system
+//     Registry.
+//   + Added user dictionary.
+//   + Added GetDictionaryList().
+//
+// 1.02
+//   * Bug Fix: When the word list was cleared, the SoundEx list still hogged up
+//     the memory =) Fixed.
+//   * Bug Fix: When a word was deleted from the dictionary, the SoundEx hash
+//     remained undeleted. Therefor, after deleting a word the whole SoundEx
+//     hash list after the deleted word was wrong (1 up).
+//   * Bug Fix: Suggestions were not passed in ASuggestions in OnCheckWord
+//     event. Fixed.
+//   * Bug Fix: DeleteSkipWord() fixed to delete form skip word list, not word
+//     list ;-)
+//   * Bug Fix: editor did not update when searching for words, the screen
+//     would "blur". Fixed.
+//   * GetSuggestions() changed from procedure to function to return number or
+//     words in list.
+//   * FWordList is now type of TList instead of TStringList.
+//   + If no AAction is specified in the OnCheckWord event, then ACTION_SKIP is
+//     default.
+//   + Now double words are automatically ignored in FWordList.
+//   + Added sscoSuggestWords option.
+//   + Added OnAbort event.
+//   + Added support for HTML Text.
+//   - Removed unsupported options from Options property.
+//
+// 1.01
+//   + Added Options property (support for selecting unknown words in editor,
+//     spell checking from cursor, and spell checking only selection, hour glass
+//     cursor during spell check, removing cursor visibility during spell
+//     check).
+//   + Added word suggestion list.
+////////////////////////////////////////////////////////////////////////////////
+
+/*-----------------------------------------------------------------
+  Usage:
+
+  UserDirectory := 'some paths in user profile';
+  LoadDictionary('some DIC file');
+  Editor := Synedit1;
+  // for words underline like words
+  Options := Options + [sscoAutoSpellCheck];
+
+  or you can start SpellCheck with dialog, in this case handle events
+  In case you add some words to user dictionary, you can save it
+
+  if SynSpellCheck.Modified then
+    SaveUserDictionary;
+-----------------------------------------------------------------*/
+
 void __fastcall Register()
 {
 	TComponentClass classesSynspellcheck__0[1] = {__classid(TSynSpellCheck)};

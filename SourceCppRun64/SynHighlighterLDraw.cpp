@@ -20,6 +20,50 @@ namespace Synhighlighterldraw
           54 << 55 << 56 << 57 << '.')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+Code template generated with SynGen.
+The original code is: SynHighlighterLDraw.pas, released 2003-04-12.
+Description: LDraw Parser/Highlighter
+The initial author of this file is Orion Pobursky.
+Copyright (c) 2003, all rights reserved.
+Unicode translation by Maël Hörz.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterLDraw.pas,v 1.7.2.7 2008/09/14 16:25:00 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides an LDraw syntax highlighter for SynEdit)
+@author(Orion Pobursky)
+@created(03/01/2003)
+@lastmod(07/05/2003)
+The SynHighlighterLDraw unit provides SynEdit with a LEGO LDraw (.ldr / .dat) highlighter.
+*/
 const String KeyWords[1/*# range 0..0*/] = {L"author"};
 const int KeyIndices[2/*# range 0..1*/] = {-1, 0};
 

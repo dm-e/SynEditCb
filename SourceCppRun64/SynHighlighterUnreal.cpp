@@ -21,6 +21,49 @@ namespace Synhighlighterunreal
 #define Synhighlighterunreal__3 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+                                          PP - 2001/10/24:
+The Original Code is based on the UnrealSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Dean Harmon.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterUnreal.pas,v 1.17.2.8 2008/09/14 16:25:03 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Unreal syntax highlighter for SynEdit)
+@author(Dean Harmon)
+@created(2000)
+@lastmod(2001-06-29)
+*/
 const String KeyWords[143/*# range 0..142*/] = {L"abstract", L"always", L"array", L"arraycount", L"assert", L"auto", L"automated", L"bool", L"boundingbox", L"boundingvolume"
                     , L"break", L"button", L"byte", L"cache", L"cacheexempt", L"case", L"catch", L"class", L"coerce", L"collapsecategories", L"color"
                     , L"config", L"const", L"continue", L"coords", L"cpptext", L"cross", L"default", L"defaultproperties", L"delegate", L"delete"

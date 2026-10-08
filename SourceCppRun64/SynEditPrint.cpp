@@ -36,6 +36,90 @@ __fastcall TPageLine::TPageLine() {}
 
 
 
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynEditPrint.pas, released 2000-06-01.
+
+The Initial Author of the Original Code is Morten J. Skovrup.
+Portions written by Morten J. Skovrup are copyright 2000 Morten J. Skovrup.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit project are listed in the Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynEditPrint.pas,v 1.34.2.12 2008/09/23 14:02:08 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+  Wrapping across page boundaries is not supported
+-------------------------------------------------------------------------------*/
+
+/*-------------------------------------------------------------------------------
+CONTENTS:
+  Print controller component.
+    Allows setting margins, headers and footers.
+
+  Design time properties:
+    Header        : Class property to set properties for headers -
+                    see CSynEditHeaderFooter.pas
+    Footer        : Class property to set properties for footers -
+                    see CSynEditHeaderFooter.pas
+    Margins       : Class property to set properties for margins -
+                    see CSynEditPrintMargins.pas
+    Lines         : The lines that should be printed (see also SynEdit the
+                    property below)
+    Font          : The font the lines should be printed in (see also SynEdit
+                    the property below)
+    Title         : A title - can be referenced in headers/footers by using the
+                    $TITLE$ macro
+    Wrap          : Wrap text to margins
+    Highlight     : Highlight text
+    Colors        : Print in colors
+    LineNumbers   : Print line numbers
+    LineOffset    : Value added to linenumbers when printing
+    PageOffset    : Value added to pagenumbers when printing
+    OnPrintLine   : Fired when a line is printed
+    OnPrintStatus : Fired at Beginning, End and when a new page is started
+    Highlighter   : The highlighter used for highlighting the text (see also the
+                    SynEdit property below)
+    LineNumbersInMargin : If true line numbers are printed in the left margin,
+                          else left margin is increased by width of line
+                          number text.
+    SelectedOnly  : Print only the selected Area
+  Run-time properties:
+    DocTitle    : Used to display the document name in the print queue monitor
+    PrinterInfo : Read only. Returns info on printer (used internally)
+    PageCount   : Returns the total number of pages;
+    SynEdit     : By setting SynEdit to a specific TSynEdit component, the
+                  properties Lines, Font and Highlighter are automatically
+                  set to the corresponding values of the TSynEdit component
+  Run-time methods:
+    UpdatePages   : Used internally by the TSynEditPrintPreview component
+    PrintToCanvas : Used internally by the TSynEditPrintPreview component
+    Print         : Prints the contents of the Lines property
+    PrintRange(StartPage,EndPage) : Prints the specified page-range (both inclusive)
+-------------------------------------------------------------------------------*/
+
 /* TSynEditPrint */
 
 __fastcall TSynEditPrint::TSynEditPrint(TComponent* AOwner)

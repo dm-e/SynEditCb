@@ -13,7 +13,7 @@ The Original Code is based on mwCompletionProposal.pas by Cyrille de Brebisson,
 part of the mwEdit component suite.
 Portions created by Cyrille de Brebisson are Copyright (C) 1999
 Cyrille de Brebisson.
-Unicode translation by Ma?l H?rz.
+Unicode translation by Maël Hörz.
 All Rights Reserved.
 
 Contributors to the SynEdit and mwEdit projects are listed in the

@@ -38,6 +38,52 @@ namespace Synhighlightercpp
 #define Synhighlightercpp__14 (TSynHighlighterCapabilities() << hcUserSettings)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterCpp.pas, released 2000-04-10.
+The Original Code is based on the dcjCppSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Michael Trier.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterCpp.pas,v 1.22.2.7 2006/05/21 11:59:35 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a C++ syntax highlighter for SynEdit)
+@author(Michael Trier)
+@created(1998)
+@lastmod(2001-11-21)
+The SynHighlighterCpp unit provides SynEdit with a C++ syntax highlighter.
+Thanks to Martin Waldenburg.
+*/
 const String KeyWords[130/*# range 0..129*/] = {L"__asm", L"__automated", L"__cdecl", L"__classid", L"__closure", L"__declspec", L"__dispid", L"__except", L"__export"
                     , L"__fastcall", L"__finally", L"__import", L"__int16", L"__int32", L"__int64", L"__int8", L"__pascal", L"__property", L"__published"
                     , L"__rtti", L"__stdcall", L"__thread", L"__try", L"_Alignas", L"_Alignof", L"_asm", L"_Atomic", L"_Bool", L"_cdecl"

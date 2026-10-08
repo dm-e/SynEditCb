@@ -33,6 +33,51 @@ namespace Synhighlighterhp48
 										31 << 32)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterHP48.pas, released 2000-06-23.
+The Original Code is based on the cbHPSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Cyrille de Brebisson.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterHP48.pas,v 1.10.2.9 2008/09/14 16:25:00 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides SynEdit with a HP48 assembler syntax highlighter.)
+@author(Cyrille de Brebisson <cyrille_de-brebisson@aus.hp.com>, converted to SynEdit by David Muir <dhm@dmsoftware.co.uk>)
+@created(1998-12, converted to SynEdit 2000-06-23)
+@lastmod(2012-09-12)
+The unit SynHighlighterHP48 provides SynEdit with a HP48 assembler highlighter.
+*/
 const String DefaultAsmKeyWords = L"!RPL\x0d\x0a" L"ENDCODE\x0d\x0a" L"{\x0d\x0a" L"}\x0d\x0a"
 	           L"GOTO\x0d\x0a" L"GOSUB\x0d\x0a" L"GOSBVL\x0d\x0a" L"GOVLNG\x0d\x0a" L"GOLONG\x0d\x0a" L"SKIP"
 	           L"\x0d\x0a" L"SKIPYES"

@@ -48,6 +48,69 @@ __fastcall EheTextDrawerException::EheTextDrawerException(System::NativeUInt Ide
 __fastcall EheTextDrawerException::EheTextDrawerException(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
 
 
+
+/*==============================================================================
+  Content:  TheTextDrawer, a helper class for drawing of
+            fixed-pitched font characters
+ ==============================================================================
+  The contents of this file are subject to the Mozilla Public License Ver. 1.0
+  (the "License"); you may not use this file except in compliance with the
+  License. You may obtain a copy of the License at http://www.mozilla.org/MPL/
+
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+  the specific language governing rights and limitations under the License.
+ ==============================================================================
+  The Original Code is HANAI Tohru's private delphi library.
+ ==============================================================================
+  The Initial Developer of the Original Code is HANAI Tohru (Japan)
+  Portions created by HANAI Tohru are Copyright (C) 1999.
+  All Rights Reserved.
+ ==============================================================================
+  Contributor(s):   HANAI Tohru
+  Unicode translation by Maël Hörz.
+ ==============================================================================
+  History:  01/19/1999  HANAI Tohru
+                        Initial Version
+            02/13/1999  HANAI Tohru
+                        Changed default intercharacter spacing
+            09/09/1999  HANAI Tohru
+                        Redesigned all. Simplified interfaces.
+                        When drawing text now it uses TextOut + SetTextCharacter-
+                        Extra insted ExtTextOut since ExtTextOut has a little
+                        heavy behavior.
+            09/10/1999  HANAI Tohru
+                        Added code to call ExtTextOut because there is a problem
+                        when TextOut called with italicized raster type font.
+                        After this changing, ExtTextOut is called without the
+                        last parameter `lpDx' and be with SetTextCharacterExtra.
+                        This pair performs faster than with `lpDx'.
+            09/14/1999  HANAI Tohru
+                        Changed code for saving/restoring DC
+            09/15/1999  HANAI Tohru
+                        Added X/Y parameters to ExtTextOut.
+            09/16/1999  HANAI Tohru
+                        Redesigned for multi-bytes character drawing.
+            09/19/1999  HANAI Tohru
+                        Since TheTextDrawer grew fat it was split into three
+                        classes - TheFontStock, TheTextDrawer and TheTextDrawerEx.
+                        Currently it should avoid TheTextDrawer because it is
+                        slower than TheTextDrawer.
+            09/25/1999  HANAI Tohru
+                        Added internally definition of LeadBytes for Delphi 2
+            10/01/1999  HANAI Tohru
+                        To save font resources, now all fonts data are shared
+                        among all of TheFontStock instances. With this changing,
+                        there added a new class `TheFontsInfoManager' to manage
+                        those shared data.
+            10/09/1999  HANAI Tohru
+                        Added BaseStyle property to TheFontFont class.
+ ==============================================================================*/
+
+// $Id: SynTextDrawer.pas,v 1.6.2.17 2008/09/17 13:59:12 maelh Exp $
+
+// SynEdit note: The name had to be changed to get SynEdit to install
+//   together with mwEdit into the same Delphi installation
 TheFontsInfoManager* gFontsInfoManager = nullptr;
 
 /* utility routines */

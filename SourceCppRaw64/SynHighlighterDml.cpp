@@ -28,6 +28,52 @@ namespace Synhighlighterdml
 #define Synhighlighterdml__9 (TSysCharSet() << '\x09' << '\x20')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterDml.pas, released 2000-04-17.
+The Original Code is based on the mwDmlSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Peter Adam.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterDml.pas,v 1.11.2.7 2008/09/14 16:25:00 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+  - There are no metadata qualifiers.
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Dml highlighter for SynEdit)
+@author(Peter Adam)
+@created(1999)
+@lastmod(2000-06-23)
+The SynHighlighterDml unit provides SynEdit with a Dml highlighter.
+*/
 const String KeyWords[264/*# range 0..263*/] = {L"abs", L"absolute_position", L"account", L"acos", L"actual_break", L"add", L"add_form", L"alternate_form", L"ascii"
                     , L"asin", L"atan", L"atan2", L"attributes", L"back", L"base", L"batch", L"begin_block", L"begin_case", L"begin_disable_trigger", L"begin_row"
                     , L"begin_signal_to_status", L"bell", L"binary_to_poly", L"bottom_line", L"break", L"break0", L"call", L"case", L"ceil"

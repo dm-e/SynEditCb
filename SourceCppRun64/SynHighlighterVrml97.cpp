@@ -54,6 +54,74 @@ namespace Synhighlightervrml97
 #define Synhighlightervrml97__31 (TSysCharSet() << '=' << '+')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterVrml.pas, released 2002-10-21.
+The Original Code is based on: SynHighlighterJScript.pas, released 2000-04-14.
+The Original Code is based on the mwJScript.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Tony de Buys.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterVrml97.pas,v 1.6.2.8 2008/09/14 16:25:03 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Vrml97/X3D/JavaScript highlighter for SynEdit)
+@author(Massimo Maria Ghisalberti (nissl@mammuth.it)
+@created(november 2002 [December 1999, converted to SynEdit April 14, 2000])
+@lastmod(2002-11-03)
+The SynHighlighterVrml97 unit provides SynEdit with a Vrml97/X3D/JavaScript (.wrl;*.x3d) highlighter.
+The highlighter formats Vrml97/X3D source code highlighting keywords, strings, numbers and characters.
+*/
+
+/* TODO: The Ansi version kept unclear to the status of following tokens:
+
+  Token       Ambiguity
+  =====       =========
+  bottom      tkVrmlAttribute or tkNonReservedKey
+  description tkVrmlAttribute or tkNonReservedKey
+  height      tkVrmlAttribute or tkNonReservedKey
+  location    tkVrmlAttribute or tkNonReservedKey
+  style       tkVrmlAttribute or tkNonReservedKey
+  type        tkVrmlAttribute or tkNonReservedKey
+
+  NULL        tkVrmlParameter or tkVrmlProto
+  FALSE       tkVrmlParameter or tkVrmlProto
+
+  Text        tkVrmlShape or tkNonReservedKey
+
+  I took always the first one as this produces the same results as in the
+  Ansi-version, because the other cases were never reached (due to the way
+  the if construct was used).
+*/
 const String Events = L"onAbort, onBlur, onChange, onClick, onDblClick, onError, onFocus, "
 	           L"onKeyDown, onKeyPress, onKeyUp, onLoad, onMouseDown, onMouseMove, "
 	           L"onMouseOut, onMouseOver, onMouseUp, onReset, onSelect, onSubmit, "

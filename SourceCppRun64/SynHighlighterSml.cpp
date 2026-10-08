@@ -19,6 +19,53 @@ namespace Synhighlightersml
 #define Synhighlightersml__2 (TFontStyles() << TFontStyle::fsBold)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterSML.pas, released 2000-04-17.
+The Original Code is based on the dmMLSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is David H. Muir.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterSml.pas,v 1.14.2.6 2008/09/14 16:25:03 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides SynEdit with a Standard ML syntax highlighter, with extra options for the standard Basis library.)
+@author(David H Muir <dhm@dmsoftware.co.uk>)
+@created(1999)
+@lastmod(2000-06-23)
+The SynHighlighterSML.pas unit provides SynEdit text control with a Standard ML highlighter.  Many formatting attributes can
+be specified, and there is an option to include extra keywords and operators only found in the Basis library, this option can
+be disabled for backwards compatibility with older ML compilers that do not have support for the Basis Library.
+*/
 const String KeyWords[41/*# range 0..40*/] = {L"abstype", L"and", L"andalso", L"as", L"case", L"datatype", L"do", L"else", L"end", L"eqtype", L"exception", L"fn"
                     , L"fun", L"functor", L"handle", L"if", L"in", L"include", L"infix", L"infixr", L"let", L"local", L"nonfix", L"of", L"op", L"open", L"orelse"
                     , L"raise", L"rec", L"sharing", L"sig", L"signature", L"struct", L"structure", L"then", L"type", L"val", L"where", L"while", L"with"

@@ -23,6 +23,45 @@ namespace Synhighlighterst
 #define Synhighlighterst__5 (System::Set<TtkTokenKind, TtkTokenKind::tkAsm, TtkTokenKind::tkUnknown>() << tkNull << tkComment << tkSpace)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterST.pas, released 2002-07.
+ST stands for Structured Text, and it is part of IEC1131 standard for
+programming PLCs.
+Author of this file is Ruggero Bandera.
+Portions created by Ruggero Bandera are Copyright (C) 2002 Ruggero Bandera.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterST.pas,v 1.9.2.6 2008/09/14 16:25:03 maelh Exp $ by Ruggero Bandera
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
 const String KeyWords[75/*# range 0..74*/] = {L"action", L"and", L"any", L"any_num", L"array", L"at", L"bool", L"by", L"byte", L"case", L"configuration", L"constant"
                     , L"dint", L"do", L"dword", L"else", L"elsif", L"end_action", L"end_case", L"end_configuration", L"end_for", L"end_if", L"end_repeat"
                     , L"end_resource", L"end_step", L"end_struct", L"end_transition", L"end_type", L"end_var", L"end_while", L"exit"

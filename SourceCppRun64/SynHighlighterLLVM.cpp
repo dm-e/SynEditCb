@@ -27,6 +27,42 @@ namespace Synhighlighterllvm
 #define Synhighlighterllvm__8 (TSysCharSet() << 'x' << 'X')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+Code template generated with SynGen.
+The original code is: SynHighlighterLLVM.pas, released 2013-03-30.
+Description: Syntax Parser/Highlighter
+The initial author of this file is Christian-W. Budde.
+Copyright (c) 2013, all rights reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+-------------------------------------------------------------------------------*/
   // as this language is case-insensitive keywords *must* be in lowercase
 const UnicodeString KeyWords[217/*# range 0..216*/] = {L"acq_rel", L"acquire", L"add", L"addrspace", L"alias", L"align", L"alignstack", L"alloca", L"alwaysinline", L"and"
                     , L"appending", L"arcp", L"arm_aapcs_vfpcc", L"arm_aapcscc", L"arm_apcscc", L"ashr", L"asm", L"atomic", L"atomicrmw", L"available_externally"

@@ -87,3 +87,11 @@ The SynEdit components have continued to evolve since the initial release of Syn
 
 --
 Detlef Meyer-Eltz
+
+License and provenance
+----------------------
+
+This repository contains code with different licenses. See [LICENSES.md](LICENSES.md)
+for their scope, [CHANGES.md](CHANGES.md) for dated changes and [LEGAL](LEGAL) for
+unresolved permissions, including SynSpellCheck. The MPL 1.1 license text is in
+[licenses/MPL-1.1.txt](licenses/MPL-1.1.txt). Preserve original file notices.

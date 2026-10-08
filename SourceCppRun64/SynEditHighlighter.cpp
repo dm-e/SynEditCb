@@ -40,6 +40,33 @@ namespace Synedithighlighter
 
 
 
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynEditHighlighter.pas, released 2000-04-07.
+
+The Original Code is based on mwHighlighter.pas by Martin Waldenburg, part of
+the mwEdit component suite.
+Portions created by Martin Waldenburg are Copyright (C) 1998 Martin Waldenburg.
+Unicode translation by Maël Hörz.
+Options property added by CodehunterWorks
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+
 /* THighlighterList */
 
 int __fastcall TSynHighlighterList::Count()

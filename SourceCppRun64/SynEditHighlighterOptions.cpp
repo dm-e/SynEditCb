@@ -14,6 +14,34 @@ __fastcall TSynEditHighlighterOptions::TSynEditHighlighterOptions() {}
 
 
 
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+Datetime format is dd.MM.yyyy hh:mm:ss.
+
+The Original Code is: SynEditHighlighterOptions.pas, released 12.09.2012.
+
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Last Changes:
+  21.09.2012 08:37:10 - Moved from String to WideString
+  25.10.2012 11:16:19 - Added DefaultExtension property
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+
 void __fastcall TSynEditHighlighterOptions::Assign(TPersistent* Source)
 {
 	if(Source->InheritsFrom(__classid(TSynEditHighlighterOptions)))

@@ -1,0 +1,37 @@
+UNRESOLVED PERMISSIONS -- 2026-10-08
+
+This file documents gaps identified in the available provenance evidence.
+It does not assert that a rights holder has made an infringement claim, and
+it does not grant any missing permission.
+
+SynSpellCheck and associated algorithms
+-------------------------------------
+Affected files include Source/SynSpellCheck.pas,
+Source/SynSpellCheckMetaphone.pas and their SourceCpp* translations.
+
+The SynSpellCheck notice identifies:
+- Jacob Dybala (m3Rlin), copyright 2002; historical contact:
+  jacobdybala@synspellcheck.prv.pl, http://www.synspellcheck.prv.pl/
+- Scalabium for the Elf hash algorithm, copyright 1998-2002;
+  historical reference: http://www.scalabium.com/faq/dct0136.htm
+- Borland Software Corporation for SoundEx, copyright 1995-2001.
+- Tom White for Metaphone; historical contact: wcstom@yahoo.com.
+- Josef Hampl for the JHCMP word differences algorithm.
+
+No explicit license grant for this collection was identified in the inspected
+files. Inclusion in an upstream distribution is provenance evidence, but by
+itself does not establish the scope of permission for every incorporated part.
+Do not assume that the repository's MPL/GPL/Apache license texts apply to these
+files merely because those texts are present.
+
+Before distributing these components, locate the original distribution and
+its applicable license/permission records, or obtain permission from the
+relevant rights holders. Record the evidence and applicable scope here.
+If permission cannot be established, exclude the affected components from
+release packages and builds intended for distribution, or replace them with
+code whose rights are established. No files have been removed in this cleanup.
+
+Other resources
+---------------
+Image/icon/resource provenance and external binary releases have not been
+exhaustively verified. A code license alone does not certify their rights.

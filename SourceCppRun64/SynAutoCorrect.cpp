@@ -22,6 +22,100 @@ __fastcall TSynAutoCorrect::TSynAutoCorrect(TComponent* AOwner) : inherited(AOwn
 
 
 
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynAutoCorrect.pas, released 2001-10-05.
+Author of this file is Aaron Chan.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynAutoCorrect.pas,v 1.13.2.7 2008/09/14 16:24:57 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+-------------------------------------------------------------------------------*/
+
+/*********************************************************/
+/*                                                       */
+/*       Aerodynamica Components                         */
+/*       SynAutoCorrect 2.x                              */
+/*                                                       */
+/*       Copyright (c) 1996-2003, Aerodynamica Software  */
+/*                                                       */
+/*       Author: Aaron Chan                              */
+/*       Portions by Greg Nixon and Jan Fiala            */
+/*                                                       */
+/*********************************************************/
+
+/*
+  @author: Aaron Chan
+  @url: http://aerodynamica.idz.net
+  @comp-url: http://aerodynamica.idz.net/products.asp?id=SynAC_2
+  @email: aerodynamica@idz.net
+  @last-updated: 12/04/03
+  @history:
+
+    ! comment     * changed     + added
+    - removed     @ bug-fixed   # todo
+
+    12/04/2003
+      - removed integrated sound support.
+      * changed keyboard and mouse handling to use SynEdit plugin system.
+
+    11/04/04 - Release 2.21:
+      @ Fixed support for correction after delimiters.
+      * SOUND_SUPPORT undefined by default.
+
+    24/03/03 - Release 2.2:
+      @ Fixed "Stack Overflow" bug and memory leak (fixed by Danail Traichev).
+
+    30/09/02 - Release 2.1:
+      @ Fixed bug when user KeyDown and MouseDown events weren't fired.
+      + Added INI_FILES and REGISTRY compiler defines (to minimize code size
+        if you don't need these features).
+      * Further tidy-up of code.
+      * Quite a few minor bug-fixes and tweaks.
+      * Items editor enhanced.
+      * Improved demo.
+      * Registry and INI file entries are saved in a new and improved way, which
+        overcomes some limitations set by the old method. If you still want to
+        use the old method, define OLD_SAVE_METHOD.
+
+    31/07/02 - Revision 2.01:
+      @ Fixed bug which occured when undefining SOUND_SUPPORT (reported by
+        Stefan Ascher).
+
+    30/07/02 - First public release of version 2.0:
+      @ MANY bugs fixed and small tweaks everywhere in the code (some
+        courtesy of Jan Fiala).
+      + Ability to play an optional WAVE file (or beep) on correction.
+      + Options set.
+      * New demo.
+*/
+
+
 
 /* TCustomSynAutoCorrect */
 

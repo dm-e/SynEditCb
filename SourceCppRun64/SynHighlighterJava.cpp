@@ -30,6 +30,51 @@ namespace Synhighlighterjava
 #define Synhighlighterjava__8 (TSysCharSet() << '_' << '$')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterJava.pas, released 2000-04-10.
+The Original Code is based on the DcjSynJava.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Michael Trier.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterJava.pas,v 1.18.2.8 2005/12/16 20:09:37 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Java highlighter for SynEdit)
+@author(Michael Trier)
+@created(December 1998, converted to SynEdit 2000-04-10 by Michael Hieke)
+@lastmod(2000-06-23)
+The SynHighlighterJava unit provides SynEdit with a Java source (.java) highlighter.
+*/
 const String KeyWords[52/*# range 0..51*/] = {L"abstract", L"assert", L"boolean", L"break", L"byte", L"case", L"catch", L"char", L"class", L"const", L"continue"
                     , L"default", L"do", L"double", L"else", L"extends", L"false", L"final", L"finally", L"float", L"for", L"goto", L"if", L"implements"
                     , L"import", L"instanceof", L"int", L"interface", L"long", L"native", L"new", L"null", L"package", L"private", L"protected"

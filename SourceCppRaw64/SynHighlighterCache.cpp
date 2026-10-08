@@ -22,6 +22,52 @@ namespace Synhighlightercache
 #define Synhighlightercache__4 (TSysCharSet() << '\x20' << '#')
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterCache.pas, released 2000-04-21.
+The Original Code is based on the mwCacheSyn.pas file from the
+mwEdit component suite by Martin Waldenburg and other developers, the Initial
+Author of this file is Pavel Krehula.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterCache.pas,v 1.13.2.6 2008/09/14 16:24:59 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+Known Issues:
+-------------------------------------------------------------------------------*/
+/*
+@abstract(Provides a Cache object script files highlighter for SynEdit)
+@author(Pavel Krehula <pavel@mas.cz>, converted to SynEdit by Bruno Mikkelsen <btm@scientist.com>)
+@created(1999-12-17, converted to SynEdit 2000-04-21)
+@lastmod(2000-06-23)
+The SynHighlighterCache unit provides SynEdit with a Cache object script files highlighter.
+Thanks to Martin Waldenburg.
+*/
 const String KeyWords[275/*# range 0..274*/] = {L"$a", L"$ascii", L"$c", L"$char", L"$d", L"$data", L"$device", L"$e", L"$ec", L"$ecode", L"$es", L"$estack", L"$et"
                     , L"$etrap", L"$extract", L"$f", L"$find", L"$fn", L"$fnumber", L"$g", L"$get", L"$h", L"$horolog", L"$i", L"$in", L"$increment", L"$inumber"
                     , L"$io", L"$j", L"$job", L"$justify", L"$k", L"$key", L"$l", L"$lb", L"$ld", L"$length", L"$lf", L"$lg", L"$li", L"$list", L"$listbuild"

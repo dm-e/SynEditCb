@@ -26,6 +26,41 @@ namespace Synhighlightersdd
 										31 << 32)
 
 
+
+/*-------------------------------------------------------------------------------
+The contents of this file are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+The Original Code is: SynHighlighterSDD.pas, released 2001-08-20.
+The Initial Author of this file is Pieter Polak.
+Unicode translation by Maël Hörz.
+All Rights Reserved.
+
+Contributors to the SynEdit and mwEdit projects are listed in the
+Contributors.txt file.
+
+Alternatively, the contents of this file may be used under the terms of the
+GNU General Public License Version 2 or later (the "GPL"), in which case
+the provisions of the GPL are applicable instead of those above.
+If you wish to allow use of your version of this file only under the terms
+of the GPL and not to allow others to use your version of this file
+under the MPL, indicate your decision by deleting the provisions above and
+replace them with the notice and other provisions required by the GPL.
+If you do not delete the provisions above, a recipient may use your version
+of this file under either the MPL or the GPL.
+
+$Id: SynHighlighterSDD.pas,v 1.13.2.6 2008/09/14 16:25:03 maelh Exp $
+
+You may retrieve the latest version of this file at the SynEdit home page,
+located at http://SynEdit.SourceForge.net
+
+-------------------------------------------------------------------------------*/
 const String KeyWords[27/*# range 0..26*/] = {L"array", L"binarydata", L"block", L"byte", L"database", L"date", L"end", L"endblock", L"integer", L"keys"
                     , L"longint", L"memotext", L"object", L"objects", L"of", L"owner", L"partition", L"partitions", L"primary", L"real", L"secondary"
                     , L"spec", L"string", L"superblock", L"superspec", L"time", L"var"};
