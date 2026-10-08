@@ -27,7 +27,6 @@ namespace Synedittextbuffer
 #define Synedittextbuffer__7 (System::Set<WORD, 0, 255>() << 10 << 13)
 #define Synedittextbuffer__8 (TSysCharSet() << '\x0a' << '\x0d')
 
-__fastcall TSynEditStringList::TSynEditStringList() {}
 __fastcall ESynEditStringList::ESynEditStringList(const String Msg) : inherited(Msg) {}
 __fastcall ESynEditStringList::ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
 __fastcall ESynEditStringList::ESynEditStringList(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Msg, Args, Args_maxidx, AHelpContext) {}

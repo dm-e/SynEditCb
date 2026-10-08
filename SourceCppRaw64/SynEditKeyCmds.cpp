@@ -158,7 +158,6 @@ __fastcall ESynKeyError::ESynKeyError(System::NativeUInt Ident, const TVarRec* A
 __fastcall ESynKeyError::ESynKeyError(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall ESynKeyError::ESynKeyError(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
 __fastcall TSynEditKeyStroke::TSynEditKeyStroke(TCollection* Collection) : inherited(Collection) {}
-__fastcall TSynEditKeyStrokes::TSynEditKeyStrokes(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
 
 
 

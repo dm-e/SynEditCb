@@ -70,7 +70,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldStartAtLine(int Line, int& Index)
 
 	result = fRanges->BinarySearch(TSynFoldRange(Line), Index);
 	if(result)
-		result = result && fRanges->Items[Index].Collapsed;
+		result = result & fRanges->Items[Index].Collapsed;
 	return result;
 }
 

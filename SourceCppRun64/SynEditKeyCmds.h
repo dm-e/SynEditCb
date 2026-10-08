@@ -355,7 +355,6 @@ public:
 	void __fastcall ResetDefaults();
 	void __fastcall SaveToStream(TStream* AStream);
 	__property TSynEditKeyStroke* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
-	__fastcall TSynEditKeyStrokes(TCollectionItemClass ItemClass);
 };
 
 // These are mainly for the TSynEditorCommand property editor, but could be

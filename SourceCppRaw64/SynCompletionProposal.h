@@ -552,7 +552,6 @@ public:
 	TProposalColumn* __fastcall FindItemID(int ID);
 	TProposalColumn* __fastcall Insert(int Index);
 	__property TProposalColumn* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
-	__fastcall TProposalColumns(TCollectionItemClass ItemClass);
 };
 void __fastcall FormattedTextOut(TCanvas* TargetCanvas, const TRect& Rect, int PPI, const String Text, bool Selected, TProposalColumns* Columns, TCustomImageList* Images);
 int __fastcall FormattedTextWidth(TCanvas* TargetCanvas, const String Text, int PPI, TProposalColumns* Columns, TCustomImageList* Images);

@@ -46,7 +46,7 @@ public:
 public:
 	typedef TForm inherited;
 	#include "SynHighlighterManager_friends.inc"
-	__fastcall TSynHighlighterForm(TComponent* AOwner, 0) : inherited(AOwner, 0) {}
+	__fastcall TSynHighlighterForm(TComponent* AOwner, int Dummy = 0) : inherited(AOwner, Dummy) {}
 };
 typedef IDesigner TDesignerClass;
 
@@ -85,7 +85,7 @@ __fastcall TSynHighlighterManager::TSynHighlighterManager(TComponent* AOwner)
 		result = -1;
 		for(stop = form->ComponentCount - 1, i = 0; i <= stop; i++)
 		{
-			if(IsInstanceOf(form->Components[i], hlClass))
+			if(ObjectIs(form->Components[i], TSynCustomHighlighter*))
 			{
 				result = i;
 				return result;

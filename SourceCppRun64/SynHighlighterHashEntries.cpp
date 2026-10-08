@@ -15,7 +15,6 @@ using namespace System::Sysutils;
 namespace Synhighlighterhashentries
 {
 
-__fastcall TSynHashEntry::TSynHashEntry() {}
 __fastcall TSynHashEntryList::TSynHashEntryList() {}
 
 

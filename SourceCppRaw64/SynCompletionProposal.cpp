@@ -61,8 +61,6 @@ namespace Syncompletionproposal
 #define Syncompletionproposal__26 (TSynCompletionOptions() << scoUsePrettyText)
 #define Syncompletionproposal__27 (TSynCompletionOptions() << scoUseBuiltInTimer)
 
-__fastcall TProposalColumns::TProposalColumns(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
-
 
 const WideChar TextHeightString[] = L"CompletionProposal";
 

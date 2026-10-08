@@ -17,9 +17,6 @@ using namespace System;
 namespace Syneditdataobject
 {
 
-__fastcall TSynEnumFormatEtc::TSynEnumFormatEtc() {}
-__fastcall TSynEditDataObject::TSynEditDataObject() {}
-
 
 UINT SynEditClipboardFormat = 0;
 UINT HTMLClipboardFormat = 0;

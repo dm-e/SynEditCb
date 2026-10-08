@@ -38,8 +38,6 @@ namespace Synedithighlighter
 #define Synedithighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
 #define Synedithighlighter__13 (TSynHighlighterCapabilities() << hcRegistry)
 
-__fastcall TSynHighlighterAttributes::TSynHighlighterAttributes() {}
-
 
 
 /* THighlighterList */
@@ -1195,6 +1193,7 @@ void __fastcall TSynCustomHighlighter::NextToEol()
 
 void __fastcall TSynCustomHighlighter::ResetRange()
 {
+
 }
 
 void __fastcall TSynCustomHighlighter::SetAdditionalIdentChars(const TSysCharSet Value)
@@ -1274,6 +1273,7 @@ void __fastcall TSynCustomHighlighter::DoSetLine(const String Value, int LineNum
 
 void __fastcall TSynCustomHighlighter::SetRange(void* Value)
 {
+
 }
 
 void __fastcall TSynCustomHighlighter::SetDefaultFilter(String Value)
@@ -1285,6 +1285,7 @@ void __fastcall TSynCustomHighlighter::SetSampleSource(String Value)
 {
 
   // TODO: sure this should be empty?
+
 }
 
 void __fastcall TSynCustomHighlighter::UnhookAttrChangeEvent(const TNotifyEvent& ANotifyEvent)

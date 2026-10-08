@@ -61,7 +61,6 @@ protected:
 	HRESULT STDMETHODCALLTYPE Clone(IEnumFORMATETC** Enum);
 public:
 	__fastcall TSynEnumFormatEtc(const System::D2CArray<TClipFormat>& FormatList, int Index = 0);
-	__fastcall TSynEnumFormatEtc();
 };
 
 class TSynEditDataObject : public System::TCppInterfacedObject<IDataObject>
@@ -88,7 +87,6 @@ protected:
 public:
 	__fastcall TSynEditDataObject(TObject* ASynEdit);
 	virtual __fastcall ~TSynEditDataObject();
-	__fastcall TSynEditDataObject();
 };
 HGLOBAL __fastcall MakeGlobal(int Value);
 HGLOBAL __fastcall MakeGlobal(const String S);

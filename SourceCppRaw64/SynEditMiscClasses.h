@@ -238,7 +238,6 @@ public:
 	#include "SynEditMiscClasses_friends.inc"
 	__property TSynGutterBand* Bands[int Index] = { read = GetBands/*# default */ };
 	__fastcall TSynBandsCollection(TPersistent* AOwner, TCollectionItemClass ItemClass);
-	//# problematic: __fastcall TSynBandsCollection(TCollectionItemClass ItemClass);
 };
 
 class TSynGutter : public System::Classes::TPersistent
@@ -369,8 +368,6 @@ public:
 	__property int LeftMargin = { read = FLeftMargin, write = SetLeftMargin, default = 2 };
 	__property int Xoffset = { read = FXoffset, write = SetXOffset, default = 12 };
 	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
-public:
-	__fastcall TSynBookMarkOpt();
 };
 
 class TSynGlyph : public System::Classes::TPersistent
@@ -402,8 +399,6 @@ public:
 	__property TBitmap* Glyph = { read = FGlyph, write = SetGlyph };
 	__property bool Visible = { read = FVisible, write = SetVisible, default = true };
 	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
-public:
-	__fastcall TSynGlyph();
 };
 
   /* TSynMethodChain */
@@ -487,7 +482,6 @@ public:
     // ++ DPI-Aware
 	virtual void __fastcall ChangeScale(int M, int D);
     // -- DPI-Aware
-	__fastcall TSynInternalImage();
 };
 
   /* TSynHotKey */

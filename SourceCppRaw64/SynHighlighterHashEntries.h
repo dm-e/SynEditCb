@@ -174,7 +174,6 @@ public:
 	__property int Kind = { read = fKind };
     /* Points to the next keyword entry with the same hashvalue. */
 	__property TSynHashEntry* Next = { read = fNext };
-	__fastcall TSynHashEntry();
 };
 
   /* A list of keyword entries, stored as single-linked lists under the hashvalue

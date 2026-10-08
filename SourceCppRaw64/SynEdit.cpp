@@ -125,9 +125,6 @@ __fastcall ESynEditError::ESynEditError(System::PResStringRec ResStringRec, cons
 __fastcall ESynEditError::ESynEditError(System::NativeUInt Ident, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Ident, Args, Args_maxidx, AHelpContext) {}
 __fastcall ESynEditError::ESynEditError(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall ESynEditError::ESynEditError(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
-__fastcall TSynEditMark::TSynEditMark() {}
-__fastcall TSynEditMarkList::TSynEditMarkList() {}
-__fastcall TSynEditMarkList::TSynEditMarkList(bool AOwnsObjects) : inherited(AOwnsObjects) {}
 __fastcall TSynEditPlugin::TSynEditPlugin() {}
 __fastcall TCustomSynEdit::TCustomSynEdit(HWND ParentWindow) : inherited(ParentWindow) {}
 __fastcall TSynEdit::TSynEdit(TComponent* AOwner) : inherited(AOwner) {}
@@ -170,8 +167,6 @@ private:
 	void* fData;
 	__fastcall THookedCommandHandlerEntry(const THookedCommandEvent& AEvent, void* AData);
 	HIDESBASE bool __fastcall Equals(const THookedCommandEvent& AEvent)/*# reintroduce */;
-public:
-	__fastcall THookedCommandHandlerEntry() {}
 };
 
 __fastcall THookedCommandHandlerEntry::THookedCommandHandlerEntry(const THookedCommandEvent& AEvent, void* AData)
@@ -9483,7 +9478,7 @@ void __fastcall TCustomSynEdit::FindDialogFindFirst(TObject* Sender)
 	}
 	if(ObjectIs(Sender, TFindDialog*))
 	{
-		if(!SearchByFindDialog(((TFindDialog*) Sender)) && (SelStart == 0) && (SelLength == 0))
+		if(!SearchByFindDialog(((TFindDialog*) Sender)) & (SelStart == 0) && (SelLength == 0))
 		{
 			SelStart = SelStartBeforeSearch;
 			SelLength = SelLengthBeforeSearch;

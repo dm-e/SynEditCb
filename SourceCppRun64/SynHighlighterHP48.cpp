@@ -32,8 +32,6 @@ namespace Synhighlighterhp48
 										25 << 26 << 27 << 28 << 29 << 30 <<  \
 										31 << 32)
 
-__fastcall TSpeedListObject::TSpeedListObject() {}
-
 
 const String DefaultAsmKeyWords = L"!RPL\x0d\x0a" L"ENDCODE\x0d\x0a" L"{\x0d\x0a" L"}\x0d\x0a"
 	           L"GOTO\x0d\x0a" L"GOSUB\x0d\x0a" L"GOSBVL\x0d\x0a" L"GOVLNG\x0d\x0a" L"GOLONG\x0d\x0a" L"SKIP"

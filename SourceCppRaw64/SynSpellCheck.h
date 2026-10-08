@@ -609,8 +609,6 @@ public:
     /* Properties */
 	__property TColor PenColor = { read = FPenColor, write = SetPenColor, default = clRed };
 	__property TUnderlineStyle UnderlineStyle = { read = FUnderlineStyle, write = SetUnderlineStyle, default = /*# usMicrosoftWord */ 1 };
-	__fastcall TDrawAutoSpellCheckPlugin(Synedit::TCustomSynEdit* AOwner, Synedit::TPlugInHandlers AHandlers);
-	__fastcall TDrawAutoSpellCheckPlugin();
 };
 
   /* Procedure types */

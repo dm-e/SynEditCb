@@ -181,7 +181,6 @@ public:
 	int __fastcall LinePut(int aIndex, const String OldLine);
 	void __fastcall Reset();
 	void __fastcall DisplayChanged();
-	__fastcall TSynWordWrapPlugin();
 };
 
 

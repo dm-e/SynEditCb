@@ -34,7 +34,6 @@ __fastcall EheFontStockException::EheFontStockException(System::PResStringRec Re
 __fastcall EheFontStockException::EheFontStockException(System::NativeUInt Ident, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Ident, Args, Args_maxidx, AHelpContext) {}
 __fastcall EheFontStockException::EheFontStockException(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall EheFontStockException::EheFontStockException(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
-__fastcall TheFontStock::TheFontStock() {}
 __fastcall EheTextDrawerException::EheTextDrawerException(const String Msg) : inherited(Msg) {}
 __fastcall EheTextDrawerException::EheTextDrawerException(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
 __fastcall EheTextDrawerException::EheTextDrawerException(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Msg, Args, Args_maxidx, AHelpContext) {}
@@ -47,7 +46,6 @@ __fastcall EheTextDrawerException::EheTextDrawerException(System::PResStringRec 
 __fastcall EheTextDrawerException::EheTextDrawerException(System::NativeUInt Ident, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Ident, Args, Args_maxidx, AHelpContext) {}
 __fastcall EheTextDrawerException::EheTextDrawerException(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall EheTextDrawerException::EheTextDrawerException(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
-__fastcall TheTextDrawer::TheTextDrawer() {}
 
 
 TheFontsInfoManager* gFontsInfoManager = nullptr;

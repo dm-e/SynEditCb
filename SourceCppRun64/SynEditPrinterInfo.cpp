@@ -21,7 +21,7 @@ int __fastcall TSynEditPrinterInfo::PixFromBottom(double mmValue)
 	int result = 0;
 	if(!FIsUpdated)
 		UpdatePrinter();
-	result = (int) Round(mmValue * FYPixPrmm - FBottomGutter);
+	result = static_cast<int>(Round(mmValue * FYPixPrmm - FBottomGutter));
 	return result;
 }
 
@@ -30,7 +30,7 @@ int __fastcall TSynEditPrinterInfo::PixFromLeft(double mmValue)
 	int result = 0;
 	if(!FIsUpdated)
 		UpdatePrinter();
-	result = (int) Round(mmValue * FXPixPrmm - FLeftGutter);
+	result = static_cast<int>(Round(mmValue * FXPixPrmm - FLeftGutter));
 	return result;
 }
 
@@ -39,7 +39,7 @@ int __fastcall TSynEditPrinterInfo::PixFromRight(double mmValue)
 	int result = 0;
 	if(!FIsUpdated)
 		UpdatePrinter();
-	result = (int) Round(mmValue * FXPixPrmm - FRightGutter);
+	result = static_cast<int>(Round(mmValue * FXPixPrmm - FRightGutter));
 	return result;
 }
 
@@ -48,7 +48,7 @@ int __fastcall TSynEditPrinterInfo::PixFromTop(double mmValue)
 	int result = 0;
 	if(!FIsUpdated)
 		UpdatePrinter();
-	result = (int) Round(mmValue * FYPixPrmm - FTopGutter);
+	result = static_cast<int>(Round(mmValue * FYPixPrmm - FTopGutter));
 	return result;
 }
 /*In case of no printers installed this information is used
@@ -66,8 +66,8 @@ void __fastcall TSynEditPrinterInfo::FillDefault()
 	FBottomGutter = 50;
 	FXPixPrInch = 300;
 	FYPixPrInch = 300;
-	FXPixPrmm = (float) (double(FXPixPrInch) / 25.4);
-	FYPixPrmm = (float) (double(FYPixPrInch) / 25.4);
+	FXPixPrmm = static_cast<float>(double(FXPixPrInch) / 25.4);
+	FYPixPrmm = static_cast<float>(double(FYPixPrInch) / 25.4);
 }
 
 int __fastcall TSynEditPrinterInfo::GetBottomGutter()
@@ -197,10 +197,10 @@ void __fastcall TSynEditPrinterInfo::UpdatePrinter()
 	FBottomGutter = FPhysicalHeight - FPrintableHeight - FTopGutter;
 	FXPixPrInch = GetDeviceCaps(Printer()->Handle, LOGPIXELSX);
 	FYPixPrInch = GetDeviceCaps(Printer()->Handle, LOGPIXELSY);
-	FXPixPrmm = (float) (double(FXPixPrInch) / 25.4);
-	FYPixPrmm = (float) (double(FYPixPrInch) / 25.4);
+	FXPixPrmm = static_cast<float>(double(FXPixPrInch) / 25.4);
+	FYPixPrmm = static_cast<float>(double(FYPixPrInch) / 25.4);
 }
 
 
-}  // namespace SynEditPrinterInfo
+}  // namespace Syneditprinterinfo
 

@@ -31,9 +31,6 @@ namespace Synhighlightermulti
 #define Synhighlightermulti__4 (TRegExOptions() << roNotEmpty << roIgnoreCase << roCompiled)
 #define Synhighlightermulti__5 (TFontStyles() << TFontStyle::fsBold)
 
-__fastcall TSchemes::TSchemes(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
-__fastcall TMarker::TMarker() {}
-
 
 
 void __fastcall CheckExpression(const String Expr)

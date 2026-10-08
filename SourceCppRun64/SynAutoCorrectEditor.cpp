@@ -21,10 +21,11 @@ void __fastcall TfrmAutoCorrectEditor::FormShow(TObject* Sender)
 	Invalidate();
 }
 
-void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItemCLX(TObject* Sender, int Index, const TRect& cRect, TOwnerDrawState State, bool& Handled)
+void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItemCLX(TObject* Sender, int Index, const TRect& cRect, Winapi::Windows::TOwnerDrawState State, bool& Handled)
 {
 	TRect Rect = cRect;
 	String s;
+
 	/*# with lbxItems do */
 	{
 		auto with0 = lbxItems;
@@ -36,10 +37,11 @@ void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItemCLX(TObject* Sender, int 
 	}
 }
 
-void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItem(TWinControl* Control, int Index, const TRect& cRect, TOwnerDrawState State)
+void __fastcall TfrmAutoCorrectEditor::lbxItemsDrawItem(TWinControl* Control, int Index, const TRect& cRect, Winapi::Windows::TOwnerDrawState State)
 {
 	TRect Rect = cRect;
 	bool Dummy = false;
+
 	Dummy = true;
 	lbxItemsDrawItemCLX(Control, Index, Rect, State, Dummy);
 }
@@ -69,7 +71,7 @@ void __fastcall TfrmAutoCorrectEditor::btnDeleteClick(TObject* Sender)
 {
 	if(lbxItems->ItemIndex < 0)
 	{
-		MessageBox(0, ((PChar) SPleaseSelectItem), ((PChar) SError), (UINT) (MB_ICONERROR | MB_OK));
+		MessageBox(0, ((PChar) SPleaseSelectItem), ((PChar) SError), static_cast<UINT>(MB_ICONERROR | MB_OK));
 		return;
 	}
 	SynAutoCorrect->Delete(lbxItems->ItemIndex);
@@ -85,7 +87,7 @@ void __fastcall TfrmAutoCorrectEditor::btnEditClick(TObject* Sender)
 	String CurrText;
 	if(lbxItems->ItemIndex < 0)
 	{
-		MessageBox(0, ((PChar) SPleaseSelectItem), ((PChar) SError), (UINT) (MB_ICONERROR | MB_OK));
+		MessageBox(0, ((PChar) SPleaseSelectItem), ((PChar) SError), static_cast<UINT>(MB_ICONERROR | MB_OK));
 		return;
 	}
 	/*# with SynAutoCorrect do */
@@ -112,7 +114,7 @@ void __fastcall TfrmAutoCorrectEditor::btnDoneClick(TObject* Sender)
 
 void __fastcall TfrmAutoCorrectEditor::btnClearClick(TObject* Sender)
 {
-	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), (UINT) (MB_YESNO | MB_ICONQUESTION)) != IDYES)
+	if(MessageBox(0, ((PChar) SClearListConfirmation), ((PChar) SConfirmation), static_cast<UINT>(MB_YESNO | MB_ICONQUESTION)) != idYes)
 		return;
 	SynAutoCorrect->Items->Clear();
 	lbxItems->Items->Clear();

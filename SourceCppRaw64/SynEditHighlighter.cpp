@@ -38,8 +38,6 @@ namespace Synedithighlighter
 #define Synedithighlighter__12 (TFontStyles() << TFontStyle::fsStrikeOut)
 #define Synedithighlighter__13 (TSynHighlighterCapabilities() << hcRegistry)
 
-__fastcall TSynHighlighterAttributes::TSynHighlighterAttributes() {}
-
 
 
 /* THighlighterList */
@@ -71,7 +69,7 @@ int __fastcall TSynHighlighterList::FindByClass(TComponent* Comp)
 	result = -1;
 	for(stop = Count() - 1, i = 0; i <= stop; i++)
 	{
-		if(IsInstanceOf(Comp, Items[i]))
+		if(ObjectIs(Comp, TSynCustomHighlighter*))
 		{
 			result = i;
 			return result;

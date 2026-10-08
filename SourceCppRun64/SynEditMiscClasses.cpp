@@ -57,9 +57,6 @@ namespace Syneditmiscclasses
 #define Syneditmiscclasses__17 (System::Set<TSynGutterBandKind, TSynGutterBandKind::gbkCustom, TSynGutterBandKind::gbkTrackChanges>() << gbkLineNumbers << gbkFold)
 
 __fastcall TSynBandsCollection::TSynBandsCollection(TPersistent* AOwner, TCollectionItemClass ItemClass) : inherited(AOwner, ItemClass) {}
-//# problematic: __fastcall TSynBandsCollection::TSynBandsCollection(TCollectionItemClass ItemClass) : inherited(ItemClass) {}
-__fastcall TSynBookMarkOpt::TSynBookMarkOpt() {}
-__fastcall TSynGlyph::TSynGlyph() {}
 __fastcall ESynMethodChain::ESynMethodChain(const String Msg) : inherited(Msg) {}
 __fastcall ESynMethodChain::ESynMethodChain(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
 __fastcall ESynMethodChain::ESynMethodChain(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Msg, Args, Args_maxidx, AHelpContext) {}
@@ -73,7 +70,6 @@ __fastcall ESynMethodChain::ESynMethodChain(System::NativeUInt Ident, const TVar
 __fastcall ESynMethodChain::ESynMethodChain(System::NativeUInt Ident, int AHelpContext) : inherited(Ident, AHelpContext) {}
 __fastcall ESynMethodChain::ESynMethodChain(System::PResStringRec ResStringRec, int AHelpContext) : inherited(ResStringRec, AHelpContext) {}
 __fastcall TSynNotifyEventChain::TSynNotifyEventChain() {}
-__fastcall TSynInternalImage::TSynInternalImage() {}
 __fastcall TSynHotKey::TSynHotKey(HWND ParentWindow) : inherited(ParentWindow) {}
 __fastcall TSynEditSearchCustom::TSynEditSearchCustom(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TBetterRegistry::TBetterRegistry() {}

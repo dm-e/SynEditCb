@@ -22,8 +22,6 @@ using namespace System::Rtlconsts;
 namespace Syneditwordwrap
 {
 
-__fastcall TSynWordWrapPlugin::TSynWordWrapPlugin() {}
-
 
 
 /* TSynWordWrapPlugin */

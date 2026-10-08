@@ -50,6 +50,7 @@ bool __fastcall TSynFoldRanges::CollapsedFoldAroundLine(int Line, int& Index)
 {
 	Index = 0; //# clear out parameter
 	bool result = false;
+
 	result = FoldAroundLineEx(Line, true, false, false, Index);
 	return result;
 }
@@ -137,6 +138,7 @@ bool __fastcall TSynFoldRanges::FoldAroundLine(int Line, int& Index)
 {
 	Index = 0; //# clear out parameter
 	bool result = false;
+
 	result = FoldAroundLineEx(Line, false, false, false, Index);
 	return result;
 }
@@ -146,6 +148,7 @@ bool __fastcall TSynFoldRanges::FoldAroundLineEx(int Line, bool WantCollapsed, b
 	Index = 0; //# clear out parameter
 	bool result = false;
 	int i = 0;
+
 	int stop = 0;
 	result = false;
 	for(stop = fRanges->Count - 1, i = 0; i <= stop; i++)
@@ -170,6 +173,7 @@ bool __fastcall TSynFoldRanges::FoldEndAtLine(int Line, int& Index)
 	Index = 0; //# clear out parameter
 	bool result = false;
 	int i = 0;
+
 	int stop = 0;
 	result = false;
 	for(stop = fRanges->Count - 1, i = 0; i <= stop; i++)
@@ -213,6 +217,7 @@ bool __fastcall TSynFoldRanges::FoldHidesLine(int Line, int& Index)
 {
 	Index = 0; //# clear out parameter
 	bool result = false;
+
 	result = FoldAroundLineEx(Line, true, false, true, Index);
 	return result;
 }
@@ -835,6 +840,7 @@ void __fastcall TSynCustomCodeFoldingHighlighter::AdjustFoldRanges(TSynFoldRange
 {
 
   // Do nothing
+
 }
 
 TSynHighlighterAttributes* __fastcall TSynCustomCodeFoldingHighlighter::GetHighlighterAttriAtRowCol(TStrings* const Lines, int Line, int Char)

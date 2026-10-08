@@ -43,8 +43,6 @@ namespace Synspellcheck
 
 __fastcall TSynEditEx::TSynEditEx(TComponent* AOwner) : inherited(AOwner) {}
 __fastcall TSynEditEx::TSynEditEx(HWND ParentWindow) : inherited(ParentWindow) {}
-__fastcall TDrawAutoSpellCheckPlugin::TDrawAutoSpellCheckPlugin(Synedit::TCustomSynEdit* AOwner, Synedit::TPlugInHandlers AHandlers) : inherited(AOwner, AHandlers) {}
-__fastcall TDrawAutoSpellCheckPlugin::TDrawAutoSpellCheckPlugin() {}
 __fastcall ENoDictionaryLoaded::ENoDictionaryLoaded(const String Msg) : inherited(Msg) {}
 __fastcall ENoDictionaryLoaded::ENoDictionaryLoaded(const String Msg, const TVarRec* Args, int Args_maxidx) : inherited(Msg, Args, Args_maxidx) {}
 __fastcall ENoDictionaryLoaded::ENoDictionaryLoaded(const String Msg, const TVarRec* Args, int Args_maxidx, int AHelpContext) : inherited(Msg, Args, Args_maxidx, AHelpContext) {}
@@ -1737,7 +1735,7 @@ void __fastcall TSynSpellCheck::AddDiacritic(TProgressBar* Progress)
 bool __fastcall TSynSpellCheck::SpellIsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || (PosChar(AChar, FApostrophes) > 0) || (AChar == L'-');
+	result = static_cast<bool>(IsCharAlphaNumeric(AChar) | (PosChar(AChar, FApostrophes) > 0) || (AChar == L'-'));
 	return result;
 }
 

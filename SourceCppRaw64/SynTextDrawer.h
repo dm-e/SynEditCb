@@ -299,7 +299,6 @@ public:
 	__property int CharAdvance = { read = GetCharAdvance };
 	__property int CharHeight = { read = GetCharHeight };
 	__property bool IsTrueType = { read = GetIsTrueType };
-	__fastcall TheFontStock();
 };
 
   /* TheTextDrawer */
@@ -393,7 +392,6 @@ public:
 	__property TColor BackColor = { write = SetBackColor };
 	__property TFontStyles Style = { write = SetStyle };
 	__property int CharExtra = { read = FCharExtra, write = SetCharExtra };
-	__fastcall TheTextDrawer();
 };
 TheFontsInfoManager* __fastcall GetFontsInfoManager();
 bool __fastcall UniversalExtTextOut(HDC DC, int X, int Y, TTextOutOptions Options, const TRect& Rect, System::PWideChar Str, int Count, PIntegerArray ETODist, bool UseLigatures = false);

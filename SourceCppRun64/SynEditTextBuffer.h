@@ -239,7 +239,6 @@ public:
 	__property TStringListChangeEvent OnInserted = { read = FOnInserted, write = FOnInserted };
 	__property TStringListPutEvent OnPut = { read = FOnPut, write = FOnPut };
 	__property Synedittypes::TSynInfoLossEvent OnInfoLoss = { read = FOnInfoLoss, write = FOnInfoLoss };
-	__fastcall TSynEditStringList();
 };
 
 class ESynEditStringList : public System::Sysutils::Exception

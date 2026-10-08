@@ -323,7 +323,6 @@ public:
 	__property bool Visible = { read = fVisible, write = SetVisible };
 	__property bool InternalImage = { read = fInternalImage, write = SetInternalImage };
 	__property bool IsBookmark = { read = GetIsBookmark };
-	__fastcall TSynEditMark();
 };
 typedef void __fastcall (__closure *TPlaceMarkEvent) (TObject*, TSynEditMark*&);
 typedef TSynEditMark* TSynEditMarks[MAX_MARKS/*# range 1..MAX_MARKS*/];
@@ -353,8 +352,6 @@ public:                                           // because TSynEditMarkList al
 	__property TSynEditMark* Items[int Index] = { read = GetItem, write = SetItem/*# default */ };
 	__property TCustomSynEdit* Edit = { read = fEdit };
 	__property TNotifyEvent OnChange = { read = fOnChange, write = fOnChange };
-	__fastcall TSynEditMarkList();
-	__fastcall TSynEditMarkList(bool AOwnsObjects);
 };
 typedef void __fastcall (__closure *TGutterClickEvent) (TObject*, TMouseButton, int, int, int, TSynEditMark*);
 enum TPluginHandler {phLinesInserted,

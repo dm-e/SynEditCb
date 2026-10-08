@@ -194,7 +194,6 @@ public:
 	#include "SynHighlighterMulti_friends.inc"
 	__fastcall TSchemes(TSynMultiSyn* aOwner);
 	__property TScheme* Items[int aIndex] = { read = GetItems, write = SetItems/*# default */ };
-	__fastcall TSchemes(TCollectionItemClass ItemClass);
 };
 
 class TMarker : public System::TObject
@@ -210,7 +209,6 @@ protected:
 	bool fIsOpenMarker;
 public:
 	__fastcall TMarker(int aScheme, int aStartPos, int aMarkerLen, bool aIsOpenMarker, const String aMarkerText);
-	__fastcall TMarker();
 };
 enum TRangeOperation {roGet,
                       roSet };

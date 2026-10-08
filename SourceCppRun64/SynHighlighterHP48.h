@@ -156,7 +156,6 @@ public:
 	virtual __fastcall ~TSpeedListObject();
 	__property TSpeedStringList* SpeedList = { read = FSpeedList, write = FSpeedList };
 	__property TObject* Pointer = { read = FObject, write = FObject };
-	__fastcall TSpeedListObject();
 };
 typedef TSpeedListObject* TSpeedListObjects[1/*# range 0..0*/];
 typedef TSpeedListObjects* PSpeedListObjects;

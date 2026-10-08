@@ -49,7 +49,6 @@ public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
 	__fastcall TSynLinePutUndoItem(TCustomSynEdit* Editor, int Index, String OldLine, TSynEditorCommand Command);
-	__fastcall TSynLinePutUndoItem() {}
 };
 
 class TSynLinesInsertedUndoItem : public TSynUndoItem
@@ -64,7 +63,6 @@ public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
 	__fastcall TSynLinesInsertedUndoItem(TCustomSynEdit* Editor, int Index, int Count);
-	__fastcall TSynLinesInsertedUndoItem() {}
 };
 
 class TSynLinesDeletedUndoItem : public TSynUndoItem
@@ -79,7 +77,6 @@ public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
 	__fastcall TSynLinesDeletedUndoItem(TCustomSynEdit* Editor, int Index, const D2CArray<String>& DeletedLines);
-	__fastcall TSynLinesDeletedUndoItem() {}
 };
 
 class TSynCaretAndSelectionUndoItem : public TSynUndoItem
@@ -94,7 +91,6 @@ public:
 	virtual void __fastcall Undo(TCustomSynEdit* Editor);
 	virtual void __fastcall Redo(TCustomSynEdit* Editor);
 	__fastcall TSynCaretAndSelectionUndoItem(TCustomSynEdit* Editor);
-	__fastcall TSynCaretAndSelectionUndoItem() {}
 };
 
 class TSynUndoPlugin : public TSynEditPlugin
@@ -112,9 +108,6 @@ protected:
 	virtual void __fastcall LinePut(int aIndex, const String OldLine);
 public:
 	__fastcall TSynUndoPlugin(TSynEditUndo* SynEditUndo, TCustomSynEdit* Editor);
-	__fastcall TSynUndoPlugin(TCustomSynEdit* AOwner) : inherited(AOwner) {}
-	__fastcall TSynUndoPlugin(TCustomSynEdit* AOwner, TPlugInHandlers AHandlers) : inherited(AOwner, AHandlers) {}
-	__fastcall TSynUndoPlugin() {}
 };
 
 class TSynEditUndoList : public TObjectStack__1<TSynUndoItem*>
@@ -133,10 +126,6 @@ public:
 	__fastcall TSynEditUndoList(TSynEditUndo* Owner);
 	void __fastcall Push(TSynUndoItem* const Value);
 	__property int BlockChangeNumber = { read = FBlockChangeNumber, write = FBlockChangeNumber };
-	__fastcall TSynEditUndoList() {}
-	__fastcall TSynEditUndoList(bool AOwnsObjects) : inherited(AOwnsObjects) {}
-	__fastcall TSynEditUndoList(TEnumerable__1<TSynUndoItem*>* const Collection, bool AOwnsObjects = true) : inherited(Collection, AOwnsObjects) {}
-	__fastcall TSynEditUndoList(IEnumerable__1<TSynUndoItem*>* const Collection) : inherited(Collection) {}
 };
 
 class TSynEditUndo : public TCppInterfacedObject<ISynEditUndo>
@@ -182,7 +171,6 @@ private:
 public:
 	__fastcall TSynEditUndo(TCustomSynEdit* Editor);
 	virtual __fastcall ~TSynEditUndo();
-	__fastcall TSynEditUndo() {}
 };
 
 /* TSynEditUndoList */
@@ -250,7 +238,7 @@ void __fastcall TSynEditUndo::AddUndoItem(TSynUndoItem* Item)
 	FUndoList->Push(Item);
 	FRedoList->Clear();
   // Do not sent unnecessary notifications
-	if((FBlockCount == 0) && (OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
+	if((FBlockCount == 0) & (OldModified ^ GetModified()) & Assigned(FOnModifiedChanged))
 		FOnModifiedChanged(this);
 }
 
@@ -443,7 +431,7 @@ void __fastcall TSynEditUndo::Redo(TControl* Editor)
 		}
 		__finally
 		{
-			if((OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
+			if((OldModified ^ GetModified()) & Assigned(FOnModifiedChanged))
 				FOnModifiedChanged(this);
 			FUndoList->BlockChangeNumber = 0;
 		}
@@ -548,7 +536,7 @@ void __fastcall TSynEditUndo::Undo(TControl* Editor)
 		}
 		__finally
 		{
-			if((OldModified ^ GetModified()) && Assigned(FOnModifiedChanged))
+			if((OldModified ^ GetModified()) & Assigned(FOnModifiedChanged))
 				FOnModifiedChanged(this);
 			FRedoList->BlockChangeNumber = 0;
 		}

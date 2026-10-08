@@ -952,7 +952,7 @@ void __fastcall TSynJavaSyn::Next()
 		CommentProc();
 		break;
 		default:
-		if(IsCharAlphaNumeric(fLine[Run]) && !CharInSet(fLine[Run], Synhighlighterjava__7)) //Fiala
+		if(IsCharAlphaNumeric(fLine[Run]) & !CharInSet(fLine[Run], Synhighlighterjava__7)) //Fiala
 			IdentProc();
 		else
 		{
@@ -1203,7 +1203,7 @@ bool __fastcall TSynJavaSyn::IsFilterStored()
 bool __fastcall TSynJavaSyn::IsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, Synhighlighterjava__8);       //Fiala
+	result = static_cast<bool>(IsCharAlphaNumeric(AChar) | CharInSet(AChar, Synhighlighterjava__8));       //Fiala
 /*
   case AChar of
     '_', '$', '0'..'9', 'a'..'z', 'A'..'Z', 'L'..'Ö', 'Ø'..'ö', 'ø'..'ÿ':

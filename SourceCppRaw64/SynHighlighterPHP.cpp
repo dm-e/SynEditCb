@@ -1196,7 +1196,7 @@ String __fastcall TSynPHPSyn::GetFriendlyLanguageName()
 bool __fastcall TSynPHPSyn::IsIdentChar(WideChar AChar)
 {
 	bool result = false;
-	result = IsCharAlphaNumeric(AChar) || CharInSet(AChar, Synhighlighterphp__7);
+	result = static_cast<bool>(IsCharAlphaNumeric(AChar) | CharInSet(AChar, Synhighlighterphp__7));
 	return result;
 }
 

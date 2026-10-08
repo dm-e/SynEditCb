@@ -246,15 +246,8 @@ void __fastcall TSynCustomExporter::ExportRange(TStrings* ALines, const TBufferC
 	String Line;
 	String Token;
 	TSynHighlighterAttributes* Attri = nullptr;
+
 	FStreaming = true;
-
-assert(ALines);
-assert(Start.Line >= 1);
-assert(Stop.Line  >= Start.Line);
-assert(Start.Line <= ALines->Count);
-assert(Stop.Line  <= ALines->Count);
-
-
 	try
 
     // abort if not all necessary conditions are met

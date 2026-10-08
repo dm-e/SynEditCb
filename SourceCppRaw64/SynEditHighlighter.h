@@ -150,8 +150,6 @@ public:
 	__property TColor Background = { read = fBackground, write = SetBackground, stored = GetBackgroundColorStored };
 	__property TColor Foreground = { read = fForeground, write = SetForeground, stored = GetForegroundColorStored };
 	__property TFontStyles Style = { read = fStyle, write = SetStyle, stored = GetFontStyleStored };
-public:
-	__fastcall TSynHighlighterAttributes();
 }; // supports Enum/UseUserSettings
       // supports LoadFrom/SaveToRegistry
 enum TSynHighlighterCapability {hcUserSettings,

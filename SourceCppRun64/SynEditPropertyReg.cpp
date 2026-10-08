@@ -49,17 +49,11 @@ namespace Syneditpropertyreg
 #define Syneditpropertyreg__4 (TPropertyAttributes() << paDialog << paReadOnly)
 
 __fastcall TSynEditFontProperty::TSynEditFontProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
-__fastcall TSynEditFontProperty::TSynEditFontProperty() {}
 __fastcall TSynEditCommandProperty::TSynEditCommandProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
-__fastcall TSynEditCommandProperty::TSynEditCommandProperty() {}
 __fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
-__fastcall TSynEditKeystrokesProperty::TSynEditKeystrokesProperty() {}
 __fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
-__fastcall TSynEditPrintMarginsProperty::TSynEditPrintMarginsProperty() {}
 __fastcall TAutoCorrectionProperty::TAutoCorrectionProperty(const _di_IDesigner ADesigner, int APropCount) : inherited(ADesigner, APropCount) {}
-__fastcall TAutoCorrectionProperty::TAutoCorrectionProperty() {}
 __fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor(TComponent* AComponent, const _di_IDesigner& ADesigner) : inherited(AComponent, ADesigner) {}
-__fastcall TSynAutoCorrectComponentEditor::TSynAutoCorrectComponentEditor() {}
 
 
 

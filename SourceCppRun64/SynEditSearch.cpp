@@ -211,7 +211,7 @@ __fastcall TSynEditSearch::~TSynEditSearch()
 
 void __fastcall TSynEditSearch::SetPattern(const String Value)
 {
-	if(CasedPat != Value)
+	if(CasedPat != Value)  // dme
 	{
 		CasedPat = Value;
 		if(CaseSensitive)
